@@ -1,0 +1,56 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+<!-- Base application theme. -->
+<style name="Base.Theme.DesynatAdmin" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your light theme here. -->
+    <item name="colorPrimary">@color/brown</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <!-- allow content to draw under status bar -->
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:windowLightStatusBar">false</item> <!-- white icons -->
+</style>
+
+<style name="Theme.DesynatAdmin" parent="Base.Theme.DesynatAdmin" />
+
+<style name="SplashViewTheme" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:windowDisablePreview">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowIsTranslucent">true</item>
+
+</style>
+
+<style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:fitsSystemWindows">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowTranslucentNavigation">true</item>
+</style>
+
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+
+        <item name="colorPrimary">@color/brown</item>
+        <item name="colorPrimaryDark">@color/brown</item>
+        <item name="colorAccent">@color/brown</item>
+        <item name="android:buttonBarNegativeButtonStyle" >@style/NegativeButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/NegativeButtonStyle</item>
+
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/brown</item>
+    </style>
+
+    <style name="button" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/btn_background</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:padding">@dimen/_10sdp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+
+</resources>
