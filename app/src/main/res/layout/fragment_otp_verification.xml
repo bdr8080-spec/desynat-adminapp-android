@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.fragment.OtpVerificationFragment">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:src="@drawable/back_ic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="OTP Verification"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnBack" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/otpImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/otp_img"
+        android:layout_marginTop="@dimen/_27sdp"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/verificationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A verification code has been sent to"
+        app:layout_constraintTop_toBottomOf="@id/otpImg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textColor="#80000000"
+        android:fontFamily="@font/poppins_regular"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/emailTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="farhan713@gmail.com"
+        app:layout_constraintTop_toBottomOf="@id/verificationTxt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#12110D"
+        android:layout_marginTop="@dimen/_7sdp"
+        app:fontFamily="@font/poppins_semi_bold"
+        android:textSize="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_regular"
+        />
+
+
+    <com.chaos.view.PinView
+        android:id="@+id/pinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:inputType="number"
+        app:itemCount="6"
+        app:itemWidth="45dp"
+        app:itemHeight="45dp"
+        app:itemSpacing="10dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textSize="20sp"
+        app:lineWidth="1dp"
+        app:lineColor="#875C3A"
+        app:itemRadius="@dimen/_10sdp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:cursorVisible="true"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/emailTv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:enabled="true" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/pinView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Resend OTP in 90 Sec"
+        android:layout_marginTop="@dimen/_10sdp"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnVerify"
+        style="@style/button"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        app:layout_constraintTop_toBottomOf="@id/timer"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Verify"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
