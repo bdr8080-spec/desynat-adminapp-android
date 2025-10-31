@@ -18,6 +18,66 @@ class MainRepository @Inject constructor(
 ) : BaseRepository(context) {
 
 
+    val loginLiveData = SingleLiveEvent<LoginResponse>()
+    suspend fun login(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.login(map)
+            },
+            responseLiveData = loginLiveData
+        )
+    }
+
+    val otpVerifyLiveData = SingleLiveEvent<LoginResponse>()
+    suspend fun otpVerification(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.otpVerification(map)
+            },
+            responseLiveData = otpVerifyLiveData
+        )
+    }
+
+    val resendOtpLiveData = SingleLiveEvent<LoginResponse>()
+    suspend fun resendOtp(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.resendOtp(map)
+            },
+            responseLiveData = resendOtpLiveData
+        )
+    }
+
+    val forgotPasswordLiveData = SingleLiveEvent<LoginResponse>()
+    suspend fun forgotPassword(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.forgotPassword(map)
+            },
+            responseLiveData = forgotPasswordLiveData
+        )
+    }
+
+    val createPasswordLiveData = SingleLiveEvent<LoginResponse>()
+    suspend fun createPassword(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.createPassword(map)
+            },
+            responseLiveData = createPasswordLiveData
+        )
+    }
+
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

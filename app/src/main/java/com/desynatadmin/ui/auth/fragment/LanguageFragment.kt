@@ -69,8 +69,12 @@ class LanguageFragment : BaseFragment() {
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
+                    findNavController().navigate(R.id.action_language_to_signinFragment)
                 }
             }
+
+
+
         }
     }
 
