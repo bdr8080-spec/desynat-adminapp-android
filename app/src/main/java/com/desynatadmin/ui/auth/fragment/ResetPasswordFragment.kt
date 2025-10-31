@@ -21,7 +21,7 @@ class ResetPasswordFragment : BaseFragment() {
     private var binding: FragmentResetPasswordBinding? = null
     private val viewModel: AuthViewModel by viewModels()
     var isObserver = false
-    var userId = ""
+    var adminId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +50,7 @@ class ResetPasswordFragment : BaseFragment() {
     }
 
     override fun initControl() {
-        userId = arguments?.getString("userId").toString()
+        adminId = arguments?.getString("adminId").toString()
 
         binding?.apply {
 
@@ -61,7 +61,7 @@ class ResetPasswordFragment : BaseFragment() {
             btnDone.setOnClickListener {
                 if (validation()) {
                     val map = HashMap<String,Any>()
-                    map["id"] = userId
+                    map["id"] = adminId
                     map["password"] = binding?.etPassword?.text.toString().trim()
                     map["confirm_password"] = binding?.etConfirmPassword?.text.toString().trim()
                     viewModel.createPassword(map)

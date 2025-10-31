@@ -92,7 +92,7 @@ class SignInFragment : BaseFragment() {
                 response?.let {
                     showToast(response.message)
                     SharedPreference.get(requireActivity()).accessToken = response.data.accessToken
-                    SharedPreference.get(requireActivity()).saveUser(response.data)
+                 //   SharedPreference.get(requireActivity()).saveUser(response.data)
                     requireActivity().startActivity(
                         Intent(requireActivity(),
                             HomeActivity::class.java)

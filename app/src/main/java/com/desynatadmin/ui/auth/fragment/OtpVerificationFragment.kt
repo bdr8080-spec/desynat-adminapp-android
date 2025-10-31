@@ -24,7 +24,7 @@ class OtpVerificationFragment : BaseFragment() {
     var countryCode = ""
     var email = ""
     var from = ""
-    var userId = ""
+    var adminId = ""
     lateinit var timer: CountDownTimer
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +44,7 @@ class OtpVerificationFragment : BaseFragment() {
     override fun initView() {
         startTimer()
         email = arguments?.getString("email").toString()
-        userId = arguments?.getString("userId").toString()
+        adminId = arguments?.getString("adminId").toString()
 
         binding?.apply {
             toolbar.tvToolbar.text = "Otp Verification"
@@ -83,7 +83,7 @@ class OtpVerificationFragment : BaseFragment() {
 
     private fun verifyOtp(){
         val map = HashMap<String,Any>()
-        map["user_id"] = userId
+        map["admin_id"] = adminId
         map["otp"] = binding?.pinView?.text?.trim().toString()
         viewModel.otpVerification(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
@@ -92,12 +92,7 @@ class OtpVerificationFragment : BaseFragment() {
 
     private fun resendOtp(){
         val map = HashMap<String,Any>()
-        map["email_mobile"] = if (email!=""&&email!="null"){
-            email
-        }
-        else{
-            "${countryCode} ${mobileNumber}"
-        }
+        map["email"] = email
         viewModel.otpVerification(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -118,7 +113,7 @@ class OtpVerificationFragment : BaseFragment() {
                 response?.let {
                     showToast(response.message)
                     val bundle = Bundle().apply {
-                        putString("userId", response.data.id)
+                        putString("adminId", adminId)
                     }
                     findNavController().navigate(R.id.action_otpVerificationFragment_to_resetPasswordFragment,bundle)
 

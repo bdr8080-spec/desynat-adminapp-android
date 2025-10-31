@@ -1,21 +1,140 @@
 package com.desynatadmin.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.desynatadmin.R
+import com.desynatadmin.adapter.BottomNavAdapter
+import com.desynatadmin.base.BaseActivity
+import com.desynatadmin.databinding.ActivityHomeBinding
+import com.desynatadmin.utils.CommonMethod
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class HomeActivity : BaseActivity() {
+    private var binding: ActivityHomeBinding? =null
+    private lateinit var controller: NavController
+    var isOpenDrawer = false
+    var bottonNavItemList = ArrayList<BottomNavItem>()
+    private var bottomAdapter : BottomNavAdapter? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_home)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        initView()
+        initControl()
+        observer()
+    }
+
+    override fun initView() {
+
+        CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        controller = navHostFragment.navController
+        val navGraph = controller.navInflater.inflate(R.navigation.home_navigation_graph)
+        controller.graph = navGraph
+
+        bottonNavItemList.clear()
+        bottonNavItemList.add(BottomNavItem("Home",R.drawable.ic_home,R.drawable.ic_selected_home))
+        bottonNavItemList.add(BottomNavItem("Products",R.drawable.ic_product,R.drawable.ic_product_selected))
+        bottonNavItemList.add(BottomNavItem("Streaming",R.drawable.ic_streaming,R.drawable.ic_streaming))
+        bottonNavItemList.add(BottomNavItem("Plans",R.drawable.ic_plan,R.drawable.ic_plan_selected))
+        bottonNavItemList.add(BottomNavItem("Payments",R.drawable.ic_payment,R.drawable.ic_payment_selected))
+
+        setBottomAdapter()
+
+        val bottomNavDestinations = setOf(
+            R.id.home,
+           /* R.id.catalog,
+            R.id.myBag,
+            R.id.profile,*/
+        )
+
+
+        controller.addOnDestinationChangedListener { _, destination, _ ->
+
+            if (destination.id in bottomNavDestinations) {
+                binding?.rvBottomNav?.isVisible = true
+                binding?.viewBackground?.isVisible = true
+            } else {
+                binding?.rvBottomNav?.isVisible = false
+                binding?.viewBackground?.isVisible = false
+            }
+
+            when (destination.id) {
+                R.id.home -> {
+                    bottomAdapter?.setSelectedItem(0)
+                }
+              /*  R.id.catalog -> {
+                    bottomAdapter?.setSelectedItem(1)
+                }
+                R.id.myBag -> {
+                    bottomAdapter?.setSelectedItem(3)
+                }
+                R.id.profile -> {
+                    bottomAdapter?.setSelectedItem(4)
+                }*/
+            }
         }
+
+    }
+
+    override fun initControl() {
+    }
+
+    override fun observer() {
+    }
+
+    fun setBottomAdapter(){
+        bottomAdapter = BottomNavAdapter(this,bottonNavItemList, object :BottomNavAdapter.BottomNavItemClick{
+            override fun onBottomNavItemClick(position: Int) {
+                when(position) {
+                    0 -> controller.navigate(R.id.home)
+                   // 1 -> controller.navigate(R.id.catalog)
+                    //2 -> controller.navigate(R.id.catalog)
+                   // 3 -> controller.navigate(R.id.myBag)
+                   // 4 -> controller.navigate(R.id.profile)
+                }
+
+            }
+
+
+        })
+        binding?.rvBottomNav?.adapter = bottomAdapter
+
+    }
+
+    fun openDrawer(){
+        isOpenDrawer = true
+        binding?.drawerLayout?.openDrawer(GravityCompat.START)
+    }
+
+
+override fun onBackPressed() {
+    Log.e("ehdf", "onBackPressed: $isOpenDrawer   ${binding?.drawerLayout?.isDrawerOpen(GravityCompat.START)}")
+    if (isOpenDrawer == true&&binding?.drawerLayout?.isDrawerOpen(GravityCompat.START)==false){
+        binding?.drawerLayout?.openDrawer(GravityCompat.START,false)
+        super.onBackPressed()
+    }
+    else if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
+        isOpenDrawer = false
+        binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+    } else {
+        super.onBackPressed()
     }
 }
+
+}
+
+data class BottomNavItem(
+    var name : String,
+    var image: Int,
+    var selectedImage: Int,
+)

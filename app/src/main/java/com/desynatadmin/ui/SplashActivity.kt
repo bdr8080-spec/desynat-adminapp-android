@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.databinding.ActivitySplashBinding
 import com.desynatadmin.ui.auth.AuthActivity
+import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.utils.SharedPreference
 
 class SplashActivity : BaseActivity() {
@@ -26,7 +27,8 @@ class SplashActivity : BaseActivity() {
     override fun initView() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (SharedPreference.get(this).accessToken.isNotEmpty()) {
-
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
             }
             else{
                 startActivity(Intent(this, AuthActivity::class.java))

@@ -73,7 +73,7 @@ class ForgetPasswordFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     val bundle = Bundle().apply {
-                        putString("userId", response.data.id)
+                        putString("adminId", response.data.id)
                         putString("email", binding?.etEmail?.text.toString().trim())
                     }
                     findNavController().navigate(R.id.action_forgetPasswordFragment_to_otpVerificationFragment,bundle)

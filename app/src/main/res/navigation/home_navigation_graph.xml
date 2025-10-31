@@ -2,6 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/home"
     android:id="@+id/home_navigation_graph">
 
+    <fragment
+        android:id="@+id/home"
+        android:name="com.desynatadmin.ui.home.fragment.HomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/fragment_home"/>
 </navigation>
