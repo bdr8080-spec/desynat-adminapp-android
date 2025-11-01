@@ -45,16 +45,24 @@ class ForgetPasswordFragment : BaseFragment() {
     }
 
     override fun initControl() {
-        binding?.btnContinue?.setOnClickListener {
-            if (validation()) {
-                val map = HashMap<String, Any>()
-                map["email"] = binding?.etEmail?.text.toString().trim()
 
-                viewModel.forgotPassword(map)
-                ProgressDialogUtils.getInstance().showProgress(requireActivity())
-                isObserver = true
+        binding?.apply {
+
+            toolbar.tvToolbar.setOnClickListener {
+                findNavController().popBackStack()
             }
 
+            btnContinue.setOnClickListener {
+                if (validation()) {
+                    val map = HashMap<String, Any>()
+                    map["email"] = binding?.etEmail?.text.toString().trim()
+
+                    viewModel.forgotPassword(map)
+                    ProgressDialogUtils.getInstance().showProgress(requireActivity())
+                    isObserver = true
+                }
+
+            }
         }
     }
 

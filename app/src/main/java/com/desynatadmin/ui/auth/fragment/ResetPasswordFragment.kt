@@ -62,8 +62,8 @@ class ResetPasswordFragment : BaseFragment() {
                 if (validation()) {
                     val map = HashMap<String,Any>()
                     map["id"] = adminId
-                    map["password"] = binding?.etPassword?.text.toString().trim()
-                    map["confirm_password"] = binding?.etConfirmPassword?.text.toString().trim()
+                    map["password"] = etPassword.text.toString().trim()
+                    map["confirm_password"] = etConfirmPassword.text.toString().trim()
                     viewModel.createPassword(map)
                     ProgressDialogUtils.getInstance().showProgress(requireActivity())
                     isObserver = true

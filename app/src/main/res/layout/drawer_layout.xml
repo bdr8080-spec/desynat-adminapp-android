@@ -783,7 +783,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
                 android:paddingVertical="@dimen/_6sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -802,6 +801,28 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivGoSupportChat"
                     style="@style/drawer_arrow" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/button_stroke">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/brown"
+                    android:fontFamily="@font/poppins_medium"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:drawableStart="@drawable/ic_logout" />
 
             </RelativeLayout>
 

@@ -10,4 +10,90 @@
         android:name="com.desynatadmin.ui.home.fragment.HomeFragment"
         android:label="Home Fragment"
         tools:layout="@layout/fragment_home"/>
+
+    <fragment
+        android:id="@+id/category"
+        android:name="com.desynatadmin.ui.home.categorySubCategoryManagement.CategoryFragment"
+        android:label="Category Fragment"
+        tools:layout="@layout/fragment_category">
+
+        <action
+            android:id="@+id/action_category_to_subcategoryFragment"
+            app:destination="@id/subcategory" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/subcategory"
+        android:name="com.desynatadmin.ui.home.categorySubCategoryManagement.SubCategoryFragment"
+        android:label="Sub Category Fragment"
+        tools:layout="@layout/fragment_sub_category">
+
+        <action
+            android:id="@+id/action_subcategory_to_subCategoryDetailFragment"
+            app:destination="@id/subCategoryDetail" />
+
+        <action
+            android:id="@+id/action_subcategory_to_addSubCategoryFragment"
+            app:destination="@id/addSubCategory" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/subCategoryDetail"
+        android:name="com.desynatadmin.ui.home.categorySubCategoryManagement.SubCategoryDetailFragment"
+        android:label="Sub Category Fragment"
+        tools:layout="@layout/fragment_sub_category_detail">
+
+        <action
+            android:id="@+id/action_subCategoryDetail_to_addSubCategoryFragment"
+            app:destination="@id/addSubCategory" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addSubCategory"
+        android:name="com.desynatadmin.ui.home.categorySubCategoryManagement.AddSubCategoryFragment"
+        android:label="Add Sub Category Fragment"
+        tools:layout="@layout/fragment_add_sub_category"/>
+
+
+
+
+
+
+    <fragment
+        android:id="@+id/brand"
+        android:name="com.desynatadmin.ui.home.brandManagement.BrandManagementFragment"
+        android:label="Brand Fragment"
+        tools:layout="@layout/fragment_brand_management">
+
+        <action
+            android:id="@+id/action_brandFragment_to_brandDetailFragment"
+            app:destination="@id/brandDetail" />
+
+        <action
+            android:id="@+id/action_brandFragment_to_addBrandFragment"
+            app:destination="@id/addBrand" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/brandDetail"
+        android:name="com.desynatadmin.ui.home.brandManagement.BrandDetailFragment"
+        android:label="Brand Detail Fragment"
+        tools:layout="@layout/fragment_brand_detail">
+
+        <action
+            android:id="@+id/action_brandDetail_to_addBrandFragment"
+            app:destination="@id/addBrand" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addBrand"
+        android:name="com.desynatadmin.ui.home.brandManagement.AddBrandFragment"
+        android:label="Add Brand Fragment"
+        tools:layout="@layout/fragment_add_brand"/>
+
 </navigation>
