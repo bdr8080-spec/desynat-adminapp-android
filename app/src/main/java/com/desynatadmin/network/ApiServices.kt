@@ -65,7 +65,7 @@ interface ApiServices {
         @Query ("category_id") categoryId:String,
         @Query("search") search : String?=null,
         @Query("page") page: Int,
-        @Query("limit") limit: Int? = 6,
+        @Query("limit") limit: Int? = 10,
     ): Response<GetSubCategoryResponse>
 
     @GET(Constants.BRAND)

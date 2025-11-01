@@ -48,6 +48,8 @@ class BrandManagementFragment : BaseFragment() {
     private var pagination=false
     private var searchBrand: Job? = null
     private var lastQuery: String? = null
+    private val itemsPerPage = 10
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -127,7 +129,7 @@ class BrandManagementFragment : BaseFragment() {
             }
 */
 
-            binding?.rvBrand?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+          /*  binding?.rvBrand?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -143,7 +145,7 @@ class BrandManagementFragment : BaseFragment() {
                             binding?.progressBar?.isVisible = true
                         }
                     }}
-            })
+            })*/
 
 
             swipeRefreshLayout.setOnRefreshListener {
@@ -165,6 +167,24 @@ class BrandManagementFragment : BaseFragment() {
 
             ivAddBrand.setOnClickListener {
                 findNavController().navigate(R.id.action_brandFragment_to_addBrandFragment)
+            }
+
+            ivNextArrow.setOnClickListener {
+                if (!isObserver && currentPage < lastPage&&totalItem!=0) {
+                    currentPage += 1
+                    getAllBrand(false)
+                    binding?.progressBar?.isVisible = true
+                }
+
+
+            }
+
+            ivBackArrow.setOnClickListener {
+                if (currentPage > 1) {
+                    currentPage--
+                    getAllBrand(false)
+                    binding?.progressBar?.isVisible = true
+                }
             }
         }
     }
@@ -206,6 +226,8 @@ class BrandManagementFragment : BaseFragment() {
                 if (!pagination){
                     brandList.clear()
                 }
+                updatePage()
+
                 brandList.addAll(response.data.data)
                 checkData()
 
@@ -235,6 +257,17 @@ class BrandManagementFragment : BaseFragment() {
 
     private fun checkData(){
         binding?.tvNoDataFound?.isVisible = brandList.isEmpty()
+    }
+
+    private fun updatePage() {
+        val start = (currentPage - 1) * itemsPerPage
+        val end = minOf(start + itemsPerPage, brandList.size)
+
+        if (start < end) {
+            val pageData = brandList.subList(start, end)
+            brandAdapter?.setData(ArrayList(pageData))
+        }
+
     }
 
 }

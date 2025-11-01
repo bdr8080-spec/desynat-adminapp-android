@@ -47,7 +47,7 @@ class SubCategoryFragment : BaseFragment() {
     private var searchBrand: Job? = null
     private var lastQuery: String? = null
     private var categoryData: GetCategoryResponse.Data?=null
-    private val itemsPerPage = 6
+    private val itemsPerPage = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -119,7 +119,7 @@ class SubCategoryFragment : BaseFragment() {
                 getAllSubCategory(false)
             }
 
-            nestedScrollView.setOnScrollChangeListener { nestedScrollView: NestedScrollView, _, scrollY, _, oldScrollY ->
+           /* nestedScrollView.setOnScrollChangeListener { nestedScrollView: NestedScrollView, _, scrollY, _, oldScrollY ->
                 val lastChild = nestedScrollView.getChildAt(nestedScrollView.childCount - 1)
 
                 if (lastChild != null) {
@@ -136,7 +136,7 @@ class SubCategoryFragment : BaseFragment() {
                         }
                     }
                 }
-            }
+            }*/
 
         }
         getAllSubCategory()
@@ -163,17 +163,20 @@ class SubCategoryFragment : BaseFragment() {
             }
 
             ivNextArrow.setOnClickListener {
-                val totalPages = (subCategoryList.size + itemsPerPage - 1) / itemsPerPage
-                if (currentPage < totalPages) {
-                    currentPage++
-                    updatePage()
-                }
+                    if (!isObserver && currentPage < lastPage&&totalItem!=0) {
+                        currentPage += 1
+                        getAllSubCategory(false)
+                        binding?.progressBar?.isVisible = true
+                    }
+
+
             }
 
             ivBackArrow.setOnClickListener {
                 if (currentPage > 1) {
                     currentPage--
-                    updatePage()
+                    getAllSubCategory(false)
+                    binding?.progressBar?.isVisible = true
                 }
             }
         }
@@ -214,8 +217,9 @@ class SubCategoryFragment : BaseFragment() {
                 val oldSize = subCategoryList.size
                 if (!pagination){
                     subCategoryList.clear()
-                    updatePage()
                 }
+                subCategoryList.clear()
+                updatePage()
                 subCategoryList.addAll(response.data.data)
                 checkData()
 
@@ -248,10 +252,6 @@ class SubCategoryFragment : BaseFragment() {
             subCategoryAdapter?.setData(ArrayList(pageData))
         }
 
-        // Update count text like "02 of 07"
-        val currentStr = "%02d".format(currentPage)
-        val lastStr = "%02d".format((subCategoryList.size + itemsPerPage - 1) / itemsPerPage)
-        binding?.tvCount?.text = "$currentStr of $lastStr"
     }
 
 }

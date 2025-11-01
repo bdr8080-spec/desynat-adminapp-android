@@ -7,6 +7,7 @@ import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemBrandBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 
 class BrandAdapter(var context:Context, var brandList: ArrayList<GetBrandResponse.Data.Data>, var brandClick:BrandClick) : RecyclerView.Adapter<BrandAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBrandBinding) :
@@ -43,6 +44,11 @@ class BrandAdapter(var context:Context, var brandList: ArrayList<GetBrandRespons
             brandClick.onBrandClick(position)
 
         }
+    }
+
+    fun setData(newList: ArrayList<GetBrandResponse.Data.Data>) {
+        brandList = newList
+        notifyDataSetChanged()
     }
 
 }
