@@ -120,6 +120,23 @@ object CommonMethod {
         })
     }
 
+    fun removeSpace(editText: EditText){
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (start == 0 && count > 0 && charSequence?.startsWith(" ") == true) {
+                    editText.setText(charSequence.toString().trim())
+                    editText.setSelection(editText.text.length)
+                }
+            }
+            override fun afterTextChanged(editable: Editable?) {
+
+            }
+        })
+    }
+
     fun spannableText(
         context: Context,
         fullString: String,

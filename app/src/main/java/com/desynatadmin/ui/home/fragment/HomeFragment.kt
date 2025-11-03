@@ -8,13 +8,17 @@ import android.view.ViewGroup
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.databinding.FragmentHomeBinding
+import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notify
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
     private var binding: FragmentHomeBinding?=null
     private var isObserver = true
+    var user : LoginResponse.Data?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,8 +35,9 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
+        user = SharedPreference.get(requireActivity()).getUser()
        binding?.apply {
-
+           tvName.text = "Hi ${user?.fullName}"
        }
     }
 

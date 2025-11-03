@@ -22,8 +22,10 @@ import com.desynatadmin.data.view_model.AuthViewModel
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAddBrandBinding
 import com.desynatadmin.databinding.FragmentBrandManagementBinding
+import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -67,6 +69,8 @@ class BrandManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+            ProgressDialogUtils.getInstance().hideProgress()
+            CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Brand Management"
 
             brandList.clear()
@@ -162,7 +166,7 @@ class BrandManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                findNavController().popBackStack()
+                (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 
             ivAddBrand.setOnClickListener {
@@ -221,6 +225,21 @@ class BrandManagementFragment : BaseFragment() {
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
                 binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
 
                 val oldSize = brandList.size
                 if (!pagination){

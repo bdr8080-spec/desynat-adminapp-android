@@ -3,26 +3,22 @@ package com.desynatadmin.ui.home.categorySubCategoryManagement
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
-import com.desynatadmin.adapter.CategoryAdapter
 import com.desynatadmin.adapter.SubCategoryAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.FragmentAddBrandBinding
 import com.desynatadmin.databinding.FragmentSubCategoryBinding
-import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -65,12 +61,13 @@ class SubCategoryFragment : BaseFragment() {
     }
 
     override fun initView() {
-
+        ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("categoryData")
         if (!itemJson.isNullOrEmpty()) {
             categoryData = Gson().fromJson(itemJson, GetCategoryResponse.Data::class.java)
         }
         binding?.apply {
+            CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Sub-Category"
 
             swipeRefreshLayout.setColorSchemeColors(
@@ -213,6 +210,20 @@ class SubCategoryFragment : BaseFragment() {
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
                 binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
 
                 val oldSize = subCategoryList.size
                 if (!pagination){

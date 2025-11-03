@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GetBrandResponse(
     @SerializedName("data")
-    val `data`: Data,
+    val data: Data,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
@@ -15,7 +15,7 @@ data class GetBrandResponse(
         @SerializedName("current_page")
         val currentPage: Int,
         @SerializedName("data")
-        val `data`: List<Data>,
+        val data: List<Data>,
         @SerializedName("first_page_url")
         val firstPageUrl: String,
         @SerializedName("from")

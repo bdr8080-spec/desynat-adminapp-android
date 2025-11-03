@@ -3,8 +3,11 @@ package com.desynatadmin.network
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.utils.Constants
 import okhttp3.MultipartBody
@@ -89,7 +92,7 @@ interface ApiServices {
     @POST(Constants.UPDATE_BRAND_STATUS)
     suspend fun updateBrandStatus(
         @Body body: HashMap<String,Any>
-    ): Response<CommonResponse>
+    ): Response<UpdateBrandStatusResponse>
 
     @POST(Constants.DELETE_BRAND)
     suspend fun deleteBrand(
@@ -109,7 +112,12 @@ interface ApiServices {
     @POST(Constants.UPDATE_SUB_CATEGORY_STATUS)
     suspend fun updateSubCategoryStatus(
         @Body body: HashMap<String,Any>
-    ): Response<CommonResponse>
+    ): Response<UpdateSubCategoryResponse>
+
+    @POST(Constants.UPDATE_CATEGORY_STATUS)
+    suspend fun updateCategoryStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateCategoryResponse>
 
     @POST(Constants.DELETE_SUB_CATEGORY)
     suspend fun deleteSubCategory(

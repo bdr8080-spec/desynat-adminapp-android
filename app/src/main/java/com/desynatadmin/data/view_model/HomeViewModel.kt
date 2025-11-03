@@ -7,8 +7,11 @@ import com.desynatadmin.data.repo.MainRepository
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -86,7 +89,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateBrandStatusResult: LiveData<CommonResponse>
+    val updateBrandStatusResult: LiveData<UpdateBrandStatusResponse>
         get() = repository.updateBrandStatusLiveData
 
     fun updateBrandStatus(map: HashMap<String, Any>) {
@@ -141,12 +144,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateSubCategoryStatusResult: LiveData<CommonResponse>
+    val updateSubCategoryStatusResult: LiveData<UpdateSubCategoryResponse>
         get() = repository.updateSubCategoryStatusLiveData
 
     fun updateSubCategoryStatus(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateSubCategoryStatus(map)
+        }
+    }
+
+  val updateCategoryStatusResult: LiveData<UpdateCategoryResponse>
+        get() = repository.updateCategoryStatusLiveData
+
+    fun updateCategoryStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateCategoryStatus(map)
         }
     }
 

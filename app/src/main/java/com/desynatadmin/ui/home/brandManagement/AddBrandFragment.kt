@@ -67,9 +67,13 @@ class AddBrandFragment : BaseFragment() {
     override fun initView() {
         val itemJson = arguments?.getString("brandData")
         binding?.apply {
+
+            CommonMethod.removeSpace(etArabicBrandName)
+            CommonMethod.removeSpace(etEnglishBrandName)
             if (!itemJson.isNullOrEmpty()) {
                 brandData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)
                 toolbar.tvToolbar.text = "Edit Brand"
+                btnSubmit.text = "Update"
                 setData()
 
             }

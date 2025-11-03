@@ -47,7 +47,7 @@ class OtpVerificationFragment : BaseFragment() {
         adminId = arguments?.getString("adminId").toString()
 
         binding?.apply {
-            toolbar.tvToolbar.text = "Otp Verification"
+            toolbar.tvToolbar.text = "OTP Verification"
             tvEmail.text = email
         }
     }
@@ -93,7 +93,7 @@ class OtpVerificationFragment : BaseFragment() {
     private fun resendOtp(){
         val map = HashMap<String,Any>()
         map["email"] = email
-        viewModel.otpVerification(map)
+        viewModel.resendOtp(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -125,6 +125,7 @@ class OtpVerificationFragment : BaseFragment() {
         viewModel.resendOtpResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                showToast("OTP sent to your email address successfully")
                 response?.let {
                     startTimer()
 

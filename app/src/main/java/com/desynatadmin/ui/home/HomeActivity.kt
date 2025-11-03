@@ -104,16 +104,23 @@ class HomeActivity : BaseActivity() {
                     enableDrawer(false)
                 }
             }
+
+
         }
 
+        binding?.apply {
+            drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
+            setUpDrawerContent()
+        }
+
+        setDrawerData(SharedPreference.get(this).getUser())
 
     }
 
     override fun initControl() {
         binding?.apply {
 
-            drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
-            setUpDrawerContent()
+
         }
     }
 
@@ -185,6 +192,7 @@ override fun onBackPressed() {
 
     fun setDrawerData(user: LoginResponse.Data?) {
         drawerBinding.tvName.text = user?.fullName
+        drawerBinding.tvEmail.text = user?.email
         /*drawerBinding.ivProfileImage.load(user?.profileImage) {
             crossfade(true)
             placeholder(R.drawable.placeholder)

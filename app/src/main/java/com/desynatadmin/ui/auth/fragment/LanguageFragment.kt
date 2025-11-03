@@ -35,6 +35,17 @@ class LanguageFragment : BaseFragment() {
 
     override fun initView() {
         requestPermissions()
+        binding?.apply {
+            Constants.language = SharedPreference.get(requireActivity()).language
+            if(Constants.language=="en"){
+                cbEnglish.isChecked = true
+                cbArabic.isChecked = false
+            }
+            else if(Constants.language=="ar"){
+                cbEnglish.isChecked = false
+                cbArabic.isChecked = true
+            }
+        }
     }
 
     override fun initControl() {

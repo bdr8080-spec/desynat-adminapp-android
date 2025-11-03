@@ -106,7 +106,7 @@ class ResetPasswordFragment : BaseFragment() {
         val confirmPassword = binding?.etConfirmPassword?.text.toString().trim()
 
         if (password.isEmpty()) {
-            showToast("Please enter password")
+            showToast("Please Enter New Password")
             return false
         }
         else if (!CommonMethod.isValidPassword(password)) {
@@ -114,11 +114,11 @@ class ResetPasswordFragment : BaseFragment() {
             return false
         }
         else if (confirmPassword.isEmpty() ) {
-            showToast("Please enter confirm password")
+            showToast("Please Re-Enter Confirm Password")
             return false
         }
         else if (password!=confirmPassword) {
-            showToast("Password and confirm password didn't match")
+            showToast("Password and Confirm Password didn't match")
             return false
         }
         return true

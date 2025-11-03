@@ -70,9 +70,13 @@ class AddSubCategoryFragment : BaseFragment() {
         val itemJson = arguments?.getString("subCategoryData")
         categoryId = arguments?.getString("categoryId").toString()
         binding?.apply {
+
+            CommonMethod.removeSpace(etArabicSubCategoryName)
+            CommonMethod.removeSpace(etEnglishSubCategoryName)
             if (!itemJson.isNullOrEmpty()) {
                 subCategoryData = Gson().fromJson(itemJson, GetSubCategoryResponse.Data.Data::class.java)
                 toolbar.tvToolbar.text = "Edit Sub-Category"
+                btnSubmit.text = "Update"
                 setData()
 
             }

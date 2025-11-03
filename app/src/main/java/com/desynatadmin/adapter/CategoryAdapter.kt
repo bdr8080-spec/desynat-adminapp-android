@@ -1,6 +1,8 @@
 package com.desynatadmin.adapter
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -13,7 +15,7 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
         RecyclerView.ViewHolder(binding.root)
 
     interface CategoryClick{
-        fun onCategoryClick(position: Int)
+        fun onCategoryClick(position: Int,type:Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,10 +40,30 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
+
+            relCategory.backgroundTintList = ColorStateList.valueOf(Color.parseColor(categoryData.colorCode))
+
+            if(categoryData.status==1){
+                tvSwitch.text = "Active"
+                tvSwitch.setTextColor(Color.parseColor("#1A900D"))
+                tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
+            }
+            else{
+                tvSwitch.text = "Inactive"
+                tvSwitch.setTextColor(Color.parseColor("#666666"))
+                tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
+
+            }
+
+            tvSwitch.setOnClickListener {
+                categoryClick.onCategoryClick(position,1)
+
+            }
+
         }
 
         holder.itemView.setOnClickListener {
-            categoryClick.onCategoryClick(position)
+            categoryClick.onCategoryClick(position,0)
 
         }
     }

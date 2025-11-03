@@ -3,7 +3,7 @@
     <string name="map_key">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
-    <string name="resend_otp">Resend Otp</string>
+    <string name="resend_otp">Resend OTP</string>
     <string name="password_reset_successfully">Password Reset successfully !</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -43,10 +43,12 @@ class BrandDetailFragment : BaseFragment() {
     }
 
     override fun initView() {
+        ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("brandData")
         if (!itemJson.isNullOrEmpty()) {
             brandData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)
             setData()
+            updateStatus()
         }
         binding?.apply {
             toolbar.tvToolbar.text = "Brand Management Detail"
@@ -90,19 +92,15 @@ class BrandDetailFragment : BaseFragment() {
         viewModel.updateBrandStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
-
-                if(brandData?.status==1){
-                    binding?.tvSwitch?.text = "Active"
-                    binding?.tvSwitch?.setTextColor(Color.parseColor("#1A900D"))
-                    binding?.tvSwitch?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
+                brandData = response.data
+                if (response.data.status==1){
+                    showToast("Brand Activated Successfully")
                 }
                 else{
-                    binding?.tvSwitch?.text = "Inactive"
-                    binding?.tvSwitch?.setTextColor(Color.parseColor("#666666"))
-                    binding?.tvSwitch?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
+                    showToast("Brand Deactivated Successfully")
 
                 }
+                updateStatus()
                 isObserver = false
 
             }
@@ -111,7 +109,7 @@ class BrandDetailFragment : BaseFragment() {
         viewModel.deleteBrandResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Item Deleted Permanently!"){
+                CommonMethod.showSuccessDialog(requireContext(), "Brand delete successfully"){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -133,6 +131,23 @@ class BrandDetailFragment : BaseFragment() {
         viewModel.updateBrandStatus(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
+    }
+
+    private fun updateStatus(){
+        binding?.apply {
+            if(brandData?.status==1){
+                tvSwitch.text = "Active"
+                tvSwitch.setTextColor(Color.parseColor("#1A900D"))
+                tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
+            }
+            else{
+                tvSwitch.text = "Inactive"
+                tvSwitch.setTextColor(Color.parseColor("#666666"))
+                tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
+
+            }
+
+        }
     }
 
     private fun setData(){

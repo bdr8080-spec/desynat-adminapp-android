@@ -92,7 +92,7 @@ class SignInFragment : BaseFragment() {
                 response?.let {
                     showToast(response.message)
                     SharedPreference.get(requireActivity()).accessToken = response.data.accessToken
-                 //   SharedPreference.get(requireActivity()).saveUser(response.data)
+                    SharedPreference.get(requireActivity()).saveUser(response.data)
                     requireActivity().startActivity(
                         Intent(requireActivity(),
                             HomeActivity::class.java)
@@ -106,11 +106,15 @@ class SignInFragment : BaseFragment() {
 
     private fun validation():Boolean{
         if (binding?.etEmail?.text?.toString()?.isBlank() == true ) {
-            showToast("Please enter email")
+            showToast("Please Enter Email Address")
             return false
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(binding?.etEmail?.text.toString()).matches()) {
-            showToast("Please enter valid email")
+            showToast("Please Enter Valid Email Address")
+            return false
+        }
+        else if (binding?.etPassword?.text?.toString()?.isBlank() == true ) {
+            showToast("Please Enter Password")
             return false
         }
         return true

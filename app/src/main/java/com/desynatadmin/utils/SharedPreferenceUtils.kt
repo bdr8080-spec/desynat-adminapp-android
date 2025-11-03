@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.desynatadmin.R
+import com.desynatadmin.ui.auth.LoginResponse
+import com.google.gson.Gson
 
 class SharedPreference(context: Context) {
     val preference: SharedPreferences =
@@ -52,7 +54,7 @@ class SharedPreference(context: Context) {
     }
 
     var language: String
-        get() = preference["language", ""]!!
+        get() = preference["language", "en"]!!
         set(value) = preference.set("language", value)
 
     var accessToken: String
@@ -62,5 +64,23 @@ class SharedPreference(context: Context) {
     var deviceToken: String
         get() = preference["deviceToken", ""]!!
         set(value) = preference.set("deviceToken", value)
+
+    fun saveUser(user: LoginResponse.Data) {
+        val json = Gson().toJson(user)
+        preference.set("userData", json)
+    }
+
+    fun getUser(): LoginResponse.Data? {
+        val json = preference["userData", ""] ?: return null
+        return try {
+            Gson().fromJson(json, LoginResponse.Data::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun clearUser() {
+        preference.set("userData", "")
+    }
 
 }

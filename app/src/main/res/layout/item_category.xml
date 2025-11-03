@@ -14,6 +14,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_placeholder"
         android:background="#F5F5F5"
+        android:elevation="@dimen/_2sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,10 +24,22 @@
         android:id="@+id/relDetail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:elevation="@dimen/_1sdp"
+        android:background="@drawable/card_stroke_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <RelativeLayout
+        android:id="@+id/relCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_stroke_background"
+        android:backgroundTint="#F6E5E3"
+        android:layout_margin="0.5dp"
         android:paddingHorizontal="@dimen/_10sdp"
         android:paddingVertical="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:background="@drawable/card_stroke_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -55,5 +68,24 @@
 
     </RelativeLayout>
 
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSwitch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:text="Active"
+        android:textColor="#1A900D"
+        android:fontFamily="@font/poppins_regular"
+        android:drawablePadding="@dimen/_5sdp"
+        android:paddingTop="@dimen/_30sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:drawableEnd="@drawable/switch_on"
+        android:layout_marginTop="-25dp"
+        android:background="@drawable/card_stroke_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relDetail"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

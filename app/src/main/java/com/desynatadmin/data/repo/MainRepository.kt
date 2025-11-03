@@ -9,8 +9,11 @@ import com.desynatadmin.network.ApiServices
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.utils.toMultipartPart
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -212,7 +215,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
-    val updateBrandStatusLiveData = SingleLiveEvent<CommonResponse>()
+    val updateBrandStatusLiveData = SingleLiveEvent<UpdateBrandStatusResponse>()
     suspend fun updateBrandStatus(map: HashMap<String, Any>
     ) {
         handleApiCall(
@@ -223,7 +226,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val updateSubCategoryStatusLiveData = SingleLiveEvent<CommonResponse>()
+    val updateSubCategoryStatusLiveData = SingleLiveEvent<UpdateSubCategoryResponse>()
     suspend fun updateSubCategoryStatus(map: HashMap<String, Any>
     ) {
         handleApiCall(
@@ -231,6 +234,18 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
                 api.updateSubCategoryStatus(map)
             },
             responseLiveData = updateSubCategoryStatusLiveData
+        )
+
+    }
+
+    val updateCategoryStatusLiveData = SingleLiveEvent<UpdateCategoryResponse>()
+    suspend fun updateCategoryStatus(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateCategoryStatus(map)
+            },
+            responseLiveData = updateCategoryStatusLiveData
         )
 
     }

@@ -28,6 +28,7 @@ object Constants {
     const val UPDATE_SUB_CATEGORY = "/api/admin/update_subcategory"
     const val DELETE_SUB_CATEGORY = "/api/admin/delete_subcategory"
     const val UPDATE_SUB_CATEGORY_STATUS = "/api/admin/change_subcategory_status"
+    const val UPDATE_CATEGORY_STATUS = "/api/admin/change_category_status"
 
     const val BRAND = "/api/admin/get_brand"
     const val ADD_BRAND = "/api/admin/add_brand"

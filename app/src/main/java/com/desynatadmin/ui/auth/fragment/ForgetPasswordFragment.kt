@@ -80,11 +80,14 @@ class ForgetPasswordFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    val bundle = Bundle().apply {
-                        putString("adminId", response.data.id)
-                        putString("email", binding?.etEmail?.text.toString().trim())
+                    CommonMethod.showSuccessDialog(requireActivity(),"OTP sent to your email address successfully"){
+                        val bundle = Bundle().apply {
+                            putString("adminId", response.data.id)
+                            putString("email", binding?.etEmail?.text.toString().trim())
+                        }
+                        findNavController().navigate(R.id.action_forgetPasswordFragment_to_otpVerificationFragment,bundle)
+
                     }
-                    findNavController().navigate(R.id.action_forgetPasswordFragment_to_otpVerificationFragment,bundle)
 
                 }
                 isObserver = false
@@ -96,11 +99,11 @@ class ForgetPasswordFragment : BaseFragment() {
     private fun validation():Boolean{
         val email = binding?.etEmail?.text.toString().trim()
 if (email.isBlank()) {
-            showToast("Please enter email")
+            showToast("Please Enter Email Address")
             return false
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showToast("Please enter valid email")
+            showToast("Please Enter Valid Email Address")
             return false
         }
         return true
