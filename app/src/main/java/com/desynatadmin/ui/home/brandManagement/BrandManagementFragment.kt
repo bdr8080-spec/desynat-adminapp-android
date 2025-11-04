@@ -246,13 +246,18 @@ class BrandManagementFragment : BaseFragment() {
                     brandList.clear()
                 }
                 updatePage()
+                val newItems = response.data.data ?: emptyList()
 
-                brandList.addAll(response.data.data)
+                brandList.addAll(newItems)
                 checkData()
 
                 if (pagination){
 
-                    brandAdapter?.notifyItemRangeInserted(oldSize, response.data.data.size)
+                    response.data.data?.size?.let {
+                        brandAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
                 }
                 else{
                     brandAdapter?.notifyDataSetChanged()
@@ -281,10 +286,11 @@ class BrandManagementFragment : BaseFragment() {
     private fun updatePage() {
         val start = (currentPage - 1) * itemsPerPage
         val end = minOf(start + itemsPerPage, brandList.size)
-
-        if (start < end) {
-            val pageData = brandList.subList(start, end)
-            brandAdapter?.setData(ArrayList(pageData))
+        if (start>=0&&end>=0) {
+            if (start < end) {
+                val pageData = brandList.subList(start, end)
+                brandAdapter?.setData(ArrayList(pageData))
+            }
         }
 
     }

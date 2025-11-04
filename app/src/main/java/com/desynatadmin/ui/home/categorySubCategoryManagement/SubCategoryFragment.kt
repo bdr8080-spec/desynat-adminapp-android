@@ -231,12 +231,17 @@ class SubCategoryFragment : BaseFragment() {
                 }
                 subCategoryList.clear()
                 updatePage()
-                subCategoryList.addAll(response.data.data)
+                val newItems = response.data.data ?: emptyList()
+                subCategoryList.addAll(newItems)
                 checkData()
 
                 if (pagination){
 
-                    subCategoryAdapter?.notifyItemRangeInserted(oldSize, response.data.data.size)
+                    response.data.data?.size?.let {
+                        subCategoryAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
                 }
                 else{
                     subCategoryAdapter?.notifyDataSetChanged()
@@ -258,10 +263,13 @@ class SubCategoryFragment : BaseFragment() {
         val start = (currentPage - 1) * itemsPerPage
         val end = minOf(start + itemsPerPage, subCategoryList.size)
 
-        if (start < end) {
-            val pageData = subCategoryList.subList(start, end)
-            subCategoryAdapter?.setData(ArrayList(pageData))
+        if (start>=0&&end>=0) {
+            if (start < end) {
+                val pageData = subCategoryList.subList(start, end)
+                subCategoryAdapter?.setData(ArrayList(pageData))
+            }
         }
+
 
     }
 

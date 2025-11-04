@@ -8,6 +8,7 @@ import com.desynatadmin.R
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.databinding.ActivityAuthBinding
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,9 +28,22 @@ class AuthActivity : BaseActivity() {
     override fun initView() {
         CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
 
+      /*  val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        controller = navHostFragment.navController
+        controller.graph = controller.navInflater.inflate(R.navigation.auth_navigation_graph)*/
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         controller = navHostFragment.navController
-        controller.graph = controller.navInflater.inflate(R.navigation.auth_navigation_graph)
+
+        val navGraph = controller.navInflater.inflate(R.navigation.auth_navigation_graph)
+
+
+        navGraph.setStartDestination(
+            if (Constants.isLogout) R.id.signInFragment
+            else R.id.language
+        )
+
+        controller.graph = navGraph
     }
 
     override fun initControl() {

@@ -15,7 +15,7 @@ data class GetSubCategoryResponse(
         @SerializedName("current_page")
         val currentPage: Int,
         @SerializedName("data")
-        val `data`: List<Data>,
+        val `data`: List<Data>? = emptyList(),
         @SerializedName("first_page_url")
         val firstPageUrl: String,
         @SerializedName("from")

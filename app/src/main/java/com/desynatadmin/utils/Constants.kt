@@ -7,6 +7,7 @@ object Constants {
     var language=""
     const val ENGLISH = "en"
     const val ARABIC = "ar"
+    var isLogout = false
 
     var location=""
     var latitude=0.0

@@ -20,6 +20,7 @@ import com.desynatadmin.databinding.DrawerLayoutBinding
 import com.desynatadmin.ui.auth.AuthActivity
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -140,6 +141,7 @@ class HomeActivity : BaseActivity() {
                     response?.let {
                         ProgressDialogUtils.getInstance().hideProgress()
 
+                        Constants.isLogout = true
                         startActivity(Intent(this, AuthActivity::class.java))
                         SharedPreference.get(this).accessToken =""
                         finishAffinity()
