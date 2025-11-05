@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.m2.CountryCityAndZoneManaFragment">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Country"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvToolbar" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDropdown"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/dropdwn_bg"
+        android:drawableEnd="@drawable/down_ic"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="14dp"
+        android:text="India"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCountry" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
+        style="@style/edit_text"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:hint="Search"
+        android:padding="@dimen/_10sdp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#5B6163"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDropdown" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="City List"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearch" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCity"
+        tools:listitem="@layout/city_list_item" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/zoneListRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCity"
+        tools:listitem="@layout/zone_list_item"
+
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imBackward"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn2_background"
+        android:padding="6dp"
+        android:src="@drawable/backward_ic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01 of 230"
+        app:layout_constraintBottom_toBottomOf="@id/imBackward"
+        app:layout_constraintEnd_toStartOf="@id/imForward"
+        app:layout_constraintStart_toEndOf="@id/imBackward"
+        app:layout_constraintTop_toTopOf="@id/imBackward" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imForward"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn1_background"
+        android:src="@drawable/forward_ic"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvPages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvPages" />
+</androidx.constraintlayout.widget.ConstraintLayout>

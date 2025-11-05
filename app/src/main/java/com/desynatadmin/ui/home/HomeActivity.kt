@@ -56,7 +56,6 @@ class HomeActivity : BaseActivity() {
         controller = navHostFragment.navController
         val navGraph = controller.navInflater.inflate(R.navigation.home_navigation_graph)
         controller.graph = navGraph
-
         bottonNavItemList.clear()
         bottonNavItemList.add(BottomNavItem("Home",R.drawable.ic_home,R.drawable.ic_selected_home))
         bottonNavItemList.add(BottomNavItem("Products",R.drawable.ic_product,R.drawable.ic_product_selected))
