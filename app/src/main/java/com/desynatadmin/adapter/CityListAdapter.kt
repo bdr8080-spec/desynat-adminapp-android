@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.CityListItemBinding
 
-class CityListAdapter(private val onItemClick: () -> Unit) : RecyclerView.Adapter<CityListAdapter.ViewHolder>() {
+class CityListAdapter( private val onItemClick: (Int) -> Unit) : RecyclerView.Adapter<CityListAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: CityListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -22,10 +22,10 @@ class CityListAdapter(private val onItemClick: () -> Unit) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             tvViewZone.setOnClickListener {
-                onItemClick()
+                onItemClick(position)
             }
         }
     }
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = 15
 }

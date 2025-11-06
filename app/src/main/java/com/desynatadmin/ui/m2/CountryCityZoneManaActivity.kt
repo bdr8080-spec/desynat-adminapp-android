@@ -11,6 +11,8 @@ import com.desynatadmin.R
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.databinding.ActivityCountryCityZoneManaBinding
 import com.desynatadmin.databinding.ActivityHomeBinding
+import com.desynatadmin.databinding.AddCityBottomsheetBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class CountryCityZoneManaActivity : BaseActivity() {
     private var binding: ActivityCountryCityZoneManaBinding? =null
@@ -18,6 +20,7 @@ class CountryCityZoneManaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        binding = ActivityCountryCityZoneManaBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         initView()
         initControl()
@@ -31,9 +34,11 @@ class CountryCityZoneManaActivity : BaseActivity() {
         val navGraph = controller.navInflater.inflate(R.navigation.country_city_navigation_graph)
         controller.graph = navGraph
 
+
     }
 
     override fun initControl() {
+
 
     }
 

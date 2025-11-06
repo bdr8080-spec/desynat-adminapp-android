@@ -9,5 +9,14 @@
         android:id="@+id/countryCityAndZoneManaFragment"
         android:name="com.desynatadmin.ui.m2.CountryCityAndZoneManaFragment"
         android:label="fragment_country_city_and_zone_mana"
-        tools:layout="@layout/fragment_country_city_and_zone_mana" />
+        tools:layout="@layout/fragment_country_city_and_zone_mana" >
+        <action
+            android:id="@+id/action_countryCityAndZoneManaFragment_to_addZoneFragment"
+            app:destination="@id/addZoneFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addZoneFragment"
+        android:name="com.desynatadmin.ui.m2.AddZoneFragment"
+        android:label="fragment_add_zone"
+        tools:layout="@layout/fragment_add_zone" />
 </navigation>
