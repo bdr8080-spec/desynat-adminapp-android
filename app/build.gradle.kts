@@ -9,15 +9,14 @@ plugins {
 
 android {
     namespace = "com.desynatadmin"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.desynatadmin"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -45,6 +44,15 @@ android {
 
 dependencies {
 
+    configurations.all {
+        resolutionStrategy {
+            force("androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7")
+            force("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7")
+            force("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+            force("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+        }
+    }
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -53,6 +61,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
@@ -81,7 +90,6 @@ dependencies {
     implementation("com.makeramen:roundedimageview:2.3.0")
     implementation ("com.intuit.sdp:sdp-android:1.1.0")
     implementation("com.tbuonomo:dotsindicator:5.1.0")
-
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 
