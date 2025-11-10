@@ -160,7 +160,7 @@ class HomeActivity : BaseActivity() {
                     0 -> controller.navigate(R.id.home)
                    // 1 -> controller.navigate(R.id.catalog)
                     //2 -> controller.navigate(R.id.catalog)
-                   // 3 -> controller.navigate(R.id.myBag)
+                    3 -> controller.navigate(R.id.planList)
                    // 4 -> controller.navigate(R.id.profile)
                 }
 

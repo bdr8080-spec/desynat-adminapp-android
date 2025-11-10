@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.subscriptionPlan.PlanDetailFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/btnDelete">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPackage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="Pro Package"
+                android:textAlignment="center"
+                android:elevation="@dimen/_2sdp"
+                android:background="@drawable/plus"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/white"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="#FFF7EA">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="KD 250.00"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_toLeftOf="@+id/tvSwitch"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvValidTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:text="for 1 Month"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_below="@+id/tvPrice"
+                    android:layout_toLeftOf="@+id/tvSwitch"
+                    android:layout_marginBottom="@dimen/_10sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:text="Active"
+                    android:textColor="#1A900D"
+                    android:fontFamily="@font/poppins_regular"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableEnd="@drawable/switch_on"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_plan_feature"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnDelete"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+        android:background="@drawable/red_stroke"
+        style="@style/button"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:text="Delete"
+        android:textColor="@color/red"
+        android:layout_marginTop="@dimen/_20sdp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnEdit"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toTopOf="@id/btnDelete"
+        app:layout_constraintStart_toEndOf="@+id/btnDelete"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        style="@style/button"
+        android:background="@drawable/btn_background"
+        android:text="Edit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
