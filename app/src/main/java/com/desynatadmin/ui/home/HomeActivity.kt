@@ -19,6 +19,7 @@ import com.desynatadmin.databinding.ActivityHomeBinding
 import com.desynatadmin.databinding.DrawerLayoutBinding
 import com.desynatadmin.ui.auth.AuthActivity
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.m2.CountryCityZoneManaActivity
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -56,7 +57,6 @@ class HomeActivity : BaseActivity() {
         controller = navHostFragment.navController
         val navGraph = controller.navInflater.inflate(R.navigation.home_navigation_graph)
         controller.graph = navGraph
-
         bottonNavItemList.clear()
         bottonNavItemList.add(BottomNavItem("Home",R.drawable.ic_home,R.drawable.ic_selected_home))
         bottonNavItemList.add(BottomNavItem("Products",R.drawable.ic_product,R.drawable.ic_product_selected))
@@ -112,6 +112,10 @@ class HomeActivity : BaseActivity() {
         binding?.apply {
             drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
             setUpDrawerContent()
+            drawerBinding.rlCountryCityManagement.setOnClickListener {
+                startActivity(Intent(this@HomeActivity, CountryCityZoneManaActivity::class.java))
+            }
+
         }
 
         setDrawerData(SharedPreference.get(this).getUser())

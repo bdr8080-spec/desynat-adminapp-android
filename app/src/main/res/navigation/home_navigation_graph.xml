@@ -63,11 +63,6 @@
         android:label="Add Sub Category Fragment"
         tools:layout="@layout/fragment_add_sub_category"/>
 
-
-
-
-
-
     <fragment
         android:id="@+id/brand"
         android:name="com.desynatadmin.ui.home.brandManagement.BrandManagementFragment"

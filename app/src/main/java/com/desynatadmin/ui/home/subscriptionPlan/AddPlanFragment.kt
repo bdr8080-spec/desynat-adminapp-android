@@ -46,6 +46,18 @@ class AddPlanFragment : BaseFragment() {
             toolbar.tvToolbar.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            etCountry.setOnClickListener {
+
+            }
+
+            etMonth.setOnClickListener {
+
+            }
+
+            btnAdd.setOnClickListener {
+
+            }
         }
     }
 

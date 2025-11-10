@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/country_city_navigation_graph.xml"
+    app:startDestination="@id/countryCityAndZoneManaFragment">
+
+    <fragment
+        android:id="@+id/countryCityAndZoneManaFragment"
+        android:name="com.desynatadmin.ui.m2.CountryCityAndZoneManaFragment"
+        android:label="fragment_country_city_and_zone_mana"
+        tools:layout="@layout/fragment_country_city_and_zone_mana" >
+        <action
+            android:id="@+id/action_countryCityAndZoneManaFragment_to_addZoneFragment"
+            app:destination="@id/addZoneFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addZoneFragment"
+        android:name="com.desynatadmin.ui.m2.AddZoneFragment"
+        android:label="fragment_add_zone"
+        tools:layout="@layout/fragment_add_zone" />
+</navigation>

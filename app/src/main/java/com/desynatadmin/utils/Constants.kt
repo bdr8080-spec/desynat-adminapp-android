@@ -37,4 +37,10 @@ object Constants {
     const val DELETE_BRAND = "/api/admin/delete_brand"
     const val UPDATE_BRAND_STATUS = "/api/admin/change_brand_status"
 
+    const val GET_SUBSCRIPTION_PLAN = "/api/admin/get_plans"
+    const val DELETE_SUBSCRIPTION_PLAN = "/api/admin/delete_plan"
+    const val CHANGE_PLAN_STATUS = "/api/admin/change_plan_status"
+    const val ADD_SUBSCRIPTION_PLAN = "/api/admin/add_plan"
+    const val UPDATE_SUBSCRIPTION_PLAN = "/api/admin/update_plan"
+
 }
