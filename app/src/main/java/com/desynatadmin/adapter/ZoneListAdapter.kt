@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ZoneListItemBinding
 
-class ZoneListAdapter(selectedCity: Int, private val onItemClick: (Int) -> Unit): RecyclerView.Adapter<ZoneListAdapter.ViewHolder>() {
+class ZoneListAdapter(): RecyclerView.Adapter<ZoneListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ZoneListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -25,7 +25,6 @@ class ZoneListAdapter(selectedCity: Int, private val onItemClick: (Int) -> Unit)
 
         holder.binding.apply {
             tvViewZone.setOnClickListener {
-                onItemClick(position)
             }
         }
 

@@ -5,8 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desynatadmin.data.repo.MainRepository
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
+import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
+import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
+import com.desynatadmin.ui.home.brandManagement.response.CityResponse
+import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
@@ -144,6 +150,55 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getCountryResult: LiveData<CountryREsponse>
+        get() = repository.getCountryData
+
+    fun hitCountryList() {
+        viewModelScope.launch {
+            repository.hitCountyList()
+        }
+    }
+
+    val getServiceCityList: LiveData<ServiceCityListResponse>
+        get() = repository.getServiceListData
+
+    fun hitServiceCityList(
+        token: String,
+        country_id: String,
+        limit: String,
+        search: String
+    ) {
+        viewModelScope.launch {
+            repository.hitServiceCityList(
+                token,
+                country_id,
+                limit,
+                search
+            )
+        }
+    }
+
+
+    val hitCityList: LiveData<CityResponse>
+        get() = repository.getCityData
+
+    fun hitCity(token : String, id : String) {
+        viewModelScope.launch {
+            repository.hitCityList(token,id)
+        }
+    }
+
+
+    val getAddServiceCity: LiveData<AddServiceCityResponse>
+        get() = repository.getAddServiceCity
+
+    fun hitAddServiceCity(token : String, map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.hitAddServiceCity(token,map)
+        }
+    }
+
+
     val updateSubCategoryStatusResult: LiveData<UpdateSubCategoryResponse>
         get() = repository.updateSubCategoryStatusLiveData
 
@@ -159,6 +214,37 @@ class HomeViewModel @Inject constructor(
     fun updateCategoryStatus(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateCategoryStatus(map)
+        }
+    }
+
+    val getChangeCityStatus : LiveData<CommonResponse>
+        get() = repository.getChangeStatus
+
+    fun hitChangeCityStatus(token : String , map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.
+            hitChangeCityStatus(token,map)
+        }
+    }
+
+
+    val getDeleteCity : LiveData<CommonResponse>
+        get() = repository.getDeleteServiceCity
+
+    fun hitDeleteServiceCity(token : String , map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.
+            hitDeleteCityService(token,map)
+        }
+    }
+
+    val getAddZoneData : LiveData<AddZoneResponse>
+        get() = repository.getAddZoneData
+
+    fun hitAddZone(token : String , map: AddZoneRequest) {
+        viewModelScope.launch {
+            repository.
+            hitAddZone(token,map)
         }
     }
 

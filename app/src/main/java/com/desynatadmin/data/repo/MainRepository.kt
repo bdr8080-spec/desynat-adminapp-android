@@ -7,8 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.desynatadmin.network.ApiServices
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
+import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
+import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
+import com.desynatadmin.ui.home.brandManagement.response.CityResponse
+import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
@@ -17,7 +23,6 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSub
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.utils.toMultipartPart
 import dagger.hilt.android.qualifiers.ApplicationContext
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
@@ -37,7 +42,8 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.uploadImage(imageFile?.toMultipartPart("image")
+                api.uploadImage(
+                    imageFile?.toMultipartPart("image")
                 )
             },
             responseLiveData = responseUploadImage
@@ -46,7 +52,7 @@ class MainRepository @Inject constructor(
 
     val loginLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun login(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -58,7 +64,7 @@ class MainRepository @Inject constructor(
 
     val otpVerifyLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun otpVerification(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -70,7 +76,7 @@ class MainRepository @Inject constructor(
 
     val resendOtpLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun resendOtp(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -82,7 +88,7 @@ class MainRepository @Inject constructor(
 
     val forgotPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun forgotPassword(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -94,7 +100,7 @@ class MainRepository @Inject constructor(
 
     val createPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun createPassword(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -104,7 +110,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-val logoutLiveData = SingleLiveEvent<CommonResponse>()
+    val logoutLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun logout(
     ) {
         handleApiCall(
@@ -115,7 +121,7 @@ val logoutLiveData = SingleLiveEvent<CommonResponse>()
         )
     }
 
-val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
+    val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
     suspend fun getCategory(
     ) {
         handleApiCall(
@@ -125,30 +131,34 @@ val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
             responseLiveData = categoryLiveData
         )
     }
-val subCategoryLiveData = SingleLiveEvent<GetSubCategoryResponse>()
-    suspend fun getSubCategory(categoryId:String,search:String?=null, page:Int
+
+    val subCategoryLiveData = SingleLiveEvent<GetSubCategoryResponse>()
+    suspend fun getSubCategory(
+        categoryId: String, search: String? = null, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getSubCategory(categoryId,search,page)
+                api.getSubCategory(categoryId, search, page)
             },
             responseLiveData = subCategoryLiveData
         )
     }
 
-val brandLiveData = SingleLiveEvent<GetBrandResponse>()
-    suspend fun getBrand(search:String?=null, page:Int
+    val brandLiveData = SingleLiveEvent<GetBrandResponse>()
+    suspend fun getBrand(
+        search: String? = null, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getBrand(search,page)
+                api.getBrand(search, page)
             },
             responseLiveData = brandLiveData
         )
     }
 
     val addBrandLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addBrand(map:HashMap<String, RequestBody>
+    suspend fun addBrand(
+        map: HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -159,7 +169,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val editBrandLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun editBrand(map:HashMap<String, RequestBody>
+    suspend fun editBrand(
+        map: HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -170,7 +181,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val addSubCategoryLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addSubCategory(map:HashMap<String, RequestBody>
+    suspend fun addSubCategory(
+        map: HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -181,7 +193,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateSubCategoryLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun editSubCategory(map:HashMap<String,RequestBody>
+    suspend fun editSubCategory(
+        map: HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -192,7 +205,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteBrandLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteBrand(map: HashMap<String, Any>
+    suspend fun deleteBrand(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -203,7 +217,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteSubCategoryLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteSubCategory(map: HashMap<String, Any>
+    suspend fun deleteSubCategory(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -215,8 +230,71 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
+    val getCountryData = SingleLiveEvent<CountryREsponse>()
+    suspend fun hitCountyList() {
+        handleApiCall(
+            api = {
+                api.getCountry()
+            },
+            responseLiveData = getCountryData
+        )
+
+    }
+
+    val getServiceListData = SingleLiveEvent<ServiceCityListResponse>()
+    suspend fun hitServiceCityList(
+        token: String,
+        country_id: String,
+        limit: String,
+        search: String
+
+    ) {
+        handleApiCall(
+            api = {
+                api.hitServiceCityList(
+                    token,
+                    country_id,
+                    limit,
+                    search
+                )
+            },
+            responseLiveData = getServiceListData
+        )
+
+    }
+
+
+    val getCityData = SingleLiveEvent<CityResponse>()
+    suspend fun hitCityList(
+        token: String, id: String
+    ) {
+        handleApiCall(
+            api = {
+                api.getCity(token, id)
+            },
+            responseLiveData = getCityData
+        )
+
+    }
+
+
+    val getAddServiceCity = SingleLiveEvent<AddServiceCityResponse>()
+    suspend fun hitAddServiceCity(
+        token: String, map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitAddServiceCity(token, map)
+            },
+            responseLiveData = getAddServiceCity
+        )
+
+    }
+
+
     val updateBrandStatusLiveData = SingleLiveEvent<UpdateBrandStatusResponse>()
-    suspend fun updateBrandStatus(map: HashMap<String, Any>
+    suspend fun updateBrandStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -227,7 +305,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateSubCategoryStatusLiveData = SingleLiveEvent<UpdateSubCategoryResponse>()
-    suspend fun updateSubCategoryStatus(map: HashMap<String, Any>
+    suspend fun updateSubCategoryStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -239,7 +318,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateCategoryStatusLiveData = SingleLiveEvent<UpdateCategoryResponse>()
-    suspend fun updateCategoryStatus(map: HashMap<String, Any>
+    suspend fun updateCategoryStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -249,6 +329,45 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
 
     }
+
+
+    val getChangeStatus = SingleLiveEvent<CommonResponse>()
+    suspend fun hitChangeCityStatus(
+        token : String,map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitChangeStatus(token,map)
+            },
+            responseLiveData = getChangeStatus
+        )
+    }
+
+    val getDeleteServiceCity = SingleLiveEvent<CommonResponse>()
+    suspend fun hitDeleteCityService(
+        token : String,map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitDeleteServiceCity(token,map)
+            },
+            responseLiveData = getChangeStatus
+        )
+    }
+
+    val getAddZoneData = SingleLiveEvent<AddZoneResponse>()
+    suspend fun hitAddZone(
+        token : String,map:AddZoneRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.hitAddZone(token,map)
+            },
+            responseLiveData = getAddZoneData
+        )
+    }
+
+
 
 }
 

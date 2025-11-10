@@ -36,5 +36,13 @@ object Constants {
     const val UPDATE_BRAND = "/api/admin/update_brand"
     const val DELETE_BRAND = "/api/admin/delete_brand"
     const val UPDATE_BRAND_STATUS = "/api/admin/change_brand_status"
+    const val GET_CITY = "/api/admin/get_cities"
+    const val ADD_SERVICE_CITY = "/api/admin/add_service_city"
+    const val GET_COUNTRY = "/api/admin/get_countries"
+    const val GET_SERVICE_CITY = "/api/admin/get_service_cities"
+    const val GET_CHANGE_SERVICE_STATUS = "/api/admin/change_service_city_status"
+    const val GET_DELETE_CITY_SERVICE = "/api/admin/delete_service_city"
+    const val ADD_ZONE = "/api/admin/add_zone"
+
 
 }

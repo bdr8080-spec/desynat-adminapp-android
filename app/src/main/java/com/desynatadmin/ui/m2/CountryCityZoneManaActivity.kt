@@ -13,7 +13,9 @@ import com.desynatadmin.databinding.ActivityCountryCityZoneManaBinding
 import com.desynatadmin.databinding.ActivityHomeBinding
 import com.desynatadmin.databinding.AddCityBottomsheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CountryCityZoneManaActivity : BaseActivity() {
     private var binding: ActivityCountryCityZoneManaBinding? =null
     private lateinit var controller: NavController

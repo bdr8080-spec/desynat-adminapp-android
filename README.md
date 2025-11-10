@@ -1,2 +1,1 @@
 # desynat-adminapp-android
-
