@@ -44,5 +44,12 @@ object Constants {
     const val GET_DELETE_CITY_SERVICE = "/api/admin/delete_service_city"
     const val ADD_ZONE = "/api/admin/add_zone"
 
+    // seller
+
+    const val NEW_SELLER = "/api/admin/get_new_sellers"
+    const val APPROVED_SELLER = "/api/admin/get_approved_sellers"
+    const val REJECTED_SELLER = "/api/admin/get_rejected_sellers"
+    const val SELLER_DETAIL = "/api/admin/get_seller_details"
+
 
 }

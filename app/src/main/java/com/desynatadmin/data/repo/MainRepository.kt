@@ -367,6 +367,68 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val getNewSellerList = SingleLiveEvent<AddZoneResponse>()
+    suspend fun hitNewSellerList(
+        token : String,
+        from_date : String,
+        to_date : String,
+        limit : String,
+        search : String,
+    ) {
+        handleApiCall(
+            api = {
+                api.hitNewSelleList(token,from_date, to_date,limit,search)
+            },
+            responseLiveData = getNewSellerList
+        )
+    }
+
+    val getApprovedData = SingleLiveEvent<AddZoneResponse>()
+    suspend fun hitApprovedSellerList(
+        token : String,
+        country_id : String,
+        from_date : String,
+        to_date : String,
+        limit : String,
+        search : String,
+    ) {
+        handleApiCall(
+            api = { api.hitApprovedSeller(token,country_id,from_date, to_date,limit,search) },
+            responseLiveData = getApprovedData
+        )
+    }
+
+    val getRejectSellerList = SingleLiveEvent<AddZoneResponse>()
+    suspend fun hitRejectedSellerList(
+        token : String,
+        country_id : String,
+        from_date : String,
+        to_date : String,
+        limit : String,
+        search : String,
+    ) {
+        handleApiCall(
+            api = {
+                api.hitRejectedSeller(token,country_id,from_date, to_date,limit,search)
+            },
+            responseLiveData = getRejectSellerList
+        )
+    }
+
+
+    val getSellerDetail = SingleLiveEvent<AddZoneResponse>()
+    suspend fun hitSellerDetail(
+        token : String,
+        seller_id : String,
+    ) {
+        handleApiCall(
+            api = {
+                api.hitSellerDetail(token,seller_id)
+            },
+            responseLiveData = getSellerDetail
+        )
+    }
+
 
 
 }

@@ -178,5 +178,40 @@ interface ApiServices {
         @Body body: AddZoneRequest
     ) : Response<AddZoneResponse>
 
+    @GET(Constants.NEW_SELLER)
+    suspend fun hitNewSelleList(
+        @Header("Token") Token: String,
+        @Query("from_date") from_date: String,
+        @Query("to_date") to_date: String,
+        @Query("limit") limit: String,
+        @Query("search") search: String,
+    ): Response<AddZoneResponse>
+
+    @GET(Constants.APPROVED_SELLER)
+    suspend fun hitApprovedSeller(
+        @Header("Token") Token: String,
+        @Query("country_id") country_id: String,
+        @Query("from_date") from_date: String,
+        @Query("to_date") to_date: String,
+        @Query("limit") limit: String,
+        @Query("search") search: String,
+    ): Response<AddZoneResponse>
+
+    @GET(Constants.REJECTED_SELLER)
+    suspend fun hitRejectedSeller(
+        @Header("Token") Token: String,
+        @Query("country_id") country_id: String,
+        @Query("from_date") from_date: String,
+        @Query("to_date") to_date: String,
+        @Query("limit") limit: String,
+        @Query("search") search: String,
+    ): Response<AddZoneResponse>
+
+    @GET(Constants.SELLER_DETAIL)
+    suspend fun hitSellerDetail(
+        @Header("Token") Token: String,
+        @Query("seller_id") seller_id: String,
+    ): Response<AddZoneResponse>
+
 
 }

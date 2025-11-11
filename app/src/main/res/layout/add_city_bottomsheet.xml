@@ -44,7 +44,7 @@
         android:drawableEnd="@drawable/down_ic"
         android:gravity="center_vertical"
         android:paddingHorizontal="14dp"
-        android:text="India"
+        android:text="Select city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCountry" />

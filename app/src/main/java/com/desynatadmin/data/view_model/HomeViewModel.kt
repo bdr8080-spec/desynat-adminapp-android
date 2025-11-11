@@ -249,4 +249,53 @@ class HomeViewModel @Inject constructor(
     }
 
 
+    val getNewSellerList : LiveData<AddZoneResponse>
+        get() = repository.getNewSellerList
+
+    fun hitNewSellerList(
+        token : String,
+        from_date : String,
+        to_date : String,
+        limit : String,
+        search : String,
+    ) {
+        viewModelScope.launch {
+            repository.
+            hitNewSellerList(token,from_date, to_date,limit,search)
+        }
+    }
+
+    val getApprovedSellerList : LiveData<AddZoneResponse>
+        get() = repository.getApprovedData
+
+    fun hitApprovedSellerList(
+        token : String,
+        country_id : String,
+        from_date : String,
+        to_date : String,
+        limit : String,
+        search : String,
+    ) {
+        viewModelScope.launch {
+            repository.
+            hitApprovedSellerList(token,country_id,from_date, to_date,limit,search)
+        }
+    }
+
+
+    val getSellerDetailData : LiveData<AddZoneResponse>
+        get() = repository.getSellerDetail
+
+    fun hitRejectedSellerList(
+        token : String,
+        seller_id : String,
+
+    ) {
+        viewModelScope.launch {
+            repository.
+            hitSellerDetail(token,seller_id)
+        }
+    }
+
+
 }

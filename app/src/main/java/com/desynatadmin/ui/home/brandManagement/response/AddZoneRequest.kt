@@ -12,3 +12,4 @@ data class AddZoneRequest(
         var lng: Double
     )
 }
+

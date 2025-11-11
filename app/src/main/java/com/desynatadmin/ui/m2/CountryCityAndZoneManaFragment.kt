@@ -164,10 +164,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                             } else {
                                 val map = HashMap<String, Any>()
                                 map["city_id"] = cityId
-                                viewModel.hitAddServiceCity(
-                                    SharedPreference.get(requireContext()).accessToken,
-                                    map
-                                )
+                                viewModel.hitAddServiceCity(SharedPreference.get(requireContext()).accessToken, map)
                                 dialog?.dismiss()
                             }
                         }
