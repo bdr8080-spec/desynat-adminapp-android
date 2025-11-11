@@ -15,7 +15,7 @@
         android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="@dimen/_20sdp"
         android:paddingVertical="@dimen/_15sdp"
-        android:text="Country City &amp; Zone"
+        android:text="Seller Management"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"

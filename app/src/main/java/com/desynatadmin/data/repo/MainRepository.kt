@@ -17,15 +17,23 @@ import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.PlaceDetailsResponse
+import com.desynatadmin.ui.home.brandManagement.response.PlacesResponse
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateZonResponse
+import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
 import com.desynatadmin.utils.toMultipartPart
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.RequestBody
@@ -47,8 +55,7 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.uploadImage(
-                    imageFile?.toMultipartPart("image")
+                api.uploadImage(imageFile?.toMultipartPart("image")
                 )
             },
             responseLiveData = responseUploadImage
@@ -57,7 +64,7 @@ class MainRepository @Inject constructor(
 
     val loginLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun login(
-        map: HashMap<String, Any>
+        map: HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
@@ -69,7 +76,7 @@ class MainRepository @Inject constructor(
 
     val otpVerifyLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun otpVerification(
-        map: HashMap<String, Any>
+        map: HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
@@ -81,7 +88,7 @@ class MainRepository @Inject constructor(
 
     val resendOtpLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun resendOtp(
-        map: HashMap<String, Any>
+        map: HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
@@ -93,7 +100,7 @@ class MainRepository @Inject constructor(
 
     val forgotPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun forgotPassword(
-        map: HashMap<String, Any>
+        map: HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
@@ -105,7 +112,7 @@ class MainRepository @Inject constructor(
 
     val createPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun createPassword(
-        map: HashMap<String, Any>
+        map: HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
@@ -115,7 +122,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val logoutLiveData = SingleLiveEvent<CommonResponse>()
+val logoutLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun logout(
     ) {
         handleApiCall(
@@ -126,7 +133,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
+val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
     suspend fun getCategory(
     ) {
         handleApiCall(
@@ -136,34 +143,30 @@ class MainRepository @Inject constructor(
             responseLiveData = categoryLiveData
         )
     }
-
-    val subCategoryLiveData = SingleLiveEvent<GetSubCategoryResponse>()
-    suspend fun getSubCategory(
-        categoryId: String, search: String? = null, page: Int
+val subCategoryLiveData = SingleLiveEvent<GetSubCategoryResponse>()
+    suspend fun getSubCategory(categoryId:String,search:String?=null, page:Int
     ) {
         handleApiCall(
             api = {
-                api.getSubCategory(categoryId, search, page)
+                api.getSubCategory(categoryId,search,page)
             },
             responseLiveData = subCategoryLiveData
         )
     }
 
-    val brandLiveData = SingleLiveEvent<GetBrandResponse>()
-    suspend fun getBrand(
-        search: String? = null, page: Int
+val brandLiveData = SingleLiveEvent<GetBrandResponse>()
+    suspend fun getBrand(search:String?=null, page:Int
     ) {
         handleApiCall(
             api = {
-                api.getBrand(search, page)
+                api.getBrand(search,page)
             },
             responseLiveData = brandLiveData
         )
     }
 
     val addBrandLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addBrand(
-        map: HashMap<String, RequestBody>
+    suspend fun addBrand(map:HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -174,8 +177,7 @@ class MainRepository @Inject constructor(
     }
 
     val editBrandLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun editBrand(
-        map: HashMap<String, RequestBody>
+    suspend fun editBrand(map:HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -186,8 +188,7 @@ class MainRepository @Inject constructor(
     }
 
     val addSubCategoryLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addSubCategory(
-        map: HashMap<String, RequestBody>
+    suspend fun addSubCategory(map:HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -338,6 +339,73 @@ class MainRepository @Inject constructor(
     }
 
 
+    val subscriptionPlanLiveData = SingleLiveEvent<GetAllPlanResponse>()
+    suspend fun getSubscriptionPlan(countryId:String?=null
+    ) {
+        handleApiCall(
+            api = {
+                api.getSubscriptionPlan(countryId)
+            },
+            responseLiveData = subscriptionPlanLiveData
+        )
+    }
+
+    val addSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addSubscriptionPlan(request: AddPlanRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.addSubscriptionPlan(request)
+            },
+            responseLiveData = addSubscriptionPlanLiveData
+        )
+    }
+
+    val editSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updateSubscriptionPlan(request: AddPlanRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.updateSubscriptionPlan(request)
+            },
+            responseLiveData = editBrandLiveData
+        )
+    }
+
+    val updateSubscriptionPlanStatusLiveData = SingleLiveEvent<UpdatePlanStatusResponse>()
+    suspend fun updateSubscriptionPlanStatus(map:HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateSubscriptionPlanStatus(map)
+            },
+            responseLiveData = updateSubscriptionPlanStatusLiveData
+        )
+    }
+
+    val deleteSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteSubscriptionPlan(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteSubscriptionPlan(map)
+            },
+            responseLiveData = deleteSubscriptionPlanLiveData
+        )
+    }
+
+    val countryPlanLiveData = SingleLiveEvent<GetCountryResponse>()
+    suspend fun getCountryy(
+    ) {
+        handleApiCall(
+            api = {
+                api.getCountryy()
+            },
+            responseLiveData = countryPlanLiveData
+        )
+    }
+
+
     val getChangeStatus = SingleLiveEvent<CommonResponse>()
     suspend fun hitChangeCityStatus(
         token : String,map: HashMap<String, Any>
@@ -451,6 +519,75 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val getLocation = SingleLiveEvent<PlacesResponse>()
+    suspend fun hitPlaceResponse(
+        input:String,key:String
+    ) {
+        handleApiCall(
+            api = {
+                api.getPlaceSuggestions(input = input,apiKey=key,"en")
+            },
+            responseLiveData = getLocation
+        )
+    }
+
+    val getZoneList = SingleLiveEvent<ZoneListResponse>()
+    suspend fun hitZoneList(
+        token : String,
+        country_id : String,
+        city_id : String,
+    ) {
+        handleApiCall(
+            api = {
+                api.hitZoneList(token,country_id, city_id)
+            },
+            responseLiveData = getZoneList
+        )
+    }
+
+    val getUpdateZoneData = SingleLiveEvent<UpdateZonResponse>()
+    suspend fun hitUpdateZone(
+        token : String,
+       req : AddZoneRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.hitUpdateZone(token,req)
+            },
+            responseLiveData = getUpdateZoneData
+        )
+    }
+    val getUpdateZoneStatusData = SingleLiveEvent<UpdateZonResponse>()
+    suspend fun hitUpdateZoneStatus(
+        token : String,
+       map : HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitUpdateZoneStatus(token,map)
+            },
+            responseLiveData = getUpdateZoneData
+        )
+    }
+
+    val fetchLocation = SingleLiveEvent<PlaceDetailsResponse>()
+    suspend fun hitPlaceDetail(
+        placeId:String,key:String
+    ) {
+        handleApiCall(
+            api = {
+                api.getPlaceDetails(
+                    placeId = placeId,
+                    apiKey = key
+                )
+            },
+            responseLiveData = fetchLocation
+        )
+    }
+
+
+
+
 
 
 }
@@ -466,6 +603,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
                 // value = null
             }
         }
+
     }
 
     override fun setValue(value: T?) {

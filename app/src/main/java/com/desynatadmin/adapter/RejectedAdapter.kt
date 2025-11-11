@@ -5,6 +5,7 @@ package com.desynatadmin.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.desynatadmin.databinding.RejectedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
@@ -33,6 +34,7 @@ class RejectedAdapter(val list : ArrayList<RejectedListResponse.Data.Data>, val 
             tvLocation.text = item.store_info.address_line1
             tvCall.text = item.mobile
             tvEmail.text = item.email
+            Glide.with(ivProfileImage).load(item.profile_pic).into(ivProfileImage)
             RejectionDescription.text = item.reject_reason
             tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"
 

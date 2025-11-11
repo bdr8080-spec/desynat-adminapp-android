@@ -15,15 +15,23 @@ import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.PlaceDetailsResponse
+import com.desynatadmin.ui.home.brandManagement.response.PlacesResponse
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateZonResponse
+import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -334,6 +342,106 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             repository.
             hitAcceptSeller(token,map)
+        }
+    }
+
+    val responseLocation : LiveData<PlacesResponse>
+        get() = repository.getLocation
+
+    fun httpLocationSearch(input:String,key:String) {
+        viewModelScope.launch {
+            repository.hitPlaceResponse(input,key)
+        }
+    }
+
+    val getZoneData : LiveData<ZoneListResponse>
+        get() = repository.getZoneList
+
+    fun hitZoneList(input:String,country_id : String , city_id:String) {
+        viewModelScope.launch {
+            repository.hitZoneList(input,country_id, city_id)
+        }
+    }
+
+    val getUpdateZone : LiveData<UpdateZonResponse>
+        get() = repository.getUpdateZoneData
+
+    fun hitUpdateZone(input:String,req : AddZoneRequest) {
+        viewModelScope.launch {
+            repository.hitUpdateZone(input,req)
+        }
+    }
+    val getUpdateZoneStatus : LiveData<UpdateZonResponse>
+        get() = repository.getUpdateZoneStatusData
+
+    fun hitUpdateZone(input:String,map : HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.hitUpdateZoneStatus(input,map)
+        }
+    }
+
+    val responseDetailPlace : LiveData<PlaceDetailsResponse>
+        get() = repository.fetchLocation
+
+    fun httpDetailPlace(placeId:String,key:String) {
+        viewModelScope.launch {
+            repository.
+            hitPlaceDetail(placeId,key)
+        }
+    }
+
+
+    val subscriptionPlanResult: LiveData<GetAllPlanResponse>
+        get() = repository.subscriptionPlanLiveData
+
+    fun getSubscriptionPlan(countryId:String?=null) {
+        viewModelScope.launch {
+            repository.getSubscriptionPlan(countryId)
+        }
+    }
+
+    val addSubscriptionPlanResult: LiveData<CommonResponse>
+        get() = repository.addSubscriptionPlanLiveData
+
+    fun addSubscriptionPlan(request: AddPlanRequest) {
+        viewModelScope.launch {
+            repository.addSubscriptionPlan(request)
+        }
+    }
+
+    val editSubscriptionPlanResult: LiveData<CommonResponse>
+        get() = repository.editSubscriptionPlanLiveData
+
+    fun updateSubscriptionPlan(request: AddPlanRequest) {
+        viewModelScope.launch {
+            repository.updateSubscriptionPlan(request)
+        }
+    }
+
+    val deleteSubscriptionResult: LiveData<CommonResponse>
+        get() = repository.deleteSubscriptionPlanLiveData
+
+    fun deleteSubscriptionPlan(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteSubscriptionPlan(map)
+        }
+    }
+
+    val updateSubscriptionPlanStatusResult: LiveData<UpdatePlanStatusResponse>
+        get() = repository.updateSubscriptionPlanStatusLiveData
+
+    fun updateSubscriptionPlanStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateSubscriptionPlanStatus(map)
+        }
+    }
+
+    val getCountryResultt: LiveData<GetCountryResponse>
+        get() = repository.countryPlanLiveData
+
+    fun getCountry() {
+        viewModelScope.launch {
+            repository.getCountryy()
         }
     }
 

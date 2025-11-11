@@ -11,16 +11,24 @@ import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.PlaceDetailsResponse
+import com.desynatadmin.ui.home.brandManagement.response.PlacesResponse
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceRequest
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateZonResponse
+import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
 import com.desynatadmin.utils.Constants
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -78,15 +86,15 @@ interface ApiServices {
 
     @GET(Constants.SUB_CATEGORY)
     suspend fun getSubCategory(
-        @Query("category_id") categoryId: String,
-        @Query("search") search: String? = null,
+        @Query ("category_id") categoryId:String,
+        @Query("search") search : String?=null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
     ): Response<GetSubCategoryResponse>
 
     @GET(Constants.BRAND)
     suspend fun getBrand(
-        @Query("search") search: String? = null,
+        @Query("search") search : String?=null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
 
@@ -95,51 +103,74 @@ interface ApiServices {
     @Multipart
     @POST(Constants.ADD_BRAND)
     suspend fun addBrand(
-        @PartMap map: HashMap<String, RequestBody>
-    ): Response<CommonResponse>
+        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
 
     @Multipart
     @POST(Constants.UPDATE_BRAND)
     suspend fun editBrand(
-        @PartMap map: HashMap<String, RequestBody>
-    ): Response<CommonResponse>
+        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
 
     @POST(Constants.UPDATE_BRAND_STATUS)
     suspend fun updateBrandStatus(
-        @Body body: HashMap<String, Any>
+        @Body body: HashMap<String,Any>
     ): Response<UpdateBrandStatusResponse>
 
     @POST(Constants.DELETE_BRAND)
     suspend fun deleteBrand(
-        @Body body: HashMap<String, Any>
+        @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
 
     @Multipart
     @POST(Constants.ADD_SUB_CATEGORY)
     suspend fun addSubCategory(
-        @PartMap map: HashMap<String, RequestBody>
-    ): Response<CommonResponse>
+        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
 
     @Multipart
     @POST(Constants.UPDATE_SUB_CATEGORY)
     suspend fun editSubCategory(
-        @PartMap map: HashMap<String, RequestBody>
-    ): Response<CommonResponse>
+        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
 
     @POST(Constants.UPDATE_SUB_CATEGORY_STATUS)
     suspend fun updateSubCategoryStatus(
-        @Body body: HashMap<String, Any>
+        @Body body: HashMap<String,Any>
     ): Response<UpdateSubCategoryResponse>
 
     @POST(Constants.UPDATE_CATEGORY_STATUS)
     suspend fun updateCategoryStatus(
-        @Body body: HashMap<String, Any>
+        @Body body: HashMap<String,Any>
     ): Response<UpdateCategoryResponse>
 
     @POST(Constants.DELETE_SUB_CATEGORY)
     suspend fun deleteSubCategory(
-        @Body body: HashMap<String, Any>
+        @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
+
+    @GET(Constants.GET_SUBSCRIPTION_PLAN)
+    suspend fun getSubscriptionPlan(
+        @Query ("country_id") countryId:String?=null
+        ): Response<GetAllPlanResponse>
+
+    @POST(Constants.ADD_SUBSCRIPTION_PLAN)
+    suspend fun addSubscriptionPlan(
+        @Body request: AddPlanRequest): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_SUBSCRIPTION_PLAN)
+    suspend fun updateSubscriptionPlan(
+        @Body request: AddPlanRequest
+    ): Response<CommonResponse>
+
+    @POST(Constants.CHANGE_PLAN_STATUS)
+    suspend fun updateSubscriptionPlanStatus(
+        @Body body: HashMap<String,Any>): Response<UpdatePlanStatusResponse>
+
+    @POST(Constants.DELETE_SUBSCRIPTION_PLAN)
+    suspend fun deleteSubscriptionPlan(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @GET(Constants.GET_COUNTRY)
+    suspend fun getCountryy(
+    ): Response<GetCountryResponse>
 
     @GET(Constants.GET_CITY)
     suspend fun getCity(
@@ -226,6 +257,41 @@ interface ApiServices {
         @Header("Token") Token: String,
         @Body body: HashMap<String, Any>
     ): Response<AcceptSellerResponse>
+
+    @GET("https://maps.googleapis.com/maps/api/place/autocomplete/json")
+    suspend fun getPlaceSuggestions(
+        @Query("input") input: String,
+        @Query("key") apiKey: String,
+
+        @Query("language") language: String = "en"
+    ): Response<PlacesResponse>
+
+
+    @GET("https://maps.googleapis.com/maps/api/place/details/json")
+    suspend fun getPlaceDetails(
+        @Query("place_id") placeId: String,
+        @Query("key") apiKey: String
+    ): Response<PlaceDetailsResponse>
+
+    @GET(Constants.GET_ZONE_LIST)
+    suspend fun hitZoneList(
+        @Header("Token") Token: String,
+        @Query("country_id") country_id: String,
+        @Query("city_id") city_id: String,
+    ): Response<ZoneListResponse>
+
+    @POST(Constants.UPDATE_ZONE)
+    suspend fun hitUpdateZone(
+        @Header("Token") Token: String,
+        @Body req : AddZoneRequest
+    ): Response<UpdateZonResponse>
+
+    @POST(Constants.UPDATE_ZONE_STATUS)
+    suspend fun hitUpdateZoneStatus(
+        @Header("Token") Token: String,
+        @Body map : HashMap<String, Any>
+    ): Response<UpdateZonResponse>
+
 
 
 }

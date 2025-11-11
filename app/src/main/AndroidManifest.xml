@@ -21,6 +21,7 @@
     <application
         android:name=".CoreApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher_app"
@@ -44,6 +45,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.m2.CountryCityZoneManaActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"

@@ -12,6 +12,40 @@
         tools:layout="@layout/fragment_home"/>
 
     <fragment
+        android:id="@+id/planList"
+        android:name="com.desynatadmin.ui.home.subscriptionPlan.PlanListFragment"
+        android:label="Subscription Plan Fragment"
+        tools:layout="@layout/fragment_plan_list">
+
+        <action
+            android:id="@+id/action_planList_to_addPlanFragment"
+            app:destination="@id/addPlan" />
+
+        <action
+            android:id="@+id/action_planList_to_planDetailFragment"
+            app:destination="@id/planDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/planDetail"
+        android:name="com.desynatadmin.ui.home.subscriptionPlan.PlanDetailFragment"
+        android:label="Plan Detail Fragment"
+        tools:layout="@layout/fragment_plan_detail">
+
+    <action
+        android:id="@+id/action_planDetail_to_addPlanFragment"
+        app:destination="@id/addPlan" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addPlan"
+        android:name="com.desynatadmin.ui.home.subscriptionPlan.AddPlanFragment"
+        android:label="Add Plan Fragment"
+        tools:layout="@layout/fragment_add_plan"/>
+
+    <fragment
         android:id="@+id/category"
         android:name="com.desynatadmin.ui.home.categorySubCategoryManagement.CategoryFragment"
         android:label="Category Fragment"
@@ -56,11 +90,6 @@
         android:name="com.desynatadmin.ui.home.categorySubCategoryManagement.AddSubCategoryFragment"
         android:label="Add Sub Category Fragment"
         tools:layout="@layout/fragment_add_sub_category"/>
-
-
-
-
-
 
     <fragment
         android:id="@+id/brand"

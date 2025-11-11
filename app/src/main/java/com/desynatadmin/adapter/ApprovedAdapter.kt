@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.desynatadmin.databinding.ApprovedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
@@ -30,6 +31,7 @@ class ApprovedAdapter(val list : ArrayList<ApprovedSellerResponse.Data.Data>, va
             tvName.text = item.first_name
             tvLocation.text = item.store_info.store_address
             tvCall.text = item.country_code + "-" + item.mobile
+            Glide.with(ivProfileImage).load(item.profile_pic).into(ivProfileImage)
             tvEmail.text = item.email
             tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(item.updated_at)}"
 

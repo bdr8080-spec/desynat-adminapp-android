@@ -21,10 +21,10 @@ data class ServiceCityListResponse(
         var total: Int
     ) {
         data class Data(
-            var city_id: Int,
-            var country_id: Int,
+            var city_id: String,
+            var country_id: String,
             var created_at: String,
-            var id: Int,
+            var id: String,
             var name: String,
             var status: Int,
             var updated_at: String

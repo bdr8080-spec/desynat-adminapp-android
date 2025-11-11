@@ -18,10 +18,12 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddCityBottomsheetBinding
 import com.desynatadmin.databinding.FragmentCountryCityAndZoneManaBinding
+import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.SingleTonDataPass
 import com.desynatadmin.utils.showToast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,6 +62,25 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         observe()
     }
 
+    fun hitZoneList(){
+        viewModel.hitZoneList(
+            SharedPreference.get(requireContext()).accessToken,
+            SingleTonDataPass.countryId,
+            SingleTonDataPass.cityId,
+        )
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(key == "2"){
+            hitZoneList()
+        }
+        else{
+            hitServiceApi()
+        }
+    }
+
     override fun initView() {
         viewModel.hitCountryList()
         binding?.apply {
@@ -72,7 +93,9 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                     tvDropdown.visibility = View.GONE
                     pagingLayout.visibility = View.GONE
                     zoneListRecyclerView.visibility = View.VISIBLE
-                    zoneListRecyclerView.adapter = ZoneListAdapter()
+                    SingleTonDataPass.countryId = serviceCityList?.get(position)?.country_id ?: ""
+                    SingleTonDataPass.cityId = serviceCityList?.get(position)?.id ?: ""
+                    hitZoneList()
                     key = "2"
                 }
 
@@ -201,6 +224,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
                     "2" -> {
                         // navigate to AddZoneFragment
+                        SingleTonDataPass.isEdit = false
+                        SingleTonDataPass.coordinate = emptyList()
                         navController.navigate(R.id.action_countryCityAndZoneManaFragment_to_addZoneFragment)
                     }
                 }
@@ -223,6 +248,36 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     }
 
     override fun observe() {
+
+        viewModel.getZoneData.observe(viewLifecycleOwner){
+            binding?.zoneListRecyclerView?.adapter = ZoneListAdapter(it.data.data?: arrayListOf(), object  : ZoneListAdapter.OnClick{
+                override fun onClick(position: Int) {
+
+                }
+
+                override fun editClick(position: Int) {
+                    SingleTonDataPass.isEdit = true
+                    SingleTonDataPass.coordinate = it.data.data.get(position).coordinates
+                    SingleTonDataPass.enName = it.data.data.get(position).name_english
+                    SingleTonDataPass.arName = it.data.data.get(position).name_arabic
+                    navController.navigate(R.id.action_countryCityAndZoneManaFragment_to_addZoneFragment)
+                }
+
+                override fun deleteClick(position: Int) {
+
+                }
+
+                override fun updateStatus(position: Int) {
+                }
+            })
+        }
+
+
+        viewModel.getUpdateZone.observe(viewLifecycleOwner){
+            showToast("Updated successfully")
+            hitZoneList()
+        }
+
         viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -239,10 +294,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                             binding?.countryRecycler?.isVisible = false
                             countryId = response?.data?.get(position)?.id.toString()
                             binding?.tvDropdown?.text = response?.data?.get(position)?.name
-                            viewModel.hitCity(
-                                SharedPreference.get(requireContext()).accessToken,
-                                countryId
-                            )
+                            viewModel.hitCity(SharedPreference.get(requireContext()).accessToken, countryId)
                         }
                     })
                 isObserver = false

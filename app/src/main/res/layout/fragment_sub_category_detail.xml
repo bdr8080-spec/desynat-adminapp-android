@@ -98,6 +98,7 @@
         android:layout_marginStart="@dimen/_7sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         style="@style/button"
+        android:background="@drawable/btn_background"
         android:text="Edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

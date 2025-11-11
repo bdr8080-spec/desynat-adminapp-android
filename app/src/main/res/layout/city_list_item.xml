@@ -10,10 +10,13 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCountryName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Dubai"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@+id/tvViewZone"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,12 +31,13 @@
         android:gravity="center_vertical"
         android:padding="4dp"
         android:text="View Zone"
+        app:layout_constraintStart_toEndOf="@+id/tvCountryName"
         android:textColor="@color/white"
         android:textSize="10sp"
         app:drawableTint="@color/white"
+        android:layout_marginEnd="30dp"
         app:layout_constraintBottom_toBottomOf="@id/tvCountryName"
         app:layout_constraintEnd_toStartOf="@id/imDelete"
-        app:layout_constraintStart_toEndOf="@id/tvCountryName"
         app:layout_constraintTop_toTopOf="@id/tvCountryName" />
 
     <androidx.appcompat.widget.AppCompatImageView

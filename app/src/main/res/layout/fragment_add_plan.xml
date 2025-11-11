@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.subscriptionPlan.AddPlanFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountry"
+                style="@style/edit_text_title"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Choose Country"
+                android:textSize="@dimen/_13sdp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etCountry"
+                    style="@style/edit_text"
+                    android:paddingVertical="@dimen/_9sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:hint="Selecte Country"
+                    android:editable="false"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
+                    android:drawableEnd="@drawable/ic_drop_down"/>
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccpCountryPicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showPhoneCode="false"
+                    android:paddingVertical="@dimen/_8sdp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Plan Name"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="In English"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEnglishPlanName"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter plan name"
+                android:inputType="text"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/edit_back" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Plan Name"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="In Arabic"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etArabicPlanName"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter plan name"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="text"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Duration"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etDuration"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Enter duration"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:inputType="number"
+                    android:background="@drawable/edit_back" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etMonth"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Month"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:inputType="text"
+                    android:background="@drawable/edit_back"
+                    android:editable="false"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/ic_drop_down"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:text="No. of Videos"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:text="No. of Products"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNoOfVideo"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Enter number"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:inputType="number"
+                    android:background="@drawable/edit_back" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNoOfProducts"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Enter number"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:inputType="number"
+                    android:background="@drawable/edit_back" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:text="No. of Highlights"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:text="No. of Employee"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNoOfHighlight"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Enter number"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:inputType="number"
+                    android:background="@drawable/edit_back" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNoOfEmployee"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Enter number"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:inputType="number"
+                    android:background="@drawable/edit_back" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Stories"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupStories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open"
+                android:textColor="@color/black"
+                android:paddingVertical="@dimen/_12sdp"
+                android:button="@drawable/selector_radio_icon"
+                android:paddingStart="@dimen/_8sdp"
+                app:buttonTint="@null"
+                android:drawableTint="@null"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Close"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Price"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPrice"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter price"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="number"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Commission"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupCommision"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Commission(%)"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCommission"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter commission"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="number"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnAdd"
+                style="@style/button"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:text="Add"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
