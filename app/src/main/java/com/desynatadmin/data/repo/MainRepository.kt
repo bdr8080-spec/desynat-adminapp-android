@@ -15,6 +15,10 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCat
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
 import com.desynatadmin.utils.toMultipartPart
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.MultipartBody
@@ -248,6 +252,73 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updateCategoryStatusLiveData
         )
 
+    }
+
+
+    val subscriptionPlanLiveData = SingleLiveEvent<GetAllPlanResponse>()
+    suspend fun getSubscriptionPlan(countryId:String?=null
+    ) {
+        handleApiCall(
+            api = {
+                api.getSubscriptionPlan(countryId)
+            },
+            responseLiveData = subscriptionPlanLiveData
+        )
+    }
+
+    val addSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addSubscriptionPlan(request: AddPlanRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.addSubscriptionPlan(request)
+            },
+            responseLiveData = addSubscriptionPlanLiveData
+        )
+    }
+
+    val editSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updateSubscriptionPlan(request: AddPlanRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.updateSubscriptionPlan(request)
+            },
+            responseLiveData = editBrandLiveData
+        )
+    }
+
+    val updateSubscriptionPlanStatusLiveData = SingleLiveEvent<UpdatePlanStatusResponse>()
+    suspend fun updateSubscriptionPlanStatus(map:HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateSubscriptionPlanStatus(map)
+            },
+            responseLiveData = updateSubscriptionPlanStatusLiveData
+        )
+    }
+
+    val deleteSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteSubscriptionPlan(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteSubscriptionPlan(map)
+            },
+            responseLiveData = deleteSubscriptionPlanLiveData
+        )
+    }
+
+    val countryPlanLiveData = SingleLiveEvent<GetCountryResponse>()
+    suspend fun getCountry(
+    ) {
+        handleApiCall(
+            api = {
+                api.getCountry()
+            },
+            responseLiveData = countryPlanLiveData
+        )
     }
 
 }

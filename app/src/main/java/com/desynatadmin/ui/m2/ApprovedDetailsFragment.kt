@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.desynatadmin.R
+import com.desynatadmin.adapter.HighlightsAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.databinding.FragmentApprovedDetailsBinding
 import com.desynatadmin.databinding.FragmentHomeBinding
@@ -51,6 +52,7 @@ class ApprovedDetailsFragment : BaseFragment() {
             binding?.btnSellerInfo?.setBackgroundResource(R.drawable.btn_other_unselected)
             binding?.btnSellerInfo?.setTextColor(Color.BLACK)
         }
+        binding?.highlightsRecyclerView?.adapter = HighlightsAdapter()
 
     }
 

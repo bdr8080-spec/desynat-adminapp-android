@@ -13,6 +13,10 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCat
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -159,6 +163,63 @@ class HomeViewModel @Inject constructor(
     fun updateCategoryStatus(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateCategoryStatus(map)
+        }
+    }
+
+
+
+
+    val subscriptionPlanResult: LiveData<GetAllPlanResponse>
+        get() = repository.subscriptionPlanLiveData
+
+    fun getSubscriptionPlan(countryId:String?=null) {
+        viewModelScope.launch {
+            repository.getSubscriptionPlan(countryId)
+        }
+    }
+
+    val addSubscriptionPlanResult: LiveData<CommonResponse>
+        get() = repository.addSubscriptionPlanLiveData
+
+    fun addSubscriptionPlan(request: AddPlanRequest) {
+        viewModelScope.launch {
+            repository.addSubscriptionPlan(request)
+        }
+    }
+
+    val editSubscriptionPlanResult: LiveData<CommonResponse>
+        get() = repository.editSubscriptionPlanLiveData
+
+    fun updateSubscriptionPlan(request: AddPlanRequest) {
+        viewModelScope.launch {
+            repository.updateSubscriptionPlan(request)
+        }
+    }
+
+    val deleteSubscriptionResult: LiveData<CommonResponse>
+        get() = repository.deleteSubscriptionPlanLiveData
+
+    fun deleteSubscriptionPlan(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteSubscriptionPlan(map)
+        }
+    }
+
+    val updateSubscriptionPlanStatusResult: LiveData<UpdatePlanStatusResponse>
+        get() = repository.updateSubscriptionPlanStatusLiveData
+
+    fun updateSubscriptionPlanStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateSubscriptionPlanStatus(map)
+        }
+    }
+
+    val getCountryResult: LiveData<GetCountryResponse>
+        get() = repository.countryPlanLiveData
+
+    fun getCountry() {
+        viewModelScope.launch {
+            repository.getCountry()
         }
     }
 

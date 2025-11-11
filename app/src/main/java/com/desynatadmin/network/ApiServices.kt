@@ -9,6 +9,10 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCat
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
 import com.desynatadmin.utils.Constants
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -123,4 +127,31 @@ interface ApiServices {
     suspend fun deleteSubCategory(
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
+
+    @GET(Constants.GET_SUBSCRIPTION_PLAN)
+    suspend fun getSubscriptionPlan(
+        @Query ("country_id") countryId:String?=null
+        ): Response<GetAllPlanResponse>
+
+    @POST(Constants.ADD_SUBSCRIPTION_PLAN)
+    suspend fun addSubscriptionPlan(
+        @Body request: AddPlanRequest): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_SUBSCRIPTION_PLAN)
+    suspend fun updateSubscriptionPlan(
+        @Body request: AddPlanRequest
+    ): Response<CommonResponse>
+
+    @POST(Constants.CHANGE_PLAN_STATUS)
+    suspend fun updateSubscriptionPlanStatus(
+        @Body body: HashMap<String,Any>): Response<UpdatePlanStatusResponse>
+
+    @POST(Constants.DELETE_SUBSCRIPTION_PLAN)
+    suspend fun deleteSubscriptionPlan(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @GET(Constants.GET_COUNTRY)
+    suspend fun getCountry(
+    ): Response<GetCountryResponse>
 }

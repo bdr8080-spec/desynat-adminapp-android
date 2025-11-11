@@ -31,18 +31,35 @@
                 android:text="Choose Country"
                 android:textSize="@dimen/_13sdp" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etCountry"
-                style="@style/edit_text"
-                android:paddingVertical="@dimen/_9sdp"
-                android:drawablePadding="@dimen/_5sdp"
-                android:hint="Kuwait"
-                android:editable="false"
-                android:clickable="true"
-                android:focusable="false"
-                android:layout_marginTop="5dp"
-                android:layout_centerVertical="true"
-                android:drawableEnd="@drawable/ic_drop_down"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etCountry"
+                    style="@style/edit_text"
+                    android:paddingVertical="@dimen/_9sdp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:hint="Selecte Country"
+                    android:editable="false"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
+                    android:drawableEnd="@drawable/ic_drop_down"/>
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccpCountryPicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showPhoneCode="false"
+                    android:paddingVertical="@dimen/_8sdp" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -194,11 +211,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:inputType="text"
-                    android:background="@drawable/edit_back"
-                    android:editable="false"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:drawableEnd="@drawable/ic_drop_down"/>
+                    android:background="@drawable/edit_back" />
 
             </LinearLayout>
 
@@ -252,11 +265,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:inputType="text"
-                    android:background="@drawable/edit_back"
-                    android:editable="false"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:drawableEnd="@drawable/ic_drop_down"/>
+                    android:background="@drawable/edit_back" />
 
             </LinearLayout>
 

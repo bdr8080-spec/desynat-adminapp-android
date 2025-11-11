@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.m2.NewDetailsFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/new_item" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pagingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newRecycler">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imBackward"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16sp"
+            android:background="@drawable/btn2_background"
+            android:padding="6dp"
+            android:src="@drawable/backward_ic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01 of 230"
+            app:layout_constraintBottom_toBottomOf="@id/imBackward"
+            app:layout_constraintEnd_toStartOf="@id/imForward"
+            app:layout_constraintStart_toEndOf="@id/imBackward"
+            app:layout_constraintTop_toTopOf="@id/imBackward" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imForward"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn1_background"
+            android:padding="6dp"
+            android:src="@drawable/forward_ic"
+            app:layout_constraintBottom_toBottomOf="@id/tvPages"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvPages" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

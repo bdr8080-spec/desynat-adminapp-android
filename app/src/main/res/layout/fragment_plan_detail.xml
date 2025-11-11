@@ -96,7 +96,6 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_plan_feature"/>
 
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

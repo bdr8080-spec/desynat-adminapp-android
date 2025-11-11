@@ -42,5 +42,6 @@ object Constants {
     const val CHANGE_PLAN_STATUS = "/api/admin/change_plan_status"
     const val ADD_SUBSCRIPTION_PLAN = "/api/admin/add_plan"
     const val UPDATE_SUBSCRIPTION_PLAN = "/api/admin/update_plan"
+    const val GET_COUNTRY = "/api/admin/get_countries"
 
 }

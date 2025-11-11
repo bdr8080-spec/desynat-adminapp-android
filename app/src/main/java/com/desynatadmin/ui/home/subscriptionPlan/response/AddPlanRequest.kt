@@ -5,25 +5,25 @@ import com.google.gson.annotations.SerializedName
 
 data class AddPlanRequest(
     @SerializedName("commission")
-    val commission: Int,
+    val commission: String,
     @SerializedName("country_id")
-    val countryId: Int,
+    val countryId: String,
     @SerializedName("duration")
-    val duration: Int,
+    val duration: String,
     @SerializedName("duration_type")
-    val durationType: Int,
+    val durationType: String,
     @SerializedName("no_of_highlights")
-    val noOfHighlights: Int,
+    val noOfHighlights: String,
     @SerializedName("no_of_products")
-    val noOfProducts: Int,
+    val noOfProducts: String,
     @SerializedName("no_of_videos")
-    val noOfVideos: Int,
+    val noOfVideos: String,
     @SerializedName("plan_name_arabic")
     val planNameArabic: String,
     @SerializedName("plan_name_english")
     val planNameEnglish: String,
     @SerializedName("price")
-    val price: Int,
+    val price: String,
     @SerializedName("stories")
-    val stories: Int
+    val stories: String
 )
