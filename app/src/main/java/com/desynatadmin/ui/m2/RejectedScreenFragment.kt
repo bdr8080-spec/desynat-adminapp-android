@@ -1,14 +1,12 @@
 package com.desynatadmin.ui.m2
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.desynatadmin.R
 import com.desynatadmin.adapter.RejectedAdapter
 import com.desynatadmin.base.BaseFragment
-import com.desynatadmin.databinding.FragmentApprovedScreenBinding
 import com.desynatadmin.databinding.FragmentRejectedScreenBinding
 
 class RejectedScreenFragment : BaseFragment() {
@@ -38,7 +36,10 @@ class RejectedScreenFragment : BaseFragment() {
 
     override fun initControl() {
 
-        binding?.rejectedRecyclerView?.adapter = RejectedAdapter()
+        binding?.rejectedRecyclerView?.adapter = RejectedAdapter(){
+            startActivity(Intent(requireContext(),RejectDetailsActivity::class.java))
+
+        }
     }
 
     override fun observe() {

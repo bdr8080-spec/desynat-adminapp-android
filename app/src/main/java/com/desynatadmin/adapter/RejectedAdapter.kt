@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.RejectedItemBinding
 
-class RejectedAdapter : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
+class RejectedAdapter(val onClick: () -> Unit) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
     class ViewHolder(val binding: RejectedItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -23,7 +23,11 @@ class RejectedAdapter : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        holder.binding.apply {
+            root.setOnClickListener {
+                onClick()
+            }
+        }
     }
 
     override fun getItemCount(): Int {
