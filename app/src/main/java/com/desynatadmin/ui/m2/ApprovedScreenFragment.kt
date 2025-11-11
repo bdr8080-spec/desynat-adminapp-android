@@ -1,16 +1,13 @@
 package com.desynatadmin.ui.m2
 
-import android.os.BaseBundle
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.desynatadmin.R
 import com.desynatadmin.adapter.ApprovedAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.databinding.FragmentApprovedScreenBinding
-import com.desynatadmin.databinding.FragmentNewScreenBinding
 
 
 class ApprovedScreenFragment : BaseFragment() {
@@ -39,7 +36,9 @@ class ApprovedScreenFragment : BaseFragment() {
     }
 
     override fun initControl() {
-        binding?.approvedRecyclerView?.adapter = ApprovedAdapter()
+        binding?.approvedRecyclerView?.adapter = ApprovedAdapter(){
+            startActivity(Intent(requireActivity(), ApprovedDetailsActivity::class.java))
+        }
 
     }
 

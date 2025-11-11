@@ -28,6 +28,7 @@ class AddPlanFragment : BaseFragment() {
     private var subscriptionData: GetAllPlanResponse.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var selectedCountryCode: String? = null
+    var durationType: String =""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,6 +84,12 @@ class AddPlanFragment : BaseFragment() {
                 val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 builder.setTitle("Select Duration Type")
                 builder.setItems(options) { dialog, which ->
+                    when(options[which]){
+                        "Days" -> durationType="1"
+                        "Month" -> durationType="2"
+                        "Year" -> durationType="3"
+                    }
+
                     etMonth.setText(options[which])
                     dialog.dismiss()
                 }
@@ -108,7 +115,7 @@ class AddPlanFragment : BaseFragment() {
                 commission = etCommission.text?.trim().toString(),
                 countryId = countryList.find { it.isoCode == selectedCountryCode }?.id.toString(),
                 duration = etDuration.text?.trim().toString(),
-                durationType = etDuration.text?.trim().toString(),
+                durationType = durationType,
                 noOfHighlights = etNoOfHighlight.text?.trim().toString(),
                 noOfProducts = etNoOfProducts.text?.trim().toString(),
                 noOfVideos = etNoOfVideo.text?.trim().toString(),
@@ -118,14 +125,12 @@ class AddPlanFragment : BaseFragment() {
                 stories = if (rbOpen.isChecked) "1" else "0"
             )
 
-            /*if (subscriptionData!=null){
-            viewModel.updateBrand(map)
+            if (subscriptionData!=null){
+            viewModel.updateSubscriptionPlan(request)
         }
         else{
-            viewModel.addBrand(map)
-        }*/
-
             viewModel.addSubscriptionPlan(request)
+        }
 
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
             isObserver = true

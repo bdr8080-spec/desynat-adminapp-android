@@ -40,10 +40,13 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
             tvPrice.text = "KD ${subscriptionData.price}"
             when(subscriptionData.durationType){
                 1->{
+                    tvDuration.text = "for ${subscriptionData.duration} Days"
+                }
+                2->{
                     tvDuration.text = "for ${subscriptionData.duration} Month"
                 }
                 else ->{
-                    tvDuration.text = "for ${subscriptionData.duration} Days"
+                    tvDuration.text = "for ${subscriptionData.duration} Year"
                 }
             }
 

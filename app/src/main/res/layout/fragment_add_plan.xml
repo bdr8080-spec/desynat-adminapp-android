@@ -141,7 +141,7 @@
                     android:hint="Enter duration"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:background="@drawable/edit_back" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -199,7 +199,7 @@
                     android:hint="Enter number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:background="@drawable/edit_back" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -210,7 +210,7 @@
                     android:hint="Enter number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:background="@drawable/edit_back" />
 
             </LinearLayout>
@@ -253,7 +253,7 @@
                     android:hint="Enter number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:background="@drawable/edit_back" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -264,7 +264,7 @@
                     android:hint="Enter number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:background="@drawable/edit_back" />
 
             </LinearLayout>
@@ -324,7 +324,7 @@
                 style="@style/edit_text"
                 android:hint="Enter price"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:inputType="text"
+                android:inputType="number"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -382,7 +382,7 @@
                 style="@style/edit_text"
                 android:hint="Enter commission"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:inputType="text"
+                android:inputType="number"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView

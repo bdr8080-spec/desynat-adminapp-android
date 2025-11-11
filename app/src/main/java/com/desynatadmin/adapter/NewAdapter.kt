@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.NewItemBinding
 
-class NewAdapter(function: () -> Unit) : RecyclerView.Adapter<NewAdapter.ViewHolder>() {
+class NewAdapter(val onClick: () -> Unit) : RecyclerView.Adapter<NewAdapter.ViewHolder>() {
      class ViewHolder(val binding: NewItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -24,7 +24,7 @@ class NewAdapter(function: () -> Unit) : RecyclerView.Adapter<NewAdapter.ViewHol
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             root.setOnClickListener {
-
+                onClick()
             }
         }
 
