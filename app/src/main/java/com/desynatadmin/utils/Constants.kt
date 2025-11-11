@@ -50,6 +50,7 @@ object Constants {
     const val APPROVED_SELLER = "/api/admin/get_approved_sellers"
     const val REJECTED_SELLER = "/api/admin/get_rejected_sellers"
     const val SELLER_DETAIL = "/api/admin/get_seller_details"
+    const val ACCEPT_SELLER = "/api/admin/accept_seller"
 
 
 }

@@ -5,13 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desynatadmin.data.repo.MainRepository
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
+import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
+import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
@@ -166,14 +171,16 @@ class HomeViewModel @Inject constructor(
         token: String,
         country_id: String,
         limit: String,
-        search: String
+        search: String,
+        page : String
     ) {
         viewModelScope.launch {
             repository.hitServiceCityList(
                 token,
                 country_id,
                 limit,
-                search
+                search,
+                page
             )
         }
     }
@@ -249,23 +256,25 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    val getNewSellerList : LiveData<AddZoneResponse>
+    val getNewSellerList : LiveData<NewSellerResponse>
         get() = repository.getNewSellerList
 
     fun hitNewSellerList(
         token : String,
+        country_id : String,
         from_date : String,
         to_date : String,
         limit : String,
+        page : String,
         search : String,
     ) {
         viewModelScope.launch {
             repository.
-            hitNewSellerList(token,from_date, to_date,limit,search)
+            hitNewSellerList(token,country_id,from_date, to_date,limit,page,search)
         }
     }
 
-    val getApprovedSellerList : LiveData<AddZoneResponse>
+    val getApprovedSellerList : LiveData<ApprovedSellerResponse>
         get() = repository.getApprovedData
 
     fun hitApprovedSellerList(
@@ -282,11 +291,28 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
-    val getSellerDetailData : LiveData<AddZoneResponse>
-        get() = repository.getSellerDetail
+    val getRejectedSellerList : LiveData<RejectedListResponse>
+        get() = repository.getRejectSellerList
 
     fun hitRejectedSellerList(
+        token : String,
+        country_id : String,
+        from_date : String,
+        to_date : String,
+        limit : String,
+        search : String,
+    ) {
+        viewModelScope.launch {
+            repository.
+            hitRejectedSellerList(token,country_id,from_date, to_date,limit,search)
+        }
+    }
+
+
+    val getSellerDetailData : LiveData<SellerDetailResponse>
+        get() = repository.getSellerDetail
+
+    fun hitSellerDetail(
         token : String,
         seller_id : String,
 
@@ -294,6 +320,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             repository.
             hitSellerDetail(token,seller_id)
+        }
+    }
+
+
+
+    val getAcceptSeller : LiveData<AcceptSellerResponse>
+        get() = repository.getAcceptSeller
+    fun hitAcceptSeller(
+        token : String,
+        map: HashMap<String, Any>
+        ) {
+        viewModelScope.launch {
+            repository.
+            hitAcceptSeller(token,map)
         }
     }
 

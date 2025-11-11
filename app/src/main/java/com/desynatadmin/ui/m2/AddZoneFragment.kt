@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
-import com.desynatadmin.adapter.LocationSearchAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAddZoneBinding
@@ -42,7 +41,7 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
     private var googleMap: GoogleMap? = null
     private var searchJob: Job? = null
     private var selectedLatLng: LatLng? = null
-    private var locationSearchAdapter: LocationSearchAdapter?=null
+  //  private var locationSearchAdapter: LocationSearchAdapter?=null
 
     private val LOCATION_PERMISSION_REQUEST = 101
     var list=ArrayList<PlacePrediction>()
@@ -66,10 +65,10 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     override fun initView() {
-        locationSearchAdapter= LocationSearchAdapter(list){
-            viewModel.httpDetailPlace(it.place_id,getString(R.string.map_key))
-        }
-        binding?.rvLocation?.adapter=locationSearchAdapter
+//        locationSearchAdapter= LocationSearchAdapter(list){
+//            viewModel.httpDetailPlace(it.place_id,getString(R.string.map_key))
+//        }
+//        binding?.rvLocation?.adapter=locationSearchAdapter
 
     }
 
@@ -104,24 +103,24 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
 
 
     override fun observe() {
-        viewModel.responseLocation.observe(viewLifecycleOwner){
-
-
-            locationSearchAdapter?.updateData(it.predictions ?: emptyList())
-        }
-        viewModel.responseDetailPlace.observe(viewLifecycleOwner){
-
-
-            val location = it?.result?.geometry?.location
-            location?.let {
-
-                val latLng = LatLng(it.lat?:0.0, it.lng?:0.0)
-                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
-                selectedLatLng=latLng
-
-            }
-
-        }
+//        viewModel.responseLocation.observe(viewLifecycleOwner){
+//
+//
+//            locationSearchAdapter?.updateData(it.predictions ?: emptyList())
+//        }
+//        viewModel.responseDetailPlace.observe(viewLifecycleOwner){
+//
+//
+//            val location = it?.result?.geometry?.location
+//            location?.let {
+//
+//                val latLng = LatLng(it.lat?:0.0, it.lng?:0.0)
+//                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+//                selectedLatLng=latLng
+//
+//            }
+//
+//        }
     }
 
     private fun initMap() {
@@ -204,7 +203,7 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
     private fun fetchPlaceSuggestions(input: String) {
         lifecycleScope.launch {
             try {
-                viewModel.httpLocationSearch(input,getString(R.string.map_key))
+                //viewModel.httpLocationSearch(input,getString(R.string.map_key))
 
             } catch (e: Exception) {
                 e.printStackTrace()

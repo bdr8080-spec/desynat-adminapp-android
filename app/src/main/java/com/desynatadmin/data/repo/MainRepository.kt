@@ -7,13 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.desynatadmin.network.ApiServices
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
+import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
+import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
@@ -246,7 +251,8 @@ class MainRepository @Inject constructor(
         token: String,
         country_id: String,
         limit: String,
-        search: String
+        search: String,
+        page : String
 
     ) {
         handleApiCall(
@@ -255,7 +261,8 @@ class MainRepository @Inject constructor(
                     token,
                     country_id,
                     limit,
-                    search
+                    search,
+                    page
                 )
             },
             responseLiveData = getServiceListData
@@ -367,23 +374,25 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val getNewSellerList = SingleLiveEvent<AddZoneResponse>()
+    val getNewSellerList = SingleLiveEvent<NewSellerResponse>()
     suspend fun hitNewSellerList(
         token : String,
+        country_id : String,
         from_date : String,
         to_date : String,
         limit : String,
+        page : String,
         search : String,
     ) {
         handleApiCall(
             api = {
-                api.hitNewSelleList(token,from_date, to_date,limit,search)
+                api.hitNewSelleList(token,country_id,from_date, to_date,limit,page,search)
             },
             responseLiveData = getNewSellerList
         )
     }
 
-    val getApprovedData = SingleLiveEvent<AddZoneResponse>()
+    val getApprovedData = SingleLiveEvent<ApprovedSellerResponse>()
     suspend fun hitApprovedSellerList(
         token : String,
         country_id : String,
@@ -398,7 +407,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val getRejectSellerList = SingleLiveEvent<AddZoneResponse>()
+    val getRejectSellerList = SingleLiveEvent<RejectedListResponse>()
     suspend fun hitRejectedSellerList(
         token : String,
         country_id : String,
@@ -416,7 +425,7 @@ class MainRepository @Inject constructor(
     }
 
 
-    val getSellerDetail = SingleLiveEvent<AddZoneResponse>()
+    val getSellerDetail = SingleLiveEvent<SellerDetailResponse>()
     suspend fun hitSellerDetail(
         token : String,
         seller_id : String,
@@ -426,6 +435,19 @@ class MainRepository @Inject constructor(
                 api.hitSellerDetail(token,seller_id)
             },
             responseLiveData = getSellerDetail
+        )
+    }
+
+    val getAcceptSeller = SingleLiveEvent<AcceptSellerResponse>()
+    suspend fun hitAcceptSeller(
+        token : String,
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitAcceptSeller(token,map)
+            },
+            responseLiveData = getAcceptSeller
         )
     }
 

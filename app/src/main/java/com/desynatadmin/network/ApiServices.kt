@@ -1,13 +1,18 @@
 package com.desynatadmin.network
 
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
+import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
+import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceRequest
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
@@ -158,6 +163,7 @@ interface ApiServices {
         @Query("country_id") country_id: String,
         @Query("limit") limit: String,
         @Query("search") search: String,
+        @Query("page") page: String,
     ): Response<ServiceCityListResponse>
 
     @POST(Constants.GET_CHANGE_SERVICE_STATUS)
@@ -181,37 +187,45 @@ interface ApiServices {
     @GET(Constants.NEW_SELLER)
     suspend fun hitNewSelleList(
         @Header("Token") Token: String,
+        @Query("country_id") country_id: String,
         @Query("from_date") from_date: String,
         @Query("to_date") to_date: String,
         @Query("limit") limit: String,
+        @Query("page") page: String,
         @Query("search") search: String,
-    ): Response<AddZoneResponse>
+    ): Response<NewSellerResponse>
 
     @GET(Constants.APPROVED_SELLER)
     suspend fun hitApprovedSeller(
         @Header("Token") Token: String,
-        @Query("country_id") country_id: String,
-        @Query("from_date") from_date: String,
-        @Query("to_date") to_date: String,
-        @Query("limit") limit: String,
-        @Query("search") search: String,
-    ): Response<AddZoneResponse>
+        @Query("country_id1") country_id: String,
+        @Query("from_date1") from_date: String,
+        @Query("to_date1") to_date: String,
+        @Query("limit1") limit: String,
+        @Query("search1") search: String,
+    ): Response<ApprovedSellerResponse>
 
     @GET(Constants.REJECTED_SELLER)
     suspend fun hitRejectedSeller(
         @Header("Token") Token: String,
-        @Query("country_id") country_id: String,
-        @Query("from_date") from_date: String,
-        @Query("to_date") to_date: String,
-        @Query("limit") limit: String,
-        @Query("search") search: String,
-    ): Response<AddZoneResponse>
+        @Query("country_id2") country_id: String,
+        @Query("from_date2") from_date: String,
+        @Query("to_date2") to_date: String,
+        @Query("limit2") limit: String,
+        @Query("search2") search: String,
+    ): Response<RejectedListResponse>
 
     @GET(Constants.SELLER_DETAIL)
     suspend fun hitSellerDetail(
         @Header("Token") Token: String,
         @Query("seller_id") seller_id: String,
-    ): Response<AddZoneResponse>
+    ): Response<SellerDetailResponse>
+
+    @POST(Constants.ACCEPT_SELLER)
+    suspend fun hitAcceptSeller(
+        @Header("Token") Token: String,
+        @Body body: HashMap<String, Any>
+    ): Response<AcceptSellerResponse>
 
 
 }

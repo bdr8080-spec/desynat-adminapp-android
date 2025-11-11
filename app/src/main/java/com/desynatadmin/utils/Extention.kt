@@ -28,6 +28,8 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 fun AppCompatActivity.statusBarTransparentWithWhite() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -43,6 +45,12 @@ fun AppCompatActivity.statusBarTransparentWithWhite() {
 
 fun Activity.moveActivity(activity: Activity) {
     startActivity(Intent(this, activity::class.java))
+}
+
+fun formatUtcDateToDdMmYyyy(utcDate: String): String {
+    val zonedDateTime = ZonedDateTime.parse(utcDate, DateTimeFormatter.ISO_ZONED_DATE_TIME)
+    val outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    return zonedDateTime.format(outputFormatter)
 }
 
 fun Context.showToast(message: String){

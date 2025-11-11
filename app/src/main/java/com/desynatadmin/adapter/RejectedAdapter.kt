@@ -1,0 +1,53 @@
+package com.desynatadmin.adapter
+
+
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.databinding.RejectedItemBinding
+import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
+import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
+
+class RejectedAdapter(val list : ArrayList<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
+    class ViewHolder(val binding: RejectedItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RejectedAdapter.ViewHolder {
+        val binding = RejectedItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.apply {
+            root.setOnClickListener {
+                click.onClick(position)
+            }
+            val item = list[position]
+            tvName.text = item.first_name
+            tvLocation.text = item.store_info.address_line1
+            tvCall.text = item.mobile
+            tvEmail.text = item.email
+            RejectionDescription.text = item.reject_reason
+            tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"
+
+
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+    interface OnClick{
+        fun onClick(position: Int)
+    }
+
+}
+
+

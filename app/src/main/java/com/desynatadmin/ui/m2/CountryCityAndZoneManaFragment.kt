@@ -40,6 +40,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     var searchCondition = ""
     var countryId = ""
     private var key = "1"
+    private var pageNo = 1
+    private var lastPage = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,6 +99,20 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
     override fun initControl() {
 
+        binding?.imForward?.setOnClickListener{
+            if(lastPage > pageNo){
+                pageNo++
+                hitServiceApi()
+            }
+        }
+
+        binding?.imBackward?.setOnClickListener{
+            if(pageNo > 1){
+                pageNo--
+                hitServiceApi()
+            }
+        }
+
 
         binding?.etSearch?.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -114,14 +130,15 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         binding?.apply {
             tvToolbar.setOnClickListener {
                 if(key == "1"){
-                    navController.popBackStack()
+//                    navController.popBackStack()
+                    activity?.finish()
                 }
                 else{
-                    recyclerView.visibility = View.INVISIBLE
-                    tvCountry.visibility = View.INVISIBLE
-                    tvDropdown.visibility = View.INVISIBLE
-                    pagingLayout.visibility = View.INVISIBLE
+                    tvCountry.visibility = View.VISIBLE
+                    tvDropdown.visibility = View.VISIBLE
+                    recyclerView.visibility = View.VISIBLE
                     zoneListRecyclerView.visibility = View.INVISIBLE
+                    key = "1"
                 }
             }
             tvDropdown.setOnClickListener {
@@ -242,6 +259,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
         viewModel.getServiceCityList.observe(viewLifecycleOwner) { response ->
             ProgressDialogUtils.getInstance().hideProgress()
+            lastPage = response?.data?.last_page ?: 0
+            binding?.tvPages?.text = "$pageNo/$lastPage"
             serviceCityList?.clear()
             serviceCityList?.addAll(response?.data?.data ?: arrayListOf())
             cityAdapter.notifyDataSetChanged()
@@ -272,8 +291,9 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         viewModel.hitServiceCityList(
             SharedPreference.get(requireContext()).accessToken,
             countryId,
-            "6",
-            searchCondition
+            "5",
+            searchCondition,
+            pageNo.toString()
         )
     }
 
