@@ -19,9 +19,11 @@ import com.desynatadmin.ui.home.brandManagement.response.PlaceDetailsResponse
 import com.desynatadmin.ui.home.brandManagement.response.PlacesResponse
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
+import com.desynatadmin.ui.home.brandManagement.response.SellerStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateZonResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateZoneStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
@@ -345,6 +347,46 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+
+    val getRejectSeller : LiveData<AcceptSellerResponse>
+        get() = repository.getRejectSeller
+    fun hitRejectSeller(
+        token : String,
+        map: HashMap<String, Any>
+    ) {
+        viewModelScope.launch {
+            repository.
+            hitRejectSeller(token,map)
+        }
+    }
+
+
+    val getDeleteZone : LiveData<AcceptSellerResponse>
+        get() = repository.getDeleteZone
+    fun hitDeleteZone(
+        token : String,
+        map: HashMap<String, Any>
+    ) {
+        viewModelScope.launch {
+            repository.
+            hitDeleteZone(token,map)
+        }
+    }
+
+    val getUpdateSellerStatus : LiveData<SellerStatusResponse>
+        get() = repository.getUpdateSellerData
+    fun hitUpdateSellerStaus(
+        token : String,
+        map: HashMap<String, Any>
+    ) {
+        viewModelScope.launch {
+            repository.
+            hitUpdateSeller(token,map)
+        }
+    }
+
+
+
     val responseLocation : LiveData<PlacesResponse>
         get() = repository.getLocation
 
@@ -371,10 +413,10 @@ class HomeViewModel @Inject constructor(
             repository.hitUpdateZone(input,req)
         }
     }
-    val getUpdateZoneStatus : LiveData<UpdateZonResponse>
+    val getUpdateZoneStatus : LiveData<UpdateZoneStatusResponse>
         get() = repository.getUpdateZoneStatusData
 
-    fun hitUpdateZone(input:String,map : HashMap<String, Any>) {
+    fun hitUpdateZoneStatus(input:String,map : HashMap<String, Any>) {
         viewModelScope.launch {
             repository.hitUpdateZoneStatus(input,map)
         }

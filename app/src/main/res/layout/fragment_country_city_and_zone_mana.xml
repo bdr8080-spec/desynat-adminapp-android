@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.m2.CountryCityAndZoneManaFragment">
 
 
@@ -11,7 +12,7 @@
         android:id="@+id/tvToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="15dp"
         android:drawableStart="@drawable/back_ic"
         android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="@dimen/_20sdp"
@@ -47,23 +48,23 @@
         android:drawableEnd="@drawable/down_ic"
         android:gravity="center_vertical"
         android:paddingHorizontal="14dp"
-        android:text="India"
+        android:text="Select Country"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCountry" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/countryRecycler"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:orientation="vertical"
-        android:id="@+id/countryRecycler"
-        tools:listitem="@layout/simple_item_layout"
-        android:visibility="gone"
         android:background="@drawable/dropdwn_bg"
+        android:orientation="vertical"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="@+id/tvDropdown"
         app:layout_constraintStart_toStartOf="@+id/tvDropdown"
-        app:layout_constraintTop_toBottomOf="@+id/tvDropdown" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDropdown"
+        tools:listitem="@layout/simple_item_layout" />
 
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -99,12 +100,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSearch" />
 
+    <TextView
+        android:id="@+id/noData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:visibility="visible"
+        android:text="No Data avaailable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCity" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +192,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/btn1_background"
         android:padding="8dp"
         android:scaleType="centerInside"

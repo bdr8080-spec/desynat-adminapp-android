@@ -32,7 +32,7 @@ class RejectedAdapter(val list : ArrayList<RejectedListResponse.Data.Data>, val 
             val item = list[position]
             tvName.text = item.first_name
             tvLocation.text = item.store_info.address_line1
-            tvCall.text = item.mobile
+            tvCall.text = item.country_code + "-" + item.mobile
             tvEmail.text = item.email
             Glide.with(ivProfileImage).load(item.profile_pic).into(ivProfileImage)
             RejectionDescription.text = item.reject_reason

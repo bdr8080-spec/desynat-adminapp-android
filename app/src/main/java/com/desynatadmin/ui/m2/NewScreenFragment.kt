@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import com.desynatadmin.R
 import com.desynatadmin.adapter.NewAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentNewScreenBinding
+import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -85,6 +88,12 @@ class NewScreenFragment : BaseFragment() {
             pageNo= 1
             apiHit()
         }
+        viewModel.getRejectSeller.observe(viewLifecycleOwner){
+            showToast("Seller Rejected")
+            pageNo = 1
+            apiHit()
+            deleteBottomDialog?.dismiss()
+        }
 
         viewModel.getNewSellerList.observe(viewLifecycleOwner){
             lastPage = it.data.last_page
@@ -109,6 +118,7 @@ class NewScreenFragment : BaseFragment() {
                     }
 
                     override fun onDelete(position: Int) {
+                        deleteBottomSheet(it.data.data?.get(position)?.id ?: "")
                     }
 
                 })
@@ -119,5 +129,53 @@ class NewScreenFragment : BaseFragment() {
             }
         }
     }
+
+    var deleteBottomDialog: BottomSheetDialog? = null
+    private fun deleteBottomSheet(id: String) {
+        deleteBottomDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+        val deleteBinding = RejectReasonLayoutBinding.inflate(layoutInflater)
+        var type = ""
+
+        deleteBottomDialog?.apply {
+            setContentView(deleteBinding.root)
+            setCancelable(true)
+        }
+
+        deleteBinding.rbComplete.setOnClickListener {
+            type = "Complete Reject"
+            deleteBinding.rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
+            deleteBinding.rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
+        }
+        deleteBinding.rbReject.setOnClickListener {
+            type = "Document Reject"
+            deleteBinding.rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
+            deleteBinding.rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
+        }
+
+        deleteBinding.btnAccept.setOnClickListener {
+            if(!deleteBinding.etReason.text.isNullOrEmpty()){
+                val map = HashMap<String, Any>()
+                map["seller_id"] = id
+                map["reject_type"] = type
+                map["reject_reason"] = deleteBinding.etReason.text.toString()
+                viewModel.hitRejectSeller(
+                    SharedPreference.get(requireContext()).accessToken,
+                    map
+                )
+            }
+            else{
+                showToast("Please enter reason")
+            }
+
+        }
+
+        deleteBinding.closeBtn.setOnClickListener {
+            deleteBottomDialog?.dismiss()
+        }
+
+
+        deleteBottomDialog?.show()
+    }
+
 
 }

@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.HighlightsAdapter
@@ -16,6 +14,7 @@ import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityApprovedDetailsBinding
 import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +41,20 @@ class ApprovedDetailsActivity : BaseActivity() {
     }
 
     override fun initControl() {
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
+        binding.ivToggle.setOnClickListener {
+            val map = HashMap<String, Any>()
+            map["seller_id"] = intent.getStringExtra("id") ?: ""
+            viewModel.hitUpdateSellerStaus(
+                SharedPreference.get(this).accessToken,
+                map
+            )
+        }
+
         binding.reelRecyclerView.adapter = ReelAdapter()
         binding?.btnSellerInfo?.setOnClickListener {
             binding?.btnSellerInfo?.setBackgroundResource(R.drawable.btn_seller_selected)
@@ -67,28 +80,47 @@ class ApprovedDetailsActivity : BaseActivity() {
 
     override fun observer() {
 
+        viewModel.getUpdateSellerStatus.observe(this){
+            showToast("Seller status updated")
+            if(it.data.is_block == 0){
+                binding.ivToggle.setImageResource(R.drawable.toggle_ic)
+            }
+            else{
+                binding.ivToggle.setImageResource(R.drawable.toggle_off)
+            }
+        }
+
         viewModel.getSellerDetailData.observe(this){
+            if(it.data.is_block == 0){
+                binding.ivToggle.setImageResource(R.drawable.toggle_ic)
+            }
+            else{
+                binding.ivToggle.setImageResource(R.drawable.toggle_off)
+            }
             Glide.with(this).load(it.data.profile_pic).into(binding.ivProfileImage)
             binding.tvName.text = it.data.first_name
             binding.txt.text = it.data.store_info.bio
             binding.tvLocation.text = it.data.store_info.store_address
             binding.tvCall.text  = it.data.country_code + "-" + it.data.mobile
-            binding.tvAddress.text  = it.data.store_info.address_line1
+            binding.tvAddress.text  = it.data.store_info.store_address
             binding.tvProPlan.text  = it.data.subcription_plan ?: ""
             Glide.with(this).load(it.data.owner_document.get(0).document_path).into(binding.doc1)
             Glide.with(this).load(it.data.owner_document.get(1).document_path).into(binding.doc2)
             Glide.with(this).load(it.data.store_document.get(0).document_path).into(binding.doc3)
             Glide.with(this).load(it.data.store_document.get(1).document_path).into(binding.doc4)
-
-            binding.tvAccountType.text = it.data.seller_bank_details.account_type
+            binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
+                "0" -> "Personal Account"
+                else -> "Other Account"
+            }
+            if(it?.data?.subcription_plan.isNullOrEmpty()){
+                binding.tvPurchasePlan.isVisible = false
+                binding.purchasePlanLayout.isVisible = false
+            }
             binding.tvIban.text = it.data.seller_bank_details.iban
             binding.tvswiftbic.text = it.data.seller_bank_details.swift
             binding.tvBankName.text = it.data.seller_bank_details.bank_name
             binding.tvAccountHolderName.text = it.data.seller_bank_details.account_holder_name
             Glide.with(this).load(it.data.seller_bank_details.upload_proof).into(binding.imAccountProof)
-
-
-
         }
     }
 }

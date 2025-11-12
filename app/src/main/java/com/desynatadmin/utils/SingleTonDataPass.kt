@@ -9,5 +9,6 @@ object SingleTonDataPass {
     var enName = ""
     var arName = ""
     var isEdit = false
+    var isView = false
     var coordinate  = emptyList<AddZoneRequest.Coordinate>()
 }

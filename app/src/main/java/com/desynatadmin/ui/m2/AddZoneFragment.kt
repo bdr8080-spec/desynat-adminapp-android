@@ -87,6 +87,13 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
         if(SingleTonDataPass.isEdit == true){
             binding?.etZonaNameEn?.setText(SingleTonDataPass.enName)
             binding?.etZonaNameAr?.setText(SingleTonDataPass.arName)
+            binding?.tvToolbar?.text = "Edit Zone"
+        }
+        else if(SingleTonDataPass.isView == true){
+            binding?.etSearch?.visibility = View.INVISIBLE
+            binding?.btnReset?.visibility = View.INVISIBLE
+            binding?.clLayout?.visibility = View.INVISIBLE
+            binding?.tvToolbar?.text = "View"
         }
         binding?.rvLocation?.adapter = locationSearchAdapter
     }
@@ -160,6 +167,11 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
             locationSearchAdapter?.updateData(it.predictions ?: emptyList())
         }
 
+        viewModel.getUpdateZone.observe(viewLifecycleOwner){
+            showToast("Updated successfully")
+            navController.popBackStack()
+        }
+
         viewModel.getAddZoneData.observe(viewLifecycleOwner){
             showToast("Zone add successfully")
             navController.popBackStack()
@@ -207,7 +219,7 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
             )
         }
 
-        if (SingleTonDataPass.isEdit == true && SingleTonDataPass.coordinate.isNotEmpty()) {
+        if ((SingleTonDataPass.isEdit == true && SingleTonDataPass.coordinate.isNotEmpty()) || (SingleTonDataPass.isView == true && SingleTonDataPass.coordinate.isNotEmpty()) ) {
             polygonPoints.clear()
             polygonPoints.addAll(
                 SingleTonDataPass.coordinate.map {

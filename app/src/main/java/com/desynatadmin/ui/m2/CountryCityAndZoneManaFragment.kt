@@ -18,7 +18,6 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddCityBottomsheetBinding
 import com.desynatadmin.databinding.FragmentCountryCityAndZoneManaBinding
-import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -36,7 +35,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     private lateinit var navController: NavController
     private var cityList: ArrayList<CityResponse.Data>? = arrayListOf()
     private var serviceCityList: ArrayList<ServiceCityListResponse.Data.Data>? = arrayListOf()
-    private lateinit var cityAdapter : CityListAdapter
+    private lateinit var cityAdapter: CityListAdapter
     private var isObserver = true
     var cuountyVisible = false
     var searchCondition = ""
@@ -62,7 +61,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         observe()
     }
 
-    fun hitZoneList(){
+    fun hitZoneList() {
         viewModel.hitZoneList(
             SharedPreference.get(requireContext()).accessToken,
             SingleTonDataPass.countryId,
@@ -73,10 +72,9 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        if(key == "2"){
+        if (key == "2") {
             hitZoneList()
-        }
-        else{
+        } else {
             hitServiceApi()
         }
     }
@@ -86,63 +84,76 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         binding?.apply {
             recyclerView.visibility = View.VISIBLE
             zoneListRecyclerView.visibility = View.GONE
-            cityAdapter = CityListAdapter(serviceCityList ?: arrayListOf(), object : CityListAdapter.OnClick {
-                override fun onViewCLick(position: Int) {
-                    recyclerView.visibility = View.GONE
-                    tvCountry.visibility = View.GONE
-                    tvDropdown.visibility = View.GONE
-                    pagingLayout.visibility = View.GONE
-                    zoneListRecyclerView.visibility = View.VISIBLE
-                    SingleTonDataPass.countryId = serviceCityList?.get(position)?.country_id ?: ""
-                    SingleTonDataPass.cityId = serviceCityList?.get(position)?.id ?: ""
-                    hitZoneList()
-                    key = "2"
-                }
+            cityAdapter =
+                CityListAdapter(serviceCityList ?: arrayListOf(), object : CityListAdapter.OnClick {
+                    override fun onViewCLick(position: Int) {
+                        recyclerView.visibility = View.GONE
+                        tvCountry.visibility = View.GONE
+                        tvDropdown.visibility = View.GONE
+                        pagingLayout.visibility = View.GONE
+                        zoneListRecyclerView.visibility = View.VISIBLE
+                        SingleTonDataPass.countryId =
+                            serviceCityList?.get(position)?.country_id ?: ""
+                        SingleTonDataPass.cityId = serviceCityList?.get(position)?.id ?: ""
+                        hitZoneList()
+                        key = "2"
+                    }
 
-                override fun onEditClick(position: Int) {
+                    override fun onEditClick(position: Int) {
 
-                }
+                    }
 
-                override fun onDeleteClick(position: Int) {
-                    val map = HashMap<String, Any>()
-                    map["city_id"] = serviceCityList?.get(position)?.id ?: ""
-                    viewModel.hitDeleteServiceCity(SharedPreference.get(requireContext()).accessToken,
-                        map)
-                }
+                    override fun onDeleteClick(position: Int) {
+                        val map = HashMap<String, Any>()
+                        map["city_id"] = serviceCityList?.get(position)?.id ?: ""
+                        viewModel.hitDeleteServiceCity(
+                            SharedPreference.get(requireContext()).accessToken,
+                            map
+                        )
+                    }
 
-                override fun onStatusClick(position: Int) {
-                    val map = HashMap<String, Any>()
-                    map["city_id"] = serviceCityList?.get(position)?.id ?: ""
-                    viewModel.hitChangeCityStatus(SharedPreference.get(requireContext()).accessToken, map)
-                }
-            })
+                    override fun onStatusClick(position: Int) {
+                        val map = HashMap<String, Any>()
+                        map["city_id"] = serviceCityList?.get(position)?.id ?: ""
+                        viewModel.hitChangeCityStatus(
+                            SharedPreference.get(requireContext()).accessToken,
+                            map
+                        )
+                    }
+                })
             recyclerView.adapter = cityAdapter
         }
     }
 
     override fun initControl() {
 
-        binding?.imForward?.setOnClickListener{
-            if(lastPage > pageNo){
+        binding?.imForward?.setOnClickListener {
+            if (lastPage > pageNo) {
                 pageNo++
                 hitServiceApi()
             }
         }
 
-        binding?.imBackward?.setOnClickListener{
-            if(pageNo > 1){
+        binding?.imBackward?.setOnClickListener {
+            if (pageNo > 1) {
                 pageNo--
                 hitServiceApi()
             }
         }
 
 
-        binding?.etSearch?.addTextChangedListener(object : TextWatcher{
+        binding?.etSearch?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                searchCondition = p0.toString()
+                if (key == "1") {
+                    hitServiceApi()
+                } else {
+                    hitZoneList()
+                }
 
             }
 
@@ -152,11 +163,10 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
         binding?.apply {
             tvToolbar.setOnClickListener {
-                if(key == "1"){
+                if (key == "1") {
 //                    navController.popBackStack()
                     activity?.finish()
-                }
-                else{
+                } else {
                     tvCountry.visibility = View.VISIBLE
                     tvDropdown.visibility = View.VISIBLE
                     recyclerView.visibility = View.VISIBLE
@@ -204,7 +214,10 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                             } else {
                                 val map = HashMap<String, Any>()
                                 map["city_id"] = cityId
-                                viewModel.hitAddServiceCity(SharedPreference.get(requireContext()).accessToken, map)
+                                viewModel.hitAddServiceCity(
+                                    SharedPreference.get(requireContext()).accessToken,
+                                    map
+                                )
                                 dialog?.dismiss()
                             }
                         }
@@ -249,56 +262,89 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
     override fun observe() {
 
-        viewModel.getZoneData.observe(viewLifecycleOwner){
-            binding?.zoneListRecyclerView?.adapter = ZoneListAdapter(it.data.data?: arrayListOf(), object  : ZoneListAdapter.OnClick{
-                override fun onClick(position: Int) {
+        viewModel.getZoneData.observe(viewLifecycleOwner) {
 
-                }
+            if (!it.data.data.isNullOrEmpty()) {
+                binding?.noData?.isVisible = false
+                binding?.zoneListRecyclerView?.isVisible = true
+                binding?.zoneListRecyclerView?.adapter =
+                    ZoneListAdapter(
+                        it.data.data ?: arrayListOf(),
+                        object : ZoneListAdapter.OnClick {
+                            override fun onClick(position: Int) {
+                                SingleTonDataPass.isView = true
+                                SingleTonDataPass.isEdit = false
+                                SingleTonDataPass.coordinate =
+                                    it.data.data.get(position).coordinates
+                                SingleTonDataPass.enName = it.data.data.get(position).name_english
+                                SingleTonDataPass.arName = it.data.data.get(position).name_arabic
+                                navController.navigate(R.id.action_countryCityAndZoneManaFragment_to_addZoneFragment)
+                            }
 
-                override fun editClick(position: Int) {
-                    SingleTonDataPass.isEdit = true
-                    SingleTonDataPass.coordinate = it.data.data.get(position).coordinates
-                    SingleTonDataPass.enName = it.data.data.get(position).name_english
-                    SingleTonDataPass.arName = it.data.data.get(position).name_arabic
-                    navController.navigate(R.id.action_countryCityAndZoneManaFragment_to_addZoneFragment)
-                }
+                            override fun editClick(position: Int) {
+                                SingleTonDataPass.isView = false
+                                SingleTonDataPass.isEdit = true
+                                SingleTonDataPass.coordinate =
+                                    it.data.data.get(position).coordinates
+                                SingleTonDataPass.enName = it.data.data.get(position).name_english
+                                SingleTonDataPass.arName = it.data.data.get(position).name_arabic
+                                SingleTonDataPass.zoneId = it.data?.data?.get(position)?.id ?: ""
+                                navController.navigate(R.id.action_countryCityAndZoneManaFragment_to_addZoneFragment)
+                            }
 
-                override fun deleteClick(position: Int) {
+                            override fun deleteClick(position: Int) {
+                                val map = HashMap<String, Any>()
+                                map["zone_id"] = it.data.data?.get(position)?.id ?: ""
+                                viewModel.hitDeleteZone(
+                                    SharedPreference.get(requireContext()).accessToken,
+                                    map
+                                )
+                            }
 
-                }
-
-                override fun updateStatus(position: Int) {
-                }
-            })
+                            override fun updateStatus(position: Int) {
+                                val map = HashMap<String, Any>()
+                                map["zone_id"] = it.data.data?.get(position)?.id ?: ""
+                                viewModel.hitUpdateZoneStatus(
+                                    SharedPreference.get(requireContext()).accessToken,
+                                    map
+                                )
+                            }
+                        })
+            } else {
+                binding?.noData?.isVisible = true
+                binding?.zoneListRecyclerView?.isVisible = false
+            }
         }
 
 
-        viewModel.getUpdateZone.observe(viewLifecycleOwner){
+        viewModel.getUpdateZoneStatus.observe(viewLifecycleOwner) {
             showToast("Updated successfully")
             hitZoneList()
         }
 
         viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
-                ProgressDialogUtils.getInstance().hideProgress()
-                viewModel.hitCity(
-                    SharedPreference.get(requireContext()).accessToken,
-                    response?.data?.get(0)?.id.toString()
-                )
-                binding?.tvDropdown?.text = response?.data?.get(0)?.name
-                countryId = response?.data?.get(0)?.id.toString()
-                binding?.countryRecycler?.adapter =
-                    ListAdapter(response.data, object : ListAdapter.OnCLick {
-                        override fun onClick(position: Int) {
-                            cuountyVisible = false
-                            binding?.countryRecycler?.isVisible = false
-                            countryId = response?.data?.get(position)?.id.toString()
-                            binding?.tvDropdown?.text = response?.data?.get(position)?.name
-                            viewModel.hitCity(SharedPreference.get(requireContext()).accessToken, countryId)
-                        }
-                    })
-                isObserver = false
-            }
+            ProgressDialogUtils.getInstance().hideProgress()
+            viewModel.hitCity(
+                SharedPreference.get(requireContext()).accessToken,
+                response?.data?.get(0)?.id.toString()
+            )
+            binding?.tvDropdown?.text = response?.data?.get(0)?.name
+            countryId = response?.data?.get(0)?.id.toString()
+            binding?.countryRecycler?.adapter =
+                ListAdapter(response.data, object : ListAdapter.OnCLick {
+                    override fun onClick(position: Int) {
+                        cuountyVisible = false
+                        binding?.countryRecycler?.isVisible = false
+                        countryId = response?.data?.get(position)?.id.toString()
+                        binding?.tvDropdown?.text = response?.data?.get(position)?.name
+                        viewModel.hitCity(
+                            SharedPreference.get(requireContext()).accessToken,
+                            countryId
+                        )
+                    }
+                })
+
+
         }
 
         viewModel.hitCityList.observe(viewLifecycleOwner) { response ->
@@ -306,7 +352,11 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             cityList?.clear()
             cityList?.addAll(response.data)
             hitServiceApi()
+        }
 
+        viewModel.getDeleteZone.observe(viewLifecycleOwner) {
+            showToast("Zone Delete successfully")
+            hitZoneList()
         }
 
         viewModel.getServiceCityList.observe(viewLifecycleOwner) { response ->
@@ -315,6 +365,13 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             binding?.tvPages?.text = "$pageNo/$lastPage"
             serviceCityList?.clear()
             serviceCityList?.addAll(response?.data?.data ?: arrayListOf())
+            if (serviceCityList.isNullOrEmpty()){
+                binding?.noData?.isVisible = false
+                binding?.recyclerView?.isVisible = true
+            }else{
+                binding?.noData?.isVisible = false
+                binding?.recyclerView?.isVisible = true
+            }
             cityAdapter.notifyDataSetChanged()
         }
 
@@ -330,16 +387,13 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         }
 
         viewModel.getAddServiceCity.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
-                ProgressDialogUtils.getInstance().hideProgress()
-                showToast("City Added successfully")
-
-                isObserver = false
-            }
+            ProgressDialogUtils.getInstance().hideProgress()
+            showToast("City Added successfully")
+            hitServiceApi()
         }
     }
 
-    fun hitServiceApi(){
+    fun hitServiceApi() {
         viewModel.hitServiceCityList(
             SharedPreference.get(requireContext()).accessToken,
             countryId,

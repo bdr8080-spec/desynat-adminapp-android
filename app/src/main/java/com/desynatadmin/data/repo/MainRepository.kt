@@ -21,9 +21,11 @@ import com.desynatadmin.ui.home.brandManagement.response.PlaceDetailsResponse
 import com.desynatadmin.ui.home.brandManagement.response.PlacesResponse
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
+import com.desynatadmin.ui.home.brandManagement.response.SellerStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateZonResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateZoneStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
@@ -519,6 +521,45 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+    val getRejectSeller = SingleLiveEvent<AcceptSellerResponse>()
+    suspend fun hitRejectSeller(
+        token : String,
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitRejectSeller(token,map)
+            },
+            responseLiveData = getRejectSeller
+        )
+    }
+
+    val getDeleteZone = SingleLiveEvent<AcceptSellerResponse>()
+    suspend fun hitDeleteZone(
+        token : String,
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitDeleteZone(token,map)
+            },
+            responseLiveData = getDeleteZone
+        )
+    }
+
+    val getUpdateSellerData = SingleLiveEvent<SellerStatusResponse>()
+    suspend fun hitUpdateSeller(
+        token : String,
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.hitSellerStatus(token,map)
+            },
+            responseLiveData = getUpdateSellerData
+        )
+    }
+
     val getLocation = SingleLiveEvent<PlacesResponse>()
     suspend fun hitPlaceResponse(
         input:String,key:String
@@ -557,7 +598,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = getUpdateZoneData
         )
     }
-    val getUpdateZoneStatusData = SingleLiveEvent<UpdateZonResponse>()
+    val getUpdateZoneStatusData = SingleLiveEvent<UpdateZoneStatusResponse>()
     suspend fun hitUpdateZoneStatus(
         token : String,
        map : HashMap<String, Any>
@@ -566,7 +607,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             api = {
                 api.hitUpdateZoneStatus(token,map)
             },
-            responseLiveData = getUpdateZoneData
+            responseLiveData = getUpdateZoneStatusData
         )
     }
 

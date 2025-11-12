@@ -10,6 +10,7 @@ tools:context=".ui.m2.NewDetailActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_marginBottom="10dp"
+    android:layout_marginTop="20dp"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -31,7 +32,7 @@ tools:context=".ui.m2.NewDetailActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="110dp"
         android:layout_marginHorizontal="16dp"
         android:background="@drawable/et_bg"
         android:padding="8dp"
@@ -44,7 +45,7 @@ tools:context=".ui.m2.NewDetailActivity">
             android:id="@+id/ivProfileImage"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/dummy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -168,10 +169,13 @@ tools:context=".ui.m2.NewDetailActivity">
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/puma_iv"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvStoreInformation"
-        app:shapeAppearanceOverlay="@style/circle_image" />
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CircleImageView"
+        app:strokeColor="@android:color/transparent"
+        app:strokeWidth="0dp"
+        android:src="@drawable/puma_iv" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl2"
@@ -648,23 +652,23 @@ tools:context=".ui.m2.NewDetailActivity">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cl4" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btnAccept"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/btn1_background"
-        android:fontFamily="@font/poppins_medium"
-        android:gravity="center"
-        android:paddingVertical="9dp"
-        android:text="Accept"
-        android:textColor="#FAFAFA"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/btnReject"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnReject"
-        app:layout_constraintTop_toTopOf="@id/btnReject" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnAccept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn1_background"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:paddingVertical="9dp"
+            android:text="Accept"
+            android:textColor="#FAFAFA"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnReject"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnReject"
+            app:layout_constraintTop_toTopOf="@id/btnReject" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

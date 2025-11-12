@@ -36,6 +36,10 @@ class ZoneListAdapter(val list : ArrayList<ZoneListResponse.Data.Data>, val clic
             else{
                 toggle.setImageResource(R.drawable.toggle_ic)
             }
+
+            imDelete.setOnClickListener {
+                click.deleteClick(position)
+            }
             toggle.setOnClickListener {
                 click.updateStatus(position)
             }

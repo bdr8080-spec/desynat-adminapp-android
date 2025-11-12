@@ -15,10 +15,12 @@ import com.desynatadmin.ui.home.brandManagement.response.PlaceDetailsResponse
 import com.desynatadmin.ui.home.brandManagement.response.PlacesResponse
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
+import com.desynatadmin.ui.home.brandManagement.response.SellerStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceRequest
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateZonResponse
+import com.desynatadmin.ui.home.brandManagement.response.UpdateZoneStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
@@ -258,6 +260,13 @@ interface ApiServices {
         @Body body: HashMap<String, Any>
     ): Response<AcceptSellerResponse>
 
+    @POST(Constants.REJECT_SELLER)
+    suspend fun hitRejectSeller(
+        @Header("Token") Token: String,
+        @Body body: HashMap<String, Any>
+    ): Response<AcceptSellerResponse>
+
+
     @GET("https://maps.googleapis.com/maps/api/place/autocomplete/json")
     suspend fun getPlaceSuggestions(
         @Query("input") input: String,
@@ -290,8 +299,18 @@ interface ApiServices {
     suspend fun hitUpdateZoneStatus(
         @Header("Token") Token: String,
         @Body map : HashMap<String, Any>
-    ): Response<UpdateZonResponse>
+    ): Response<UpdateZoneStatusResponse>
 
+    @POST(Constants.DELETE_ZONE)
+    suspend fun hitDeleteZone(
+        @Header("Token") Token: String,
+        @Body body: HashMap<String, Any>
+    ): Response<AcceptSellerResponse>
 
+    @POST(Constants.UPDATE_SELLER_STATUS)
+    suspend fun hitSellerStatus(
+        @Header("Token") Token: String,
+        @Body body: HashMap<String, Any>
+    ): Response<SellerStatusResponse>
 
 }

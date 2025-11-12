@@ -50,6 +50,7 @@ object Constants {
     const val REJECTED_SELLER = "/api/admin/get_rejected_sellers"
     const val SELLER_DETAIL = "/api/admin/get_seller_details"
     const val ACCEPT_SELLER = "/api/admin/accept_seller"
+    const val REJECT_SELLER = "/api/admin/reject_seller"
 
 
     const val GET_SUBSCRIPTION_PLAN = "/api/admin/get_plans"
@@ -61,5 +62,7 @@ object Constants {
     const val GET_ZONE_LIST = "/api/admin/get_zones"
     const val UPDATE_ZONE = "/api/admin/update_zone"
     const val UPDATE_ZONE_STATUS = "/api/admin/change_zone_status"
+    const val DELETE_ZONE = "/api/admin/delete_zone"
+    const val UPDATE_SELLER_STATUS = "/api/admin/block_unblock_seller"
 
 }

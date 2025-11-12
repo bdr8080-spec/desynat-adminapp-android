@@ -30,7 +30,7 @@ data class RejectedListResponse(
             var device_type: String,
             var email: String,
             var first_name: String,
-            var id: Int,
+            var id: String,
             var is_block: Int,
             var lang: Any,
             var last_name: String,
