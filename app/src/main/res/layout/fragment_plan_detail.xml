@@ -86,15 +86,197 @@
 
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <LinearLayout
+                android:id="@+id/llProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_plan_feature"/>
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Number of Products: "
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_feature"
+                    android:drawablePadding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text=""
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/tvFeature"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Number of Videos (Reels): "
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_feature"
+                    android:drawablePadding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvReel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text=""
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/tvFeature"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llHighlights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Number of Highlights: "
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_feature"
+                    android:drawablePadding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHighlights"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text=""
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/tvFeature"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llStories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Stories: "
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_feature"
+                    android:drawablePadding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text=""
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/tvFeature"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llEmployees"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEmployee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Store Employees"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_feature"
+                    android:drawablePadding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCommision"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Commission: "
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_feature"
+                    android:drawablePadding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCommission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text=""
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/tvFeature"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

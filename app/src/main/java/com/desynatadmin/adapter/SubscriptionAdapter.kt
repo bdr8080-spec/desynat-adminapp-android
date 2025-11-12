@@ -12,14 +12,20 @@ import com.desynatadmin.databinding.ItemPlanBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
+import com.desynatadmin.utils.CommonMethod
 
 class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<GetAllPlanResponse.Data>, var subscriptionClick:SubscriptionClick) : RecyclerView.Adapter<SubscriptionAdapter.ViewHolder>() {
+
+    val backgrounds = listOf(
+        R.drawable.pro,
+        R.drawable.plus,
+        R.drawable.growth,
+    )
     inner class ViewHolder(val binding: ItemPlanBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     interface SubscriptionClick{
-        fun onSubscriptionClick(position: Int)
-    }
+        fun onSubscriptionClick(position: Int, backgroundRes: Int)    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -37,25 +43,30 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
 
         holder.binding.apply {
             tvPackage.text = subscriptionData.planNameEnglish
-            tvPrice.text = "KD ${subscriptionData.price}"
+            tvPrice.text = "KD ${CommonMethod.formatDoubleValue(subscriptionData?.price)}"
             when(subscriptionData.durationType){
                 1->{
-                    tvDuration.text = "for ${subscriptionData.duration} Days"
-                }
-                2->{
                     tvDuration.text = "for ${subscriptionData.duration} Month"
                 }
-                else ->{
+                2->{
                     tvDuration.text = "for ${subscriptionData.duration} Year"
                 }
+                else ->{
+                    tvDuration.text = "for ${subscriptionData.duration} Month"
+                }
             }
-
+/*
             when(position){
                 0->tvPackage.setBackgroundResource(R.drawable.pro)
                 1->tvPackage.setBackgroundResource(R.drawable.plus)
                 2->tvPackage.setBackgroundResource(R.drawable.growth)
                 else ->tvPackage.setBackgroundResource(R.drawable.pro)
-            }
+            }*/
+
+
+
+            val backgroundRes = backgrounds[position % backgrounds.size]
+            tvPackage.setBackgroundResource(backgroundRes)
         }
         var featureList = ArrayList<FeatureList>()
 
@@ -71,7 +82,6 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
             if (noOfHighlights != 0)
                 featureList.add(FeatureList("Number of Highlights: ", noOfHighlights))
 
-            if (stories != 0)
                 featureList.add(FeatureList("Stories: ", stories))
 
             if (noOfEmployee != 0)
@@ -85,10 +95,13 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
                     featureList.add(FeatureList("Commission: ", formattedCommission))}
                 else {
                     val formattedCommission =  commissionValue.toString()
-                    featureList.add(FeatureList("Commission: $formattedCommission", 0))
+                    featureList.add(FeatureList("Commission: $formattedCommission %", 0))
 
                 }
 
+            }
+            else{
+                featureList.add(FeatureList("Commission: ", 0))
             }
         }
 
@@ -98,7 +111,8 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
                 context = context,
                 featureList,object :FeaturePlanAdapter.SubscriptionFeatureClick{
                     override fun onSubscriptionClick(featurePosition: Int) {
-                        subscriptionClick.onSubscriptionClick(position)
+                        val backgroundRes = backgrounds[position % backgrounds.size]
+                        subscriptionClick.onSubscriptionClick(position,backgroundRes)
                     }
 
                 })
@@ -107,7 +121,8 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
         }
 
         holder.itemView.setOnClickListener {
-            subscriptionClick.onSubscriptionClick(position)
+            val backgroundRes = backgrounds[position % backgrounds.size]
+            subscriptionClick.onSubscriptionClick(position,backgroundRes)
 
         }
     }

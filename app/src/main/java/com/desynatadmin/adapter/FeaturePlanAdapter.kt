@@ -27,9 +27,23 @@ class FeaturePlanAdapter(var context:Context, var featureList: ArrayList<Feature
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             tvFeature.text = featureList[position].feature
-            if (featureList[position].count!=0) {
-                tvCount.text = featureList[position].count.toString()
-            }
+                if (featureList[position].feature=="Commission: "){
+                    if (featureList[position].count!=0) {
+                        tvCount.text = "${featureList[position].count.toString()}%"
+                    }
+                    else{
+                        tvCount.text = "No"
+                    }
+                }
+                else if (featureList[position].feature=="Stories: "){
+                    tvCount.text = if(featureList[position].count==1) "Open" else "Close"
+                }
+                else{
+                    if (featureList[position].count!=0) {
+                        tvCount.text = featureList[position].count.toString()
+                    }
+                }
+
         }
 
         holder.itemView.setOnClickListener {

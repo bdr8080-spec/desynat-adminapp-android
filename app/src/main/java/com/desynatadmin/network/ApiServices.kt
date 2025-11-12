@@ -150,6 +150,11 @@ interface ApiServices {
         @Query ("country_id") countryId:String?=null
         ): Response<GetAllPlanResponse>
 
+    @GET(Constants.GET_SUBSCRIPTION_PLAN_DETAILS)
+    suspend fun getSubscriptionPlanDetail(
+        @Query ("plan_id") planId:String?=null
+        ): Response<UpdatePlanStatusResponse>
+
     @POST(Constants.ADD_SUBSCRIPTION_PLAN)
     suspend fun addSubscriptionPlan(
         @Body request: AddPlanRequest): Response<CommonResponse>
