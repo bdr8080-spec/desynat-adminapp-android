@@ -445,5 +445,19 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getFilterData: LiveData<UpdateZonResponse>
+        get() = repository.filterNewSeller
+
+    fun httpFilterData(token:String,country_id: String,from_date: String,to_date: String) {
+        viewModelScope.launch {
+            repository.hitNewSeller(
+                token = token,
+                country_id = country_id,
+                from_date = from_date,
+                to_date = to_date
+            )
+        }
+    }
+
 
 }

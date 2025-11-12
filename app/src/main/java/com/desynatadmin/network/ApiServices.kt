@@ -293,5 +293,15 @@ interface ApiServices {
     ): Response<UpdateZonResponse>
 
 
+    @GET("api/admin/get_new_sellers")
+    suspend fun filter(
+        @Header("Token") Token: String,
+        @Query("country_id")country_id:String,
+        @Query("from_date")from_date:String,
+        @Query("to_date")to_date:String,
+
+    ): Response<UpdateZonResponse>
+
+
 
 }

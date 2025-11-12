@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.desynatadmin.adapter.ApprovedAdapter
+import com.desynatadmin.adapter.NewAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentApprovedScreenBinding
+import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ApprovedScreenFragment : BaseFragment() {
 
     private var binding: FragmentApprovedScreenBinding? = null
+    private var list=ArrayList<ApprovedSellerResponse.Data.Data>()
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
@@ -63,7 +66,8 @@ class ApprovedScreenFragment : BaseFragment() {
           if(!it.data.data.isNullOrEmpty()){
               binding?.noSeller?.isVisible = false
               binding?.approvedRecyclerView?.isVisible = true
-              binding?.approvedRecyclerView?.adapter = ApprovedAdapter(it.data.data, object : ApprovedAdapter.OnCLick{
+              list=it.data.data
+              binding?.approvedRecyclerView?.adapter = ApprovedAdapter(list, object : ApprovedAdapter.OnCLick{
                   override fun onClick(position: Int) {
                       startActivity(Intent(requireContext(), ApprovedDetailsActivity::class.java)
                           .putExtra("id", it.data?.data?.get(position)?.id)
@@ -76,6 +80,12 @@ class ApprovedScreenFragment : BaseFragment() {
                 binding?.approvedRecyclerView?.isVisible = false
           }
         }
+    }
+
+    fun filterData(s:String){
+        var arr=list.filter { it.first_name.contains(s,true) }
+        (binding?.approvedRecyclerView?.adapter as ApprovedAdapter).list=arr
+        (binding?.approvedRecyclerView?.adapter as ApprovedAdapter).notifyDataSetChanged()
     }
 
 }

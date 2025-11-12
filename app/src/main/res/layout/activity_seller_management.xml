@@ -59,6 +59,7 @@
                 android:background="@drawable/filter_bg"
                 android:padding="16dp"
                 android:scaleType="fitXY"
+                android:id="@+id/filter"
                 android:src="@drawable/filter_ic"
                 app:layout_constraintTop_toTopOf="@id/etSearch"
                 app:layout_constraintBottom_toBottomOf="@id/etSearch"
@@ -91,19 +92,19 @@
                 app:layout_constraintTop_toBottomOf="@id/btnExport">
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabNew"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New" />
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabApproved"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Approved" />
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabRejected"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rejected" />

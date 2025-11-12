@@ -570,6 +570,19 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+    val filterNewSeller = SingleLiveEvent<UpdateZonResponse>()
+    suspend fun hitNewSeller(
+        token : String,
+        country_id: String,from_date: String,to_date: String
+    ) {
+        handleApiCall(
+            api = {
+                api.filter(Token =token,country_id = country_id, from_date = from_date, to_date = to_date)
+            },
+            responseLiveData = filterNewSeller
+        )
+    }
+
     val fetchLocation = SingleLiveEvent<PlaceDetailsResponse>()
     suspend fun hitPlaceDetail(
         placeId:String,key:String

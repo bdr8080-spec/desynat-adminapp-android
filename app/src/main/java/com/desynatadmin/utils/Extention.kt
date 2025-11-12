@@ -3,6 +3,7 @@ package com.desynatadmin.utils
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -30,6 +31,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 fun AppCompatActivity.statusBarTransparentWithWhite() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -268,6 +270,24 @@ fun EditText.togglePasswordVisibility(passwordToggle: ImageView) {
         this.setSelection(pass.length)
         passwordVisible = newVisibility
     }
+}
+
+fun openDatePicker(context: Context,onClick:(String,Long)->Unit){
+    val calendar = Calendar.getInstance()
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            val timestamp = calendar.timeInMillis
+            onClick(selectedDate,timestamp)
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+
+    datePickerDialog.show()
 }
 
 fun String?.orDash(): String = if (this.isNullOrBlank()) "-" else this

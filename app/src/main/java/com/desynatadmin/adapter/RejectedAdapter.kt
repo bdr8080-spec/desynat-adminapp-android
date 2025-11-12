@@ -10,7 +10,7 @@ import com.desynatadmin.databinding.RejectedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class RejectedAdapter(val list : ArrayList<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
+class RejectedAdapter(var list : List<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
     class ViewHolder(val binding: RejectedItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 

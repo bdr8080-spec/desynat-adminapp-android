@@ -9,7 +9,7 @@ import com.desynatadmin.databinding.NewItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class NewAdapter(val list: ArrayList<NewSellerResponse.Data.Data>, val click: OnClick) :
+class NewAdapter(var list: List<NewSellerResponse.Data.Data>, val click: OnClick) :
     RecyclerView.Adapter<NewAdapter.ViewHolder>() {
     class ViewHolder(val binding: NewItemBinding) :
         RecyclerView.ViewHolder(binding.root)

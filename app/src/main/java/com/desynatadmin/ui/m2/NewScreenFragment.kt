@@ -25,6 +25,7 @@ class NewScreenFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     var pageNo = 1
     var lastPage = 1
+    var list=ArrayList<NewSellerResponse.Data.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,9 +91,10 @@ class NewScreenFragment : BaseFragment() {
             lastPage = it.data.last_page
             binding?.tvPages?.text ="$pageNo/$lastPage"
             if(!it.data.data.isNullOrEmpty()){
+                list=it.data.data
                 binding?.noSeller?.isVisible = false
                 binding?.newRecycler?.isVisible = true
-                binding?.newRecycler?.adapter = NewAdapter(it.data.data, object : NewAdapter.OnClick{
+                binding?.newRecycler?.adapter = NewAdapter(list, object : NewAdapter.OnClick{
                     override fun onCLick(position: Int) {
                         startActivity(Intent(requireContext(), NewDetailActivity::class.java)
                             .putExtra("id", it?.data?.data?.get(position)?.id)
@@ -118,6 +120,12 @@ class NewScreenFragment : BaseFragment() {
                 binding?.newRecycler?.isVisible = false
             }
         }
+    }
+
+    fun filterData(s:String){
+        var arr=list.filter { it.first_name.contains(s,true) }
+        (binding?.newRecycler?.adapter as NewAdapter).list=arr
+        (binding?.newRecycler?.adapter as NewAdapter).notifyDataSetChanged()
     }
 
 }
