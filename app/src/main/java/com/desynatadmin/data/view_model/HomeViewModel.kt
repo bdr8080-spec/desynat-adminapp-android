@@ -400,6 +400,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val subscriptionPlanDetailResult: LiveData<UpdatePlanStatusResponse>
+        get() = repository.subscriptionPlanDetailLiveData
+
+    fun getSubscriptionPlanDetail(planId:String?=null) {
+        viewModelScope.launch {
+            repository.getSubscriptionPlanDetail(planId)
+        }
+    }
+
     val addSubscriptionPlanResult: LiveData<CommonResponse>
         get() = repository.addSubscriptionPlanLiveData
 

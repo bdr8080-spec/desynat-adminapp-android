@@ -28,6 +28,7 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.desynatadmin.R
+import com.desynatadmin.databinding.DeleteDialogLayoutBinding
 import com.desynatadmin.databinding.SuccessDialogLayoutBinding
 import java.io.File
 import java.text.ParseException
@@ -327,6 +328,50 @@ object CommonMethod {
                 }
             }, 1000)
         }
+    }
+
+    fun formatDoubleValue(value: Double?): String {
+        if (value == null || value == 0.0) return ""
+        return if (value % 1.0 == 0.0) {
+            value.toInt().toString()  // Convert to integer string if whole number
+        } else {
+            value.toString()          // Keep decimal part if not whole
+        }
+    }
+
+    fun deleteAlertDialog(
+        context: Context,
+        description: String,
+        onResult: (action: DialogAction) -> Unit
+    ) {
+        val dialog = Dialog(context, R.style.CustomDialog)
+        val dialogBinding = DeleteDialogLayoutBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(dialogBinding.root)
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        dialogBinding.tvDescription.text = description
+
+        dialogBinding.btnDelete.setOnClickListener {
+            onResult(DialogAction.DELETE)
+            dialog.dismiss()
+        }
+        dialogBinding.btnDiscard.setOnClickListener {
+            onResult(DialogAction.DISCARD)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    enum class DialogAction {
+        DELETE, DISCARD
     }
 
 

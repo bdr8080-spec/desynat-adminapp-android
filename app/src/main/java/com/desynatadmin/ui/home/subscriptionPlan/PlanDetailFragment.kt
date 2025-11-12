@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
+import com.desynatadmin.adapter.FeatureList
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentPlanDetailBinding
@@ -24,6 +26,8 @@ class PlanDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var subscriptionData: GetAllPlanResponse.Data?=null
+    private var background: Int?=R.drawable.plus
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,10 +45,12 @@ class PlanDetailFragment : BaseFragment() {
 
     override fun initView() {
         val itemJson = arguments?.getString("subscriptionData")
+        background = arguments?.getInt("background")
         if (!itemJson.isNullOrEmpty()) {
             subscriptionData = Gson().fromJson(itemJson, GetAllPlanResponse.Data::class.java)
             setData()
             updateStatus()
+            getSubscriptionPlan()
         }
         binding?.apply {
             toolbar.tvToolbar.text = "Plan Details"
@@ -58,7 +64,21 @@ class PlanDetailFragment : BaseFragment() {
             }
 
             btnDelete.setOnClickListener {
-                deletePlan()
+                CommonMethod.deleteAlertDialog(
+                    requireActivity(),
+                    "Are you sure you want to delete the plan?"
+                ) { action ->
+                    when (action) {
+                        CommonMethod.DialogAction.DELETE -> {
+                            deletePlan()
+                        }
+
+                        CommonMethod.DialogAction.DISCARD -> {
+
+                        }
+                    }
+                }
+
             }
 
             btnEdit.setOnClickListener {
@@ -93,12 +113,28 @@ class PlanDetailFragment : BaseFragment() {
             }
         }
 
+        viewModel.subscriptionPlanDetailResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                subscriptionData = response.data
+                setData()
+                isObserver = false
+            }
+        }
+
         viewModel.updateSubscriptionPlanStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 subscriptionData = response.data
+                if (response.data.status==1){
+//                    CommonMethod.showSuccessDialog(requireContext(), "Plan active successfully")
+                   showToast("Plan active successfully")
+                }
+                else{
+                    showToast("Plan inactive successfully")
+                }
                 updateStatus()
-                CommonMethod.showSuccessDialog(requireContext(), "Plan status updated successfully!")
+
                 isObserver = false
             }
         }
@@ -142,17 +178,41 @@ class PlanDetailFragment : BaseFragment() {
     private fun setData(){
 
         binding?.apply {
-
+            background?.let { tvPackage.setBackgroundResource(it) }
             tvPackage.text = subscriptionData?.planNameEnglish
-            tvPrice.text = "KD ${subscriptionData?.planNameEnglish}"
+            tvPrice.text = "KD ${CommonMethod.formatDoubleValue(subscriptionData?.price)}"
             when(subscriptionData?.durationType){
                 1->{
                     tvValidTime.text = "for ${subscriptionData?.duration} Month"
                 }
+                2->{
+                    tvValidTime.text = "for ${subscriptionData?.duration} Year"
+                }
                 else ->{
-                    tvValidTime.text = "for ${subscriptionData?.duration} Days"
+                    tvValidTime.text = "for ${subscriptionData?.duration} Month"
                 }
             }
+
+            setVisibilityIfZero(llProduct, subscriptionData?.noOfProducts)
+            setVisibilityIfZero(llVideos, subscriptionData?.noOfVideos)
+            setVisibilityIfZero(llHighlights, subscriptionData?.noOfHighlights)
+            setVisibilityIfZero(llEmployees, subscriptionData?.noOfEmployee)
+
+            tvProduct.text = subscriptionData?.noOfProducts.toString()
+            tvReel.text = subscriptionData?.noOfVideos.toString()
+            tvHighlights.text = subscriptionData?.noOfHighlights.toString()
+            tvStories.text = if(subscriptionData?.stories==1)"Open" else "Close"
+            tvEmployee.text = subscriptionData?.noOfEmployee.toString()+" Store Employees"
+
+            val commissionValue = subscriptionData?.commissionPercentage?.toString()?.toDoubleOrNull()
+            if (commissionValue != null && commissionValue != 0.0) {
+                tvCommission.text =  "${CommonMethod.formatDoubleValue(subscriptionData?.commissionPercentage)}%"
+            }
+            else{
+                tvCommission.text = "No"
+            }
+
+            tvProduct.text = subscriptionData?.noOfProducts.toString()
             if(subscriptionData?.status==1){
                 tvSwitch.text = "Active"
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
@@ -168,4 +228,22 @@ class PlanDetailFragment : BaseFragment() {
 
     }
 
+    private fun setVisibilityIfZero(view: View, value: Any?) {
+        val numericValue = when (value) {
+            is Int -> value
+            is Double -> value.toInt()
+            is Float -> value.toInt()
+            is String -> value.toIntOrNull() ?: 0
+            else -> 0
+        }
+        view.visibility = if (numericValue == 0) View.GONE else View.VISIBLE
+    }
+
+
+    private fun getSubscriptionPlan(){
+
+            viewModel.getSubscriptionPlanDetail(subscriptionData?.id.toString())
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
 }

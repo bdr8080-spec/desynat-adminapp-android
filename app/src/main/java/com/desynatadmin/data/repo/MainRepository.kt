@@ -350,6 +350,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+ val subscriptionPlanDetailLiveData = SingleLiveEvent<UpdatePlanStatusResponse>()
+    suspend fun getSubscriptionPlanDetail(planId:String?=null
+    ) {
+        handleApiCall(
+            api = {
+                api.getSubscriptionPlanDetail(planId)
+            },
+            responseLiveData = subscriptionPlanDetailLiveData
+        )
+    }
+
     val addSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun addSubscriptionPlan(request: AddPlanRequest
     ) {
@@ -368,7 +379,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             api = {
                 api.updateSubscriptionPlan(request)
             },
-            responseLiveData = editBrandLiveData
+            responseLiveData = editSubscriptionPlanLiveData
         )
     }
 
