@@ -442,6 +442,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val subscriptionPlanDetailResult: LiveData<UpdatePlanStatusResponse>
+        get() = repository.subscriptionPlanDetailLiveData
+
+    fun getSubscriptionPlanDetail(planId:String?=null) {
+        viewModelScope.launch {
+            repository.getSubscriptionPlanDetail(planId)
+        }
+    }
+
     val addSubscriptionPlanResult: LiveData<CommonResponse>
         get() = repository.addSubscriptionPlanLiveData
 
@@ -484,6 +493,20 @@ class HomeViewModel @Inject constructor(
     fun getCountry() {
         viewModelScope.launch {
             repository.getCountryy()
+        }
+    }
+
+    val getFilterData: LiveData<UpdateZonResponse>
+        get() = repository.filterNewSeller
+
+    fun httpFilterData(token:String,country_id: String,from_date: String,to_date: String) {
+        viewModelScope.launch {
+            repository.hitNewSeller(
+                token = token,
+                country_id = country_id,
+                from_date = from_date,
+                to_date = to_date
+            )
         }
     }
 

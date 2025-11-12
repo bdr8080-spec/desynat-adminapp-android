@@ -54,6 +54,7 @@ object Constants {
 
 
     const val GET_SUBSCRIPTION_PLAN = "/api/admin/get_plans"
+    const val GET_SUBSCRIPTION_PLAN_DETAILS = "/api/admin/get_plan_details"
     const val DELETE_SUBSCRIPTION_PLAN = "/api/admin/delete_plan"
     const val CHANGE_PLAN_STATUS = "/api/admin/change_plan_status"
     const val ADD_SUBSCRIPTION_PLAN = "/api/admin/add_plan"

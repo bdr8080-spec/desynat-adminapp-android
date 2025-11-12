@@ -51,9 +51,10 @@ class PlanListFragment : BaseFragment() {
 
         binding?.apply {
             subscriptionAdapter = SubscriptionAdapter(requireActivity(),subscriptionList,object: SubscriptionAdapter.SubscriptionClick{
-                override fun onSubscriptionClick(position: Int) {
+                override fun onSubscriptionClick(position: Int,backgrounRes:Int) {
                     val bundle = Bundle().apply {
                         putString("subscriptionData", Gson().toJson(subscriptionList[position]))
+                        putInt("background", backgrounRes)
                     }
                     findNavController().navigate(R.id.action_planList_to_planDetailFragment,bundle)
                 }
@@ -62,7 +63,7 @@ class PlanListFragment : BaseFragment() {
             rvPlan.adapter = subscriptionAdapter
         }
         getCountryApi()
-        getSubscriptionPlan()
+      //  getSubscriptionPlan()
     }
 
     override fun initControl() {
@@ -137,7 +138,9 @@ class PlanListFragment : BaseFragment() {
             val countryCodes = countryList?.map { it.isoCode }
             val countryCodeString = countryCodes?.joinToString(",")
             binding?.ccpCountryPicker?.setCustomMasterCountries(countryCodeString)
-
+            selectedCountryCode = countryList[0].isoCode
+            binding?.etCountry?.setText(countryList[0].name)
+            getSubscriptionPlan()
         }
     }
 

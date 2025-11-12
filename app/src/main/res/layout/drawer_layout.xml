@@ -39,16 +39,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ivBack" />
 
-                <com.google.android.material.imageview.ShapeableImageView
+                <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/ivProfileImage"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:src="@drawable/dummy"
+                    android:src="@drawable/ic_user"
                     android:scaleType="centerCrop"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
-                    app:shapeAppearanceOverlay="@style/circle_image"
+                    app:civ_border="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivBack"
                     app:layout_constraintBottom_toBottomOf="parent"/>
@@ -146,6 +146,7 @@
 
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:id="@+id/rlSellereManagment"
                 android:layout_width="match_parent"
@@ -172,8 +173,6 @@
                     style="@style/drawer_arrow" />
 
             </RelativeLayout>
-
-
 
             <RelativeLayout
                 android:id="@+id/rlUserManagement"

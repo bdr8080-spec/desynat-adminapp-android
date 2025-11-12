@@ -69,9 +69,8 @@ class HomeActivity : BaseActivity() {
 
         val bottomNavDestinations = setOf(
             R.id.home,
-           /* R.id.catalog,
-            R.id.myBag,
-            R.id.profile,*/
+            R.id.planList,
+
         )
 
 
@@ -90,18 +89,11 @@ class HomeActivity : BaseActivity() {
                     bottomAdapter?.setSelectedItem(0)
                     enableDrawer(true)
                 }
-              /*  R.id.catalog -> {
-                    bottomAdapter?.setSelectedItem(1)
-                      enableDrawer(false)
-                }
-                R.id.myBag -> {
+                R.id.planList -> {
                     bottomAdapter?.setSelectedItem(3)
-                      enableDrawer(false)
+                    enableDrawer(false)
                 }
-                R.id.profile -> {
-                    bottomAdapter?.setSelectedItem(4)
-                      enableDrawer(false)
-                }*/
+
                 else ->{
                     enableDrawer(false)
                 }

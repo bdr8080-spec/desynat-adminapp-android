@@ -9,7 +9,7 @@ import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class ApprovedAdapter(val list : ArrayList<ApprovedSellerResponse.Data.Data>, val click : OnCLick) :
+class ApprovedAdapter(var list : List<ApprovedSellerResponse.Data.Data>, val click : OnCLick) :
     RecyclerView.Adapter<ApprovedAdapter.ViewHolder>() {
     class ViewHolder(val binding: ApprovedItemBinding) :
         RecyclerView.ViewHolder(binding.root)

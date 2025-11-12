@@ -152,6 +152,11 @@ interface ApiServices {
         @Query ("country_id") countryId:String?=null
         ): Response<GetAllPlanResponse>
 
+    @GET(Constants.GET_SUBSCRIPTION_PLAN_DETAILS)
+    suspend fun getSubscriptionPlanDetail(
+        @Query ("plan_id") planId:String?=null
+        ): Response<UpdatePlanStatusResponse>
+
     @POST(Constants.ADD_SUBSCRIPTION_PLAN)
     suspend fun addSubscriptionPlan(
         @Body request: AddPlanRequest): Response<CommonResponse>
@@ -300,6 +305,16 @@ interface ApiServices {
         @Header("Token") Token: String,
         @Body map : HashMap<String, Any>
     ): Response<UpdateZoneStatusResponse>
+
+
+    @GET("api/admin/get_new_sellers")
+    suspend fun filter(
+        @Header("Token") Token: String,
+        @Query("country_id")country_id:String,
+        @Query("from_date")from_date:String,
+        @Query("to_date")to_date:String,
+
+    ): Response<UpdateZonResponse>
 
     @POST(Constants.DELETE_ZONE)
     suspend fun hitDeleteZone(

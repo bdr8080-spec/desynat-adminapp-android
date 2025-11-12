@@ -7,16 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.desynatadmin.adapter.ApprovedAdapter
 import com.desynatadmin.adapter.RejectedAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentRejectedScreenBinding
+import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RejectedScreenFragment : BaseFragment() {
 
+    var list=ArrayList<RejectedListResponse.Data.Data>()
     private var binding: FragmentRejectedScreenBinding? = null
     private val viewModel: HomeViewModel by viewModels()
 
@@ -63,8 +66,9 @@ class RejectedScreenFragment : BaseFragment() {
             if (!it.data.data.isNullOrEmpty()) {
                 binding?.noSeller?.isVisible = false
                 binding?.rejectedRecyclerView?.isVisible = true
+                list=it.data.data
                 binding?.rejectedRecyclerView?.adapter =
-                    RejectedAdapter(it.data.data, object : RejectedAdapter.OnClick {
+                    RejectedAdapter(list, object : RejectedAdapter.OnClick {
                         override fun onClick(position: Int) {
                             startActivity(
                                 Intent(requireContext(), RejectDetailsActivity::class.java)
@@ -78,5 +82,12 @@ class RejectedScreenFragment : BaseFragment() {
             }
         }
     }
+
+    fun filterData(s:String){
+        var arr=list.filter { it.first_name.contains(s,true) }
+        (binding?.rejectedRecyclerView?.adapter as RejectedAdapter).list=arr
+        (binding?.rejectedRecyclerView?.adapter as RejectedAdapter).notifyDataSetChanged()
+    }
+
 
 }

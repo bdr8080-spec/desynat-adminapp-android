@@ -352,6 +352,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+ val subscriptionPlanDetailLiveData = SingleLiveEvent<UpdatePlanStatusResponse>()
+    suspend fun getSubscriptionPlanDetail(planId:String?=null
+    ) {
+        handleApiCall(
+            api = {
+                api.getSubscriptionPlanDetail(planId)
+            },
+            responseLiveData = subscriptionPlanDetailLiveData
+        )
+    }
+
     val addSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun addSubscriptionPlan(request: AddPlanRequest
     ) {
@@ -370,7 +381,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             api = {
                 api.updateSubscriptionPlan(request)
             },
-            responseLiveData = editBrandLiveData
+            responseLiveData = editSubscriptionPlanLiveData
         )
     }
 
@@ -608,6 +619,19 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
                 api.hitUpdateZoneStatus(token,map)
             },
             responseLiveData = getUpdateZoneStatusData
+        )
+    }
+
+    val filterNewSeller = SingleLiveEvent<UpdateZonResponse>()
+    suspend fun hitNewSeller(
+        token : String,
+        country_id: String,from_date: String,to_date: String
+    ) {
+        handleApiCall(
+            api = {
+                api.filter(Token =token,country_id = country_id, from_date = from_date, to_date = to_date)
+            },
+            responseLiveData = filterNewSeller
         )
     }
 
