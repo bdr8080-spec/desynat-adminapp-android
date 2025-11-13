@@ -29,9 +29,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.time.Instant
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 
 fun AppCompatActivity.statusBarTransparentWithWhite() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -66,6 +69,13 @@ fun isNetworkAvailable(context: Context): Boolean {
     val network = connectivityManager.activeNetwork ?: return false
     val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
     return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+}
+
+fun formatUtcDateToLocal(inputDate: String): String {
+    val instant = Instant.parse(inputDate)
+    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' hh:mm a", Locale.getDefault())
+        .withZone(ZoneId.of("Asia/Kolkata")) // Converts UTC to IST
+    return formatter.format(instant)
 }
 
 fun Fragment.pickImageFromCameraOrGallery(onImagePicked: (File) -> Unit) {

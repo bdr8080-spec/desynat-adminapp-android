@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.databinding.NewItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
@@ -31,7 +32,9 @@ class NewAdapter(var list: List<NewSellerResponse.Data.Data>, val click: OnClick
             tvName.text = item.first_name
             tvLocation.text = item.store_info.address_line1
             tvCall.text = item.country_code + "-" + item.mobile
-            Glide.with(ivProfileImage).load(item.profile_pic).into(ivProfileImage)
+            Glide.with(ivProfileImage).load(item.profile_pic)
+                .transform(CircleCrop())
+                .into(ivProfileImage)
             tvEmail.text = item.email
             tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"
             root.setOnClickListener {

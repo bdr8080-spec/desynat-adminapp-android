@@ -106,13 +106,13 @@ class NewScreenFragment : BaseFragment() {
                 binding?.newRecycler?.adapter = NewAdapter(list, object : NewAdapter.OnClick{
                     override fun onCLick(position: Int) {
                         startActivity(Intent(requireContext(), NewDetailActivity::class.java)
-                            .putExtra("id", it?.data?.data?.get(position)?.id)
+                            .putExtra("id", list.get(position).id)
                         )
                     }
 
                     override fun onAccept(position: Int) {
                         val map = HashMap<String, Any>()
-                        map["seller_id"] = it.data.data?.get(position)?.id ?: ""
+                        map["seller_id"] = list.get(position).id?: ""
                         viewModel.hitAcceptSeller(
                             SharedPreference.get(requireContext()).accessToken,
                           map
@@ -120,7 +120,7 @@ class NewScreenFragment : BaseFragment() {
                     }
 
                     override fun onDelete(position: Int) {
-                        deleteBottomSheet(it.data.data?.get(position)?.id ?: "")
+                        deleteBottomSheet( list.get(position).id?: "")
                     }
 
                 })
@@ -144,12 +144,12 @@ class NewScreenFragment : BaseFragment() {
         }
 
         deleteBinding.rbComplete.setOnClickListener {
-            type = "Complete Reject"
+            type = "complete"
             deleteBinding.rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
             deleteBinding.rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
         }
         deleteBinding.rbReject.setOnClickListener {
-            type = "Document Reject"
+            type = "document"
             deleteBinding.rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
             deleteBinding.rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
         }
@@ -183,6 +183,14 @@ class NewScreenFragment : BaseFragment() {
     fun filterData(s:String){
         var arr=list.filter { it.first_name.contains(s,true) }
         (binding?.newRecycler?.adapter as NewAdapter).list=arr
+        if(arr.isNullOrEmpty()){
+            binding?.noSeller?.isVisible = true
+            binding?.newRecycler?.isVisible = false
+        }
+        else{
+            binding?.noSeller?.isVisible = false
+            binding?.newRecycler?.isVisible = true
+        }
         (binding?.newRecycler?.adapter as NewAdapter).notifyDataSetChanged()
     }
 

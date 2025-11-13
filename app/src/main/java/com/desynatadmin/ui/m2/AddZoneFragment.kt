@@ -1,12 +1,17 @@
 package com.desynatadmin.ui.m2
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,16 +36,21 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 @AndroidEntryPoint
 class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
@@ -60,6 +70,9 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
     private val polygonPoints = mutableListOf<LatLng>()
     private var currentPolygon: Polygon? = null
 
+    // 👇 Default city name
+    private var defaultCityName = "New Delhi"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,6 +85,7 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         navController = findNavController()
+        defaultCityName = SingleTonDataPass.cityName
         initMap()
         initView()
         initControl()
@@ -84,12 +98,11 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
             binding?.rvLocation?.isVisible = false
         }
 
-        if(SingleTonDataPass.isEdit == true){
+        if (SingleTonDataPass.isEdit == true) {
             binding?.etZonaNameEn?.setText(SingleTonDataPass.enName)
             binding?.etZonaNameAr?.setText(SingleTonDataPass.arName)
             binding?.tvToolbar?.text = "Edit Zone"
-        }
-        else if(SingleTonDataPass.isView == true){
+        } else if (SingleTonDataPass.isView == true) {
             binding?.etSearch?.visibility = View.INVISIBLE
             binding?.btnReset?.visibility = View.INVISIBLE
             binding?.clLayout?.visibility = View.INVISIBLE
@@ -101,28 +114,25 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
     override fun initControl() {
         binding?.tvToolbar?.setOnClickListener { findNavController().popBackStack() }
 
-        // Submit button
         binding?.btnSubmit?.setOnClickListener {
             if (polygonPoints.isNotEmpty()) {
-                val coords = polygonPoints.joinToString("\n") { "(${it.latitude}, ${it.longitude})"}
                 val coordinateList = polygonPoints.map {
                     AddZoneRequest.Coordinate(lat = it.latitude, lng = it.longitude)
                 }
-                if(SingleTonDataPass.isEdit == true){
+
+                if (SingleTonDataPass.isEdit == true) {
                     viewModel.hitUpdateZone(
                         input = SharedPreference.get(requireContext()).accessToken,
                         req = AddZoneRequest(
-                            zone_id = SingleTonDataPass.zoneId?: "",
-                            city_id =  SingleTonDataPass.cityId ?: "",
+                            zone_id = SingleTonDataPass.zoneId ?: "",
+                            city_id = SingleTonDataPass.cityId ?: "",
                             coordinates = coordinateList,
-                            country_id =  SingleTonDataPass.countryId ?: "",
-                            name_arabic =  SingleTonDataPass.arName ?: "",
-                            name_english =  SingleTonDataPass.enName ?: ""
+                            country_id = SingleTonDataPass.countryId ?: "",
+                            name_arabic = SingleTonDataPass.arName ?: "",
+                            name_english = SingleTonDataPass.enName ?: ""
                         )
                     )
-
-                }
-                else{
+                } else {
                     viewModel.hitAddZone(
                         SharedPreference.get(requireContext()).accessToken,
                         map = AddZoneRequest(
@@ -133,7 +143,6 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
                             coordinates = coordinateList
                         )
                     )
-
                 }
             } else {
                 requireContext().showToast("Draw a polygon first")
@@ -155,7 +164,6 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
             }
         })
 
-        // Optional: Reset polygon
         binding?.btnReset?.setOnClickListener {
             clearPolygon()
             SingleTonDataPass.coordinate = emptyList()
@@ -167,13 +175,13 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
             locationSearchAdapter?.updateData(it.predictions ?: emptyList())
         }
 
-        viewModel.getUpdateZone.observe(viewLifecycleOwner){
+        viewModel.getUpdateZone.observe(viewLifecycleOwner) {
             showToast("Updated successfully")
             navController.popBackStack()
         }
 
-        viewModel.getAddZoneData.observe(viewLifecycleOwner){
-            showToast("Zone add successfully")
+        viewModel.getAddZoneData.observe(viewLifecycleOwner) {
+            showToast("Zone added successfully")
             navController.popBackStack()
         }
 
@@ -198,50 +206,79 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
+        enableMyLocation()
+        showDefaultCity(defaultCityName)
 
+        // Load polygon if editing or viewing
+        if ((SingleTonDataPass.isEdit == true && SingleTonDataPass.coordinate.isNotEmpty()) ||
+            (SingleTonDataPass.isView == true && SingleTonDataPass.coordinate.isNotEmpty())
+        ) {
+            polygonPoints.clear()
+            polygonPoints.addAll(SingleTonDataPass.coordinate.map { LatLng(it.lat, it.lng) })
+            drawPolygon()
+            val bounds = LatLngBounds.builder()
+            polygonPoints.forEach { bounds.include(it) }
+            googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100))
+        }
+
+        // 👇 Use custom drawable marker when adding polygon points
+        googleMap?.setOnMapClickListener { latLng ->
+            polygonPoints.add(latLng)
+            googleMap?.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .icon(bitmapDescriptorFromVector(requireContext(), R.drawable.location))
+                    .anchor(0.5f, 1f)
+            )
+            drawPolygon()
+        }
+    }
+
+    private fun enableMyLocation() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             googleMap?.isMyLocationEnabled = true
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                location?.let {
-                    val currentLatLng = LatLng(it.latitude, it.longitude)
-                    selectedLatLng = currentLatLng
-                    googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-                }
-            }
         } else {
             requestPermissions(
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST
             )
         }
+    }
 
-        if ((SingleTonDataPass.isEdit == true && SingleTonDataPass.coordinate.isNotEmpty()) || (SingleTonDataPass.isView == true && SingleTonDataPass.coordinate.isNotEmpty()) ) {
-            polygonPoints.clear()
-            polygonPoints.addAll(
-                SingleTonDataPass.coordinate.map {
-                    LatLng(it.lat, it.lng)
+    private fun showDefaultCity(cityName: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                val addresses = geocoder.getFromLocationName(cityName, 1)
+                if (!addresses.isNullOrEmpty()) {
+                    val location = addresses[0]
+                    val cityLatLng = LatLng(location.latitude, location.longitude)
+                    withContext(Dispatchers.Main) {
+                        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(cityLatLng, 12f))
+                        selectedLatLng = cityLatLng
+                    }
+                } else {
+                    withContext(Dispatchers.Main) { moveToUserLocation() }
                 }
-            )
-
-            drawPolygon()
-
-            // Move camera to polygon center
-            val bounds = com.google.android.gms.maps.model.LatLngBounds.builder()
-            polygonPoints.forEach { bounds.include(it) }
-            googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100))
-        }
-
-
-            googleMap?.setOnMapClickListener { latLng ->
-                polygonPoints.add(latLng)
-                googleMap?.addMarker(MarkerOptions().position(latLng))
-                drawPolygon()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) { moveToUserLocation() }
             }
+        }
+    }
 
+    private fun moveToUserLocation() {
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let {
+                val currentLatLng = LatLng(it.latitude, it.longitude)
+                selectedLatLng = currentLatLng
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+            }
+        }
     }
 
     private fun drawPolygon() {
@@ -254,7 +291,6 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
                 .strokeWidth(4f)
             currentPolygon = googleMap?.addPolygon(polygonOptions)
         } else {
-            // Draw connecting lines until we have enough points
             val polylineOptions = PolylineOptions()
                 .addAll(polygonPoints)
                 .color(0xFFFF0000.toInt())
@@ -279,6 +315,21 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
+    // ✅ Converts SVG/vector drawable → BitmapDescriptor for custom marker
+    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int, sizeDp: Int = 36): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)!!
+        val sizePx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            sizeDp.toFloat(),
+            context.resources.displayMetrics
+        ).toInt()
+        vectorDrawable.setBounds(0, 0, sizePx, sizePx)
+        val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -287,26 +338,14 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
         if (requestCode == LOCATION_PERMISSION_REQUEST && grantResults.isNotEmpty()
             && grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
-            onMapReady(googleMap!!)
+            enableMyLocation()
         }
     }
 
-    override fun onResume() {
-        super.onResume(); binding?.mapview?.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause(); binding?.mapview?.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy(); binding?.mapview?.onDestroy()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory(); binding?.mapview?.onLowMemory()
-    }
-
+    override fun onResume() { super.onResume(); binding?.mapview?.onResume() }
+    override fun onPause() { super.onPause(); binding?.mapview?.onPause() }
+    override fun onDestroy() { super.onDestroy(); binding?.mapview?.onDestroy() }
+    override fun onLowMemory() { super.onLowMemory(); binding?.mapview?.onLowMemory() }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         binding?.mapview?.onSaveInstanceState(outState)

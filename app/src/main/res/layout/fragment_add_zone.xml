@@ -136,6 +136,8 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/et_bg"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="14sp"
+                    android:hint="Enter Zone name in english"
                     android:paddingHorizontal="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvZoneNameEn" />
@@ -159,6 +161,8 @@
                     android:layout_height="56dp"
                     android:layout_marginTop="6dp"
                     android:paddingHorizontal="12dp"
+                    android:textSize="14sp"
+                    android:hint="Enter Zone name in arabic"
                     android:background="@drawable/et_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

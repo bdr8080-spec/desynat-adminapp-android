@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
@@ -72,12 +73,12 @@ class NewDetailActivity : BaseActivity() {
         }
 
         deleteBinding.rbComplete.setOnClickListener {
-            type = "Complete Reject"
+            type = "complete"
             deleteBinding.rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
             deleteBinding.rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
         }
         deleteBinding.rbReject.setOnClickListener {
-            type = "Document Reject"
+            type = "document"
             deleteBinding.rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
             deleteBinding.rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
         }
@@ -125,7 +126,7 @@ class NewDetailActivity : BaseActivity() {
         viewModel.getSellerDetailData.observe(this){
             binding.tvName.text = it.data.first_name
             binding.tvStoreName.text = it.data.store_info.store_name
-            binding.tvLocation.text = it.data.store_info.store_address
+            binding.tvLocation.text = it.data.store_info.country_info.name
             binding.tvCall.text = it.data.country_code + "-" + it.data.mobile
             binding.tvEmail.text = it.data.email
             binding.tvAddress.text = it.data.store_info.store_address
@@ -134,7 +135,7 @@ class NewDetailActivity : BaseActivity() {
             binding.tvBio.text = it.data.store_info.bio
             binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
                 "0" -> "Personal Account"
-                else -> "Other Account"
+                else -> "Business Account"
             }
             binding.tvIban.text = it.data.seller_bank_details.iban
             binding.tvswiftbic.text = it.data.seller_bank_details.swift
@@ -142,8 +143,8 @@ class NewDetailActivity : BaseActivity() {
             binding.tvAccountHolderName.text = it.data.seller_bank_details.account_holder_name
             binding.tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(it.data.updated_at)}"
 
-            Glide.with(this).load(it.data.store_info.store_image).circleCrop().into(binding.ivStoreImage)
-            Glide.with(this).load(it.data.profile_pic).circleCrop().into(binding.ivProfileImage)
+            Glide.with(this).load(it.data.store_info.store_image).transform(CircleCrop()).into(binding.ivStoreImage)
+            Glide.with(this).load(it.data.profile_pic).transform(CircleCrop()).into(binding.ivProfileImage)
             Glide.with(this).load(it.data.owner_document.get(0).document_path).into(binding.doc1)
             Glide.with(this).load(it.data.owner_document.get(1).document_path).into(binding.doc2)
             Glide.with(this).load(it.data.store_document.get(0).document_path).into(binding.doc3)

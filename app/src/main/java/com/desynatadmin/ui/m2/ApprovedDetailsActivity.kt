@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.adapter.HighlightsAdapter
 import com.desynatadmin.adapter.ReelAdapter
@@ -14,8 +15,11 @@ import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityApprovedDetailsBinding
 import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
+import com.desynatadmin.utils.formatUtcDateToLocal
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class ApprovedDetailsActivity : BaseActivity() {
@@ -81,11 +85,12 @@ class ApprovedDetailsActivity : BaseActivity() {
     override fun observer() {
 
         viewModel.getUpdateSellerStatus.observe(this){
-            showToast("Seller status updated")
             if(it.data.is_block == 0){
+                showToast("Seller UnBlock Successfully")
                 binding.ivToggle.setImageResource(R.drawable.toggle_ic)
             }
             else{
+                showToast("Seller Block Successfully")
                 binding.ivToggle.setImageResource(R.drawable.toggle_off)
             }
         }
@@ -97,24 +102,44 @@ class ApprovedDetailsActivity : BaseActivity() {
             else{
                 binding.ivToggle.setImageResource(R.drawable.toggle_off)
             }
-            Glide.with(this).load(it.data.profile_pic).into(binding.ivProfileImage)
+            Glide.with(this).load(it.data.profile_pic).transform(CircleCrop()).into(binding.ivProfileImage)
+            Glide.with(this).load(it.data.store_info.store_image).into(binding.imPuma)
             binding.tvName.text = it.data.first_name
+            binding.tvEmail.text = it.data.email
             binding.txt.text = it.data.store_info.bio
-            binding.tvLocation.text = it.data.store_info.store_address
+            binding.tvLocation.text = it.data.store_info.country_info.name
             binding.tvCall.text  = it.data.country_code + "-" + it.data.mobile
-            binding.tvAddress.text  = it.data.store_info.store_address
-            binding.tvProPlan.text  = it.data.subcription_plan ?: ""
+            binding.tvAddress.text  = "${it.data.store_info.store_name}\n${it.data.store_info.store_address}"
+           // binding.tvProPlan.text  = it.data.subcription_plan ?: ""
             Glide.with(this).load(it.data.owner_document.get(0).document_path).into(binding.doc1)
             Glide.with(this).load(it.data.owner_document.get(1).document_path).into(binding.doc2)
             Glide.with(this).load(it.data.store_document.get(0).document_path).into(binding.doc3)
             Glide.with(this).load(it.data.store_document.get(1).document_path).into(binding.doc4)
             binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
                 "0" -> "Personal Account"
-                else -> "Other Account"
+                else -> "Business Account"
             }
+            binding.cl1.isVisible = true
+            binding.clOrder.isVisible = true
             if(it?.data?.subcription_plan.isNullOrEmpty()){
-                binding.tvPurchasePlan.isVisible = false
+                binding.tvPurchasePlan.text = "No Active Plans"
                 binding.purchasePlanLayout.isVisible = false
+            }
+            else{
+                binding.tvPurchasePlan.text = "Purchased Plan"
+                binding.purchasePlanLayout.isVisible = true
+                binding.tvStatus.text = if(it.data?.subcription_plan?.get(0)?.plan_info?.status == 0) " Active" else "Expire"
+                binding.tvProPlanLabel.text = it.data?.subcription_plan?.get(0)?.plan_info?.plan_name_english ?: ""
+                if(it.data?.subcription_plan?.get(0)?.plan_info?.duration_type == 1){
+                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + "Months"
+                }
+                else{
+                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + "Years"
+                }
+                binding.tvPurchasedOn.text = formatUtcDateToLocal( it.data?.subcription_plan?.get(0)?.plan_info?.created_at ?: "")
+                binding.tvTotalAmount.text = "${it.data?.subcription_plan?.get(0)?.plan_info?.price?.roundToInt()} KD"
+
+
             }
             binding.tvIban.text = it.data.seller_bank_details.iban
             binding.tvswiftbic.text = it.data.seller_bank_details.swift

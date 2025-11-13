@@ -6,6 +6,7 @@ object SingleTonDataPass {
     var zoneId = ""
     var countryId = ""
     var cityId = ""
+    var cityName = ""
     var enName = ""
     var arName = ""
     var isEdit = false

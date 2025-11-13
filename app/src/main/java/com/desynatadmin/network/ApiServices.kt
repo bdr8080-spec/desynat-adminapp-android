@@ -6,6 +6,7 @@ import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.ChangeCityStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
@@ -208,7 +209,7 @@ interface ApiServices {
     suspend fun hitChangeStatus(
         @Header("Token") Token: String,
         @Body body: HashMap<String, Any>
-    ) : Response<CommonResponse>
+    ) : Response<ChangeCityStatusResponse>
 
     @POST(Constants.GET_DELETE_CITY_SERVICE)
     suspend fun hitDeleteServiceCity(

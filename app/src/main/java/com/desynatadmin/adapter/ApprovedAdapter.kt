@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.databinding.ApprovedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
@@ -29,9 +30,9 @@ class ApprovedAdapter(var list : List<ApprovedSellerResponse.Data.Data>, val cli
         holder.binding.apply {
             val item = list[position]
             tvName.text = item.first_name
-            tvLocation.text = item.store_info.store_address
+            tvLocation.text = item.store_info.country_info.name
             tvCall.text = item.country_code + "-" + item.mobile
-            Glide.with(ivProfileImage).load(item.profile_pic).into(ivProfileImage)
+            Glide.with(ivProfileImage).load(item.profile_pic).transform(CircleCrop()).into(ivProfileImage)
             tvEmail.text = item.email
             tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(item.updated_at)}"
 

@@ -138,6 +138,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="CircleImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+
     <style name="rounded_corner_10sdp" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/_10sdp</item>

@@ -10,6 +10,7 @@ import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.ChangeCityStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
@@ -234,7 +235,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getChangeCityStatus : LiveData<CommonResponse>
+    val getChangeCityStatus : LiveData<ChangeCityStatusResponse>
         get() = repository.getChangeStatus
 
     fun hitChangeCityStatus(token : String , map: HashMap<String, Any>) {

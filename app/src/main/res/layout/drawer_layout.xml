@@ -175,6 +175,33 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlCountryCityManagement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCountry"
+                    style="@style/drawer_image"
+                    android:src="@drawable/ic_country_city_management" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCountry"
+                    style="@style/drawer_text"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_toStartOf="@+id/ivGoCountry"
+                    android:layout_toEndOf="@id/ivCountry"
+                    android:text="Country , City &amp; Zone Management" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivGoCountry"
+                    style="@style/drawer_arrow" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
                 android:id="@+id/rlUserManagement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -362,32 +389,6 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivGoOrderManagement"
-                    style="@style/drawer_arrow" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlCountryCityManagement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivCountry"
-                    style="@style/drawer_image"
-                    android:src="@drawable/ic_country_city_management" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvCountry"
-                    style="@style/drawer_text"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_toStartOf="@+id/ivGoCountry"
-                    android:layout_toEndOf="@id/ivCountry"
-                    android:text="Country , City &amp; Zone Management" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivGoCountry"
                     style="@style/drawer_arrow" />
 
             </RelativeLayout>

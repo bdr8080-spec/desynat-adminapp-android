@@ -20,6 +20,10 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
         R.drawable.pro,
         R.drawable.plus,
         R.drawable.growth,
+        R.drawable.color_4,
+        R.drawable.color_6,
+        R.drawable.color_5,
+        R.drawable.color_7,
     )
     inner class ViewHolder(val binding: ItemPlanBinding) :
         RecyclerView.ViewHolder(binding.root)

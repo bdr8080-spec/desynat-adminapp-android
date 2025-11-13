@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
@@ -47,15 +48,15 @@ class RejectDetailsActivity : BaseActivity() {
     override fun observer() {
         viewmodel.getSellerDetailData.observe(this){
             binding.tvName.text = it.data.first_name
-            binding.tvLocation.text = it.data.store_info.store_address
-            binding.tvCall.text = it.data.mobile
+            binding.tvLocation.text = it.data.store_info.country_info.name
+            binding.tvCall.text = it.data.country_code + "-" + it.data.mobile
             binding.tvEmail.text = it.data.email
             binding.tvAddress.text = it.data.store_info.store_address
             binding.RejectionDescription.text = it.data.reject_reason
             binding.tvStoreName.text = it.data.store_info.store_name
             binding.tvMail.text = it.data.store_info.store_mail_id
             binding.tvBio.text = it.data.store_info.bio
-            Glide.with(this).load(it.data.store_info.store_image).circleCrop().into(binding.ivStoreImage)
+            Glide.with(this).load(it.data.store_info.store_image).transform(CircleCrop()).into(binding.ivStoreImage)
             Glide.with(this).load(it.data.profile_pic).circleCrop().into(binding.ivProfileImage)
             Glide.with(this).load(it.data.owner_document.get(0).document_path).into(binding.doc1)
             Glide.with(this).load(it.data.owner_document.get(1).document_path).into(binding.doc2)
@@ -64,7 +65,7 @@ class RejectDetailsActivity : BaseActivity() {
             binding.tvPhone.text = it.data.store_info.country_code + "-" + it.data.store_info.store_phone
             binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
                 "0" -> "Personal Account"
-                else -> "Other Account"
+                else -> "Business Account"
             }
             binding.tvIban.text = it.data.seller_bank_details.iban
             binding.tvswiftbic.text = it.data.seller_bank_details.swift

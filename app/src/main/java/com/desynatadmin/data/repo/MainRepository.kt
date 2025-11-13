@@ -12,6 +12,7 @@ import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
+import com.desynatadmin.ui.home.brandManagement.response.ChangeCityStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
@@ -419,7 +420,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
-    val getChangeStatus = SingleLiveEvent<CommonResponse>()
+    val getChangeStatus = SingleLiveEvent<ChangeCityStatusResponse>()
     suspend fun hitChangeCityStatus(
         token : String,map: HashMap<String, Any>
     ) {
@@ -439,7 +440,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             api = {
                 api.hitDeleteServiceCity(token,map)
             },
-            responseLiveData = getChangeStatus
+            responseLiveData = getDeleteServiceCity
         )
     }
 

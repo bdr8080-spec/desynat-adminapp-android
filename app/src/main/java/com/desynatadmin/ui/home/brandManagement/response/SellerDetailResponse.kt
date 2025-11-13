@@ -30,7 +30,7 @@ data class SellerDetailResponse(
         var store_document: List<StoreDocument>,
         var store_info: StoreInfo,
         var store_information: String,
-        var subcription_plan: String,
+        var subcription_plan: List<SubcriptionPlan>,
         var updated_at: String
     ) {
         data class OwnerDocument(
@@ -98,6 +98,43 @@ data class SellerDetailResponse(
                 var id: Int,
                 var iso_code: String,
                 var name: String,
+                var updated_at: String
+            )
+        }
+
+        data class SubcriptionPlan(
+            var amount: String,
+            var created_at: String,
+            var id: Int,
+            var online_transaction_id: Any,
+            var payment_method: String,
+            var payment_status: String,
+            var plan_end_date: String,
+            var plan_id: Int,
+            var plan_info: PlanInfo,
+            var plan_start_date: String,
+            var seller_id: Int,
+            var status: String,
+            var transaction_id: String,
+            var updated_at: String
+        ) {
+            data class PlanInfo(
+                var commission: Int,
+                var commission_percentage: Any,
+                var country_id: Int,
+                var created_at: String,
+                var duration: String,
+                var duration_type: Int,
+                var id: Int,
+                var no_of_employee: Int,
+                var no_of_highlights: Int,
+                var no_of_products: Int,
+                var no_of_videos: Int,
+                var plan_name_arabic: String,
+                var plan_name_english: String,
+                var price: Double,
+                var status: Int,
+                var stories: Int,
                 var updated_at: String
             )
         }

@@ -66,7 +66,23 @@ class AddPlanFragment : BaseFragment() {
             btnAdd.text = "Add"
         }
 
-            CommonMethod.removeSpace(etArabicPlanName)
+            etArabicPlanName.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
+                val regex = Regex("[a-zA-Z]")
+
+                // 1️⃣ Block English alphabets
+                if (source != null && source.contains(regex)) {
+                    return@InputFilter ""
+                }
+
+                // 2️⃣ Prevent space at the beginning (when EditText is empty)
+                if (dstart == 0 && source.startsWith(" ")) {
+                    return@InputFilter ""
+                }
+
+                // Allow everything else
+                return@InputFilter null
+            })
+            //CommonMethod.removeSpace(etArabicPlanName)
             CommonMethod.removeSpace(etEnglishPlanName)
         }
 
@@ -170,7 +186,7 @@ class AddPlanFragment : BaseFragment() {
         viewModel.addSubscriptionPlanResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Plan purchased successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(), "Plan Added successfully!"){
                     findNavController().popBackStack()
                 }
                 isObserver = false

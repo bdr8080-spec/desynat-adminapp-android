@@ -85,6 +85,14 @@ class ApprovedScreenFragment : BaseFragment() {
     fun filterData(s:String){
         var arr=list.filter { it.first_name.contains(s,true) }
         (binding?.approvedRecyclerView?.adapter as ApprovedAdapter).list=arr
+        if(arr.isNullOrEmpty()){
+            binding?.noSeller?.isVisible = true
+            binding?.approvedRecyclerView?.isVisible = false
+        }
+        else{
+            binding?.noSeller?.isVisible = false
+            binding?.approvedRecyclerView?.isVisible = true
+        }
         (binding?.approvedRecyclerView?.adapter as ApprovedAdapter).notifyDataSetChanged()
     }
 

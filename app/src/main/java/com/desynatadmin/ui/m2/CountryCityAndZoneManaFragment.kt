@@ -20,6 +20,7 @@ import com.desynatadmin.databinding.AddCityBottomsheetBinding
 import com.desynatadmin.databinding.FragmentCountryCityAndZoneManaBinding
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.SingleTonDataPass
@@ -96,6 +97,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                             serviceCityList?.get(position)?.country_id ?: ""
                         SingleTonDataPass.cityId = serviceCityList?.get(position)?.id ?: ""
                         hitZoneList()
+                        SingleTonDataPass.cityName = serviceCityList?.get(position)?.name ?: ""
                         key = "2"
                     }
 
@@ -343,8 +345,6 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                         )
                     }
                 })
-
-
         }
 
         viewModel.hitCityList.observe(viewLifecycleOwner) { response ->
@@ -355,7 +355,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         }
 
         viewModel.getDeleteZone.observe(viewLifecycleOwner) {
-            showToast("Zone Delete successfully")
+            CommonMethod.showSuccessDialog(requireContext(), "Zone Deleted successfully!")
             hitZoneList()
         }
 
@@ -366,8 +366,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             serviceCityList?.clear()
             serviceCityList?.addAll(response?.data?.data ?: arrayListOf())
             if (serviceCityList.isNullOrEmpty()){
-                binding?.noData?.isVisible = false
-                binding?.recyclerView?.isVisible = true
+                binding?.noData?.isVisible = true
+                binding?.recyclerView?.isVisible = false
             }else{
                 binding?.noData?.isVisible = false
                 binding?.recyclerView?.isVisible = true
@@ -377,12 +377,18 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
         viewModel.getChangeCityStatus.observe(viewLifecycleOwner) { response ->
             ProgressDialogUtils.getInstance().hideProgress()
+            if(response?.data?.status == 0){
+                showToast("City Unblock successfully")
+            }
+            else{
+                showToast("City block successfully")
+            }
             hitServiceApi()
-
         }
+
         viewModel.getDeleteCity.observe(viewLifecycleOwner) { response ->
             ProgressDialogUtils.getInstance().hideProgress()
-            showToast("City deleted successfully")
+            CommonMethod.showSuccessDialog(requireContext(), "City Deleted successfully!")
             hitServiceApi()
         }
 

@@ -45,8 +45,7 @@ tools:context=".ui.m2.NewDetailActivity">
             android:id="@+id/ivProfileImage"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/dummy"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circle_image" />
@@ -169,13 +168,10 @@ tools:context=".ui.m2.NewDetailActivity">
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
-        android:background="@android:color/transparent"
+        app:shapeAppearanceOverlay="@style/circle_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvStoreInformation"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CircleImageView"
-        app:strokeColor="@android:color/transparent"
-        app:strokeWidth="0dp"
-        android:src="@drawable/puma_iv" />
+         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl2"
