@@ -180,7 +180,12 @@ class PlanDetailFragment : BaseFragment() {
         binding?.apply {
             background?.let { tvPackage.setBackgroundResource(it) }
             tvPackage.text = subscriptionData?.planNameEnglish
-            tvPrice.text = "KD ${CommonMethod.formatDoubleValue(subscriptionData?.price)}"
+            if(subscriptionData?.discountedPrice!=null&&subscriptionData?.discountedPrice!=0.0){
+                tvPrice.text = "KD ${CommonMethod.formatDoubleValue(subscriptionData?.discountedPrice)}"
+            }
+            else{
+                tvPrice.text = "KD ${CommonMethod.formatDoubleValue(subscriptionData?.price)}"
+            }
             when(subscriptionData?.durationType){
                 1->{
                     tvValidTime.text = "for ${subscriptionData?.duration} Month"

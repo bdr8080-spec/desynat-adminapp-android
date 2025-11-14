@@ -26,6 +26,11 @@ data class GetAllPlanResponse(
         val duration: Int,
         @SerializedName("duration_type")
         val durationType: Int,
+         @SerializedName("new_duration")
+        val newDuration: Int,
+        @SerializedName("new_duration_type")
+        val newDurationType: Int,
+
         @SerializedName("id")
         val id: Int,
         @SerializedName("no_of_employee")
@@ -42,6 +47,8 @@ data class GetAllPlanResponse(
         val planNameEnglish: String,
         @SerializedName("price")
         val price: Double,
+        @SerializedName("discounted_price")
+        val discountedPrice: Double,
         @SerializedName("status")
         val status: Int,
         @SerializedName("stories")

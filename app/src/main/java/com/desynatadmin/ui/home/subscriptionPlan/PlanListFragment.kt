@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
+import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.adapter.SubscriptionAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentPlanListBinding
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
@@ -73,7 +77,8 @@ class PlanListFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                ccpCountryPicker.launchCountrySelectionDialog()
+                showCustomDropdown(etCountry)
+               // ccpCountryPicker.launchCountrySelectionDialog()
             }
 
             ccpCountryPicker.setOnCountryChangeListener {
@@ -117,7 +122,7 @@ class PlanListFragment : BaseFragment() {
 
     private fun getSubscriptionPlan(){
         if (selectedCountryCode!=null){
-            viewModel.getSubscriptionPlan(countryList.find { it.isoCode == selectedCountryCode }?.id.toString())
+            viewModel.getSubscriptionPlan(selectedCountryCode.toString())
         }
         else{
             viewModel.getSubscriptionPlan()
@@ -138,11 +143,41 @@ class PlanListFragment : BaseFragment() {
             val countryCodes = countryList?.map { it.isoCode }
             val countryCodeString = countryCodes?.joinToString(",")
             binding?.ccpCountryPicker?.setCustomMasterCountries(countryCodeString)
-            selectedCountryCode = countryList[0].isoCode
+            selectedCountryCode = countryList[0].id.toString()
             binding?.etCountry?.setText(countryList[0].name)
             getSubscriptionPlan()
         }
     }
 
+    private fun showCustomDropdown(anchor: View) {
+
+        val dropdownBinding = CustomCountryPickerBinding.inflate(layoutInflater)
+
+        val popupWindow = PopupWindow(
+            dropdownBinding.root,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.isOutsideTouchable = true
+        popupWindow.elevation = 20f
+
+        popupWindow.showAsDropDown(anchor)
+
+        dropdownBinding.apply {
+
+            rvCountry.adapter = CountryPickerAdapter(requireActivity(),countryList,object :
+                CountryPickerAdapter.ClickOnItem{
+                override fun onClickItem(position: Int) {
+                    binding?.etCountry?.setText(countryList[position].name)
+                    selectedCountryCode = countryList[position].id.toString()
+                    getSubscriptionPlan()
+                    popupWindow.dismiss()
+                }
+
+            })
+        }
+    }
 
 }

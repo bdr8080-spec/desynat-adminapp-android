@@ -5,14 +5,18 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
+import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.adapter.FeatureList
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentAddPlanBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
@@ -34,6 +38,7 @@ class AddPlanFragment : BaseFragment() {
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var selectedCountryCode: String? = null
     var durationType: String =""
+    var newDurationType: String =""
     var planId: String?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +64,11 @@ class AddPlanFragment : BaseFragment() {
             subscriptionData = Gson().fromJson(itemJson, GetAllPlanResponse.Data::class.java)
             toolbar.tvToolbar.text = "Update Plan"
             btnAdd.text = "Update"
+            tvPrice.text = "Old Price"
+            tvNewPrice.isVisible = true
+            etNewPrice.isVisible = true
+            tvNewDuration.isVisible = true
+            llNewDuration.isVisible = true
             setData()
         }
         else{
@@ -95,7 +105,8 @@ class AddPlanFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                ccpCountryPicker.launchCountrySelectionDialog()
+                showCustomDropdown(etCountry)
+              //  ccpCountryPicker.launchCountrySelectionDialog()
             }
 
             ccpCountryPicker.setOnCountryChangeListener {
@@ -134,6 +145,23 @@ class AddPlanFragment : BaseFragment() {
                 builder.show()
             }
 
+            etNewMonth.setOnClickListener {
+                val options = arrayOf("Month", "Year")
+
+                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                builder.setTitle("Select Duration Type")
+                builder.setItems(options) { dialog, which ->
+                    when(options[which]){
+                        "Month" -> newDurationType="1"
+                        "Year" -> newDurationType="2"
+                    }
+
+                    etNewMonth.setText(options[which])
+                    dialog.dismiss()
+                }
+                builder.show()
+            }
+
             btnAdd.setOnClickListener {
                 if (validation()){
                     addSubscription()
@@ -144,27 +172,47 @@ class AddPlanFragment : BaseFragment() {
 
     fun addSubscription(){
         binding?.apply {
-            val request = AddPlanRequest(
-                commission = if (rbYes.isChecked) "1" else "0",
-                commission_percentage = etCommission.text?.trim().toString(),
-                countryId = countryList.find { it.isoCode == selectedCountryCode }?.id.toString(),
-                duration = etDuration.text?.trim().toString(),
-                durationType = durationType,
-                noOfHighlights = etNoOfHighlight.text?.trim().toString(),
-                noOfEmployee = etNoOfEmployee.text?.trim().toString(),
-                noOfProducts = etNoOfProducts.text?.trim().toString(),
-                noOfVideos = etNoOfVideo.text?.trim().toString(),
-                planNameArabic = etArabicPlanName.text?.trim().toString(),
-                planNameEnglish = etEnglishPlanName.text?.trim().toString(),
-                price = etPrice.text?.trim().toString(),
-                stories = if (rbOpen.isChecked) "1" else "0",
-                plan_id = planId
-            )
+
 
             if (subscriptionData!=null){
+                val request = AddPlanRequest(
+                    commission = if (rbYes.isChecked) "1" else "0",
+                    commission_percentage = etCommission.text?.trim().toString(),
+                    countryId = selectedCountryCode.toString(),
+                    duration = etDuration.text?.trim().toString(),
+                    durationType = durationType,
+                    noOfHighlights = etNoOfHighlight.text?.trim().toString(),
+                    noOfEmployee = etNoOfEmployee.text?.trim().toString(),
+                    noOfProducts = etNoOfProducts.text?.trim().toString(),
+                    noOfVideos = etNoOfVideo.text?.trim().toString(),
+                    planNameArabic = etArabicPlanName.text?.trim().toString(),
+                    planNameEnglish = etEnglishPlanName.text?.trim().toString(),
+                    price = etPrice.text?.trim().toString(),
+                    stories = if (rbOpen.isChecked) "1" else "0",
+                    plan_id = planId,
+                    discounted_price = etNewPrice.text?.trim().toString(),
+                    new_duration = etNewDuration.text?.trim().toString(),
+                    new_duration_type = newDurationType
+                )
             viewModel.updateSubscriptionPlan(request)
         }
         else{
+                val request = AddPlanRequest(
+                    commission = if (rbYes.isChecked) "1" else "0",
+                    commission_percentage = etCommission.text?.trim().toString(),
+                    countryId = selectedCountryCode.toString(),
+                    duration = etDuration.text?.trim().toString(),
+                    durationType = durationType,
+                    noOfHighlights = etNoOfHighlight.text?.trim().toString(),
+                    noOfEmployee = etNoOfEmployee.text?.trim().toString(),
+                    noOfProducts = etNoOfProducts.text?.trim().toString(),
+                    noOfVideos = etNoOfVideo.text?.trim().toString(),
+                    planNameArabic = etArabicPlanName.text?.trim().toString(),
+                    planNameEnglish = etEnglishPlanName.text?.trim().toString(),
+                    price = etPrice.text?.trim().toString(),
+                    stories = if (rbOpen.isChecked) "1" else "0",
+                    plan_id = planId
+                )
             viewModel.addSubscriptionPlan(request)
         }
 
@@ -210,7 +258,9 @@ class AddPlanFragment : BaseFragment() {
             etEnglishPlanName.setText(subscriptionData?.planNameEnglish)
             etArabicPlanName.setText(subscriptionData?.planNameArabic)
             etDuration.setText(subscriptionData?.duration.toString())
-            etMonth.setText(subscriptionData?.durationType.toString())
+            if (subscriptionData?.newDuration!=0) {
+                etNewDuration.setText(subscriptionData?.newDuration.toString())
+            }
             etNoOfVideo.setText(subscriptionData?.noOfVideos.toString())
             etNoOfProducts.setText(subscriptionData?.noOfProducts.toString())
             etNoOfHighlight.setText(subscriptionData?.noOfHighlights.toString())
@@ -218,8 +268,9 @@ class AddPlanFragment : BaseFragment() {
 
             binding?.etCommission?.setText(CommonMethod.formatDoubleValue(subscriptionData?.commissionPercentage))
             binding?.etPrice?.setText(CommonMethod.formatDoubleValue(subscriptionData?.price))
+            binding?.etNewPrice?.setText(CommonMethod.formatDoubleValue(subscriptionData?.discountedPrice))
 
-            selectedCountryCode = countryList.find { it.id== subscriptionData?.countryId}?.isoCode.toString()
+            selectedCountryCode = countryList.find { it.id== subscriptionData?.countryId}?.id.toString()
             rbYes.isChecked = subscriptionData?.commission==1
             if(subscriptionData?.commission==1){
                 etCommission.isVisible = true
@@ -234,6 +285,12 @@ class AddPlanFragment : BaseFragment() {
                 "1" -> etMonth.setText("Month")
                 "2" -> etMonth.setText("Year")
                 else -> etMonth.setText("")
+            }
+
+            when (subscriptionData?.newDurationType?.toString()) {
+                "1" -> etNewMonth.setText("Month")
+                "2" -> etNewMonth.setText("Year")
+                else -> etNewMonth.setText("")
             }
         }
     }
@@ -291,6 +348,14 @@ class AddPlanFragment : BaseFragment() {
                     showToast("Please enter price")
                     return false
                 }
+             /*   etPrice.text.isNullOrBlank()&&subscriptionData!=null -> {
+                    showToast("Please enter old price")
+                    return false
+                }
+                etNewPrice.text.isNullOrBlank()&&subscriptionData!=null -> {
+                    showToast("Please enter new price")
+                    return false
+                }*/
                 isInvalid(etPrice, "Price")-> return false
                 !rbYes.isChecked && !rbNo.isChecked -> {
                     showToast("Please select commission option (Yes/No)")
@@ -330,5 +395,36 @@ class AddPlanFragment : BaseFragment() {
         }
         return false
     }
+
+    private fun showCustomDropdown(anchor: View) {
+
+        val dropdownBinding = CustomCountryPickerBinding.inflate(layoutInflater)
+
+        val popupWindow = PopupWindow(
+            dropdownBinding.root,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.isOutsideTouchable = true
+        popupWindow.elevation = 20f
+
+        popupWindow.showAsDropDown(anchor)
+
+        dropdownBinding.apply {
+
+            rvCountry.adapter = CountryPickerAdapter(requireActivity(),countryList,object :
+                CountryPickerAdapter.ClickOnItem{
+                override fun onClickItem(position: Int) {
+                    binding?.etCountry?.setText(countryList[position].name)
+                    selectedCountryCode = countryList[position].id.toString()
+                    popupWindow.dismiss()
+                }
+
+            })
+        }
+    }
+
 
 }

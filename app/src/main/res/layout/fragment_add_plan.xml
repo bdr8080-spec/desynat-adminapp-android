@@ -163,6 +163,51 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvNewDuration"
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="New Duration"/>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llNewDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNewDuration"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Enter new duration"
+                    android:maxLength="2"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:inputType="number"
+                    android:background="@drawable/edit_back" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNewMonth"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    style="@style/edit_text"
+                    android:hint="Select"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:inputType="text"
+                    android:background="@drawable/edit_back"
+                    android:editable="false"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:drawableEnd="@drawable/ic_drop_down"/>
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -315,6 +360,7 @@
             </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -325,6 +371,24 @@
                 android:layout_width="match_parent"
                 style="@style/edit_text"
                 android:hint="Enter price"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="number"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvNewPrice"
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="New Price"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:visibility="gone"
+                android:id="@+id/etNewPrice"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter new price"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="number"
                 android:background="@drawable/edit_back" />
