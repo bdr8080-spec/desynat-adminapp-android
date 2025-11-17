@@ -32,11 +32,16 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
+import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
+import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
+import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.toMultipartPart
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.RequestBody
@@ -652,8 +657,93 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
+    val userLiveData = SingleLiveEvent<GetUserResponse>()
+    suspend fun getAllUser(search:String?=null, page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getUser(search,page)
+            },
+            responseLiveData = userLiveData
+        )
+    }
 
+    val userDetailLiveData = SingleLiveEvent<GetUserDetailResponse>()
+    suspend fun getUserDetail(userId:String
+    ) {
+        handleApiCall(
+            api = {
+                api.getUserDetail(userId)
+            },
+            responseLiveData = userDetailLiveData
+        )
+    }
 
+    val updateUserStatusLiveData = SingleLiveEvent<BlockUnblockUserResponse>()
+    suspend fun blockUnblockUser(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.blockUnblockUser(map)
+            },
+            responseLiveData = updateUserStatusLiveData
+        )
+    }
+
+    val reasonLiveData = SingleLiveEvent<GetReasonResponse>()
+    suspend fun getReason(search:String?=null, page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getReason(search,page)
+            },
+            responseLiveData = reasonLiveData
+        )
+    }
+
+    val addReasonLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addReason(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.addReason(map)
+            },
+            responseLiveData = addReasonLiveData
+        )
+    }
+
+    val updateReasonLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updateReason(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateReason(map)
+            },
+            responseLiveData = updateReasonLiveData
+        )
+    }
+
+    val updateReasonStatusLiveData = SingleLiveEvent<BlockUnblockReasonResponse>()
+    suspend fun blockUnblockReason(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.blockUnblockReason(map)
+            },
+            responseLiveData = updateReasonStatusLiveData
+        )
+    }
+
+    val deleteReasonLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteReason(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteReason(map)
+            },
+            responseLiveData = deleteReasonLiveData
+        )
+    }
 
 
 }

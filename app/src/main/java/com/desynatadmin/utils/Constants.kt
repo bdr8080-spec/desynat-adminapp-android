@@ -66,4 +66,15 @@ object Constants {
     const val DELETE_ZONE = "/api/admin/delete_zone"
     const val UPDATE_SELLER_STATUS = "/api/admin/block_unblock_seller"
 
+    const val GET_USER = "/api/admin/get_users"
+    const val GET_USER_DETAIL = "/api/admin/get_user_details"
+    const val BLOCK_UNBLOCK_USER = "/api/admin/block_unblock_user"
+    const val ADD_WALLET_AMOUNT = "/api/admin/add_user_wallet_amount"
+
+    const val GET_REASON = "/api/admin/get_reasons"
+    const val ADD_REASON = "/api/admin/add_reason"
+    const val UPDATE_REASON = "/api/admin/update_reason"
+    const val BLOCK_UNBLOCK_REASON = "/api/admin/change_reason_status"
+    const val DELETE_REASON = "/api/admin/delete_reason"
+
 }

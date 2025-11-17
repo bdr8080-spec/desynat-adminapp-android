@@ -125,4 +125,29 @@
         android:label="Add Brand Fragment"
         tools:layout="@layout/fragment_add_brand"/>
 
+
+
+
+
+    <fragment
+        android:id="@+id/user"
+        android:name="com.desynatadmin.ui.home.userManagement.UserManagementFragment"
+        android:label="User Fragment"
+        tools:layout="@layout/fragment_user_management">
+
+        <action
+            android:id="@+id/action_userFragment_to_userDetailFragment"
+            app:destination="@id/userDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetail"
+        android:name="com.desynatadmin.ui.home.userManagement.UserDetailFragment"
+        android:label="User Detail Fragment"
+        tools:layout="@layout/fragment_user_detail">
+
+    </fragment>
+
+
 </navigation>

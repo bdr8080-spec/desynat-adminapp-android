@@ -30,11 +30,16 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
+import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
+import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
+import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -508,6 +513,78 @@ class HomeViewModel @Inject constructor(
                 from_date = from_date,
                 to_date = to_date
             )
+        }
+    }
+
+    val getAllUserResult: LiveData<GetUserResponse>
+        get() = repository.userLiveData
+
+    fun getAllUser(search: String?=null, page:Int) {
+        viewModelScope.launch {
+            repository.getAllUser(search,page)
+        }
+    }
+
+    val getUserDetailResult: LiveData<GetUserDetailResponse>
+        get() = repository.userDetailLiveData
+
+    fun getUserDetail(userId:String) {
+        viewModelScope.launch {
+            repository.getUserDetail(userId)
+        }
+    }
+
+    val updateUserStatusResult: LiveData<BlockUnblockUserResponse>
+        get() = repository.updateUserStatusLiveData
+
+    fun blockUnblockUser(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.blockUnblockUser(map)
+        }
+    }
+
+    val getReasonResult: LiveData<GetReasonResponse>
+        get() = repository.reasonLiveData
+
+    fun getReason(search: String?=null, page:Int) {
+        viewModelScope.launch {
+            repository.getReason(search,page)
+        }
+    }
+
+    val addReasonResult: LiveData<CommonResponse>
+        get() = repository.addReasonLiveData
+
+    fun addReason(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.addReason(map)
+        }
+    }
+
+    val updateReasonResult: LiveData<CommonResponse>
+        get() = repository.updateReasonLiveData
+
+    fun updateReason(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateReason(map)
+        }
+    }
+
+    val updateReasonStatusResult: LiveData<BlockUnblockReasonResponse>
+        get() = repository.updateReasonStatusLiveData
+
+    fun blockUnblockReason(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.blockUnblockReason(map)
+        }
+    }
+
+    val deleteReasonResult: LiveData<CommonResponse>
+        get() = repository.deleteReasonLiveData
+
+    fun deleteReason(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.deleteReason(map)
         }
     }
 

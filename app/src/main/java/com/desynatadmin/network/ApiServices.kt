@@ -27,11 +27,16 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
+import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
+import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
+import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.Constants
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -100,7 +105,6 @@ interface ApiServices {
         @Query("search") search : String?=null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
-
         ): Response<GetBrandResponse>
 
     @Multipart
@@ -328,5 +332,47 @@ interface ApiServices {
         @Header("Token") Token: String,
         @Body body: HashMap<String, Any>
     ): Response<SellerStatusResponse>
+
+    @GET(Constants.GET_USER)
+    suspend fun getUser(
+        @Query("search") search : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10, ): Response<GetUserResponse>
+
+    @GET(Constants.GET_USER_DETAIL)
+    suspend fun getUserDetail(
+        @Query("user_id") userId : String,
+        ): Response<GetUserDetailResponse>
+
+    @POST(Constants.BLOCK_UNBLOCK_USER)
+    suspend fun blockUnblockUser(
+        @Body body: HashMap<String, Any>
+    ): Response<BlockUnblockUserResponse>
+
+    @GET(Constants.GET_REASON)
+    suspend fun getReason(
+        @Query("search") search : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10, ): Response<GetReasonResponse>
+
+    @POST(Constants.BLOCK_UNBLOCK_REASON)
+    suspend fun blockUnblockReason(
+        @Body body: HashMap<String, Any>
+    ): Response<BlockUnblockReasonResponse>
+
+    @POST(Constants.DELETE_REASON)
+    suspend fun deleteReason(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.ADD_REASON)
+    suspend fun addReason(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_REASON)
+    suspend fun updateReason(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
 
 }

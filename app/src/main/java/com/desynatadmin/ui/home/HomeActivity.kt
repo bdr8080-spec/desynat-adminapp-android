@@ -105,12 +105,6 @@ class HomeActivity : BaseActivity() {
         binding?.apply {
             drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
             setUpDrawerContent()
-            drawerBinding.rlCountryCityManagement.setOnClickListener {
-                startActivity(Intent(this@HomeActivity, CountryCityZoneManaActivity::class.java))
-            }
-            drawerBinding.rlSellereManagment.setOnClickListener {
-                startActivity(Intent(this@HomeActivity, SellerManagementActivity::class.java))
-            }
 
         }
 
@@ -224,6 +218,28 @@ override fun onBackPressed() {
             rlBrandManagement.setOnClickListener {
                 controller.navigate(R.id.brand)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlUserManagement.setOnClickListener {
+                controller.navigate(R.id.user)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlDeliveryBoyManagement.setOnClickListener {
+              //  controller.navigate(R.id.user)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlReasonManagement.setOnClickListener {
+              //  controller.navigate(R.id.user)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlCountryCityManagement.setOnClickListener {
+                startActivity(Intent(this@HomeActivity, CountryCityZoneManaActivity::class.java))
+            }
+            rlSellereManagment.setOnClickListener {
+                startActivity(Intent(this@HomeActivity, SellerManagementActivity::class.java))
             }
         }
 
