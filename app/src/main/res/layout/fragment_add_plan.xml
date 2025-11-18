@@ -31,36 +31,18 @@
                 android:text="Choose Country"
                 android:textSize="@dimen/_13sdp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etCountry"
-                    style="@style/edit_text"
-                    android:paddingVertical="@dimen/_9sdp"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:hint="Select"
-                    android:editable="false"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:layout_marginTop="5dp"
-                    android:layout_centerVertical="true"
-                    android:drawableEnd="@drawable/ic_drop_down"/>
-
-                <com.hbb20.CountryCodePicker
-                    android:id="@+id/ccpCountryPicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:ccp_showArrow="false"
-                    app:ccp_showFlag="false"
-                    app:ccp_showNameCode="false"
-                    app:ccp_showPhoneCode="false"
-                    android:paddingVertical="@dimen/_8sdp"
-                    app:ccpDialog_allowSearch="false"/>
-
-            </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCountry"
+                style="@style/edit_text"
+                android:paddingVertical="@dimen/_9sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:hint="Select"
+                android:editable="false"
+                android:clickable="true"
+                android:focusable="false"
+                android:layout_marginTop="5dp"
+                android:layout_centerVertical="true"
+                android:drawableEnd="@drawable/ic_drop_down"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

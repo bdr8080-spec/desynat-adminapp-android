@@ -77,4 +77,14 @@ object Constants {
     const val BLOCK_UNBLOCK_REASON = "/api/admin/change_reason_status"
     const val DELETE_REASON = "/api/admin/delete_reason"
 
+
+    const val GET_KUWAIT_ZONE = "/api/admin/get_kuwait_zones"
+    const val GET_DELIVERY_BOY = "/api/admin/get_delivery_boys"
+    const val GET_DELIVERY_BOY_DETAIL = "/api/admin/get_deliveryboy_details"
+    const val BLOCK_UNBLOCK_DELIVERY_BOY = "/api/admin/block_unblock_deliveryboy"
+    const val ADD_DELIVERY_BOY = "/api/admin/add_deliveryBoy"
+    const val UPDATE_DELIVERY_BOY = "/api/admin/update_deliveryBoy"
+    const val DELETE_DELIVERY_BOY = "/api/admin/delete_deliveryBoy"
+
+
 }

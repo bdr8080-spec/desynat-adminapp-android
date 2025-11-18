@@ -229,6 +229,61 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlDeliveryBoyManagement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:paddingVertical="@dimen/_6sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDeliveryBoy"
+                    style="@style/drawer_image"
+                    android:src="@drawable/ic_delivery_boy_management" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDeliveryBoy"
+                    style="@style/drawer_text"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_toStartOf="@+id/ivGoDeliveryBoy"
+                    android:layout_toEndOf="@id/ivDeliveryBoy"
+                    android:text="Delivery Boy Management" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivGoDeliveryBoy"
+                    style="@style/drawer_arrow" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlReasonManagement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:paddingVertical="@dimen/_6sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivReason"
+                    style="@style/drawer_image"
+                    android:src="@drawable/ic_reason_management" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvReason"
+                    style="@style/drawer_text"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_toStartOf="@+id/ivGoReason"
+                    android:layout_toEndOf="@id/ivReason"
+                    android:text="Reason Management" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivGoReason"
+                    style="@style/drawer_arrow" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/relSubAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -278,34 +333,6 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivGoAffilate"
-                    style="@style/drawer_arrow" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlDeliveryBoyManagement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_6sdp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivDeliveryBoy"
-                    style="@style/drawer_image"
-                    android:src="@drawable/ic_delivery_boy_management" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDeliveryBoy"
-                    style="@style/drawer_text"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_toStartOf="@+id/ivGoDeliveryBoy"
-                    android:layout_toEndOf="@id/ivDeliveryBoy"
-                    android:text="Delivery Boy Management" />
-
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivGoDeliveryBoy"
                     style="@style/drawer_arrow" />
 
             </RelativeLayout>
@@ -720,35 +747,6 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivGoBannerRequest"
-                    style="@style/drawer_arrow" />
-
-            </RelativeLayout>
-
-
-
-            <RelativeLayout
-                android:id="@+id/rlReasonManagement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_6sdp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivReason"
-                    style="@style/drawer_image"
-                    android:src="@drawable/ic_cms" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvReason"
-                    style="@style/drawer_text"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_toStartOf="@+id/ivGoReason"
-                    android:layout_toEndOf="@id/ivReason"
-                    android:text="Reason Management" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivGoReason"
                     style="@style/drawer_arrow" />
 
             </RelativeLayout>

@@ -79,20 +79,16 @@ class AddPlanFragment : BaseFragment() {
             etArabicPlanName.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
                 val regex = Regex("[a-zA-Z]")
 
-                // 1️⃣ Block English alphabets
                 if (source != null && source.contains(regex)) {
                     return@InputFilter ""
                 }
 
-                // 2️⃣ Prevent space at the beginning (when EditText is empty)
                 if (dstart == 0 && source.startsWith(" ")) {
                     return@InputFilter ""
                 }
 
-                // Allow everything else
                 return@InputFilter null
             })
-            //CommonMethod.removeSpace(etArabicPlanName)
             CommonMethod.removeSpace(etEnglishPlanName)
         }
 
@@ -105,14 +101,10 @@ class AddPlanFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                showCustomDropdown(etCountry)
-              //  ccpCountryPicker.launchCountrySelectionDialog()
-            }
-
-            ccpCountryPicker.setOnCountryChangeListener {
-                val countryName = ccpCountryPicker.selectedCountryName
-                selectedCountryCode = ccpCountryPicker.selectedCountryNameCode
-                etCountry.setText(countryName)
+                CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
+                    binding?.etCountry?.setText(selectedCountry.name)
+                    selectedCountryCode = selectedCountry.id.toString()
+                }
             }
 
             radioGroupCommision.setOnCheckedChangeListener { _, checkedId ->
@@ -377,9 +369,7 @@ class AddPlanFragment : BaseFragment() {
 
     private fun setCountry() {
            countryList = SharedPreference.get(requireActivity()).getCountryList() as ArrayList<GetCountryResponse.Data>
-            val countryCodes = countryList.map { it.isoCode }
-            val countryCodeString = countryCodes.joinToString(",")
-            binding?.ccpCountryPicker?.setCustomMasterCountries(countryCodeString)
+
     }
 
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
@@ -395,36 +385,5 @@ class AddPlanFragment : BaseFragment() {
         }
         return false
     }
-
-    private fun showCustomDropdown(anchor: View) {
-
-        val dropdownBinding = CustomCountryPickerBinding.inflate(layoutInflater)
-
-        val popupWindow = PopupWindow(
-            dropdownBinding.root,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            true
-        )
-
-        popupWindow.isOutsideTouchable = true
-        popupWindow.elevation = 20f
-
-        popupWindow.showAsDropDown(anchor)
-
-        dropdownBinding.apply {
-
-            rvCountry.adapter = CountryPickerAdapter(requireActivity(),countryList,object :
-                CountryPickerAdapter.ClickOnItem{
-                override fun onClickItem(position: Int) {
-                    binding?.etCountry?.setText(countryList[position].name)
-                    selectedCountryCode = countryList[position].id.toString()
-                    popupWindow.dismiss()
-                }
-
-            })
-        }
-    }
-
 
 }

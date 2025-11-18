@@ -30,13 +30,20 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
+import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.userManagement.response.AddWalletBalanceResponse
 import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
@@ -519,9 +526,9 @@ class HomeViewModel @Inject constructor(
     val getAllUserResult: LiveData<GetUserResponse>
         get() = repository.userLiveData
 
-    fun getAllUser(search: String?=null, page:Int) {
+    fun getAllUser(search: String?=null, page:Int,countryId:String?=null,fromDate:String?=null,toDate:String?=null) {
         viewModelScope.launch {
-            repository.getAllUser(search,page)
+            repository.getAllUser(search,page,countryId,fromDate,toDate)
         }
     }
 
@@ -543,12 +550,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val walletBalanceResult: LiveData<AddWalletBalanceResponse>
+        get() = repository.walletBalanceLiveData
+
+    fun addWalletAmount(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.addWalletAmount(map)
+        }
+    }
+
     val getReasonResult: LiveData<GetReasonResponse>
         get() = repository.reasonLiveData
 
-    fun getReason(search: String?=null, page:Int) {
+    fun getReason(type:Int,search: String?=null, page:Int) {
         viewModelScope.launch {
-            repository.getReason(search,page)
+            repository.getReason(type,search,page)
         }
     }
 
@@ -561,12 +577,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateReasonResult: LiveData<CommonResponse>
+    val updateReasonResult: LiveData<UpdateReasonResponse>
         get() = repository.updateReasonLiveData
 
     fun updateReason(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.updateReason(map)
+        }
+    }
+
+    val kuwaitZoneResult: LiveData<GetKuwaitZoneResponse>
+        get() = repository.kuwaitLiveData
+
+    fun getKuwaitZone() {
+        viewModelScope.launch {
+            repository.getKuwaitZone()
         }
     }
 
@@ -585,6 +610,60 @@ class HomeViewModel @Inject constructor(
     fun deleteReason(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.deleteReason(map)
+        }
+    }
+
+    val getDeliveryBoyResult: LiveData<GetAllDeliveryBoyResponse>
+        get() = repository.deliveryBoyLiveData
+
+    fun getDeliveryBoy(search: String?=null, page:Int,fromDate:String?=null,toDate:String?=null) {
+        viewModelScope.launch {
+            repository.getDeliveryBoy(search,page,fromDate,toDate)
+        }
+    }
+
+    val getDeliveryBoyDetailResult: LiveData<GetDeliveryBoyDetailResponse>
+        get() = repository.deliveryBoyDetailLiveData
+
+    fun getDeliveryBoyDetail(userId:String) {
+        viewModelScope.launch {
+            repository.getDeliveryBoyDetail(userId)
+        }
+    }
+
+    val addDeliveryBoyResult: LiveData<CommonResponse>
+        get() = repository.addDeliveryBoyLiveData
+
+    fun addDeliveryBoy(request: AddDeliveryBoyRequest) {
+        viewModelScope.launch {
+            repository.addDeliveryBoy(request)
+        }
+    }
+
+    val updateDeliveryBoyResult: LiveData<CommonResponse>
+        get() = repository.updateDeliveryBoyLiveData
+
+    fun updateDeliveryBoy(request: AddDeliveryBoyRequest) {
+        viewModelScope.launch {
+            repository.updateDeliveryBoy(request)
+        }
+    }
+
+    val updateDeliveryBoyStatusResult: LiveData<BlockUnblockDeliveryBoyResponse>
+        get() = repository.updateDeliveryBoyStatusLiveData
+
+    fun blockUnblockDeliveryBoy(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.blockUnblockDeliveryBoy(map)
+        }
+    }
+
+    val deleteDeliveryBoyResult: LiveData<CommonResponse>
+        get() = repository.deleteReasonLiveData
+
+    fun deleteDeliveryBoy(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.deleteDeliveryBoy(map)
         }
     }
 

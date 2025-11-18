@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,17 +16,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.ReasonAdapter
-import com.desynatadmin.adapter.UserAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddReasonDialogBinding
 import com.desynatadmin.databinding.FragmentReasonManagementBinding
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
-import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -38,6 +34,7 @@ class ReasonManagementFragment : BaseFragment() {
     private var binding: FragmentReasonManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isReasonObserver = true
     private var reasonList = ArrayList<GetReasonResponse.Data.Data>()
     private var reasonAdapter : ReasonAdapter?=null
 
@@ -52,6 +49,7 @@ class ReasonManagementFragment : BaseFragment() {
     private var lastQuery: String? = null
     private val itemsPerPage = 10
     private var type = 1
+    var selectedPos = -1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,11 +75,19 @@ class ReasonManagementFragment : BaseFragment() {
 
             reasonList.clear()
             reasonAdapter = ReasonAdapter(requireActivity(),reasonList,object : ReasonAdapter.ReasonClick{
-                override fun onReasonClick(position: Int) {
-                    val bundle = Bundle().apply {
-                        putString("reasonData", Gson().toJson(reasonList[position]))
+                override fun onReasonClick(position: Int,type:Int) {
+                    selectedPos = position
+                    when(type){
+                        1-> {
+                           addReasonDialog(isEdit = true)
+                        }
+                        2-> {
+                            updateReasonStatus()
+                        }
+                        3->{
+                            deleteReason()
+                        }
                     }
-                    findNavController().navigate(R.id.action_userFragment_to_userDetailFragment,bundle)
                 }
 
             })
@@ -158,6 +164,11 @@ class ReasonManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
+
+            toolbar.tvToolbar.setOnClickListener{
+                findNavController().popBackStack()
+            }
+
             tvExchange.setOnClickListener {
                 type = 1
                 getAllReason()
@@ -232,8 +243,52 @@ class ReasonManagementFragment : BaseFragment() {
             }
         }
 
-        viewModel.getReasonResult.observe(viewLifecycleOwner) { response ->
+        viewModel.addReasonResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
+                CommonMethod.showSuccessDialog(requireActivity(),"Reason added successfully"){
+                    getAllReason(loading = false)
+                }
+                isObserver = false
+            }
+        }
+
+        viewModel.updateReasonResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                reasonList[selectedPos]=response.data
+                reasonAdapter?.notifyItemChanged(selectedPos)
+                selectedPos = -1
+                isObserver = false
+            }
+        }
+
+        viewModel.updateReasonStatusResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                reasonList[selectedPos].status = response.data.status
+                reasonAdapter?.notifyItemChanged(selectedPos)
+                selectedPos = -1
+                isObserver = false
+            }
+        }
+
+        viewModel.deleteReasonResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                reasonList.removeAt(selectedPos)
+                reasonAdapter?.notifyItemRemoved(selectedPos)
+                reasonAdapter?.notifyItemRangeChanged(selectedPos, reasonList.size)
+                checkData()
+                selectedPos = -1
+                isObserver = false
+            }
+        }
+
+        viewModel.getReasonResult.observe(viewLifecycleOwner) { response ->
+            if (isReasonObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
@@ -289,18 +344,18 @@ class ReasonManagementFragment : BaseFragment() {
 
                 pagination = false
                 isFromSwipe = false
-                isObserver = false
+                isReasonObserver = false
             }
         }
 
     }
 
     private fun getAllReason(loading:Boolean=true,search:String?=lastQuery){
-        viewModel.getReason(search = search, page = currentPage)
+        viewModel.getReason(type,search = search, page = currentPage)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
-        isObserver = true
+        isReasonObserver = true
     }
 
     private fun addReason(reasonEnglish:String,reasonArabic:String){
@@ -314,11 +369,11 @@ class ReasonManagementFragment : BaseFragment() {
         isObserver = true
     }
 
-    private fun updateReason(reasonEnglish:String,reasonArabic:String,reasonId:String){
+    private fun updateReason(reasonEnglish:String,reasonArabic:String){
         val map = HashMap<String,Any>()
         map["reason_english"] = reasonEnglish
             map["reason_arabic"] = reasonArabic
-            map["reason_id"] = reasonId
+            map["reason_id"] = reasonList[selectedPos].id
             map["type"] = type
             viewModel.updateReason(map)
 
@@ -326,18 +381,18 @@ class ReasonManagementFragment : BaseFragment() {
         isObserver = true
     }
 
-    private fun updateReasonStatus(reasonId:String){
+    private fun updateReasonStatus(){
         val map = HashMap<String,Any>()
-            map["reason_id"] = reasonId
+            map["reason_id"] = reasonList[selectedPos].id
             viewModel.blockUnblockReason(map)
 
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
-    private fun deleteReason(reasonId:String){
+    private fun deleteReason(){
         val map = HashMap<String,Any>()
-            map["reason_id"] = reasonId
+            map["reason_id"] = reasonList[selectedPos].id
             viewModel.deleteReason(map)
 
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
@@ -360,7 +415,7 @@ class ReasonManagementFragment : BaseFragment() {
 
     }
 
-    private fun addReasonDialog(isEdit:Boolean = false,reasonId:String?=null) {
+    private fun addReasonDialog(isEdit:Boolean = false) {
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddReasonDialogBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -378,6 +433,11 @@ class ReasonManagementFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding.apply {
+            CommonMethod.removeSpace(etEnglishReason)
+            if(isEdit){
+                etEnglishReason.setText(reasonList[selectedPos].reasonEnglish)
+                etArabicReason.setText(reasonList[selectedPos].reasonArabic)
+            }
 
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
@@ -392,13 +452,12 @@ class ReasonManagementFragment : BaseFragment() {
                 }
                 else{
                     if(isEdit){
-                        if (reasonId != null) {
-                            updateReason(etEnglishReason.text?.trim().toString(),etArabicReason.text?.trim().toString(),reasonId)
-                        }
-
+                            updateReason(etEnglishReason.text?.trim().toString(),etArabicReason.text?.trim().toString())
+                        dialog.dismiss()
                     }
                     else{
                         addReason(etEnglishReason.text?.trim().toString(),etArabicReason.text?.trim().toString())
+                        dialog.dismiss()
                     }
                 }
             }
@@ -407,6 +466,5 @@ class ReasonManagementFragment : BaseFragment() {
 
         dialog.show()
     }
-
 
 }

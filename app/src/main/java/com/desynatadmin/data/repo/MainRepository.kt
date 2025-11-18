@@ -32,13 +32,20 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
+import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.userManagement.response.AddWalletBalanceResponse
 import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
@@ -658,11 +665,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val userLiveData = SingleLiveEvent<GetUserResponse>()
-    suspend fun getAllUser(search:String?=null, page:Int
+    suspend fun getAllUser(search:String?=null, page:Int,countryId:String?=null,fromDate:String?=null,toDate:String?=null
     ) {
         handleApiCall(
             api = {
-                api.getUser(search,page)
+                api.getUser(search,page,countryId,fromDate,toDate)
             },
             responseLiveData = userLiveData
         )
@@ -690,12 +697,23 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val reasonLiveData = SingleLiveEvent<GetReasonResponse>()
-    suspend fun getReason(search:String?=null, page:Int
+    val walletBalanceLiveData = SingleLiveEvent<AddWalletBalanceResponse>()
+    suspend fun addWalletAmount(map:HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
-                api.getReason(search,page)
+                api.addWalletAmount(map)
+            },
+            responseLiveData = walletBalanceLiveData
+        )
+    }
+
+    val reasonLiveData = SingleLiveEvent<GetReasonResponse>()
+    suspend fun getReason(type:Int,search:String?=null, page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getReason(type,search,page)
             },
             responseLiveData = reasonLiveData
         )
@@ -712,7 +730,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val updateReasonLiveData = SingleLiveEvent<CommonResponse>()
+    val updateReasonLiveData = SingleLiveEvent<UpdateReasonResponse>()
     suspend fun updateReason(map:HashMap<String,Any>
     ) {
         handleApiCall(
@@ -720,6 +738,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
                 api.updateReason(map)
             },
             responseLiveData = updateReasonLiveData
+        )
+    }
+
+ val kuwaitLiveData = SingleLiveEvent<GetKuwaitZoneResponse>()
+    suspend fun getKuwaitZone(
+    ) {
+        handleApiCall(
+            api = {
+                api.getKuwaitZone()
+            },
+            responseLiveData = kuwaitLiveData
         )
     }
 
@@ -742,6 +771,72 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
                 api.deleteReason(map)
             },
             responseLiveData = deleteReasonLiveData
+        )
+    }
+
+    val deliveryBoyLiveData = SingleLiveEvent<GetAllDeliveryBoyResponse>()
+    suspend fun getDeliveryBoy(search:String?=null, page:Int,fromDate:String?=null,toDate:String?=null
+    ) {
+        handleApiCall(
+            api = {
+                api.getDeliveryBoy(search,page,fromDate,toDate)
+            },
+            responseLiveData = deliveryBoyLiveData
+        )
+    }
+
+    val deliveryBoyDetailLiveData = SingleLiveEvent<GetDeliveryBoyDetailResponse>()
+    suspend fun getDeliveryBoyDetail(userId:String
+    ) {
+        handleApiCall(
+            api = {
+                api.getDeliveryBoyDetail(userId)
+            },
+            responseLiveData = deliveryBoyDetailLiveData
+        )
+    }
+
+    val addDeliveryBoyLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addDeliveryBoy(request: AddDeliveryBoyRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.addDeliveryBoy(request)
+            },
+            responseLiveData = addDeliveryBoyLiveData
+        )
+    }
+
+    val updateDeliveryBoyLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updateDeliveryBoy(request: AddDeliveryBoyRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.updateDeliveryBoy(request)
+            },
+            responseLiveData = updateDeliveryBoyLiveData
+        )
+    }
+
+    val updateDeliveryBoyStatusLiveData = SingleLiveEvent<BlockUnblockDeliveryBoyResponse>()
+    suspend fun blockUnblockDeliveryBoy(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.blockUnblockDeliveryBoy(map)
+            },
+            responseLiveData = updateDeliveryBoyStatusLiveData
+        )
+    }
+
+    val deleteDeliveryBoyLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteDeliveryBoy(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteDeliveryBoy(map)
+            },
+            responseLiveData = deleteDeliveryBoyLiveData
         )
     }
 

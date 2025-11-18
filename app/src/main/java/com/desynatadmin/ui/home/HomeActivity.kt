@@ -226,12 +226,12 @@ override fun onBackPressed() {
             }
 
             rlDeliveryBoyManagement.setOnClickListener {
-              //  controller.navigate(R.id.user)
+                controller.navigate(R.id.deliveryBoy)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
             rlReasonManagement.setOnClickListener {
-              //  controller.navigate(R.id.user)
+                controller.navigate(R.id.reason)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 

@@ -41,7 +41,7 @@ data class BlockUnblockUserResponse(
         @SerializedName("profile_image")
         val profileImage: String,
         @SerializedName("status")
-        val status: Int,
+        val status: String,
         @SerializedName("updated_at")
         val updatedAt: String
     )

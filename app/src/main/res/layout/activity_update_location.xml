@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.UpdateLocationActivity">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:elevation="1dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Change"
+            android:drawableStart="@drawable/back_ic"
+            android:drawablePadding="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/edit_text"
+                android:paddingVertical="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:hint="Search  address "
+                android:editable="false"
+                android:clickable="false"
+                android:focusable="false"
+                android:textSize="@dimen/_11sdp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_centerVertical="true"
+                android:drawableStart="@drawable/ic_search"
+                app:layout_constraintTop_toBottomOf="@+id/tvToolbar"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/etSearch">
+
+            <fragment
+                android:id="@+id/mapConst"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivMapImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:color/transparent" />
+
+            <ImageView
+                android:id="@+id/currentMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_map"
+                android:layout_centerInParent="true" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCurrent"
+                style="@style/button"
+                android:layout_width="wrap_content"
+                android:background="@drawable/button_stroke"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/brown"
+                android:drawableTint="@color/brown"
+                android:drawableStart="@drawable/ic_current_loc"
+                android:drawablePadding="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:text="Use Current Location"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:singleLine="true"
+                    android:text="Location"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvAddress"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_regular"
+                    android:maxLines="2"
+                    android:text="Fetching address..."
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/btnContinue" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnContinue"
+                style="@style/button"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:text="Continue"
+                app:layout_constraintBottom_toTopOf="@+id/viewBottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/viewBottom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_22sdp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

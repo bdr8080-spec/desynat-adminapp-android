@@ -1,25 +1,27 @@
 package com.desynatadmin.ui.home.userManagement
 
-import android.graphics.Color
+import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.AddAmountDialogBinding
 import com.desynatadmin.databinding.FragmentUserDetailBinding
-import com.desynatadmin.databinding.FragmentUserManagementBinding
-import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
+import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,11 +62,71 @@ class UserDetailFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            findNavController().popBackStack()
+            toolbar.tvToolbar.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            tvAddMoney.setOnClickListener {
+                addAmountDialog()
+            }
+
+            ivSwitch.setOnClickListener {
+                updateUserStatus()
+            }
         }
     }
 
+    private fun addAmount(amount:String){
+        val map = HashMap<String,Any>()
+        map["user_id"] = userData?.id.toString()
+        map["amount"] = amount
+        viewModel.addWalletAmount(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun updateUserStatus(){
+        val map = HashMap<String,Any>()
+        map["user_id"] = userData?.id.toString()
+        viewModel.blockUnblockUser(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
     override fun observe() {
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                errorMessage?.let { showToast(it) }
+                isObserver = false
+            }
+        }
+
+        viewModel.updateUserStatusResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+               userData?.status = response.data.status
+                updateStatus()
+                isObserver = false
+            }
+        }
+
+        viewModel.walletBalanceResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                setWalletData(response.data.amount)
+                isObserver = false
+            }
+        }
+
+    }
+
+    private fun setWalletData(amount: String) {
+        binding?.apply {
+            tvWalletBalance.text = "$amount KD"
+        }
     }
 
     private fun updateStatus(){
@@ -82,15 +144,17 @@ class UserDetailFragment : BaseFragment() {
     private fun setData(){
 
         binding?.apply {
-
+            if (userData?.walletInfo!=null){
+                tvWalletBalance.text = "${CommonMethod.formatAmount(userData?.walletInfo?.amount.toString())} KD"
+            }
             tvName.text = userData?.fullName
             tvLocation.text = userData?.countryInfo?.name
             tvJoinedOn.text = "Joined at ${userData?.createdAt?.let { formatUtcDateToDdMmYyyy(it) }}"
             tvEmail.text = userData?.email
             tvCall.text = userData?.countryCode+"-"+userData?.mobile
-            tvCompletedOrder.text = userData?.fullName
-            tvCancelledOrder.text = userData?.fullName
-            Glide.with(ivProfileImage).load(userData?.profileImage).transform(CircleCrop()).into(ivProfileImage)
+          /*  tvCompletedOrder.text = userData?.fullName
+            tvCancelledOrder.text = userData?.fullName*/
+            Glide.with(ivProfileImage).load(userData?.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
 
             if(userData?.status=="1"){
                 ivSwitch.setImageResource(R.drawable.switch_on)
@@ -102,5 +166,42 @@ class UserDetailFragment : BaseFragment() {
 
     }
 
+    private fun addAmountDialog() {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = AddAmountDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            tvToolbar.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            btnSubmit.setOnClickListener {
+                if(etAmount.text?.isEmpty() == true){
+                    showToast("Please enter amount")
+                }
+                else{
+                    addAmount(etAmount.text?.trim().toString())
+                    dialog.dismiss()
+                }
+            }
+
+        }
+
+        dialog.show()
+    }
 
 }

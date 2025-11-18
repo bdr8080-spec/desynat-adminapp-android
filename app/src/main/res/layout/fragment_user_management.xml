@@ -91,7 +91,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"/>
+            android:layout_height="@dimen/_20sdp"/>
 
     </LinearLayout>
 
@@ -114,7 +114,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="01 of 230"
+        android:text="01 of 01"
         android:singleLine="true"
         android:ellipsize="end"
         android:textColor="@color/black"

@@ -27,13 +27,20 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
+import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
+import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.userManagement.response.AddWalletBalanceResponse
 import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
@@ -337,7 +344,12 @@ interface ApiServices {
     suspend fun getUser(
         @Query("search") search : String?=null,
         @Query("page") page: Int,
-        @Query("limit") limit: Int? = 10, ): Response<GetUserResponse>
+        @Query("country_id") countryId : String?=null,
+        @Query("from_date") fromDate : String?=null,
+        @Query("to_date") toDate : String?=null,
+        @Query("limit") limit: Int? = 10,
+
+        ): Response<GetUserResponse>
 
     @GET(Constants.GET_USER_DETAIL)
     suspend fun getUserDetail(
@@ -349,8 +361,14 @@ interface ApiServices {
         @Body body: HashMap<String, Any>
     ): Response<BlockUnblockUserResponse>
 
+    @POST(Constants.ADD_WALLET_AMOUNT)
+    suspend fun addWalletAmount(
+        @Body body: HashMap<String, Any>
+    ): Response<AddWalletBalanceResponse>
+
     @GET(Constants.GET_REASON)
     suspend fun getReason(
+        @Query("type") type : Int=1,
         @Query("search") search : String?=null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10, ): Response<GetReasonResponse>
@@ -373,6 +391,42 @@ interface ApiServices {
     @POST(Constants.UPDATE_REASON)
     suspend fun updateReason(
         @Body body: HashMap<String, Any>
+    ): Response<UpdateReasonResponse>
+
+    @GET(Constants.GET_KUWAIT_ZONE)
+    suspend fun getKuwaitZone():Response<GetKuwaitZoneResponse>
+
+    @GET(Constants.GET_DELIVERY_BOY)
+    suspend fun getDeliveryBoy(
+        @Query("search") search : String?=null,
+        @Query("page") page: Int,
+        @Query("from_date") fromDate : String?=null,
+        @Query("to_date") toDate : String?=null,
+        @Query("limit") limit: Int? = 10, ): Response<GetAllDeliveryBoyResponse>
+
+    @POST(Constants.GET_DELIVERY_BOY_DETAIL)
+    suspend fun getDeliveryBoyDetail(
+        @Query("user_id") userId : String,
+    ): Response<GetDeliveryBoyDetailResponse>
+
+    @POST(Constants.BLOCK_UNBLOCK_DELIVERY_BOY)
+    suspend fun blockUnblockDeliveryBoy(
+        @Body body: HashMap<String, Any>
+    ): Response<BlockUnblockDeliveryBoyResponse>
+
+    @POST(Constants.DELETE_DELIVERY_BOY)
+    suspend fun deleteDeliveryBoy(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.ADD_DELIVERY_BOY)
+    suspend fun addDeliveryBoy(
+        @Body request: AddDeliveryBoyRequest
+    ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_DELIVERY_BOY)
+    suspend fun updateDeliveryBoy(
+        @Body request: AddDeliveryBoyRequest
     ): Response<CommonResponse>
 
 }

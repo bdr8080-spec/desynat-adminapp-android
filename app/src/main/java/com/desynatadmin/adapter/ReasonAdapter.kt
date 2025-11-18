@@ -18,7 +18,7 @@ class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResp
         RecyclerView.ViewHolder(binding.root)
 
     interface ReasonClick{
-        fun onReasonClick(position: Int)
+        fun onReasonClick(position: Int,type:Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,21 +36,26 @@ class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResp
 
         holder.binding.apply {
             tvReason.text = reasonData.reasonEnglish
-            if(reasonData.status=="1"){
+            if(reasonData.status==1){
                 ivSwitch.setImageResource(R.drawable.switch_on)
             }
             else{
                 ivSwitch.setImageResource(R.drawable.switch_off)
             }
-            ivSwitch.setOnClickListener {
 
+            ivEdit.setOnClickListener {
+                reasonClick.onReasonClick(position,1)
+            }
+
+            ivSwitch.setOnClickListener {
+                reasonClick.onReasonClick(position,2)
+            }
+
+            ivDelete.setOnClickListener {
+                reasonClick.onReasonClick(position,3)
             }
         }
 
-        holder.itemView.setOnClickListener {
-            reasonClick.onReasonClick(position)
-
-        }
     }
 
     fun setData(newList: ArrayList<GetReasonResponse.Data.Data>) {

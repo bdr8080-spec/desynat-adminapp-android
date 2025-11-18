@@ -126,7 +126,11 @@
         tools:layout="@layout/fragment_add_brand"/>
 
 
-
+    <fragment
+        android:id="@+id/reason"
+        android:name="com.desynatadmin.ui.home.reasonManagement.ReasonManagementFragment"
+        android:label="Reason Fragment"
+        tools:layout="@layout/fragment_reason_management"/>
 
 
     <fragment
@@ -148,6 +152,41 @@
         tools:layout="@layout/fragment_user_detail">
 
     </fragment>
+
+    <fragment
+        android:id="@+id/deliveryBoy"
+        android:name="com.desynatadmin.ui.home.deliveryBoyManagement.DeliveryBoyManagementFragment"
+        android:label="Delivery Boy Management Fragment"
+        tools:layout="@layout/fragment_delivery_boy_management">
+
+
+        <action
+            android:id="@+id/action_deliveryBoyFragment_to_deliveryBoyDetailFragment"
+            app:destination="@id/deliveryBoyDetail" />
+
+        <action
+            android:id="@+id/action_deliveryBoyFragment_to_addDeliveryBoyFragment"
+            app:destination="@id/addDeliveryBoy" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/deliveryBoyDetail"
+        android:name="com.desynatadmin.ui.home.deliveryBoyManagement.DeliveryBoyDetailFragment"
+        android:label="Delivery Boy Detail Fragment"
+        tools:layout="@layout/fragment_delivery_boy_detail">
+
+        <action
+            android:id="@+id/action_deliveryBoyDetailFragment_to_addDeliveryBoyFragment"
+            app:destination="@id/addDeliveryBoy" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addDeliveryBoy"
+        android:name="com.desynatadmin.ui.home.deliveryBoyManagement.AddDeliveryBoyFragment"
+        android:label="Add Delivery Boy Fragment"
+        tools:layout="@layout/fragment_add_delivery_boy"/>
 
 
 </navigation>

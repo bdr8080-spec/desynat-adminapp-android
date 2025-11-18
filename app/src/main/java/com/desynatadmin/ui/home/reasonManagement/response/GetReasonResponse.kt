@@ -49,7 +49,7 @@ data class GetReasonResponse(
             @SerializedName("reason_english")
             val reasonEnglish: String,
             @SerializedName("status")
-            val status: Int,
+            var status: Int,
             @SerializedName("type")
             val type: Int,
             @SerializedName("updated_at")

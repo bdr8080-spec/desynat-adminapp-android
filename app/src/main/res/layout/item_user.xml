@@ -16,7 +16,7 @@
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:scaleType="centerCrop"
-        android:src="@drawable/dummy"
+        android:src="@drawable/ic_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/circle_image" />
@@ -183,5 +183,61 @@
         app:layout_constraintStart_toEndOf="@id/tvCompletedOrder"
         app:layout_constraintTop_toBottomOf="@id/tvCancelledOrderLabel"
         app:layout_constraintEnd_toEndOf="@id/tvCancelledOrderLabel" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_back"
+        android:backgroundTint="#FFF7EA"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tvCompletedOrder">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivWallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_wallet"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_5sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Wallet Balance"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_9sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/ivWallet"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWalletBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="0 KD"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11sdp"
+            android:layout_below="@+id/tvWallet"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/ivWallet"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvViewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="View Details"
+            android:drawableEnd="@drawable/ic_arrow"
+            android:drawablePadding="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

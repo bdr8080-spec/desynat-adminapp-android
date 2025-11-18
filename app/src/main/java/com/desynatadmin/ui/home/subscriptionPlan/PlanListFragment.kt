@@ -19,6 +19,7 @@ import com.desynatadmin.databinding.FragmentPlanListBinding
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -67,7 +68,6 @@ class PlanListFragment : BaseFragment() {
             rvPlan.adapter = subscriptionAdapter
         }
         getCountryApi()
-      //  getSubscriptionPlan()
     }
 
     override fun initControl() {
@@ -77,15 +77,15 @@ class PlanListFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                showCustomDropdown(etCountry)
-               // ccpCountryPicker.launchCountrySelectionDialog()
-            }
-
-            ccpCountryPicker.setOnCountryChangeListener {
-                val countryName = ccpCountryPicker.selectedCountryName
-                selectedCountryCode = ccpCountryPicker.selectedCountryNameCode
-                etCountry.setText(countryName)
-                getSubscriptionPlan()
+                CommonMethod.showCountryPicker(
+                    requireContext(),
+                    it,
+                    countryList
+                ) { selectedCountry ->
+                    etCountry.setText(selectedCountry.name)
+                    selectedCountryCode = selectedCountry.id.toString()
+                    getSubscriptionPlan()
+                }
             }
         }
     }
@@ -101,6 +101,7 @@ class PlanListFragment : BaseFragment() {
 
         viewModel.getCountryResultt.observe(viewLifecycleOwner) { response ->
             if (isCountryObserver) {
+                countryList.clear()
                 countryList.addAll(response.data)
                 setCountry()
 
@@ -140,43 +141,9 @@ class PlanListFragment : BaseFragment() {
     private fun setCountry() {
         if (!countryList.isNullOrEmpty()) {
             SharedPreference.get(requireActivity()).saveCountryList(countryList)
-            val countryCodes = countryList?.map { it.isoCode }
-            val countryCodeString = countryCodes?.joinToString(",")
-            binding?.ccpCountryPicker?.setCustomMasterCountries(countryCodeString)
             selectedCountryCode = countryList[0].id.toString()
             binding?.etCountry?.setText(countryList[0].name)
             getSubscriptionPlan()
-        }
-    }
-
-    private fun showCustomDropdown(anchor: View) {
-
-        val dropdownBinding = CustomCountryPickerBinding.inflate(layoutInflater)
-
-        val popupWindow = PopupWindow(
-            dropdownBinding.root,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            true
-        )
-
-        popupWindow.isOutsideTouchable = true
-        popupWindow.elevation = 20f
-
-        popupWindow.showAsDropDown(anchor)
-
-        dropdownBinding.apply {
-
-            rvCountry.adapter = CountryPickerAdapter(requireActivity(),countryList,object :
-                CountryPickerAdapter.ClickOnItem{
-                override fun onClickItem(position: Int) {
-                    binding?.etCountry?.setText(countryList[position].name)
-                    selectedCountryCode = countryList[position].id.toString()
-                    getSubscriptionPlan()
-                    popupWindow.dismiss()
-                }
-
-            })
         }
     }
 

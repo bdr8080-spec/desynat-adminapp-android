@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemUserBinding
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.Data.Data>, var userClick:UserClick) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
@@ -16,7 +17,7 @@ class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.D
         RecyclerView.ViewHolder(binding.root)
 
     interface UserClick{
-        fun onUserClick(position: Int)
+        fun onUserClick(position: Int,type:Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,13 +35,16 @@ class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.D
 
         holder.binding.apply {
             tvName.text = userData.fullName
+            if (userData.walletInfo!=null){
+                tvWalletBalance.text = "${CommonMethod.formatAmount(userData.walletInfo.amount)} KD"
+            }
             tvLocation.text = userData.countryInfo.name
             tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
             tvEmail.text = userData.email
             tvCall.text = userData.countryCode+"-"+userData.mobile
-            tvCompletedOrder.text = userData.fullName
-            tvCancelledOrder.text = userData.fullName
-            Glide.with(ivProfileImage).load(userData.profileImage).transform(CircleCrop()).into(ivProfileImage)
+         /*   tvCompletedOrder.text = userData.fullName
+            tvCancelledOrder.text = userData.fullName*/
+            Glide.with(ivProfileImage).load(userData.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
             if(userData.status=="1"){
                 ivSwitch.setImageResource(R.drawable.switch_on)
             }
@@ -48,13 +52,12 @@ class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.D
                 ivSwitch.setImageResource(R.drawable.switch_off)
             }
             ivSwitch.setOnClickListener {
-
+                userClick.onUserClick(position,2)
             }
-        }
 
-        holder.itemView.setOnClickListener {
-            userClick.onUserClick(position)
-
+            tvViewDetail.setOnClickListener {
+                userClick.onUserClick(position,1)
+            }
         }
     }
 
