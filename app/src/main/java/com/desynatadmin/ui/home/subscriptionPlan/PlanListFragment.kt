@@ -78,9 +78,10 @@ class PlanListFragment : BaseFragment() {
 
             etCountry.setOnClickListener {
                 CommonMethod.showCountryPicker(
-                    requireContext(),
-                    it,
-                    countryList
+                    context = requireContext(),
+                    anchor = it,
+                    countryList = countryList,
+                    isDialCode = false
                 ) { selectedCountry ->
                     etCountry.setText(selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
@@ -108,6 +109,7 @@ class PlanListFragment : BaseFragment() {
                 isCountryObserver = false
             }
         }
+
         viewModel.subscriptionPlanResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()

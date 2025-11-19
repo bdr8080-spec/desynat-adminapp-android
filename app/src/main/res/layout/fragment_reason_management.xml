@@ -91,6 +91,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:visibility="gone"
                     android:id="@+id/etSearch"
                     style="@style/edit_text"
                     android:drawablePadding="10dp"
@@ -131,7 +132,7 @@
         android:paddingEnd="@dimen/_15sdp"
         android:paddingBottom="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ivBackArrow"
         android:src="@drawable/ic_add_brand"/>
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -139,9 +140,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_25sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ivAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_back_brand_disable"/>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -149,7 +150,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="01 of 230"
+        android:text="01 of 01"
         android:singleLine="true"
         android:ellipsize="end"
         android:textColor="@color/black"
@@ -165,9 +166,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/_15sdp"
-        android:paddingBottom="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_25sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ivAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_next_brand"/>
 
     <ProgressBar
@@ -191,7 +192,7 @@
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_13sdp"
-        android:text="No data found"
+        android:text="No Reason Added"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -92,6 +92,5 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:5.1.0")
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-    implementation ("com.mikhaellopez:circularimageview:4.3.1")
 
 }

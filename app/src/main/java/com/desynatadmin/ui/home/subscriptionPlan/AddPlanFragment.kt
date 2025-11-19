@@ -101,7 +101,7 @@ class AddPlanFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
+                CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry, isDialCode = false){ selectedCountry ->
                     binding?.etCountry?.setText(selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                 }

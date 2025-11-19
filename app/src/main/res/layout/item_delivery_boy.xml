@@ -30,7 +30,7 @@
         android:text="Alisha Khan"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivSwitch"
         app:layout_constraintStart_toEndOf="@id/ivProfileImage"
         app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
 
@@ -42,7 +42,7 @@
         android:text="Joined on 21/02/2025"
         android:textColor="@color/black"
         android:textSize="@dimen/_9sdp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivSwitch"
         app:layout_constraintStart_toStartOf="@+id/tvName"
         app:layout_constraintTop_toBottomOf="@id/tvName" />
 
@@ -68,7 +68,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCall"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
@@ -78,27 +78,34 @@
         android:text="+965- 28392018391"
         android:textColor="#000000"
         android:textSize="@dimen/_9sdp"
-        app:layout_constraintEnd_toStartOf="@id/tvEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view1" />
 
+    <RelativeLayout
+        android:id="@+id/relEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="@id/tvCall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvCall"
+        app:layout_constraintTop_toTopOf="@id/tvCall">
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvEmail"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
         android:drawableStart="@drawable/mail_ic"
         android:drawablePadding="@dimen/_4sdp"
         android:fontFamily="@font/poppins_regular"
         android:text="alisha.khan@gmail.com"
+        android:layout_centerHorizontal="true"
         android:textColor="#000000"
         android:textSize="@dimen/_9sdp"
-        android:singleLine="true"
-        android:ellipsize="end"
-        app:layout_constraintBottom_toBottomOf="@id/tvCall"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvCall"
-        app:layout_constraintTop_toTopOf="@id/tvCall" />
+        android:singleLine="true" />
+
+    </RelativeLayout>
 
     <View
         android:id="@+id/view2"
@@ -108,7 +115,7 @@
         android:background="#1A000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+        app:layout_constraintTop_toBottomOf="@id/tvCall" />
 
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -752,6 +752,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+    val userCountryLiveData = SingleLiveEvent<GetCountryResponse>()
+    suspend fun getUserCountry(
+    ) {
+        handleApiCall(
+            api = {
+                api.getUserCountry()
+            },
+            responseLiveData = userCountryLiveData
+        )
+    }
+
     val updateReasonStatusLiveData = SingleLiveEvent<BlockUnblockReasonResponse>()
     suspend fun blockUnblockReason(map:HashMap<String,Any>
     ) {

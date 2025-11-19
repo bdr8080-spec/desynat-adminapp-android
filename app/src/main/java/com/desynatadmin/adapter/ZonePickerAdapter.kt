@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemCountryBinding
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
@@ -28,6 +29,7 @@ class ZonePickerAdapter(var context:Context, var zoneList: ArrayList<GetKuwaitZo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
+            ivFlag.isVisible = false
             tvCountry.text = "${zoneList[position].nameEnglish}"
         }
 

@@ -2,12 +2,15 @@ package com.desynatadmin.ui.home.userManagement
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -115,8 +118,9 @@ class UserDetailFragment : BaseFragment() {
         viewModel.walletBalanceResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
-                setWalletData(response.data.amount)
+                CommonMethod.showSuccessDialog(requireActivity(),response.message){
+                    setWalletData(response.data.amount)
+                }
                 isObserver = false
             }
         }
@@ -185,13 +189,32 @@ class UserDetailFragment : BaseFragment() {
 
         dialogBinding.apply {
 
+            etAmount.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(editable: Editable?) {
+                    val text = editable.toString()
+
+                    if (text.length > 1 && text.startsWith("0") && !text.startsWith("0.")) {
+                        val newValue = text.trimStart('0')
+
+                        etAmount.removeTextChangedListener(this)
+                        etAmount.setText(newValue)
+                        etAmount.setSelection(newValue.length)
+                        etAmount.addTextChangedListener(this)
+                    }
+                }
+            })
+
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
             }
 
             btnSubmit.setOnClickListener {
-                if(etAmount.text?.isEmpty() == true){
-                    showToast("Please enter amount")
+               if(isInvalid(etAmount, "Amount")) {
+                    return@setOnClickListener
                 }
                 else{
                     addAmount(etAmount.text?.trim().toString())
@@ -202,6 +225,21 @@ class UserDetailFragment : BaseFragment() {
         }
 
         dialog.show()
+    }
+
+
+    fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
+        val value = et.text.toString().trim()
+        if (value.isEmpty()) {
+            showToast("Please enter $fieldName")
+            return true
+        }
+        val num = value.toIntOrNull() ?: 0
+        if (num <= 0) {
+            showToast("$fieldName should be greater than 0")
+            return true
+        }
+        return false
     }
 
 }

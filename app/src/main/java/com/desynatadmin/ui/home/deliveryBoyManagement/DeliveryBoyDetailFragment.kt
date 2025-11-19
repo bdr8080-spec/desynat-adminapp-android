@@ -13,6 +13,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentDeliveryBoyDetailBinding
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -106,22 +107,40 @@ class DeliveryBoyDetailFragment : BaseFragment() {
                 error(R.drawable.ic_placeholder)
             }
 
-            ivRegistration1.load(deliveryBoyData?.registrationCertificate?.get(0)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+            if (deliveryBoyData?.registrationCertificate!=null) {
+                if(deliveryBoyData?.registrationCertificate?.get(0)==null){
+                    ivRegistration1.isVisible = false
+                }
+                if(deliveryBoyData?.registrationCertificate?.get(1)==null){
+                    ivRegistration2.isVisible = false
+                }
+                ivRegistration1.load(deliveryBoyData?.registrationCertificate?.get(0)?.documentPath) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
+
+                ivRegistration2.load(deliveryBoyData?.identityProof?.get(1)?.documentPath) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
+            }
+            else{
+                tvRegistration.isVisible = false
+                llRegistration.isVisible = false
             }
 
-            ivRegistration2.load(deliveryBoyData?.identityProof?.get(1)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+            if (deliveryBoyData?.pollutionPaper!=null){
+                ivPollutionPaper.load(deliveryBoyData?.pollutionPaper?.get(0)?.documentPath) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
             }
-
-            ivPollutionPaper.load(deliveryBoyData?.pollutionPaper?.get(0)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+            else{
+                tvPollutionPaper.isVisible = false
+                llPollutionPaper.isVisible = false
             }
 
             ivVehicleInsurance.load(deliveryBoyData?.vehicleInsurance?.get(0)?.documentPath) {
@@ -146,7 +165,20 @@ class DeliveryBoyDetailFragment : BaseFragment() {
             }
 
             btnDelete.setOnClickListener {
-                deleteDeliveryBoy()
+                CommonMethod.deleteAlertDialog(
+                    requireActivity(),
+                    "Are you sure you want to delete the delivery boy account?"
+                ) { action ->
+                    when (action) {
+                        CommonMethod.DialogAction.DELETE -> {
+                            deleteDeliveryBoy()
+                        }
+
+                        CommonMethod.DialogAction.DISCARD -> {
+
+                        }
+                    }
+                }
             }
         }
     }

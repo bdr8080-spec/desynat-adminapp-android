@@ -97,11 +97,12 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etPassword"
                     style="@style/edit_text"
+                    android:layout_width="match_parent"
                     android:drawableStart="@drawable/password_iv"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="Enter password"
                     android:inputType="textPassword"
-                    android:paddingEnd="@dimen/_30sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:background="@null"
                     android:layout_toLeftOf="@+id/ivPassword" />
 
@@ -109,10 +110,12 @@
                     android:id="@+id/ivPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/disable_eye_ic"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:src="@drawable/ic_eye"
+                    app:tint="@color/hint_color"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
 

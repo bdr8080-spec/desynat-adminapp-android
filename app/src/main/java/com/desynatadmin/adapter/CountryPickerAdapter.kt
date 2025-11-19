@@ -9,7 +9,7 @@ import com.desynatadmin.databinding.ItemCountryBinding
 import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 
-class CountryPickerAdapter(var context:Context, var countryList: ArrayList<GetCountryResponse.Data>,var onClick:ClickOnItem) : RecyclerView.Adapter<CountryPickerAdapter.ViewHolder>() {
+class CountryPickerAdapter(var context:Context, var countryList: ArrayList<GetCountryResponse.Data>,var isDialCode:Boolean=false,var onClick:ClickOnItem) : RecyclerView.Adapter<CountryPickerAdapter.ViewHolder>() {
 
     interface ClickOnItem{
         fun onClickItem(position: Int)
@@ -30,7 +30,12 @@ class CountryPickerAdapter(var context:Context, var countryList: ArrayList<GetCo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-            tvCountry.text = "${countryList[position].name} (${countryList[position].dialCode})"
+            if (isDialCode){
+                tvCountry.text = "${countryList[position].name} (${countryList[position].dialCode})"
+            }
+            else{
+                tvCountry.text = "${countryList[position].name}"
+            }
             ivFlag.load(countryList[position].flag1)
         }
 

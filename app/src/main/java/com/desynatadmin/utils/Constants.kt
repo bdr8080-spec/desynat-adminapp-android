@@ -84,7 +84,8 @@ object Constants {
     const val BLOCK_UNBLOCK_DELIVERY_BOY = "/api/admin/block_unblock_deliveryboy"
     const val ADD_DELIVERY_BOY = "/api/admin/add_deliveryBoy"
     const val UPDATE_DELIVERY_BOY = "/api/admin/update_deliveryBoy"
-    const val DELETE_DELIVERY_BOY = "/api/admin/delete_deliveryBoy"
+    const val DELETE_DELIVERY_BOY = "/api/admin/delete_deliveryboy"
+    const val GET_USER_COUNTRY = "/api/admin/get_user_countries_list"
 
 
 }

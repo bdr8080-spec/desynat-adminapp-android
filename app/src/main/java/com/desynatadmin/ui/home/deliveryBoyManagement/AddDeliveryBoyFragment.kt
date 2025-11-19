@@ -309,78 +309,78 @@ class AddDeliveryBoyFragment : BaseFragment() {
             profileImage = deliveryBoyData?.profilePic
             ivProfileImage.load(deliveryBoyData?.profilePic) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_upload_image)
+                error(R.drawable.ic_upload_image)
             }
 
             drivingLicense1 = deliveryBoyData?.drivingLicense?.get(0)?.documentPath
             ivDriving1.load(deliveryBoyData?.drivingLicense?.get(0)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_front_img)
+                error(R.drawable.ic_front_img)
             }
 
             drivingLicense2 = deliveryBoyData?.drivingLicense?.get(1)?.documentPath
             ivDriving2.load(deliveryBoyData?.drivingLicense?.get(1)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_back_img)
+                error(R.drawable.ic_back_img)
             }
 
             vehicleImage1 = deliveryBoyData?.vehicleImage?.get(0)?.documentPath
             ivVehicle1.load(deliveryBoyData?.vehicleImage?.get(0)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_front_img)
+                error(R.drawable.ic_front_img)
             }
 
             vehicleImage2 = deliveryBoyData?.vehicleImage?.get(1)?.documentPath
             ivVehicle2.load(deliveryBoyData?.vehicleImage?.get(1)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_back_img)
+                error(R.drawable.ic_back_img)
             }
 
             identityProof1 = deliveryBoyData?.identityProof?.get(0)?.documentPath
             ivIdentity1.load(deliveryBoyData?.identityProof?.get(0)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_front_img)
+                error(R.drawable.ic_front_img)
             }
 
             identityProof2 = deliveryBoyData?.identityProof?.get(1)?.documentPath
             ivIdentity2.load(deliveryBoyData?.identityProof?.get(1)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_back_img)
+                error(R.drawable.ic_back_img)
             }
 
             registrationCertificate1 = deliveryBoyData?.registrationCertificate?.get(0)?.documentPath
             ivRegistration1.load(deliveryBoyData?.registrationCertificate?.get(0)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_front_img)
+                error(R.drawable.ic_front_img)
             }
 
             registrationCertificate2 = deliveryBoyData?.registrationCertificate?.get(1)?.documentPath
             ivRegistration2.load(deliveryBoyData?.identityProof?.get(1)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_back_img)
+                error(R.drawable.ic_back_img)
             }
 
             pollutionPaper = deliveryBoyData?.pollutionPaper?.get(0)?.documentPath
             ivPollutionPaper.load(deliveryBoyData?.pollutionPaper?.get(0)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_front_img)
+                error(R.drawable.ic_front_img)
             }
 
             vehicleInsurance = deliveryBoyData?.vehicleInsurance?.get(0)?.documentPath
             ivVehicleInsurance.load(deliveryBoyData?.vehicleInsurance?.get(0)?.documentPath) {
                 crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+                placeholder(R.drawable.ic_front_img)
+                error(R.drawable.ic_front_img)
             }
         }
     }
@@ -576,31 +576,31 @@ class AddDeliveryBoyFragment : BaseFragment() {
         binding?.apply {
 
             if (profileImage == null) {
-                showToast("Upload Profile Image")
+                showToast("Please Upload Profile Image")
                 return false
             }
             if (etEnglishFullName.text.toString().trim().isEmpty()) {
-                showToast("Enter Full Name in English")
+                showToast("Please Enter Full Name in English")
                 return false
             }
 
             if (etArabicFullName.text.toString().trim().isEmpty()) {
-                showToast("Enter Full Name in Arabic")
+                showToast("Please Enter Full Name in Arabic")
                 return false
             }
 
             val mobile = etMobileNumber.text.toString().trim()
             if (mobile.isEmpty()) {
-                showToast("Enter Mobile Number")
+                showToast("Please Enter Mobile Number")
                 return false
             }
             if (mobile.length < 7 ) {
-                showToast("Number must be at least 7 digits long")
+                showToast("Mobile Number in Between 7-15 digits ")
                 return false
             }
             val email = etEmail.text.toString().trim()
             if (email.isEmpty()) {
-                showToast("Enter Email Address")
+                showToast("Please Enter Email Address")
                 return false
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -608,86 +608,86 @@ class AddDeliveryBoyFragment : BaseFragment() {
                 return false
             }
             if (etAddressLine1.text.toString().trim().isEmpty()) {
-                showToast("Enter Address Line 01")
+                showToast("Please Enter Address Line 1")
                 return false
             }
 
             if (etAddressLine2.text.toString().trim().isEmpty()) {
-                showToast("Enter Address Line 02")
+                showToast("Please Enter Address Line 2")
                 return false
             }
 
             if (etCity.text.toString().trim().isEmpty()) {
-                showToast("Enter City/District")
+                showToast("Please Enter City/District")
                 return false
             }
 
             if (etState.text.toString().trim().isEmpty()) {
-                showToast("Enter State")
+                showToast("Please Enter State")
                 return false
             }
 
             val pass = etPassword.text.toString()
             if (pass.isEmpty()) {
-                showToast("Enter Password")
+                showToast("Please Enter Password")
                 return false
             }
 
             val cPass = etConfirmPassword.text.toString()
             if (cPass.isEmpty()) {
-                showToast("Enter Confirm Password")
+                showToast("Please Enter Confirm Password")
                 return false
             }
 
             if (pass != cPass) {
-                showToast("Password and confirm password didn't match")
+                showToast("Password does not match")
                 return false
             }
 
             if (etZone.text.toString().trim().isEmpty()) {
-                showToast("Select Zone")
+                showToast("Please Select Zone")
                 return false
             }
 
             if (etVehicleName.text.toString().trim().isEmpty()) {
-                showToast("Enter Vehicle Name")
+                showToast("Please Enter Vehicle Name")
                 return false
             }
 
             if (etVehichleRegistrationNumber.text.toString().trim().isEmpty()) {
-                showToast("Enter Registration Number")
+                showToast("Please Enter Registration Number")
                 return false
             }
 
             if (vehicleImage1 == null) {
-                showToast("Upload Vehicle Front Image")
+                showToast("Please Upload Vehicle Front Image")
                 return false
             }
             if (vehicleImage2 == null) {
-                showToast("Upload Vehicle Back Image")
+                showToast("Please Upload Vehicle Back Image")
                 return false
             }
 
             if (identityProof1 == null) {
-                showToast("Upload Identity Front Image")
+                showToast("Please Upload Identity Front Image")
                 return false
             }
             if (identityProof2 == null) {
-                showToast("Upload Identity Back Image")
+                showToast("Please Upload Identity Back Image")
                 return false
             }
 
             if (drivingLicense1 == null) {
-                showToast("Upload Driving License Front Image")
+                showToast("Please Upload Driving License Front Image")
                 return false
             }
             if (drivingLicense2 == null) {
-                showToast("Upload Driving License Back Image")
+                showToast("Please Upload Driving License Back Image")
                 return false
             }
 
             if (vehicleInsurance == null) {
-                showToast("Upload Vehicle Insurance  Image")
+                showToast("Please Upload Vehicle Insurance Document")
                 return false
             }
            /* if (pollutionPaper == null) {

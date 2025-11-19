@@ -509,6 +509,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getUserCountryResult: LiveData<GetCountryResponse>
+        get() = repository.userCountryLiveData
+
+    fun getUserCountry() {
+        viewModelScope.launch {
+            repository.getUserCountry()
+        }
+    }
+
     val getFilterData: LiveData<UpdateZonResponse>
         get() = repository.filterNewSeller
 
@@ -659,7 +668,7 @@ class HomeViewModel @Inject constructor(
     }
 
     val deleteDeliveryBoyResult: LiveData<CommonResponse>
-        get() = repository.deleteReasonLiveData
+        get() = repository.deleteDeliveryBoyLiveData
 
     fun deleteDeliveryBoy(map:HashMap<String,Any>) {
         viewModelScope.launch {

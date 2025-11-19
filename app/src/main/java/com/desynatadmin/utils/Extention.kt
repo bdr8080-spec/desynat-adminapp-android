@@ -23,6 +23,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.desynatadmin.R
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -299,6 +300,44 @@ fun openDatePicker(context: Context,onClick:(String,Long)->Unit){
 
     datePickerDialog.show()
 }
+
+fun openCustomDatePicker(
+    context: Context,
+    minDate: Long? = null,
+    onClick: (String, Long) -> Unit
+) {
+    val today = Calendar.getInstance()
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        R.style.DialogTheme,
+        { _, year, month, dayOfMonth ->
+            val selectedCal = Calendar.getInstance()
+            selectedCal.set(Calendar.YEAR, year)
+            selectedCal.set(Calendar.MONTH, month)
+            selectedCal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            selectedCal.set(Calendar.HOUR_OF_DAY, 0)
+            selectedCal.set(Calendar.MINUTE, 0)
+            selectedCal.set(Calendar.SECOND, 0)
+            selectedCal.set(Calendar.MILLISECOND, 0)
+
+            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            val timestamp = selectedCal.timeInMillis
+
+            onClick(selectedDate, timestamp)
+        },
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH),
+        today.get(Calendar.DAY_OF_MONTH)
+    )
+
+    if (minDate != null) {
+        datePickerDialog.datePicker.minDate = minDate
+    }
+
+    datePickerDialog.show()
+}
+
 
 fun String?.orDash(): String = if (this.isNullOrBlank()) "-" else this
 

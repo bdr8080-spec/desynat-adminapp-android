@@ -3,6 +3,7 @@ package com.desynatadmin.ui.home.reasonManagement
 import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddReasonDialogBinding
 import com.desynatadmin.databinding.FragmentReasonManagementBinding
+import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -166,7 +168,7 @@ class ReasonManagementFragment : BaseFragment() {
         binding?.apply {
 
             toolbar.tvToolbar.setOnClickListener{
-                findNavController().popBackStack()
+                (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 
             tvExchange.setOnClickListener {
@@ -434,9 +436,24 @@ class ReasonManagementFragment : BaseFragment() {
 
         dialogBinding.apply {
             CommonMethod.removeSpace(etEnglishReason)
+            etArabicReason.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
+                val regex = Regex("[a-zA-Z]")
+
+                if (source != null && source.contains(regex)) {
+                    return@InputFilter ""
+                }
+
+                if (dstart == 0 && source.startsWith(" ")) {
+                    return@InputFilter ""
+                }
+
+                return@InputFilter null
+            })
+
             if(isEdit){
                 etEnglishReason.setText(reasonList[selectedPos].reasonEnglish)
                 etArabicReason.setText(reasonList[selectedPos].reasonArabic)
+                btnSubmit.text = "Update"
             }
 
             tvToolbar.setOnClickListener {

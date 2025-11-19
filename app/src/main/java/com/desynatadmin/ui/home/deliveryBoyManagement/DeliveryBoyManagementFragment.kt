@@ -20,9 +20,11 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentDeliveryBoyManagementBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
+import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.openDatePicker
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -50,6 +52,12 @@ class DeliveryBoyManagementFragment : BaseFragment() {
     private var lastQuery: String? = null
     private val itemsPerPage = 10
     var selectedPos = -1
+
+    var startDate:String?=null
+    var endDate:String?=null
+    var fromTimestamp = 0L
+    var toTimestamp = 0L
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -87,9 +95,21 @@ class DeliveryBoyManagementFragment : BaseFragment() {
 
                         }
                         3->{
-                            selectedPos = position
-                            deleteDeliveryBoy()
+                            CommonMethod.deleteAlertDialog(
+                                requireActivity(),
+                                "Are you sure you want to delete the delivery boy account?"
+                            ) { action ->
+                                when (action) {
+                                    CommonMethod.DialogAction.DELETE -> {
+                                        selectedPos = position
+                                        deleteDeliveryBoy()
+                                    }
 
+                                    CommonMethod.DialogAction.DISCARD -> {
+
+                                    }
+                                }
+                            }
                         }
                         4->{
                             val bundle = Bundle().apply {
@@ -141,7 +161,7 @@ class DeliveryBoyManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener{
-                findNavController().popBackStack()
+                (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 
             ivAdd.setOnClickListener {
@@ -172,8 +192,8 @@ class DeliveryBoyManagementFragment : BaseFragment() {
         }
     }
 
-    private fun getAllDeliveryBoy(loading:Boolean=true,search:String?=null,fromDate:String?=null,toDate:String?=null){
-        viewModel.getDeliveryBoy(search = search, page = currentPage, fromDate = fromDate, toDate = toDate)
+    private fun getAllDeliveryBoy(loading:Boolean=true,search:String?=null){
+        viewModel.getDeliveryBoy(search = search, page = currentPage, fromDate = startDate, toDate = endDate)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -315,8 +335,6 @@ class DeliveryBoyManagementFragment : BaseFragment() {
     }
 
     private fun filterDialog() {
-        var fromTimestamp = 0L
-        var toTimestamp = 0L
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = UserFilterDialogBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -337,19 +355,26 @@ class DeliveryBoyManagementFragment : BaseFragment() {
 
             tvCountry.isVisible = false
             etCountry.isVisible = false
+
+            if (startDate!=null){
+                etFrom.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
+            if (endDate!=null){
+                etTo.text=CommonMethod.formatDate(endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
             }
 
             etFrom.setOnClickListener {
-                openDatePicker(requireActivity()){date,timestamp->
+                openCustomDatePicker(requireActivity()){date,timestamp->
                     etFrom.text=date
                     fromTimestamp=timestamp
                 }
 
             }
             etTo.setOnClickListener {
-                openDatePicker(requireActivity()){date,timestamp->
+                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
                     etTo.text=date
                     toTimestamp=timestamp
                 }
@@ -357,12 +382,23 @@ class DeliveryBoyManagementFragment : BaseFragment() {
             }
 
             tvClear.setOnClickListener {
+                startDate = null
+                endDate = null
+                toTimestamp = 0L
+                fromTimestamp = 0L
                 getAllDeliveryBoy()
                 dialog.dismiss()
             }
 
             tvApply.setOnClickListener{
-                    getAllDeliveryBoy(toDate = CommonMethod.convertTimestampToDateString(toTimestamp), fromDate = CommonMethod.convertTimestampToDateString(fromTimestamp))
+                if (etFrom.text.isNotEmpty()){
+                    startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                }
+
+                if (etTo.text.isNotEmpty()){
+                    endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                }
+                    getAllDeliveryBoy()
                     dialog.dismiss()
             }
 

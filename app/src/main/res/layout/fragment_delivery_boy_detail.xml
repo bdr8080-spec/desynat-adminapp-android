@@ -31,7 +31,6 @@
         app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
         android:scaleType="centerCrop"
         android:clipToOutline="true"
-        android:background="@drawable/brown_dash_rectangle"
         android:src="@drawable/ic_placeholder"/>
 
         <LinearLayout
@@ -167,7 +166,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginStart="@dimen/_39sdp"
-                android:text="23"
+                android:text="0"
                 android:layout_marginBottom="@dimen/_10sdp"/>
 
         </LinearLayout>
@@ -237,7 +236,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -250,7 +248,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
         </LinearLayout>
@@ -280,7 +277,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -293,7 +289,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
         </LinearLayout>
@@ -323,7 +318,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -336,7 +330,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
         </LinearLayout>
@@ -366,12 +359,12 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPollutionPaper"
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
@@ -379,6 +372,7 @@
             android:text="Pollution paper"/>
 
         <LinearLayout
+            android:id="@+id/llPollutionPaper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
@@ -396,12 +390,12 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRegistration"
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
@@ -409,6 +403,7 @@
             android:text="Registration certificate"/>
 
         <LinearLayout
+            android:id="@+id/llRegistration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
@@ -426,7 +421,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -439,7 +433,6 @@
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
                 android:src="@drawable/ic_placeholder"/>
 
         </LinearLayout>

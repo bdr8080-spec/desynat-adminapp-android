@@ -27,7 +27,6 @@
                 android:layout_height="@dimen/_120sdp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_placeholder"
-                android:background="#F5F5F5"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"

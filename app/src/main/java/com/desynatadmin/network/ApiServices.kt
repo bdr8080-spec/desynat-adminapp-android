@@ -396,6 +396,9 @@ interface ApiServices {
     @GET(Constants.GET_KUWAIT_ZONE)
     suspend fun getKuwaitZone():Response<GetKuwaitZoneResponse>
 
+    @GET(Constants.GET_USER_COUNTRY)
+    suspend fun getUserCountry():Response<GetCountryResponse>
+
     @GET(Constants.GET_DELIVERY_BOY)
     suspend fun getDeliveryBoy(
         @Query("search") search : String?=null,

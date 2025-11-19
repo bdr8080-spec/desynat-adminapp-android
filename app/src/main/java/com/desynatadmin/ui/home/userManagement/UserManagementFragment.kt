@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.home.userManagement
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,15 +11,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
+import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.adapter.UserAdapter
+import com.desynatadmin.adapter.UserCountryPickerAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.AddAmountDialogBinding
+import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentUserManagementBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
@@ -27,6 +32,7 @@ import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.openDatePicker
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -40,7 +46,7 @@ class UserManagementFragment : BaseFragment() {
    private var binding: FragmentUserManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-
+    private var isCountryObserver = true
     private var userList = ArrayList<GetUserResponse.Data.Data>()
     private var userAdapter : UserAdapter?=null
     private var currentPage = 1
@@ -55,7 +61,11 @@ class UserManagementFragment : BaseFragment() {
     private val itemsPerPage = 10
     var selectedPos = -1
     private var countryList = ArrayList<GetCountryResponse.Data>()
-
+    var countryId:String?=null
+    var startDate:String?=null
+    var endDate:String?=null
+    var fromTimestamp=0L
+    var toTimestamp=0L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,9 +83,6 @@ class UserManagementFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
-        countryList.clear()
-        SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
-
         binding?.apply {
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "User Management"
@@ -133,6 +140,7 @@ class UserManagementFragment : BaseFragment() {
             }
         }
 
+        getUserCountryApi()
         getAllUser()
 
     }
@@ -179,6 +187,14 @@ class UserManagementFragment : BaseFragment() {
                 pagination = false
                 isFromSwipe = false
                 isObserver = false
+            }
+        }
+
+        viewModel.getUserCountryResult.observe(viewLifecycleOwner) { response ->
+            if (isCountryObserver) {
+                countryList.clear()
+                countryList.addAll(response.data)
+                isCountryObserver = false
             }
         }
 
@@ -256,13 +272,19 @@ class UserManagementFragment : BaseFragment() {
 
     }
 
-    private fun getAllUser(loading:Boolean=true,search:String?=null,fromDate:String?=null,toDate:String?=null,countryId:String?=null){
-        viewModel.getAllUser(search = search, page = currentPage,fromDate=fromDate, toDate = toDate, countryId = countryId)
+    private fun getAllUser(loading:Boolean=true,search:String?=null){
+        viewModel.getAllUser(search = search, page = currentPage,fromDate=startDate, toDate = endDate, countryId = countryId)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
         isObserver = true
     }
+
+    private fun getUserCountryApi(){
+        viewModel.getUserCountry()
+        isCountryObserver = true
+    }
+
 
     private fun updateUserStatus(){
         val map = HashMap<String,Any>()
@@ -274,6 +296,11 @@ class UserManagementFragment : BaseFragment() {
 
     private fun checkData(){
         binding?.tvNoDataFound?.isVisible = userList.isEmpty()
+        if (lastQuery!=null){
+            binding?.tvNoDataFound?.text = "No result found"
+        }else{
+            binding?.tvNoDataFound?.text = "No data found"
+        }
     }
 
     private fun updatePage() {
@@ -289,9 +316,7 @@ class UserManagementFragment : BaseFragment() {
     }
 
     private fun userFilterDialog() {
-        var fromTimestamp=0L
-        var toTimestamp=0L
-        var countryId:String?=null
+        var selectedCountryId:String?=null
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = UserFilterDialogBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -309,20 +334,29 @@ class UserManagementFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding.apply {
+            if(countryId!=null){
+                etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
+            }
+            if (startDate!=null){
+                etFrom.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
+            if (endDate!=null){
+                etTo.text=CommonMethod.formatDate(endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
 
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
             }
 
             etFrom.setOnClickListener {
-                openDatePicker(requireActivity()){date,timestamp->
+                openCustomDatePicker(requireActivity()){date,timestamp->
                     etFrom.text=date
                     fromTimestamp=timestamp
                 }
 
             }
             etTo.setOnClickListener {
-                openDatePicker(requireActivity()){date,timestamp->
+                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
                     etTo.text=date
                     toTimestamp=timestamp
                 }
@@ -330,29 +364,74 @@ class UserManagementFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                CommonMethod.showCountryPicker(
+                showUserCountryPicker(
                     requireContext(),
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.setText(selectedCountry.name)
-                    countryId = selectedCountry.id.toString()
+                    etCountry.text = selectedCountry.name
+                    selectedCountryId = selectedCountry.id.toString()
                 }
             }
 
             tvClear.setOnClickListener {
+                countryId = null
+                startDate = null
+                endDate = null
+                toTimestamp = 0L
+                fromTimestamp = 0L
                 getAllUser()
                 dialog.dismiss()
             }
 
             tvApply.setOnClickListener{
-                getAllUser(countryId = countryId,toDate = if (toTimestamp!=0L){CommonMethod.convertTimestampToDateString(toTimestamp)}else null, fromDate =  if (fromTimestamp!=0L){CommonMethod.convertTimestampToDateString(fromTimestamp)}else null)
+                if (selectedCountryId!=null) {
+                    countryId = selectedCountryId
+                }
+                if (etFrom.text.isNotEmpty()){
+                    startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                }
+
+                if (etTo.text.isNotEmpty()){
+                    endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                }
+
+                getAllUser()
                 dialog.dismiss()
             }
 
         }
 
         dialog.show()
+    }
+
+    fun showUserCountryPicker(
+        context: Context,
+        anchor: View,
+        countryList: ArrayList<GetCountryResponse.Data>,
+        onCountrySelected: (GetCountryResponse.Data) -> Unit
+    ) {
+        val binding = CustomCountryPickerBinding.inflate(LayoutInflater.from(context))
+
+        val popupWindow = PopupWindow(
+            binding.root,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.isOutsideTouchable = true
+        popupWindow.elevation = 20f
+        popupWindow.showAsDropDown(anchor)
+
+        binding.rvCountry.adapter = UserCountryPickerAdapter(context, countryList,
+            object : UserCountryPickerAdapter.ClickOnItem {
+                override fun onClickItem(position: Int) {
+                    onCountrySelected(countryList[position])
+                    popupWindow.dismiss()
+                }
+            }
+        )
     }
 
 }
