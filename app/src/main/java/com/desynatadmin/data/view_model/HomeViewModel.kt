@@ -12,7 +12,6 @@ import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.ChangeCityStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
-import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
@@ -175,15 +174,6 @@ class HomeViewModel @Inject constructor(
     fun deleteSubCategory(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.deleteSubCategory(map)
-        }
-    }
-
-    val getCountryResult: LiveData<CountryREsponse>
-        get() = repository.getCountryData
-
-    fun hitCountryList() {
-        viewModelScope.launch {
-            repository.hitCountyList()
         }
     }
 
@@ -500,12 +490,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getCountryResultt: LiveData<GetCountryResponse>
+    val getCountryResult: LiveData<GetCountryResponse>
         get() = repository.countryPlanLiveData
 
     fun getCountry() {
         viewModelScope.launch {
-            repository.getCountryy()
+            repository.getCountry()
         }
     }
 

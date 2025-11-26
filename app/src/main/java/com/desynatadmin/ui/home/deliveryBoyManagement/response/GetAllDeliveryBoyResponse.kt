@@ -82,6 +82,8 @@ data class GetAllDeliveryBoyResponse(
             val otpVerify: String,
             @SerializedName("password")
             val password: String,
+            @SerializedName("unhashed_password")
+            val unhashedPassword: String,
             @SerializedName("pollution_paper")
             val pollutionPaper: List<PollutionPaper>,
             @SerializedName("profile_pic")

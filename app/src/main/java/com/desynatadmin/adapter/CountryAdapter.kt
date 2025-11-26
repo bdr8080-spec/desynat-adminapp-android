@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
@@ -33,14 +34,15 @@ class CountryAdapter(var list:ArrayList<GetCountryResponse.Data>,var context: Co
                 name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.ic_radio_unselected,0)
 
             }
-            name.text=list[position].name
+            name.text="${list[position].flag}  ${list[position].name}"
             root.setOnClickListener {
                 selectedIndex=position
                 notifyDataSetChanged()
                 onClick(list[position].name,list[position].id.toString())
             }
 
-            Glide.with(context).load(list[position].flag1).into(img)
+            img.isVisible = false
+          //  Glide.with(context).load(list[position].flag1).into(img)
         }
     }
 

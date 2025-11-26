@@ -80,7 +80,7 @@ class HomeFragment : BaseFragment() {
             }
         }
 
-        viewModel.getCountryResultt.observe(viewLifecycleOwner) { response ->
+        viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
             if (isCountryObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 countryList.clear()

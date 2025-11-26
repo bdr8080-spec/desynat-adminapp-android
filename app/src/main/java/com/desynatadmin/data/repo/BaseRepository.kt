@@ -9,6 +9,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import android.content.Context
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.isNetworkAvailable
 
 abstract class BaseRepository(private val context: Context) {
@@ -33,9 +34,11 @@ abstract class BaseRepository(private val context: Context) {
                     responseLiveData.postValue(response.body())
                 }
                 response.isSuccessful && response.body() == null -> {
+                    ProgressDialogUtils.getInstance().hideProgress()
                     error.postValue("Empty response from server")
                 }
                 response.errorBody() != null -> {
+                    ProgressDialogUtils.getInstance().hideProgress()
                     try {
                         val errorText = response.errorBody()?.charStream()?.readText() ?: ""
                         if (errorText.isNotBlank()) {
@@ -70,15 +73,20 @@ abstract class BaseRepository(private val context: Context) {
             }
 
         } catch (e: UnknownHostException) {
+            ProgressDialogUtils.getInstance().hideProgress()
             error.postValue("No internet connection. Please check your network.")
         } catch (e: SocketTimeoutException) {
+            ProgressDialogUtils.getInstance().hideProgress()
             error.postValue("Connection timed out. Please try again.")
         } catch (e: IOException) {
+            ProgressDialogUtils.getInstance().hideProgress()
             error.postValue("Network error: ${e.localizedMessage ?: "Unknown"}")
         } catch (e: Exception) {
+            ProgressDialogUtils.getInstance().hideProgress()
             error.postValue(e.localizedMessage ?: "Something went wrong")
             Log.e("BaseRepository", "Unexpected error", e)
         } finally {
+            ProgressDialogUtils.getInstance().hideProgress()
             progress.postValue(false)
         }
     }

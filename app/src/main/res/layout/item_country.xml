@@ -16,9 +16,9 @@
     android:id="@+id/tvCountry"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/poppins_medium"
+    android:fontFamily="@font/poppins_regular"
     android:text="Store availability"
     android:textColor="@color/black"
-    android:textSize="@dimen/_11sdp" />
+    android:textSize="@dimen/_12sdp" />
 
 </LinearLayout>

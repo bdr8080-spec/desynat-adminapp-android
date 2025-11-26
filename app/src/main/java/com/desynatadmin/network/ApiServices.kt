@@ -8,7 +8,6 @@ import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.ChangeCityStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
-import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
@@ -187,10 +186,6 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
 
-    @GET(Constants.GET_COUNTRY)
-    suspend fun getCountryy(
-    ): Response<GetCountryResponse>
-
     @GET(Constants.GET_CITY)
     suspend fun getCity(
         @Header("Token") Token: String,
@@ -205,7 +200,7 @@ interface ApiServices {
 
     @GET(Constants.GET_COUNTRY)
     suspend fun getCountry(
-    ): Response<CountryREsponse>
+    ): Response<GetCountryResponse>
 
     @GET(Constants.GET_SERVICE_CITY)
     suspend fun hitServiceCityList(

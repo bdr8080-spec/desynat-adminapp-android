@@ -14,7 +14,6 @@ import com.desynatadmin.ui.home.brandManagement.response.AddZoneResponse
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.ChangeCityStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
-import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.brandManagement.response.FileUploadResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
@@ -250,18 +249,6 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     }
 
-
-    val getCountryData = SingleLiveEvent<CountryREsponse>()
-    suspend fun hitCountyList() {
-        handleApiCall(
-            api = {
-                api.getCountry()
-            },
-            responseLiveData = getCountryData
-        )
-
-    }
-
     val getServiceListData = SingleLiveEvent<ServiceCityListResponse>()
     suspend fun hitServiceCityList(
         token: String,
@@ -421,11 +408,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val countryPlanLiveData = SingleLiveEvent<GetCountryResponse>()
-    suspend fun getCountryy(
+    suspend fun getCountry(
     ) {
         handleApiCall(
             api = {
-                api.getCountryy()
+                api.getCountry()
             },
             responseLiveData = countryPlanLiveData
         )

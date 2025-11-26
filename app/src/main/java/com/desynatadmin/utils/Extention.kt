@@ -221,10 +221,24 @@ fun File.toMultipartPart(fieldName: String): MultipartBody.Part {
     val mimeType = when (extension.lowercase()) {
         "jpg", "jpeg" -> "image/jpeg"
         "png" -> "image/png"
+        "pdf" -> "application/pdf"
         else -> throw IllegalArgumentException("Unsupported file type: $extension")
     }
     val requestFile = asRequestBody(mimeType.toMediaTypeOrNull())
     return MultipartBody.Part.createFormData(fieldName, name, requestFile)
+}
+
+
+fun Uri.getFileName(context: Context): String {
+    var name = "file_${System.currentTimeMillis()}"
+    val cursor = context.contentResolver.query(this, null, null, null, null)
+    cursor?.use {
+        if (it.moveToFirst()) {
+            val index = it.getColumnIndex("_display_name")
+            if (index != -1) name = it.getString(index)
+        }
+    }
+    return name
 }
 
 fun isValidEmail(email: String) =

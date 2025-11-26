@@ -55,6 +55,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_39sdp"
                 android:text="Anwer Sheikh"/>
 
@@ -77,6 +78,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_39sdp"
                 android:text="+48448151222"/>
 
@@ -122,6 +124,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginStart="@dimen/_39sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:text="C-94, Sector 63, Kuwait"/>
 
             <View
@@ -143,6 +146,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_39sdp"
                 android:text="Zone - 02"/>
 
@@ -166,6 +170,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginStart="@dimen/_39sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:text="0"
                 android:layout_marginBottom="@dimen/_10sdp"/>
 
@@ -235,6 +240,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -247,6 +253,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -275,6 +282,7 @@
                 android:layout_gravity="center_horizontal"
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
+                android:background="#33E0DCDC"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
@@ -288,6 +296,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -317,6 +326,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -329,6 +339,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -358,6 +369,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -389,6 +401,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -420,6 +433,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 
@@ -432,6 +446,7 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
+                android:background="#33E0DCDC"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/ic_placeholder"/>
 

@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.desynatadmin.R
 import com.desynatadmin.adapter.CountryAdapter
-import com.desynatadmin.adapter.ListAdapter
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityRejectDetailsBinding
 import com.desynatadmin.databinding.ActivitySellerManagementBinding
@@ -101,7 +100,7 @@ class SellerManagementActivity : AppCompatActivity() {
     }
 
     private fun observer(){
-        viewModel.getCountryResultt.observe(this) { response ->
+        viewModel.getCountryResult.observe(this) { response ->
                 countryList.clear()
                 countryList.addAll(response.data)
 

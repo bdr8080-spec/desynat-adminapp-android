@@ -1,5 +1,6 @@
 package com.desynatadmin.utils
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
@@ -21,6 +22,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.appcompat.widget.AppCompatEditText
@@ -29,6 +31,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.databinding.CustomCountryPickerBinding
@@ -106,6 +109,26 @@ object CommonMethod {
         }
         return file
     }
+
+    @SuppressLint("Range")
+    fun fileFromUri(context: Context, uri: Uri): File {
+        val fileName = context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                cursor.getString(cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME))
+            } else null
+        } ?: "temp_file"
+
+        val file = File(context.cacheDir, fileName)
+
+        context.contentResolver.openInputStream(uri)?.use { input ->
+            file.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        return file
+    }
+
 
     fun removeAllTextSpaces (editText: AppCompatEditText){
         editText.addTextChangedListener(object : TextWatcher {
@@ -435,5 +458,29 @@ object CommonMethod {
         return format.format(date)
     }
 
+    fun loadDocument(imageView: ImageView, url: String?,placeHolder:Int = R.drawable.ic_placeholder) {
+        if (url.isNullOrEmpty()) {
+            imageView.setImageResource(R.drawable.ic_placeholder)
+            return
+        }
+
+        if (url.endsWith(".pdf", ignoreCase = true)) {
+            imageView.setImageResource(R.drawable.pdf)
+        } else {
+            imageView.load(url) {
+                crossfade(true)
+                placeholder(placeHolder)
+                error(placeHolder)
+            }
+        }
+    }
+
+    fun openPdfInBrowser(context: Context, pdfUrl: String) {
+        if (pdfUrl.isNotEmpty()) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
+    }
 
 }

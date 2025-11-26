@@ -95,6 +95,8 @@
             android:hint="Enter Full Name"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
+            android:singleLine="true"
+            android:maxLength="40"
             android:background="@drawable/edit_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -109,6 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
             android:paddingHorizontal="@dimen/_10sdp"
             android:background="@drawable/edit_back">
 
@@ -119,9 +122,6 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="+965"
                 android:paddingVertical="@dimen/_10sdp"
-                android:drawableEnd="@drawable/ic_drop_down"
-                android:drawablePadding="@dimen/_5sdp"
-                android:layout_marginStart="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +136,7 @@
                 android:inputType="number"
                 android:background="@null"
                 android:maxLength="15"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:paddingHorizontal="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -169,19 +169,33 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:text="Address Line 1"/>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etAddressLine1"
+        <RelativeLayout
+            android:id="@+id/relAddressLine1"
             android:layout_width="match_parent"
-            style="@style/edit_text"
-            android:hint="Enter Address Line 1"
-            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:clickable="true"
-            android:editable="false"
-            android:focusable="false"
-            android:drawableEnd="@drawable/ic_current_loc"
-            android:inputType="text"
-            android:background="@drawable/edit_back" />
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:background="@drawable/edit_back">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etAddressLine1"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter Address Line 1"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@null"
+                android:layout_toLeftOf="@+id/ivCurrentLoc"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCurrentLoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/ic_current_loc"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/edit_text_title"
@@ -195,6 +209,7 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
+            android:singleLine="true"
             android:hint="Enter Address Line 2"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"

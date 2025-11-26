@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.SimpleItemLayoutBinding
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
-import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 
-class ListAdapter(val list: ArrayList<out Any>, val click: OnCLick) :
+class ListAdapter(val list: List<out Any>, val click: OnCLick) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     inner class ListViewHolder(val binding: SimpleItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -31,7 +31,7 @@ class ListAdapter(val list: ArrayList<out Any>, val click: OnCLick) :
             val item = list[position]
 
             val displayName = when (item) {
-                is CountryREsponse.Data -> item.name
+                is GetCountryResponse.Data -> item.name
                 is CityResponse.Data -> item.name
                 else -> "Unknown"
             }

@@ -81,7 +81,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     }
 
     override fun initView() {
-        viewModel.hitCountryList()
+        viewModel.getCountry()
         binding?.apply {
             recyclerView.visibility = View.VISIBLE
             zoneListRecyclerView.visibility = View.GONE

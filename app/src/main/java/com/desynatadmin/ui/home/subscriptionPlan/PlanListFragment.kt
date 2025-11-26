@@ -16,7 +16,6 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentPlanListBinding
-import com.desynatadmin.ui.home.brandManagement.response.CountryREsponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
@@ -100,7 +99,7 @@ class PlanListFragment : BaseFragment() {
             }
         }
 
-        viewModel.getCountryResultt.observe(viewLifecycleOwner) { response ->
+        viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
             if (isCountryObserver) {
                 countryList.clear()
                 countryList.addAll(response.data)
