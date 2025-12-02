@@ -839,6 +839,142 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
+    val promoCodeLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getPromoCode(search:String?=null,fromDate:String?=null,toDate:String?=null, page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getPromoCode(search,fromDate,toDate,page)
+            },
+            responseLiveData = promoCodeLiveData
+        )
+    }
+
+    val addPromoCodeLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addPromoCode(request: AddDeliveryBoyRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.addPromoCode(request)
+            },
+            responseLiveData = addPromoCodeLiveData
+        )
+    }
+
+    val updatePromoCodeLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updatePromoCode(request: AddDeliveryBoyRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.updatePromoCode(request)
+            },
+            responseLiveData = updatePromoCodeLiveData
+        )
+    }
+
+    val updatePromoCodeStatusLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updatePromoCodeStatus(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updatePromoCodeStatus(map)
+            },
+            responseLiveData = updatePromoCodeStatusLiveData
+        )
+    }
+
+    val deletePromoCodeLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deletePromoCode(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deletePromoCode(map)
+            },
+            responseLiveData = deletePromoCodeLiveData
+        )
+    }
+
+    val giftCardLiveData = SingleLiveEvent<GetBrandResponse>()
+    suspend fun getGiftCard(search:String?=null, page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getGiftCard(search,page)
+            },
+            responseLiveData = giftCardLiveData
+        )
+    }
+
+    val addGiftCardLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addGiftCard(map:HashMap<String, RequestBody>
+    ) {
+        handleApiCall(
+            api = {
+                api.addGiftCard(map)
+            },
+            responseLiveData = addGiftCardLiveData
+        )
+    }
+
+    val editGiftCardLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun editGiftCard(map:HashMap<String, RequestBody>
+    ) {
+        handleApiCall(
+            api = {
+                api.editGiftCard(map)
+            },
+            responseLiveData = editGiftCardLiveData
+        )
+    }
+
+    val updateGiftCardStatusLiveData = SingleLiveEvent<UpdateBrandStatusResponse>()
+    suspend fun updateGiftCardStatus(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateGiftCardStatus(map)
+            },
+            responseLiveData = updateGiftCardStatusLiveData
+        )
+    }
+
+    val deleteGiftCardLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteGiftCard(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteGiftCard(map)
+            },
+            responseLiveData = deleteGiftCardLiveData
+        )
+    }
+
+    val shippingChargeLiveData = SingleLiveEvent<GetBrandResponse>()
+    suspend fun getShippingCharge(page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getShippingCharge(page)
+            },
+            responseLiveData = shippingChargeLiveData
+        )
+    }
+
+  val shippingTaxLiveData = SingleLiveEvent<GetBrandResponse>()
+    suspend fun getShippingTax(
+    ) {
+        handleApiCall(
+            api = {
+                api.getShippingTax()
+            },
+            responseLiveData = shippingTaxLiveData
+        )
+    }
+
+
+
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

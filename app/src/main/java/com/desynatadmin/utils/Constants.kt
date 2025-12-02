@@ -87,5 +87,20 @@ object Constants {
     const val DELETE_DELIVERY_BOY = "/api/admin/delete_deliveryboy"
     const val GET_USER_COUNTRY = "/api/admin/get_user_countries_list"
 
+    const val GET_PROMO_CODE = "/api/admin/get_promocode"
+    const val ADD_PROMO_CODE = "/api/admin/add_promocode"
+    const val UPDATE_PROMO_CODE = "/api/admin/updated_promocode"
+    const val DELETE_PROMO_CODE = "/api/admin/delete_promocode"
+    const val UPDATE_STATUS_PROMO_CODE = "/api/admin/updated_promocode"
+
+    const val GIFT_CARD = "/api/admin/get_brand"
+    const val ADD_GIFT_CARD = "/api/admin/add_brand"
+    const val UPDATE_GIFT_CARD = "/api/admin/update_brand"
+    const val DELETE_GIFT_CARD = "/api/admin/delete_brand"
+    const val UPDATE_GIFT_CARD_STATUS = "/api/admin/change_brand_status"
+
+    const val SHIPPING_CHARGE = "/api/admin/change_brand_status"
+    const val SHIPPING_TAX = "/api/admin/change_brand_status"
+
 
 }

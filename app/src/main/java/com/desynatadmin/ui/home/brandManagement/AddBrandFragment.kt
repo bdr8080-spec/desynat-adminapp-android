@@ -65,10 +65,10 @@ class AddBrandFragment : BaseFragment() {
     }
 
     override fun initView() {
-        val itemJson = arguments?.getString("brandData")
+        val itemJson = arguments?.getString("giftCard")
         binding?.apply {
 
-            CommonMethod.removeSpace(etArabicBrandName)
+            CommonMethod.applyArabicOnlyFilter(etArabicBrandName)
             CommonMethod.removeSpace(etEnglishBrandName)
             if (!itemJson.isNullOrEmpty()) {
                 brandData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)

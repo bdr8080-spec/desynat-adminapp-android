@@ -667,4 +667,113 @@ class HomeViewModel @Inject constructor(
     }
 
 
+    val getPromoCodeListResult: LiveData<CommonResponse>
+        get() = repository.promoCodeLiveData
+
+    fun getPromoCode(search: String?=null,fromDate:String?=null,toDate:String?=null, page:Int) {
+        viewModelScope.launch {
+            repository.getPromoCode(search,fromDate,toDate,page)
+        }
+    }
+
+    val addPromoCodeResult: LiveData<CommonResponse>
+        get() = repository.addPromoCodeLiveData
+
+    fun addPromoCode(request: AddDeliveryBoyRequest) {
+        viewModelScope.launch {
+            repository.addPromoCode(request)
+        }
+    }
+
+    val updatePromoCodeResult: LiveData<CommonResponse>
+        get() = repository.updatePromoCodeLiveData
+
+    fun updatePromoCode(request: AddDeliveryBoyRequest) {
+        viewModelScope.launch {
+            repository.updatePromoCode(request)
+        }
+    }
+
+    val updatePromoCodeStatusResult: LiveData<CommonResponse>
+        get() = repository.updatePromoCodeStatusLiveData
+
+    fun updatePromoCodeStatus(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updatePromoCodeStatus(map)
+        }
+    }
+
+    val deletePromoCodeResult: LiveData<CommonResponse>
+        get() = repository.deletePromoCodeLiveData
+
+    fun deletePromoCode(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.deletePromoCode(map)
+        }
+    }
+
+    val getGiftCardResult: LiveData<GetBrandResponse>
+        get() = repository.giftCardLiveData
+
+    fun getGiftCard(search: String?=null, page:Int) {
+        viewModelScope.launch {
+            repository.getGiftCard(search,page)
+        }
+    }
+
+    val addGiftCardResult: LiveData<CommonResponse>
+        get() = repository.addGiftCardLiveData
+
+    fun addGiftCard(map:HashMap<String,RequestBody>) {
+        viewModelScope.launch {
+            repository.addGiftCard(map)
+        }
+    }
+
+    val editGiftCardResult: LiveData<CommonResponse>
+        get() = repository.editGiftCardLiveData
+
+    fun editGiftCard(map:HashMap<String,RequestBody>) {
+        viewModelScope.launch {
+            repository.editGiftCard(map)
+        }
+    }
+
+    val deleteGiftCardResult: LiveData<CommonResponse>
+        get() = repository.deleteGiftCardLiveData
+
+    fun deleteGiftCard(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteGiftCard(map)
+        }
+    }
+
+    val updateGiftCardStatusLiveData: LiveData<UpdateBrandStatusResponse>
+        get() = repository.updateGiftCardStatusLiveData
+
+    fun updateGiftCardStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateGiftCardStatus(map)
+        }
+    }
+
+    val getShippingChargeResult: LiveData<GetBrandResponse>
+        get() = repository.shippingChargeLiveData
+
+    fun getShippingCharge(page:Int) {
+        viewModelScope.launch {
+            repository.getShippingCharge(page)
+        }
+    }
+
+    val getShippingTaxResult: LiveData<GetBrandResponse>
+        get() = repository.shippingTaxLiveData
+
+    fun getShippingTax() {
+        viewModelScope.launch {
+            repository.getShippingTax()
+        }
+    }
+
+
 }

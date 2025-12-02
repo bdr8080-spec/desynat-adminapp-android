@@ -213,7 +213,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
             }
 
             etZone.setOnClickListener {
-                showBrandDropdown(etZone)
+                showZoneDropdown(etZone)
             }
 
             btnAdd.setOnClickListener {
@@ -807,7 +807,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
         }
     }
 
-    private fun showBrandDropdown(view: AppCompatEditText) {
+    private fun showZoneDropdown(view: AppCompatEditText) {
         val list = kuwaitZoneList.map { it.nameEnglish }
         val popup = androidx.appcompat.widget.ListPopupWindow(requireActivity())
         popup.anchorView = view
@@ -820,7 +820,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
         popup.show()
     }
 
-    private fun showZoneDropdown(anchor: View) {
+    private fun showZoneDropdownOld(anchor: View) {
 
         val dropdownBinding = CustomZonePickerBinding.inflate(layoutInflater)
 

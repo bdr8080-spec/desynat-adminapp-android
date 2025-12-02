@@ -427,4 +427,70 @@ interface ApiServices {
         @Body request: AddDeliveryBoyRequest
     ): Response<CommonResponse>
 
+    @GET(Constants.GET_PROMO_CODE)
+    suspend fun getPromoCode(
+        @Query("search") search : String?=null,
+        @Query("from_date") fromDate : String?=null,
+        @Query("to_date") toDate : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10, ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_STATUS_PROMO_CODE)
+    suspend fun updatePromoCodeStatus(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.DELETE_PROMO_CODE)
+    suspend fun deletePromoCode(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.ADD_PROMO_CODE)
+    suspend fun addPromoCode(
+        @Body request: AddDeliveryBoyRequest
+    ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_PROMO_CODE)
+    suspend fun updatePromoCode(
+        @Body request: AddDeliveryBoyRequest
+    ): Response<CommonResponse>
+
+    @GET(Constants.GIFT_CARD)
+    suspend fun getGiftCard(
+        @Query("search") search : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetBrandResponse>
+
+    @Multipart
+    @POST(Constants.ADD_BRAND)
+    suspend fun addGiftCard(
+        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+
+    @Multipart
+    @POST(Constants.UPDATE_BRAND)
+    suspend fun editGiftCard(
+        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_BRAND_STATUS)
+    suspend fun updateGiftCardStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateBrandStatusResponse>
+
+    @POST(Constants.DELETE_GIFT_CARD)
+    suspend fun deleteGiftCard(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @GET(Constants.SHIPPING_CHARGE)
+    suspend fun getShippingCharge(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetBrandResponse>
+
+  @GET(Constants.SHIPPING_TAX)
+    suspend fun getShippingTax(
+    ): Response<GetBrandResponse>
+
+
 }

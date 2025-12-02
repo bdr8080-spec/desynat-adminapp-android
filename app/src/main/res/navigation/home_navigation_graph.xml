@@ -125,7 +125,6 @@
         android:label="Add Brand Fragment"
         tools:layout="@layout/fragment_add_brand"/>
 
-
     <fragment
         android:id="@+id/reason"
         android:name="com.desynatadmin.ui.home.reasonManagement.ReasonManagementFragment"
@@ -189,4 +188,91 @@
         tools:layout="@layout/fragment_add_delivery_boy"/>
 
 
+
+    <fragment
+        android:id="@+id/giftCard"
+        android:name="com.desynatadmin.ui.home.giftCardManagement.GiftCardManagementFragment"
+        android:label="Gift Card Fragment"
+        tools:layout="@layout/fragment_gift_card_management">
+
+        <action
+            android:id="@+id/action_giftCardFragment_to_giftCardDetailFragment"
+            app:destination="@id/giftCardDetail" />
+
+        <action
+            android:id="@+id/action_giftCardFragment_to_addGiftCardFragment"
+            app:destination="@id/addGiftCard" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/giftCardDetail"
+        android:name="com.desynatadmin.ui.home.giftCardManagement.GiftCardDetailFragment"
+        android:label="Gift Card Detail Fragment"
+        tools:layout="@layout/fragment_gift_card_detail">
+
+        <action
+            android:id="@+id/action_giftCardDetailDetail_to_addGiftCardFragment"
+            app:destination="@id/addGiftCard" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addGiftCard"
+        android:name="com.desynatadmin.ui.home.giftCardManagement.AddGiftCardFragment"
+        android:label="Add Gift Card Fragment"
+        tools:layout="@layout/fragment_add_gift_card"/>
+
+    <fragment
+        android:id="@+id/promoCode"
+        android:name="com.desynatadmin.ui.home.promoCodeManagement.PromoCodeManagementFragment"
+        android:label="Promo Code Fragment"
+        tools:layout="@layout/fragment_promo_code_management">
+
+        <action
+            android:id="@+id/action_promoCodeFragment_to_promoCodeDetailFragment"
+            app:destination="@id/promoCodeDetail" />
+
+        <action
+            android:id="@+id/action_promoCodeFragment_to_addPromoCodeFragment"
+            app:destination="@id/addPromoCode" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/promoCodeDetail"
+        android:name="com.desynatadmin.ui.home.promoCodeManagement.PromoCodeDetailFragment"
+        android:label="Promo Code Detail Fragment"
+        tools:layout="@layout/fragment_promo_code_detail">
+
+        <action
+            android:id="@+id/action_promoCodeDetail_to_addPromoCodeFragment"
+            app:destination="@id/addPromoCode" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addPromoCode"
+        android:name="com.desynatadmin.ui.home.promoCodeManagement.AddPromoCodeFragment"
+        android:label="Add Promo Code Fragment"
+        tools:layout="@layout/fragment_add_promo_code"/>
+
+
+    <fragment
+        android:id="@+id/shippingTax"
+        android:name="com.desynatadmin.ui.home.shippingAndTaxManagement.ShippingManagementFragment"
+        android:label="Shipping Tax Fragment"
+        tools:layout="@layout/fragment_shipping_management">
+
+        <action
+            android:id="@+id/action_shippingTax_to_shippingChargeFragment"
+            app:destination="@id/shippingCharge" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/shippingCharge"
+        android:name="com.desynatadmin.ui.home.shippingAndTaxManagement.ShippingChargesFragment"
+        android:label="Shipping Charge Fragment"
+        tools:layout="@layout/fragment_shipping_charges"/>
 </navigation>

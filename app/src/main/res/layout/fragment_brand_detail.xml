@@ -39,7 +39,6 @@
     android:layout_marginTop="@dimen/_15sdp"
     android:background="#FFF7EA">
 
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvBrandName"
         android:layout_width="match_parent"

@@ -74,41 +74,6 @@ class DeliveryBoyDetailFragment : BaseFragment() {
                 error(R.drawable.ic_placeholder)
             }
 
-         /*   ivDriving1.load(deliveryBoyData?.drivingLicense?.get(0)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-
-            ivDriving2.load(deliveryBoyData?.drivingLicense?.get(1)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-
-            ivVehicle1.load(deliveryBoyData?.vehicleImage?.get(0)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-
-            ivVehicle2.load(deliveryBoyData?.vehicleImage?.get(1)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-
-            ivIdentity1.load(deliveryBoyData?.identityProof?.get(0)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-
-            ivIdentity2.load(deliveryBoyData?.identityProof?.get(1)?.documentPath) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }*/
 
             if (deliveryBoyData?.registrationCertificate!=null) {
                 if(deliveryBoyData?.registrationCertificate?.get(0)==null){
@@ -122,17 +87,6 @@ class DeliveryBoyDetailFragment : BaseFragment() {
                 loadDocument(ivRegistration1, deliveryBoyData?.registrationCertificate?.get(0)?.documentPath)
                 loadDocument(ivRegistration2, deliveryBoyData?.registrationCertificate?.get(1)?.documentPath)
 
-             /*   ivRegistration1.load(deliveryBoyData?.registrationCertificate?.get(0)?.documentPath) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }
-
-                ivRegistration2.load(deliveryBoyData?.identityProof?.get(1)?.documentPath) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }*/
             }
             else{
                 tvRegistration.isVisible = false
@@ -141,22 +95,11 @@ class DeliveryBoyDetailFragment : BaseFragment() {
 
             if (deliveryBoyData?.pollutionPaper!=null){
                 loadDocument(ivPollutionPaper, deliveryBoyData?.pollutionPaper?.get(0)?.documentPath)
-               /* ivPollutionPaper.load(deliveryBoyData?.pollutionPaper?.get(0)?.documentPath) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }*/
             }
             else{
                 tvPollutionPaper.isVisible = false
                 llPollutionPaper.isVisible = false
             }
-
-//            ivVehicleInsurance.load(deliveryBoyData?.vehicleInsurance?.get(0)?.documentPath) {
-//                crossfade(true)
-//                placeholder(R.drawable.ic_placeholder)
-//                error(R.drawable.ic_placeholder)
-//            }
 
             loadDocument(ivDriving1, deliveryBoyData?.drivingLicense?.get(0)?.documentPath)
             loadDocument(ivDriving2, deliveryBoyData?.drivingLicense?.get(1)?.documentPath)

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.promoCodeManagement.PromoCodeDetailFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/btnDelete">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="#FFF7EA">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPromoCodeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:text="Flat 20 % OFF"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tvSwitch"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="Active"
+                android:textColor="#1A900D"
+                android:fontFamily="@font/poppins_regular"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableEnd="@drawable/switch_on"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFeature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="Flat 20% off On minimum order 299 KD"
+            android:textColor="#B2000000"
+            android:textSize="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="Lorem ipsum dolor sit amet consectetur. Amet enim quis augue ullamcorper elit massa mi nisl. Sed enim ut sed maecenas pretium ."
+            android:textColor="#B2000000"
+            android:textSize="@dimen/_10sdp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33000000"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="Terms &amp; conditions"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="Lorem ipsum dolor sit amet consectetur. Amet enim quis augue ullamcorper elit massa mi nisl. Sed enim ut sed maecenas pretium ."
+            android:textColor="#B2000000"
+            android:textSize="@dimen/_10sdp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33000000"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_dmarginHorizontal="@dimen/_15sdp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/card_stroke_background">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountryTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Country"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvCountry" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Kuwait"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="end"
+                app:layout_constraintStart_toEndOf="@id/tvCountryTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvCountryTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvApplicableFor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Applicable for"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCountryTitle"
+                app:layout_constraintEnd_toStartOf="@id/tvCountry" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvApplicable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Every Order"
+                android:="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="end"
+                app:layout_constraintStart_toEndOf="@id/tvApplicableFor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvApplicableFor" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStartDateTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Start date"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvApplicableFor"
+                app:layout_constraintEnd_toStartOf="@id/tvStartDate" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStartDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="21/09/2025 "
+                android:="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="end"
+                app:layout_constraintStart_toEndOf="@id/tvStartDateTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvStartDateTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEndDateTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="End Date"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStartDateTitle"
+                app:layout_constraintEnd_toStartOf="@id/tvEndDate" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEndDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="21/12/2025 "
+                android:="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="end"
+                app:layout_constraintStart_toEndOf="@id/tvEndDateTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvEndDateTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnDelete"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+        android:background="@drawable/red_stroke"
+        style="@style/button"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:text="Delete"
+        android:textColor="@color/red"
+        android:layout_marginTop="@dimen/_20sdp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnEdit"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toTopOf="@id/btnDelete"
+        app:layout_constraintStart_toEndOf="@+id/btnDelete"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        style="@style/button"
+        android:background="@drawable/btn_background"
+        android:text="Edit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

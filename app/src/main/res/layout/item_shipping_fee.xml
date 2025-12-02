@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:background="@drawable/edit_back">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="20km - 50km"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        android:layout_centerVertical="true"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="50 KD"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/_11sdp"
+        android:layout_centerVertical="true"/>
+
+    <ImageView
+        android:id="@+id/ivEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/edit_ic"
+        android:padding="@dimen/_10sdp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/ivDelete"/>
+
+    <ImageView
+        android:id="@+id/ivDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete_ic"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/ivSwitch"
+        android:padding="@dimen/_10sdp" />
+
+    <ImageView
+        android:id="@+id/ivSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/switch_on"
+        android:padding="@dimen/_10sdp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>
