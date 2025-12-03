@@ -36,7 +36,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_15sdp"
+    android:layout_marginTop="@dimen/_25sdp"
     android:background="#FFF7EA">
 
     <androidx.appcompat.widget.AppCompatTextView

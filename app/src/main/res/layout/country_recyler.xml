@@ -27,7 +27,7 @@
     android:textSize="@dimen/_12sdp"
     android:fontFamily="@font/poppins_regular"
     android:drawableEnd="@drawable/ic_radio_unselected"
-    android:text="India"/>
+    android:text="Kuwait"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

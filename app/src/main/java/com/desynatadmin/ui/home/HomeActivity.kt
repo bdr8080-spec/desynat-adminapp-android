@@ -241,6 +241,26 @@ override fun onBackPressed() {
             rlSellereManagment.setOnClickListener {
                 startActivity(Intent(this@HomeActivity, SellerManagementActivity::class.java))
             }
+
+            rlPromoCodeManagement.setOnClickListener {
+                controller.navigate(R.id.promoCode)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlGiftCard.setOnClickListener {
+                controller.navigate(R.id.giftCard)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlShippingManagement.setOnClickListener {
+                controller.navigate(R.id.shippingTax)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlBannerPerDayPrice.setOnClickListener {
+                controller.navigate(R.id.bannerPerDayPrice)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
         }
 
     }

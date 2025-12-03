@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemPromoCodeBinding
+import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 
-class PromoCodeAdapter(var context:Context, var promoCodeList: ArrayList<String>, var promoCodeClick:PromoCodeClick) : RecyclerView.Adapter<PromoCodeAdapter.ViewHolder>() {
+class PromoCodeAdapter(var context:Context, var promoCodeList: ArrayList<GetPromoCodeResponse.Data>, var promoCodeClick:PromoCodeClick) : RecyclerView.Adapter<PromoCodeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemPromoCodeBinding) :
         RecyclerView.ViewHolder(binding.root)
 

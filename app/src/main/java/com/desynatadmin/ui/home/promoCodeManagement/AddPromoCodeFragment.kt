@@ -9,23 +9,31 @@ import androidx.navigation.fragment.findNavController
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAddPromoCodeBinding
-import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
+import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class AddPromoCodeFragment : BaseFragment() {
     private var binding: FragmentAddPromoCodeBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var promoCodeData: GetBrandResponse.Data.Data?=null
+    private var promoCodeData: GetPromoCodeResponse.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var selectedCountryCode: String? = null
+    var startDate:String?=null
+    var endDate:String?=null
+    var fromTimestamp=0L
+    var toTimestamp=0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +61,7 @@ class AddPromoCodeFragment : BaseFragment() {
             CommonMethod.removeSpace(etEnglishDescription)
 
             if (!itemJson.isNullOrEmpty()) {
-                promoCodeData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)
+                promoCodeData = Gson().fromJson(itemJson, GetPromoCodeResponse.Data::class.java)
                 toolbar.tvToolbar.text = "Edit Promocode"
                 btnSubmit.text = "Save Changes"
                 setData()
@@ -79,20 +87,55 @@ class AddPromoCodeFragment : BaseFragment() {
                 }
             }
 
-            btnSubmit.setOnClickListener {
+            etStartDate.setOnClickListener {
+                openCustomDatePicker(requireActivity()){date,timestamp->
+                    etStartDate.text=date
+                    fromTimestamp=timestamp
+                    startDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                }
 
+            }
+
+            etEndDate.setOnClickListener {
+                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
+                    etEndDate.text=date
+                    toTimestamp=timestamp
+                    endDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                }
+            }
+
+            btnSubmit.setOnClickListener {
+                if (validation()) {
+                    addPromoCode()
+                }
             }
 
         }
     }
 
     private fun addPromoCode(){
-       /* if (promoCodeData!=null){
+
+        val request = AddPromoCodeRequest(
+            applicableFor = if (binding?.rbFirst?.isChecked==true) "1" else "2",
+            countryId = selectedCountryCode.toString(),
+            descriptionArabic = binding?.etArabicDescription?.text.toString(),
+            descriptionEnglish = binding?.etEnglishDescription?.text.toString(),
+            nameArabic = binding?.etArabicPromoCode?.text.toString(),
+            nameEnglish = binding?.etEnglishPromoCode?.text.toString(),
+            startDate = startDate.toString(),
+            endDate = endDate.toString(),
+            uptoDiscount = binding?.etUpToDiscount?.text.toString(),
+            minOrderValue = binding?.etMinimumOrderValue?.text.toString(),
+            discountPercent = binding?.etDiscount?.text.toString(),
+            promocodeId = if(promoCodeData!=null) promoCodeData?.id.toString() else null
+        )
+
+        if (promoCodeData!=null){
             viewModel.updatePromoCode(request)
         }
         else{
             viewModel.addPromoCode(request)
-        }*/
+        }
 
     ProgressDialogUtils.getInstance().showProgress(requireActivity())
     isObserver = true
@@ -110,7 +153,7 @@ class AddPromoCodeFragment : BaseFragment() {
         viewModel.addPromoCodeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Promocode Added successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(), response.message){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -120,7 +163,7 @@ class AddPromoCodeFragment : BaseFragment() {
         viewModel.updatePromoCodeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Promocode Updated successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(), response.message){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -136,14 +179,102 @@ class AddPromoCodeFragment : BaseFragment() {
         binding?.apply {
             etEnglishPromoCode.setText(promoCodeData?.nameEnglish)
             etArabicPromoCode.setText(promoCodeData?.nameArabic)
-            etEnglishDescription.setText(promoCodeData?.nameArabic)
-            etArabicDescription.setText(promoCodeData?.nameArabic)
-            etDiscount.setText(promoCodeData?.nameArabic)
-            etUpToDiscount.setText(promoCodeData?.nameArabic)
-            etMinimumOrderValue.setText(promoCodeData?.nameArabic)
-            etStartDate.setText(promoCodeData?.nameArabic)
-            etEndDate.setText(promoCodeData?.nameArabic)
+            etEnglishDescription.setText(promoCodeData?.descriptionEnglish)
+            etArabicDescription.setText(promoCodeData?.descriptionArabic)
+            etDiscount.setText(promoCodeData?.discountPercent)
+            etUpToDiscount.setText(promoCodeData?.uptoDiscount)
+            etMinimumOrderValue.setText(promoCodeData?.minOrderValue)
+            selectedCountryCode = promoCodeData?.countryId.toString()
+            startDate = promoCodeData?.startDate.toString()
+            endDate = promoCodeData?.endDate.toString()
+            if(selectedCountryCode!=null){
+                etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
+            }
+            if (startDate!=null){
+                etStartDate.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
+            if (endDate!=null){
+                etEndDate.text=CommonMethod.formatDate(endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
         }
     }
 
+    private fun validation(): Boolean {
+        binding?.apply {
+            if (etCountry.text.toString().isBlank()) {
+                showToast("Please select country")
+                return false
+            }
+
+            if (etEnglishPromoCode.text.toString().trim().isEmpty()) {
+                showToast("Please enter promocode name in English")
+                return false
+            }
+
+            if (etArabicPromoCode.text.toString().trim().isEmpty()) {
+                showToast("Please enter promocode name in Arabic")
+                return false
+            }
+
+            if (etEnglishDescription.text.toString().trim().isEmpty()) {
+                showToast("Please enter description in English")
+                return false
+            }
+
+            if (etArabicDescription.text.toString().trim().isEmpty()) {
+                showToast("Please enter description in Arabic")
+                return false
+            }
+
+            if (radioGroup.checkedRadioButtonId == -1) {
+                showToast("Please select applicable order type")
+                return false
+            }
+
+            if (etDiscount.text.toString().trim().isEmpty()) {
+                showToast("Please enter discount percentage")
+                return false
+            }
+
+            if (etMinimumOrderValue.text.toString().trim().isEmpty()) {
+                showToast("Please enter minimum order value")
+                return false
+            }
+
+            if (etUpToDiscount.text.toString().trim().isEmpty()) {
+                showToast("Please enter up to discount value")
+                return false
+            }
+
+            if (etStartDate.text.toString().trim().isEmpty()) {
+                showToast("Please select start date")
+                return false
+            }
+
+            if (etEndDate.text.toString().trim().isEmpty()) {
+                showToast("Please select end date")
+                return false
+            }
+
+            if (!isEndDateValid()) {
+                showToast("End date must be after start date")
+                return false
+            }
         }
+        return true
+    }
+
+    private fun isEndDateValid(): Boolean {
+        return try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val start = sdf.parse(binding?.etStartDate?.text.toString())
+            val end = sdf.parse(binding?.etEndDate?.text.toString())
+            end != null && start != null && end >= start
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+
+
+}

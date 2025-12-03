@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.desynatadmin.R
-import com.desynatadmin.databinding.ItemBrandBinding
 import com.desynatadmin.databinding.ItemCardBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
-import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 
-class GiftCardAdapter(var context:Context, var giftCardList: ArrayList<GetBrandResponse.Data.Data>, var giftCardClick:GiftCardClick) : RecyclerView.Adapter<GiftCardAdapter.ViewHolder>() {
+class GiftCardAdapter(var context:Context, var giftCardList: ArrayList<GetAllGiftCardResponse.Data.Data>, var giftCardClick:GiftCardClick) : RecyclerView.Adapter<GiftCardAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCardBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -47,7 +46,7 @@ class GiftCardAdapter(var context:Context, var giftCardList: ArrayList<GetBrandR
         }
     }
 
-    fun setData(newList: ArrayList<GetBrandResponse.Data.Data>) {
+    fun setData(newList: ArrayList<GetAllGiftCardResponse.Data.Data>) {
         giftCardList = newList
         notifyDataSetChanged()
     }

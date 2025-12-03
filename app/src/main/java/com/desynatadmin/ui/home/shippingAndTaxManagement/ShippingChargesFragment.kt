@@ -10,31 +10,36 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.adapter.ShippingChargeAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.AddAmountDialogBinding
 import com.desynatadmin.databinding.AddShippingChargeDialogBinding
 import com.desynatadmin.databinding.AddTaxDialogBinding
 import com.desynatadmin.databinding.FragmentShippingChargesBinding
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 
 @AndroidEntryPoint
 class ShippingChargesFragment : BaseFragment() {
     private var binding: FragmentShippingChargesBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var shippingList = ArrayList<String>()
+    private var shippingList = ArrayList<GetShippingTaxResponse.Data.ShippingInfo>()
     private var shippingChargeAdapter : ShippingChargeAdapter?=null
+    private var shippingTaxData : GetShippingTaxResponse.Data?=null
 
     private var currentPage = 1
     private var lastPage = 1
@@ -43,6 +48,8 @@ class ShippingChargesFragment : BaseFragment() {
     private var pageLimit=10
     private var pagination=false
     private val itemsPerPage = 10
+    var selectedPos = -1
+    val rangeList = (1..100).map { it.toString() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,22 +69,28 @@ class ShippingChargesFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-
+            val itemJson = arguments?.getString("shippingData")
+            if (!itemJson.isNullOrEmpty()) {
+                shippingTaxData = Gson().fromJson(itemJson, GetShippingTaxResponse.Data::class.java)
+                setTaxData()
+            }
             toolbar.tvToolbar.text = "Shipping Charges & Other Taxs"
 
 
             shippingList.clear()
+            shippingTaxData?.shippingInfo?.let { shippingList.addAll(it) }
             shippingChargeAdapter = ShippingChargeAdapter(requireActivity(),shippingList,object : ShippingChargeAdapter.ClickOnItem{
                 override fun onClickItem(position: Int,type:Int) {
+                    selectedPos = position
                   when(type){
                       1->{
-                          addShippingChargeDialog()
+                          addShippingChargeDialog(true)
                       }
                       2->{
-
+                          updateShippingChargeStatus()
                       }
                       3->{
-
+                          deleteShippingCharge()
                       }
                   }
                 }
@@ -85,6 +98,14 @@ class ShippingChargesFragment : BaseFragment() {
             })
 
             rvShippingFee.adapter = shippingChargeAdapter
+        }
+    }
+
+    private fun setTaxData() {
+        binding?.apply {
+            tvCountry.text = shippingTaxData?.name
+            tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
+            ivFlag.load(shippingTaxData?.flag1)
         }
     }
 
@@ -128,6 +149,57 @@ class ShippingChargesFragment : BaseFragment() {
                 errorMessage?.let { showToast(it) }
                 pagination = false
                 isObserver = false
+            }
+        }
+
+        viewModel.deleteShippingChargeResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                shippingList.removeAt(selectedPos)
+                shippingChargeAdapter?.notifyItemRemoved(selectedPos)
+                shippingChargeAdapter?.notifyItemRangeChanged(selectedPos,shippingList.size)
+                selectedPos = -1
+                checkData()
+            }
+        }
+
+        viewModel.updateShippingChargeStatusResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                shippingList[selectedPos] = response.data
+                shippingChargeAdapter?.notifyItemChanged(selectedPos)
+                selectedPos = -1
+                checkData()
+            }
+        }
+
+        viewModel.updateShippingChargeResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                shippingList[selectedPos] = response.data
+                shippingChargeAdapter?.notifyItemChanged(selectedPos)
+                selectedPos = -1
+            }
+        }
+
+        viewModel.addShippingChargeResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                shippingList.add(0, response.data)
+                shippingChargeAdapter?.notifyItemInserted(0)
+            }
+        }
+
+        viewModel.addTaxResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                shippingTaxData?.taxInfo = response.data
+                setTaxData()
             }
         }
 
@@ -188,12 +260,63 @@ class ShippingChargesFragment : BaseFragment() {
         }
     }
 
+    private fun addTax(tax:String) {
+        val map = HashMap<String,Any>()
+        map["country_id"] = shippingTaxData?.id.toString()
+        map["tax"] = tax
+            viewModel.addTax(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun addShippingCharge(fee:String,rangFrom:String,rangeTo:String) {
+        val map = HashMap<String,Any>()
+        map["country_id"] = shippingTaxData?.id.toString()
+        map["range_from"] = rangFrom
+        map["range_to"] = rangeTo
+        map["shipping_fee"] = fee
+            viewModel.addShippingCharge(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+
+    private fun updateShippingCharge(fee:String,rangFrom:String,rangeTo:String) {
+        val map = HashMap<String,Any>()
+        map["country_id"] = shippingList[selectedPos].countryId
+        map["range_from"] = rangFrom
+        map["range_to"] = rangeTo
+        map["shipping_fee"] = fee
+        map["shipping_charge_id"] = shippingList[selectedPos].id
+            viewModel.updateShippingCharge(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun updateShippingChargeStatus() {
+        val map = HashMap<String,Any>()
+        map["shipping_charge_id"] = shippingList[selectedPos].id
+            viewModel.updateShippingChargeStatus(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun deleteShippingCharge() {
+        val map = HashMap<String,Any>()
+        map["shipping_charge_id"] = shippingList[selectedPos].id
+        viewModel.deleteShippingCharge(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+
+
     private fun getShippingCharge(loading:Boolean=true){
-        viewModel.getShippingCharge( page = currentPage)
+      /*  viewModel.getShippingCharge( page = currentPage)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
-        isObserver = true
+        isObserver = true*/
     }
 
     private fun checkData(){
@@ -231,7 +354,7 @@ class ShippingChargesFragment : BaseFragment() {
 
         dialogBinding.apply {
 
-            etAmount.addTextChangedListener(object : TextWatcher {
+           /* etAmount.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -248,7 +371,7 @@ class ShippingChargesFragment : BaseFragment() {
                         etAmount.addTextChangedListener(this)
                     }
                 }
-            })
+            })*/
 
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
@@ -259,7 +382,7 @@ class ShippingChargesFragment : BaseFragment() {
                     return@setOnClickListener
                 }
                 else{
-
+                    addTax(etAmount.text.toString())
                     dialog.dismiss()
                 }
             }
@@ -269,7 +392,7 @@ class ShippingChargesFragment : BaseFragment() {
         dialog.show()
     }
 
-    private fun addShippingChargeDialog() {
+    private fun addShippingChargeDialog(isEdit: Boolean =false) {
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddShippingChargeDialogBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -287,6 +410,13 @@ class ShippingChargesFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding.apply {
+            if (isEdit){
+                etFrom.text = CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeFrom?.toDouble())
+                etTo.text = CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeTo?.toDouble())
+                etAmount.setText(CommonMethod.formatDoubleValue(shippingList[selectedPos]?.shippingFee?.toDouble()))
+                tvToolbar.text = "Edit"
+                btnSubmit.text = "Save Changes"
+            }
 
             etAmount.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -307,6 +437,14 @@ class ShippingChargesFragment : BaseFragment() {
                 }
             })
 
+            etFrom.setOnClickListener{
+                showRangeList(etFrom)
+            }
+
+            etTo.setOnClickListener{
+                showRangeList(etTo)
+            }
+
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
             }
@@ -316,6 +454,12 @@ class ShippingChargesFragment : BaseFragment() {
                     return@setOnClickListener
                 }
                 else{
+                    if(isEdit){
+                        updateShippingCharge(etAmount.text.toString(),etFrom.text.toString(),etTo.text.toString())
+                    }
+                    else{
+                        addShippingCharge(etAmount.text.toString(),etFrom.text.toString(),etTo.text.toString())
+                    }
                     dialog.dismiss()
                 }
             }
@@ -337,6 +481,23 @@ class ShippingChargesFragment : BaseFragment() {
             return true
         }
         return false
+    }
+
+    private fun showRangeList(editText: TextView) {
+        val popup = ListPopupWindow(requireContext())
+        popup.anchorView = editText
+        popup.setAdapter(
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, rangeList)
+        )
+
+        popup.setOnItemClickListener { _, _, pos, _ ->
+            editText.text = rangeList[pos]
+            popup.dismiss()
+        }
+
+        popup.width = editText.width
+        popup.isModal = true
+        popup.show()
     }
 
 }

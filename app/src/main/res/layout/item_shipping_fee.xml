@@ -32,7 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/edit_ic"
-        android:padding="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/ivDelete"/>
 
@@ -42,15 +44,19 @@
         android:layout_height="wrap_content"
         android:src="@drawable/delete_ic"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:paddingHorizontal="@dimen/_5sdp"
         android:layout_toLeftOf="@+id/ivSwitch"
-        android:padding="@dimen/_10sdp" />
+        android:paddingVertical="@dimen/_10sdp" />
 
     <ImageView
         android:id="@+id/ivSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/switch_on"
-        android:padding="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:paddingVertical="@dimen/_10sdp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"/>
 

@@ -16,6 +16,7 @@ import com.desynatadmin.databinding.FragmentGiftCardDetailBinding
 import com.desynatadmin.databinding.FragmentGiftCardManagementBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
@@ -27,7 +28,7 @@ class GiftCardDetailFragment : BaseFragment() {
     private var binding: FragmentGiftCardDetailBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    var giftData: GetBrandResponse.Data.Data?=null
+    var giftData: GetAllGiftCardResponse.Data.Data?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +48,7 @@ class GiftCardDetailFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("giftCard")
         if (!itemJson.isNullOrEmpty()) {
-            giftData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)
+            giftData = Gson().fromJson(itemJson, GetAllGiftCardResponse.Data.Data::class.java)
             setData()
             updateStatus()
         }
@@ -63,7 +64,21 @@ class GiftCardDetailFragment : BaseFragment() {
             }
 
             btnDelete.setOnClickListener {
-                deleteGiftCard()
+                CommonMethod.deleteAlertDialog(
+                    requireActivity(),
+                    "Are you sure you want to delete the gift card?"
+                ) { action ->
+                    when (action) {
+                        CommonMethod.DialogAction.DELETE -> {
+                            deleteGiftCard()
+                        }
+
+                        CommonMethod.DialogAction.DISCARD -> {
+
+                        }
+                    }
+                }
+
             }
 
             btnEdit.setOnClickListener {
@@ -120,7 +135,7 @@ class GiftCardDetailFragment : BaseFragment() {
 
     private fun deleteGiftCard(){
         val map = HashMap<String,Any>()
-        map["gift_id"]=giftData?.id.toString()
+        map["giftCard_id"]=giftData?.id.toString()
         viewModel.deleteGiftCard(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -128,7 +143,7 @@ class GiftCardDetailFragment : BaseFragment() {
 
     private fun updateGiftCardStatus(){
         val map = HashMap<String,Any>()
-        map["gift_id"]=giftData?.id.toString()
+        map["giftCard_id"]=giftData?.id.toString()
         viewModel.updateGiftCardStatus(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true

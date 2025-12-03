@@ -4,15 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.desynatadmin.R
-import com.desynatadmin.databinding.ItemBrandBinding
-import com.desynatadmin.databinding.ItemCardBinding
 import com.desynatadmin.databinding.ItemShippingFeeBinding
-import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
-import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.utils.CommonMethod
 
-class ShippingChargeAdapter(var context:Context, var shippingChargeList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<ShippingChargeAdapter.ViewHolder>() {
+class ShippingChargeAdapter(var context:Context, var shippingChargeList: ArrayList<GetShippingTaxResponse.Data.ShippingInfo>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<ShippingChargeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemShippingFeeBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -34,8 +31,17 @@ class ShippingChargeAdapter(var context:Context, var shippingChargeList: ArrayLi
         var shippingChargeData = shippingChargeList[position]
 
         holder.binding.apply {
-            /*tvDistance.text = shippingChargeData.nameEnglish
-            tvPrice.text = shippingChargeData.nameEnglish*/
+            tvDistance.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.rangeFrom?.toDouble())}km - ${CommonMethod.formatDoubleValue(shippingChargeData?.rangeTo?.toDouble())}km"
+
+
+            tvPrice.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.shippingFee?.toDouble())} KD"
+
+            if (shippingChargeData.status==1){
+                ivSwitch.setImageResource(R.drawable.switch_on)
+            }
+            else{
+                ivSwitch.setImageResource(R.drawable.switch_off)
+            }
 
             ivDelete.setOnClickListener {
                 clickOnItem.onClickItem(position,3)
@@ -53,7 +59,7 @@ class ShippingChargeAdapter(var context:Context, var shippingChargeList: ArrayLi
 
     }
 
-    fun setData(newList: ArrayList<String>) {
+    fun setData(newList: ArrayList<GetShippingTaxResponse.Data.ShippingInfo>) {
         shippingChargeList = newList
         notifyDataSetChanged()
     }

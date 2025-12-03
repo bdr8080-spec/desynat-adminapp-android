@@ -16,6 +16,7 @@ import com.desynatadmin.databinding.FragmentAddGiftCardBinding
 import com.desynatadmin.databinding.FragmentGiftCardManagementBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -31,7 +32,7 @@ class AddGiftCardFragment : BaseFragment() {
     private var binding: FragmentAddGiftCardBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var giftData: GetBrandResponse.Data.Data?=null
+    private var giftData: GetAllGiftCardResponse.Data.Data?=null
 
     private var isImageObserver = true
 
@@ -69,7 +70,7 @@ class AddGiftCardFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
-        val itemJson = arguments?.getString("brandData")
+        val itemJson = arguments?.getString("giftData")
         binding?.apply {
             toolbar.tvToolbar.text = "Add New Card"
             binding?.apply {
@@ -77,7 +78,7 @@ class AddGiftCardFragment : BaseFragment() {
                 CommonMethod.applyArabicOnlyFilter(etArabicCardName)
                 CommonMethod.removeSpace(etEnglishCardName)
                 if (!itemJson.isNullOrEmpty()) {
-                    giftData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)
+                    giftData = Gson().fromJson(itemJson, GetAllGiftCardResponse.Data.Data::class.java)
                     toolbar.tvToolbar.text = "Edit Card"
                     btnSubmit.text = "Update"
                     setData()
@@ -95,7 +96,7 @@ class AddGiftCardFragment : BaseFragment() {
                 ) { uri ->
                     uri?.let {
                         image = CommonMethod.uriToFile(requireActivity(), it)
-                        ivBrand.setImageURI(it)
+                        ivGiftCard.setImageURI(it)
                     }
                 }
             }
@@ -120,7 +121,7 @@ class AddGiftCardFragment : BaseFragment() {
                     }
                 }
 
-                ivBrand.setOnClickListener {
+                ivGiftCard.setOnClickListener {
                     imagePicker.showImageSourceDialog()
                 }
             }
@@ -191,24 +192,24 @@ class AddGiftCardFragment : BaseFragment() {
                 etEnglishCardName.setText(giftData?.nameEnglish)
                 etArabicCardName.setText(giftData?.nameArabic)
                 imageUrl = giftData?.image.toString()
-                ivBrand.load(giftData?.image) {
+                ivGiftCard.load(giftData?.image) {
                     crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
+                    placeholder(R.drawable.ic_upload_brand)
+                    error(R.drawable.ic_upload_brand)
                 }
             }
 
         }
 
         fun addGiftCard(){
-            val map = HashMap<String, RequestBody>()
+            val map = HashMap<String, Any>()
 
             if (giftData!=null){
-                map["brand_id"] = giftData?.id.toString().toPlainRequestBody()
+                map["giftCard_id"] = giftData?.id.toString()
             }
-            map["name_arabic"] = binding?.etArabicCardName?.text?.trim().toString().toPlainRequestBody()
-            map["name_english"] = binding?.etEnglishCardName?.text?.trim().toString().toPlainRequestBody()
-            map["image"] =imageUrl.toPlainRequestBody()
+            map["name_arabic"] = binding?.etArabicCardName?.text?.trim().toString()
+            map["name_english"] = binding?.etEnglishCardName?.text?.trim().toString()
+            map["image"] =imageUrl
             if (giftData!=null){
                 viewModel.editGiftCard(map)
             }

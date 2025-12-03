@@ -12,8 +12,10 @@ import com.desynatadmin.databinding.ItemShippingFeeBinding
 import com.desynatadmin.databinding.ItemShippingTaxBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.utils.CommonMethod
 
-class ShippingCountryTaxAdapter(var context:Context, var shippingTaxList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<ShippingCountryTaxAdapter.ViewHolder>() {
+class ShippingCountryTaxAdapter(var context:Context, var shippingTaxList: ArrayList<GetShippingTaxResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<ShippingCountryTaxAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemShippingTaxBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -35,9 +37,9 @@ class ShippingCountryTaxAdapter(var context:Context, var shippingTaxList: ArrayL
         var shippingTaxData = shippingTaxList[position]
 
         holder.binding.apply {
-         /*   tvCountry.text = shippingTaxData.nameEnglish
-            tvTax.text = shippingTaxData.nameEnglish
-            ivFlag.load(shippingTaxData)*/
+            tvCountry.text = shippingTaxData.name
+            tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
+            ivFlag.load(shippingTaxData.flag1)
         }
 
         holder.itemView.setOnClickListener {

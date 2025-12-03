@@ -17,7 +17,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:fontFamily="@font/poppins_regular"
-    android:text="Store availability"
+    android:text="Kuwait"
     android:textColor="@color/black"
     android:textSize="@dimen/_12sdp" />
 

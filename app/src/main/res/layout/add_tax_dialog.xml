@@ -47,7 +47,7 @@
         android:layout_marginStart="@dimen/_7sdp"
         android:hint="Enter tax"
         android:maxLength="10"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:background="@null"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/view"/>

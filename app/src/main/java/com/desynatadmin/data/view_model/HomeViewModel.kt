@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desynatadmin.data.repo.MainRepository
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
+import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -34,10 +36,18 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliv
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
+import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
+import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -667,19 +677,19 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    val getPromoCodeListResult: LiveData<CommonResponse>
+    val getPromoCodeListResult: LiveData<GetPromoCodeResponse>
         get() = repository.promoCodeLiveData
 
-    fun getPromoCode(search: String?=null,fromDate:String?=null,toDate:String?=null, page:Int) {
+    fun getPromoCode(search: String?=null,fromDate:String?=null,toDate:String?=null) {
         viewModelScope.launch {
-            repository.getPromoCode(search,fromDate,toDate,page)
+            repository.getPromoCode(search,fromDate,toDate)
         }
     }
 
     val addPromoCodeResult: LiveData<CommonResponse>
         get() = repository.addPromoCodeLiveData
 
-    fun addPromoCode(request: AddDeliveryBoyRequest) {
+    fun addPromoCode(request: AddPromoCodeRequest) {
         viewModelScope.launch {
             repository.addPromoCode(request)
         }
@@ -688,13 +698,13 @@ class HomeViewModel @Inject constructor(
     val updatePromoCodeResult: LiveData<CommonResponse>
         get() = repository.updatePromoCodeLiveData
 
-    fun updatePromoCode(request: AddDeliveryBoyRequest) {
+    fun updatePromoCode(request: AddPromoCodeRequest) {
         viewModelScope.launch {
             repository.updatePromoCode(request)
         }
     }
 
-    val updatePromoCodeStatusResult: LiveData<CommonResponse>
+    val updatePromoCodeStatusResult: LiveData<UpdatePromoCodeResponse>
         get() = repository.updatePromoCodeStatusLiveData
 
     fun updatePromoCodeStatus(map:HashMap<String,Any>) {
@@ -712,7 +722,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getGiftCardResult: LiveData<GetBrandResponse>
+    val getGiftCardResult: LiveData<GetAllGiftCardResponse>
         get() = repository.giftCardLiveData
 
     fun getGiftCard(search: String?=null, page:Int) {
@@ -724,7 +734,7 @@ class HomeViewModel @Inject constructor(
     val addGiftCardResult: LiveData<CommonResponse>
         get() = repository.addGiftCardLiveData
 
-    fun addGiftCard(map:HashMap<String,RequestBody>) {
+    fun addGiftCard(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.addGiftCard(map)
         }
@@ -733,7 +743,7 @@ class HomeViewModel @Inject constructor(
     val editGiftCardResult: LiveData<CommonResponse>
         get() = repository.editGiftCardLiveData
 
-    fun editGiftCard(map:HashMap<String,RequestBody>) {
+    fun editGiftCard(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.editGiftCard(map)
         }
@@ -748,7 +758,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateGiftCardStatusLiveData: LiveData<UpdateBrandStatusResponse>
+    val updateGiftCardStatusLiveData: LiveData<UpdateGiftCardResponse>
         get() = repository.updateGiftCardStatusLiveData
 
     fun updateGiftCardStatus(map: HashMap<String, Any>) {
@@ -766,12 +776,74 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getShippingTaxResult: LiveData<GetBrandResponse>
+    val getShippingTaxResult: LiveData<GetShippingTaxResponse>
         get() = repository.shippingTaxLiveData
 
     fun getShippingTax() {
         viewModelScope.launch {
             repository.getShippingTax()
+        }
+    }
+
+    val bannerPerDayResult: LiveData<GetBannerPricePerDayResponse>
+        get() = repository.bannerPerDayPriceLiveData
+
+    fun getBannerPerDay(type:Int) {
+        viewModelScope.launch {
+            repository.getBannerPerDay(type)
+        }
+    }
+    val updateBannerPerDayResult: LiveData<UpdateBannerPriceResponse>
+        get() = repository.updateBannerPerDayPriceLiveData
+
+    fun updateBannerPerDayPrice(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateBannerPerDayPrice(map)
+        }
+    }
+
+    val addTaxResult: LiveData<AddTaxResponse>
+        get() = repository.addTaxLiveData
+
+    fun addTax(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.addTax(map)
+        }
+    }
+
+    val addShippingChargeResult: LiveData<UpdateShippingChargeResponse>
+        get() = repository.addShippingChargeLiveData
+
+    fun addShippingCharge(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.addShippingCharge(map)
+        }
+    }
+
+    val updateShippingChargeResult: LiveData<UpdateShippingChargeResponse>
+        get() = repository.updateShippingChargeLiveData
+
+    fun updateShippingCharge(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateShippingCharge(map)
+        }
+    }
+
+    val deleteShippingChargeResult: LiveData<CommonResponse>
+        get() = repository.deleteShippingChargeLiveData
+
+    fun deleteShippingCharge(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.deleteShippingCharge(map)
+        }
+    }
+
+    val updateShippingChargeStatusResult: LiveData<UpdateShippingChargeResponse>
+        get() = repository.updateShippingChargeStatusLiveData
+
+    fun updateShippingChargeStatus(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateShippingChargeStatus(map)
         }
     }
 

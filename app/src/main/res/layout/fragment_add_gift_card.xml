@@ -24,7 +24,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivBrand"
+                android:id="@+id/ivGiftCard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
                 android:scaleType="centerCrop"

@@ -87,20 +87,29 @@ object Constants {
     const val DELETE_DELIVERY_BOY = "/api/admin/delete_deliveryboy"
     const val GET_USER_COUNTRY = "/api/admin/get_user_countries_list"
 
-    const val GET_PROMO_CODE = "/api/admin/get_promocode"
+    const val GET_PROMO_CODE = "/api/admin/get_promocodes"
     const val ADD_PROMO_CODE = "/api/admin/add_promocode"
-    const val UPDATE_PROMO_CODE = "/api/admin/updated_promocode"
+    const val UPDATE_PROMO_CODE = "/api/admin/update_promocode"
     const val DELETE_PROMO_CODE = "/api/admin/delete_promocode"
-    const val UPDATE_STATUS_PROMO_CODE = "/api/admin/updated_promocode"
+    const val UPDATE_STATUS_PROMO_CODE = "/api/admin/block_unblock_promocode"
 
-    const val GIFT_CARD = "/api/admin/get_brand"
-    const val ADD_GIFT_CARD = "/api/admin/add_brand"
-    const val UPDATE_GIFT_CARD = "/api/admin/update_brand"
-    const val DELETE_GIFT_CARD = "/api/admin/delete_brand"
-    const val UPDATE_GIFT_CARD_STATUS = "/api/admin/change_brand_status"
+    const val GIFT_CARD = "/api/admin/get_giftCards"
+    const val ADD_GIFT_CARD = "/api/admin/add_giftCard"
+    const val UPDATE_GIFT_CARD = "/api/admin/update_giftCard"
+    const val DELETE_GIFT_CARD = "/api/admin/delete_gift_card"
+    const val UPDATE_GIFT_CARD_STATUS = "/api/admin/block_unblock_giftCard"
 
-    const val SHIPPING_CHARGE = "/api/admin/change_brand_status"
-    const val SHIPPING_TAX = "/api/admin/change_brand_status"
+    const val ADD_SHIPPING_CHARGE = "/api/admin/add_shipping_charge"
+    const val UPDATE_SHIPPING_CHARGE = "/api/admin/update_shipping_charge"
+    const val DELETE_SHIPPING_CHARGE = "/api/admin/delete_shipping_fee"
+    const val UPDATE_SHIPPING_CHARGE_STATUS = "/api/admin/blobk_unblock_shippingFee"
+    const val SHIPPING_CHARGE = "/api/admin/shipping_charge"
+
+    const val ADD_TAX = "/api/admin/add_tax"
+    const val SHIPPING_TAX = "/api/admin/countries_with_tax_shipping"
+
+    const val BANNER_PER_DAY_PRICE = "/api/admin/get_banners"
+    const val UPDATE_BANNER_PER_DAY_PRICE = "/api/admin/add_update_banner"
 
 
 }

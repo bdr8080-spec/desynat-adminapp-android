@@ -111,7 +111,7 @@
             android:layout_height="1dp"
             android:background="#33000000"
             android:layout_marginTop="@dimen/_15sdp"
-            android:layout_dmarginHorizontal="@dimen/_15sdp"/>
+            android:layout_marginHorizontal="@dimen/_15sdp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Every Order"
-                android:="@color/black"
+               android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                 android:gravity="end"
                 app:layout_constraintStart_toEndOf="@id/tvApplicableFor"
@@ -191,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="21/09/2025 "
-                android:="@color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                 android:gravity="end"
                 app:layout_constraintStart_toEndOf="@id/tvStartDateTitle"
@@ -217,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="21/12/2025 "
-                android:="@color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                 android:gravity="end"
                 app:layout_constraintStart_toEndOf="@id/tvEndDateTitle"

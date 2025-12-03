@@ -25,6 +25,7 @@ import com.desynatadmin.databinding.FragmentPromoCodeManagementBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
+import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.openCustomDatePicker
@@ -42,18 +43,11 @@ class PromoCodeManagementFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
 
-    private var promoCodeList = ArrayList<String>()
+    private var promoCodeList = ArrayList<GetPromoCodeResponse.Data>()
     private var promoCodeAdapter : PromoCodeAdapter?=null
-    private var currentPage = 1
-    private var lastPage = 1
-    private var totalPage = 0
-    private var totalItem=0
-    private var pageLimit=10
     private var isFromSwipe=false
-    private var pagination=false
     private var search: Job? = null
     private var lastQuery: String? = null
-    private val itemsPerPage = 10
     var selectedPos = -1
 
     var startDate:String?=null
@@ -107,8 +101,6 @@ class PromoCodeManagementFragment : BaseFragment() {
                     search?.cancel()
                     search = lifecycleScope.launch {
                         delay(600)
-                        currentPage = 1
-                        pagination = false
                         isFromSwipe = false
                         if (!isObserver)
                             getPromoCode(search =  query.ifEmpty { null })
@@ -119,8 +111,6 @@ class PromoCodeManagementFragment : BaseFragment() {
 
             swipeRefreshLayout.setOnRefreshListener {
                 isFromSwipe = true
-                pagination = false
-                currentPage = 1
                 getPromoCode(false)
             }
         }
@@ -148,53 +138,25 @@ class PromoCodeManagementFragment : BaseFragment() {
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
                 errorMessage?.let { showToast(it) }
-                pagination = false
                 isFromSwipe = false
                 isObserver = false
             }
         }
 
         viewModel.getPromoCodeListResult.observe(viewLifecycleOwner) { response ->
-        /*    if (isObserver) {
+            if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 if (isFromSwipe) {
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
-
-                currentPage = response.data.currentPage
-                totalItem = response.data.total
-
-                lastPage = response.data.lastPage
-
-                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
-                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
-
-                val oldSize = promoCodeList.size
-
-                if (!pagination) {
                     promoCodeList.clear()
-                }
-                val newItems = response.data.data ?: emptyList()
-
-                promoCodeList.addAll(newItems)
+                promoCodeList.addAll(response.data)
                 checkData()
 
-                if (pagination) {
-
-                    response.data.data?.size?.let {
-                        promoCodeAdapter?.notifyItemRangeInserted(
-                            oldSize,
-                            it
-                        )
-                    }
-                } else {
                     promoCodeAdapter?.notifyDataSetChanged()
-                }
-
-                pagination = false
                 isFromSwipe = false
                 isObserver = false
-            }*/
+            }
         }
     }
 
@@ -203,7 +165,7 @@ class PromoCodeManagementFragment : BaseFragment() {
     }
 
     private fun getPromoCode(loading:Boolean=true,search:String?=null){
-        viewModel.getPromoCode(search = search, fromDate = startDate, toDate = endDate, page = currentPage)
+        viewModel.getPromoCode(search = search, fromDate = startDate, toDate = endDate)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }

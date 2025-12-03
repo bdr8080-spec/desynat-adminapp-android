@@ -1,6 +1,8 @@
 package com.desynatadmin.network
 
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
+import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -31,10 +33,18 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliv
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
+import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
+import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -432,13 +442,14 @@ interface ApiServices {
         @Query("search") search : String?=null,
         @Query("from_date") fromDate : String?=null,
         @Query("to_date") toDate : String?=null,
-        @Query("page") page: Int,
-        @Query("limit") limit: Int? = 10, ): Response<CommonResponse>
+      /*  @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10, */
+        ): Response<GetPromoCodeResponse>
 
     @POST(Constants.UPDATE_STATUS_PROMO_CODE)
     suspend fun updatePromoCodeStatus(
         @Body body: HashMap<String, Any>
-    ): Response<CommonResponse>
+    ): Response<UpdatePromoCodeResponse>
 
     @POST(Constants.DELETE_PROMO_CODE)
     suspend fun deletePromoCode(
@@ -447,12 +458,12 @@ interface ApiServices {
 
     @POST(Constants.ADD_PROMO_CODE)
     suspend fun addPromoCode(
-        @Body request: AddDeliveryBoyRequest
+        @Body request: AddPromoCodeRequest
     ): Response<CommonResponse>
 
     @POST(Constants.UPDATE_PROMO_CODE)
     suspend fun updatePromoCode(
-        @Body request: AddDeliveryBoyRequest
+        @Body request: AddPromoCodeRequest
     ): Response<CommonResponse>
 
     @GET(Constants.GIFT_CARD)
@@ -460,22 +471,20 @@ interface ApiServices {
         @Query("search") search : String?=null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
-    ): Response<GetBrandResponse>
+    ): Response<GetAllGiftCardResponse>
 
-    @Multipart
-    @POST(Constants.ADD_BRAND)
+    @POST(Constants.ADD_GIFT_CARD)
     suspend fun addGiftCard(
-        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+        @Body map : HashMap<String,Any>): Response<CommonResponse>
 
-    @Multipart
-    @POST(Constants.UPDATE_BRAND)
+    @POST(Constants.UPDATE_GIFT_CARD)
     suspend fun editGiftCard(
-        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+        @Body map : HashMap<String,Any>): Response<CommonResponse>
 
-    @POST(Constants.UPDATE_BRAND_STATUS)
+    @POST(Constants.UPDATE_GIFT_CARD_STATUS)
     suspend fun updateGiftCardStatus(
         @Body body: HashMap<String,Any>
-    ): Response<UpdateBrandStatusResponse>
+    ): Response<UpdateGiftCardResponse>
 
     @POST(Constants.DELETE_GIFT_CARD)
     suspend fun deleteGiftCard(
@@ -490,7 +499,41 @@ interface ApiServices {
 
   @GET(Constants.SHIPPING_TAX)
     suspend fun getShippingTax(
-    ): Response<GetBrandResponse>
+    ): Response<GetShippingTaxResponse>
 
+  @GET(Constants.BANNER_PER_DAY_PRICE)
+    suspend fun getBannerPerDay(
+      @Query("type") type: Int,
+      ): Response<GetBannerPricePerDayResponse>
+
+    @POST(Constants.UPDATE_BANNER_PER_DAY_PRICE)
+    suspend fun updateBannerPerDayPrice(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateBannerPriceResponse>
+
+    @POST(Constants.ADD_TAX)
+    suspend fun addTax(
+        @Body body: HashMap<String,Any>
+    ): Response<AddTaxResponse>
+
+    @POST(Constants.ADD_SHIPPING_CHARGE)
+    suspend fun addShippingCharge(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateShippingChargeResponse>
+
+    @POST(Constants.UPDATE_SHIPPING_CHARGE)
+    suspend fun updateShippingCharge(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateShippingChargeResponse>
+
+    @POST(Constants.UPDATE_SHIPPING_CHARGE_STATUS)
+    suspend fun updateShippingChargeStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateShippingChargeResponse>
+
+    @POST(Constants.DELETE_SHIPPING_CHARGE)
+    suspend fun deleteShippingCharge(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
 
 }

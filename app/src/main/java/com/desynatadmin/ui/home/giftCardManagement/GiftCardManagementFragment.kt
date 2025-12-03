@@ -21,6 +21,7 @@ import com.desynatadmin.databinding.FragmentGiftCardManagementBinding
 import com.desynatadmin.databinding.FragmentPromoCodeManagementBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
@@ -35,7 +36,7 @@ class GiftCardManagementFragment : BaseFragment() {
     private var binding: FragmentGiftCardManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var giftCardList = ArrayList<GetBrandResponse.Data.Data>()
+    private var giftCardList = ArrayList<GetAllGiftCardResponse.Data.Data>()
     private var giftCardAdapter : GiftCardAdapter?=null
     private var currentPage = 1
     private var lastPage = 1

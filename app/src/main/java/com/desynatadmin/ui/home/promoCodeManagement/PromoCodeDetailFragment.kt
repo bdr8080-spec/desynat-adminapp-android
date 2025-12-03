@@ -12,6 +12,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentPromoCodeDetailBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
@@ -23,7 +24,7 @@ class PromoCodeDetailFragment : BaseFragment() {
     private var binding: FragmentPromoCodeDetailBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    var promoCodeData: GetBrandResponse.Data.Data?=null
+    var promoCodeData: GetPromoCodeResponse.Data?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +45,7 @@ class PromoCodeDetailFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("promoCodeData")
         if (!itemJson.isNullOrEmpty()) {
-            promoCodeData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)
+            promoCodeData = Gson().fromJson(itemJson, GetPromoCodeResponse.Data::class.java)
             setData()
             updateStatus()
         }
@@ -147,17 +148,11 @@ class PromoCodeDetailFragment : BaseFragment() {
             }
         }
 
-        viewModel.updatePromoCodeResult.observe(viewLifecycleOwner) { response ->
+        viewModel.updatePromoCodeStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-               /* promoCodeData = response.data
-                if (response.data.status==1){
-                    showToast("Promocode Activated Successfully")
-                }
-                else{
-                    showToast("Promocode Deactivated Successfully")
-
-                }*/
+                promoCodeData = response.data
+                showToast(response.message)
                 updateStatus()
                 isObserver = false
 

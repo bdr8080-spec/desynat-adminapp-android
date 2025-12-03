@@ -62,7 +62,21 @@ class BrandDetailFragment : BaseFragment() {
             }
 
             btnDelete.setOnClickListener {
-                deleteBrand()
+                CommonMethod.deleteAlertDialog(
+                    requireActivity(),
+                    "Are you sure you want to delete the brand?"
+                ) { action ->
+                    when (action) {
+                        CommonMethod.DialogAction.DELETE -> {
+                            deleteBrand()
+                        }
+
+                        CommonMethod.DialogAction.DISCARD -> {
+
+                        }
+                    }
+                }
+
             }
 
             btnEdit.setOnClickListener {

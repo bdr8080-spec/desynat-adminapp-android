@@ -275,4 +275,11 @@
         android:name="com.desynatadmin.ui.home.shippingAndTaxManagement.ShippingChargesFragment"
         android:label="Shipping Charge Fragment"
         tools:layout="@layout/fragment_shipping_charges"/>
+
+    <fragment
+        android:id="@+id/bannerPerDayPrice"
+        android:name="com.desynatadmin.ui.home.banner.BannerPerDayPriceFragment"
+        android:label="Banner Per Day Price Fragment"
+        tools:layout="@layout/fragment_banner_per_day_price"/>
+
 </navigation>

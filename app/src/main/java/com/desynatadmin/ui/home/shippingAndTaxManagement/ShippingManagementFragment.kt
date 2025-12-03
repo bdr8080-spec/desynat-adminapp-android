@@ -13,6 +13,8 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentShippingManagementBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -23,7 +25,7 @@ class ShippingManagementFragment : BaseFragment() {
     private var binding: FragmentShippingManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var shippingList = ArrayList<String>()
+    private var shippingList = ArrayList<GetShippingTaxResponse.Data>()
     private var shippingCountryTaxAdapter : ShippingCountryTaxAdapter?=null
 
     override fun onCreateView(
@@ -44,7 +46,6 @@ class ShippingManagementFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-
             toolbar.tvToolbar.text = "Shipping Charges & Other Taxs"
 
             shippingList.clear()
@@ -86,9 +87,8 @@ class ShippingManagementFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
 
                 shippingList.clear()
-                // shippingList.addAll(newItems)
+                 shippingList.addAll(response.data)
                 checkData()
-
                     shippingCountryTaxAdapter?.notifyDataSetChanged()
                 isObserver = false
             }
