@@ -103,9 +103,8 @@ class ShippingChargesFragment : BaseFragment() {
 
     private fun setTaxData() {
         binding?.apply {
-            tvCountry.text = shippingTaxData?.name
+            tvCountry.text = "${shippingTaxData?.flag}  ${shippingTaxData?.name}"
             tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
-            ivFlag.load(shippingTaxData?.flag1)
         }
     }
 
@@ -378,7 +377,7 @@ class ShippingChargesFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener {
-                if(isInvalid(etAmount, "Amount")) {
+                if(isInvalid(etAmount, "Tax")) {
                     return@setOnClickListener
                 }
                 else{

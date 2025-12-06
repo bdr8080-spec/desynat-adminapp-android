@@ -40,7 +40,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:hint="Enter amount"
         android:maxLength="10"
-        android:inputType="number"/>
+        android:inputType="numberDecimal"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btnSubmit"

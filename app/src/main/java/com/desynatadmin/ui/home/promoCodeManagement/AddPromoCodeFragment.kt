@@ -1,13 +1,18 @@
 package com.desynatadmin.ui.home.promoCodeManagement
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.desynatadmin.adapter.UserCountryPickerAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentAddPromoCodeBinding
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
@@ -27,7 +32,7 @@ class AddPromoCodeFragment : BaseFragment() {
     private var binding: FragmentAddPromoCodeBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var promoCodeData: GetPromoCodeResponse.Data?=null
+    private var promoCodeData: GetPromoCodeResponse.Data.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var selectedCountryCode: String? = null
     var startDate:String?=null
@@ -61,7 +66,7 @@ class AddPromoCodeFragment : BaseFragment() {
             CommonMethod.removeSpace(etEnglishDescription)
 
             if (!itemJson.isNullOrEmpty()) {
-                promoCodeData = Gson().fromJson(itemJson, GetPromoCodeResponse.Data::class.java)
+                promoCodeData = Gson().fromJson(itemJson, GetPromoCodeResponse.Data.Data::class.java)
                 toolbar.tvToolbar.text = "Edit Promocode"
                 btnSubmit.text = "Save Changes"
                 setData()
@@ -81,7 +86,7 @@ class AddPromoCodeFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry, isDialCode = false){ selectedCountry ->
+                showUserCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
                     etCountry.setText(selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                 }
@@ -163,6 +168,9 @@ class AddPromoCodeFragment : BaseFragment() {
         viewModel.updatePromoCodeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                findNavController().previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("updatedPromoCode", Gson().toJson(response.data))
                 CommonMethod.showSuccessDialog(requireContext(), response.message){
                     findNavController().popBackStack()
                 }
@@ -172,7 +180,8 @@ class AddPromoCodeFragment : BaseFragment() {
     }
 
     private fun setCountry() {
-        countryList = SharedPreference.get(requireActivity()).getCountryList() as ArrayList<GetCountryResponse.Data>
+        countryList.clear()
+        SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
     }
 
     private fun setData() {
@@ -187,6 +196,12 @@ class AddPromoCodeFragment : BaseFragment() {
             selectedCountryCode = promoCodeData?.countryId.toString()
             startDate = promoCodeData?.startDate.toString()
             endDate = promoCodeData?.endDate.toString()
+            if (promoCodeData?.applicableFor==1){
+                rbFirst.isChecked = true
+            }
+            else{
+                rbEvery.isChecked = true
+            }
             if(selectedCountryCode!=null){
                 etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
             }
@@ -273,6 +288,35 @@ class AddPromoCodeFragment : BaseFragment() {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun showUserCountryPicker(
+        context: Context,
+        anchor: View,
+        countryList: ArrayList<GetCountryResponse.Data>,
+        onCountrySelected: (GetCountryResponse.Data) -> Unit
+    ) {
+        val binding = CustomCountryPickerBinding.inflate(LayoutInflater.from(context))
+
+        val popupWindow = PopupWindow(
+            binding.root,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.isOutsideTouchable = true
+        popupWindow.elevation = 20f
+        popupWindow.showAsDropDown(anchor)
+
+        binding.rvCountry.adapter = UserCountryPickerAdapter(context, countryList,
+            object : UserCountryPickerAdapter.ClickOnItem {
+                override fun onClickItem(position: Int) {
+                    onCountrySelected(countryList[position])
+                    popupWindow.dismiss()
+                }
+            }
+        )
     }
 
 

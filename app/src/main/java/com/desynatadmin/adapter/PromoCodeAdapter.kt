@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemPromoCodeBinding
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 
-class PromoCodeAdapter(var context:Context, var promoCodeList: ArrayList<GetPromoCodeResponse.Data>, var promoCodeClick:PromoCodeClick) : RecyclerView.Adapter<PromoCodeAdapter.ViewHolder>() {
+class PromoCodeAdapter(var context:Context, var promoCodeList: ArrayList<GetPromoCodeResponse.Data.Data>, var promoCodeClick:PromoCodeClick) : RecyclerView.Adapter<PromoCodeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemPromoCodeBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -29,9 +29,14 @@ class PromoCodeAdapter(var context:Context, var promoCodeList: ArrayList<GetProm
         var promoCodeData = promoCodeList[position]
 
         holder.binding.apply {
-
+            tvName.text = promoCodeData.nameEnglish
+            tvFeature.text = "Flat ${promoCodeData.discountPercent}% off on minimum order ${promoCodeData.minOrderValue} KD"
+            tvDescription.text = promoCodeData.descriptionEnglish
         }
 
+        holder.itemView.setOnClickListener{
+            promoCodeClick.onPromoCodeClick(position)
+        }
     }
 
 

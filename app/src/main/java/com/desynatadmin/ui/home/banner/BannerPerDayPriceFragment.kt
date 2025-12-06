@@ -178,7 +178,7 @@ class BannerPerDayPriceFragment : BaseFragment() {
         viewModel.updateBannerPerDayResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-
+                showToast(response.message)
                 bannerPerDayPriceList[selectedPos] = response.data
 
                 bannerPerDayPriceAdapter?.notifyItemChanged(selectedPos)
@@ -205,7 +205,7 @@ class BannerPerDayPriceFragment : BaseFragment() {
         map["country_id"] = bannerPerDayPriceList[selectedPos].countryId
         map["type"] = type
         map["per_day_price"] = price
-        viewModel.getBannerPerDay(type)
+        viewModel.updateBannerPerDayPrice(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }

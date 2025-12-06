@@ -176,6 +176,10 @@ class AddGiftCardFragment : BaseFragment() {
             viewModel.editGiftCardResult.observe(viewLifecycleOwner) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
+                    findNavController().previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("updatedGiftCard", Gson().toJson(response.data))
+
                     CommonMethod.showSuccessDialog(requireContext(), "Gift card updated successfully!"){
                         findNavController().popBackStack()
                     }

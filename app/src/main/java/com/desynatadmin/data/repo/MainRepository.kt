@@ -850,11 +850,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val promoCodeLiveData = SingleLiveEvent<GetPromoCodeResponse>()
-    suspend fun getPromoCode(search:String?=null,fromDate:String?=null,toDate:String?=null
+    suspend fun getPromoCode(search:String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null
     ) {
         handleApiCall(
             api = {
-                api.getPromoCode(search,fromDate,toDate)
+                api.getPromoCode(search,fromDate,toDate,countryId)
             },
             responseLiveData = promoCodeLiveData
         )
@@ -871,7 +871,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val updatePromoCodeLiveData = SingleLiveEvent<CommonResponse>()
+    val updatePromoCodeLiveData = SingleLiveEvent<UpdatePromoCodeResponse>()
     suspend fun updatePromoCode(request: AddPromoCodeRequest
     ) {
         handleApiCall(
@@ -926,7 +926,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val editGiftCardLiveData = SingleLiveEvent<CommonResponse>()
+    val editGiftCardLiveData = SingleLiveEvent<UpdateGiftCardResponse>()
     suspend fun editGiftCard(map:HashMap<String, Any>
     ) {
         handleApiCall(

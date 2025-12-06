@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class UpdatePromoCodeResponse(
     @SerializedName("data")
-    val `data`: GetPromoCodeResponse.Data,
+    val `data`: GetPromoCodeResponse.Data.Data,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")

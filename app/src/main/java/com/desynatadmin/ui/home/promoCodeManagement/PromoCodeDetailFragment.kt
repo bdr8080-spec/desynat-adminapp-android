@@ -12,6 +12,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentPromoCodeDetailBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -24,7 +25,7 @@ class PromoCodeDetailFragment : BaseFragment() {
     private var binding: FragmentPromoCodeDetailBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    var promoCodeData: GetPromoCodeResponse.Data?=null
+    var promoCodeData: GetPromoCodeResponse.Data.Data?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +43,22 @@ class PromoCodeDetailFragment : BaseFragment() {
     }
 
     override fun initView() {
+
+        findNavController().currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<String>("updatedPromoCode")
+            ?.observe(viewLifecycleOwner) { json ->
+                json?.let {
+                    promoCodeData = Gson().fromJson(json, GetPromoCodeResponse.Data.Data::class.java)
+                    setData()
+                    updateStatus()
+                }
+            }
+
         ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("promoCodeData")
         if (!itemJson.isNullOrEmpty()) {
-            promoCodeData = Gson().fromJson(itemJson, GetPromoCodeResponse.Data::class.java)
+            promoCodeData = Gson().fromJson(itemJson, GetPromoCodeResponse.Data.Data::class.java)
             setData()
             updateStatus()
         }
@@ -114,15 +127,14 @@ class PromoCodeDetailFragment : BaseFragment() {
     private fun setData(){
 
         binding?.apply {
-
+            tvFeature.text = "Flat ${promoCodeData?.discountPercent}% off on minimum order ${promoCodeData?.minOrderValue} KD"
             tvPromoCodeName.text = promoCodeData?.nameEnglish
-            tvFeature.text = promoCodeData?.nameEnglish
-            tvDescription.text = promoCodeData?.nameEnglish
-            tvTerms.text = promoCodeData?.nameEnglish
-            tvCountry.text = promoCodeData?.nameEnglish
-            tvApplicable.text = promoCodeData?.nameEnglish
-            tvStartDate.text = promoCodeData?.nameEnglish
-            tvEndDate.text = promoCodeData?.nameEnglish
+            tvDescription.text = promoCodeData?.descriptionEnglish
+          //  tvTerms.text = promoCodeData?.nameEnglish
+            tvCountry.text = promoCodeData?.countryInfo?.name
+            tvApplicable.text = if(promoCodeData?.applicableFor==1) "First Order" else "Every Order"
+            tvStartDate.text = CommonMethod.formatDate(promoCodeData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            tvEndDate.text = CommonMethod.formatDate(promoCodeData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
 
             if(promoCodeData?.status==1){
                 tvSwitch.text = "Active"

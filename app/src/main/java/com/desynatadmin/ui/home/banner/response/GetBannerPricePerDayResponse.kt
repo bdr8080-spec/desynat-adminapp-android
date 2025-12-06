@@ -18,7 +18,7 @@ data class GetBannerPricePerDayResponse(
         @SerializedName("id")
         val id: Int,
         @SerializedName("per_day_price")
-        val perDayPrice: Int,
+        val perDayPrice: String,
         @SerializedName("type")
         val type: Int,
         @SerializedName("updated_at")

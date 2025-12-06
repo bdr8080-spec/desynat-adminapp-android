@@ -29,15 +29,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edit_back">
 
-        <ImageView
-            android:id="@+id/ivFlag"
-            android:layout_width="@dimen/_26sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCountry"
             android:layout_width="wrap_content"
@@ -46,12 +37,11 @@
             android:text="Kuwait"
             android:layout_marginStart="@dimen/_10sdp"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/ivFlag"
             android:textSize="@dimen/_12sdp"
             android:layout_centerVertical="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivFlag"/>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTaxTitle"

@@ -680,9 +680,9 @@ class HomeViewModel @Inject constructor(
     val getPromoCodeListResult: LiveData<GetPromoCodeResponse>
         get() = repository.promoCodeLiveData
 
-    fun getPromoCode(search: String?=null,fromDate:String?=null,toDate:String?=null) {
+    fun getPromoCode(search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null) {
         viewModelScope.launch {
-            repository.getPromoCode(search,fromDate,toDate)
+            repository.getPromoCode(search,fromDate,toDate,countryId)
         }
     }
 
@@ -695,7 +695,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updatePromoCodeResult: LiveData<CommonResponse>
+    val updatePromoCodeResult: LiveData<UpdatePromoCodeResponse>
         get() = repository.updatePromoCodeLiveData
 
     fun updatePromoCode(request: AddPromoCodeRequest) {
@@ -740,7 +740,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val editGiftCardResult: LiveData<CommonResponse>
+    val editGiftCardResult: LiveData<UpdateGiftCardResponse>
         get() = repository.editGiftCardLiveData
 
     fun editGiftCard(map:HashMap<String,Any>) {

@@ -152,8 +152,6 @@ object CommonMethod {
         editText.filters = arrayOf(filter)
     }
 
-
-
     fun removeAllTextSpaces (editText: AppCompatEditText){
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {

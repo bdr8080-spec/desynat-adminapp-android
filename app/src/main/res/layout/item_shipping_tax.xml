@@ -6,12 +6,6 @@
     android:layout_marginBottom="@dimen/_15sdp"
     android:background="@drawable/edit_back">
 
-    <ImageView
-        android:id="@+id/ivFlag"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_10sdp"/>
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCountry"
         android:layout_width="wrap_content"
@@ -19,7 +13,6 @@
         android:fontFamily="@font/poppins_medium"
         android:text="Kuwait"
         android:textColor="@color/black"
-        android:layout_toRightOf="@+id/ivFlag"
         android:textSize="@dimen/_12sdp" />
 
     <androidx.appcompat.widget.AppCompatTextView

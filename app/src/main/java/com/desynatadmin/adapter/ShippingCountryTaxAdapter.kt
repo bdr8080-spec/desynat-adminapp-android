@@ -37,9 +37,8 @@ class ShippingCountryTaxAdapter(var context:Context, var shippingTaxList: ArrayL
         var shippingTaxData = shippingTaxList[position]
 
         holder.binding.apply {
-            tvCountry.text = shippingTaxData.name
+            tvCountry.text = "${shippingTaxData?.flag}  ${shippingTaxData.name}"
             tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
-            ivFlag.load(shippingTaxData.flag1)
         }
 
         holder.itemView.setOnClickListener {

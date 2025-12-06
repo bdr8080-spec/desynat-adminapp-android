@@ -45,6 +45,19 @@ class GiftCardDetailFragment : BaseFragment() {
     }
 
     override fun initView() {
+
+        findNavController().currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<String>("updatedGiftCard")
+            ?.observe(viewLifecycleOwner) { json ->
+                json?.let {
+                    giftData = Gson().fromJson(json, GetAllGiftCardResponse.Data.Data::class.java)
+                    setData()
+                    updateStatus()
+                }
+            }
+
+
         ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("giftCard")
         if (!itemJson.isNullOrEmpty()) {

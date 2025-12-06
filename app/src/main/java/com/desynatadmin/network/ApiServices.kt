@@ -442,6 +442,7 @@ interface ApiServices {
         @Query("search") search : String?=null,
         @Query("from_date") fromDate : String?=null,
         @Query("to_date") toDate : String?=null,
+        @Query("country_id") countryId : String?=null,
       /*  @Query("page") page: Int,
         @Query("limit") limit: Int? = 10, */
         ): Response<GetPromoCodeResponse>
@@ -464,7 +465,7 @@ interface ApiServices {
     @POST(Constants.UPDATE_PROMO_CODE)
     suspend fun updatePromoCode(
         @Body request: AddPromoCodeRequest
-    ): Response<CommonResponse>
+    ): Response<UpdatePromoCodeResponse>
 
     @GET(Constants.GIFT_CARD)
     suspend fun getGiftCard(
@@ -479,7 +480,7 @@ interface ApiServices {
 
     @POST(Constants.UPDATE_GIFT_CARD)
     suspend fun editGiftCard(
-        @Body map : HashMap<String,Any>): Response<CommonResponse>
+        @Body map : HashMap<String,Any>): Response<UpdateGiftCardResponse>
 
     @POST(Constants.UPDATE_GIFT_CARD_STATUS)
     suspend fun updateGiftCardStatus(

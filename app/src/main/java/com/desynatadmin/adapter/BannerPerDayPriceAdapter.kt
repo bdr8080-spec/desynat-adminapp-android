@@ -31,9 +31,9 @@ class BannerPerDayPriceAdapter(var context:Context, var bannerList: ArrayList<Ge
         var bannerData = bannerList[position]
         val countryData = countryMap[bannerData.countryId]
         holder.binding.apply {
-            tvCountry.text = countryData?.name
+            tvCountry.text = "${countryData?.name}"
             tvPrice.text = "${bannerData.perDayPrice} KD"
-            ivFlag.load(countryData?.flag1)
+            ivFlag.text = "${countryData?.flag}"
 
             ivEdit.setOnClickListener {
                 onClick.onItemClick(position)

@@ -82,6 +82,21 @@ class SharedPreference(context: Context) {
         }
     }
 
+    fun saveUserCountryList(countryList: List<GetCountryResponse.Data>) {
+        val json = Gson().toJson(countryList)
+        preference.set("countryUserList", json)
+    }
+
+    fun getUserCountryList(): List<GetCountryResponse.Data>? {
+        val json = preference["countryUserList", ""] ?: return null
+        return try {
+            val type = object : TypeToken<List<GetCountryResponse.Data>>() {}.type
+            Gson().fromJson(json, type)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     fun saveUser(user: LoginResponse.Data) {
         val json = Gson().toJson(user)
         preference.set("userData", json)
