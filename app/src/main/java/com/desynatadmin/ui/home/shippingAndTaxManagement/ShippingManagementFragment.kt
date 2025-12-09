@@ -46,7 +46,7 @@ class ShippingManagementFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "Shipping Charges & Other Taxs"
+            toolbar.tvToolbar.text = "Delivery Charges & Other Taxs"
 
             shippingList.clear()
             shippingCountryTaxAdapter = ShippingCountryTaxAdapter(requireActivity(),shippingList,object : ShippingCountryTaxAdapter.ClickOnItem{

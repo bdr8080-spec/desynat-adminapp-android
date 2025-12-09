@@ -2,6 +2,8 @@ package com.desynatadmin.ui.home.promoCodeManagement
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,6 +78,86 @@ class AddPromoCodeFragment : BaseFragment() {
 
             }
 
+            val percentageWatcher = object : TextWatcher {
+
+                private var isEditing = false
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    if (isEditing) return
+                    isEditing = true
+
+                    val value = s.toString()
+
+                    if (value.isNotEmpty()) {
+                        val number = value.toDoubleOrNull() ?: 0.0
+
+                        if (number > 100) {
+                            val corrected = value.take(2)
+                            s?.replace(0, s.length, corrected)
+                        }
+                    }
+
+                    isEditing = false
+                }
+            }
+
+            etDiscount.addTextChangedListener(percentageWatcher)
+
+            etUpToDiscount.addTextChangedListener(object : TextWatcher {
+                private var isEditing = false
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    if (isEditing) return
+                    isEditing = true
+
+                    s?.let {
+                        if (it.startsWith("0")) {
+                            it.delete(0, 1)   // safer than replace()
+                        }
+                    }
+
+                    etUpToDiscount.setSelection(
+                        etUpToDiscount.text?.length?.coerceAtMost(etUpToDiscount.length()) ?: 0
+                    )
+
+                    isEditing = false
+                }
+            })
+
+            etMinimumOrderValue.addTextChangedListener(object : TextWatcher {
+                private var isEditing = false
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    if (isEditing) return
+                    isEditing = true
+
+                    s?.let {
+                        if (it.startsWith("0")) {
+                            it.delete(0, 1)
+                        }
+                    }
+
+                    etMinimumOrderValue.setSelection(
+                        etMinimumOrderValue.text?.length
+                            ?.coerceAtMost(etMinimumOrderValue.length()) ?: 0
+                    )
+
+                    isEditing = false
+                }
+            })
+
         }
     }
 
@@ -86,7 +168,7 @@ class AddPromoCodeFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                showUserCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
+                CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
                     etCountry.setText(selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                 }
@@ -181,7 +263,7 @@ class AddPromoCodeFragment : BaseFragment() {
 
     private fun setCountry() {
         countryList.clear()
-        SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
+        SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
     }
 
     private fun setData() {
@@ -247,7 +329,7 @@ class AddPromoCodeFragment : BaseFragment() {
             }
 
             if (etDiscount.text.toString().trim().isEmpty()) {
-                showToast("Please enter discount percentage")
+                showToast("Please enter discount%")
                 return false
             }
 

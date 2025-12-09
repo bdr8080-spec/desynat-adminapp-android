@@ -15,7 +15,7 @@
     android:background="@drawable/bottomsheet_bg"
     android:backgroundTint="#FFF7EA"
     android:fontFamily="@font/poppins_medium"
-    android:text="Add Shipping Charge"
+    android:text="Add Delivery Charge"
     android:textColor="@color/black"
     android:drawableEnd="@drawable/close_icon"
     android:textSize="@dimen/_13sdp"
@@ -39,7 +39,7 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/etFrom"
             style="@style/edit_text"
             android:layout_weight="1"
@@ -64,6 +64,27 @@
             android:editable="false"
             android:focusable="false"
             android:hint="To"
+            android:paddingVertical="@dimen/_8sdp" />-->
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etFrom"
+            style="@style/edit_text"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_centerVertical="true"
+            android:hint="From"
+            android:inputType="numberDecimal"
+            android:paddingVertical="@dimen/_8sdp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etTo"
+            style="@style/edit_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:hint="To"
+            android:inputType="numberDecimal"
             android:paddingVertical="@dimen/_8sdp" />
 
     </LinearLayout>
@@ -74,7 +95,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Shipping Fee"
+        android:text="Delivery Price"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"/>
 
@@ -88,7 +109,7 @@
         android:padding="@dimen/_8sdp"
         android:hint="Enter amount"
         android:maxLength="10"
-        android:inputType="number"/>
+        android:inputType="numberDecimal"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btnSubmit"

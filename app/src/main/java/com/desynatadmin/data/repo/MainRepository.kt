@@ -48,6 +48,7 @@ import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
@@ -961,12 +962,12 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val shippingChargeLiveData = SingleLiveEvent<GetBrandResponse>()
-    suspend fun getShippingCharge(page:Int
+    val shippingChargeLiveData = SingleLiveEvent<GetShippingChargeResponse>()
+    suspend fun getShippingCharge(countryId:String,page:Int
     ) {
         handleApiCall(
             api = {
-                api.getShippingCharge(page)
+                api.getShippingCharge(countryId,page)
             },
             responseLiveData = shippingChargeLiveData
         )

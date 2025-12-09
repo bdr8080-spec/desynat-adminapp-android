@@ -36,7 +36,7 @@
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select"
+                android:hint="Select country"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -159,7 +159,8 @@
                 style="@style/edit_text"
                 android:hint="Enter discount"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
+                android:maxLength="5"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -174,7 +175,7 @@
                 style="@style/edit_text"
                 android:hint="Enter minimum order value"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -189,7 +190,8 @@
                 style="@style/edit_text"
                 android:hint="Enter Up to Discount"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
+                android:maxLength="7"
                 android:background="@drawable/edit_back" />
 
             <androidx.constraintlayout.widget.ConstraintLayout

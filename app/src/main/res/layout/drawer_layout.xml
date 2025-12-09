@@ -331,7 +331,7 @@
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_toStartOf="@+id/ivGoShipping"
                 android:layout_toEndOf="@id/ivShipping"
-                android:text="Shipping charges &amp; Tax Management" />
+                android:text="Delivery Charge &amp; Tax Management" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGoShipping"

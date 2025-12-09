@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Shipping Fee"
+            android:text="Delivery Charges"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
             android:layout_centerVertical="true"/>

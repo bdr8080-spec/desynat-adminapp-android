@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/button_stroke"
+            android:background="@drawable/tab"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -40,8 +40,6 @@
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
                 android:text="Top"
-                android:layout_marginVertical="1dp"
-                android:layout_marginStart="1dp"
                 android:background="@drawable/selected_left_border"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp" />
@@ -49,7 +47,7 @@
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/brown"/>
+                android:background="@drawable/line_gradient"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvBottom"
@@ -60,14 +58,13 @@
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
                 android:text="Bottom"
-                android:layout_marginVertical="1dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/brown"/>
+                android:background="@drawable/line_gradient"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSubCategory"
@@ -78,8 +75,6 @@
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
                 android:text="Sub-category"
-                android:layout_marginVertical="1dp"
-                android:layout_marginEnd="1dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp" />
 

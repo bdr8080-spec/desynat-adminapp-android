@@ -65,11 +65,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:text="Flat 20% off On minimum order 299 KD"
             android:textColor="#B2000000"
             android:textSize="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +94,7 @@
             android:fontFamily="@font/poppins_medium"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Terms &amp; conditions"
+            android:text="Promocode Description"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"/>
 
@@ -118,6 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:padding="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:background="@drawable/card_stroke_background">
 
             <androidx.appcompat.widget.AppCompatTextView

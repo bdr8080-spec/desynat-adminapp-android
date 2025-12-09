@@ -178,7 +178,12 @@ class BannerPerDayPriceFragment : BaseFragment() {
         viewModel.updateBannerPerDayResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                when (type){
+                    1-> showToast("Top Banner Price Update successfully")
+                    2-> showToast("Bottom Banner Price Update successfully")
+                    3-> showToast("Sub-Category Banner Price Update successfully")
+                }
+
                 bannerPerDayPriceList[selectedPos] = response.data
 
                 bannerPerDayPriceAdapter?.notifyItemChanged(selectedPos)

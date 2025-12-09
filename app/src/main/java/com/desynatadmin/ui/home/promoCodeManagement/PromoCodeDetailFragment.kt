@@ -14,8 +14,10 @@ import com.desynatadmin.databinding.FragmentPromoCodeDetailBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,7 @@ class PromoCodeDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     var promoCodeData: GetPromoCodeResponse.Data.Data?=null
+    private var countryList = ArrayList<GetCountryResponse.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +46,9 @@ class PromoCodeDetailFragment : BaseFragment() {
     }
 
     override fun initView() {
-
+        ProgressDialogUtils.getInstance().hideProgress()
+        countryList.clear()
+        SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         findNavController().currentBackStackEntry
             ?.savedStateHandle
             ?.getLiveData<String>("updatedPromoCode")
@@ -129,9 +134,10 @@ class PromoCodeDetailFragment : BaseFragment() {
         binding?.apply {
             tvFeature.text = "Flat ${promoCodeData?.discountPercent}% off on minimum order ${promoCodeData?.minOrderValue} KD"
             tvPromoCodeName.text = promoCodeData?.nameEnglish
-            tvDescription.text = promoCodeData?.descriptionEnglish
-          //  tvTerms.text = promoCodeData?.nameEnglish
-            tvCountry.text = promoCodeData?.countryInfo?.name
+         //   tvDescription.text = promoCodeData?.descriptionEnglish
+            tvTerms.text = promoCodeData?.descriptionEnglish
+            tvCountry.text =  countryList.firstOrNull { it.id.toString() == promoCodeData?.countryId.toString() }?.name
+          //  tvCountry.text = promoCodeData?.countryInfo?.name
             tvApplicable.text = if(promoCodeData?.applicableFor==1) "First Order" else "Every Order"
             tvStartDate.text = CommonMethod.formatDate(promoCodeData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             tvEndDate.text = CommonMethod.formatDate(promoCodeData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")

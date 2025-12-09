@@ -46,6 +46,7 @@ import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
@@ -767,12 +768,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getShippingChargeResult: LiveData<GetBrandResponse>
+    val getShippingChargeResult: LiveData<GetShippingChargeResponse>
         get() = repository.shippingChargeLiveData
 
-    fun getShippingCharge(page:Int) {
+    fun getShippingCharge(countryId:String,page:Int) {
         viewModelScope.launch {
-            repository.getShippingCharge(page)
+            repository.getShippingCharge(countryId,page)
         }
     }
 

@@ -103,7 +103,7 @@ object Constants {
     const val UPDATE_SHIPPING_CHARGE = "/api/admin/update_shipping_charge"
     const val DELETE_SHIPPING_CHARGE = "/api/admin/delete_shipping_fee"
     const val UPDATE_SHIPPING_CHARGE_STATUS = "/api/admin/blobk_unblock_shippingFee"
-    const val SHIPPING_CHARGE = "/api/admin/shipping_charge"
+    const val SHIPPING_CHARGE = "/api/admin/shipping_charges_by_countryId"
 
     const val ADD_TAX = "/api/admin/add_tax"
     const val SHIPPING_TAX = "/api/admin/countries_with_tax_shipping"

@@ -37,6 +37,7 @@ class ShippingChargesFragment : BaseFragment() {
     private var binding: FragmentShippingChargesBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isAddObserver = true
     private var shippingList = ArrayList<GetShippingTaxResponse.Data.ShippingInfo>()
     private var shippingChargeAdapter : ShippingChargeAdapter?=null
     private var shippingTaxData : GetShippingTaxResponse.Data?=null
@@ -49,6 +50,7 @@ class ShippingChargesFragment : BaseFragment() {
     private var pagination=false
     private val itemsPerPage = 10
     var selectedPos = -1
+    var add = false
     val rangeList = (1..100).map { it.toString() }
 
     override fun onCreateView(
@@ -74,11 +76,11 @@ class ShippingChargesFragment : BaseFragment() {
                 shippingTaxData = Gson().fromJson(itemJson, GetShippingTaxResponse.Data::class.java)
                 setTaxData()
             }
-            toolbar.tvToolbar.text = "Shipping Charges & Other Taxs"
+            toolbar.tvToolbar.text = "Delivery Charges & Other Taxs"
 
 
             shippingList.clear()
-            shippingTaxData?.shippingInfo?.let { shippingList.addAll(it) }
+            //shippingTaxData?.shippingInfo?.let { shippingList.addAll(it) }
             shippingChargeAdapter = ShippingChargeAdapter(requireActivity(),shippingList,object : ShippingChargeAdapter.ClickOnItem{
                 override fun onClickItem(position: Int,type:Int) {
                     selectedPos = position
@@ -99,6 +101,8 @@ class ShippingChargesFragment : BaseFragment() {
 
             rvShippingFee.adapter = shippingChargeAdapter
         }
+
+        getShippingCharge()
     }
 
     private fun setTaxData() {
@@ -154,12 +158,13 @@ class ShippingChargesFragment : BaseFragment() {
         viewModel.deleteShippingChargeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                showToast("Delivery Charge delete Successfully ")
                 shippingList.removeAt(selectedPos)
                 shippingChargeAdapter?.notifyItemRemoved(selectedPos)
                 shippingChargeAdapter?.notifyItemRangeChanged(selectedPos,shippingList.size)
                 selectedPos = -1
                 checkData()
+                isObserver = false
             }
         }
 
@@ -171,25 +176,34 @@ class ShippingChargesFragment : BaseFragment() {
                 shippingChargeAdapter?.notifyItemChanged(selectedPos)
                 selectedPos = -1
                 checkData()
+                isObserver = false
             }
         }
 
         viewModel.updateShippingChargeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                showToast("Delivery Charge Updated Successfully ")
                 shippingList[selectedPos] = response.data
                 shippingChargeAdapter?.notifyItemChanged(selectedPos)
                 selectedPos = -1
+                isObserver = false
             }
         }
 
         viewModel.addShippingChargeResult.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
-                ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
-                shippingList.add(0, response.data)
-                shippingChargeAdapter?.notifyItemInserted(0)
+            if (isAddObserver) {
+                if (response.status=="error"){
+                    ProgressDialogUtils.getInstance().hideProgress()
+                    showToast(response.message)
+                }
+                else {
+                    add = true
+                    getShippingCharge()
+//                shippingList.add(0, response.data)
+//                shippingChargeAdapter?.notifyItemInserted(0)
+                }
+                isAddObserver = false
             }
         }
 
@@ -205,11 +219,15 @@ class ShippingChargesFragment : BaseFragment() {
         viewModel.getShippingChargeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                if (add) {
+                    showToast("Delivery Charge Added Successfully ")
+                    add = false
+                }
                 binding?.progressBar?.isVisible = false
-                currentPage = response.data.currentPage
-                totalItem = response.data.total
+//                currentPage = response.data.currentPage
+//                totalItem = response.data.total
 
-                lastPage = response.data.lastPage
+               // lastPage = response.data.lastPage
 
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
@@ -236,12 +254,12 @@ class ShippingChargesFragment : BaseFragment() {
                     shippingList.clear()
                 }
                 updatePage()
-                val newItems = response.data.data ?: emptyList()
+               // val newItems = response.data.data ?: emptyList()
 
-               // shippingList.addAll(newItems)
+                response.data?.let { shippingList.addAll(it) }
                 checkData()
-
-                if (pagination){
+                shippingChargeAdapter?.notifyDataSetChanged()
+                /*if (pagination){
 
                     response.data.data?.size?.let {
                         shippingChargeAdapter?.notifyItemRangeInserted(oldSize,
@@ -251,7 +269,7 @@ class ShippingChargesFragment : BaseFragment() {
                 }
                 else{
                     shippingChargeAdapter?.notifyDataSetChanged()
-                }
+                }*/
 
                 pagination = false
                 isObserver = false
@@ -276,7 +294,7 @@ class ShippingChargesFragment : BaseFragment() {
         map["shipping_fee"] = fee
             viewModel.addShippingCharge(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        isObserver = true
+        isAddObserver = true
     }
 
 
@@ -311,11 +329,11 @@ class ShippingChargesFragment : BaseFragment() {
 
 
     private fun getShippingCharge(loading:Boolean=true){
-      /*  viewModel.getShippingCharge( page = currentPage)
+        viewModel.getShippingCharge( shippingTaxData?.taxInfo?.countryId.toString(),page = currentPage)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
-        isObserver = true*/
+        isObserver = true
     }
 
     private fun checkData(){
@@ -353,24 +371,38 @@ class ShippingChargesFragment : BaseFragment() {
 
         dialogBinding.apply {
 
-           /* etAmount.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            etAmount.setText(CommonMethod.formatPrice(shippingTaxData?.taxInfo?.tax?.toDouble()?:0.0))
+            var isEditing = false
+            var previousValue = ""
+
+            etAmount.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    previousValue = s.toString()
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
-                override fun afterTextChanged(editable: Editable?) {
-                    val text = editable.toString()
+                override fun afterTextChanged(s: Editable?) {
+                    if (isEditing) return
+                    isEditing = true
 
-                    if (text.length > 1 && text.startsWith("0") && !text.startsWith("0.")) {
-                        val newValue = text.trimStart('0')
+                    val value = s.toString()
 
-                        etAmount.removeTextChangedListener(this)
-                        etAmount.setText(newValue)
-                        etAmount.setSelection(newValue.length)
-                        etAmount.addTextChangedListener(this)
+                    if (value.isNotEmpty()) {
+                        val num = value.toFloatOrNull() ?: 0f
+
+                        if (num > 100) {
+                            etAmount.setText(previousValue)
+
+                            // IMPORTANT: Prevent IndexOutOfBounds
+                            etAmount.setSelection(previousValue.length.coerceAtMost(etAmount.text?.length ?: 0))
+                        }
                     }
+
+                    isEditing = false
                 }
-            })*/
+            })
+
 
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
@@ -410,29 +442,33 @@ class ShippingChargesFragment : BaseFragment() {
 
         dialogBinding.apply {
             if (isEdit){
-                etFrom.text = CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeFrom?.toDouble())
-                etTo.text = CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeTo?.toDouble())
+//                etFrom.text = CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeFrom?.toDouble())
+//                etTo.text = CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeTo?.toDouble())
+                etFrom.setText(CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeFrom?.toDouble()))
+                etTo.setText(CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeTo?.toDouble()))
                 etAmount.setText(CommonMethod.formatDoubleValue(shippingList[selectedPos]?.shippingFee?.toDouble()))
                 tvToolbar.text = "Edit"
                 btnSubmit.text = "Save Changes"
             }
 
             etAmount.addTextChangedListener(object : TextWatcher {
+                private var isEditing = false
+
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
-                override fun afterTextChanged(editable: Editable?) {
-                    val text = editable.toString()
+                override fun afterTextChanged(s: Editable?) {
+                    if (isEditing) return
+                    isEditing = true
 
-                    if (text.length > 1 && text.startsWith("0") && !text.startsWith("0.")) {
-                        val newValue = text.trimStart('0')
-
-                        etAmount.removeTextChangedListener(this)
-                        etAmount.setText(newValue)
-                        etAmount.setSelection(newValue.length)
-                        etAmount.addTextChangedListener(this)
+                    s?.let {
+                        if (it.startsWith("0")) {
+                            it.replace(0, 1, "")
+                        }
                     }
+
+                    isEditing = false
                 }
             })
 
@@ -449,7 +485,13 @@ class ShippingChargesFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener {
-                if(isInvalid(etAmount, "Amount")) {
+                if(etFrom.text?.isEmpty() == true){
+                    showToast("Please Enter Range ")
+                }
+                else if(etTo.text?.isEmpty() == true){
+                    showToast("Please Enter Range ")
+                }
+               else if(isInvalid(etAmount, "Delivery Price")) {
                     return@setOnClickListener
                 }
                 else{
@@ -474,7 +516,7 @@ class ShippingChargesFragment : BaseFragment() {
             showToast("Please enter $fieldName")
             return true
         }
-        val num = value.toIntOrNull() ?: 0
+        val num = value.toDoubleOrNull() ?: 0.0
         if (num <= 0) {
             showToast("$fieldName should be greater than 0")
             return true

@@ -43,6 +43,7 @@ import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
@@ -494,9 +495,10 @@ interface ApiServices {
 
     @GET(Constants.SHIPPING_CHARGE)
     suspend fun getShippingCharge(
+        @Query("country_id") countryId: String,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
-    ): Response<GetBrandResponse>
+    ): Response<GetShippingChargeResponse>
 
   @GET(Constants.SHIPPING_TAX)
     suspend fun getShippingTax(

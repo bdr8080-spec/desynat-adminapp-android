@@ -82,7 +82,8 @@ class PromoCodeManagementFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
-
+        countryList.clear()
+        SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Promocode Management"
@@ -126,7 +127,7 @@ class PromoCodeManagementFragment : BaseFragment() {
         }
 
         getPromoCode()
-        getUserCountryApi()
+      //  getUserCountryApi()
     }
 
     override fun initControl() {
@@ -259,7 +260,7 @@ class PromoCodeManagementFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                showUserCountryPicker(
+                CommonMethod.showCountryPicker(
                     requireContext(),
                     it,
                     countryList
