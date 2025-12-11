@@ -288,7 +288,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver||isImageObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                errorMessage?.let { showToast(it) }
+
                 isObserver = false
                 isImageObserver = false
             }

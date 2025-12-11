@@ -68,7 +68,7 @@ class GiftCardManagementFragment : BaseFragment() {
         binding?.apply {
             ProgressDialogUtils.getInstance().hideProgress()
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Gift Cards"
+            toolbar.tvToolbar.text = "Gift Card Category"
             giftCardList.clear()
             giftCardAdapter = GiftCardAdapter(requireActivity(),giftCardList,object :GiftCardAdapter.GiftCardClick{
                 override fun onGiftCardClick(position: Int) {
@@ -157,7 +157,7 @@ class GiftCardManagementFragment : BaseFragment() {
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
-                errorMessage?.let { showToast(it) }
+
                 pagination = false
                 isFromSwipe = false
                 isObserver = false

@@ -98,7 +98,7 @@ class PlanDetailFragment : BaseFragment() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                errorMessage?.let { showToast(it) }
+
                 isObserver = false
             }
         }

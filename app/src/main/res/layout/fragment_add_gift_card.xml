@@ -43,7 +43,7 @@
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Card Type Name"/>
+                    android:text="Gift Card Category Name"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
@@ -60,7 +60,7 @@
                 android:id="@+id/etEnglishCardName"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter Card Type Name"
+                android:hint="Enter Gift Card Category Name"
                 android:inputType="text"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back" />
@@ -73,7 +73,7 @@
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Card Type Name"/>
+                    android:text="Gift Card Category Name"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
@@ -90,7 +90,7 @@
                 android:id="@+id/etArabicCardName"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter Card Type Name"
+                android:hint="Enter Gift Card Category Name"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="text"
                 android:background="@drawable/edit_back" />

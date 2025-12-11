@@ -183,7 +183,7 @@ class UserManagementFragment : BaseFragment() {
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
-                errorMessage?.let { showToast(it) }
+
                 pagination = false
                 isFromSwipe = false
                 isObserver = false

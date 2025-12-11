@@ -31,7 +31,7 @@
                 android:id="@+id/rvCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_category"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>

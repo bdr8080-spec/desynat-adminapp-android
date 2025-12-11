@@ -34,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ShippingChargesFragment : BaseFragment() {
+    private var addShippingDialog: Dialog?=null
     private var binding: FragmentShippingChargesBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
@@ -149,7 +150,7 @@ class ShippingChargesFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
-                errorMessage?.let { showToast(it) }
+
                 pagination = false
                 isObserver = false
             }
@@ -182,6 +183,7 @@ class ShippingChargesFragment : BaseFragment() {
 
         viewModel.updateShippingChargeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
+                addShippingDialog?.dismiss()
                 ProgressDialogUtils.getInstance().hideProgress()
                 showToast("Delivery Charge Updated Successfully ")
                 shippingList[selectedPos] = response.data
@@ -220,6 +222,7 @@ class ShippingChargesFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 if (add) {
+                    addShippingDialog?.dismiss()
                     showToast("Delivery Charge Added Successfully ")
                     add = false
                 }
@@ -424,17 +427,17 @@ class ShippingChargesFragment : BaseFragment() {
     }
 
     private fun addShippingChargeDialog(isEdit: Boolean =false) {
-        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        addShippingDialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddShippingChargeDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog.setContentView(it) }
+        dialogBinding.root.let { addShippingDialog?.setContentView(it) }
 
-        val window: Window = dialog.window!!
+        val window: Window = addShippingDialog?.window!!
         window.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         window.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setCancelable(false)
+        addShippingDialog?.setCancelable(false)
 
         val params: WindowManager.LayoutParams = window.attributes
         params.gravity = Gravity.BOTTOM
@@ -481,7 +484,7 @@ class ShippingChargesFragment : BaseFragment() {
             }
 
             tvToolbar.setOnClickListener {
-                dialog.dismiss()
+                addShippingDialog?.dismiss()
             }
 
             btnSubmit.setOnClickListener {
@@ -501,13 +504,12 @@ class ShippingChargesFragment : BaseFragment() {
                     else{
                         addShippingCharge(etAmount.text.toString(),etFrom.text.toString(),etTo.text.toString())
                     }
-                    dialog.dismiss()
                 }
             }
 
         }
 
-        dialog.show()
+        addShippingDialog?.show()
     }
 
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {

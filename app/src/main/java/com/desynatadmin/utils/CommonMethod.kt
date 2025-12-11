@@ -257,7 +257,9 @@ object CommonMethod {
                 401 -> {
                     clearAllData(context)
                 }
-
+               else -> {
+                    context.showToast(errorMessage)
+                }
 
 
             }

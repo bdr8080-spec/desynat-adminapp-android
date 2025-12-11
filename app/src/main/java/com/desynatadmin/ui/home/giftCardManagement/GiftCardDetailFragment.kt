@@ -79,7 +79,7 @@ class GiftCardDetailFragment : BaseFragment() {
             btnDelete.setOnClickListener {
                 CommonMethod.deleteAlertDialog(
                     requireActivity(),
-                    "Are you sure you want to delete the gift card?"
+                    "Are you sure you want to delete the gift card category?"
                 ) { action ->
                     when (action) {
                         CommonMethod.DialogAction.DELETE -> {
@@ -112,7 +112,7 @@ class GiftCardDetailFragment : BaseFragment() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                errorMessage?.let { showToast(it) }
+
                 isObserver = false
             }
         }
@@ -123,10 +123,10 @@ class GiftCardDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 giftData = response.data
                 if (response.data.status==1){
-                    showToast("Gift Card Activated Successfully")
+                    showToast("Gift Card Category Activated Successfully")
                 }
                 else{
-                    showToast("Gift Card Deactivated Successfully")
+                    showToast("Gift Card Category Deactivated Successfully")
 
                 }
                 updateStatus()
@@ -138,7 +138,7 @@ class GiftCardDetailFragment : BaseFragment() {
         viewModel.deleteGiftCardResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Gift Card deleted successfully"){
+                CommonMethod.showSuccessDialog(requireContext(), "Gift card Category Deleted Successfully"){
                     findNavController().popBackStack()
                 }
                 isObserver = false

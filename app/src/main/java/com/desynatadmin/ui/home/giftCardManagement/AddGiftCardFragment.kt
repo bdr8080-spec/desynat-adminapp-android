@@ -72,19 +72,17 @@ class AddGiftCardFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("giftData")
         binding?.apply {
-            toolbar.tvToolbar.text = "Add New Card"
             binding?.apply {
-
                 CommonMethod.applyArabicOnlyFilter(etArabicCardName)
                 CommonMethod.removeSpace(etEnglishCardName)
                 if (!itemJson.isNullOrEmpty()) {
                     giftData = Gson().fromJson(itemJson, GetAllGiftCardResponse.Data.Data::class.java)
-                    toolbar.tvToolbar.text = "Edit Card"
+                    toolbar.tvToolbar.text = "Edit Gift Card Category"
                     btnSubmit.text = "Update"
                     setData()
 
                 } else {
-                    toolbar.tvToolbar.text = "Add New Card"
+                    toolbar.tvToolbar.text = "Add New Gift Card Category"
 
                 }
 
@@ -129,15 +127,15 @@ class AddGiftCardFragment : BaseFragment() {
 
         private fun validation(): Boolean {
             if (image==null&&giftData==null){
-                showToast("Please upload gift card image")
+                showToast("Please upload image")
                 return false
             }
             else if (binding?.etEnglishCardName?.text?.toString()?.isBlank() == true ) {
-                showToast("Please enter gift card type name in english")
+                showToast("Please enter gift card category name in english")
                 return false
             }
             else if (binding?.etArabicCardName?.text?.toString()?.isBlank() == true ) {
-                showToast("Please enter gift card type name in arabic")
+                showToast("Please enter gift card category name in arabic")
                 return false
             }
             return true
@@ -147,7 +145,7 @@ class AddGiftCardFragment : BaseFragment() {
             viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
-                    errorMessage?.let { showToast(it) }
+
                     isObserver = false
                 }
             }
@@ -166,7 +164,7 @@ class AddGiftCardFragment : BaseFragment() {
             viewModel.addGiftCardResult.observe(viewLifecycleOwner) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
-                    CommonMethod.showSuccessDialog(requireContext(), "Gift card added successfully!"){
+                    CommonMethod.showSuccessDialog(requireContext(), "Gift card category added successfully!"){
                         findNavController().popBackStack()
                     }
                     isObserver = false
@@ -180,7 +178,7 @@ class AddGiftCardFragment : BaseFragment() {
                         ?.savedStateHandle
                         ?.set("updatedGiftCard", Gson().toJson(response.data))
 
-                    CommonMethod.showSuccessDialog(requireContext(), "Gift card updated successfully!"){
+                    CommonMethod.showSuccessDialog(requireContext(), "Gift card category updated successfully!"){
                         findNavController().popBackStack()
                     }
                     isObserver = false

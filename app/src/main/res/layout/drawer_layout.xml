@@ -303,7 +303,7 @@
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_toLeftOf="@+id/ivGoGiftCard"
                 android:layout_toEndOf="@id/ivGiftCard"
-                android:text="Gift Card Management"
+                android:text="Gift Card Category Management"
                 tools:ignore="RtlHardcoded" />
 
             <androidx.appcompat.widget.AppCompatImageView

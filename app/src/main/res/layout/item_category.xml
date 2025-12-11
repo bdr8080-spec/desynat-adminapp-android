@@ -1,91 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:paddingHorizontal="@dimen/_15sdp"
+android:layout_marginBottom="@dimen/_15sdp"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:visibility="visible"
+    android:id="@+id/clRight"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/_15sdp"
-    android:layout_marginBottom="@dimen/_15sdp">
+    >
+
+    <RelativeLayout
+        android:id="@+id/relDetail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/card_stroke_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_stroke_background"
+            android:layout_margin="0.5dp"
+            android:layout_above="@+id/tvSwitch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <RelativeLayout
+                android:id="@+id/relCategory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#F6E5E3"
+                android:layout_margin="0.5dp"
+                android:background="@drawable/card_background"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCategoryName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Women"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_110sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="From casual wear to formal looks, explore the latest in men’s fashion, accessories, and more."
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:layout_below="@+id/tvCategoryName"
+                android:layout_marginEnd="@dimen/_110sdp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:text="Active"
+            android:textColor="#1A900D"
+            android:fontFamily="@font/poppins_regular"
+            android:drawablePadding="@dimen/_5sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:drawableEnd="@drawable/switch_on"
+           android:layout_alignParentBottom="true"/>
+
+
+    </RelativeLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivCategory"
         android:layout_width="@dimen/_90sdp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
         android:src="@drawable/ic_placeholder"
-        android:background="#F5F5F5"
-        android:elevation="@dimen/_2sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="@dimen/_40sdp"
         app:layout_constraintBottom_toBottomOf="@+id/relDetail"/>
 
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:visibility="gone"
+    android:id="@+id/clLeft"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
     <RelativeLayout
-        android:id="@+id/relDetail"
+        android:id="@+id/relDetail1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:elevation="@dimen/_1sdp"
         android:background="@drawable/card_stroke_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <RelativeLayout
-        android:id="@+id/relCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/card_stroke_background"
-        android:backgroundTint="#F6E5E3"
-        android:layout_margin="0.5dp"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:paddingVertical="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_stroke_background"
+            android:layout_margin="0.5dp"
+            android:layout_above="@+id/tvSwitch1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCategoryName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semi_bold"
-        android:text="Women"
-        android:layout_marginVertical="@dimen/_5sdp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_110sdp"/>
+            <RelativeLayout
+                android:id="@+id/relCategory1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#F6E5E3"
+                android:layout_margin="0.5dp"
+                android:background="@drawable/card_stroke_background"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
-        android:text="From casual wear to formal looks, explore the latest in men’s fashion, accessories, and more."
-        android:textColor="@color/black"
-        android:textSize="@dimen/_11sdp"
-        android:layout_below="@+id/tvCategoryName"
-        android:layout_marginEnd="@dimen/_110sdp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCategoryName1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Women"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_110sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDescription1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="From casual wear to formal looks, explore the latest in men’s fashion, accessories, and more."
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:layout_below="@+id/tvCategoryName1"
+                android:layout_marginStart="@dimen/_110sdp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSwitch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:text="Active"
+            android:textColor="#1A900D"
+            android:fontFamily="@font/poppins_regular"
+            android:drawablePadding="@dimen/_5sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:drawableEnd="@drawable/switch_on"
+            android:layout_alignParentBottom="true"/>
+
 
     </RelativeLayout>
 
-    </RelativeLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSwitch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/_15sdp"
-        android:text="Active"
-        android:textColor="#1A900D"
-        android:fontFamily="@font/poppins_regular"
-        android:drawablePadding="@dimen/_5sdp"
-        android:paddingTop="@dimen/_30sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:drawableEnd="@drawable/switch_on"
-        android:layout_marginTop="-25dp"
-        android:background="@drawable/card_stroke_background"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivCategory1"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_placeholder"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_40sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relDetail"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/relDetail1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivCategory"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder"
+            android:background="#F5F5F5"
+            android:elevation="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/relDetail"/>
+
+        <RelativeLayout
+            android:id="@+id/relDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:elevation="@dimen/_1sdp"
+            android:background="@drawable/card_stroke_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/relCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_stroke_background"
+            android:backgroundTint="#F6E5E3"
+            android:layout_margin="0.5dp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCategoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="Women"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_110sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="From casual wear to formal looks, explore the latest in men’s fashion, accessories, and more."
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11sdp"
+            android:layout_below="@+id/tvCategoryName"
+            android:layout_marginEnd="@dimen/_110sdp"/>
+
+        </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSwitch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:text="Active"
+            android:textColor="#1A900D"
+            android:fontFamily="@font/poppins_regular"
+            android:drawablePadding="@dimen/_5sdp"
+            android:paddingTop="@dimen/_30sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:drawableEnd="@drawable/switch_on"
+            android:layout_marginTop="-25dp"
+            android:background="@drawable/card_stroke_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relDetail"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    -->
+

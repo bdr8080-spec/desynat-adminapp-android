@@ -116,7 +116,7 @@ class CategoryFragment : BaseFragment() {
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
-                errorMessage?.let { showToast(it) }
+
                 isFromSwipe = false
                 isObserver = false
             }

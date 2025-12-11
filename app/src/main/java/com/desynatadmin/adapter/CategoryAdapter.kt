@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.desynatadmin.R
@@ -33,6 +34,35 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
         var categoryData = categoryList[position]
 
         holder.binding.apply {
+
+            val params = holder.itemView.layoutParams
+            params.height = itemHeight
+            holder.itemView.layoutParams = params
+
+
+            if (position % 2 == 0) {
+                clRight.isVisible = true
+                clLeft.isVisible = false
+            } else {
+                clRight.isVisible = false
+                clLeft.isVisible = true
+            }
+
+            tvCategoryName.text = categoryData.name
+            tvDescription.text = categoryData.description
+            ivCategory.load(categoryData.image)
+
+            relCategory.backgroundTintList = ColorStateList.valueOf(Color.parseColor(categoryData.colorCode))
+
+            tvCategoryName1.text = categoryData.name
+            tvDescription1.text = categoryData.description
+            ivCategory1.load(categoryData.image)
+
+            relCategory1.backgroundTintList = ColorStateList.valueOf(Color.parseColor(categoryData.colorCode))
+
+
+/*
+
             tvCategoryName.text = categoryData.name
             tvDescription.text = categoryData.description
             ivCategory.load(categoryData.image) {
@@ -41,7 +71,7 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
                 error(R.drawable.ic_placeholder)
             }
 
-            relCategory.backgroundTintList = ColorStateList.valueOf(Color.parseColor(categoryData.colorCode))
+            relCategory.backgroundTintList = ColorStateList.valueOf(Color.parseColor(categoryData.colorCode))*/
 
             if(categoryData.status==1){
                 tvSwitch.text = "Active"
@@ -55,9 +85,23 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
 
             }
 
+            if(categoryData.status==1){
+                tvSwitch1.text = "Active"
+                tvSwitch1.setTextColor(Color.parseColor("#1A900D"))
+                tvSwitch1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
+            }
+            else{
+                tvSwitch1.text = "Inactive"
+                tvSwitch1.setTextColor(Color.parseColor("#666666"))
+                tvSwitch1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
+            }
+
             tvSwitch.setOnClickListener {
                 categoryClick.onCategoryClick(position,1)
+            }
 
+            tvSwitch1.setOnClickListener {
+                categoryClick.onCategoryClick(position,1)
             }
 
         }
@@ -67,5 +111,12 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
 
         }
     }
+
+
+    private val itemHeight: Int by lazy {
+        val displayMetrics = context.resources.displayMetrics
+        displayMetrics.heightPixels / 4
+    }
+
 
 }
