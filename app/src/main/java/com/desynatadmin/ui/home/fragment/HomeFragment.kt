@@ -44,6 +44,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
+        ProgressDialogUtils.getInstance().hideProgress()
         getCountryApi()
         user = SharedPreference.get(requireActivity()).getUser()
        binding?.apply {
@@ -73,10 +74,10 @@ class HomeFragment : BaseFragment() {
 
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            if (isObserver) {
+            if (isObserver||isCountryObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-
                 isObserver = false
+                isCountryObserver = false
             }
         }
 

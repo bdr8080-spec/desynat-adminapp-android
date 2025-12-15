@@ -539,4 +539,35 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
 
+    @GET(Constants.BANNER_REQUEST)
+    suspend fun getBannerRequest(
+        @Query("type") type: Int,
+        @Query("search") search : String?=null,
+        @Query("from_date") fromDate : String?=null,
+        @Query("to_date") toDate : String?=null,
+        @Query("country_id") countryId : String?=null,
+          @Query("page") page: Int,
+          @Query("limit") limit: Int? = 10,
+    ): Response<CommonResponse>
+
+    @GET(Constants.GET_AFFILIATE_COMMISSION)
+    suspend fun getAffiliatedCommission(): Response<CommonResponse>
+
+@POST(Constants.UPDATE_AFFILIATE_COMMISSION)
+    suspend fun updateAffiliateCommission(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @GET(Constants.ORDER_LIST)
+    suspend fun getOrderList(
+        @Query("type") type: Int,
+        @Query("search") search : String?=null,
+        @Query("from_date") fromDate : String?=null,
+        @Query("to_date") toDate : String?=null,
+        @Query("country_id") countryId : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<CommonResponse>
+
+
 }

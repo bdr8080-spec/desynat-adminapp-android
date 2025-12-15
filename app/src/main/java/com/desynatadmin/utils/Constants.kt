@@ -111,5 +111,9 @@ object Constants {
     const val BANNER_PER_DAY_PRICE = "/api/admin/get_banners"
     const val UPDATE_BANNER_PER_DAY_PRICE = "/api/admin/add_update_banner"
 
+    const val BANNER_REQUEST = "/api/admin/get_banners"
+    const val GET_AFFILIATE_COMMISSION = "/api/admin/add_tax"
+    const val UPDATE_AFFILIATE_COMMISSION = "/api/admin/add_tax"
+    const val ORDER_LIST = "/api/admin/order"
 
 }

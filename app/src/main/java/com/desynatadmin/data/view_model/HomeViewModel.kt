@@ -794,6 +794,7 @@ class HomeViewModel @Inject constructor(
             repository.getBannerPerDay(type)
         }
     }
+
     val updateBannerPerDayResult: LiveData<UpdateBannerPriceResponse>
         get() = repository.updateBannerPerDayPriceLiveData
 
@@ -848,5 +849,40 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val bannerRequestResult: LiveData<CommonResponse>
+        get() = repository.bannerRequestLiveData
+
+    fun getBannerRequest(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page: Int) {
+        viewModelScope.launch {
+            repository.getBannerRequest(type,search,fromDate, toDate, countryId, page)
+        }
+    }
+
+    val getAffiliatedCommissionResult: LiveData<CommonResponse>
+        get() = repository.getAffiliatedCommissionLiveData
+
+    fun getAffiliatedCommission() {
+        viewModelScope.launch {
+            repository.getAffiliatedCommission()
+        }
+    }
+
+    val updateAffiliateCommissionResult: LiveData<CommonResponse>
+        get() = repository.updateAffiliateCommissionLiveData
+
+    fun updateAffiliateCommission(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateAffiliateCommission(map)
+        }
+    }
+
+    val getOrderListResult: LiveData<CommonResponse>
+        get() = repository.orderListLiveData
+
+    fun getOrderList(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page: Int) {
+        viewModelScope.launch {
+            repository.getOrderList(type,search,fromDate, toDate, countryId, page)
+        }
+    }
 
 }

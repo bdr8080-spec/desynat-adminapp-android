@@ -1064,6 +1064,50 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
+    val bannerRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getBannerRequest(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getBannerRequest(type,search,fromDate, toDate, countryId, page)
+            },
+            responseLiveData = bannerRequestLiveData
+        )
+    }
+
+    val getAffiliatedCommissionLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getAffiliatedCommission(
+    ) {
+        handleApiCall(
+            api = {
+                api.getAffiliatedCommission()
+            },
+            responseLiveData = getAffiliatedCommissionLiveData
+        )
+    }
+
+    val updateAffiliateCommissionLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updateAffiliateCommission(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateAffiliateCommission(map)
+            },
+            responseLiveData = updateAffiliateCommissionLiveData
+        )
+    }
+
+    val orderListLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getOrderList(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getOrderList(type,search,fromDate, toDate, countryId, page)
+            },
+            responseLiveData = orderListLiveData
+        )
+    }
+
 
 }
 

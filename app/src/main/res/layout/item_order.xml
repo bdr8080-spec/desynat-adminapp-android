@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:background="@drawable/edit_back"
+    android:paddingVertical="@dimen/_10sdp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRequestBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Seller Name"
+        android:textColor="#80000000"
+        android:textSize="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvOrder"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Order ID"
+        android:textColor="#80000000"
+        android:textSize="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Atif Aslam"
+        android:textColor="@color/black"
+        android:maxLength="25"
+        android:ellipsize="end"
+        android:textSize="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="@id/tvRequestBy"
+        app:layout_constraintEnd_toStartOf="@+id/tvOrderID"
+        app:layout_constraintTop_toBottomOf="@id/tvRequestBy" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrderID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="#28673"
+        android:textColor="@color/black"
+        android:maxLength="25"
+        android:ellipsize="end"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="@id/tvOrder"
+        app:layout_constraintTop_toBottomOf="@id/tvOrder" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="#4D000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Transaction Id "
+        android:textColor="#80000000"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTransactionId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="#5372821"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTransaction"
+        app:layout_constraintTop_toTopOf="@id/tvTransaction" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrderOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Order on"
+        android:textColor="#80000000"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="@id/tvTransaction"
+        app:layout_constraintTop_toBottomOf="@id/tvTransaction" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrderOnValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="21/08/2024 at 07:30 PM"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
+        app:layout_constraintBottom_toBottomOf="@+id/tvOrderOn"
+        app:layout_constraintTop_toTopOf="@id/tvOrderOn" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Total Amount"
+        android:textColor="#80000000"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="@id/tvTransaction"
+        app:layout_constraintTop_toBottomOf="@id/tvOrderOn" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="299 KD"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAmount"
+        app:layout_constraintTop_toTopOf="@id/tvAmount" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrderType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Order Type"
+        android:textColor="#80000000"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="@id/tvTransaction"
+        app:layout_constraintTop_toBottomOf="@id/tvAmount" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrderTypeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Normal Orders"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
+        app:layout_constraintBottom_toBottomOf="@+id/tvOrderType"
+        app:layout_constraintTop_toTopOf="@id/tvOrderType" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnAssignOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/btn_gradient_back"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="Assign Driver"
+        android:textColor="#FAFAFA"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOrderType" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
