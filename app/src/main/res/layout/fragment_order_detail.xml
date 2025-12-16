@@ -59,10 +59,102 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clOrderInfo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
-            android:background="@drawable/card_stroke_background"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_stroke15_background"
             android:backgroundTint="#F9F9F9"
-            android:layout_marginHorizontal="@dimen/_15sdp">
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:padding="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_order_bag"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvOrderId"
+                app:layout_constraintBottom_toBottomOf="@+id/tvOrderIdValue"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Order ID"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/ivBag"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderIdValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="#4556896"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                android:textAlignment="textEnd"
+                app:layout_constraintStart_toStartOf="@+id/tvOrderId"
+                app:layout_constraintTop_toBottomOf="@id/tvOrderId" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Date &amp; Time"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvOrderId" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDateTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="21/05/25 at 9:15 Pm"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                android:textAlignment="textEnd"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="@+id/tvDate"
+                app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivOrderTypeBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_order_bag"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvOrderType"
+                app:layout_constraintBottom_toBottomOf="@+id/tvOrderTypeValue"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Order Type"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/ivOrderTypeBag"
+                app:layout_constraintTop_toBottomOf="@+id/tvOrderIdValue" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderTypeValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Normal Orders"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                android:textAlignment="textEnd"
+                app:layout_constraintStart_toStartOf="@+id/tvOrderType"
+                app:layout_constraintTop_toBottomOf="@id/tvOrderType" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -210,16 +302,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clProductInfo"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProduct"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
-            android:background="@drawable/card_stroke_background"
+            android:nestedScrollingEnabled="false"
+            android:background="@drawable/card_stroke15_background"
             android:backgroundTint="#14ADADAD"
-            android:layout_marginHorizontal="@dimen/_15sdp">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            tools:listitem="@layout/item_product"
+            tools:itemCount="2"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvInstruction"
@@ -341,7 +435,7 @@
                 android:fontFamily="@font/poppins_semi_bold"
                 android:text="Review"
                 android:layout_marginTop="@dimen/_15sdp"
-                 android:textColor="@color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -627,6 +721,46 @@
             android:padding="@dimen/_8sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_20sdp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clDriver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivDriver"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_placeholder"
+                app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDriverName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Salman Ahmad"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintEnd_toStartOf="@+id/ivEdit"
+                app:layout_constraintStart_toEndOf="@+id/ivDriver"
+                app:layout_constraintTop_toTopOf="@+id/ivDriver" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit_ic"
+                android:paddingStart="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="@+id/ivDriver"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
