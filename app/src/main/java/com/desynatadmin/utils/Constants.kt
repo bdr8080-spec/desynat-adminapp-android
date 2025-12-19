@@ -111,9 +111,11 @@ object Constants {
     const val BANNER_PER_DAY_PRICE = "/api/admin/get_banners"
     const val UPDATE_BANNER_PER_DAY_PRICE = "/api/admin/add_update_banner"
 
-    const val BANNER_REQUEST = "/api/admin/get_banners"
-    const val GET_AFFILIATE_COMMISSION = "/api/admin/add_tax"
-    const val UPDATE_AFFILIATE_COMMISSION = "/api/admin/add_tax"
+    const val BANNER_REQUEST = "/api/admin/get_banner_request"
+    const val APPROVE_BANNER_REQUEST = "/api/admin/approve_banner_request"
+    const val REJECT_BANNER_REQUEST = "/api/admin/reject_banner_request"
+    const val GET_AFFILIATE_COMMISSION = "/api/admin/countries_with_affiliate_commission"
+    const val UPDATE_AFFILIATE_COMMISSION = "/api/admin/update_affiliate_commission"
     const val ORDER_LIST = "/api/admin/order"
 
 }

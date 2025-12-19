@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.desynatadmin.network.ApiServices
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
+import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -1064,7 +1067,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
-    val bannerRequestLiveData = SingleLiveEvent<CommonResponse>()
+    val bannerRequestLiveData = SingleLiveEvent<GetBannerRequestResponse>()
     suspend fun getBannerRequest(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page:Int
     ) {
         handleApiCall(
@@ -1075,7 +1078,29 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val getAffiliatedCommissionLiveData = SingleLiveEvent<CommonResponse>()
+    val approveBannerRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun approveBannerRequest(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.approveBannerRequest(map)
+            },
+            responseLiveData = approveBannerRequestLiveData
+        )
+    }
+
+    val rejectBannerRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun rejectBannerRequest(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.rejectBannerRequest(map)
+            },
+            responseLiveData = rejectBannerRequestLiveData
+        )
+    }
+
+    val getAffiliatedCommissionLiveData = SingleLiveEvent<GetAffiliateCommissionResponse>()
     suspend fun getAffiliatedCommission(
     ) {
         handleApiCall(
@@ -1086,7 +1111,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val updateAffiliateCommissionLiveData = SingleLiveEvent<CommonResponse>()
+    val updateAffiliateCommissionLiveData = SingleLiveEvent<UpdateAffiliateCommissionResponse>()
     suspend fun updateAffiliateCommission(map:HashMap<String,Any>
     ) {
         handleApiCall(

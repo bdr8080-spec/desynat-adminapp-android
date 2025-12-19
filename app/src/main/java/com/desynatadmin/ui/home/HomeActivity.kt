@@ -151,10 +151,16 @@ class HomeActivity : BaseActivity() {
         bottomAdapter = BottomNavAdapter(this,bottonNavItemList, object :BottomNavAdapter.BottomNavItemClick{
             override fun onBottomNavItemClick(position: Int) {
                 when(position) {
-                    0 -> controller.navigate(R.id.home)
+                    0 -> {
+                        ProgressDialogUtils.getInstance().hideProgress()
+                        controller.navigate(R.id.home)
+                    }
                    // 1 -> controller.navigate(R.id.catalog)
                     //2 -> controller.navigate(R.id.catalog)
-                    3 -> controller.navigate(R.id.planList)
+                    3 -> {
+                        ProgressDialogUtils.getInstance().hideProgress()
+                        controller.navigate(R.id.planList)
+                    }
                    // 4 -> controller.navigate(R.id.profile)
                 }
 
@@ -259,6 +265,16 @@ override fun onBackPressed() {
 
             rlBannerPerDayPrice.setOnClickListener {
                 controller.navigate(R.id.bannerPerDayPrice)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlBannerRequest.setOnClickListener {
+                controller.navigate(R.id.bannerRequest)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlAffilateCommissionManagement.setOnClickListener {
+                controller.navigate(R.id.affiliateCommission)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
         }

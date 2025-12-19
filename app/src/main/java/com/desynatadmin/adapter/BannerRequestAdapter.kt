@@ -10,10 +10,12 @@ import coil.load
 import com.desynatadmin.databinding.ItemBannerPriceBinding
 import com.desynatadmin.databinding.ItemBannerRequestBinding
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.CommonMethod
 
-class BannerRequestAdapter(var context:Context, var bannerList: ArrayList<String>, var onClick:OnClick) : RecyclerView.Adapter<BannerRequestAdapter.ViewHolder>() {
+class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: ArrayList<GetBannerRequestResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<BannerRequestAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBannerRequestBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -35,9 +37,28 @@ class BannerRequestAdapter(var context:Context, var bannerList: ArrayList<String
         var bannerRequestData = bannerList[position]
         holder.binding.apply {
 
-            var type = 1
+            tvName.text = bannerRequestData.sellerDetails?.firstName+" "+bannerRequestData.sellerDetails?.lastName
+            tvCountry.text = bannerRequestData.sellerDetails?.countryDetails?.name
+            tvRequestId.text = "#${bannerRequestData.orderId}"
+            tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerRequestData.createdAt, outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvDurationValue.text = bannerRequestData.totalDays
+            tvTotalAmountValue.text = "${CommonMethod.formatAmount(bannerRequestData.price)} KD"
+            when(bannerRequestData?.bannerPosition) {
+                "1" -> {
+                    tvBannerPositionValue.text = "Home Top"
+                }
+
+                "2" -> {
+                    tvBannerPositionValue.text = "Home Bottom"
+                }
+
+                "3" -> {
+                    tvBannerPositionValue.text = "Sub-Category"
+                }
+            }
+
             when(type){
-                1->{
+                0->{
                     tvStatus.isVisible = false
                     tvStatusValue.isVisible = false
                     btnReject.isVisible = true
@@ -50,7 +71,7 @@ class BannerRequestAdapter(var context:Context, var bannerList: ArrayList<String
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
                 }
-                2->{
+                1->{
                     tvStatus.isVisible = true
                     tvStatusValue.isVisible = true
                     btnReject.isVisible = false
@@ -63,10 +84,20 @@ class BannerRequestAdapter(var context:Context, var bannerList: ArrayList<String
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
 
-                    tvStatusValue.text = "Active"
+
                     tvStatusValue.setTextColor(Color.parseColor("#68CA44"))
+                    if (bannerRequestData.paymentStatus=="1"){
+                        tvStatusValue.text = "Active"
+                        tvAmountValue.text = "Paid"
+                        tvAmountValue.setTextColor(Color.parseColor("#68CA44"))
+                    }
+                    else{
+                        tvStatusValue.text = "Upcoming"
+                        tvAmountValue.text = "No"
+                        tvAmountValue.setTextColor(Color.parseColor("#D53B36"))
+                    }
                 }
-                3->{
+                2->{
                     tvStatus.isVisible = true
                     tvStatusValue.isVisible = true
                     btnReject.isVisible = false
@@ -79,9 +110,13 @@ class BannerRequestAdapter(var context:Context, var bannerList: ArrayList<String
 
                     tvAmount.isVisible = true
                     tvAmountValue.isVisible = true
-                    tvDuration.text = "Bank Acc no."
+                 //   tvDuration.text = "Bank Acc no."
                     tvTotalAmount.text = "Available Amount"
                     tvAmount.text = "Requested Amount"
+                    tvDurationValue.text = bannerRequestData?.sellerDetails?.bankInformation
+
+                    tvReasonValue.text = bannerRequestData?.cancelledReason
+                    tvAmountValue.text = "${CommonMethod.formatAmount(bannerRequestData.price)} KD"
                 }
 
             }
@@ -100,8 +135,9 @@ class BannerRequestAdapter(var context:Context, var bannerList: ArrayList<String
 
     }
 
-    fun setData(newList: ArrayList<String>) {
+    fun setData(typeValue:Int,newList: ArrayList<GetBannerRequestResponse.Data.Data>) {
         bannerList = newList
+        type = typeValue
         notifyDataSetChanged()
     }
 }

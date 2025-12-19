@@ -66,7 +66,15 @@ class PlanListFragment : BaseFragment() {
             })
             rvPlan.adapter = subscriptionAdapter
         }
-        getCountryApi()
+        if(SharedPreference.get(requireActivity()).getCountryList() == null) {
+            getCountryApi()
+        }
+        else{
+            countryList.clear()
+            SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
+            setCountry()
+
+        }
     }
 
     override fun initControl() {
@@ -84,7 +92,7 @@ class PlanListFragment : BaseFragment() {
                 ) { selectedCountry ->
                     etCountry.setText(selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
-                    getSubscriptionPlan()
+                    getSubscriptionPlan(true)
                 }
             }
         }
@@ -122,15 +130,17 @@ class PlanListFragment : BaseFragment() {
 
     }
 
-    private fun getSubscriptionPlan(){
+    private fun getSubscriptionPlan(isLoading:Boolean=false){
         if (selectedCountryCode!=null){
             viewModel.getSubscriptionPlan(selectedCountryCode.toString())
         }
         else{
             viewModel.getSubscriptionPlan()
         }
+        if (isLoading) {
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
-            isObserver = true
+        }
+        isObserver = true
         }
 
 
@@ -146,6 +156,11 @@ class PlanListFragment : BaseFragment() {
             binding?.etCountry?.setText(countryList[0].name)
             getSubscriptionPlan()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        ProgressDialogUtils.getInstance().hideProgress()
     }
 
 }

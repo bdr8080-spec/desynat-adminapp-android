@@ -1,8 +1,11 @@
 package com.desynatadmin.network
 
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
+import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -19,7 +22,6 @@ import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.brandManagement.response.SellerStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
-import com.desynatadmin.ui.home.brandManagement.response.ServiceRequest
 import com.desynatadmin.ui.home.brandManagement.response.UpdateBrandStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateZonResponse
 import com.desynatadmin.ui.home.brandManagement.response.UpdateZoneStatusResponse
@@ -545,18 +547,30 @@ interface ApiServices {
         @Query("search") search : String?=null,
         @Query("from_date") fromDate : String?=null,
         @Query("to_date") toDate : String?=null,
-        @Query("country_id") countryId : String?=null,
+        @Query("country_name") countryId : String?=null,
           @Query("page") page: Int,
           @Query("limit") limit: Int? = 10,
+    ): Response<GetBannerRequestResponse>
+
+    @POST(Constants.APPROVE_BANNER_REQUEST)
+    suspend fun approveBannerRequest(
+        @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
 
+
+    @POST(Constants.REJECT_BANNER_REQUEST)
+    suspend fun rejectBannerRequest(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+
     @GET(Constants.GET_AFFILIATE_COMMISSION)
-    suspend fun getAffiliatedCommission(): Response<CommonResponse>
+    suspend fun getAffiliatedCommission(): Response<GetAffiliateCommissionResponse>
 
 @POST(Constants.UPDATE_AFFILIATE_COMMISSION)
     suspend fun updateAffiliateCommission(
         @Body body: HashMap<String,Any>
-    ): Response<CommonResponse>
+    ): Response<UpdateAffiliateCommissionResponse>
 
     @GET(Constants.ORDER_LIST)
     suspend fun getOrderList(

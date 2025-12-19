@@ -394,6 +394,87 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rlOrderManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivOrderManagement"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_order_management" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderManagement"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoOrderManagement"
+                android:layout_toEndOf="@id/ivOrderManagement"
+                android:text="Order Management" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoOrderManagement"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlBannerRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBannerRequest"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_banner_request_management" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBannerRequest"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoBannerRequest"
+                android:layout_toEndOf="@id/ivBannerRequest"
+                android:text="Banner requests Management" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoBannerRequest"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlAffilateCommissionManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCommission"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_affilate_commision" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCommission"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoCommission"
+                android:layout_toEndOf="@id/ivCommission"
+                android:text="Affiliate Commission percentage" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoCommission"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/relSubAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -470,60 +551,6 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGoLive"
-                style="@style/drawer_arrow" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlOrderManagement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_10sdp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivOrderManagement"
-                style="@style/drawer_image"
-                android:src="@drawable/ic_order_management" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOrderManagement"
-                style="@style/drawer_text"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ivGoOrderManagement"
-                android:layout_toEndOf="@id/ivOrderManagement"
-                android:text="Order Management" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivGoOrderManagement"
-                style="@style/drawer_arrow" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlAffilateCommissionManagement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_6sdp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivCommission"
-                style="@style/drawer_image"
-                android:src="@drawable/ic_affilate_commision" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCommission"
-                style="@style/drawer_text"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ivGoCommission"
-                android:layout_toEndOf="@id/ivCommission"
-                android:text="Affiliate Commission percentage" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivGoCommission"
                 style="@style/drawer_arrow" />
 
         </RelativeLayout>
@@ -717,33 +744,6 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGoDeals"
-                style="@style/drawer_arrow" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlBannerRequest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_6sdp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivBannerRequest"
-                style="@style/drawer_image"
-                android:src="@drawable/ic_banner_request_management" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvBannerRequest"
-                style="@style/drawer_text"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ivGoBannerRequest"
-                android:layout_toEndOf="@id/ivBannerRequest"
-                android:text="Banner requests Management" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivGoBannerRequest"
                 style="@style/drawer_arrow" />
 
         </RelativeLayout>

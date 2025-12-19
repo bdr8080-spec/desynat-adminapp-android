@@ -82,20 +82,20 @@ class OtpVerificationFragment : BaseFragment() {
     }
 
     private fun verifyOtp(){
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
         val map = HashMap<String,Any>()
         map["admin_id"] = adminId
         map["otp"] = binding?.pinView?.text?.trim().toString()
         viewModel.otpVerification(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        isObserver = true
     }
 
     private fun resendOtp(){
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
         val map = HashMap<String,Any>()
         map["email"] = email
         viewModel.resendOtp(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        isObserver = true
     }
 
     override fun observe() {

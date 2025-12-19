@@ -53,7 +53,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Request By"
                 android:textColor="#80000000"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
                 android:textColor="@color/black"
                 android:maxLength="25"
                 android:ellipsize="end"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_11sdp"
                 app:layout_constraintStart_toStartOf="@id/tvRequestBy"
                 app:layout_constraintTop_toBottomOf="@id/tvRequestBy" />
 
@@ -93,7 +93,7 @@
                 android:drawableStart="@drawable/ic_loc_pin"
                 android:drawablePadding="@dimen/_2sdp"
                 android:textColor="#80000000"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_11sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/viewName"
@@ -132,7 +132,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Request Id"
                 android:textColor="#80000000"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view1" />
 
@@ -144,7 +144,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="#5372821"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tvRequest"
                 app:layout_constraintTop_toTopOf="@id/tvRequest" />
@@ -157,18 +157,18 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Requested On"
                 android:textColor="#80000000"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@id/tvRequest"
                 app:layout_constraintTop_toBottomOf="@id/tvRequest" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvRequestValue"
+                android:id="@+id/tvRequestOnValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="#5372821"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="@+id/tvRequestId"
                 app:layout_constraintBottom_toBottomOf="@+id/tvRequestOn"
                 app:layout_constraintTop_toTopOf="@id/tvRequestOn" />
@@ -181,10 +181,9 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Banner position"
                 android:textColor="#80000000"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@id/tvRequest"
                 app:layout_constraintTop_toBottomOf="@id/tvRequestOn" />
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvBannerPositionValue"
@@ -193,12 +192,13 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Sub-Category"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="@+id/tvRequestId"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBannerPosition"
                 app:layout_constraintTop_toTopOf="@id/tvBannerPosition" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/tvSubCategoryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -206,18 +206,19 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Sub-category name"
                 android:textColor="#80000000"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@id/tvRequest"
                 app:layout_constraintTop_toBottomOf="@id/tvBannerPosition" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/tvSubCategoryNameValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Dress"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="@+id/tvRequestId"
                 app:layout_constraintBottom_toBottomOf="@+id/tvSubCategoryName"
                 app:layout_constraintTop_toTopOf="@id/tvSubCategoryName" />
@@ -255,7 +256,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="From"
                     android:textColor="#80000000"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -267,7 +268,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="21/09/2025"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
                     app:layout_constraintTop_toTopOf="@id/tvFrom" />
@@ -280,7 +281,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="To"
                     android:textColor="#80000000"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="@id/tvFrom"
                     app:layout_constraintTop_toBottomOf="@id/tvFrom" />
 
@@ -291,7 +292,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="21/09/2025"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="@+id/tvFromDate"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTo"
                     app:layout_constraintTop_toTopOf="@id/tvTo" />
@@ -304,7 +305,7 @@
                     android:fontFamily="@font/poppins_semi_bold"
                     android:text="Total days"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="@id/tvFrom"
                     app:layout_constraintTop_toBottomOf="@id/tvTo" />
 
@@ -315,7 +316,7 @@
                     android:fontFamily="@font/poppins_semi_bold"
                     android:text="7"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="@+id/tvFromDate"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTotalDays"
                     app:layout_constraintTop_toTopOf="@id/tvTotalDays" />
@@ -342,7 +343,7 @@
                 android:fontFamily="@font/poppins_semi_bold"
                 android:text="Total Price"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -353,11 +354,65 @@
                 android:fontFamily="@font/poppins_semi_bold"
                 android:text="499 KD"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTotalPrice"
                 app:layout_constraintTop_toTopOf="@id/tvTotalPrice" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvAmountPaid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Amount Paid"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvAmountPaidStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="21/09/2025"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAmountPaid"
+                app:layout_constraintTop_toTopOf="@id/tvAmountPaid" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvTransactionId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Transaction Id"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/tvAmountPaid"
+                app:layout_constraintTop_toBottomOf="@id/tvAmountPaid" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvTransactionIdValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="21/09/2025"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="@+id/tvAmountPaidStatus"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTransactionId"
+                app:layout_constraintTop_toTopOf="@id/tvTransactionId" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

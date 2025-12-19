@@ -15,6 +15,7 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -24,11 +25,10 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvShipping"
+                android:id="@+id/rvAffiliateCommission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 tools:listitem="@layout/item_affiliate_commission"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>

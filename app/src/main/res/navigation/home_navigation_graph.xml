@@ -187,8 +187,6 @@
         android:label="Add Delivery Boy Fragment"
         tools:layout="@layout/fragment_add_delivery_boy"/>
 
-
-
     <fragment
         android:id="@+id/giftCard"
         android:name="com.desynatadmin.ui.home.giftCardManagement.GiftCardManagementFragment"
@@ -281,5 +279,29 @@
         android:name="com.desynatadmin.ui.home.banner.BannerPerDayPriceFragment"
         android:label="Banner Per Day Price Fragment"
         tools:layout="@layout/fragment_banner_per_day_price"/>
+
+    <fragment
+        android:id="@+id/bannerRequest"
+        android:name="com.desynatadmin.ui.home.bannerRequestManagement.BannerRequestManagementFragment"
+        android:label="Banner Request Fragment"
+        tools:layout="@layout/fragment_banner_request_management">
+
+        <action
+            android:id="@+id/action_bannerRequest_to_bannerRequestDetailFragment"
+            app:destination="@id/bannerRequestDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/bannerRequestDetail"
+        android:name="com.desynatadmin.ui.home.bannerRequestManagement.BannerRequestDetailFragment"
+        android:label="Banner Request Detail Fragment"
+        tools:layout="@layout/fragment_banner_request_detail"/>
+
+    <fragment
+        android:id="@+id/affiliateCommission"
+        android:name="com.desynatadmin.ui.home.affiliateCommission.AffiliateCommissionFragment"
+        android:label="Affiliate Commission Fragment"
+        tools:layout="@layout/fragment_affiliate_commission"/>
 
 </navigation>

@@ -54,12 +54,12 @@ class ForgetPasswordFragment : BaseFragment() {
 
             btnContinue.setOnClickListener {
                 if (validation()) {
+                    ProgressDialogUtils.getInstance().showProgress(requireActivity())
+                    isObserver = true
                     val map = HashMap<String, Any>()
                     map["email"] = binding?.etEmail?.text.toString().trim()
 
                     viewModel.forgotPassword(map)
-                    ProgressDialogUtils.getInstance().showProgress(requireActivity())
-                    isObserver = true
                 }
 
             }

@@ -25,6 +25,7 @@ import com.desynatadmin.databinding.FragmentBannerRequestManagementBinding
 import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -42,10 +43,10 @@ class BannerRequestManagementFragment : BaseFragment() {
     private var binding: FragmentBannerRequestManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var type = 1 //1-new,2-approved,3-rejected
+    private var type = 0 //0-new,1-approved,2-rejected
 
     private var bannerRequestAdapter: BannerRequestAdapter?=null
-    private var bannerRequestList = ArrayList<String>()
+    private var bannerRequestList = ArrayList<GetBannerRequestResponse.Data.Data>()
 
     private var search: Job? = null
     private var lastQuery: String? = null
@@ -66,6 +67,8 @@ class BannerRequestManagementFragment : BaseFragment() {
     var countryId:String?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
 
+    private var selectedPos = -1
+    private var selectedType:String?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,10 +96,18 @@ class BannerRequestManagementFragment : BaseFragment() {
             CommonMethod.removeSpace(etSearch)
 
             bannerRequestList.clear()
-            bannerRequestAdapter = BannerRequestAdapter(requireActivity(),bannerRequestList,object : BannerRequestAdapter.OnClick{
+            bannerRequestAdapter = BannerRequestAdapter(requireActivity(),type,bannerRequestList,object : BannerRequestAdapter.OnClick{
                 override fun onItemClick(position: Int,type:Int) {
+                    selectedPos = position
                     when(type){
+                        1-> acceptRequest()
                         2-> rejectReasonDialog()
+                        3->{
+                            val bundle = Bundle().apply {
+                                putString("bannerData", Gson().toJson(bannerRequestList[position]))
+                            }
+                            findNavController().navigate(R.id.action_bannerRequest_to_bannerRequestDetailFragment,bundle)
+                        }
                     }
                 }
 
@@ -105,7 +116,7 @@ class BannerRequestManagementFragment : BaseFragment() {
             rvBannerRequest.adapter = bannerRequestAdapter
 
             when(type){
-                1->{
+                0->{
                     getBannerRequest()
                     tvNew.setTextColor(requireActivity().getColor(R.color.white))
                     tvApproved.setTextColor(requireActivity().getColor(R.color.black))
@@ -114,7 +125,7 @@ class BannerRequestManagementFragment : BaseFragment() {
                     tvApproved.background = null
                     tvRejected.background = null
                 }
-                2->{
+                1->{
                     getBannerRequest()
                     tvApproved.setTextColor(requireActivity().getColor(R.color.white))
                     tvNew.setTextColor(requireActivity().getColor(R.color.black))
@@ -124,7 +135,7 @@ class BannerRequestManagementFragment : BaseFragment() {
                     tvRejected.background = null
                 }
 
-                3->{
+                2->{
                     getBannerRequest()
                     tvRejected.setTextColor(requireActivity().getColor(R.color.white))
                     tvNew.setTextColor(requireActivity().getColor(R.color.black))
@@ -176,7 +187,7 @@ class BannerRequestManagementFragment : BaseFragment() {
             }
 
             tvNew.setOnClickListener {
-                type = 1
+                type = 0
                 getBannerRequest()
                 tvNew.setTextColor(requireActivity().getColor(R.color.white))
                 tvApproved.setTextColor(requireActivity().getColor(R.color.black))
@@ -187,7 +198,7 @@ class BannerRequestManagementFragment : BaseFragment() {
             }
 
             tvApproved.setOnClickListener {
-                type = 2
+                type = 1
                 getBannerRequest()
                 tvApproved.setTextColor(requireActivity().getColor(R.color.white))
                 tvNew.setTextColor(requireActivity().getColor(R.color.black))
@@ -198,7 +209,7 @@ class BannerRequestManagementFragment : BaseFragment() {
             }
 
             tvRejected.setOnClickListener {
-                type = 3
+                type = 2
                 getBannerRequest()
                 tvRejected.setTextColor(requireActivity().getColor(R.color.white))
                 tvNew.setTextColor(requireActivity().getColor(R.color.black))
@@ -248,65 +259,83 @@ class BannerRequestManagementFragment : BaseFragment() {
             }
         }
 
+        viewModel.approveBannerRequestResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                getBannerRequest()
+            }
+        }
+
+        viewModel.rejectBannerRequestResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                getBannerRequest()
+            }
+        }
+
         viewModel.bannerRequestResult.observe(viewLifecycleOwner) { response ->
-//            if (isObserver) {
-//                ProgressDialogUtils.getInstance().hideProgress()
-//                binding?.progressBar?.isVisible = false
-//                if (isFromSwipe){
-//                    binding?.swipeRefreshLayout?.isRefreshing = false
-//                }
-//
-//                currentPage = response.data.currentPage
-//                totalItem = response.data.total
-//
-//                lastPage = response.data.lastPage
-//
-//                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
-//                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
-//
-//                binding?.tvCount?.text = "$currentStr of $lastStr"
-//
-//                if (currentPage<lastPage){
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
-//                }
-//                else{
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
-//                }
-//
-//                if (currentPage>1){
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
-//                }
-//                else{
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
-//                }
-//
-//
-//                val oldSize = bannerRequestList.size
-//                if (!pagination){
-//                    bannerRequestList.clear()
-//                }
-//                updatePage()
-//                val newItems = response.data.data ?: emptyList()
-//
-//                bannerRequestList.addAll(newItems)
-//                checkData()
-//
-//                if (pagination){
-//
-//                    response.data.data?.size?.let {
-//                        bannerRequestAdapter?.notifyItemRangeInserted(oldSize,
-//                            it
-//                        )
-//                    }
-//                }
-//                else{
-//                    bannerRequestAdapter?.notifyDataSetChanged()
-//                }
-//
-//                pagination = false
-//                isFromSwipe = false
-//                isObserver = false
-//            }
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                if (selectedType!=null){
+                    CommonMethod.showSuccessDialog(requireActivity(),if (selectedType=="accept") "Banner request accepted successfully" else "Banner request rejected successfully"){
+                        selectedType = null
+                    }
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = bannerRequestList.size
+                if (!pagination){
+                    bannerRequestList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                bannerRequestList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        bannerRequestAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    bannerRequestAdapter?.setData(type,ArrayList(bannerRequestList))
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
         }
     }
 
@@ -315,7 +344,7 @@ class BannerRequestManagementFragment : BaseFragment() {
     }
 
     private fun getBannerRequest(loading:Boolean=true,search:String?=null) {
-        viewModel.getBannerRequest(type,search = search, fromDate = startDate, toDate = endDate, countryId = countryId,currentPage)
+        viewModel.getBannerRequest(type,search = search, fromDate = startDate, toDate = endDate, countryId = countryList.firstOrNull { it.id.toString() == countryId }?.name,currentPage)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -328,10 +357,29 @@ class BannerRequestManagementFragment : BaseFragment() {
         if (start>=0&&end>=0) {
             if (start < end) {
                 val pageData = bannerRequestList.subList(start, end)
-                bannerRequestAdapter?.setData(ArrayList(pageData))
+                bannerRequestAdapter?.setData(type,ArrayList(pageData))
             }
         }
 
+    }
+
+    private fun acceptRequest(){
+        selectedType = "accept"
+        val map = HashMap<String,Any>()
+        map["banner_id"] = bannerRequestList[selectedPos].id
+        viewModel.approveBannerRequest(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun rejectRequest(reason:String){
+        selectedType = "reject"
+        val map = HashMap<String,Any>()
+        map["banner_id"] = bannerRequestList[selectedPos].id
+        map["reason"] = reason
+        viewModel.rejectBannerRequest(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
     }
 
     private fun filterDialog() {
@@ -451,6 +499,7 @@ class BannerRequestManagementFragment : BaseFragment() {
                     showToast("Please enter reason")
                 }
                 else{
+                    rejectRequest(etReason.text?.trim().toString())
                     dialog.dismiss()
                 }
             }

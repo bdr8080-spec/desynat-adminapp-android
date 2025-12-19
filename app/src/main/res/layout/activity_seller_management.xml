@@ -14,6 +14,7 @@
         android:drawableStart="@drawable/back_ic"
         android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:paddingVertical="@dimen/_15sdp"
         android:text="Seller Management"
         android:textAlignment="center"

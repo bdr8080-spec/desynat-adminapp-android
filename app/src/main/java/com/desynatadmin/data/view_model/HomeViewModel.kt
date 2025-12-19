@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desynatadmin.data.repo.MainRepository
-import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
+import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -59,7 +61,6 @@ import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
@@ -849,7 +850,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val bannerRequestResult: LiveData<CommonResponse>
+    val bannerRequestResult: LiveData<GetBannerRequestResponse>
         get() = repository.bannerRequestLiveData
 
     fun getBannerRequest(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page: Int) {
@@ -858,7 +859,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getAffiliatedCommissionResult: LiveData<CommonResponse>
+    val approveBannerRequestResult: LiveData<CommonResponse>
+        get() = repository.approveBannerRequestLiveData
+
+    fun approveBannerRequest(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.approveBannerRequest(map)
+        }
+    }
+
+    val rejectBannerRequestResult: LiveData<CommonResponse>
+        get() = repository.rejectBannerRequestLiveData
+
+    fun rejectBannerRequest(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.rejectBannerRequest(map)
+        }
+    }
+
+    val getAffiliatedCommissionResult: LiveData<GetAffiliateCommissionResponse>
         get() = repository.getAffiliatedCommissionLiveData
 
     fun getAffiliatedCommission() {
@@ -867,7 +886,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateAffiliateCommissionResult: LiveData<CommonResponse>
+    val updateAffiliateCommissionResult: LiveData<UpdateAffiliateCommissionResponse>
         get() = repository.updateAffiliateCommissionLiveData
 
     fun updateAffiliateCommission(map:HashMap<String,Any>) {

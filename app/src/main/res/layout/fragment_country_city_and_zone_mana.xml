@@ -6,16 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.m2.CountryCityAndZoneManaFragment">
 
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:drawableStart="@drawable/back_ic"
         android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="@dimen/_20sdp"
         android:paddingVertical="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:text="Country City &amp; Zone"
         android:textAlignment="center"
         android:textColor="@color/black"

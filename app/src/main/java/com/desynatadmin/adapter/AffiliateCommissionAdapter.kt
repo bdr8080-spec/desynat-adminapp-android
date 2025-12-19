@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemAffiliateCommissionBinding
+import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.utils.CommonMethod
 
-class AffiliateCommissionAdapter(var context:Context, var affiliateCommissionList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<AffiliateCommissionAdapter.ViewHolder>() {
+class AffiliateCommissionAdapter(var context:Context, var affiliateCommissionList: ArrayList<GetAffiliateCommissionResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<AffiliateCommissionAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemAffiliateCommissionBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -29,9 +30,8 @@ class AffiliateCommissionAdapter(var context:Context, var affiliateCommissionLis
         var affiliateCommissionData = affiliateCommissionList[position]
 
         holder.binding.apply {
-          /*  tvCountry.text = "${affiliateCommissionData?.flag}  ${affiliateCommissionData.name}"
-            tvCommissionValue.text = "${CommonMethod.formatDoubleValue(affiliateCommissionData?.taxInfo?.tax?.toDouble())}%"*/
-
+            tvCountry.text = "${affiliateCommissionData?.flag}  ${affiliateCommissionData.name}"
+            tvCommissionValue.text = "${CommonMethod.formatDoubleValue(affiliateCommissionData?.affiliateCommissionInfo?.commission?.toDouble())}%"
             ivEdit.setOnClickListener {
                 clickOnItem.onClickItem(position)
             }

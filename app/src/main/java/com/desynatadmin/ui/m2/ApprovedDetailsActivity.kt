@@ -61,7 +61,7 @@ class ApprovedDetailsActivity : BaseActivity() {
 
         binding.reelRecyclerView.adapter = ReelAdapter()
         binding?.btnSellerInfo?.setOnClickListener {
-            binding?.btnSellerInfo?.setBackgroundResource(R.drawable.btn_seller_selected)
+            binding?.btnSellerInfo?.setBackgroundResource(R.drawable.selected_left_border)
             binding?.btnSellerInfo?.setTextColor(Color.WHITE)
             binding?.btnOtherInfo?.setBackgroundResource(R.drawable.btn_other_unselected)
             binding?.btnOtherInfo?.setTextColor(Color.BLACK)
@@ -70,9 +70,9 @@ class ApprovedDetailsActivity : BaseActivity() {
         }
 
         binding?.btnOtherInfo?.setOnClickListener {
-            binding?.btnOtherInfo?.setBackgroundResource(R.drawable.btn_seller_selected)
+            binding?.btnOtherInfo?.setBackgroundResource(R.drawable.selected_right_border)
             binding?.btnOtherInfo?.setTextColor(Color.WHITE)
-            binding?.btnSellerInfo?.setBackgroundResource(R.drawable.btn_other_unselected)
+            binding?.btnSellerInfo?.background = null
             binding?.btnSellerInfo?.setTextColor(Color.BLACK)
             binding?.sellerInfoLayout?.visibility = View.GONE
             binding?.otherInfoLayout?.visibility = View.VISIBLE

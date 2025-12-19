@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,37 +13,35 @@ import android.view.WindowManager
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateCommissionAdapter
-import com.desynatadmin.adapter.ShippingCountryTaxAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddTaxDialogBinding
-import com.desynatadmin.databinding.FragmentShippingManagementBinding
+import com.desynatadmin.databinding.FragmentAffiliateCommissionBinding
 import com.desynatadmin.ui.home.HomeActivity
-import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
-import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AffiliateCommissionFragment : BaseFragment() {
-    private var binding: FragmentShippingManagementBinding?=null
+    private var binding: FragmentAffiliateCommissionBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var affiliateCommissionList = ArrayList<String>()
+    private var affiliateCommissionList = ArrayList<GetAffiliateCommissionResponse.Data>()
     private var affiliateCommissionAdapter : AffiliateCommissionAdapter?=null
     private var selectedPos = -1
+
+    private var updateCommissionDialog: Dialog?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentShippingManagementBinding.inflate(layoutInflater,container,false)
+        binding = FragmentAffiliateCommissionBinding.inflate(layoutInflater,container,false)
         return binding?.root
     }
 
@@ -87,7 +84,6 @@ class AffiliateCommissionFragment : BaseFragment() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-
                 isObserver = false
             }
         }
@@ -97,7 +93,7 @@ class AffiliateCommissionFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
 
                 affiliateCommissionList.clear()
-              //  affiliateCommissionList.addAll(response.data)
+                affiliateCommissionList.addAll(response.data)
                 checkData()
                 affiliateCommissionAdapter?.notifyDataSetChanged()
                 isObserver = false
@@ -107,7 +103,11 @@ class AffiliateCommissionFragment : BaseFragment() {
         viewModel.updateAffiliateCommissionResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                updateCommissionDialog?.dismiss()
+                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate Commission Updated Successfully")
+                affiliateCommissionList[selectedPos].affiliateCommissionInfo = response.data
                 affiliateCommissionAdapter?.notifyDataSetChanged()
+                selectedPos = -1
                 isObserver = false
             }
         }
@@ -121,8 +121,8 @@ class AffiliateCommissionFragment : BaseFragment() {
 
     private fun updateCommission(commission:String) {
         val map = HashMap<String,Any>()
-      //  map["country_id"] = affiliateCommissionList[selectedPos]?.id.toString()
-        map["tax"] = commission
+        map["country_id"] = affiliateCommissionList[selectedPos]?.affiliateCommissionInfo?.countryId.toString()
+        map["commission"] = commission
         viewModel.updateAffiliateCommission(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -133,17 +133,17 @@ class AffiliateCommissionFragment : BaseFragment() {
     }
 
     private fun commissionDialog() {
-        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        updateCommissionDialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddTaxDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog.setContentView(it) }
+        dialogBinding.root.let { it.let { it1 -> updateCommissionDialog?.setContentView(it1) } }
 
-        val window: Window = dialog.window!!
+        val window: Window = updateCommissionDialog?.window!!
         window.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         window.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setCancelable(false)
+        updateCommissionDialog?.setCancelable(false)
 
         val params: WindowManager.LayoutParams = window.attributes
         params.gravity = Gravity.BOTTOM
@@ -155,7 +155,7 @@ class AffiliateCommissionFragment : BaseFragment() {
             tvTitle.text = "Commission"
             tvTitle.hint = "Enter commission"
             btnSubmit.text = "Save"
-        //    etAmount.setText(CommonMethod.formatPrice(shippingTaxData?.taxInfo?.tax?.toDouble()?:0.0))
+            etAmount.setText(CommonMethod.formatPrice(affiliateCommissionList[selectedPos]?.affiliateCommissionInfo?.commission?.toDouble()?:0.0))
             var isEditing = false
             var previousValue = ""
 
@@ -187,7 +187,7 @@ class AffiliateCommissionFragment : BaseFragment() {
 
 
             tvToolbar.setOnClickListener {
-                dialog.dismiss()
+                updateCommissionDialog?.dismiss()
             }
 
             btnSubmit.setOnClickListener {
@@ -196,13 +196,12 @@ class AffiliateCommissionFragment : BaseFragment() {
                 }
                 else{
                     updateCommission(etAmount.text.toString())
-                    dialog.dismiss()
                 }
             }
 
         }
 
-        dialog.show()
+        updateCommissionDialog?.show()
     }
 
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {

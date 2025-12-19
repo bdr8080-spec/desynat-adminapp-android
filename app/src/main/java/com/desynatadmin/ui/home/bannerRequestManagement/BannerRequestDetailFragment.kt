@@ -17,8 +17,12 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentBannerRequestDetailBinding
 import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
+import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,6 +32,8 @@ class BannerRequestDetailFragment : BaseFragment() {
     private var isObserver = true
 
     private var type = 1
+    var bannerData: GetBannerRequestResponse.Data.Data?=null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +52,12 @@ class BannerRequestDetailFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
+
+        val itemJson = arguments?.getString("bannerData")
+        if (!itemJson.isNullOrEmpty()) {
+            bannerData = Gson().fromJson(itemJson, GetBannerRequestResponse.Data.Data::class.java)
+            setData()
+        }
 
         binding?.apply {
             toolbar.tvToolbar.text = "Details"
@@ -76,6 +88,74 @@ class BannerRequestDetailFragment : BaseFragment() {
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                 }
             }
+        }
+    }
+
+    private fun setData() {
+        binding?.apply {
+            tvName.text = bannerData?.sellerDetails?.firstName+" "+bannerData?.sellerDetails?.lastName
+            tvCountry.text = bannerData?.sellerDetails?.countryDetails?.name
+            tvRequestId.text = "#${bannerData?.orderId}"
+            tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            when(bannerData?.bannerPosition){
+                "1" ->{
+                    tvBannerPositionValue.text = "Home Top"
+                }
+                "2"->{
+                    tvBannerPositionValue.text = "Home Bottom"
+                }
+                "3"->{
+                    tvBannerPositionValue.text = "Sub-Category"
+                    if (bannerData?.categoryDetails!=null){
+                        tvSubCategoryNameValue.isVisible = true
+                        tvSubCategoryName.isVisible = true
+                        tvSubCategoryNameValue.text = bannerData?.subcategoryDetails?.nameEnglish
+                    }
+                    else{
+                        tvSubCategoryNameValue.isVisible = false
+                        tvSubCategoryName.isVisible = false
+                    }
+                }
+            }
+
+            when(bannerData?.adminVerify){
+                "0"->{
+                    tvStatus.text = "New"
+                    tvStatus.setTextColor(Color.parseColor("#68CA44"))
+                    btnReject.isVisible = true
+                    btnAccept.isVisible = true
+                }
+                "1"->{
+                    tvAmountPaid.isVisible = true
+                    tvAmountPaidStatus.isVisible = true
+                    tvStatus.setTextColor(Color.parseColor("#68CA44"))
+                    if (bannerData?.paymentStatus=="1"){
+                        tvTransactionId.isVisible = true
+                        tvTransactionIdValue.isVisible = true
+                        tvStatus.text = "Active"
+                        tvAmountPaidStatus.text = "Yes"
+                        tvAmountPaidStatus.setTextColor(Color.parseColor("#68CA44"))
+                        tvTransactionIdValue.text = bannerData?.transactionId
+                    }
+                    else{
+                        tvStatus.text = "Upcoming"
+                        tvAmountPaidStatus.text = "No"
+                        tvAmountPaidStatus.setTextColor(Color.parseColor("#D53B36"))
+                    }
+                }
+                "2"->{
+                    tvStatus.text = "Rejected"
+                    tvStatus.setTextColor(Color.parseColor("#D53B36"))
+                    tvReason.isVisible = true
+                    tvReasonValue.isVisible = true
+                    tvReasonValue.text = bannerData?.cancelledReason
+                }
+            }
+
+            tvTotalDaysValue.text = bannerData?.totalDays
+            tvFromDate.text =  CommonMethod.customizeChangeDateFormat(bannerData?.startDate.toString(), inputFormat = "yyyy-MM-dd","dd/MM/yyyy")
+            tvToDate.text =  CommonMethod.customizeChangeDateFormat(bannerData?.endDate.toString(), inputFormat = "yyyy-MM-dd","dd/MM/yyyy")
+            tvTotalPriceValue.text = "${CommonMethod.formatAmount(bannerData?.price.toString())} KD"
         }
     }
 

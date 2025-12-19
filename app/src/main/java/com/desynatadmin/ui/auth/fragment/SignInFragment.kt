@@ -67,13 +67,12 @@ class SignInFragment : BaseFragment() {
     }
 
     private fun loginWithPassword(){
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
         val map = HashMap<String,Any>()
-
         map["email"] = binding?.etEmail?.text?.trim().toString()
         map["password"] = binding?.etPassword?.text?.trim().toString()
         viewModel.login(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        isObserver = true
     }
 
     override fun observe() {
