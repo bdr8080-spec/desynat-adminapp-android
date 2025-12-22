@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateCommissionAdapter
 import com.desynatadmin.adapter.OrderAdapter
@@ -22,21 +23,25 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentOrderManagementBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.openCustomDatePicker
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.http.Query
 
 @AndroidEntryPoint
 class OrderManagementFragment : BaseFragment() {
     private var binding: FragmentOrderManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var orderList = ArrayList<String>()
+    private var isDriverObserver = true
+    private var orderList = ArrayList<GetActiveOrderResponse.Data.Data>()
     private var orderAdapter : OrderAdapter?=null
 
     private var type = 1 //1-active,2-exchange,3-complete,4-cancelled
@@ -82,7 +87,20 @@ class OrderManagementFragment : BaseFragment() {
 
             orderList.clear()
             orderAdapter = OrderAdapter(requireActivity(),orderList,object : OrderAdapter.OnClick{
-                override fun onItemClick(position: Int,type:Int) {
+                override fun onItemClick(position: Int,clickType:Int) {
+                    when(clickType){
+                        1->{
+
+                        }
+                        2->{
+                            val bundle = Bundle().apply {
+                                putString("orderData", Gson().toJson(orderList[position]))
+                                putInt("type", type)
+                            }
+                            findNavController().navigate(R.id.action_orderFragment_to_orderDetailFragment,bundle)
+                        }
+                    }
+
                 }
 
             })
@@ -97,7 +115,20 @@ class OrderManagementFragment : BaseFragment() {
                 isFromSwipe = true
                 pagination = false
                 currentPage = 1
-                getOrder(false)
+                when(type) {
+                    1 -> {
+                        getActiveOrder(false)
+                    }
+                    2 -> {
+                        getReturnOrder(false)
+                    }
+                    3 -> {
+                        getCompletedOrder(false)
+                    }
+                    4 -> {
+                        getCancelledOrder(false)
+                    }
+                }
             }
 
             etSearch.addTextChangedListener(object : TextWatcher {
@@ -114,7 +145,21 @@ class OrderManagementFragment : BaseFragment() {
                         delay(600)
                         isFromSwipe = false
                         if (!isObserver)
-                            getOrder(search =  query.ifEmpty { null })
+                            when(type) {
+                                1 -> {
+                                    getActiveOrder(search =  query.ifEmpty { null })
+                                }
+                                2 -> {
+                                    getReturnOrder(search =  query.ifEmpty { null })
+                                }
+                                3 -> {
+                                    getCompletedOrder(search =  query.ifEmpty { null })
+                                }
+                                4 -> {
+                                    getCancelledOrder(search =  query.ifEmpty { null })
+                                }
+                            }
+
                     }
 
                 }
@@ -122,7 +167,7 @@ class OrderManagementFragment : BaseFragment() {
 
             when(type){
                 1->{
-                    getOrder()
+                    getActiveOrder()
                     tvActive.setTextColor(requireActivity().getColor(R.color.white))
                     tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
                     tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
@@ -133,7 +178,7 @@ class OrderManagementFragment : BaseFragment() {
                     tvCancelled.background = null
                 }
                 2->{
-                    getOrder()
+                    getReturnOrder()
                     tvReturnExchange.setTextColor(requireActivity().getColor(R.color.white))
                     tvActive.setTextColor(requireActivity().getColor(R.color.black))
                     tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
@@ -145,7 +190,7 @@ class OrderManagementFragment : BaseFragment() {
                 }
 
                 3->{
-                    getOrder()
+                    getCompletedOrder()
                     tvCompleted.setTextColor(requireActivity().getColor(R.color.white))
                     tvActive.setTextColor(requireActivity().getColor(R.color.black))
                     tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
@@ -156,7 +201,7 @@ class OrderManagementFragment : BaseFragment() {
                     tvCancelled.background = null
                 }
                 4->{
-                getOrder()
+                    getCancelledOrder()
                 tvCancelled.setTextColor(requireActivity().getColor(R.color.white))
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
@@ -169,8 +214,6 @@ class OrderManagementFragment : BaseFragment() {
             }
 
         }
-
-        getOrder()
     }
 
     override fun initControl() {
@@ -182,7 +225,20 @@ class OrderManagementFragment : BaseFragment() {
             ivNextArrow.setOnClickListener {
                 if (!isObserver && currentPage < lastPage&&totalItem!=0) {
                     currentPage += 1
-                    getOrder(false)
+                    when(type) {
+                        1 -> {
+                            getActiveOrder(false)
+                        }
+                        2 -> {
+                            getReturnOrder(false)
+                        }
+                        3 -> {
+                            getCompletedOrder(false)
+                        }
+                        4 -> {
+                            getCancelledOrder(false)
+                        }
+                    }
                     binding?.progressBar?.isVisible = true
                 }
 
@@ -192,7 +248,20 @@ class OrderManagementFragment : BaseFragment() {
             ivBackArrow.setOnClickListener {
                 if (currentPage > 1) {
                     currentPage--
-                    getOrder(false)
+                    when(type) {
+                        1 -> {
+                            getActiveOrder(false)
+                        }
+                        2 -> {
+                            getReturnOrder(false)
+                        }
+                        3 -> {
+                            getCompletedOrder(false)
+                        }
+                        4 -> {
+                            getCancelledOrder(false)
+                        }
+                    }
                     binding?.progressBar?.isVisible = true
                 }
             }
@@ -203,7 +272,7 @@ class OrderManagementFragment : BaseFragment() {
 
             tvActive.setOnClickListener {
                 type = 1
-                getOrder()
+                getActiveOrder()
                 tvActive.setTextColor(requireActivity().getColor(R.color.white))
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
@@ -216,7 +285,7 @@ class OrderManagementFragment : BaseFragment() {
 
             tvReturnExchange.setOnClickListener {
                 type = 2
-                getOrder()
+                getReturnOrder()
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.white))
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
@@ -229,7 +298,7 @@ class OrderManagementFragment : BaseFragment() {
 
             tvCompleted.setOnClickListener {
                 type = 3
-                getOrder()
+                getCompletedOrder()
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.white))
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
@@ -242,7 +311,7 @@ class OrderManagementFragment : BaseFragment() {
 
             tvCancelled.setOnClickListener {
                 type = 4
-                getOrder()
+                getCancelledOrder()
                 tvCancelled.setTextColor(requireActivity().getColor(R.color.white))
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
@@ -271,65 +340,82 @@ class OrderManagementFragment : BaseFragment() {
             }
         }
 
-        viewModel.getOrderListResult.observe(viewLifecycleOwner) { response ->
-//            if (isObserver) {
-//                ProgressDialogUtils.getInstance().hideProgress()
-//                binding?.progressBar?.isVisible = false
-//                if (isFromSwipe){
-//                    binding?.swipeRefreshLayout?.isRefreshing = false
-//                }
-//
-//                currentPage = response.data.currentPage
-//                totalItem = response.data.total
-//
-//                lastPage = response.data.lastPage
-//
-//                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
-//                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
-//
-//                binding?.tvCount?.text = "$currentStr of $lastStr"
-//
-//                if (currentPage<lastPage){
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
-//                }
-//                else{
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
-//                }
-//
-//                if (currentPage>1){
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
-//                }
-//                else{
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
-//                }
-//
-//
-//                val oldSize = bannerRequestList.size
-//                if (!pagination){
-//                    bannerRequestList.clear()
-//                }
-//                updatePage()
-//                val newItems = response.data.data ?: emptyList()
-//
-//                bannerRequestList.addAll(newItems)
-//                checkData()
-//
-//                if (pagination){
-//
-//                    response.data.data?.size?.let {
-//                        bannerRequestAdapter?.notifyItemRangeInserted(oldSize,
-//                            it
-//                        )
-//                    }
-//                }
-//                else{
-//                    bannerRequestAdapter?.notifyDataSetChanged()
-//                }
-//
-//                pagination = false
-//                isFromSwipe = false
-//                isObserver = false
-//            }
+        viewModel.assignDriverResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+
+                isObserver = false
+            }
+        }
+
+        viewModel.getAssignDriverListResult.observe(viewLifecycleOwner) { response ->
+            if (isDriverObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+
+                isDriverObserver = false
+            }
+        }
+
+
+        viewModel.getActiveOrderListResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderList.size
+                if (!pagination){
+                    orderList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                orderList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        orderAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    orderAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
         }
     }
 
@@ -351,11 +437,78 @@ class OrderManagementFragment : BaseFragment() {
 
     }
 
-    private fun getOrder(loading:Boolean=true,search:String?=null) {
-        viewModel.getOrderList(type,search = search, fromDate = startDate, toDate = endDate, countryId = countryId,currentPage)
+    private fun getActiveOrder(loading:Boolean=true,search:String?=null) {
+        val map = HashMap<String,Any>()
+        search?.let { map["search"] = it }
+        startDate?.let { map["from_date"] = it }
+        endDate?.let { map["to_date"] = it }
+        countryId?.let { map["country_id"] = it }
+        map["page"] = currentPage
+        map["limit"] = 10
+        viewModel.getActiveOrderList(map)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
+        isObserver = true
+    }
+
+    private fun getCompletedOrder(loading:Boolean=true,search:String?=null) {
+        val map = HashMap<String,Any>()
+        search?.let { map["search"] = it }
+        startDate?.let { map["from_date"] = it }
+        endDate?.let { map["to_date"] = it }
+        countryId?.let { map["country_id"] = it }
+        map["page"] = currentPage
+        map["limit"] = 10
+        viewModel.getCompletedOrderList(map)
+        if (loading){
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        }
+        isObserver = true
+    }
+
+    private fun getCancelledOrder(loading:Boolean=true,search:String?=null) {
+        val map = HashMap<String,Any>()
+        search?.let { map["search"] = it }
+        startDate?.let { map["from_date"] = it }
+        endDate?.let { map["to_date"] = it }
+        countryId?.let { map["country_id"] = it }
+        map["page"] = currentPage
+        map["limit"] = 10
+        viewModel.getCancelledOrderList(map)
+        if (loading){
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        }
+        isObserver = true
+    }
+
+    private fun getReturnOrder(loading:Boolean=true,search:String?=null) {
+        val map = HashMap<String,Any>()
+        search?.let { map["search"] = it }
+        startDate?.let { map["from_date"] = it }
+        endDate?.let { map["to_date"] = it }
+        countryId?.let { map["country_id"] = it }
+        map["page"] = currentPage
+        map["limit"] = 10
+        viewModel.getReturnOrderList(map)
+        if (loading){
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        }
+        isObserver = true
+    }
+
+    private fun getAssignDriver(orderId:String) {
+        viewModel.getDriverToAssign(orderId)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isDriverObserver = true
+    }
+
+    private fun assignDriver(orderId:String,driverId:String) {
+        val map = HashMap<String,Any>()
+        map["driver_id"] = driverId
+        map["order_id"] = orderId
+        viewModel.assignDriver(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
@@ -412,7 +565,20 @@ class OrderManagementFragment : BaseFragment() {
                 countryId = null
                 toTimestamp = 0L
                 fromTimestamp = 0L
-                getOrder()
+                when(type) {
+                    1 -> {
+                        getActiveOrder()
+                    }
+                    2 -> {
+                        getReturnOrder()
+                    }
+                    3 -> {
+                        getCompletedOrder()
+                    }
+                    4 -> {
+                        getCancelledOrder()
+                    }
+                }
                 dialog.dismiss()
             }
 
@@ -438,7 +604,20 @@ class OrderManagementFragment : BaseFragment() {
                 if (etTo.text.isNotEmpty()){
                     endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
                 }
-                getOrder()
+                when(type) {
+                    1 -> {
+                        getActiveOrder()
+                    }
+                    2 -> {
+                        getReturnOrder()
+                    }
+                    3 -> {
+                        getCompletedOrder()
+                    }
+                    4 -> {
+                        getCancelledOrder()
+                    }
+                }
                 dialog.dismiss()
             }
 

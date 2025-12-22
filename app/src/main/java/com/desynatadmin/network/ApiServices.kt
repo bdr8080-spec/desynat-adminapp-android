@@ -37,6 +37,7 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDet
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -68,6 +69,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.PartMap
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface ApiServices {
 
@@ -572,16 +574,34 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<UpdateAffiliateCommissionResponse>
 
-    @GET(Constants.ORDER_LIST)
-    suspend fun getOrderList(
-        @Query("type") type: Int,
-        @Query("search") search : String?=null,
-        @Query("from_date") fromDate : String?=null,
-        @Query("to_date") toDate : String?=null,
-        @Query("country_id") countryId : String?=null,
-        @Query("page") page: Int,
-        @Query("limit") limit: Int? = 10,
-    ): Response<CommonResponse>
+    @GET(Constants.ACTIVE_ORDER_LIST)
+    suspend fun getActiveOrderList(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetActiveOrderResponse>
 
+    @GET(Constants.COMPLETED_ORDER_LIST)
+    suspend fun getCompletedOrderList(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetActiveOrderResponse>
+
+    @GET(Constants.CANCELLED_ORDER_LIST)
+    suspend fun getCancelledOrderList(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetActiveOrderResponse>
+
+    @GET(Constants.RETURN_ORDER_LIST)
+    suspend fun getReturnOrderList(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetActiveOrderResponse>
+
+    @GET(Constants.GET_DRIVER_TO_ASSIGN)
+    suspend fun getDriverToAssign(
+        @Query("order_id") orderId: String
+        ): Response<CommonResponse>
+
+    @POST(Constants.ASSIGN_DRIVER)
+    suspend fun assignDriver(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
 
 }

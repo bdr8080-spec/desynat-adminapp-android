@@ -43,6 +43,7 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDet
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -1122,17 +1123,71 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val orderListLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun getOrderList(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page:Int
+    val activeOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
+    suspend fun getActiveOrderList(map:HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
-                api.getOrderList(type,search,fromDate, toDate, countryId, page)
+                api.getActiveOrderList(map)
             },
-            responseLiveData = orderListLiveData
+            responseLiveData = activeOrderListLiveData
         )
     }
 
+    val completedOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
+    suspend fun getCompletedOrderList(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getCompletedOrderList(map)
+            },
+            responseLiveData = completedOrderListLiveData
+        )
+    }
+
+    val cancelledOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
+    suspend fun getCancelledOrderList(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getCancelledOrderList(map)
+            },
+            responseLiveData = cancelledOrderListLiveData
+        )
+    }
+
+    val returnOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
+    suspend fun getReturnOrderList(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getReturnOrderList(map)
+            },
+            responseLiveData = returnOrderListLiveData
+        )
+    }
+
+    val getAssignDriverListLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getDriverToAssign(orderId:String
+    ) {
+        handleApiCall(
+            api = {
+                api.getDriverToAssign(orderId)
+            },
+            responseLiveData = getAssignDriverListLiveData
+        )
+    }
+
+    val assignDriverLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun assignDriver(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.assignDriver(map)
+            },
+            responseLiveData = assignDriverLiveData
+        )
+    }
 
 }
 

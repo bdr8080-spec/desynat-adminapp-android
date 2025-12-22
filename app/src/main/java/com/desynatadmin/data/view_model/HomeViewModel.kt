@@ -40,6 +40,7 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDet
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -895,13 +896,59 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getOrderListResult: LiveData<CommonResponse>
-        get() = repository.orderListLiveData
+    val getActiveOrderListResult: LiveData<GetActiveOrderResponse>
+        get() = repository.activeOrderListLiveData
 
-    fun getOrderList(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page: Int) {
+    fun getActiveOrderList(map:HashMap<String,Any>) {
         viewModelScope.launch {
-            repository.getOrderList(type,search,fromDate, toDate, countryId, page)
+            repository.getActiveOrderList(map)
         }
     }
+
+    val getCompletedOrderListResult: LiveData<GetActiveOrderResponse>
+        get() = repository.completedOrderListLiveData
+
+    fun getCompletedOrderList(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getCompletedOrderList(map)
+        }
+    }
+
+    val getReturnOrderListResult: LiveData<GetActiveOrderResponse>
+        get() = repository.returnOrderListLiveData
+
+    fun getReturnOrderList(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getReturnOrderList(map)
+        }
+    }
+
+    val getCancelledOrderListResult: LiveData<GetActiveOrderResponse>
+        get() = repository.cancelledOrderListLiveData
+
+    fun getCancelledOrderList(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getCancelledOrderList(map)
+        }
+    }
+
+    val getAssignDriverListResult: LiveData<CommonResponse>
+        get() = repository.getAssignDriverListLiveData
+
+    fun getDriverToAssign(orderId:String) {
+        viewModelScope.launch {
+            repository.getDriverToAssign(orderId)
+        }
+    }
+
+    val assignDriverResult: LiveData<CommonResponse>
+        get() = repository.assignDriverLiveData
+
+    fun assignDriver(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.assignDriver(map)
+        }
+    }
+
 
 }

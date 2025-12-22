@@ -47,7 +47,7 @@
         android:textColor="@color/black"
         android:maxLength="25"
         android:ellipsize="end"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_11sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="@id/tvRequestBy"
         app:layout_constraintEnd_toStartOf="@+id/tvOrderID"
@@ -60,9 +60,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="#28673"
         android:textColor="@color/black"
-        android:maxLength="25"
-        android:ellipsize="end"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@id/tvOrder"
         app:layout_constraintTop_toBottomOf="@id/tvOrder" />
 
@@ -97,7 +95,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="#5372821"
         android:textColor="@color/black"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvTransaction"
         app:layout_constraintTop_toTopOf="@id/tvTransaction" />
@@ -121,7 +119,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="21/08/2024 at 07:30 PM"
         android:textColor="@color/black"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
         app:layout_constraintBottom_toBottomOf="@+id/tvOrderOn"
         app:layout_constraintTop_toTopOf="@id/tvOrderOn" />
@@ -145,7 +143,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="299 KD"
         android:textColor="@color/black"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
         app:layout_constraintBottom_toBottomOf="@+id/tvAmount"
         app:layout_constraintTop_toTopOf="@id/tvAmount" />
@@ -169,7 +167,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="Normal Orders"
         android:textColor="@color/black"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
         app:layout_constraintBottom_toBottomOf="@+id/tvOrderType"
         app:layout_constraintTop_toTopOf="@id/tvOrderType" />

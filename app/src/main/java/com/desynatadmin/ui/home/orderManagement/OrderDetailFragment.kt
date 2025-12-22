@@ -12,7 +12,10 @@ import com.desynatadmin.adapter.ProductAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentOrderDetailBinding
+import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,10 +24,11 @@ class OrderDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
 
-    private var productList = ArrayList<String>()
+    private var productList = ArrayList<GetActiveOrderResponse.Data.Data.OrderDetail>()
     private var productAdapter : ProductAdapter?=null
 
     private var type = 0
+    var orderDetailData: GetActiveOrderResponse.Data.Data?=null
 
 
     override fun onCreateView(
@@ -44,6 +48,9 @@ class OrderDetailFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
+
+        val itemJson = arguments?.getString("orderData")
+        type = arguments?.getInt("type")?:1
         binding?.apply {
 
             productList.clear()
@@ -85,7 +92,33 @@ class OrderDetailFragment : BaseFragment() {
                 }
             }
 
+            if (!itemJson.isNullOrEmpty()) {
+                orderDetailData = Gson().fromJson(itemJson, GetActiveOrderResponse.Data.Data::class.java)
+                setData()
+            }
+
         }
+    }
+
+    private fun setData() {
+        productList.clear()
+        orderDetailData?.orderDetails?.let { productList.addAll(it) }
+        productAdapter?.notifyDataSetChanged()
+
+        binding?.apply {
+            tvOrderIdValue.text = "#${orderDetailData?.orderId}"
+            tvDateTime.text = CommonMethod.customizeChangeDateFormat(orderDetailData?.createdAt.toString(), outputFormat = "dd/MM/yy 'at' hh:mm a")
+            tvOrderTypeValue.text = "Normal Orders"
+            tvCustomerName.text = orderDetailData?.deliveryDetails?.name
+            tvSellerName.text = orderDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.firstName+" "+orderDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.lastName
+            tvDeliveredBy.text = orderDetailData?.deliveryDetails?.name
+            tvCountryValue.text = orderDetailData?.deliveryDetails?.countryName
+            tvShippingLocationValue.text = orderDetailData?.deliveryDetails?.address
+
+            tvTotalAmount.text = "${CommonMethod.formatPrice(orderDetailData?.totalAmount?:0.0)} KD"
+            CommissionEarned.text = "${CommonMethod.formatPrice(orderDetailData?.totalAmount?:0.0)} KD"
+        }
+
     }
 
     override fun initControl() {

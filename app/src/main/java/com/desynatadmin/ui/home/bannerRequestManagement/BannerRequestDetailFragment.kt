@@ -12,6 +12,7 @@ import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
@@ -93,6 +94,11 @@ class BannerRequestDetailFragment : BaseFragment() {
 
     private fun setData() {
         binding?.apply {
+            ivBanner.load(bannerData?.uploadBanner) {
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
             tvName.text = bannerData?.sellerDetails?.firstName+" "+bannerData?.sellerDetails?.lastName
             tvCountry.text = bannerData?.sellerDetails?.countryDetails?.name
             tvRequestId.text = "#${bannerData?.orderId}"
@@ -126,6 +132,8 @@ class BannerRequestDetailFragment : BaseFragment() {
                     btnAccept.isVisible = true
                 }
                 "1"->{
+                    btnReject.isVisible = false
+                    btnAccept.isVisible = false
                     tvAmountPaid.isVisible = true
                     tvAmountPaidStatus.isVisible = true
                     tvStatus.setTextColor(Color.parseColor("#68CA44"))
@@ -144,6 +152,8 @@ class BannerRequestDetailFragment : BaseFragment() {
                     }
                 }
                 "2"->{
+                    btnReject.isVisible = false
+                    btnAccept.isVisible = false
                     tvStatus.text = "Rejected"
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                     tvReason.isVisible = true
@@ -170,10 +180,28 @@ class BannerRequestDetailFragment : BaseFragment() {
             }
 
             btnAccept.setOnClickListener {
-
+                acceptRequest()
             }
         }
     }
+
+    private fun acceptRequest(){
+        val map = HashMap<String,Any>()
+        map["banner_id"] = bannerData?.id.toString()
+        viewModel.approveBannerRequest(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun rejectRequest(reason:String){
+        val map = HashMap<String,Any>()
+        map["banner_id"] = bannerData?.id.toString()
+        map["reason"] = reason
+        viewModel.rejectBannerRequest(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
 
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
@@ -182,6 +210,28 @@ class BannerRequestDetailFragment : BaseFragment() {
                 isObserver = false
             }
         }
+
+        viewModel.approveBannerRequestResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                CommonMethod.showSuccessDialog(
+                    requireActivity(),
+                    "Banner request accepted successfully"
+                ) {
+                   bannerData?.adminVerify = "1"
+                    setData()
+                }
+            }
+        }
+
+        viewModel.rejectBannerRequestResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                CommonMethod.showSuccessDialog(requireActivity(),"Banner request rejected successfully"){
+                    bannerData?.adminVerify = "2"
+                    setData()
+                }
+            }
+        }
+
     }
 
     private fun rejectReasonDialog() {
@@ -213,6 +263,7 @@ class BannerRequestDetailFragment : BaseFragment() {
                     showToast("Please enter reason")
                 }
                 else{
+                    rejectRequest(etReason.text?.trim().toString())
                     dialog.dismiss()
                 }
             }

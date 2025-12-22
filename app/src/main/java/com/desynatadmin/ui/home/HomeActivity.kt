@@ -277,6 +277,11 @@ override fun onBackPressed() {
                 controller.navigate(R.id.affiliateCommission)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
+
+            rlOrderManagement.setOnClickListener {
+                controller.navigate(R.id.order)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
         }
 
     }

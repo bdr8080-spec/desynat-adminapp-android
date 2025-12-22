@@ -41,7 +41,7 @@ data class GetBannerRequestResponse(
     ) {
         data class Data(
             @SerializedName("Admin_verify")
-            val adminVerify: String,
+            var adminVerify: String,
             @SerializedName("banner_position")
             val bannerPosition: String,
             @SerializedName("cancelled_reason")

@@ -363,6 +363,7 @@
             android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvReturn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -694,7 +695,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalAmount"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCommission"
                 app:layout_constraintTop_toTopOf="@id/tvCommission" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

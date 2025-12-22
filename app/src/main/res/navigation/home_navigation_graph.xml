@@ -304,4 +304,23 @@
         android:label="Affiliate Commission Fragment"
         tools:layout="@layout/fragment_affiliate_commission"/>
 
+    <fragment
+        android:id="@+id/order"
+        android:name="com.desynatadmin.ui.home.orderManagement.OrderManagementFragment"
+        android:label="Order Management Fragment"
+        tools:layout="@layout/fragment_order_management">
+
+        <action
+            android:id="@+id/action_orderFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetail"
+        android:name="com.desynatadmin.ui.home.orderManagement.OrderDetailFragment"
+        android:label="Order Detail Fragment"
+        tools:layout="@layout/fragment_order_detail"/>
+
+
 </navigation>

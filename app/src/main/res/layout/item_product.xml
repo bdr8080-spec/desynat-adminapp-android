@@ -35,7 +35,8 @@
         android:fontFamily="@font/poppins_semi_bold"
         android:text="Nike Shirt"
         android:textColor="@color/black"
-        android:textSize="@dimen/_11sdp"
+        android:textSize="@dimen/_10sdp"
+        android:maxLines="2"
         app:layout_constraintStart_toEndOf="@+id/ivProduct"
         app:layout_constraintEnd_toStartOf="@+id/tvPrice"
         app:layout_constraintTop_toTopOf="@+id/ivProduct" />

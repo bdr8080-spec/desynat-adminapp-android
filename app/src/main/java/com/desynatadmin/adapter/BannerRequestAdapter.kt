@@ -36,7 +36,6 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var bannerRequestData = bannerList[position]
         holder.binding.apply {
-
             tvName.text = bannerRequestData.sellerDetails?.firstName+" "+bannerRequestData.sellerDetails?.lastName
             tvCountry.text = bannerRequestData.sellerDetails?.countryDetails?.name
             tvRequestId.text = "#${bannerRequestData.orderId}"

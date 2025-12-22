@@ -4,9 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemProductBinding
+import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
+import com.desynatadmin.utils.CommonMethod
 
-class ProductAdapter(var context:Context, var productList: ArrayList<String>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(var context:Context, var productList: ArrayList<GetActiveOrderResponse.Data.Data.OrderDetail>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -23,7 +27,20 @@ class ProductAdapter(var context:Context, var productList: ArrayList<String>) : 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var productData = productList[position]
         holder.binding.apply {
+            tvCount.text = if(position<10) "0${position}" else position.toString()
+            tvProduct.text = productData?.productDetails?.productNameEn
+            tvPrice.text = "${CommonMethod.formatPrice(productData?.amount?:0.0)} KD"
+            tvFabric.text = productData?.productDetails?.brand?.nameEnglish
+            tvSizeValue.text = productData?.variationDetails?.size?.name
+            tvColorValue.text = productData?.variationDetails?.color?.name
+            tvCategoryValue.text = productData?.productDetails?.category?.name
+            tvQuantityValue.text = productData?.quantity?.toString()
 
+            ivProduct.load(productData?.variationDetails?.variantImage?.get(0)) {
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
         }
 
 
