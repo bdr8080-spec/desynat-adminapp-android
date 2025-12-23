@@ -12,6 +12,7 @@ import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateComm
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectionResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -1090,7 +1091,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val rejectBannerRequestLiveData = SingleLiveEvent<CommonResponse>()
+    val rejectBannerRequestLiveData = SingleLiveEvent<RejectionResponse>()
     suspend fun rejectBannerRequest(map:HashMap<String,Any>
     ) {
         handleApiCall(

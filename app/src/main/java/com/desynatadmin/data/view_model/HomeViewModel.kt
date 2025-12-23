@@ -9,6 +9,7 @@ import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateComm
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectionResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -869,7 +870,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val rejectBannerRequestResult: LiveData<CommonResponse>
+    val rejectBannerRequestResult: LiveData<RejectionResponse>
         get() = repository.rejectBannerRequestLiveData
 
     fun rejectBannerRequest(map:HashMap<String,Any>) {

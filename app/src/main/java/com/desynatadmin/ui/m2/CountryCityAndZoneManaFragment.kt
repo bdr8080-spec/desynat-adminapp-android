@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.desynatadmin.R
 import com.desynatadmin.adapter.CityListAdapter
 import com.desynatadmin.adapter.ListAdapter
@@ -44,6 +45,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     private var key = "1"
     private var pageNo = 1
     private var lastPage = 1
+
+    private lateinit var countryAdapter: ListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,6 +84,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     }
 
     override fun initView() {
+        setupCountryRecycler()
         viewModel.getCountry()
         binding?.apply {
             recyclerView.visibility = View.VISIBLE
@@ -332,19 +336,29 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             )
             binding?.tvDropdown?.text = response?.data?.get(0)?.name
             countryId = response?.data?.get(0)?.id.toString()
-            binding?.countryRecycler?.adapter =
-                ListAdapter(response.data, object : ListAdapter.OnCLick {
+
+            if (!response?.data.isNullOrEmpty()) {
+                countryAdapter.updateList(response.data)
+                binding?.countryRecycler?.isVisible = true
+            }
+
+           /* binding?.countryRecycler?.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = ListAdapter(response.data, object : ListAdapter.OnCLick {
                     override fun onClick(position: Int) {
                         cuountyVisible = false
-                        binding?.countryRecycler?.isVisible = false
-                        countryId = response?.data?.get(position)?.id.toString()
-                        binding?.tvDropdown?.text = response?.data?.get(position)?.name
+                        isVisible = false
+                        countryId = response.data[position].id.toString()
+                        binding?.tvDropdown?.text = response.data[position].name
+
                         viewModel.hitCity(
                             SharedPreference.get(requireContext()).accessToken,
                             countryId
                         )
                     }
                 })
+            }*/
+
         }
 
         viewModel.hitCityList.observe(viewLifecycleOwner) { response ->
@@ -414,4 +428,29 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         super.onDestroyView()
         binding = null
     }
+
+    private fun setupCountryRecycler() {
+        countryAdapter = ListAdapter(mutableListOf(), object : ListAdapter.OnCLick {
+            override fun onClick(position: Int) {
+                cuountyVisible = false
+                binding?.countryRecycler?.isVisible = false
+
+                val country = countryAdapter.getItem(position)
+                countryId = country.id.toString()
+                binding?.tvDropdown?.text = country.name
+
+                viewModel.hitCity(
+                    SharedPreference.get(requireContext()).accessToken,
+                    countryId
+                )
+            }
+        })
+
+        binding?.countryRecycler?.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = countryAdapter
+            setHasFixedSize(true)
+        }
+    }
+
 }

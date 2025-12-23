@@ -31,8 +31,6 @@ class BannerRequestDetailFragment : BaseFragment() {
     private var binding: FragmentBannerRequestDetailBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-
-    private var type = 1
     var bannerData: GetBannerRequestResponse.Data.Data?=null
 
 
@@ -63,8 +61,8 @@ class BannerRequestDetailFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = "Details"
 
-            when(type){
-                1->{
+            when(bannerData?.adminVerify){
+                "0"->{
                     btnAccept.isVisible = true
                     btnReject.isVisible = true
                     tvReason.isVisible = false
@@ -72,15 +70,21 @@ class BannerRequestDetailFragment : BaseFragment() {
                     tvStatus.text = "New"
                     tvStatus.setTextColor(Color.parseColor("#68CA44"))
                 }
-                2->{
+                "1"->{
                     btnAccept.isVisible = false
                     btnReject.isVisible = false
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
-                    tvStatus.text = "Active"
+                    if (bannerData?.paymentStatus=="0"){
+                        tvStatus.text = "Upcoming"
+                    }
+                    else{
+                        tvStatus.text = "Active"
+                    }
+
                     tvStatus.setTextColor(Color.parseColor("#68CA44"))
                 }
-                3->{
+                "2"->{
                     btnAccept.isVisible = false
                     btnReject.isVisible = false
                     tvReason.isVisible = true
@@ -227,6 +231,7 @@ class BannerRequestDetailFragment : BaseFragment() {
             if (isObserver) {
                 CommonMethod.showSuccessDialog(requireActivity(),"Banner request rejected successfully"){
                     bannerData?.adminVerify = "2"
+                    bannerData?.cancelledReason = response.data.cancelledReason
                     setData()
                 }
             }

@@ -94,7 +94,8 @@
                 android:text="#4556896"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp"
-                android:textAlignment="textEnd"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintEnd_toStartOf="@+id/tvDateTime"
                 app:layout_constraintStart_toStartOf="@+id/tvOrderId"
                 app:layout_constraintTop_toBottomOf="@id/tvOrderId" />
 
@@ -107,7 +108,7 @@
                 android:textColor="#80000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvOrderId" />
+                app:layout_constraintTop_toTopOf="@+id/tvOrderId"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDateTime"
@@ -120,7 +121,7 @@
                 android:textAlignment="textEnd"
                 android:layout_marginStart="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="@+id/tvDate"
-                app:layout_constraintTop_toBottomOf="@id/tvDate" />
+                app:layout_constraintTop_toBottomOf="@id/tvDate"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivOrderTypeBag"
@@ -378,6 +379,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvReason"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -392,6 +394,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvReturn"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvReturnReason"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

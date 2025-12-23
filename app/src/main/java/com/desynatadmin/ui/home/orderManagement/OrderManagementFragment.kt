@@ -356,7 +356,6 @@ class OrderManagementFragment : BaseFragment() {
             }
         }
 
-
         viewModel.getActiveOrderListResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()

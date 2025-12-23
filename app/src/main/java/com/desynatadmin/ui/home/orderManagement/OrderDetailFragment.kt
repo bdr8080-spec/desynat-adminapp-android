@@ -23,6 +23,7 @@ class OrderDetailFragment : BaseFragment() {
     private var binding: FragmentOrderDetailBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isDriverObserver = true
 
     private var productList = ArrayList<GetActiveOrderResponse.Data.Data.OrderDetail>()
     private var productAdapter : ProductAdapter?=null
@@ -95,6 +96,7 @@ class OrderDetailFragment : BaseFragment() {
             if (!itemJson.isNullOrEmpty()) {
                 orderDetailData = Gson().fromJson(itemJson, GetActiveOrderResponse.Data.Data::class.java)
                 setData()
+                getAssignDriver(orderDetailData?.id.toString())
             }
 
         }
@@ -141,11 +143,43 @@ class OrderDetailFragment : BaseFragment() {
 
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            if (isObserver||isDriverObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                isObserver = false
+                isDriverObserver = false
+            }
+        }
+
+        viewModel.assignDriverResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+
                 isObserver = false
             }
         }
+
+        viewModel.getAssignDriverListResult.observe(viewLifecycleOwner) { response ->
+            if (isDriverObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+
+                isDriverObserver = false
+            }
+        }
+    }
+
+    private fun getAssignDriver(orderId:String) {
+        viewModel.getDriverToAssign(orderId)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isDriverObserver = true
+    }
+
+    private fun assignDriver(orderId:String,driverId:String) {
+        val map = HashMap<String,Any>()
+        map["driver_id"] = driverId
+        map["order_id"] = orderId
+        viewModel.assignDriver(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
     }
 
 }

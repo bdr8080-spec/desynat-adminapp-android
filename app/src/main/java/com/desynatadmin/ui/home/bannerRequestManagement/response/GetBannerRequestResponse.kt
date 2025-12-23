@@ -45,7 +45,7 @@ data class GetBannerRequestResponse(
             @SerializedName("banner_position")
             val bannerPosition: String,
             @SerializedName("cancelled_reason")
-            val cancelledReason: String,
+            var cancelledReason: String,
             @SerializedName("category")
             val category: String,
             @SerializedName("category_details")

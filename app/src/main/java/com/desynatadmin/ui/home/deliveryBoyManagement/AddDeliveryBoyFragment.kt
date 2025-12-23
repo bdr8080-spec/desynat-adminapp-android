@@ -369,38 +369,35 @@ class AddDeliveryBoyFragment : BaseFragment() {
                 error(R.drawable.ic_upload_image)
             }
 
-            drivingLicense1 = deliveryBoyData?.drivingLicense?.get(0)?.documentPath
-            drivingLicense2 = deliveryBoyData?.drivingLicense?.get(1)?.documentPath
+            drivingLicense1 = deliveryBoyData?.drivingLicense?.getOrNull(0)?.documentPath
+            drivingLicense2 = deliveryBoyData?.drivingLicense?.getOrNull(1)?.documentPath
 
-            vehicleImage1 = deliveryBoyData?.vehicleImage?.get(0)?.documentPath
+            vehicleImage1 = deliveryBoyData?.vehicleImage?.getOrNull(0)?.documentPath
+            vehicleImage2 = deliveryBoyData?.vehicleImage?.getOrNull(1)?.documentPath
 
-            vehicleImage2 = deliveryBoyData?.vehicleImage?.get(1)?.documentPath
+            identityProof1 = deliveryBoyData?.identityProof?.getOrNull(0)?.documentPath
+            identityProof2 = deliveryBoyData?.identityProof?.getOrNull(1)?.documentPath
 
-            identityProof1 = deliveryBoyData?.identityProof?.get(0)?.documentPath
-            identityProof2 = deliveryBoyData?.identityProof?.get(1)?.documentPath
+            registrationCertificate1 = deliveryBoyData?.registrationCertificate?.getOrNull(0)?.documentPath
+            registrationCertificate2 = deliveryBoyData?.registrationCertificate?.getOrNull(1)?.documentPath
 
-            registrationCertificate1 = deliveryBoyData?.registrationCertificate?.get(0)?.documentPath
+            pollutionPaper = deliveryBoyData?.pollutionPaper?.getOrNull(0)?.documentPath
+            vehicleInsurance = deliveryBoyData?.vehicleInsurance?.getOrNull(0)?.documentPath
 
-            registrationCertificate2 = deliveryBoyData?.registrationCertificate?.get(1)?.documentPath
+            loadDocument(ivDriving1, deliveryBoyData?.drivingLicense?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
+            loadDocument(ivDriving2, deliveryBoyData?.drivingLicense?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
 
-            pollutionPaper = deliveryBoyData?.pollutionPaper?.get(0)?.documentPath
+            loadDocument(ivVehicle1, deliveryBoyData?.vehicleImage?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
+            loadDocument(ivVehicle2, deliveryBoyData?.vehicleImage?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
 
-            vehicleInsurance = deliveryBoyData?.vehicleInsurance?.get(0)?.documentPath
+            loadDocument(ivIdentity1, deliveryBoyData?.identityProof?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
+            loadDocument(ivIdentity2, deliveryBoyData?.identityProof?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
 
-            loadDocument(ivPollutionPaper, deliveryBoyData?.pollutionPaper?.get(0)?.documentPath,R.drawable.ic_front_img)
-            loadDocument(ivRegistration1, deliveryBoyData?.registrationCertificate?.get(0)?.documentPath,R.drawable.ic_front_img)
-            loadDocument(ivRegistration2, deliveryBoyData?.registrationCertificate?.get(0)?.documentPath,R.drawable.ic_back_img)
+            loadDocument(ivRegistration1, deliveryBoyData?.registrationCertificate?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
+            loadDocument(ivRegistration2, deliveryBoyData?.registrationCertificate?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
 
-            loadDocument(ivDriving1, deliveryBoyData?.drivingLicense?.get(0)?.documentPath,R.drawable.ic_front_img)
-            loadDocument(ivDriving2, deliveryBoyData?.drivingLicense?.get(1)?.documentPath,R.drawable.ic_back_img)
-
-            loadDocument(ivVehicle1, deliveryBoyData?.vehicleImage?.get(0)?.documentPath,R.drawable.ic_front_img)
-            loadDocument(ivVehicle2, deliveryBoyData?.vehicleImage?.get(1)?.documentPath,R.drawable.ic_back_img)
-
-            loadDocument(ivIdentity1, deliveryBoyData?.identityProof?.get(0)?.documentPath,R.drawable.ic_front_img)
-            loadDocument(ivIdentity2, deliveryBoyData?.identityProof?.get(1)?.documentPath,R.drawable.ic_back_img)
-
-            loadDocument(ivVehicleInsurance, deliveryBoyData?.vehicleInsurance?.get(0)?.documentPath,R.drawable.ic_front_img)
+            loadDocument(ivPollutionPaper, deliveryBoyData?.pollutionPaper?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
+            loadDocument(ivVehicleInsurance, deliveryBoyData?.vehicleInsurance?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
 
         }
     }

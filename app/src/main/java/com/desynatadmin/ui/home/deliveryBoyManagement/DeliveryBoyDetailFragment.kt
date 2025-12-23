@@ -75,42 +75,56 @@ class DeliveryBoyDetailFragment : BaseFragment() {
             }
 
 
-            if (deliveryBoyData?.registrationCertificate!=null) {
-                if(deliveryBoyData?.registrationCertificate?.get(0)==null){
-                    ivRegistration1.isVisible = false
-                }
-                if(deliveryBoyData?.registrationCertificate?.get(1)==null){
-                    ivRegistration2.isVisible = false
-                }
+            val registrationList = deliveryBoyData?.registrationCertificate
 
+            if (!registrationList.isNullOrEmpty()) {
 
-                loadDocument(ivRegistration1, deliveryBoyData?.registrationCertificate?.get(0)?.documentPath)
-                loadDocument(ivRegistration2, deliveryBoyData?.registrationCertificate?.get(1)?.documentPath)
+                val regFront = registrationList.getOrNull(0)?.documentPath
+                val regBack = registrationList.getOrNull(1)?.documentPath
 
-            }
-            else{
+                ivRegistration1.isVisible = !regFront.isNullOrEmpty()
+                ivRegistration2.isVisible = !regBack.isNullOrEmpty()
+
+                loadDocument(ivRegistration1, regFront)
+                loadDocument(ivRegistration2, regBack)
+
+            } else {
                 tvRegistration.isVisible = false
                 llRegistration.isVisible = false
             }
 
-            if (deliveryBoyData?.pollutionPaper!=null){
-                loadDocument(ivPollutionPaper, deliveryBoyData?.pollutionPaper?.get(0)?.documentPath)
-            }
-            else{
+
+            val pollution = deliveryBoyData?.pollutionPaper?.getOrNull(0)?.documentPath
+
+            if (!pollution.isNullOrEmpty()) {
+                loadDocument(ivPollutionPaper, pollution)
+            } else {
                 tvPollutionPaper.isVisible = false
                 llPollutionPaper.isVisible = false
             }
 
-            loadDocument(ivDriving1, deliveryBoyData?.drivingLicense?.get(0)?.documentPath)
-            loadDocument(ivDriving2, deliveryBoyData?.drivingLicense?.get(1)?.documentPath)
+            val driving = deliveryBoyData?.drivingLicense
 
-            loadDocument(ivVehicle1, deliveryBoyData?.vehicleImage?.get(0)?.documentPath)
-            loadDocument(ivVehicle2, deliveryBoyData?.vehicleImage?.get(1)?.documentPath)
+            loadDocument(ivDriving1, driving?.getOrNull(0)?.documentPath)
+            ivDriving2.isVisible = driving?.size ?: 0 > 1
+            loadDocument(ivDriving2, driving?.getOrNull(1)?.documentPath)
 
-            loadDocument(ivIdentity1, deliveryBoyData?.identityProof?.get(0)?.documentPath)
-            loadDocument(ivIdentity2, deliveryBoyData?.identityProof?.get(1)?.documentPath)
+            val vehicle = deliveryBoyData?.vehicleImage
 
-            loadDocument(ivVehicleInsurance, deliveryBoyData?.vehicleInsurance?.get(0)?.documentPath)
+            loadDocument(ivVehicle1, vehicle?.getOrNull(0)?.documentPath)
+            ivVehicle2.isVisible = vehicle?.size ?: 0 > 1
+            loadDocument(ivVehicle2, vehicle?.getOrNull(1)?.documentPath)
+
+            val identity = deliveryBoyData?.identityProof
+
+            loadDocument(ivIdentity1, identity?.getOrNull(0)?.documentPath)
+            ivIdentity2.isVisible = identity?.size ?: 0 > 1
+            loadDocument(ivIdentity2, identity?.getOrNull(1)?.documentPath)
+
+            loadDocument(
+                ivVehicleInsurance,
+                deliveryBoyData?.vehicleInsurance?.getOrNull(0)?.documentPath
+            )
 
         }
     }

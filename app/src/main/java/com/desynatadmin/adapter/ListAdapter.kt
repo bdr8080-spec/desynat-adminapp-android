@@ -7,8 +7,10 @@ import com.desynatadmin.databinding.SimpleItemLayoutBinding
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 
-class ListAdapter(val list: List<out Any>, val click: OnCLick) :
-    RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class ListAdapter(
+    private val list: MutableList<Any>,
+    private val click: OnCLick
+) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     inner class ListViewHolder(val binding: SimpleItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -44,6 +46,15 @@ class ListAdapter(val list: List<out Any>, val click: OnCLick) :
                 )
             }
         }
+    }
+
+    fun getItem(position: Int): Any = list[position]
+
+
+    fun updateList(newList: List<Any>) {
+        list.clear()
+        list.addAll(newList)
+        notifyDataSetChanged()
     }
 
     interface OnCLick {
