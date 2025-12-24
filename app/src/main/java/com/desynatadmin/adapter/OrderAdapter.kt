@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemOrderBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.utils.CommonMethod
@@ -32,28 +34,23 @@ class OrderAdapter(var context:Context, var orderList: ArrayList<GetActiveOrderR
         holder.binding.apply {
 
             tvName.text = orderData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.firstName+" "+orderData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.lastName
-            tvOrderID.text = "#${orderData?.orderId}"
+            tvOrderID.text = "#${orderData?.id}"
             tvTransactionId.text = "#${orderData?.transactionId}"
             tvOrderOnValue.text = CommonMethod.customizeChangeDateFormat(orderData.createdAt, outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(orderData?.totalAmount?:0.0)} KD"
             tvOrderTypeValue.text = "Normal Orders"
 
-
-            var type = 1
-            when(type){
-                1->{
+            when(orderData?.deliveryStatus) {
+                "1" -> {
                     btnAssignOrder.isVisible = true
                 }
-                2->{
-                    btnAssignOrder.isVisible = true
-                }
-                3->{
-                    btnAssignOrder.isVisible = false
-                }
-                4->{
-                    btnAssignOrder.isVisible = false
-                }
 
+                "3" -> {
+                    btnAssignOrder.isVisible = false
+                }
+                "7" -> {
+                    btnAssignOrder.isVisible = false
+                }
             }
             btnAssignOrder.setOnClickListener {
                 onClick.onItemClick(position,1)

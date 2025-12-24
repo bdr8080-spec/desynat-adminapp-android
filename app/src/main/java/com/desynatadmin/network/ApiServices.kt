@@ -39,6 +39,8 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResp
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -580,6 +582,11 @@ interface ApiServices {
         @QueryMap map: HashMap<String,Any>
     ): Response<GetActiveOrderResponse>
 
+    @GET(Constants.ORDER_DETAIL)
+    suspend fun getOrderDetail(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetSingleOrderDetailResponse>
+
     @GET(Constants.COMPLETED_ORDER_LIST)
     suspend fun getCompletedOrderList(
         @QueryMap map: HashMap<String,Any>
@@ -598,7 +605,7 @@ interface ApiServices {
     @GET(Constants.GET_DRIVER_TO_ASSIGN)
     suspend fun getDriverToAssign(
         @Query("order_id") orderId: String
-        ): Response<CommonResponse>
+        ): Response<GetAvailableDeliveryBoyResponse>
 
     @POST(Constants.ASSIGN_DRIVER)
     suspend fun assignDriver(

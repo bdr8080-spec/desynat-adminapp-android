@@ -338,6 +338,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvCancelReason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -349,6 +350,7 @@
             android:textSize="@dimen/_12sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvCancellationReason"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -410,6 +412,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/llComplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -426,11 +429,15 @@
                 android:textSize="@dimen/_12sdp"/>
 
             <androidx.appcompat.widget.AppCompatRatingBar
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:stepSize="5"
                 android:rating="2"
+                android:isIndicator="true"
+                android:progressTint="#FFA41B"
+                android:secondaryProgressTint="#FFA41B"
+                android:backgroundTint="#EAECF0"
                 style="@style/Widget.AppCompat.RatingBar"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -461,11 +468,15 @@
                 android:textSize="@dimen/_12sdp"/>
 
             <androidx.appcompat.widget.AppCompatRatingBar
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:stepSize="5"
                 android:rating="2"
+                android:isIndicator="true"
+                android:progressTint="#FFA41B"
+                android:secondaryProgressTint="#FFA41B"
+                android:backgroundTint="#EAECF0"
                 style="@style/Widget.AppCompat.RatingBar"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -565,7 +576,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Picked"
+                android:text="Shipped"
                 android:textColor="@color/brown"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@+id/ivPicked"
@@ -611,24 +622,24 @@
                 app:layout_constraintTop_toTopOf="@+id/ivConfirmed"
                 app:layout_constraintBottom_toBottomOf="@+id/ivConfirmed"
                 app:layout_constraintStart_toEndOf="@+id/ivOnTheWay"
-                app:layout_constraintEnd_toStartOf="@+id/ivReturned"/>
+                app:layout_constraintEnd_toStartOf="@+id/ivDelivered"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivReturned"
+                android:id="@+id/ivDelivered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_order_picked"
+                android:src="@drawable/ic_delivered_tab"
                 android:layout_marginEnd="@dimen/_15sdp"
                 app:layout_constraintTop_toTopOf="@+id/ivConfirmed"
                 app:layout_constraintStart_toEndOf="@+id/viewOnTheWay"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvReturned"
+                android:id="@+id/tvDeliveredText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Returned"
+                android:text="Delivered"
                 android:textColor="@color/brown"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -726,6 +737,7 @@
             android:layout_marginBottom="@dimen/_20sdp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
             android:id="@+id/clDriver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

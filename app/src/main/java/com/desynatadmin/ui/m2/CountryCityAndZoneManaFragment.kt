@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.desynatadmin.R
 import com.desynatadmin.adapter.CityListAdapter
 import com.desynatadmin.adapter.ListAdapter
@@ -21,6 +20,7 @@ import com.desynatadmin.databinding.AddCityBottomsheetBinding
 import com.desynatadmin.databinding.FragmentCountryCityAndZoneManaBinding
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
@@ -37,6 +37,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     private lateinit var navController: NavController
     private var cityList: ArrayList<CityResponse.Data>? = arrayListOf()
     private var serviceCityList: ArrayList<ServiceCityListResponse.Data.Data>? = arrayListOf()
+    private var countryList = ArrayList<GetCountryResponse.Data>()
     private lateinit var cityAdapter: CityListAdapter
     private var isObserver = true
     var cuountyVisible = false
@@ -45,8 +46,6 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     private var key = "1"
     private var pageNo = 1
     private var lastPage = 1
-
-    private lateinit var countryAdapter: ListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,8 +83,16 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     }
 
     override fun initView() {
-        setupCountryRecycler()
-        viewModel.getCountry()
+        if(SharedPreference.get(requireActivity()).getCountryList() == null) {
+            viewModel.getCountry()
+        }
+        else{
+            countryList.clear()
+            SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
+            setCountry()
+
+        }
+
         binding?.apply {
             recyclerView.visibility = View.VISIBLE
             zoneListRecyclerView.visibility = View.GONE
@@ -336,29 +343,19 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             )
             binding?.tvDropdown?.text = response?.data?.get(0)?.name
             countryId = response?.data?.get(0)?.id.toString()
-
-            if (!response?.data.isNullOrEmpty()) {
-                countryAdapter.updateList(response.data)
-                binding?.countryRecycler?.isVisible = true
-            }
-
-           /* binding?.countryRecycler?.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = ListAdapter(response.data, object : ListAdapter.OnCLick {
+            binding?.countryRecycler?.adapter =
+                ListAdapter(response.data, object : ListAdapter.OnCLick {
                     override fun onClick(position: Int) {
                         cuountyVisible = false
-                        isVisible = false
-                        countryId = response.data[position].id.toString()
-                        binding?.tvDropdown?.text = response.data[position].name
-
+                        binding?.countryRecycler?.isVisible = false
+                        countryId = response?.data?.get(position)?.id.toString()
+                        binding?.tvDropdown?.text = response?.data?.get(position)?.name
                         viewModel.hitCity(
                             SharedPreference.get(requireContext()).accessToken,
                             countryId
                         )
                     }
                 })
-            }*/
-
         }
 
         viewModel.hitCityList.observe(viewLifecycleOwner) { response ->
@@ -423,34 +420,34 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         )
     }
 
+    private fun setCountry() {
+        if (!countryList.isNullOrEmpty()) {
+            SharedPreference.get(requireActivity()).saveCountryList(countryList)
+            binding?.tvDropdown?.setText(countryList[0].name)
+            viewModel.hitCity(
+                SharedPreference.get(requireContext()).accessToken,
+                countryList?.get(0)?.id.toString()
+            )
+            binding?.tvDropdown?.text = countryList?.get(0)?.name
+            countryId = countryList?.get(0)?.id.toString()
+            binding?.countryRecycler?.adapter =
+                ListAdapter(countryList, object : ListAdapter.OnCLick {
+                    override fun onClick(position: Int) {
+                        cuountyVisible = false
+                        binding?.countryRecycler?.isVisible = false
+                        countryId = countryList?.get(position)?.id.toString()
+                        binding?.tvDropdown?.text = countryList?.get(position)?.name
+                        viewModel.hitCity(
+                            SharedPreference.get(requireContext()).accessToken,
+                            countryId
+                        )
+                    }
+                })
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
-
-    private fun setupCountryRecycler() {
-        countryAdapter = ListAdapter(mutableListOf(), object : ListAdapter.OnCLick {
-            override fun onClick(position: Int) {
-                cuountyVisible = false
-                binding?.countryRecycler?.isVisible = false
-
-                val country = countryAdapter.getItem(position)
-                countryId = country.id.toString()
-                binding?.tvDropdown?.text = country.name
-
-                viewModel.hitCity(
-                    SharedPreference.get(requireContext()).accessToken,
-                    countryId
-                )
-            }
-        })
-
-        binding?.countryRecycler?.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = countryAdapter
-            setHasFixedSize(true)
-        }
-    }
-
 }

@@ -70,7 +70,7 @@ class SellerManagementActivity : AppCompatActivity() {
         binding.filter.setOnClickListener {
             filterBottomSheet()
         }
-        viewModel.getCountry()
+        viewModel.getCountryList()
         binding.etSearch.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -100,7 +100,7 @@ class SellerManagementActivity : AppCompatActivity() {
     }
 
     private fun observer(){
-        viewModel.getCountryResult.observe(this) { response ->
+        viewModel.getCountryListResult.observe(this) { response ->
                 countryList.clear()
                 countryList.addAll(response.data)
 

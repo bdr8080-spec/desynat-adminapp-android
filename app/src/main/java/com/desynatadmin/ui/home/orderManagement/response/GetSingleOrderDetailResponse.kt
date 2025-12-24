@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GetSingleOrderDetailResponse(
     @SerializedName("data")
-    val `data`: List<GetActiveOrderResponse.Data.Data>,
+    val `data`:GetActiveOrderResponse.Data.Data,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")

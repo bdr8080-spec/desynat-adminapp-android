@@ -226,12 +226,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"
-        android:id="@+id/tvAmount"
+        android:id="@+id/tvPaymentStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Amount"
+        android:text="Payment Status"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="@id/tvRequest"
@@ -239,7 +239,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"
-        android:id="@+id/tvAmountValue"
+        android:id="@+id/tvPaymentStatusValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
@@ -247,8 +247,8 @@
         android:textColor="#68CA44"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/tvRequestId"
-        app:layout_constraintBottom_toBottomOf="@+id/tvAmount"
-        app:layout_constraintTop_toTopOf="@id/tvAmount" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvPaymentStatus"
+        app:layout_constraintTop_toTopOf="@id/tvPaymentStatus" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"
@@ -267,7 +267,7 @@
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toStartOf="@id/btnAccept"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAmount" />
+        app:layout_constraintTop_toBottomOf="@id/tvPaymentStatus" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"

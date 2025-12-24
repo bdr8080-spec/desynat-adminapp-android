@@ -17,13 +17,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateCommissionAdapter
+import com.desynatadmin.adapter.AssignDriverAdapter
 import com.desynatadmin.adapter.OrderAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.AssignDriverDialogBinding
 import com.desynatadmin.databinding.FragmentOrderManagementBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -46,6 +49,7 @@ class OrderManagementFragment : BaseFragment() {
 
     private var type = 1 //1-active,2-exchange,3-complete,4-cancelled
 
+    private var selectedPos = -1
     private var currentPage = 1
     private var lastPage = 1
     private var totalPage = 0
@@ -64,6 +68,11 @@ class OrderManagementFragment : BaseFragment() {
     var toTimestamp = 0L
     var countryId:String?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
+
+    private var assignDriverAdapter : AssignDriverAdapter?=null
+    private var selectedDriver: GetAvailableDeliveryBoyResponse.Data?=null
+    private var assignDriverList = ArrayList<GetAvailableDeliveryBoyResponse.Data>()
+    private var dialogDriver: Dialog?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,7 +99,8 @@ class OrderManagementFragment : BaseFragment() {
                 override fun onItemClick(position: Int,clickType:Int) {
                     when(clickType){
                         1->{
-
+                            selectedPos = position
+                            assignDriverDialog()
                         }
                         2->{
                             val bundle = Bundle().apply {
@@ -271,6 +281,7 @@ class OrderManagementFragment : BaseFragment() {
             }
 
             tvActive.setOnClickListener {
+                currentPage = 1
                 type = 1
                 getActiveOrder()
                 tvActive.setTextColor(requireActivity().getColor(R.color.white))
@@ -284,6 +295,7 @@ class OrderManagementFragment : BaseFragment() {
             }
 
             tvReturnExchange.setOnClickListener {
+                currentPage = 1
                 type = 2
                 getReturnOrder()
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.white))
@@ -297,6 +309,7 @@ class OrderManagementFragment : BaseFragment() {
             }
 
             tvCompleted.setOnClickListener {
+                currentPage = 1
                 type = 3
                 getCompletedOrder()
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.white))
@@ -310,6 +323,7 @@ class OrderManagementFragment : BaseFragment() {
             }
 
             tvCancelled.setOnClickListener {
+                currentPage = 1
                 type = 4
                 getCancelledOrder()
                 tvCancelled.setTextColor(requireActivity().getColor(R.color.white))
@@ -343,7 +357,10 @@ class OrderManagementFragment : BaseFragment() {
         viewModel.assignDriverResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-
+                dialogDriver?.dismiss()
+                CommonMethod.showSuccessDialog(requireActivity(),"Driver assigned successfully"){
+                    getActiveOrder()
+                }
                 isObserver = false
             }
         }
@@ -351,10 +368,197 @@ class OrderManagementFragment : BaseFragment() {
         viewModel.getAssignDriverListResult.observe(viewLifecycleOwner) { response ->
             if (isDriverObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-
+                assignDriverList.clear()
+                assignDriverList.addAll(response.data)
+                assignDriverAdapter?.notifyDataSetChanged()
                 isDriverObserver = false
             }
         }
+
+        viewModel.getCompletedOrderListResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderList.size
+                if (!pagination){
+                    orderList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                orderList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        orderAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    orderAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+
+        viewModel.getReturnOrderListResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderList.size
+                if (!pagination){
+                    orderList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                orderList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        orderAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    orderAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getCancelledOrderListResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderList.size
+                if (!pagination){
+                    orderList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                orderList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        orderAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    orderAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
 
         viewModel.getActiveOrderListResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
@@ -502,14 +706,65 @@ class OrderManagementFragment : BaseFragment() {
         isDriverObserver = true
     }
 
-    private fun assignDriver(orderId:String,driverId:String) {
+    private fun assignDriver() {
         val map = HashMap<String,Any>()
-        map["driver_id"] = driverId
-        map["order_id"] = orderId
+        map["driver_id"] = selectedDriver?.id.toString()
+        map["order_id"] = orderList[selectedPos]?.id.toString()
         viewModel.assignDriver(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
+
+    private fun assignDriverDialog() {
+        var newSelectedDriver: GetAvailableDeliveryBoyResponse.Data? = null
+        dialogDriver = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = AssignDriverDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialogDriver?.setContentView(it) }
+
+        val window: Window = dialogDriver?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialogDriver?.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            assignDriverAdapter = AssignDriverAdapter(requireActivity(),assignDriverList,object :
+                AssignDriverAdapter.DriverClick{
+                override fun onDriverClick(position: Int) {
+                    newSelectedDriver = assignDriverList[position]
+                    tvSelectedDriver.text = assignDriverList[position].fullNameEnglish
+                }
+
+            })
+            rvDriver.adapter = assignDriverAdapter
+
+            getAssignDriver(orderList[selectedPos]?.id.toString())
+
+            tvToolbar.setOnClickListener {
+                dialogDriver?.dismiss()
+            }
+
+            btnSubmit.setOnClickListener {
+                if (newSelectedDriver!=null){
+                    selectedDriver = newSelectedDriver
+                    assignDriver()
+                }
+
+
+            }
+
+        }
+
+        dialogDriver?.show()
+    }
+
 
     private fun filterDialog() {
         var selectedCountryId:String?=null

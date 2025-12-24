@@ -45,6 +45,8 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResp
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -1135,6 +1137,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+    val getOrderDetailLiveData = SingleLiveEvent<GetSingleOrderDetailResponse>()
+    suspend fun getOrderDetail(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getOrderDetail(map)
+            },
+            responseLiveData = getOrderDetailLiveData
+        )
+    }
+
     val completedOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
     suspend fun getCompletedOrderList(map:HashMap<String,Any>
     ) {
@@ -1168,7 +1181,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val getAssignDriverListLiveData = SingleLiveEvent<CommonResponse>()
+    val getAssignDriverListLiveData = SingleLiveEvent<GetAvailableDeliveryBoyResponse>()
     suspend fun getDriverToAssign(orderId:String
     ) {
         handleApiCall(

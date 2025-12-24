@@ -64,8 +64,8 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
                     btnAccept.isVisible = true
                     tvBannerPosition.isVisible = false
                     tvBannerPositionValue.isVisible = false
-                    tvAmount.isVisible = false
-                    tvAmountValue.isVisible = false
+                    tvPaymentStatus.isVisible = false
+                    tvPaymentStatusValue.isVisible = false
 
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
@@ -77,8 +77,8 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
                     btnAccept.isVisible = false
                     tvBannerPosition.isVisible = true
                     tvBannerPositionValue.isVisible = true
-                    tvAmount.isVisible = true
-                    tvAmountValue.isVisible = true
+                    tvPaymentStatus.isVisible = true
+                    tvPaymentStatusValue.isVisible = true
 
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
@@ -87,13 +87,13 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
                     tvStatusValue.setTextColor(Color.parseColor("#68CA44"))
                     if (bannerRequestData.paymentStatus=="1"){
                         tvStatusValue.text = "Active"
-                        tvAmountValue.text = "Paid"
-                        tvAmountValue.setTextColor(Color.parseColor("#68CA44"))
+                        tvPaymentStatusValue.text = "Paid"
+                        tvPaymentStatusValue.setTextColor(Color.parseColor("#68CA44"))
                     }
                     else{
                         tvStatusValue.text = "Upcoming"
-                        tvAmountValue.text = "No"
-                        tvAmountValue.setTextColor(Color.parseColor("#D53B36"))
+                        tvPaymentStatusValue.text = "Pending"
+                        tvPaymentStatusValue.setTextColor(Color.parseColor("#D53B36"))
                     }
                 }
                 2->{
@@ -107,15 +107,15 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
                     tvReason.isVisible = true
                     tvReasonValue.isVisible = true
 
-                    tvAmount.isVisible = true
-                    tvAmountValue.isVisible = true
+                    tvPaymentStatus.isVisible = false
+                    tvPaymentStatusValue.isVisible = false
                  //   tvDuration.text = "Bank Acc no."
-                    tvTotalAmount.text = "Available Amount"
-                    tvAmount.text = "Requested Amount"
+                    tvTotalAmount.text = "Total Amount"
+                    tvPaymentStatus.text = "Requested Amount"
                     tvDurationValue.text = bannerRequestData?.sellerDetails?.bankInformation
 
                     tvReasonValue.text = bannerRequestData?.cancelledReason
-                    tvAmountValue.text = "${CommonMethod.formatAmount(bannerRequestData.price)} KD"
+                    tvPaymentStatusValue.text = "${CommonMethod.formatAmount(bannerRequestData.price)} KD"
                 }
 
             }

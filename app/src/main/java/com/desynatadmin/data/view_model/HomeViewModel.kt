@@ -42,6 +42,8 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResp
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -513,6 +515,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getCountryListResult: LiveData<GetCountryResponse>
+        get() = repository.countryPlanLiveData
+
+    fun getCountryList() {
+        viewModelScope.launch {
+            repository.getCountry()
+        }
+    }
+
     val getUserCountryResult: LiveData<GetCountryResponse>
         get() = repository.userCountryLiveData
 
@@ -906,6 +917,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getOrderDetailResult: LiveData<GetSingleOrderDetailResponse>
+        get() = repository.getOrderDetailLiveData
+
+    fun getOrderDetail(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getOrderDetail(map)
+        }
+    }
+
     val getCompletedOrderListResult: LiveData<GetActiveOrderResponse>
         get() = repository.completedOrderListLiveData
 
@@ -933,7 +953,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getAssignDriverListResult: LiveData<CommonResponse>
+    val getAssignDriverListResult: LiveData<GetAvailableDeliveryBoyResponse>
         get() = repository.getAssignDriverListLiveData
 
     fun getDriverToAssign(orderId:String) {
