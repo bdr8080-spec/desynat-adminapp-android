@@ -27,7 +27,7 @@ data class GetActiveOrderResponse(
         @SerializedName("links")
         val links: List<Link>,
         @SerializedName("next_page_url")
-        val nextPageUrl: Any,
+        val nextPageUrl: String,
         @SerializedName("path")
         val path: String,
         @SerializedName("per_page")
@@ -40,10 +40,18 @@ data class GetActiveOrderResponse(
         val total: Int
     ) {
         data class Data(
+            @SerializedName("assign_date")
+            val assignDate: String,
+            @SerializedName("assign_status")
+            val assignStatus: String,
+            @SerializedName("cancel_reason")
+            val cancelReason: Any,
             @SerializedName("created_at")
             val createdAt: String,
             @SerializedName("delivery_address")
             val deliveryAddress: Int,
+            @SerializedName("delivery_boy_id")
+            val deliveryBoyId: String,
             @SerializedName("delivery_details")
             val deliveryDetails: DeliveryDetails,
             @SerializedName("delivery_status")
@@ -51,15 +59,15 @@ data class GetActiveOrderResponse(
             @SerializedName("discount_mrp")
             val discountMrp: String,
             @SerializedName("driver_details")
-            val driverDetails: DriverDetail,
+            val driverDetails: DriverDetails,
             @SerializedName("giftcard_amount")
-            val giftcardAmount: Any,
+            val giftcardAmount: Double,
             @SerializedName("giftcard_id")
-            val giftcardId: Any,
+            val giftcardId: String,
             @SerializedName("id")
             val id: Int,
             @SerializedName("order_details")
-            val orderDetails: ArrayList<OrderDetail>,
+            val orderDetails: List<OrderDetail>,
             @SerializedName("order_id")
             val orderId: String,
             @SerializedName("payment_method")
@@ -87,67 +95,8 @@ data class GetActiveOrderResponse(
             @SerializedName("user_id")
             val userId: Int,
             @SerializedName("wallet_amount")
-            val walletAmount: Any
+            val walletAmount: Double
         ) {
-            data class DriverDetail(
-                @SerializedName("address_line1")
-                val addressLine1: String,
-                @SerializedName("address_line2")
-                val addressLine2: String,
-                @SerializedName("city")
-                val city: String,
-                @SerializedName("country_code")
-                val countryCode: String,
-                @SerializedName("country_id")
-                val countryId: Int,
-                @SerializedName("created_at")
-                val createdAt: String,
-                @SerializedName("device_token")
-                val deviceToken: Any,
-                @SerializedName("device_type")
-                val deviceType: String,
-                @SerializedName("document_information")
-                val documentInformation: String,
-                @SerializedName("email")
-                val email: String,
-                @SerializedName("full_name_arabic")
-                val fullNameArabic: String,
-                @SerializedName("full_name_english")
-                val fullNameEnglish: String,
-                @SerializedName("id")
-                val id: Int,
-                @SerializedName("let")
-                val let: String,
-                @SerializedName("long")
-                val long: String,
-                @SerializedName("mobile")
-                val mobile: String,
-                @SerializedName("on_duty")
-                val onDuty: String,
-                @SerializedName("otp")
-                val otp: String,
-                @SerializedName("otp_verify")
-                val otpVerify: String,
-                @SerializedName("password")
-                val password: String,
-                @SerializedName("profile_pic")
-                val profilePic: String,
-                @SerializedName("state")
-                val state: String,
-                @SerializedName("status")
-                val status: String,
-                @SerializedName("unhashed_password")
-                val unhashedPassword: String,
-                @SerializedName("updated_at")
-                val updatedAt: String,
-                @SerializedName("vehicle_name")
-                val vehicleName: String,
-                @SerializedName("vehicle_reg_no")
-                val vehicleRegNo: String,
-                @SerializedName("zone_id")
-                val zoneId: Int
-            )
-
             data class DeliveryDetails(
                 @SerializedName("address")
                 val address: String,
@@ -189,21 +138,122 @@ data class GetActiveOrderResponse(
                 val userId: Int
             )
 
+            data class DriverDetails(
+                @SerializedName("address_line1")
+                val addressLine1: String,
+                @SerializedName("address_line2")
+                val addressLine2: String,
+                @SerializedName("city")
+                val city: String,
+                @SerializedName("country_code")
+                val countryCode: String,
+                @SerializedName("country_id")
+                val countryId: Int,
+                @SerializedName("created_at")
+                val createdAt: String,
+                @SerializedName("device_token")
+                val deviceToken: Any,
+                @SerializedName("device_type")
+                val deviceType: String,
+                @SerializedName("document_information")
+                val documentInformation: String,
+                @SerializedName("email")
+                val email: String,
+                @SerializedName("full_name_arabic")
+                val fullNameArabic: String,
+                @SerializedName("full_name_english")
+                val fullNameEnglish: String,
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("let")
+                val let: String,
+                @SerializedName("long")
+                val long: String,
+                @SerializedName("mobile")
+                val mobile: String,
+                @SerializedName("on_duty")
+                val onDuty: String,
+                @SerializedName("otp")
+                val otp: Any,
+                @SerializedName("otp_verify")
+                val otpVerify: String,
+                @SerializedName("password")
+                val password: String,
+                @SerializedName("profile_pic")
+                val profilePic: String,
+                @SerializedName("state")
+                val state: String,
+                @SerializedName("status")
+                val status: String,
+                @SerializedName("unhashed_password")
+                val unhashedPassword: String,
+                @SerializedName("updated_at")
+                val updatedAt: String,
+                @SerializedName("vehicle_name")
+                val vehicleName: String,
+                @SerializedName("vehicle_reg_no")
+                val vehicleRegNo: String,
+                @SerializedName("zone_id")
+                val zoneId: Int,
+                @SerializedName("zone_info")
+                val zoneInfo: ZoneInfo
+            ) {
+                data class ZoneInfo(
+                    @SerializedName("city_id")
+                    val cityId: Int,
+                    @SerializedName("coordinates")
+                    val coordinates: List<Coordinate>,
+                    @SerializedName("country_id")
+                    val countryId: Int,
+                    @SerializedName("created_at")
+                    val createdAt: String,
+                    @SerializedName("id")
+                    val id: Int,
+                    @SerializedName("name_arabic")
+                    val nameArabic: String,
+                    @SerializedName("name_english")
+                    val nameEnglish: String,
+                    @SerializedName("status")
+                    val status: Int,
+                    @SerializedName("updated_at")
+                    val updatedAt: String
+                ) {
+                    data class Coordinate(
+                        @SerializedName("lat")
+                        val lat: String,
+                        @SerializedName("lng")
+                        val lng: String
+                    )
+                }
+            }
+
             data class OrderDetail(
                 @SerializedName("amount")
                 val amount: Double,
+                @SerializedName("assign_date")
+                val assignDate: String,
+                @SerializedName("assign_status")
+                val assignStatus: String,
+                @SerializedName("cancel_reason")
+                val cancelReason: String,
                 @SerializedName("created_at")
                 val createdAt: String,
+                @SerializedName("delivery_boy_id")
+                val deliveryBoyId: String,
                 @SerializedName("delivery_status")
                 val deliveryStatus: String,
                 @SerializedName("exchange_new_size")
-                val exchangeNewSize: Any,
+                val exchangeNewSize: String,
                 @SerializedName("exchange_old_size")
-                val exchangeOldSize: Any,
+                val exchangeOldSize: String,
                 @SerializedName("exchange_reason")
-                val exchangeReason: Any,
+                val exchangeReason: String,
                 @SerializedName("id")
                 val id: Int,
+                @SerializedName("is_picked")
+                val isPicked: String,
+                @SerializedName("not_delivered_reason")
+                val notDeliveredReason: String,
                 @SerializedName("order_id")
                 val orderId: Int,
                 @SerializedName("payment_status")
@@ -217,9 +267,9 @@ data class GetActiveOrderResponse(
                 @SerializedName("r_e_approve")
                 val rEApprove: String,
                 @SerializedName("return_image")
-                val returnImage: Any,
+                val returnImage: String,
                 @SerializedName("return_reason")
-                val returnReason: Any,
+                val returnReason: String,
                 @SerializedName("return_type")
                 val returnType: String,
                 @SerializedName("status")
@@ -235,7 +285,7 @@ data class GetActiveOrderResponse(
             ) {
                 data class ProductDetails(
                     @SerializedName("affiliated_commission")
-                    val affiliatedCommission: Any,
+                    val affiliatedCommission: String,
                     @SerializedName("affiliated_product")
                     val affiliatedProduct: String,
                     @SerializedName("brand")
@@ -257,7 +307,7 @@ data class GetActiveOrderResponse(
                     @SerializedName("description_en")
                     val descriptionEn: String,
                     @SerializedName("exchangable_days")
-                    val exchangableDays: Any,
+                    val exchangableDays: String,
                     @SerializedName("id")
                     val id: Int,
                     @SerializedName("max_card_quantity")
@@ -349,9 +399,9 @@ data class GetActiveOrderResponse(
                         @SerializedName("created_at")
                         val createdAt: String,
                         @SerializedName("device_token")
-                        val deviceToken: Any,
+                        val deviceToken: String,
                         @SerializedName("device_type")
-                        val deviceType: Any,
+                        val deviceType: String,
                         @SerializedName("email")
                         val email: String,
                         @SerializedName("first_name")

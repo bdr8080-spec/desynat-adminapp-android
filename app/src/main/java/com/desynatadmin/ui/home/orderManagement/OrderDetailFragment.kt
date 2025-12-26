@@ -111,17 +111,64 @@ class OrderDetailFragment : BaseFragment() {
                     ivPicked.setImageResource(R.drawable.ic_order_picked)
                     ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                     ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+
+                    if (orderDetailData?.assignStatus=="1"){
+                        btnAssignDriver.isVisible = false
+                        ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                            crossfade(true)
+                            placeholder(R.drawable.ic_placeholder)
+                            error(R.drawable.ic_placeholder)
+                        }
+                        tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+                        tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        tvDeliveredBy.isVisible = true
+                        tvDelivered.isVisible = true
+                        tvZoneValue.isVisible = true
+                        tvZone.isVisible = true
+                    }
+                    else{
+                        btnAssignDriver.isVisible = true
+                        tvDeliveredBy.isVisible = false
+                        tvDelivered.isVisible = false
+                        tvZoneValue.isVisible = false
+                        tvZone.isVisible = false
+                    }
                 }
 
                 "2"->{
-                    tvStatus.text ="On the way"
+                    tvStatus.text ="Confirmed"
                     tvCancelReason.isVisible = false
                     tvCancellationReason.isVisible = false
                     llComplete.isVisible = false
                     btnInvoice.isVisible = true
-                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
+                    ivPicked.setImageResource(R.drawable.ic_order_picked)
+                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                     ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+
+                    if (orderDetailData?.assignStatus=="1"){
+                        btnAssignDriver.isVisible = false
+                        ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                            crossfade(true)
+                            placeholder(R.drawable.ic_placeholder)
+                            error(R.drawable.ic_placeholder)
+                        }
+                        tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+                        tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        tvDeliveredBy.isVisible = true
+                        tvDelivered.isVisible = true
+                        tvZoneValue.isVisible = true
+                        tvZone.isVisible = true
+                    }
+                    else{
+                        btnAssignDriver.isVisible = true
+                        tvDeliveredBy.isVisible = false
+                        tvDelivered.isVisible = false
+                        tvZoneValue.isVisible = false
+                        tvZone.isVisible = false
+                    }
+
                 }
 
                 "6"->{
@@ -129,9 +176,18 @@ class OrderDetailFragment : BaseFragment() {
                     tvCancelReason.isVisible = false
                     tvCancellationReason.isVisible = false
                     llComplete.isVisible = false
+                    btnAssignDriver.isVisible = false
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                     ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_placeholder)
+                        error(R.drawable.ic_placeholder)
+                    }
+                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                 }
 
                 "4"->{
@@ -141,6 +197,21 @@ class OrderDetailFragment : BaseFragment() {
                     tvCancellationReason.isVisible = true
                     llComplete.isVisible = false
                     btnInvoice.isVisible = false
+                    btnAssignDriver.isVisible = false
+                    ivOnTheWay.isVisible = false
+                    tvOnTheWay.isVisible = false
+
+                    ivDelivered.setImageResource(R.drawable.ic_cancelled)
+                    tvDeliveredText.text = "Cancelled"
+                    tvDeliveredText.setTextColor(Color.parseColor("#D72E04"))
+                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_placeholder)
+                        error(R.drawable.ic_placeholder)
+                    }
+                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                 }
                 "8"->{
                     tvStatus.text ="Not Delivered"
@@ -149,6 +220,15 @@ class OrderDetailFragment : BaseFragment() {
                     tvCancellationReason.isVisible = true
                     llComplete.isVisible = false
                     btnInvoice.isVisible = false
+                    btnAssignDriver.isVisible = false
+                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_placeholder)
+                        error(R.drawable.ic_placeholder)
+                    }
+                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                 }
                 "3"->{
                     tvStatus.text ="Delivered"
@@ -157,11 +237,14 @@ class OrderDetailFragment : BaseFragment() {
                     tvCancellationReason.isVisible = false
                     clDriver.isVisible = true
                     llComplete.isVisible = true
+                    btnAssignDriver.isVisible = false
                     ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                         crossfade(true)
                         placeholder(R.drawable.ic_placeholder)
                         error(R.drawable.ic_placeholder)
                     }
+                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
                     tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
@@ -169,7 +252,7 @@ class OrderDetailFragment : BaseFragment() {
 
                 }
                 "7"->{
-                    tvStatus.text ="Picked"
+                    tvStatus.text ="On the way"
                     btnAssignDriver.isVisible = false
                     clDriver.isVisible = true
                     ivDriver.load(orderDetailData?.driverDetails?.profilePic){
@@ -177,13 +260,14 @@ class OrderDetailFragment : BaseFragment() {
                         placeholder(R.drawable.ic_placeholder)
                         error(R.drawable.ic_placeholder)
                     }
+                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
                     tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
                     ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
                     tvPicked.text = "Picked"
-                    tvDeliveredText.text = "Return"
                 }
 
                 "9"->{
@@ -198,10 +282,12 @@ class OrderDetailFragment : BaseFragment() {
                         placeholder(R.drawable.ic_placeholder)
                         error(R.drawable.ic_placeholder)
                     }
+                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
                     tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab_selected)
+                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
                     tvPicked.text = "Picked"
                     tvDeliveredText.text = "Exchange"
                 }
@@ -218,10 +304,12 @@ class OrderDetailFragment : BaseFragment() {
                         placeholder(R.drawable.ic_placeholder)
                         error(R.drawable.ic_placeholder)
                     }
+                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
                     tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab_selected)
+                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
                 }
             }
@@ -231,7 +319,6 @@ class OrderDetailFragment : BaseFragment() {
             tvOrderTypeValue.text = "Normal Orders"
             tvCustomerName.text = orderDetailData?.deliveryDetails?.name
             tvSellerName.text = orderDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.firstName+" "+orderDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.lastName
-            tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
             tvCountryValue.text = orderDetailData?.deliveryDetails?.countryName
             tvShippingLocationValue.text = orderDetailData?.deliveryDetails?.address
 

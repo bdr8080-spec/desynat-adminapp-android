@@ -157,6 +157,30 @@
                 app:layout_constraintStart_toStartOf="@+id/tvOrderType"
                 app:layout_constraintTop_toBottomOf="@id/tvOrderType" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvZone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Zone"
+                android:textColor="#80000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvOrderType"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvZoneValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Zone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                android:textAlignment="textEnd"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="@+id/tvZone"
+                app:layout_constraintTop_toBottomOf="@id/tvZone"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -317,6 +341,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvInstruction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -328,6 +353,7 @@
             android:textSize="@dimen/_12sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvDeliveryInstruction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -689,7 +715,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Commission Earned"
+                android:text="Admin Commission"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintStart_toStartOf="@id/tvTotal"

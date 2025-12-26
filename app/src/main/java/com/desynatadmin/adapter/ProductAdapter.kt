@@ -27,7 +27,7 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetActiveOr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var productData = productList[position]
         holder.binding.apply {
-            tvCount.text = if(position<10) "0${position}" else position.toString()
+            tvCount.text = if((position+1)<10) "0${(position+1)}" else (position+1).toString()
             tvProduct.text = productData?.productDetails?.productNameEn
             tvPrice.text = "${CommonMethod.formatPrice(productData?.amount?:0.0)} KD"
             tvFabric.text = productData?.productDetails?.brand?.nameEnglish

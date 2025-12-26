@@ -37,7 +37,7 @@
             android:fontFamily="@font/poppins_medium"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:text="Driver1"
+            android:text="Select Driver"
             android:textColor="@color/black"
             android:drawableEnd="@drawable/right_arrow"
             android:textSize="@dimen/_12sdp"/>

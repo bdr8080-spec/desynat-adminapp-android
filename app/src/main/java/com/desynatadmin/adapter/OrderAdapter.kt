@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemOrderBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.utils.CommonMethod
@@ -41,14 +39,16 @@ class OrderAdapter(var context:Context, var orderList: ArrayList<GetActiveOrderR
             tvOrderTypeValue.text = "Normal Orders"
 
             when(orderData?.deliveryStatus) {
-                "1" -> {
-                    btnAssignOrder.isVisible = true
-                }
+                "1","2" -> {
+                    if (orderData?.assignStatus=="1"){
+                        btnAssignOrder.isVisible = false
+                    }
+                    else{
+                        btnAssignOrder.isVisible = true
+                    }
 
-                "3" -> {
-                    btnAssignOrder.isVisible = false
                 }
-                "7" -> {
+                else ->{
                     btnAssignOrder.isVisible = false
                 }
             }

@@ -4,10 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemDriverBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 
 class AssignDriverAdapter(var context:Context, private var driverList: ArrayList<GetAvailableDeliveryBoyResponse.Data>, var driverClick:DriverClick) : RecyclerView.Adapter<AssignDriverAdapter.ViewHolder>() {
+    var selected = -1
     inner class ViewHolder(val binding: ItemDriverBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -30,9 +32,24 @@ class AssignDriverAdapter(var context:Context, private var driverList: ArrayList
 
         holder.binding.apply {
             tvDrive.text = driverData.fullNameEnglish
+
+            if (selected==position){
+                ivRadio.setImageResource(R.drawable.ic_radio_selected)
+            }
+            else{
+                ivRadio.setImageResource(R.drawable.ic_radio_unselected)
+            }
         }
 
         holder.itemView.setOnClickListener {
+            val previousSelected = selected
+            selected = position
+
+            if (previousSelected != -1) {
+                notifyItemChanged(previousSelected)
+            }
+            notifyItemChanged(selected)
+
             driverClick.onDriverClick(position)
 
         }
