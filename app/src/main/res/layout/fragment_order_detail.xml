@@ -262,7 +262,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Jhon"
+                android:text="NA"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                 android:textAlignment="textEnd"

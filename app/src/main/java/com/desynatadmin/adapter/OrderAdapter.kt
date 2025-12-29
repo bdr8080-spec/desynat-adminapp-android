@@ -31,11 +31,11 @@ class OrderAdapter(var context:Context, var orderList: ArrayList<GetActiveOrderR
         var orderData = orderList[position]
         holder.binding.apply {
 
-            tvName.text = orderData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.firstName+" "+orderData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.lastName
+            tvName.text = orderData?.productDetails?.sellerDetails?.firstName+" "+orderData?.productDetails?.sellerDetails?.lastName
             tvOrderID.text = "#${orderData?.id}"
-            tvTransactionId.text = "#${orderData?.transactionId}"
+            tvTransactionId.text = "#${orderData?.order?.transactionId}"
             tvOrderOnValue.text = CommonMethod.customizeChangeDateFormat(orderData.createdAt, outputFormat = "dd/MM/yyyy 'at' hh:mm a")
-            tvTotalAmount.text = "${CommonMethod.formatPrice(orderData?.totalAmount?:0.0)} KD"
+            tvTotalAmount.text = "${CommonMethod.formatPrice(orderData?.order?.totalAmount?:0.0)} KD"
             tvOrderTypeValue.text = "Normal Orders"
 
             when(orderData?.deliveryStatus) {

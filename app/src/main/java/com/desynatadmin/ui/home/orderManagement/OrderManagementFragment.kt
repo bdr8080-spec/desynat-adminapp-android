@@ -30,6 +30,7 @@ import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoy
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +44,7 @@ class OrderManagementFragment : BaseFragment() {
     private var binding: FragmentOrderManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isCountryObserver = true
     private var isDriverObserver = true
     private var orderList = ArrayList<GetActiveOrderResponse.Data.Data>()
     private var orderAdapter : OrderAdapter?=null
@@ -225,6 +227,18 @@ class OrderManagementFragment : BaseFragment() {
 
         }
     }
+
+    private fun getCountryApi(){
+        viewModel.getCountry()
+        isCountryObserver = true
+    }
+
+    private fun setCountry() {
+        if (!countryList.isNullOrEmpty()) {
+            SharedPreference.get(requireActivity()).saveCountryList(countryList)
+        }
+    }
+
 
     override fun initControl() {
         binding?.apply {
@@ -560,6 +574,16 @@ class OrderManagementFragment : BaseFragment() {
         }
 
 
+        viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
+            if (isCountryObserver) {
+                countryList.clear()
+                countryList.addAll(response.data)
+                setCountry()
+
+                isCountryObserver = false
+            }
+        }
+
         viewModel.getActiveOrderListResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -785,6 +809,15 @@ class OrderManagementFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding.apply {
+
+            if(SharedPreference.get(requireActivity()).getCountryList() == null) {
+                getCountryApi()
+            }
+            else{
+                countryList.clear()
+                SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
+            }
+
             if(countryId!=null){
                 etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
             }
@@ -813,6 +846,17 @@ class OrderManagementFragment : BaseFragment() {
 
             }
 
+            etCountry.setOnClickListener {
+                CommonMethod.showCountryPicker(
+                    requireContext(),
+                    etCountry,
+                    countryList
+                ) { selectedCountry ->
+                    etCountry.text = selectedCountry.name
+                    selectedCountryId = selectedCountry.id.toString()
+                }
+            }
+
             tvClear.setOnClickListener {
                 startDate = null
                 endDate = null
@@ -834,17 +878,6 @@ class OrderManagementFragment : BaseFragment() {
                     }
                 }
                 dialog.dismiss()
-            }
-
-            etCountry.setOnClickListener {
-                CommonMethod.showCountryPicker(
-                    requireContext(),
-                    it,
-                    countryList
-                ) { selectedCountry ->
-                    etCountry.text = selectedCountry.name
-                    selectedCountryId = selectedCountry.id.toString()
-                }
             }
 
             tvApply.setOnClickListener{

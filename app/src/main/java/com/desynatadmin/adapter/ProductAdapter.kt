@@ -10,7 +10,7 @@ import com.desynatadmin.databinding.ItemProductBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.utils.CommonMethod
 
-class ProductAdapter(var context:Context, var productList: ArrayList<GetActiveOrderResponse.Data.Data.OrderDetail>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(var context:Context, var productList: ArrayList<GetActiveOrderResponse.Data.Data>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -29,7 +29,7 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetActiveOr
         holder.binding.apply {
             tvCount.text = if((position+1)<10) "0${(position+1)}" else (position+1).toString()
             tvProduct.text = productData?.productDetails?.productNameEn
-            tvPrice.text = "${CommonMethod.formatPrice(productData?.amount?:0.0)} KD"
+            tvPrice.text = "${CommonMethod.formatPrice(productData?.order?.totalAmount?:0.0)} KD"
             tvFabric.text = productData?.productDetails?.brand?.nameEnglish
             tvSizeValue.text = productData?.variationDetails?.size?.name
             tvColorValue.text = productData?.variationDetails?.color?.name

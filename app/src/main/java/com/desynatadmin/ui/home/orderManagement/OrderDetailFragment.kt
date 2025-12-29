@@ -35,8 +35,9 @@ class OrderDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var isDriverObserver = true
+    private var isAssignObserver = true
 
-    private var productList = ArrayList<GetActiveOrderResponse.Data.Data.OrderDetail>()
+    private var productList = ArrayList<GetActiveOrderResponse.Data.Data>()
     private var productAdapter : ProductAdapter?=null
 
     private var type = 0
@@ -88,7 +89,7 @@ class OrderDetailFragment : BaseFragment() {
         map["id"]=orderId
         viewModel.getOrderDetail(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        isDriverObserver = true
+        isObserver = true
     }
 
 
@@ -96,7 +97,7 @@ class OrderDetailFragment : BaseFragment() {
 
 
         productList.clear()
-        orderDetailData?.orderDetails?.let { productList.addAll(it) }
+        orderDetailData?.let { productList.add(it) }
         productAdapter?.notifyDataSetChanged()
 
         binding?.apply {
@@ -114,6 +115,7 @@ class OrderDetailFragment : BaseFragment() {
 
                     if (orderDetailData?.assignStatus=="1"){
                         btnAssignDriver.isVisible = false
+                        clDriver.isVisible = true
                         ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                             crossfade(true)
                             placeholder(R.drawable.ic_placeholder)
@@ -128,9 +130,8 @@ class OrderDetailFragment : BaseFragment() {
                         tvZone.isVisible = true
                     }
                     else{
+                        clDriver.isVisible = false
                         btnAssignDriver.isVisible = true
-                        tvDeliveredBy.isVisible = false
-                        tvDelivered.isVisible = false
                         tvZoneValue.isVisible = false
                         tvZone.isVisible = false
                     }
@@ -142,12 +143,13 @@ class OrderDetailFragment : BaseFragment() {
                     tvCancellationReason.isVisible = false
                     llComplete.isVisible = false
                     btnInvoice.isVisible = true
-                    ivPicked.setImageResource(R.drawable.ic_order_picked)
+                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                     ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
                     if (orderDetailData?.assignStatus=="1"){
                         btnAssignDriver.isVisible = false
+                        clDriver.isVisible = true
                         ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                             crossfade(true)
                             placeholder(R.drawable.ic_placeholder)
@@ -180,6 +182,7 @@ class OrderDetailFragment : BaseFragment() {
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                     ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                    clDriver.isVisible = true
                     ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                         crossfade(true)
                         placeholder(R.drawable.ic_placeholder)
@@ -200,7 +203,7 @@ class OrderDetailFragment : BaseFragment() {
                     btnAssignDriver.isVisible = false
                     ivOnTheWay.isVisible = false
                     tvOnTheWay.isVisible = false
-
+                    clDriver.isVisible = true
                     ivDelivered.setImageResource(R.drawable.ic_cancelled)
                     tvDeliveredText.text = "Cancelled"
                     tvDeliveredText.setTextColor(Color.parseColor("#D72E04"))
@@ -221,6 +224,7 @@ class OrderDetailFragment : BaseFragment() {
                     llComplete.isVisible = false
                     btnInvoice.isVisible = false
                     btnAssignDriver.isVisible = false
+                    clDriver.isVisible = true
                     ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                         crossfade(true)
                         placeholder(R.drawable.ic_placeholder)
@@ -317,13 +321,13 @@ class OrderDetailFragment : BaseFragment() {
             tvOrderIdValue.text = "#${orderDetailData?.id}"
             tvDateTime.text = CommonMethod.customizeChangeDateFormat(orderDetailData?.createdAt.toString(), outputFormat = "dd/MM/yy 'at' hh:mm a")
             tvOrderTypeValue.text = "Normal Orders"
-            tvCustomerName.text = orderDetailData?.deliveryDetails?.name
-            tvSellerName.text = orderDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.firstName+" "+orderDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.lastName
-            tvCountryValue.text = orderDetailData?.deliveryDetails?.countryName
-            tvShippingLocationValue.text = orderDetailData?.deliveryDetails?.address
+            tvCustomerName.text = orderDetailData?.order?.deliveryDetails?.name
+            tvSellerName.text = orderDetailData?.productDetails?.sellerDetails?.firstName+" "+orderDetailData?.productDetails?.sellerDetails?.lastName
+            tvCountryValue.text = orderDetailData?.order?.deliveryDetails?.countryName
+            tvShippingLocationValue.text = orderDetailData?.order?.deliveryDetails?.address
 
-            tvTotalAmount.text = "${CommonMethod.formatPrice(orderDetailData?.totalAmount?:0.0)} KD"
-            CommissionEarned.text = "${CommonMethod.formatPrice(orderDetailData?.totalAmount?:0.0)} KD"
+            tvTotalAmount.text = "${CommonMethod.formatPrice(orderDetailData?.order?.totalAmount?:0.0)} KD"
+            CommissionEarned.text = "${CommonMethod.formatPrice(orderDetailData?.productDetails?.affiliatedCommission?:0.0)} KD"
         }
 
     }
@@ -343,26 +347,31 @@ class OrderDetailFragment : BaseFragment() {
                 assignDriverDialog()
             }
 
+            ivEdit.setOnClickListener {
+                assignDriverDialog()
+            }
+
             }
         }
 
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            if (isObserver||isDriverObserver) {
+            if (isObserver||isDriverObserver||isAssignObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 isObserver = false
                 isDriverObserver = false
+                isAssignObserver = false
             }
         }
 
         viewModel.assignDriverResult.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
+            if (isAssignObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 dialogDriver?.dismiss()
                 CommonMethod.showSuccessDialog(requireActivity(),"Driver assigned successfully"){
-
+                    getOrderDetail(orderDetailData?.id.toString())
                 }
-                isObserver = false
+                isAssignObserver = false
             }
         }
 
@@ -398,7 +407,7 @@ class OrderDetailFragment : BaseFragment() {
         map["order_id"] = orderDetailData?.id.toString()
         viewModel.assignDriver(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        isObserver = true
+        isAssignObserver = true
     }
 
     private fun assignDriverDialog() {
@@ -441,7 +450,6 @@ class OrderDetailFragment : BaseFragment() {
                     selectedDriver = newSelectedDriver
                     assignDriver()
                 }
-
 
             }
 
