@@ -48,7 +48,8 @@
                             android:layout_height="match_parent"
                             android:paddingHorizontal="@dimen/_15sdp"
                             android:fontFamily="@font/poppins_medium"
-                            android:layout_margin="1dp"
+                            android:layout_marginVertical="1dp"
+                            android:layout_marginStart="1dp"
                             android:gravity="center"
                             android:text="Active"
                             android:background="@drawable/selected_left_gradient"
@@ -56,7 +57,7 @@
                             android:textSize="@dimen/_11sdp" />
 
                         <View
-                            android:layout_width="0dp"
+                            android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:background="@drawable/line_gradient"/>
 
@@ -66,7 +67,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center"
-                            android:layout_margin="1dp"
+                            android:layout_marginVertical="1dp"
                             android:paddingHorizontal="@dimen/_15sdp"
                             android:text="Return &amp; Exchange"
                             android:layout_marginTop="1dp"
@@ -74,7 +75,7 @@
                             android:textSize="@dimen/_11sdp" />
 
                         <View
-                            android:layout_width="0dp"
+                            android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:background="@drawable/line_gradient"/>
 
@@ -85,13 +86,13 @@
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center"
                             android:text="Completed"
-                            android:layout_margin="1dp"
+                            android:layout_marginVertical="1dp"
                             android:paddingHorizontal="@dimen/_15sdp"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_11sdp" />
 
                         <View
-                            android:layout_width="0dp"
+                            android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:background="@drawable/line_gradient"/>
 
@@ -100,7 +101,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:paddingHorizontal="@dimen/_15sdp"
-                            android:layout_margin="1dp"
+                            android:layout_marginVertical="1dp"
+                            android:layout_marginEnd="1dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center"
                             android:text="Cancelled"

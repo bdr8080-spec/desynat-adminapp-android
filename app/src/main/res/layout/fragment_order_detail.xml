@@ -455,10 +455,10 @@
                 android:textSize="@dimen/_12sdp"/>
 
             <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/rbProductRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
-                android:stepSize="5"
                 android:rating="2"
                 android:isIndicator="true"
                 android:progressTint="#FFA41B"
@@ -467,6 +467,7 @@
                 style="@style/Widget.AppCompat.RatingBar"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semi_bold"
@@ -494,10 +495,10 @@
                 android:textSize="@dimen/_12sdp"/>
 
             <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/rbStoreRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
-                android:stepSize="5"
                 android:rating="2"
                 android:isIndicator="true"
                 android:progressTint="#FFA41B"
@@ -506,6 +507,7 @@
                 style="@style/Widget.AppCompat.RatingBar"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStoreReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semi_bold"
@@ -735,6 +737,35 @@
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalAmount"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCommission"
                 app:layout_constraintTop_toTopOf="@id/tvCommission" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvPaymentMethod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Payment Method"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintStart_toStartOf="@id/tvCommission"
+                app:layout_constraintTop_toBottomOf="@id/tvCommission" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvPaymentMethodValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="20 KD"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:textAlignment="textEnd"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/tvPaymentMethod"
+                app:layout_constraintEnd_toEndOf="@+id/CommissionEarned"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPaymentMethod"
+                app:layout_constraintTop_toTopOf="@id/tvPaymentMethod" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

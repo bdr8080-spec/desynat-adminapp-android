@@ -109,7 +109,8 @@
         android:text="Order on"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="@id/tvTransaction"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTransaction" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -120,7 +121,8 @@
         android:text="21/08/2024 at 07:30 PM"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvOrderOn"
         app:layout_constraintTop_toTopOf="@id/tvOrderOn" />
 
@@ -133,7 +135,8 @@
         android:text="Total Amount"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="@id/tvTransaction"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvOrderOn" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -144,7 +147,8 @@
         android:text="299 KD"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvAmount"
         app:layout_constraintTop_toTopOf="@id/tvAmount" />
 
@@ -157,7 +161,8 @@
         android:text="Order Type"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="@id/tvTransaction"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAmount" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -168,7 +173,8 @@
         android:text="Normal Orders"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@+id/tvTransactionId"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvOrderType"
         app:layout_constraintTop_toTopOf="@id/tvOrderType" />
 

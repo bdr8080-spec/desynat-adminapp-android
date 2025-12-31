@@ -102,98 +102,101 @@ class OrderDetailFragment : BaseFragment() {
 
         binding?.apply {
 
-            when(orderDetailData?.deliveryStatus){
-                "1"->{
-                    tvStatus.text ="New"
-                    tvCancelReason.isVisible = false
-                    tvCancellationReason.isVisible = false
-                    llComplete.isVisible = false
-                    btnInvoice.isVisible = true
-                    ivPicked.setImageResource(R.drawable.ic_order_picked)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
-
-                    if (orderDetailData?.assignStatus=="1"){
+            when(type){
+                2->{
+                    if(orderDetailData?.returnReason!=null){
+                        tvStatus.text ="Return"
                         btnAssignDriver.isVisible = false
+                        tvCancelReason.isVisible = true
+                        tvCancellationReason.isVisible = true
                         clDriver.isVisible = true
+                        llComplete.isVisible = false
+                        ivEdit.isVisible = false
                         ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                             crossfade(true)
                             placeholder(R.drawable.ic_placeholder)
                             error(R.drawable.ic_placeholder)
                         }
-                        tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                        tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
                         tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                        tvDeliveredBy.isVisible = true
-                        tvDelivered.isVisible = true
-                        tvZoneValue.isVisible = true
-                        tvZone.isVisible = true
-                    }
-                    else{
-                        clDriver.isVisible = false
-                        btnAssignDriver.isVisible = true
-                        tvZoneValue.isVisible = false
-                        tvZone.isVisible = false
-                    }
-                }
+                        ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                        ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                        ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                        tvPicked.text = "Picked"
+                        tvDeliveredText.text = "Return"
+                        if (orderDetailData?.returnReason!=null){
+                            tvCancellationReason.text = orderDetailData?.returnReason
+                        }
 
-                "2"->{
-                    tvStatus.text ="Confirmed"
-                    tvCancelReason.isVisible = false
-                    tvCancellationReason.isVisible = false
-                    llComplete.isVisible = false
-                    btnInvoice.isVisible = true
-                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
-
-                    if (orderDetailData?.assignStatus=="1"){
+                    }
+                    else if(orderDetailData?.exchangeReason!=null){
+                        tvStatus.text ="Exchange"
                         btnAssignDriver.isVisible = false
+                        tvCancelReason.isVisible = true
+                        tvCancellationReason.isVisible = true
+                        if (orderDetailData?.exchangeReason!=null){
+                            tvCancellationReason.text = orderDetailData?.exchangeReason
+                        }
+                        ivEdit.isVisible = false
                         clDriver.isVisible = true
+                        llComplete.isVisible = false
                         ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                             crossfade(true)
                             placeholder(R.drawable.ic_placeholder)
                             error(R.drawable.ic_placeholder)
                         }
-                        tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                        tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
                         tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                        tvDeliveredBy.isVisible = true
-                        tvDelivered.isVisible = true
-                        tvZoneValue.isVisible = true
-                        tvZone.isVisible = true
+                        ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                        ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                        ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                        tvPicked.text = "Picked"
+                        tvDeliveredText.text = "Exchange"
                     }
-                    else{
-                        btnAssignDriver.isVisible = true
-                        tvDeliveredBy.isVisible = false
-                        tvDelivered.isVisible = false
-                        tvZoneValue.isVisible = false
-                        tvZone.isVisible = false
-                    }
-
                 }
-
-                "6"->{
-                    tvStatus.text ="Confirmed"
-                    tvCancelReason.isVisible = false
-                    tvCancellationReason.isVisible = false
-                    llComplete.isVisible = false
+                3->{
+                    tvStatus.text ="Delivered"
                     btnAssignDriver.isVisible = false
-                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                    tvCancelReason.isVisible = false
+                    tvCancellationReason.isVisible = false
                     clDriver.isVisible = true
+
+                    btnAssignDriver.isVisible = false
                     ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                         crossfade(true)
                         placeholder(R.drawable.ic_placeholder)
                         error(R.drawable.ic_placeholder)
                     }
-                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+                    ivEdit.isVisible = false
                     tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                }
+                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
+                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab_selected)
 
-                "4"->{
+                    if (orderDetailData?.userRatingReviewProvide!=null){
+                        llComplete.isVisible = true
+                        rbProductRating.rating == orderDetailData?.userRatingReviewProvide?.productRating?:0f
+
+                        if (orderDetailData?.userRatingReviewProvide?.storeReview!=null&&orderDetailData?.userRatingReviewProvide?.storeReview!=""&&orderDetailData?.userRatingReviewProvide?.storeReview!="null"){
+                            tvSellerReview.text = orderDetailData?.userRatingReviewProvide?.storeReview
+                        }
+                        else{
+                            tvStoreReview.isVisible = false
+                            tvSellerReview.isVisible = false
+                        }
+                        if (orderDetailData?.userRatingReviewProvide?.productReview!=null&&orderDetailData?.userRatingReviewProvide?.productReview!=""&&orderDetailData?.userRatingReviewProvide?.productReview!="null"){
+                            tvProductReview.text = orderDetailData?.userRatingReviewProvide?.productReview
+                        }
+                        else{
+                            tvProductReview.isVisible = false
+                            tvReview.isVisible = false
+                        }
+
+                        rbStoreRating.rating == orderDetailData?.userRatingReviewProvide?.storeRating?:0f
+                    }
+                    else{
+                        llComplete.isVisible = false
+                    }
+                }
+                4->{
                     tvStatus.text ="Cancelled"
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))
                     tvCancelReason.isVisible = true
@@ -203,7 +206,10 @@ class OrderDetailFragment : BaseFragment() {
                     btnAssignDriver.isVisible = false
                     ivOnTheWay.isVisible = false
                     tvOnTheWay.isVisible = false
-                    clDriver.isVisible = true
+                    clDriver.isVisible = false
+                    clOrderStatus.isVisible = false
+                    clBilling.isVisible = false
+                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivDelivered.setImageResource(R.drawable.ic_cancelled)
                     tvDeliveredText.text = "Cancelled"
                     tvDeliveredText.setTextColor(Color.parseColor("#D72E04"))
@@ -212,108 +218,255 @@ class OrderDetailFragment : BaseFragment() {
                         placeholder(R.drawable.ic_placeholder)
                         error(R.drawable.ic_placeholder)
                     }
-                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+
                     tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                }
-                "8"->{
-                    tvStatus.text ="Not Delivered"
-                    tvStatus.setTextColor(Color.parseColor("#EB2525"))
-                    tvCancelReason.isVisible = true
-                    tvCancellationReason.isVisible = true
-                    llComplete.isVisible = false
-                    btnInvoice.isVisible = false
-                    btnAssignDriver.isVisible = false
-                    clDriver.isVisible = true
-                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
-                        crossfade(true)
-                        placeholder(R.drawable.ic_placeholder)
-                        error(R.drawable.ic_placeholder)
+                    if (orderDetailData?.cancelReason!=null){
+                        tvCancellationReason.text = orderDetailData?.cancelReason
+                        return
                     }
-                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
-                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                }
-                "3"->{
-                    tvStatus.text ="Delivered"
-                    btnAssignDriver.isVisible = false
-                    tvCancelReason.isVisible = false
-                    tvCancellationReason.isVisible = false
-                    clDriver.isVisible = true
-                    llComplete.isVisible = true
-                    btnAssignDriver.isVisible = false
-                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
-                        crossfade(true)
-                        placeholder(R.drawable.ic_placeholder)
-                        error(R.drawable.ic_placeholder)
+                    else if (orderDetailData?.notDeliveredReason!=null){
+                        tvCancellationReason.text = orderDetailData?.notDeliveredReason
+                        return
                     }
-                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
-                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab_selected)
+                    else if (orderDetailData?.returnReason!=null){
+                        tvCancellationReason.text = orderDetailData?.returnReason
+                        return
+                    }
+                    else if (orderDetailData?.exchangeReason!=null){
+                        tvCancellationReason.text = orderDetailData?.exchangeReason
+                        return
+                    }
 
                 }
-                "7"->{
-                    tvStatus.text ="On the way"
-                    btnAssignDriver.isVisible = false
-                    clDriver.isVisible = true
-                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
-                        crossfade(true)
-                        placeholder(R.drawable.ic_placeholder)
-                        error(R.drawable.ic_placeholder)
-                    }
-                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
-                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                else ->{
+                    when(orderDetailData?.deliveryStatus){
+                        "1"->{
+                            tvStatus.text ="Active"
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            llComplete.isVisible = false
+                            btnInvoice.isVisible = true
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
-                    tvPicked.text = "Picked"
-                }
+                            if (orderDetailData?.assignStatus=="1"){
+                                btnAssignDriver.isVisible = false
+                                clDriver.isVisible = true
+                                ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                    crossfade(true)
+                                    placeholder(R.drawable.ic_placeholder)
+                                    error(R.drawable.ic_placeholder)
+                                }
+                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                tvDeliveredBy.isVisible = true
+                                tvDelivered.isVisible = true
 
-                "9"->{
-                    tvStatus.text ="Exchange"
-                    btnAssignDriver.isVisible = false
-                    tvCancelReason.isVisible = false
-                    tvCancellationReason.isVisible = false
-                    clDriver.isVisible = true
-                    llComplete.isVisible = true
-                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
-                        crossfade(true)
-                        placeholder(R.drawable.ic_placeholder)
-                        error(R.drawable.ic_placeholder)
-                    }
-                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
-                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
-                    tvPicked.text = "Picked"
-                    tvDeliveredText.text = "Exchange"
-                }
+                            }
+                            else{
+                                clDriver.isVisible = false
+                                btnAssignDriver.isVisible = true
+                            }
+                        }
 
-                "5"->{
-                    tvStatus.text ="Return"
-                    btnAssignDriver.isVisible = false
-                    tvCancelReason.isVisible = false
-                    tvCancellationReason.isVisible = false
-                    clDriver.isVisible = true
-                    llComplete.isVisible = true
-                    ivDriver.load(orderDetailData?.driverDetails?.profilePic){
-                        crossfade(true)
-                        placeholder(R.drawable.ic_placeholder)
-                        error(R.drawable.ic_placeholder)
+                        "2"->{
+                            tvStatus.text ="Active"
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            llComplete.isVisible = false
+                            btnInvoice.isVisible = true
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+
+                            if (orderDetailData?.assignStatus=="1"){
+                                btnAssignDriver.isVisible = false
+                                clDriver.isVisible = true
+                                ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                    crossfade(true)
+                                    placeholder(R.drawable.ic_placeholder)
+                                    error(R.drawable.ic_placeholder)
+                                }
+                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+
+                            }
+                            else{
+                                btnAssignDriver.isVisible = true
+                            }
+
+                        }
+
+                        "6"->{
+                            tvStatus.text ="Active"
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            llComplete.isVisible = false
+                            btnAssignDriver.isVisible = false
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                            clDriver.isVisible = true
+                            ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_placeholder)
+                                error(R.drawable.ic_placeholder)
+                            }
+                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        }
+
+                        "4"->{
+                            tvStatus.text ="Cancelled"
+                            tvStatus.setTextColor(Color.parseColor("#EB2525"))
+                            tvCancelReason.isVisible = true
+                            tvCancellationReason.isVisible = true
+                            llComplete.isVisible = false
+                            btnInvoice.isVisible = false
+                            btnAssignDriver.isVisible = false
+                            ivOnTheWay.isVisible = false
+                            tvOnTheWay.isVisible = false
+                            clDriver.isVisible = false
+                            clOrderStatus.isVisible = false
+                            clBilling.isVisible = false
+                            ivDelivered.setImageResource(R.drawable.ic_cancelled)
+                            tvDeliveredText.text = "Cancelled"
+                            tvDeliveredText.setTextColor(Color.parseColor("#D72E04"))
+                            ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_placeholder)
+                                error(R.drawable.ic_placeholder)
+                            }
+                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            if (orderDetailData?.cancelReason!=null){
+                                tvCancellationReason.text = orderDetailData?.cancelReason
+                                return
+                            }
+                            else if (orderDetailData?.notDeliveredReason!=null){
+                                tvCancellationReason.text = orderDetailData?.notDeliveredReason
+                                return
+                            }
+                            else if (orderDetailData?.returnReason!=null){
+                                tvCancellationReason.text = orderDetailData?.returnReason
+                                return
+                            }
+                            else if (orderDetailData?.exchangeReason!=null){
+                                tvCancellationReason.text = orderDetailData?.exchangeReason
+                                return
+                            }
+                        }
+                        "8"->{
+                            tvStatus.text ="Not Delivered"
+                            tvStatus.setTextColor(Color.parseColor("#EB2525"))
+                            tvCancelReason.isVisible = true
+                            tvCancellationReason.isVisible = true
+                            llComplete.isVisible = false
+                            btnInvoice.isVisible = false
+                            btnAssignDriver.isVisible = false
+                            clDriver.isVisible = true
+                            ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_placeholder)
+                                error(R.drawable.ic_placeholder)
+                            }
+                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        }
+                        "3"->{
+                            tvStatus.text ="Delivered"
+                            btnAssignDriver.isVisible = false
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            clDriver.isVisible = true
+                            btnAssignDriver.isVisible = false
+                            ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_placeholder)
+                                error(R.drawable.ic_placeholder)
+                            }
+                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab_selected)
+                            if (orderDetailData?.userRatingReviewProvide!=null){
+                                llComplete.isVisible = true
+                                rbProductRating.rating == orderDetailData?.userRatingReviewProvide?.productRating?:0f
+
+                                if (orderDetailData?.userRatingReviewProvide?.storeReview!=null&&orderDetailData?.userRatingReviewProvide?.storeReview!=""&&orderDetailData?.userRatingReviewProvide?.storeReview!="null"){
+                                    tvSellerReview.text = orderDetailData?.userRatingReviewProvide?.storeReview
+                                }
+                                else{
+                                    tvStoreReview.isVisible = false
+                                    tvSellerReview.isVisible = false
+                                }
+                                if (orderDetailData?.userRatingReviewProvide?.productReview!=null&&orderDetailData?.userRatingReviewProvide?.productReview!=""&&orderDetailData?.userRatingReviewProvide?.productReview!="null"){
+                                    tvProductReview.text = orderDetailData?.userRatingReviewProvide?.productReview
+                                }
+                                else{
+                                    tvProductReview.isVisible = false
+                                    tvReview.isVisible = false
+                                }
+
+                                rbStoreRating.rating == orderDetailData?.userRatingReviewProvide?.storeRating?:0f
+                            }
+                            else{
+                                llComplete.isVisible = false
+                            }
+                        }
+                        "7"->{
+                            tvStatus.text ="On the way"
+                            btnAssignDriver.isVisible = false
+                            clDriver.isVisible = true
+                            ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_placeholder)
+                                error(R.drawable.ic_placeholder)
+                            }
+                            ivEdit.isVisible = false
+                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+
+                            tvPicked.text = "Picked"
+                        }
+
+                        "9"->{
+                            tvStatus.text ="Exchange"
+                            btnAssignDriver.isVisible = false
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            clDriver.isVisible = true
+                            llComplete.isVisible = true
+                            ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_placeholder)
+                                error(R.drawable.ic_placeholder)
+                            }
+                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                            tvPicked.text = "Picked"
+                            tvDeliveredText.text = "Exchange"
+                        }
+
+                        "5"->{
+                            tvStatus.text ="Return"
+                            btnAssignDriver.isVisible = false
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            clDriver.isVisible = true
+                            llComplete.isVisible = true
+                            ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_placeholder)
+                                error(R.drawable.ic_placeholder)
+                            }
+                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+
+                        }
                     }
-                    tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
-                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
-                    ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
-                    ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
-                    ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
                 }
             }
@@ -326,8 +479,35 @@ class OrderDetailFragment : BaseFragment() {
             tvCountryValue.text = orderDetailData?.order?.deliveryDetails?.countryName
             tvShippingLocationValue.text = orderDetailData?.order?.deliveryDetails?.address
 
-            tvTotalAmount.text = "${CommonMethod.formatPrice(orderDetailData?.order?.totalAmount?:0.0)} KD"
-            CommissionEarned.text = "${CommonMethod.formatPrice(orderDetailData?.productDetails?.affiliatedCommission?:0.0)} KD"
+            tvTotalAmount.text = "${CommonMethod.formatPrice(orderDetailData?.amount?:0.0)} KD"
+            CommissionEarned.text = "${CommonMethod.formatPrice(orderDetailData?.adminCommission?:0.0)} KD"
+            if (orderDetailData?.driverDetails!=null){
+                tvZoneValue.isVisible = true
+                tvZone.isVisible = true
+                tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
+            }
+            else{
+                tvDeliveredBy.text = "NA"
+                tvZoneValue.isVisible = false
+                tvZone.isVisible = false
+            }
+            when(orderDetailData?.order?.paymentMethod){
+                "1"->{
+                    tvPaymentMethod.isVisible = false
+                    tvPaymentMethodValue.isVisible = false
+                }
+                "2"->{
+                    tvPaymentMethod.isVisible = true
+                    tvPaymentMethodValue.isVisible = true
+                    tvPaymentMethodValue.text = "Wallet"
+                }
+                "3"->{
+                    tvPaymentMethod.isVisible = true
+                    tvPaymentMethodValue.isVisible = true
+                    tvPaymentMethodValue.text = "COD"
+                }
+            }
         }
 
     }

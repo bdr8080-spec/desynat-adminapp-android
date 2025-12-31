@@ -69,6 +69,7 @@ class OrderManagementFragment : BaseFragment() {
     var fromTimestamp = 0L
     var toTimestamp = 0L
     var countryId:String?=null
+    var countryName:String?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
 
     private var assignDriverAdapter : AssignDriverAdapter?=null
@@ -443,6 +444,7 @@ class OrderManagementFragment : BaseFragment() {
                 else{
                     orderAdapter?.notifyDataSetChanged()
                 }
+                orderAdapter?.setType(type)
 
                 pagination = false
                 isFromSwipe = false
@@ -505,7 +507,7 @@ class OrderManagementFragment : BaseFragment() {
                 else{
                     orderAdapter?.notifyDataSetChanged()
                 }
-
+                orderAdapter?.setType(type)
                 pagination = false
                 isFromSwipe = false
                 isObserver = false
@@ -566,7 +568,7 @@ class OrderManagementFragment : BaseFragment() {
                 else{
                     orderAdapter?.notifyDataSetChanged()
                 }
-
+                orderAdapter?.setType(type)
                 pagination = false
                 isFromSwipe = false
                 isObserver = false
@@ -638,7 +640,7 @@ class OrderManagementFragment : BaseFragment() {
                 else{
                     orderAdapter?.notifyDataSetChanged()
                 }
-
+                orderAdapter?.setType(type)
                 pagination = false
                 isFromSwipe = false
                 isObserver = false
@@ -669,7 +671,7 @@ class OrderManagementFragment : BaseFragment() {
         search?.let { map["search"] = it }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
-        countryId?.let { map["country_id"] = it }
+        countryName?.let { map["country_name"] = it }
         map["page"] = currentPage
         map["limit"] = 10
         viewModel.getActiveOrderList(map)
@@ -684,7 +686,7 @@ class OrderManagementFragment : BaseFragment() {
         search?.let { map["search"] = it }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
-        countryId?.let { map["country_id"] = it }
+        countryName?.let { map["country_name"] = it }
         map["page"] = currentPage
         map["limit"] = 10
         viewModel.getCompletedOrderList(map)
@@ -699,7 +701,7 @@ class OrderManagementFragment : BaseFragment() {
         search?.let { map["search"] = it }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
-        countryId?.let { map["country_id"] = it }
+        countryName?.let { map["country_name"] = it }
         map["page"] = currentPage
         map["limit"] = 10
         viewModel.getCancelledOrderList(map)
@@ -714,7 +716,7 @@ class OrderManagementFragment : BaseFragment() {
         search?.let { map["search"] = it }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
-        countryId?.let { map["country_id"] = it }
+        countryName?.let { map["country_name"] = it }
         map["page"] = currentPage
         map["limit"] = 10
         viewModel.getReturnOrderList(map)
@@ -861,6 +863,7 @@ class OrderManagementFragment : BaseFragment() {
                 startDate = null
                 endDate = null
                 countryId = null
+                countryName = null
                 toTimestamp = 0L
                 fromTimestamp = 0L
                 when(type) {
@@ -883,6 +886,7 @@ class OrderManagementFragment : BaseFragment() {
             tvApply.setOnClickListener{
                 if (selectedCountryId!=null) {
                     countryId = selectedCountryId
+                    countryName = countryList.firstOrNull { it.id.toString() == countryId }?.name
                 }
                 if (etFrom.text.isNotEmpty()){
                     startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")

@@ -47,7 +47,7 @@ data class GetActiveOrderResponse(
             @SerializedName("assign_status")
             val assignStatus: String,
             @SerializedName("cancel_reason")
-            val cancelReason: Any,
+            val cancelReason: String,
             @SerializedName("created_at")
             val createdAt: String,
             @SerializedName("delivery_boy_id")
@@ -68,6 +68,8 @@ data class GetActiveOrderResponse(
             val isPicked: String,
             @SerializedName("not_delivered_reason")
             val notDeliveredReason: String,
+            @SerializedName("admin_commission")
+            val adminCommission: Double,
             @SerializedName("order")
             val order: Order,
             @SerializedName("order_id")
@@ -512,7 +514,7 @@ data class GetActiveOrderResponse(
                 @SerializedName("product_image")
                 val productImage: String,
                 @SerializedName("product_rating")
-                val productRating: String,
+                val productRating: Float,
                 @SerializedName("product_review")
                 val productReview: String,
                 @SerializedName("store_id")
@@ -520,7 +522,7 @@ data class GetActiveOrderResponse(
                 @SerializedName("store_image")
                 val storeImage: String,
                 @SerializedName("store_rating")
-                val storeRating: String,
+                val storeRating: Float,
                 @SerializedName("store_review")
                 val storeReview: String,
                 @SerializedName("updated_at")

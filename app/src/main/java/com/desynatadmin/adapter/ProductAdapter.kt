@@ -29,7 +29,7 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetActiveOr
         holder.binding.apply {
             tvCount.text = if((position+1)<10) "0${(position+1)}" else (position+1).toString()
             tvProduct.text = productData?.productDetails?.productNameEn
-            tvPrice.text = "${CommonMethod.formatPrice(productData?.order?.totalAmount?:0.0)} KD"
+            tvPrice.text = "${CommonMethod.formatPrice(productData?.amount?:0.0)} KD"
             tvFabric.text = productData?.productDetails?.brand?.nameEnglish
             tvSizeValue.text = productData?.variationDetails?.size?.name
             tvColorValue.text = productData?.variationDetails?.color?.name
