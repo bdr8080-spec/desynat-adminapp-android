@@ -3,9 +3,11 @@ package com.desynatadmin.utils
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
@@ -505,6 +507,28 @@ object CommonMethod {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
+    }
+
+    fun downloadPdf(context: Context, pdfUrl: String, fileName: String = "Invoice") {
+
+        val request = DownloadManager.Request(Uri.parse(pdfUrl))
+            .setTitle(fileName)
+            .setDescription("Downloading PDF...")
+            .setNotificationVisibility(
+                DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
+            )
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(true)
+            .setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                "$fileName.pdf"
+            )
+
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        downloadManager.enqueue(request)
+
+        context.showToast("Download started")
     }
 
 }

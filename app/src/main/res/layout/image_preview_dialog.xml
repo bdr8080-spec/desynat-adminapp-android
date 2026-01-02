@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_15sdp"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:background="@drawable/bottomsheet_bg"
+        android:backgroundTint="#FFF7EA"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Preview"
+        android:textColor="@color/black"
+        android:drawableEnd="@drawable/close_icon"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <io.getstream.photoview.PhotoView
+        android:id="@+id/phptoView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvToolbar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -298,6 +298,7 @@ class OrderManagementFragment : BaseFragment() {
             tvActive.setOnClickListener {
                 currentPage = 1
                 type = 1
+                etSearch.setText("")
                 getActiveOrder()
                 tvActive.setTextColor(requireActivity().getColor(R.color.white))
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
@@ -312,6 +313,7 @@ class OrderManagementFragment : BaseFragment() {
             tvReturnExchange.setOnClickListener {
                 currentPage = 1
                 type = 2
+                etSearch.setText("")
                 getReturnOrder()
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.white))
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
@@ -326,6 +328,7 @@ class OrderManagementFragment : BaseFragment() {
             tvCompleted.setOnClickListener {
                 currentPage = 1
                 type = 3
+                etSearch.setText("")
                 getCompletedOrder()
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.white))
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
@@ -340,6 +343,7 @@ class OrderManagementFragment : BaseFragment() {
             tvCancelled.setOnClickListener {
                 currentPage = 1
                 type = 4
+                etSearch.setText("")
                 getCancelledOrder()
                 tvCancelled.setTextColor(requireActivity().getColor(R.color.white))
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
@@ -668,7 +672,12 @@ class OrderManagementFragment : BaseFragment() {
 
     private fun getActiveOrder(loading:Boolean=true,search:String?=null) {
         val map = HashMap<String,Any>()
-        search?.let { map["search"] = it }
+        search?.let { searchId ->
+            map["search"] =
+                orderList.firstOrNull { order ->
+                    order.id.toString() == searchId
+                }?.order?.orderId ?: searchId
+        }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
         countryName?.let { map["country_name"] = it }
@@ -683,7 +692,12 @@ class OrderManagementFragment : BaseFragment() {
 
     private fun getCompletedOrder(loading:Boolean=true,search:String?=null) {
         val map = HashMap<String,Any>()
-        search?.let { map["search"] = it }
+        search?.let { searchId ->
+            map["search"] =
+                orderList.firstOrNull { order ->
+                    order.id.toString() == searchId
+                }?.order?.orderId ?: searchId
+        }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
         countryName?.let { map["country_name"] = it }
@@ -698,7 +712,12 @@ class OrderManagementFragment : BaseFragment() {
 
     private fun getCancelledOrder(loading:Boolean=true,search:String?=null) {
         val map = HashMap<String,Any>()
-        search?.let { map["search"] = it }
+        search?.let { searchId ->
+            map["search"] =
+                orderList.firstOrNull { order ->
+                    order.id.toString() == searchId
+                }?.order?.orderId ?: searchId
+        }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
         countryName?.let { map["country_name"] = it }
@@ -713,7 +732,12 @@ class OrderManagementFragment : BaseFragment() {
 
     private fun getReturnOrder(loading:Boolean=true,search:String?=null) {
         val map = HashMap<String,Any>()
-        search?.let { map["search"] = it }
+        search?.let { searchId ->
+            map["search"] =
+                orderList.firstOrNull { order ->
+                    order.id.toString() == searchId
+                }?.order?.orderId ?: searchId
+        }
         startDate?.let { map["from_date"] = it }
         endDate?.let { map["to_date"] = it }
         countryName?.let { map["country_name"] = it }
@@ -790,7 +814,6 @@ class OrderManagementFragment : BaseFragment() {
 
         dialogDriver?.show()
     }
-
 
     private fun filterDialog() {
         var selectedCountryId:String?=null

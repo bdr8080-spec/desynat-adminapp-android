@@ -71,6 +71,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.PartMap
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
@@ -611,5 +612,8 @@ interface ApiServices {
     suspend fun assignDriver(
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
+
+    @GET("${Constants.INVOICE}/{order_id}")
+    suspend fun getInvoice( @Path("order_id") order_id: String): Response<CommonResponse>
 
 }

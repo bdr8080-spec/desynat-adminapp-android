@@ -1203,6 +1203,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+    val invoiceLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getInvoice(id:String)
+    {
+        handleApiCall(
+            api = {
+                api.getInvoice(id)
+            },
+            responseLiveData = invoiceLiveData
+        )
+    }
+
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

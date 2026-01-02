@@ -14,13 +14,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.desynatadmin.R
+import com.desynatadmin.adapter.AssignDriverAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.AssignDriverDialogBinding
 import com.desynatadmin.databinding.FragmentBannerRequestDetailBinding
+import com.desynatadmin.databinding.ImagePreviewDialogBinding
 import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.CommonMethod.openPdfInBrowser
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -186,6 +191,10 @@ class BannerRequestDetailFragment : BaseFragment() {
             btnAccept.setOnClickListener {
                 acceptRequest()
             }
+
+            ivBanner.setOnClickListener {
+                imagePreviewDialog(bannerData?.uploadBanner?:"")
+            }
         }
     }
 
@@ -276,6 +285,39 @@ class BannerRequestDetailFragment : BaseFragment() {
         }
 
         dialog.show()
+    }
+
+    private fun imagePreviewDialog(image:String) {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = ImagePreviewDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog?.setContentView(it) }
+
+        val window: Window = dialog?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            tvToolbar.setOnClickListener{
+                dialog?.dismiss()
+            }
+
+            phptoView.load(image) {
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
+        }
+
+        dialog?.show()
     }
 
 

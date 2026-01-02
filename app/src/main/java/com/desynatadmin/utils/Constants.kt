@@ -123,5 +123,6 @@ object Constants {
     const val ORDER_DETAIL = "/api/admin/single_order_detail"
     const val GET_DRIVER_TO_ASSIGN = "/api/admin/get_drivers_to_assign"
     const val ASSIGN_DRIVER = "/api/admin/assign_driver"
+    const val INVOICE = "/Invoice"
 
 }

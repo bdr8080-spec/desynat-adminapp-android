@@ -520,7 +520,9 @@ class OrderDetailFragment : BaseFragment() {
             }
 
             btnInvoice.setOnClickListener {
-
+                CommonMethod.openPdfInBrowser(requireActivity(),"http://157.241.119.72/Invoice/${orderDetailData?.order?.orderId.toString()}")
+               // getInvoice()
+              //  CommonMethod.downloadPdf(requireActivity(),orderDetailData?.adminCommission)
             }
 
             btnAssignDriver.setOnClickListener {
@@ -534,6 +536,12 @@ class OrderDetailFragment : BaseFragment() {
             }
         }
 
+    private fun getInvoice() {
+        viewModel.getInvoice(orderDetailData?.order?.orderId.toString())
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver||isDriverObserver||isAssignObserver) {
@@ -541,6 +549,14 @@ class OrderDetailFragment : BaseFragment() {
                 isObserver = false
                 isDriverObserver = false
                 isAssignObserver = false
+            }
+        }
+
+        viewModel.invoiceResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+
+                isObserver = false
             }
         }
 

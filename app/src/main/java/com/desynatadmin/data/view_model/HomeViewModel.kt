@@ -971,5 +971,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val invoiceResult: LiveData<CommonResponse>
+        get() = repository.invoiceLiveData
+
+    fun getInvoice(id:String) {
+        viewModelScope.launch {
+            repository.getInvoice(id)
+        }
+    }
+
 
 }
