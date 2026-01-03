@@ -64,7 +64,6 @@ class BannerRequestDetailFragment : BaseFragment() {
         }
 
         binding?.apply {
-            toolbar.tvToolbar.text = "Details"
 
             when(bannerData?.adminVerify){
                 "0"->{
@@ -103,6 +102,7 @@ class BannerRequestDetailFragment : BaseFragment() {
 
     private fun setData() {
         binding?.apply {
+            updateStatus()
             ivBanner.load(bannerData?.uploadBanner) {
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)
@@ -141,6 +141,7 @@ class BannerRequestDetailFragment : BaseFragment() {
                     btnAccept.isVisible = true
                 }
                 "1"->{
+                    ivSwitch.isVisible = true
                     btnReject.isVisible = false
                     btnAccept.isVisible = false
                     tvAmountPaid.isVisible = true
@@ -180,7 +181,7 @@ class BannerRequestDetailFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 
@@ -195,7 +196,30 @@ class BannerRequestDetailFragment : BaseFragment() {
             ivBanner.setOnClickListener {
                 imagePreviewDialog(bannerData?.uploadBanner?:"")
             }
+
+            ivSwitch.setOnClickListener {
+                    updateStatusApi()
+            }
         }
+    }
+
+    private fun updateStatus(){
+        binding?.apply {
+            if(bannerData?.status==1){
+                ivSwitch.setImageResource(R.drawable.switch_on)
+            }
+            else{
+                ivSwitch.setImageResource(R.drawable.switch_off)
+            }
+        }
+    }
+
+    private fun updateStatusApi(){
+        val map = HashMap<String,Any>()
+        map["id"]=bannerData?.id.toString()
+        viewModel.updateBannerStatus(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
     }
 
     private fun acceptRequest(){
@@ -243,6 +267,23 @@ class BannerRequestDetailFragment : BaseFragment() {
                     bannerData?.cancelledReason = response.data.cancelledReason
                     setData()
                 }
+            }
+        }
+
+
+        viewModel.updateBannerStatusResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                bannerData = response.data
+                if (bannerData?.status==1){
+                    showToast("Banner Unblock Successfully")
+                }
+                else{
+                    showToast("Banner Block Successfully")
+                }
+                updateStatus()
+                isObserver = false
+
             }
         }
 

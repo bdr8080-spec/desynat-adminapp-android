@@ -112,6 +112,7 @@ object Constants {
     const val UPDATE_BANNER_PER_DAY_PRICE = "/api/admin/add_update_banner"
 
     const val BANNER_REQUEST = "/api/admin/get_banner_request"
+    const val UPDATE_BANNER_STATUS = "/api/admin/block_unblock_banner_req"
     const val APPROVE_BANNER_REQUEST = "/api/admin/approve_banner_request"
     const val REJECT_BANNER_REQUEST = "/api/admin/reject_banner_request"
     const val GET_AFFILIATE_COMMISSION = "/api/admin/countries_with_affiliate_commission"

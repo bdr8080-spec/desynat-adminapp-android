@@ -10,6 +10,7 @@ import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectionResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.UpdateBannerRequestStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -871,6 +872,16 @@ class HomeViewModel @Inject constructor(
             repository.getBannerRequest(type,search,fromDate, toDate, countryId, page)
         }
     }
+
+    val updateBannerStatusResult: LiveData<UpdateBannerRequestStatusResponse>
+        get() = repository.updateBannerStatusLiveData
+
+    fun updateBannerStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateBannerStatus(map)
+        }
+    }
+
 
     val approveBannerRequestResult: LiveData<CommonResponse>
         get() = repository.approveBannerRequestLiveData

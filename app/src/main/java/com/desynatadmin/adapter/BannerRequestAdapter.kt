@@ -6,13 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.desynatadmin.databinding.ItemBannerPriceBinding
 import com.desynatadmin.databinding.ItemBannerRequestBinding
-import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
-import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
-import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 
 class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: ArrayList<GetBannerRequestResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<BannerRequestAdapter.ViewHolder>() {

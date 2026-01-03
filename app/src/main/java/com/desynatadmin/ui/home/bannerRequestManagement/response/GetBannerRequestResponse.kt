@@ -60,6 +60,8 @@ data class GetBannerRequestResponse(
             val orderId: String,
             @SerializedName("payment_status")
             val paymentStatus: String,
+            @SerializedName("status")
+            val status: Int,
             @SerializedName("price")
             val price: String,
             @SerializedName("seller_details")

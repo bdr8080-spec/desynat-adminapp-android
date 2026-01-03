@@ -7,6 +7,7 @@ import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectionResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.UpdateBannerRequestStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddServiceCityResponse
 import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
@@ -558,7 +559,12 @@ interface ApiServices {
           @Query("limit") limit: Int? = 10,
     ): Response<GetBannerRequestResponse>
 
-    @POST(Constants.APPROVE_BANNER_REQUEST)
+    @POST(Constants.UPDATE_BANNER_STATUS)
+    suspend fun updateBannerStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateBannerRequestStatusResponse>
+
+@POST(Constants.APPROVE_BANNER_REQUEST)
     suspend fun approveBannerRequest(
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
