@@ -282,6 +282,21 @@ override fun onBackPressed() {
                 controller.navigate(R.id.order)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
+
+            rlFullScreenBanner.setOnClickListener {
+                controller.navigate(R.id.fullScreenBanner)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlDealsManagement.setOnClickListener {
+                controller.navigate(R.id.dealManagement)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlStoryManagement.setOnClickListener {
+                controller.navigate(R.id.storyManagement)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
         }
 
     }

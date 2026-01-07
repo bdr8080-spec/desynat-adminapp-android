@@ -103,7 +103,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                         tvCountry.visibility = View.GONE
                         tvDropdown.visibility = View.GONE
                         pagingLayout.visibility = View.GONE
-                        zoneListRecyclerView.visibility = View.VISIBLE
+                     //   zoneListRecyclerView.visibility = View.VISIBLE
                         SingleTonDataPass.countryId =
                             serviceCityList?.get(position)?.country_id ?: ""
                         SingleTonDataPass.cityId = serviceCityList?.get(position)?.id ?: ""

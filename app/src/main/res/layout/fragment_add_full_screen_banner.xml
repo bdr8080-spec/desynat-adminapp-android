@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.fullScreenBannerManagement.AddFullScreenBannerFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_15sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivBanner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_upload_banner"
+                android:background="@drawable/ic_dash"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvImage"
+                app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Title"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter Title"
+                android:inputType="text"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/edit_back" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountry"
+                style="@style/edit_text_title"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Select Country"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCountry"
+                style="@style/edit_text"
+                android:paddingVertical="@dimen/_9sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:hint="Select country"
+                android:editable="false"
+                android:clickable="true"
+                android:focusable="false"
+                android:layout_marginTop="5dp"
+                android:layout_centerVertical="true"
+                android:drawableEnd="@drawable/ic_drop_down"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStartDate"
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="Duration"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/etStartDate"
+                    style="@style/edit_text"
+                    android:layout_width="0dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:hint="From   //  //"
+                    android:paddingVertical="@dimen/_9sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    app:layout_constraintEnd_toStartOf="@+id/etEndDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvStartDate" />
+
+                <TextView
+                    android:id="@+id/etEndDate"
+                    style="@style/edit_text"
+                    android:layout_width="0dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:hint="To   //  //"
+                    android:paddingVertical="@dimen/_9sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/etStartDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/etStartDate"
+                    app:layout_constraintTop_toTopOf="@+id/etStartDate" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        style="@style/button"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

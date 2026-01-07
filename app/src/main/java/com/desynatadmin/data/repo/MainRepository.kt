@@ -38,13 +38,20 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
+import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.UpdateDealStatusResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -59,6 +66,7 @@ import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
+import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -1222,6 +1230,195 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
                 api.getInvoice(id)
             },
             responseLiveData = invoiceLiveData
+        )
+    }
+
+
+    val getActiveDealsLiveData = SingleLiveEvent<GetActiveDealResponse>()
+    suspend fun getActiveDeals(search:String?=null, page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getActiveDeals(search,page)
+            },
+            responseLiveData = getActiveDealsLiveData
+        )
+    }
+
+    val getExpiredDealsLiveData = SingleLiveEvent<GetActiveDealResponse>()
+    suspend fun getExpiredDeals(search:String?=null, page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getExpiredDeals(search,page)
+            },
+            responseLiveData = getExpiredDealsLiveData
+        )
+    }
+
+    val addDealLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addDeal(request:AddDealRequest)
+    {
+        handleApiCall(
+            api = {
+                api.addDeal(request)
+            },
+            responseLiveData = addDealLiveData
+        )
+    }
+
+    val updateDealLiveData = SingleLiveEvent<UpdateDealStatusResponse>()
+    suspend fun updateDeal(request:AddDealRequest)
+    {
+        handleApiCall(
+            api = {
+                api.updateDeal(request)
+            },
+            responseLiveData = updateDealLiveData
+        )
+    }
+
+    val updateDealStatusLiveData = SingleLiveEvent<UpdateDealStatusResponse>()
+    suspend fun updateDealStatus(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.updateDealStatus(map)
+            },
+            responseLiveData = updateDealStatusLiveData
+        )
+    }
+
+    val deleteDealLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteDeal(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.deleteDeal(map)
+            },
+            responseLiveData = deleteDealLiveData
+        )
+    }
+
+    val getFullScreenBannerLiveData = SingleLiveEvent<GetFullScreenBannerResponse>()
+    suspend fun getFullScreenBanner(search:String?=null,country:String?=null ,startDate: String?=null,enDate: String?=null,page:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getFullScreenBanner(search,country,startDate,enDate,page)
+            },
+            responseLiveData = getFullScreenBannerLiveData
+        )
+    }
+
+    val addFullScreenBannerLiveData = SingleLiveEvent<AddFullScreenBannerResponse>()
+    suspend fun addFullScreenBanner(request:AddFullScreenBannerRequest)
+    {
+        handleApiCall(
+            api = {
+                api.addFullScreenBanner(request)
+            },
+            responseLiveData = addFullScreenBannerLiveData
+        )
+    }
+
+    val updateFullScreenBannerLiveData = SingleLiveEvent<AddFullScreenBannerResponse>()
+    suspend fun updateFullScreenBanner(request:AddFullScreenBannerRequest)
+    {
+        handleApiCall(
+            api = {
+                api.updateFullScreenBanner(request)
+            },
+            responseLiveData = updateFullScreenBannerLiveData
+        )
+    }
+
+    val deleteFullScreenBannerLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteFullScreenBanner(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.deleteFullScreenBanner(map)
+            },
+            responseLiveData = deleteFullScreenBannerLiveData
+        )
+    }
+
+    val getAdminStoryLiveData = SingleLiveEvent<GetStoryResponse>()
+    suspend fun getAdminStory(page:Int)
+    {
+        handleApiCall(
+            api = {
+                api.getAdminStory(page)
+            },
+            responseLiveData = getAdminStoryLiveData
+        )
+    }
+
+    val getSellerStoryLiveData = SingleLiveEvent<GetStoryResponse>()
+    suspend fun getSellerStory(page:Int)
+    {
+        handleApiCall(
+            api = {
+                api.getSellerStory(page)
+            },
+            responseLiveData = getSellerStoryLiveData
+        )
+    }
+
+    val addStoryLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addStory(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.addStory(map)
+            },
+            responseLiveData = addStoryLiveData
+        )
+    }
+
+    val deleteStoryLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteStory(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.deleteStory(map)
+            },
+            responseLiveData = deleteStoryLiveData
+        )
+    }
+
+
+    val getLiveRequestLiveData = SingleLiveEvent<GetLiveRequestResponse>()
+    suspend fun getLiveRequest(type:Int,search:String?=null,country:String?=null,page:Int)
+    {
+        handleApiCall(
+            api = {
+                api.getLiveRequest(type,search,country,page)
+            },
+            responseLiveData = getLiveRequestLiveData
+        )
+    }
+
+    val acceptLiveRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun acceptLiveRequest(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.acceptLiveRequest(map)
+            },
+            responseLiveData = acceptLiveRequestLiveData
+        )
+    }
+
+    val rejectLiveRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun rejectLiveRequest(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.rejectLiveRequest(map)
+            },
+            responseLiveData = rejectLiveRequestLiveData
         )
     }
 

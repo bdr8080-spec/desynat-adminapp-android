@@ -71,7 +71,6 @@ class AddGiftCardFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         val itemJson = arguments?.getString("giftData")
-        binding?.apply {
             binding?.apply {
                 CommonMethod.applyArabicOnlyFilter(etArabicCardName)
                 CommonMethod.removeSpace(etEnglishCardName)
@@ -98,7 +97,6 @@ class AddGiftCardFragment : BaseFragment() {
                     }
                 }
             }
-        }
     }
 
         override fun initControl() {

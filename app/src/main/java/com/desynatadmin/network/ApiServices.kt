@@ -32,13 +32,20 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
+import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.UpdateDealStatusResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -53,6 +60,7 @@ import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
+import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -621,5 +629,107 @@ interface ApiServices {
 
     @GET("${Constants.INVOICE}/{order_id}")
     suspend fun getInvoice( @Path("order_id") order_id: String): Response<CommonResponse>
+
+    @GET(Constants.GET_ACTIVE_DEALS)
+    suspend fun getActiveDeals(
+        @Query("search") search : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetActiveDealResponse>
+
+    @GET(Constants.GET_EXPIRED_DEALS)
+    suspend fun getExpiredDeals(
+        @Query("search") search : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetActiveDealResponse>
+
+    @POST(Constants.ADD_DEALS)
+    suspend fun addDeal(
+        @Body body: AddDealRequest
+    ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_DEALS)
+    suspend fun updateDeal(
+        @Body body: AddDealRequest
+    ): Response<UpdateDealStatusResponse>
+
+    @POST(Constants.UPDATE_DEAL_STATUS)
+    suspend fun updateDealStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateDealStatusResponse>
+
+    @POST(Constants.DELETE_DEAL)
+    suspend fun deleteDeal(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @GET(Constants.GET_FULL_BANNER)
+    suspend fun getFullScreenBanner(
+        @Query("search") search : String?=null,
+        @Query("country") country : String?=null,
+        @Query("from_date") fromDate : String?=null,
+        @Query("to_date") toDate : String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetFullScreenBannerResponse>
+
+    @POST(Constants.ADD_FULL_BANNER)
+    suspend fun addFullScreenBanner(
+        @Body body: AddFullScreenBannerRequest
+    ): Response<AddFullScreenBannerResponse>
+
+    @POST(Constants.UPDATE_FULL_BANNER)
+    suspend fun updateFullScreenBanner(
+        @Body body: AddFullScreenBannerRequest
+    ): Response<AddFullScreenBannerResponse>
+
+    @POST(Constants.DELETE_FULL_BANNER)
+    suspend fun deleteFullScreenBanner(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @GET(Constants.GET_ADMIN_STORY)
+    suspend fun getAdminStory(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetStoryResponse>
+
+    @GET(Constants.GET_SELLER_STORY)
+    suspend fun getSellerStory(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetStoryResponse>
+
+    @POST(Constants.ADD_STORY)
+    suspend fun addStory(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.DELETE_STORY)
+    suspend fun deleteStory(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+
+    @GET(Constants.GET_LIVE_REQUEST)
+    suspend fun getLiveRequest(
+        @Query("type") type: Int,
+        @Query("search") search: String?=null,
+        @Query("country") country: String?=null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetLiveRequestResponse>
+
+    @POST(Constants.ACCEPT_LIVE_REQUEST)
+    suspend fun acceptLiveRequest(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.REJECT_LIVE_REQUEST)
+    suspend fun rejectLiveRequest(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
 
 }

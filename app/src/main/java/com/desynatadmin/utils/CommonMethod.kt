@@ -36,6 +36,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import coil.load
 import com.desynatadmin.R
+import com.desynatadmin.adapter.AllCountryPickerAdapter
 import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.DeleteDialogLayoutBinding
@@ -450,6 +451,37 @@ object CommonMethod {
 
         binding.rvCountry.adapter = CountryPickerAdapter(context, countryList,isDialCode,
             object : CountryPickerAdapter.ClickOnItem {
+                override fun onClickItem(position: Int) {
+                    onCountrySelected(countryList[position])
+                    popupWindow.dismiss()
+                }
+            }
+        )
+    }
+
+
+    fun showAllCountryPicker(
+        context: Context,
+        anchor: View,
+        countryList: ArrayList<GetCountryResponse.Data>,
+        isDialCode:Boolean=false,
+        onCountrySelected: (GetCountryResponse.Data) -> Unit
+    ) {
+        val binding = CustomCountryPickerBinding.inflate(LayoutInflater.from(context))
+
+        val popupWindow = PopupWindow(
+            binding.root,
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.isOutsideTouchable = true
+        popupWindow.elevation = 20f
+        popupWindow.showAsDropDown(anchor)
+
+        binding.rvCountry.adapter = AllCountryPickerAdapter(context, countryList,isDialCode,
+            object : AllCountryPickerAdapter.ClickOnItem {
                 override fun onClickItem(position: Int) {
                     onCountrySelected(countryList[position])
                     popupWindow.dismiss()

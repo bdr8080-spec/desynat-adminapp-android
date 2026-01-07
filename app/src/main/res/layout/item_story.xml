@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
+    android:paddingBottom="@dimen/_8sdp"
+    android:background="@drawable/story_card_background">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivStory"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_170sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/reel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounded_corner_8sdp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ivStory"
+        app:layout_constraintEnd_toEndOf="@id/ivStory"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_delete_story" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/play_ic"
+        app:layout_constraintTop_toTopOf="@id/ivStory"
+        app:layout_constraintEnd_toEndOf="@id/ivStory"
+        app:layout_constraintBottom_toBottomOf="@id/ivStory"
+        app:layout_constraintStart_toStartOf="@id/ivStory" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPosted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:singleLine="true"
+        android:text="Posted On"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_9sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivStory"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Active"
+        android:textColor="#68CA44"
+        android:textSize="@dimen/_9sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvPosted"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPosted"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPostedOn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:singleLine="true"
+        android:text="21/02/2025, 11:10PM"
+        android:ellipsize="end"
+        android:textColor="#99000000"
+        android:textSize="@dimen/_9sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPosted"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

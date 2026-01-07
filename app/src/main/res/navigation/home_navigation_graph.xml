@@ -322,5 +322,94 @@
         android:label="Order Detail Fragment"
         tools:layout="@layout/fragment_order_detail"/>
 
+    <fragment
+        android:id="@+id/fullScreenBanner"
+        android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.FullScreenBannerManagementFragment"
+        android:label="Full Screen Banner Management Fragment"
+        tools:layout="@layout/fragment_full_screen_banner_management">
+
+        <action
+            android:id="@+id/action_fullScreenBanner_to_fullScreenBannerDetailFragment"
+            app:destination="@id/fullScreenBannerDetail" />
+
+        <action
+            android:id="@+id/action_fullScreenBanner_to_addFullScreenBannerFragment"
+            app:destination="@id/addFullScreenBanner" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fullScreenBannerDetail"
+        android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.FullScreenBannerDetailFragment"
+        android:label="Full Screen Banner Detail Fragment"
+        tools:layout="@layout/fragment_full_screen_banner_detail">
+
+
+        <action
+            android:id="@+id/action_fullScreenBannerDetail_to_addFullScreenBannerFragment"
+            app:destination="@id/addFullScreenBanner" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFullScreenBanner"
+        android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.AddFullScreenBannerFragment"
+        android:label="Add Full Screen Banner Fragment"
+        tools:layout="@layout/fragment_add_full_screen_banner"/>
+
+    <fragment
+        android:id="@+id/dealManagement"
+        android:name="com.desynatadmin.ui.home.dealsManagement.DealsManagementFragment"
+        android:label="Deal Management Fragment"
+        tools:layout="@layout/fragment_deals_management">
+
+        <action
+            android:id="@+id/action_dealManagement_to_dealDetailFragment"
+            app:destination="@id/dealDetail" />
+
+        <action
+            android:id="@+id/action_dealManagement_to_addDealFragment"
+            app:destination="@id/addDeal" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/dealDetail"
+        android:name="com.desynatadmin.ui.home.dealsManagement.AddDealFragment"
+        android:label="Deal Detail Fragment"
+        tools:layout="@layout/fragment_full_screen_banner_detail">
+
+
+        <action
+            android:id="@+id/action_dealDetail_to_addDealFragment"
+            app:destination="@id/addDeal" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addDeal"
+        android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.AddFullScreenBannerFragment"
+        android:label="Add Deal Fragment"
+        tools:layout="@layout/fragment_add_deal"/>
+
+    <fragment
+        android:id="@+id/storyManagement"
+        android:name="com.desynatadmin.ui.home.storyManagement.StoryManagementFragment"
+        android:label="Story Management Fragment"
+        tools:layout="@layout/fragment_story_management">
+
+
+        <action
+            android:id="@+id/action_storyManagement_to_addStoryFragment"
+            app:destination="@id/addStory" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addStory"
+        android:name="com.desynatadmin.ui.home.storyManagement.AddStoryFragment"
+        android:label="Add Story Fragment"
+        tools:layout="@layout/fragment_add_story"/>
+
 
 </navigation>

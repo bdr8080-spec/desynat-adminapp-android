@@ -65,7 +65,7 @@ class AddBrandFragment : BaseFragment() {
     }
 
     override fun initView() {
-        val itemJson = arguments?.getString("giftCard")
+        val itemJson = arguments?.getString("brandData")
         binding?.apply {
 
             CommonMethod.applyArabicOnlyFilter(etArabicBrandName)

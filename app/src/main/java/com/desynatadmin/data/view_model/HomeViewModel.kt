@@ -35,13 +35,20 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
+import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.UpdateDealStatusResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -56,6 +63,7 @@ import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
+import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -991,5 +999,157 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getActiveDealsResult: LiveData<GetActiveDealResponse>
+        get() = repository.getActiveDealsLiveData
+
+    fun getActiveDeals(search: String?=null, page:Int) {
+        viewModelScope.launch {
+            repository.getActiveDeals(search,page)
+        }
+    }
+
+    val getExpiredDealsResult: LiveData<GetActiveDealResponse>
+        get() = repository.getExpiredDealsLiveData
+
+    fun getExpiredDeals(search: String?=null, page:Int) {
+        viewModelScope.launch {
+            repository.getExpiredDeals(search,page)
+        }
+    }
+
+    val addDealResult: LiveData<CommonResponse>
+        get() = repository.addDealLiveData
+
+    fun addDeal(request:AddDealRequest) {
+        viewModelScope.launch {
+            repository.addDeal(request)
+        }
+    }
+
+    val updateDealResult: LiveData<UpdateDealStatusResponse>
+        get() = repository.updateDealLiveData
+
+    fun updateDeal(request:AddDealRequest) {
+        viewModelScope.launch {
+            repository.updateDeal(request)
+        }
+    }
+
+    val updateDealStatusResult: LiveData<UpdateDealStatusResponse>
+        get() = repository.updateDealStatusLiveData
+
+    fun updateDealStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateDealStatus(map)
+        }
+    }
+
+    val deleteDealResult: LiveData<CommonResponse>
+        get() = repository.deleteDealLiveData
+
+    fun deleteDeal(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteDeal(map)
+        }
+    }
+
+    val getFullScreenBannerResult: LiveData<GetFullScreenBannerResponse>
+        get() = repository.getFullScreenBannerLiveData
+
+    fun getFullScreenBanner(search: String?=null,country: String?=null,startDate: String?=null,enDate: String?=null, page:Int) {
+        viewModelScope.launch {
+            repository.getFullScreenBanner(search,country,startDate,enDate,page)
+        }
+    }
+
+    val addFullScreenBannerResult: LiveData<AddFullScreenBannerResponse>
+        get() = repository.addFullScreenBannerLiveData
+
+    fun addFullScreenBanner(request:AddFullScreenBannerRequest) {
+        viewModelScope.launch {
+            repository.addFullScreenBanner(request)
+        }
+    }
+
+val updateFullScreenBannerResult: LiveData<AddFullScreenBannerResponse>
+        get() = repository.updateFullScreenBannerLiveData
+
+    fun updateFullScreenBanner(request:AddFullScreenBannerRequest) {
+        viewModelScope.launch {
+            repository.updateFullScreenBanner(request)
+        }
+    }
+
+val deleteFullScreenBannerResult: LiveData<CommonResponse>
+        get() = repository.deleteFullScreenBannerLiveData
+
+    fun deleteFullScreenBanner(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteFullScreenBanner(map)
+        }
+    }
+
+    val addStoryResult: LiveData<CommonResponse>
+        get() = repository.addStoryLiveData
+
+    fun addStory(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.addStory(map)
+        }
+    }
+
+    val deleteStoryResult: LiveData<CommonResponse>
+        get() = repository.deleteStoryLiveData
+
+    fun deleteStory(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteStory(map)
+        }
+    }
+
+    val getSellerStoryResult: LiveData<GetStoryResponse>
+        get() = repository.getSellerStoryLiveData
+
+    fun getSellerStory(page:Int) {
+        viewModelScope.launch {
+            repository.getSellerStory(page)
+        }
+    }
+
+    val getAdminStoryResult: LiveData<GetStoryResponse>
+        get() = repository.getAdminStoryLiveData
+
+    fun getAdminStory(page:Int) {
+        viewModelScope.launch {
+            repository.getAdminStory(page)
+        }
+    }
+
+    val getLiveRequestResult: LiveData<GetLiveRequestResponse>
+        get() = repository.getLiveRequestLiveData
+
+    fun getLiveRequest(type:Int,search:String?=null,country:String?=null,page:Int) {
+        viewModelScope.launch {
+            repository.getLiveRequest(type,search,country,page)
+        }
+    }
+
+    val acceptLiveRequestResult: LiveData<CommonResponse>
+        get() = repository.acceptLiveRequestLiveData
+
+    fun acceptLiveRequest(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.acceptLiveRequest(map)
+        }
+    }
+
+    val rejectLiveRequestResult: LiveData<CommonResponse>
+        get() = repository.rejectLiveRequestLiveData
+
+    fun rejectLiveRequest(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.rejectLiveRequest(map)
+        }
+    }
 
 }

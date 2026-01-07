@@ -1,11 +1,17 @@
 package com.desynatadmin.ui.m2
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
@@ -14,6 +20,9 @@ import com.desynatadmin.adapter.ReelAdapter
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityApprovedDetailsBinding
+import com.desynatadmin.databinding.ImagePreviewDialogBinding
+import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
+import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import com.desynatadmin.utils.formatUtcDateToLocal
@@ -25,6 +34,7 @@ import kotlin.math.roundToInt
 class ApprovedDetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityApprovedDetailsBinding
     private val viewModel : HomeViewModel by viewModels()
+    private var sellerDetailData: SellerDetailResponse.Data?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +48,7 @@ class ApprovedDetailsActivity : BaseActivity() {
     }
 
     override fun initView() {
+        ProgressDialogUtils.getInstance().showProgress(this)
         viewModel.hitSellerDetail(
             SharedPreference.get(this).accessToken,
             intent.getStringExtra("id") ?: ""
@@ -79,6 +90,24 @@ class ApprovedDetailsActivity : BaseActivity() {
         }
         binding?.highlightsRecyclerView?.adapter = HighlightsAdapter()
 
+        binding?.apply {
+            doc1.setOnClickListener {
+                imagePreviewDialog(sellerDetailData?.owner_document?.get(0)?.document_path?:"")
+            }
+
+            doc2.setOnClickListener {
+                imagePreviewDialog(sellerDetailData?.owner_document?.get(1)?.document_path?:"")
+            }
+
+            doc3.setOnClickListener {
+                imagePreviewDialog(sellerDetailData?.store_document?.get(0)?.document_path?:"")
+            }
+
+            doc4.setOnClickListener {
+                imagePreviewDialog(sellerDetailData?.store_document?.get(1)?.document_path?:"")
+            }
+        }
+
     }
 
 
@@ -96,6 +125,9 @@ class ApprovedDetailsActivity : BaseActivity() {
         }
 
         viewModel.getSellerDetailData.observe(this){
+            ProgressDialogUtils.getInstance().hideProgress()
+
+            sellerDetailData = it.data
             if(it.data.is_block == 0){
                 binding.ivToggle.setImageResource(R.drawable.toggle_ic)
             }
@@ -148,4 +180,38 @@ class ApprovedDetailsActivity : BaseActivity() {
             Glide.with(this).load(it.data.seller_bank_details.upload_proof).into(binding.imAccountProof)
         }
     }
+
+    private fun imagePreviewDialog(image:String) {
+        val dialog = Dialog(this, R.style.CustomDialog)
+        val dialogBinding = ImagePreviewDialogBinding.inflate(LayoutInflater.from(this))
+        dialogBinding.root.let { dialog?.setContentView(it) }
+
+        val window: Window = dialog?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            tvToolbar.setOnClickListener{
+                dialog?.dismiss()
+            }
+
+            phptoView.load(image) {
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
+        }
+
+        dialog?.show()
+    }
+
 }

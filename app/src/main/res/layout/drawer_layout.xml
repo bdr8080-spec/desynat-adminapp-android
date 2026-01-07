@@ -448,6 +448,34 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rlFullScreenBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivFullScreenBanner"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_banner_request_management" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFullScreenBanner"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoFullScreenBanner"
+                android:layout_toEndOf="@id/ivFullScreenBanner"
+                android:text="Full Screen Banner Management" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoFullScreenBanner"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:id="@+id/rlAffilateCommissionManagement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

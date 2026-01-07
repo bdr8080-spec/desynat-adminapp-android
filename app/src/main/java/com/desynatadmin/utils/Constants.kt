@@ -126,4 +126,27 @@ object Constants {
     const val ASSIGN_DRIVER = "/api/admin/assign_driver"
     const val INVOICE = "/Invoice"
 
+    const val GET_FULL_BANNER = "/api/admin/get_full_banners"
+    const val ADD_FULL_BANNER = "/api/admin/add_full_banner"
+    const val UPDATE_FULL_BANNER = "/api/admin/update_full_banner"
+    const val DELETE_FULL_BANNER = "/api/admin/delete_full_banner"
+
+    const val GET_ACTIVE_DEALS = "/api/admin/get_active_deals"
+    const val GET_EXPIRED_DEALS = "/api/admin/get_expired_deals"
+    const val UPDATE_DEAL_STATUS = "/api/admin/block_unblock_deal"
+    const val DELETE_DEAL = "/api/admin/delete_deal"
+    const val ADD_DEALS = "/api/admin/add_deal"
+    const val UPDATE_DEALS = "/api/admin/update_deal"
+
+    const val ADD_STORY = "/api/admin/add_story"
+    const val DELETE_STORY = "/api/admin/delete_story"
+    const val GET_SELLER_STORY = "/api/admin/get_seller_stories"
+    const val GET_ADMIN_STORY = "/api/admin/get_seller_stories"
+
+    const val GET_LIVE_REQUEST = "/api/admin/get_live_requests"
+    const val ACCEPT_LIVE_REQUEST = "/api/admin/accept_live_request"
+    const val REJECT_LIVE_REQUEST = "/api/admin/accept_live_request"
+
+
+
 }
