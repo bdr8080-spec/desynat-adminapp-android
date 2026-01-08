@@ -51,7 +51,10 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScree
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -1390,11 +1393,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val getLiveRequestLiveData = SingleLiveEvent<GetLiveRequestResponse>()
-    suspend fun getLiveRequest(type:Int,search:String?=null,country:String?=null,page:Int)
+    suspend fun getLiveRequest(map: HashMap<String, Any>)
     {
         handleApiCall(
             api = {
-                api.getLiveRequest(type,search,country,page)
+                api.getLiveRequest(map)
             },
             responseLiveData = getLiveRequestLiveData
         )
@@ -1421,6 +1424,62 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = rejectLiveRequestLiveData
         )
     }
+
+    val getTimeSlotLiveData = SingleLiveEvent<GetTimeSlotResponse>()
+    suspend fun getTimeSlot(countryId:String,date:String)
+    {
+        handleApiCall(
+            api = {
+                api.getTimeSlot(countryId,date)
+            },
+            responseLiveData = getTimeSlotLiveData
+        )
+    }
+
+    val addTimeSlotLiveData = SingleLiveEvent<UpdateTimeSlotResponse>()
+    suspend fun addTimeSlot(request:AddTimeSlotRequest)
+    {
+        handleApiCall(
+            api = {
+                api.addTimeSlot(request)
+            },
+            responseLiveData = addTimeSlotLiveData
+        )
+    }
+
+    val updateTimeSlotLiveData = SingleLiveEvent<UpdateTimeSlotResponse>()
+    suspend fun updateTimeSlot(request:AddTimeSlotRequest)
+    {
+        handleApiCall(
+            api = {
+                api.updateTimeSlot(request)
+            },
+            responseLiveData = updateTimeSlotLiveData
+        )
+    }
+
+    val updateTimeSlotStatusLiveData = SingleLiveEvent<UpdateTimeSlotResponse>()
+    suspend fun updateTimeSlotStatus(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.updateTimeSlotStatus(map)
+            },
+            responseLiveData = updateTimeSlotStatusLiveData
+        )
+    }
+
+    val deleteTimeSlotLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteTimeSlot(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.deleteTimeSlot(map)
+            },
+            responseLiveData = deleteTimeSlotLiveData
+        )
+    }
+
 
 }
 

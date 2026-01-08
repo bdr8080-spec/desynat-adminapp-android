@@ -14,10 +14,9 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAddBrandBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.utils.CommonMethod
-import com.desynatadmin.utils.ImagePicker
+import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
-import com.desynatadmin.utils.toMultipartPart
 import com.desynatadmin.utils.toPlainRequestBody
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,7 +97,7 @@ class AddBrandFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

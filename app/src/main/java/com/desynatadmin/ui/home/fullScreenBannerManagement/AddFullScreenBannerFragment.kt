@@ -16,7 +16,7 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScree
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
-import com.desynatadmin.utils.ImagePicker
+import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
@@ -109,7 +109,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

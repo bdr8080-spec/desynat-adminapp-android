@@ -335,7 +335,7 @@ fun openCustomDatePicker(
             selectedCal.set(Calendar.SECOND, 0)
             selectedCal.set(Calendar.MILLISECOND, 0)
 
-            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            val selectedDate =  String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
             val timestamp = selectedCal.timeInMillis
 
             onClick(selectedDate, timestamp)

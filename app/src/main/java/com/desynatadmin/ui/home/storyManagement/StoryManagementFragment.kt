@@ -65,12 +65,17 @@ class StoryManagementFragment : BaseFragment() {
                         }
                         2->{
                             selectedPos = position
+                        }
+                        3->{
+                            selectedPos = position
                             deleteStory()
                         }
                     }
                 }
 
             })
+
+            rvStory.adapter = storyAdapter
 
             swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(requireActivity(), R.color.brown)
@@ -96,12 +101,13 @@ class StoryManagementFragment : BaseFragment() {
             }
         }
 
+        getAdminStory()
     }
 
     override fun initControl() {
         binding?.apply {
 
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 
@@ -143,7 +149,6 @@ class StoryManagementFragment : BaseFragment() {
                 val newItems = response.data.data ?: emptyList()
 
                 storyList.addAll(newItems)
-                checkData()
 
                 if (pagination){
                     response.data.data?.size?.let {
@@ -167,9 +172,8 @@ class StoryManagementFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 CommonMethod.showSuccessDialog(requireContext(), "Story deleted successfully!"){
                     storyList.removeAt(selectedPos)
-                    storyAdapter?.notifyItemRemoved(selectedPos)
-                    storyAdapter?.notifyItemRangeChanged(selectedPos, storyList.size)
-                    checkData()
+                    storyAdapter?.notifyItemRemoved(selectedPos + 1)
+                    storyAdapter?.notifyItemRangeChanged(selectedPos + 1, storyList.size)
                     selectedPos = -1
                 }
                 isObserver = false
@@ -195,9 +199,5 @@ class StoryManagementFragment : BaseFragment() {
         isObserver = true
     }
 
-
-    private fun checkData(){
-        binding?.tvNoDataFound?.isVisible = storyList.isEmpty()
-    }
 
 }

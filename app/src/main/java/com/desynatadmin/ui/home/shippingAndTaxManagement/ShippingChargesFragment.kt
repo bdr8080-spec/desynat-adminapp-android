@@ -115,7 +115,7 @@ class ShippingChargesFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

@@ -67,10 +67,18 @@ class SellerManagementActivity : AppCompatActivity() {
     }
 
     private fun initView(){
+        if(SharedPreference.get(this).getCountryList() == null) {
+            viewModel.getCountryList()
+        }
+        else{
+            countryList.clear()
+            SharedPreference.get(this).getCountryList()?.let { countryList.addAll(it) }
+        }
+
         binding.filter.setOnClickListener {
             filterBottomSheet()
         }
-        viewModel.getCountryList()
+
         binding.etSearch.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 

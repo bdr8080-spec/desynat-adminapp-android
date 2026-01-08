@@ -375,9 +375,9 @@
 
     <fragment
         android:id="@+id/dealDetail"
-        android:name="com.desynatadmin.ui.home.dealsManagement.AddDealFragment"
+        android:name="com.desynatadmin.ui.home.dealsManagement.DealsDetailFragment"
         android:label="Deal Detail Fragment"
-        tools:layout="@layout/fragment_full_screen_banner_detail">
+        tools:layout="@layout/fragment_deals_detail">
 
 
         <action
@@ -388,7 +388,7 @@
 
     <fragment
         android:id="@+id/addDeal"
-        android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.AddFullScreenBannerFragment"
+        android:name="com.desynatadmin.ui.home.dealsManagement.AddDealFragment"
         android:label="Add Deal Fragment"
         tools:layout="@layout/fragment_add_deal"/>
 
@@ -410,6 +410,12 @@
         android:name="com.desynatadmin.ui.home.storyManagement.AddStoryFragment"
         android:label="Add Story Fragment"
         tools:layout="@layout/fragment_add_story"/>
+
+    <fragment
+        android:id="@+id/liveRequestTimeSlot"
+        android:name="com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.LiveRequestAndTimeslotManagementFragment"
+        android:label="Live Request And Time Slot Management Fragment"
+        tools:layout="@layout/fragment_live_request_and_timeslot_management"/>
 
 
 </navigation>

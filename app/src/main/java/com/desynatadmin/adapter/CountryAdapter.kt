@@ -41,8 +41,6 @@ class CountryAdapter(var list:ArrayList<GetCountryResponse.Data>,var context: Co
                 onClick(list[position].name,list[position].id.toString())
             }
 
-            img.isVisible = false
-          //  Glide.with(context).load(list[position].flag1).into(img)
         }
     }
 

@@ -45,7 +45,10 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScree
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -714,11 +717,7 @@ interface ApiServices {
 
     @GET(Constants.GET_LIVE_REQUEST)
     suspend fun getLiveRequest(
-        @Query("type") type: Int,
-        @Query("search") search: String?=null,
-        @Query("country") country: String?=null,
-        @Query("page") page: Int,
-        @Query("limit") limit: Int? = 10,
+        @QueryMap map: HashMap<String,Any>
     ): Response<GetLiveRequestResponse>
 
     @POST(Constants.ACCEPT_LIVE_REQUEST)
@@ -731,5 +730,30 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
 
+    @GET(Constants.GET_TIME_SLOT)
+    suspend fun getTimeSlot(
+        @Query("country_id") countryId: String,
+        @Query("date") date: String
+    ): Response<GetTimeSlotResponse>
+
+    @POST(Constants.ADD_TIME_SLOT)
+    suspend fun addTimeSlot(
+        @Body body: AddTimeSlotRequest
+    ): Response<UpdateTimeSlotResponse>
+
+    @POST(Constants.UPDATE_TIME_SLOT)
+    suspend fun updateTimeSlot(
+        @Body body: AddTimeSlotRequest
+    ): Response<UpdateTimeSlotResponse>
+
+    @POST(Constants.DELETE_TIME_SLOT)
+    suspend fun deleteTimeSlot(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_TIME_SLOT_STATUS)
+    suspend fun updateTimeSlotStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateTimeSlotResponse>
 
 }

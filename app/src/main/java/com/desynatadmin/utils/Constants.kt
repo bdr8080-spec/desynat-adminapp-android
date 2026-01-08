@@ -141,11 +141,16 @@ object Constants {
     const val ADD_STORY = "/api/admin/add_story"
     const val DELETE_STORY = "/api/admin/delete_story"
     const val GET_SELLER_STORY = "/api/admin/get_seller_stories"
-    const val GET_ADMIN_STORY = "/api/admin/get_seller_stories"
+    const val GET_ADMIN_STORY = "/api/admin/get_admin_stories"
 
     const val GET_LIVE_REQUEST = "/api/admin/get_live_requests"
     const val ACCEPT_LIVE_REQUEST = "/api/admin/accept_live_request"
-    const val REJECT_LIVE_REQUEST = "/api/admin/accept_live_request"
+    const val REJECT_LIVE_REQUEST = "/api/admin/reject_live_request"
+    const val GET_TIME_SLOT = "/api/admin/get_timeslots"
+    const val ADD_TIME_SLOT = "/api/admin/add_timeslot"
+    const val UPDATE_TIME_SLOT = "/api/admin/update_timeslot"
+    const val DELETE_TIME_SLOT = "/api/admin/delete_timeslot"
+    const val UPDATE_TIME_SLOT_STATUS = "/api/admin/block_unblock_timeslot"
 
 
 

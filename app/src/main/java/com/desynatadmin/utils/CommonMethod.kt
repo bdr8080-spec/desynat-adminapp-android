@@ -440,7 +440,7 @@ object CommonMethod {
 
         val popupWindow = PopupWindow(
             binding.root,
-            LinearLayout.LayoutParams.MATCH_PARENT,
+            anchor.width,
             LinearLayout.LayoutParams.WRAP_CONTENT,
             true
         )
@@ -471,7 +471,7 @@ object CommonMethod {
 
         val popupWindow = PopupWindow(
             binding.root,
-            LinearLayout.LayoutParams.MATCH_PARENT,
+            anchor.width,
             LinearLayout.LayoutParams.WRAP_CONTENT,
             true
         )

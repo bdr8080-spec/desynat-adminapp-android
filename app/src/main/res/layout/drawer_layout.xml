@@ -201,7 +201,6 @@
 
         </RelativeLayout>
 
-
         <RelativeLayout
             android:id="@+id/rlUserManagement"
             android:layout_width="match_parent"
@@ -474,7 +473,6 @@
 
         </RelativeLayout>
 
-
         <RelativeLayout
             android:id="@+id/rlAffilateCommissionManagement"
             android:layout_width="match_parent"
@@ -498,6 +496,87 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGoCommission"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlLive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivLive"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_live_request" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLive"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoLive"
+                android:layout_toEndOf="@id/ivLive"
+                android:text="Live Request  &amp; Timeslot Management" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoLive"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlStoryManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivStory"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_story_management" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStory"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoStory"
+                android:layout_toEndOf="@id/ivStory"
+                android:text="Story Management" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoStory"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDealsManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDeals"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_deal_management" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeals"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoDeals"
+                android:layout_toEndOf="@id/ivDeals"
+                android:text="Deals Management" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoDeals"
                 style="@style/drawer_arrow" />
 
         </RelativeLayout>
@@ -557,33 +636,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rlLive"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_6sdp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivLive"
-                style="@style/drawer_image"
-                android:src="@drawable/ic_live_request" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLive"
-                style="@style/drawer_text"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ivGoLive"
-                android:layout_toEndOf="@id/ivLive"
-                android:text="Live Request  &amp; Timeslot Management" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivGoLive"
-                style="@style/drawer_arrow" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/rlRefundManagement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -637,7 +689,6 @@
 
         </RelativeLayout>
 
-
         <RelativeLayout
             android:id="@+id/rlNotificationManagement"
             android:layout_width="match_parent"
@@ -664,35 +715,6 @@
                 style="@style/drawer_arrow" />
 
         </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/rlStoryManagement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_6sdp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivStory"
-                style="@style/drawer_image"
-                android:src="@drawable/ic_story_management" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvStory"
-                style="@style/drawer_text"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ivGoStory"
-                android:layout_toEndOf="@id/ivStory"
-                android:text="Story Management" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivGoStory"
-                style="@style/drawer_arrow" />
-
-        </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/rlTicketManagement"
@@ -744,34 +766,6 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGoPayout"
-                style="@style/drawer_arrow" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/rlDealsManagement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_6sdp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivDeals"
-                style="@style/drawer_image"
-                android:src="@drawable/ic_deal_management" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDeals"
-                style="@style/drawer_text"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ivGoDeals"
-                android:layout_toEndOf="@id/ivDeals"
-                android:text="Deals Management" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivGoDeals"
                 style="@style/drawer_arrow" />
 
         </RelativeLayout>

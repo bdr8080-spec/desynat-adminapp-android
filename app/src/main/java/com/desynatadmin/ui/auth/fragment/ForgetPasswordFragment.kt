@@ -48,7 +48,7 @@ class ForgetPasswordFragment : BaseFragment() {
 
         binding?.apply {
 
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

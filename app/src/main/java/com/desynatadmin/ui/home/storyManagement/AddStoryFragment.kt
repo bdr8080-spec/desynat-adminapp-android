@@ -1,18 +1,26 @@
 package com.desynatadmin.ui.home.storyManagement
 
+import android.app.Dialog
+import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAddStoryBinding
+import com.desynatadmin.databinding.UploadStoryPreviewDialogBinding
 import com.desynatadmin.utils.CommonMethod
-import com.desynatadmin.utils.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.mediaPicker.StoryMediaPicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -24,22 +32,33 @@ class AddStoryFragment : BaseFragment() {
 
     private var isImageObserver = true
 
-    private lateinit var imagePicker: ImagePicker
-    private var image: File? = null
-    private var imageUrl = ""
+    private lateinit var storyMediaPicker: StoryMediaPicker
+    private var mediaType = ""
+    private var mediaFile: File? = null
+
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            imagePicker.onCameraResult(success)
+            storyMediaPicker.onImageCameraResult(success)
         }
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            imagePicker.onGalleryResult(uri)
+            storyMediaPicker.onImageGalleryResult(uri)
         }
 
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            imagePicker.onPermissionResult(granted)
+            storyMediaPicker.onPermissionResult(granted)
+        }
+
+    private val videoCameraLauncher =
+        registerForActivityResult(ActivityResultContracts.CaptureVideo()) { success ->
+            storyMediaPicker.onVideoCameraResult(success)
+        }
+
+    private val videoGalleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            storyMediaPicker.onVideoGalleryResult(uri)
         }
 
     override fun onCreateView(
@@ -62,17 +81,28 @@ class AddStoryFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = "Add Story"
 
-            imagePicker = ImagePicker(
+            storyMediaPicker = StoryMediaPicker(
                 requireActivity(),
                 cameraLauncher,
                 galleryLauncher,
+                videoCameraLauncher,
+                videoGalleryLauncher,
                 permissionLauncher
-            ) { uri ->
+            ) { uri, type ->
                 uri?.let {
-                    image = CommonMethod.uriToFile(requireActivity(), it)
-                    ivAddStory.setImageURI(it)
+                    mediaType = type
+                    mediaFile = CommonMethod.uriToFile(requireActivity(), it)
+
+                    if (type == "image") {
+                        binding?.ivAddStory?.setImageURI(it)
+                    } else {
+                        binding?.ivAddStory?.setImageResource(R.drawable.ic_placeholder)
+                    }
+
+                    previewDialog(it)
                 }
             }
+
         }
 
     }
@@ -80,12 +110,12 @@ class AddStoryFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
 
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 
             ivAddStory.setOnClickListener {
-                imagePicker.showImageSourceDialog()
+                storyMediaPicker.showCameraStoryPicker()
             }
 
         }
@@ -103,10 +133,8 @@ class AddStoryFragment : BaseFragment() {
 
         viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
             if (isImageObserver) {
-                ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    imageUrl = response.data.url
-                    addStory()
+                    addStory(response.data.url)
                 }
                 isImageObserver = false
             }
@@ -123,17 +151,61 @@ class AddStoryFragment : BaseFragment() {
         }
     }
 
-    fun addStory(){
+    fun addStory(url: String) {
         val map = HashMap<String, Any>()
-        map["file"] = imageUrl
+        map["file"] = url
         viewModel.addStory(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
     fun uploadFile(){
-        viewModel.uploadImage(image)
+        viewModel.uploadImage(mediaFile)
         ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isImageObserver = true
     }
+
+    private fun previewDialog(uri: Uri) {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = UploadStoryPreviewDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            if (mediaType == "image") {
+                ivImage.isVisible = true
+                ivImage.setImageURI(uri)
+            } else {
+                videoView.isVisible = true
+                videoView.setVideoURI(uri)
+                videoView.start()
+            }
+
+            tvCancel.setOnClickListener {
+                mediaType = ""
+                mediaFile = null
+                dialog.dismiss()
+            }
+             tvUpload.setOnClickListener{
+                 uploadFile()
+                 dialog.dismiss()
+             }
+
+        }
+
+        dialog.show()
+    }
+
 }

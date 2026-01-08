@@ -21,7 +21,7 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCat
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.utils.CommonMethod
-import com.desynatadmin.utils.ImagePicker
+import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.showToast
@@ -29,6 +29,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -86,7 +87,7 @@ class AddDealFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
-        val itemJson = arguments?.getString("dealData")
+        val itemJson = arguments?.getString("dealsData")
         binding?.apply {
 
             CommonMethod.applyArabicOnlyFilter(etArabicFullName)
@@ -153,8 +154,8 @@ class AddDealFragment : BaseFragment() {
             etArabicFullName.setText(dealData?.nameArabic)
             etSubCategory.setText(dealData?.subCategoryDetails?.nameEnglish)
             etDiscount.setText(dealData?.discount)
-            etFromDate.setText(CommonMethod.customizeChangeDateFormat(dealData?.from.toString(), outputFormat = "dd/MM/yyyy"))
-            etToDate.setText(CommonMethod.customizeChangeDateFormat(dealData?.to.toString(), outputFormat = "dd/MM/yyyy"))
+            etFromDate.setText(CommonMethod.customizeChangeDateFormat(dealData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy"))
+            etToDate.setText(CommonMethod.customizeChangeDateFormat(dealData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy"))
 
             if (image==null){
                 imageUrl = dealData?.image.toString()
@@ -191,8 +192,12 @@ class AddDealFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
+            }
+
+            ivDeal.setOnClickListener{
+                imagePicker.showImageSourceDialog()
             }
 
             etSubCategory.setOnClickListener{
@@ -200,7 +205,7 @@ class AddDealFragment : BaseFragment() {
             }
 
             etFromDate.setOnClickListener{
-                openCustomDatePicker(requireActivity()){date,timestamp->
+                openCustomDatePicker(requireActivity(), Calendar.getInstance().timeInMillis){ date, timestamp->
                     etFromDate.setText(date)
                     fromTimestamp=timestamp
                     startDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
@@ -270,7 +275,6 @@ class AddDealFragment : BaseFragment() {
 
         viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
             if (isImageObserver) {
-                ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     imageUrl = response.data.url
                     addDeal()
@@ -404,7 +408,7 @@ class AddDealFragment : BaseFragment() {
     private fun validation(): Boolean {
         binding?.apply {
 
-            if (ivDeal.drawable == null) {
+            if (imageUrl == null) {
                 showToast("Please upload image")
                 return false
             }

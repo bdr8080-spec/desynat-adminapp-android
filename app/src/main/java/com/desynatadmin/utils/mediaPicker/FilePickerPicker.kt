@@ -1,4 +1,4 @@
-package com.desynatadmin.utils
+package com.desynatadmin.utils.mediaPicker
 
 import android.Manifest
 import android.content.Context
@@ -9,7 +9,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import java.io.File
 
 class FilePickerPicker(

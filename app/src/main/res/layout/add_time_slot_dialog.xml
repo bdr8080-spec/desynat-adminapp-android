@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bottomsheet_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/_15sdp"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:background="@drawable/bottomsheet_bg"
+    android:backgroundTint="#FFF7EA"
+    android:fontFamily="@font/poppins_medium"
+    android:text="Add Timeslot"
+    android:textColor="@color/black"
+    android:drawableEnd="@drawable/close_icon"
+    android:textSize="@dimen/_13sdp"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFrom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="From"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tvToolbar"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etFromHour"
+        style="@style/edit_text"
+        android:layout_width="0dp"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:padding="@dimen/_8sdp"
+        android:hint="HH"
+        android:editable="false"
+        android:clickable="true"
+        android:focusable="false"
+        android:background="@drawable/card_stroke_background"
+        android:drawableEnd="@drawable/ic_drop_down"
+        app:layout_constraintEnd_toStartOf="@+id/etFromMin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFrom"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etFromMin"
+        style="@style/edit_text"
+        android:layout_width="0dp"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:padding="@dimen/_8sdp"
+        android:hint="MM"
+        android:editable="false"
+        android:clickable="true"
+        android:focusable="false"
+        android:background="@drawable/card_stroke_background"
+        android:drawableEnd="@drawable/ic_drop_down"
+        app:layout_constraintEnd_toStartOf="@+id/etFromType"
+        app:layout_constraintStart_toEndOf="@+id/etFromHour"
+        app:layout_constraintTop_toBottomOf="@+id/tvFrom"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etFromType"
+        style="@style/edit_text"
+        android:layout_width="0dp"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:padding="@dimen/_8sdp"
+        android:hint="AM"
+        android:editable="false"
+        android:clickable="true"
+        android:focusable="false"
+        android:background="@drawable/card_stroke_background"
+        android:drawableEnd="@drawable/ic_drop_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etFromMin"
+        app:layout_constraintTop_toBottomOf="@+id/tvFrom"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="To"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@+id/etFromHour"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etToHour"
+        style="@style/edit_text"
+        android:layout_width="0dp"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:padding="@dimen/_8sdp"
+        android:hint="HH"
+        android:editable="false"
+        android:clickable="true"
+        android:focusable="false"
+        android:background="@drawable/card_stroke_background"
+        android:drawableEnd="@drawable/ic_drop_down"
+        app:layout_constraintEnd_toStartOf="@+id/etToMin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTo"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etToMin"
+        style="@style/edit_text"
+        android:layout_width="0dp"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:padding="@dimen/_8sdp"
+        android:hint="MM"
+        android:editable="false"
+        android:clickable="true"
+        android:focusable="false"
+        android:background="@drawable/card_stroke_background"
+        android:drawableEnd="@drawable/ic_drop_down"
+        app:layout_constraintEnd_toStartOf="@+id/etToType"
+        app:layout_constraintStart_toEndOf="@+id/etToHour"
+        app:layout_constraintTop_toBottomOf="@+id/tvTo"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etToType"
+        style="@style/edit_text"
+        android:layout_width="0dp"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:padding="@dimen/_8sdp"
+        android:hint="AM"
+        android:editable="false"
+        android:clickable="true"
+        android:focusable="false"
+        android:background="@drawable/card_stroke_background"
+        android:drawableEnd="@drawable/ic_drop_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etToMin"
+        app:layout_constraintTop_toBottomOf="@+id/tvTo"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnSubmit"
+        style="@style/button"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:text="Submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etToHour"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

@@ -33,7 +33,7 @@ class DealsAdapter(var context:Context, var dealsList: ArrayList<GetActiveDealRe
 
         holder.binding.apply {
             tvDealNameValue.text = dealData.nameEnglish
-            tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData.from, outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData.to, outputFormat = "dd/MM/yyyy")}"
+            tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData.from, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData.to, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
            // tvTotalEnrolled.text = "${dealData }Sellers"
             tvDiscountValue.text = dealData.discount+"%"
             ivDeal.load(dealData.image) {

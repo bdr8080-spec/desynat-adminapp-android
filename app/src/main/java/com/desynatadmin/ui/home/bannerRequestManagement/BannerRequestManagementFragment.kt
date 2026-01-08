@@ -182,7 +182,7 @@ class BannerRequestManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 

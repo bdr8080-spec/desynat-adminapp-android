@@ -51,18 +51,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCountry" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-
-
             app:layout_constraintTop_toBottomOf="@+id/etCountry"
             android:background="@drawable/btn_stroke_background"
             android:elevation="3dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/rvCountry"
             android:visibility="gone"/>
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvChooseDate"
@@ -108,7 +106,6 @@
             app:layout_constraintStart_toEndOf="@+id/etFrom"
             app:layout_constraintTop_toTopOf="@+id/etFrom" />
 
-
         <TextView
             android:id="@+id/tvClear"
             android:layout_width="0dp"
@@ -145,6 +142,6 @@
             app:layout_constraintStart_toEndOf="@+id/tvClear"
             app:layout_constraintTop_toTopOf="@+id/tvClear" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

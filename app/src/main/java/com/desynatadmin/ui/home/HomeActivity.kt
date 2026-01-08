@@ -293,6 +293,11 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
+            rlLive.setOnClickListener {
+                controller.navigate(R.id.liveRequestTimeSlot)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
             rlStoryManagement.setOnClickListener {
                 controller.navigate(R.id.storyManagement)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)

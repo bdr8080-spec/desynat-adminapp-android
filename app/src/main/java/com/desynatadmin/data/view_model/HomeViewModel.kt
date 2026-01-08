@@ -48,7 +48,10 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScree
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
+import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -1128,9 +1131,9 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     val getLiveRequestResult: LiveData<GetLiveRequestResponse>
         get() = repository.getLiveRequestLiveData
 
-    fun getLiveRequest(type:Int,search:String?=null,country:String?=null,page:Int) {
+    fun getLiveRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
-            repository.getLiveRequest(type,search,country,page)
+            repository.getLiveRequest(map)
         }
     }
 
@@ -1149,6 +1152,51 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     fun rejectLiveRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.rejectLiveRequest(map)
+        }
+    }
+
+    val getTimeSlotResult: LiveData<GetTimeSlotResponse>
+        get() = repository.getTimeSlotLiveData
+
+    fun getTimeSlot(countryId:String,date:String){
+        viewModelScope.launch {
+            repository.getTimeSlot(countryId,date)
+        }
+    }
+
+    val addTimeSlotLiveDataResult: LiveData<UpdateTimeSlotResponse>
+        get() = repository.addTimeSlotLiveData
+
+    fun addTimeSlot(request:AddTimeSlotRequest) {
+        viewModelScope.launch {
+            repository.addTimeSlot(request)
+        }
+    }
+
+    val updateTimeSlotLiveDataResult: LiveData<UpdateTimeSlotResponse>
+        get() = repository.updateTimeSlotLiveData
+
+    fun updateTimeSlot(request:AddTimeSlotRequest) {
+        viewModelScope.launch {
+            repository.updateTimeSlot(request)
+        }
+    }
+
+    val updateTimeSlotStatusResult: LiveData<UpdateTimeSlotResponse>
+        get() = repository.updateTimeSlotStatusLiveData
+
+    fun updateTimeSlotStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateTimeSlotStatus(map)
+        }
+    }
+
+    val deleteTimeSlotResult: LiveData<CommonResponse>
+        get() = repository.deleteTimeSlotLiveData
+
+    fun deleteTimeSlot(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteTimeSlot(map)
         }
     }
 

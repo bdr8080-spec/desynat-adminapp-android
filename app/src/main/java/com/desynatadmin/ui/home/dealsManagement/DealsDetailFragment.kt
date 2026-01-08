@@ -53,26 +53,32 @@ class DealsDetailFragment : BaseFragment() {
                 }
             }
 
-        val itemJson = arguments?.getString("dealData")
+        val itemJson = arguments?.getString("dealsData")
 
         binding?.apply {
             toolbar.tvToolbar.text = "Details"
+
+            /*dealAdapter = DealAdapter(requireActivity(),enrolledList)
+            rvDeals.adapter = dealAdapter*/
+
             if (!itemJson.isNullOrEmpty()) {
                 dealData = Gson().fromJson(itemJson, GetActiveDealResponse.Data.Data::class.java)
                 setData()
             }
+
+
         }
     }
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 
             btnEdit.setOnClickListener {
                 val bundle = Bundle().apply {
-                    putString("dealData", Gson().toJson(dealData))
+                    putString("dealsData", Gson().toJson(dealData))
                 }
                 findNavController().navigate(R.id.action_dealDetail_to_addDealFragment,bundle)
             }
@@ -148,7 +154,7 @@ class DealsDetailFragment : BaseFragment() {
             tvDealName.text = dealData?.nameEnglish
             tvCategoryValue.text = dealData?.categoryDetails?.name
             tvSubCategoryValue.text = dealData?.subCategoryDetails?.nameEnglish
-            tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData?.from.toString(), outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData?.to.toString(), outputFormat = "dd/MM/yyyy")}"
+            tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
             // tvTotalEnrolled.text = "${dealData }Sellers"
             tvDiscountValue.text = dealData?.discount+"%"
             ivDeal.load(dealData?.image) {

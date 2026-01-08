@@ -29,8 +29,8 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResp
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.CommonMethod.loadDocument
-import com.desynatadmin.utils.FilePickerPicker
-import com.desynatadmin.utils.ImagePicker
+import com.desynatadmin.utils.mediaPicker.FilePickerPicker
+import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -193,7 +193,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
 
-            toolbar.tvToolbar.setOnClickListener {
+            toolbar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

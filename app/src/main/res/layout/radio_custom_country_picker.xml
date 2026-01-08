@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_15sdp"
+    android:background="@drawable/card_stroke_background"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="1dp"
+        android:background="@drawable/card_stroke_background"
+        android:backgroundTint="@color/white">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCountry"
+            style="@style/edit_text"
+            android:paddingVertical="@dimen/_9sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:hint="Select Country"
+            android:editable="false"
+            android:clickable="true"
+            android:focusable="false"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:drawableEnd="@drawable/right_arrow"/>
+
+        <View
+            android:id="@+id/viewCountry"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1A000000"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/etCountry"
+            android:elevation="3dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            tools:itemCount="7"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/rvCountry"
+            tools:listitem="@layout/country_recyler" />
+
+    </LinearLayout>
+
+    </LinearLayout>

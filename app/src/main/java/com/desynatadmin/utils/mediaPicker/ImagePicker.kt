@@ -1,4 +1,4 @@
-package com.desynatadmin.utils
+package com.desynatadmin.utils.mediaPicker
 
 import android.Manifest
 import android.content.Context

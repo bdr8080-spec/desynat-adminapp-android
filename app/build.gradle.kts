@@ -94,4 +94,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation("io.getstream:photoview:1.0.3")
 
+    implementation ("com.google.android.material:material:1.11.0")
+
 }
