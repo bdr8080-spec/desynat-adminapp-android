@@ -377,18 +377,6 @@ class AddDealFragment : BaseFragment() {
     private fun clearAllField(){
         binding?.apply {
             etSubCategory.setText("")
-            etEnglishFullName.setText("")
-            etArabicFullName.setText("")
-            etFromDate.setText("")
-            etToDate.setText("")
-            etDiscount.setText("")
-            imageUrl = ""
-            image = null
-            startDate = null
-            endDate = null
-            toTimestamp = 0L
-            fromTimestamp = 0L
-            ivDeal.setImageResource(R.drawable.ic_upload_brand)
         }
     }
 
@@ -408,7 +396,7 @@ class AddDealFragment : BaseFragment() {
     private fun validation(): Boolean {
         binding?.apply {
 
-            if (imageUrl == null) {
+            if (imageUrl == "") {
                 showToast("Please upload image")
                 return false
             }

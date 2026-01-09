@@ -51,23 +51,28 @@ abstract class BaseRepository(private val context: Context) {
                             }
                             error.postValue(errorMessage)
                             if (errorJsonObject.optInt("status_code")!=0){
+                                ProgressDialogUtils.getInstance().hideProgress()
                                 CommonMethod.commonErrorHandling(context,errorJsonObject.optInt("status_code"),errorMessage)
 
                             }
                             else{
+                                ProgressDialogUtils.getInstance().hideProgress()
                                 CommonMethod.commonErrorHandling(context,response.code(),errorMessage)
                             }
 
                         } else {
+                            ProgressDialogUtils.getInstance().hideProgress()
                             error.postValue("Unknown server error (no message provided)")
                         }
                     } catch (jsonEx: Exception) {
+                        ProgressDialogUtils.getInstance().hideProgress()
                         error.postValue("Server error: ${response.code()} ${response.message()}")
                     } finally {
                         progress.postValue(false)
                     }
                 }
                 else -> {
+                    ProgressDialogUtils.getInstance().hideProgress()
                     error.postValue("Unexpected error: ${response.code()} ${response.message()}")
                 }
             }

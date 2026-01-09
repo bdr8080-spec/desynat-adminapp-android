@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/edit_back"
     android:layout_marginBottom="@dimen/_15sdp"
-    android:paddingBottom="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_6sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -40,8 +40,9 @@
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_5sdp"
-        app:layout_constraintStart_toStartOf="@id/tvDealName"
-        app:layout_constraintTop_toBottomOf="@id/tvDealName" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDealName"
+        app:layout_constraintBottom_toBottomOf="@id/tvDealName" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDiscount"
@@ -51,10 +52,10 @@
         android:text="Discount%"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDealName"
-        app:layout_constraintTop_toTopOf="@id/tvDealName" />
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDealName" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDiscountValue"
@@ -66,8 +67,8 @@
         android:textSize="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvDealNameValue"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDealNameValue" />
+        app:layout_constraintTop_toTopOf="@id/tvDiscount"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDiscount" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDuration"
@@ -80,7 +81,7 @@
         android:textSize="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDealNameValue" />
+        app:layout_constraintTop_toBottomOf="@id/tvDiscount" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDurationValue"
@@ -92,8 +93,9 @@
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="@id/tvDuration"
-        app:layout_constraintTop_toBottomOf="@id/tvDuration" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tvDuration"
+        app:layout_constraintTop_toTopOf="@id/tvDuration" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvEnrolled"
@@ -103,10 +105,10 @@
         android:text="Total Enrolled"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvDuration"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDuration" />
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDuration" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTotalEnrolled"
@@ -118,7 +120,7 @@
         android:textSize="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvDurationValue"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDurationValue"/>
+        app:layout_constraintTop_toTopOf="@id/tvEnrolled"
+        app:layout_constraintBottom_toBottomOf="@+id/tvEnrolled"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

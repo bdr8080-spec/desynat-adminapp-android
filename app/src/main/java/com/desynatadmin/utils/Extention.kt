@@ -219,8 +219,20 @@ fun String.toPlainRequestBody(): RequestBody =
 
 fun File.toMultipartPart(fieldName: String): MultipartBody.Part {
     val mimeType = when (extension.lowercase()) {
+
+        // Images
         "jpg", "jpeg" -> "image/jpeg"
         "png" -> "image/png"
+        "webp" -> "image/webp"
+
+        // Video
+        "mp4" -> "video/mp4"
+        "mkv" -> "video/x-matroska"
+        "3gp" -> "video/3gpp"
+        "webm" -> "video/webm"
+        "mov" -> "video/quicktime"
+
+        // Documents
         "pdf" -> "application/pdf"
         else -> throw IllegalArgumentException("Unsupported file type: $extension")
     }

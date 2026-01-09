@@ -29,7 +29,7 @@
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_120sdp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_upload_brand"
+                android:src="@drawable/ic_upload_deal_img"
                 android:background="@drawable/ic_dash"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_gravity="center_horizontal"
@@ -223,6 +223,7 @@
                 android:editable="false"
                 android:focusable="false"
                 android:clickable="true"
+                android:drawableEnd="@drawable/ic_calendar"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -234,6 +235,7 @@
                 android:editable="false"
                 android:focusable="false"
                 android:clickable="true"
+                android:drawableEnd="@drawable/ic_calendar"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView

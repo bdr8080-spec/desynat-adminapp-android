@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemStoryBinding
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.CommonMethod.getVideoThumbnail
 
 class StoryAdapter(
     val context: Context,
@@ -32,7 +34,12 @@ class StoryAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         holder.binding.apply {
+
+            ivStory.setImageDrawable(null)
+            ivStory.setImageResource(R.drawable.ic_placeholder)
+            ivPlay.isVisible = false
 
             if (position == 0) {
                 clAddReel.isVisible = true
@@ -47,20 +54,41 @@ class StoryAdapter(
             clAddReel.isVisible = false
             clReel.isVisible = true
 
-            val story = storyList[position - 1]
+            val storyIndex = position - 1
+            val story = storyList[storyIndex]
 
             ivPlay.setOnClickListener {
-                click.onClick(position - 1, 2)
+                click.onClick(storyIndex, 2)
             }
 
             ivDelete.setOnClickListener {
-                click.onClick(position - 1, 3)
+                click.onClick(storyIndex, 3)
             }
 
-            ivStory.load(story.file){
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
+
+            if (isVideo(story.file)) {
+                ivPlay.isVisible = true
+                ivStory.setImageResource(R.color.black)
+//                Glide.with(context)
+//                    .asBitmap()
+//                    .load(story.file)
+//                    .into(ivStory)
+                Thread {
+                    val bitmap = getVideoThumbnail(story.file)
+                    bitmap?.let {
+                        ivStory.post {
+                            ivStory.setImageBitmap(it)
+                        }
+                    }?: ivStory.setImageResource(R.color.black)
+                }.start()
+
+            } else {
+                ivPlay.isVisible = false
+                ivStory.load(story.file){
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
             }
 
             tvPostedOn.text = CommonMethod.customizeChangeDateFormat(story.createdAt, outputFormat = "dd/MM/yyyy, hh:mma")
@@ -75,10 +103,33 @@ class StoryAdapter(
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                 }
             }
+
+        }
+        holder.itemView.setOnClickListener {
+
+            if (position == 0) return@setOnClickListener
+
+            val storyIndex = position - 1
+            val story = storyList[storyIndex]
+
+            if (isVideo(story.file)) {
+                click.onClick(storyIndex, 2)
+            } else {
+                click.onClick(storyIndex, 4)
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return storyList.size + 1
+    }
+
+    fun isVideo(url: String): Boolean {
+        val lower = url.lowercase()
+        return lower.endsWith(".mp4")
+                || lower.endsWith(".mkv")
+                || lower.endsWith(".3gp")
+                || lower.endsWith(".webm")
+                || lower.endsWith(".mov")
     }
 }

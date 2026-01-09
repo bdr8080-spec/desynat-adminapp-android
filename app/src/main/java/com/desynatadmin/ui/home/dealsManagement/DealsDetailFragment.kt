@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.desynatadmin.R
+import com.desynatadmin.adapter.EnrolledAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentDealsDetailBinding
@@ -25,6 +26,8 @@ class DealsDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var dealData: GetActiveDealResponse.Data.Data?=null
+    private var enrolledList = ArrayList<String>()
+    private var enrolledAdapter: EnrolledAdapter?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,8 +61,13 @@ class DealsDetailFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = "Details"
 
-            /*dealAdapter = DealAdapter(requireActivity(),enrolledList)
-            rvDeals.adapter = dealAdapter*/
+            enrolledAdapter = EnrolledAdapter(requireActivity(),enrolledList,object :EnrolledAdapter.ClickOnItem{
+                override fun onClickItem(position: Int) {
+
+                }
+
+            })
+            rvEnrolled.adapter = enrolledAdapter
 
             if (!itemJson.isNullOrEmpty()) {
                 dealData = Gson().fromJson(itemJson, GetActiveDealResponse.Data.Data::class.java)

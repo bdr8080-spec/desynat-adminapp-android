@@ -19,14 +19,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.desynatadmin.R
-import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.adapter.LiveRequestAdapter
 import com.desynatadmin.adapter.LiveRequestCountryAdapter
 import com.desynatadmin.adapter.TimeSlotAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddTimeSlotDialogBinding
-import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentLiveRequestAndTimeslotManagementBinding
 import com.desynatadmin.databinding.RadioCustomCountryPickerBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
@@ -48,7 +46,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import retrofit2.http.Query
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -870,6 +867,21 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
         for (day in 1..maxDays) {
 
+            val dateCal = calendar.clone() as Calendar
+            dateCal.set(Calendar.DAY_OF_MONTH, day)
+            dateCal.set(Calendar.HOUR_OF_DAY, 0)
+            dateCal.set(Calendar.MINUTE, 0)
+            dateCal.set(Calendar.SECOND, 0)
+            dateCal.set(Calendar.MILLISECOND, 0)
+
+            val todayCal = today.clone() as Calendar
+            todayCal.set(Calendar.HOUR_OF_DAY, 0)
+            todayCal.set(Calendar.MINUTE, 0)
+            todayCal.set(Calendar.SECOND, 0)
+            todayCal.set(Calendar.MILLISECOND, 0)
+
+            val isPastDate = dateCal.before(todayCal)
+
             val isSelected =
                 selectedCalendar?.let {
                     it.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
@@ -887,7 +899,8 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                 CalendarDay(
                     day = day,
                     isCurrentMonth = true,
-                    isSelected = isSelected || isToday
+                    isSelected = isSelected || isToday,
+                    isDisabled = isPastDate
                 )
             )
         }

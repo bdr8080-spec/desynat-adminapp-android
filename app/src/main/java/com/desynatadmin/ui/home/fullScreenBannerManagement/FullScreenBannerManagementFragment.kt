@@ -60,7 +60,6 @@ class FullScreenBannerManagementFragment : BaseFragment() {
     var toTimestamp = 0L
     var countryId: String? = null
     private var countryList = ArrayList<GetCountryResponse.Data>()
-    private var isLoad = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -127,7 +126,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                         pagination = false
                         isFromSwipe = false
                         if (!isObserver)
-                            getAllBanner(search = query.ifEmpty { null })
+                            getAllBanner(loading = false, search = query.ifEmpty { null })
                     }
 
                 }
@@ -141,10 +140,8 @@ class FullScreenBannerManagementFragment : BaseFragment() {
             }
         }
 
-        if (!isLoad) {
-            isLoad = true
             getAllBanner()
-        }
+
 
         if (SharedPreference.get(requireActivity()).getUserCountryList() == null) {
             getCountry()

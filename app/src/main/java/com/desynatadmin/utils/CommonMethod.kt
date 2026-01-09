@@ -6,6 +6,8 @@ import android.app.Dialog
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Environment
 import android.os.Handler
@@ -102,10 +104,18 @@ object CommonMethod {
         }
     }
 
-
     fun uriToFile(context:Context,uri: Uri): File {
+        val mimeType = context.contentResolver.getType(uri)
+
+        val extension = when {
+            mimeType == null -> "bin" // fallback
+            mimeType.startsWith("image") -> "jpg"
+            mimeType.startsWith("video") -> "mp4"
+            mimeType == "application/pdf" -> "pdf"
+            else -> "bin"
+        }
         val inputStream = context.contentResolver.openInputStream(uri)
-        val file = File(context.cacheDir, "picked_image_${System.currentTimeMillis()}.jpg")
+        val file = File(context.cacheDir, "picked_file_${System.currentTimeMillis()}.$extension")
         inputStream?.use { input ->
             file.outputStream().use { output ->
                 input.copyTo(output)
@@ -113,6 +123,38 @@ object CommonMethod {
         }
         return file
     }
+
+    fun uriToFileForStory(context: Context, uri: Uri): File? {
+        val mimeType = context.contentResolver.getType(uri)
+
+        val extension = when {
+            mimeType == null -> "bin" // fallback
+            mimeType.startsWith("image") -> "jpg"
+            mimeType.startsWith("video") -> "mp4"
+            mimeType == "application/pdf" -> "pdf"
+            else -> "bin"
+        }
+
+        val file = File(context.cacheDir, "picked_file_${System.currentTimeMillis()}.$extension")
+
+        context.contentResolver.openInputStream(uri)?.use { input ->
+            file.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+
+     /*   if (extension=="mp4") {
+            val maxSize = 5 * 1024 * 1024 // 5 MB in bytes
+            if (file.length() > maxSize) {
+                file.delete()
+                context.showToast("Upload size exceed to 5 MB")
+                return null
+            }
+        }*/
+
+        return file
+    }
+
 
     @SuppressLint("Range")
     fun fileFromUri(context: Context, uri: Uri): File {
@@ -561,6 +603,19 @@ object CommonMethod {
         downloadManager.enqueue(request)
 
         context.showToast("Download started")
+    }
+
+    fun getVideoThumbnail(videoUrl: String): Bitmap? {
+        return try {
+            val retriever = MediaMetadataRetriever()
+            retriever.setDataSource(videoUrl, HashMap())
+            val bitmap = retriever.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
+            retriever.release()
+            bitmap
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
 }

@@ -95,6 +95,12 @@ interface ApiServices {
         @Part file: MultipartBody.Part? = null
     ): Response<FileUploadResponse>
 
+  @Multipart
+    @POST(Constants.UPLOAD_VIDEO_IMAGE)
+    suspend fun uploadVideoImage(
+        @Part file: MultipartBody.Part? = null
+    ): Response<FileUploadResponse>
+
 
     @POST(Constants.LOGIN)
     suspend fun login(

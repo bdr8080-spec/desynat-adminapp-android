@@ -106,6 +106,19 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val responseUploadVideoImage = SingleLiveEvent<FileUploadResponse>()
+    suspend fun uploadVideoImage(
+        imageFile: File? = null
+    ) {
+        handleApiCall(
+            api = {
+                api.uploadVideoImage(imageFile?.toMultipartPart("file")
+                )
+            },
+            responseLiveData = responseUploadVideoImage
+        )
+    }
+
     val loginLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun login(
         map: HashMap<String,Any>

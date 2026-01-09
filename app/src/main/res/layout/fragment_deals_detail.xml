@@ -25,10 +25,11 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivDeal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_120sdp"
+            android:layout_height="@dimen/_125sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_placeholder"
             android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"/>
@@ -233,14 +234,29 @@
             app:layout_constraintTop_toBottomOf="@+id/btnDelete"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDeals"
+            android:id="@+id/rvEnrolled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            tools:listitem="@layout/item_deals"
+            tools:listitem="@layout/item_enrolled_seller"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnrolledSeller"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNotData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Next Milestone Work"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_50sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvEnrolledSeller"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

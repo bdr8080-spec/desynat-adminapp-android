@@ -151,6 +151,7 @@ object Constants {
     const val UPDATE_TIME_SLOT = "/api/admin/update_timeslot"
     const val DELETE_TIME_SLOT = "/api/admin/delete_timeslot"
     const val UPDATE_TIME_SLOT_STATUS = "/api/admin/block_unblock_timeslot"
+    const val UPLOAD_VIDEO_IMAGE = "/api/uploadFile"
 
 
 

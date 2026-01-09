@@ -1,9 +1,12 @@
 package com.desynatadmin.utils.mediaPicker
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -14,40 +17,16 @@ class StoryMediaPicker(
     private val context: Context,
     private val imageCameraLauncher: ActivityResultLauncher<Uri>,
     private val imageGalleryLauncher: ActivityResultLauncher<String>,
-    private val videoCameraLauncher: ActivityResultLauncher<Uri>,
+    private val videoCameraLauncher: ActivityResultLauncher<Intent>,
     private val videoGalleryLauncher: ActivityResultLauncher<String>,
     private val permissionLauncher: ActivityResultLauncher<String>,
-    private val callback: (Uri?, String) -> Unit // image / video
+    private val callback: (Uri?, String) -> Unit
 ) {
 
     private var cameraUri: Uri? = null
 
-    fun showStoryPicker() {
-        val options = arrayOf(
-            "Camera Photo",
-            "Record Video",
-            "Gallery Image",
-            "Gallery Video"
-        )
-
-        AlertDialog.Builder(context)
-            .setTitle("Add Story")
-            .setItems(options) { _, which ->
-                when (which) {
-                    0 -> openCameraImage()
-                    1 -> openCameraVideo()
-                    2 -> openGalleryImage()
-                    3 -> openGalleryVideo()
-                }
-            }.show()
-    }
-
     fun showCameraStoryPicker() {
-        val options = arrayOf(
-            "Camera Photo",
-            "Record Video",
-        )
-
+        val options = arrayOf("Camera Photo", "Record Video")
         AlertDialog.Builder(context)
             .setTitle("Add Story")
             .setItems(options) { _, which ->
@@ -59,58 +38,37 @@ class StoryMediaPicker(
     }
 
     private fun openCameraImage() {
-        if (checkCameraPermission()) {
-            cameraUri = createUri("IMG", "jpg")
-            cameraUri?.let { uri ->
-                imageCameraLauncher.launch(uri)
-            }
+        if (!checkCameraPermission()) return
+        cameraUri = createUri("IMG", "jpg")
+        cameraUri?.let { uri ->
+            imageCameraLauncher.launch(uri)
         }
-    }
-
-    private fun openGalleryImage() {
-        imageGalleryLauncher.launch("image/*")
     }
 
     private fun openCameraVideo() {
-        if (checkCameraPermission()) {
-            cameraUri = createUri("VID", "mp4")
-            cameraUri?.let { uri ->
-                videoCameraLauncher.launch(uri)
-            }
-        }
-    }
+        if (!checkCameraPermission()) return
 
-    private fun openGalleryVideo() {
-        videoGalleryLauncher.launch("video/*")
-    }
+        cameraUri = createUri("VID", "mp4")
 
-    private fun checkCameraPermission(): Boolean {
-        return if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            true
-        } else {
-            permissionLauncher.launch(Manifest.permission.CAMERA)
-            false
+        val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE).apply {
+            putExtra(MediaStore.EXTRA_OUTPUT, cameraUri)
+            putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30)
+            putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1)
         }
+
+        videoCameraLauncher.launch(intent)
     }
 
     fun onImageCameraResult(success: Boolean) {
-        cameraUri?.let { uri ->
-            if (success) callback(uri, "image") else callback(null, "")
-        }
+        if (success) callback(cameraUri, "image") else callback(null, "")
+    }
+
+    fun onVideoCameraResult(success: Boolean) {
+        if (success) callback(cameraUri, "video") else callback(null, "")
     }
 
     fun onImageGalleryResult(uri: Uri?) {
         callback(uri, "image")
-    }
-
-    fun onVideoCameraResult(success: Boolean) {
-        cameraUri?.let { uri ->
-            if (success) callback(uri, "video") else callback(null, "")
-        }
     }
 
     fun onVideoGalleryResult(uri: Uri?) {
@@ -119,6 +77,18 @@ class StoryMediaPicker(
 
     fun onPermissionResult(granted: Boolean) {
         if (!granted) callback(null, "")
+    }
+
+    private fun checkCameraPermission(): Boolean {
+        return if (ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) true
+        else {
+            permissionLauncher.launch(Manifest.permission.CAMERA)
+            false
+        }
     }
 
     private fun createUri(prefix: String, ext: String): Uri {
@@ -130,3 +100,4 @@ class StoryMediaPicker(
         )
     }
 }
+

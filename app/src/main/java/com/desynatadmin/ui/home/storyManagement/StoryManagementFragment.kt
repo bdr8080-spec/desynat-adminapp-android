@@ -1,19 +1,27 @@
 package com.desynatadmin.ui.home.storyManagement
 
+import android.app.Dialog
+import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.adapter.StoryAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentStoryManagementBinding
+import com.desynatadmin.databinding.ImagePreviewDialogBinding
+import com.desynatadmin.databinding.StoryPreviewDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
@@ -64,11 +72,14 @@ class StoryManagementFragment : BaseFragment() {
                             findNavController().navigate(R.id.action_storyManagement_to_addStoryFragment)
                         }
                         2->{
-                            selectedPos = position
+                            imagePreviewDialog(storyList[position].file,"video")
                         }
                         3->{
                             selectedPos = position
                             deleteStory()
+                        }
+                        4->{
+                            imagePreviewDialog(storyList[position].file,"image")
                         }
                     }
                 }
@@ -150,16 +161,18 @@ class StoryManagementFragment : BaseFragment() {
 
                 storyList.addAll(newItems)
 
-                if (pagination){
-                    response.data.data?.size?.let {
-                        storyAdapter?.notifyItemRangeInserted(oldSize,
-                            it
-                        )
-                    }
-                }
-                else{
-                    storyAdapter?.notifyDataSetChanged()
-                }
+                storyAdapter?.notifyDataSetChanged()
+
+//                if (pagination){
+//                    response.data.data?.size?.let {
+//                        storyAdapter?.notifyItemRangeInserted(oldSize,
+//                            it
+//                        )
+//                    }
+//                }
+//                else{
+//                    storyAdapter?.notifyDataSetChanged()
+//                }
 
                 pagination = false
                 isFromSwipe = false
@@ -199,5 +212,77 @@ class StoryManagementFragment : BaseFragment() {
         isObserver = true
     }
 
+    private fun imagePreviewDialog(image:String,type:String) {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = StoryPreviewDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog?.setContentView(it) }
+
+        val window: Window = dialog?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.black)
+        dialog?.setCancelable(true)
+
+        dialogBinding.apply {
+
+            ivClose.setOnClickListener{
+                dialog?.dismiss()
+            }
+
+            ivPlay.setOnClickListener {
+                ivPlay.isVisible = false
+                videoView.seekTo(0)
+                videoView.start()
+            }
+
+            if (type == "video") {
+                phptoView.isVisible = false
+                videoView.isVisible = true
+                progressBar.isVisible = true
+                videoView.setVideoURI(Uri.parse(image))
+                videoView.requestFocus()
+
+                videoView.setOnPreparedListener { mp ->
+                    progressBar.isVisible = false
+                    mp.isLooping = false
+                    videoView.start()
+                }
+
+                videoView.setOnCompletionListener {
+                    ivPlay.isVisible = true
+                }
+
+                videoView.setOnInfoListener { mp, what, extra ->
+                    when (what) {
+                        android.media.MediaPlayer.MEDIA_INFO_BUFFERING_START -> progressBar.isVisible = true
+                        android.media.MediaPlayer.MEDIA_INFO_BUFFERING_END -> progressBar.isVisible = false
+                    }
+                    false
+                }
+            }
+
+            else{
+                phptoView.isVisible = true
+                videoView.isVisible = false
+                ivPlay.isVisible = false
+                phptoView.load(image) {
+                    crossfade(true)
+                    placeholder(R.color.black)
+                    error(R.color.black)
+                }
+            }
+
+        }
+
+        dialog.setOnDismissListener {
+            if (type == "video") {
+                dialogBinding.videoView.stopPlayback()
+            }
+        }
+
+        dialog?.show()
+    }
 
 }

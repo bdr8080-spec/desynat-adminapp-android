@@ -25,6 +25,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -114,14 +115,15 @@ class AddFullScreenBannerFragment : BaseFragment() {
             }
 
                     etCountry.setOnClickListener {
-                        CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
+                        CommonMethod.showAllCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
                             etCountry.setText(selectedCountry.name)
                             selectedCountryCode = selectedCountry.id.toString()
                         }
                     }
 
                     etStartDate.setOnClickListener {
-                        openCustomDatePicker(requireActivity()){date,timestamp->
+                        openCustomDatePicker(requireActivity(),
+                            Calendar.getInstance().timeInMillis){ date, timestamp->
                             etStartDate.text=date
                             fromTimestamp=timestamp
                             startDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
@@ -285,7 +287,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
             }
 
             if (!isEndDateValid()) {
-                showToast("End date must be after start date")
+                showToast("From Date should be smaller then to date")
                 return false
             }
         }

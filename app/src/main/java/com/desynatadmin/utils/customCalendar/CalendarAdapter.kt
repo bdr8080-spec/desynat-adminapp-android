@@ -45,9 +45,20 @@ class CalendarAdapter(
         holder.tvDay.isEnabled = day.isCurrentMonth
         holder.tvDay.alpha = if (day.isCurrentMonth) 1f else 0.3f
 
+        if (day.isDisabled) {
+            holder.tvDay.setTextColor(Color.parseColor("#C0BBBB"))
+            holder.ivCircle.isInvisible = true
+            holder.itemView.isClickable = false
+            holder.itemView.isEnabled = false
+            return
+        }
+
+        holder.itemView.isEnabled = true
+        holder.itemView.isClickable = true
+
             if (day.isSelected) {
-                holder.ivCircle.isVisible = true
-                holder.tvDay.setTextColor(Color.parseColor("#FFFFFF"))
+                    holder.ivCircle.isVisible = true
+                    holder.tvDay.setTextColor(Color.parseColor("#FFFFFF"))
             }  else{
                 holder.ivCircle.isInvisible = true
                 holder.tvDay.setTextColor(Color.BLACK)

@@ -104,6 +104,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+ val uploadVideoImageResult: LiveData<FileUploadResponse>
+        get() = repository.responseUploadVideoImage
+
+    fun uploadVideoImage(
+        image: File?=null
+    ) {
+        viewModelScope.launch {
+            repository.uploadVideoImage(image)
+        }
+    }
+
 
     val logoutResult: LiveData<CommonResponse>
         get() = repository.logoutLiveData

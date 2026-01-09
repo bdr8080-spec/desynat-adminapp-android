@@ -361,5 +361,4 @@ class BannerRequestDetailFragment : BaseFragment() {
         dialog?.show()
     }
 
-
 }
