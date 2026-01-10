@@ -77,6 +77,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     private var searchBanner: Job? = null
     private var lastQuery: String? = null
     private val itemsPerPage = 10
+    var selectedCountryIdSlotTime: GetCountryResponse.Data? = null
     var selectedCountryId: GetCountryResponse.Data? = null
     var timeSlotDate: String? = null
     private var selectedCalendar: Calendar? = null
@@ -119,9 +120,13 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
             ProgressDialogUtils.getInstance().hideProgress()
-            selectedCountryId = countryList[0]
-            etCountry.setText(countryList[0].name)
-
+                for (i in 0 until countryList.size) {
+                    if (countryList[i].name == "Kuwait") {
+                        selectedCountryId = countryList[i]
+                        selectedCountryIdSlotTime = countryList[i]
+                        etCountry.setText(countryList[i].name)
+                    }
+                }
 
             calendarAdapter = CalendarAdapter(daysList,calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.YEAR)) { selectedDay ->
@@ -150,6 +155,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             if (type==1){
                 type = 1
                 liveRequestType = 0
+                binding?.etCountry?.setText(selectedCountryIdSlotTime?.name)
                 getTimeSlot()
                 clSearch.isVisible = false
                 llLiveRequest.isVisible = false
@@ -165,6 +171,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             }
             else{
                 type = 2
+                binding?.etCountry?.setText(selectedCountryId?.name)
                 clSearch.isVisible = true
                 llLiveRequest.isVisible = true
                 btnAddTimeSlot.isVisible = false
@@ -307,7 +314,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                 type = 1
                 liveRequestType = 0
                 getTimeSlot()
-
+                binding?.etCountry?.setText(selectedCountryIdSlotTime?.name)
                 clSearch.isVisible = false
                 llLiveRequest.isVisible = false
                 llTimeSlot.isVisible = true
@@ -322,6 +329,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                 type = 2
                 liveRequestType = 0
                 getLiveRequest()
+                binding?.etCountry?.setText(selectedCountryId?.name)
                 clSearch.isVisible = true
                 llLiveRequest.isVisible = true
                 llTimeSlot.isVisible = false
@@ -584,7 +592,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
     private fun getTimeSlot() {
         viewModel.getTimeSlot(
-            selectedCountryId?.id.toString(),
+            selectedCountryIdSlotTime?.id.toString(),
             timeSlotDate.toString()
         )
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
@@ -593,7 +601,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
     private fun addTimeSlot(fromTime: String, toTime: String){
         val request = AddTimeSlotRequest(
-            countryId = selectedCountryId?.id.toString(),
+            countryId = selectedCountryIdSlotTime?.id.toString(),
             date = timeSlotDate.toString(),
             from = fromTime,
             to = toTime
@@ -605,7 +613,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
     private fun editTimeSlot(fromTime: String, toTime: String) {
         val request = AddTimeSlotRequest(
-            countryId = selectedCountryId?.id.toString(),
+            countryId = selectedCountryIdSlotTime?.id.toString(),
             date = timeSlotDate.toString(),
             from = fromTime,
             to = toTime,
@@ -1142,6 +1150,13 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     }
 
     private fun showCustomCountryPicker(anchor:View){
+       val previousCountry:GetCountryResponse.Data? = if (type==1){
+               selectedCountryIdSlotTime
+           }
+           else{
+               selectedCountryId
+           }
+
         val customBinding = RadioCustomCountryPickerBinding.inflate(LayoutInflater.from(context))
 
         val popupWindow = PopupWindow(
@@ -1160,14 +1175,17 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             popupWindow.dismiss()
         }
 
-        liveRequestCountryAdapter = LiveRequestCountryAdapter(requireActivity(),countryList,selectedCountryId,object :LiveRequestCountryAdapter.OnClick{
+        liveRequestCountryAdapter = LiveRequestCountryAdapter(requireActivity(),countryList,previousCountry,object :LiveRequestCountryAdapter.OnClick{
             override fun onClick(position: Int) {
-                selectedCountryId = countryList[position]
-                binding?.etCountry?.setText(selectedCountryId?.name)
+
                 if (type==1){
+                    selectedCountryIdSlotTime = countryList[position]
+                    binding?.etCountry?.setText(selectedCountryIdSlotTime?.name)
                     getTimeSlot()
                 }
                 else{
+                    selectedCountryId = countryList[position]
+                    binding?.etCountry?.setText(selectedCountryId?.name)
                     getLiveRequest()
                 }
                 popupWindow.dismiss()

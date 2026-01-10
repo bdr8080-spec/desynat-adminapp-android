@@ -3,6 +3,7 @@ package com.desynatadmin.ui.home.dealsManagement
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,6 +70,9 @@ class AddDealFragment : BaseFragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             imagePicker.onPermissionResult(granted)
         }
+
+    private var originalCategoryName: String? = null
+    private var originalSubCategory: GetSubCategoryResponse.Data.Data? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -154,8 +158,10 @@ class AddDealFragment : BaseFragment() {
             etArabicFullName.setText(dealData?.nameArabic)
             etSubCategory.setText(dealData?.subCategoryDetails?.nameEnglish)
             etDiscount.setText(dealData?.discount)
-            etFromDate.setText(CommonMethod.customizeChangeDateFormat(dealData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy"))
-            etToDate.setText(CommonMethod.customizeChangeDateFormat(dealData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy"))
+            startDate = dealData?.from.toString()
+            endDate = dealData?.to.toString()
+            etFromDate.setText(CommonMethod.customizeChangeDateFormat(startDate.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy"))
+            etToDate.setText(CommonMethod.customizeChangeDateFormat(endDate.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy"))
 
             if (image==null){
                 imageUrl = dealData?.image.toString()
@@ -166,6 +172,12 @@ class AddDealFragment : BaseFragment() {
                 }
                 selectedCategory = dealData?.categoryDetails
                 selectedSubCategory = dealData?.subCategoryDetails
+
+                originalCategoryName = selectedCategory?.name
+                originalSubCategory = selectedSubCategory
+
+                Log.e("category", "setData: $originalCategoryName" )
+
                 getSubCategory()
                 when (dealData?.categoryDetails?.name) {
                     "Women" -> {
@@ -225,19 +237,16 @@ class AddDealFragment : BaseFragment() {
                     R.id.rbWomen -> {
                         if (selectedCategory?.name!="Women") {
                             getCategoryId("Women")
-                            clearAllField()
                         }
                     }
                     R.id.rbMen -> {
                         if (selectedCategory?.name!="Men") {
                             getCategoryId("Men")
-                            clearAllField()
                         }
                     }
                     R.id.rbKids -> {
                         if (selectedCategory?.name!="Kids") {
                             getCategoryId("Kids")
-                            clearAllField()
                         }
                     }
                 }
@@ -369,6 +378,21 @@ class AddDealFragment : BaseFragment() {
                 if (categoryList[i].name==match){
                     selectedCategory = categoryList[i]
                     getSubCategory()
+                    Log.e("category", "match: $match" )
+                    Log.e("category", "originalCategoryName: $originalCategoryName" )
+
+                    if (match == originalCategoryName) {
+                        selectedSubCategory = originalSubCategory
+                        binding?.etSubCategory
+                            ?.setText(originalSubCategory?.nameEnglish ?: "")
+                        Log.e("category", "set: ${originalSubCategory?.nameEnglish}" )
+                    } else {
+                        clearAllField()
+                        selectedSubCategory = null
+                        Log.e("category", "clear: $originalCategoryName" )
+
+                    }
+
                 }
             }
         }

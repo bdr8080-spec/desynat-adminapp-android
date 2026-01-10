@@ -1,6 +1,7 @@
 package com.desynatadmin.utils.customCalendar
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,11 @@ class CalendarAdapter(
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
         val day = days[position]
+
+        holder.ivCircle.isInvisible = true
+        holder.tvDay.setTextColor(Color.BLACK)
+        holder.itemView.isClickable = false
+        holder.itemView.isEnabled = false
 
         if (day.day == 0) {
             holder.tvDay.text = ""

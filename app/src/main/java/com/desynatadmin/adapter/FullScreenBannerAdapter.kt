@@ -1,14 +1,19 @@
 package com.desynatadmin.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemFullScreenBannerBinding
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.utils.CommonMethod
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<GetFullScreenBannerResponse.Data.Data>, var bannerClick:BannerClick) : RecyclerView.Adapter<FullScreenBannerAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemFullScreenBannerBinding) :
@@ -28,6 +33,7 @@ class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<Get
         return bannerList.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var bannerData = bannerList[position]
 
@@ -41,11 +47,41 @@ class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<Get
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
+            when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
+                "Upcoming"->{
+                    tvStatusValue.text = "Upcoming"
+                    tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
+                }
+                "Active" ->{
+                    tvStatusValue.text = "Active"
+                    tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
+                }
+                "Expired"->{
+                    tvStatusValue.text = "Expired"
+                    tvStatusValue.setTextColor(Color.parseColor("#D53B36"))
+                }
+            }
         }
 
         holder.itemView.setOnClickListener {
             bannerClick.onBannerClick(position)
 
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getBannerStatus(startDate: String, endDate: String): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+        val start = LocalDate.parse(startDate, formatter)
+        val end = LocalDate.parse(endDate, formatter)
+        val today = LocalDate.now()
+
+        return when {
+            today.isBefore(start) -> "Upcoming"
+            (today.isEqual(start) || today.isAfter(start)) &&
+                    (today.isEqual(end) || today.isBefore(end)) -> "Active"
+            else -> "Expired"
         }
     }
 
