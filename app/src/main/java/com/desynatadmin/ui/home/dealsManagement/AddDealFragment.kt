@@ -420,7 +420,7 @@ class AddDealFragment : BaseFragment() {
     private fun validation(): Boolean {
         binding?.apply {
 
-            if (imageUrl == "") {
+            if (image == null&&dealData==null) {
                 showToast("Please upload image")
                 return false
             }

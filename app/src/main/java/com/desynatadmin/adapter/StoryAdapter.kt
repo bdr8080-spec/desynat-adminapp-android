@@ -68,11 +68,12 @@ class StoryAdapter(
 
             if (isVideo(story.file)) {
                 ivPlay.isVisible = true
-                ivStory.setImageResource(R.color.black)
-//                Glide.with(context)
-//                    .asBitmap()
-//                    .load(story.file)
-//                    .into(ivStory)
+                ivStory.setImageResource(R.drawable.ic_placeholder)
+                ivStory.load(story.file){
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
                 Thread {
                     val bitmap = getVideoThumbnail(story.file)
                     bitmap?.let {
@@ -84,6 +85,7 @@ class StoryAdapter(
 
             } else {
                 ivPlay.isVisible = false
+                ivStory.setImageResource(R.drawable.ic_placeholder)
                 ivStory.load(story.file){
                     crossfade(true)
                     placeholder(R.drawable.ic_placeholder)

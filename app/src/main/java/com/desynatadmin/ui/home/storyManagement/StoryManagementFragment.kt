@@ -3,7 +3,6 @@ package com.desynatadmin.ui.home.storyManagement
 import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,6 @@ import com.desynatadmin.adapter.StoryAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentStoryManagementBinding
-import com.desynatadmin.databinding.ImagePreviewDialogBinding
 import com.desynatadmin.databinding.StoryPreviewDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
@@ -109,6 +107,14 @@ class StoryManagementFragment : BaseFragment() {
                         }
                     }
                 }
+            }
+
+
+            swipeRefreshLayout.setOnRefreshListener {
+                isFromSwipe = true
+                pagination = false
+                currentPage = 1
+                getAdminStory(false)
             }
         }
 

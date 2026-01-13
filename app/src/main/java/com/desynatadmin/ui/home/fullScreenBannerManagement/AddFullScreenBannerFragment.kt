@@ -132,7 +132,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
                     }
 
                     etEndDate.setOnClickListener {
-                        openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
+                        openCustomDatePicker(requireActivity(), minDate = if (fromTimestamp!=0L) fromTimestamp else Calendar.getInstance().timeInMillis){date,timestamp->
                             etEndDate.text=date
                             toTimestamp=timestamp
                             endDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")

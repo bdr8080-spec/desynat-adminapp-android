@@ -95,5 +95,6 @@ dependencies {
     implementation("io.getstream:photoview:1.0.3")
 
     implementation ("com.google.android.material:material:1.11.0")
+    implementation ("com.otaliastudios:transcoder:0.11.2")
 
 }
