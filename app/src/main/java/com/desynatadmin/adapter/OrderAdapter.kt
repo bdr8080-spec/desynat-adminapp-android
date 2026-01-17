@@ -44,7 +44,7 @@ class OrderAdapter(var context:Context, var orderList: ArrayList<GetActiveOrderR
 
             tvOrderOnValue.text = CommonMethod.customizeChangeDateFormat(orderData.createdAt, outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(orderData?.amount?:0.0)} KD"
-            tvOrderTypeValue.text = "Normal Orders"
+            tvOrderTypeValue.text =  if (orderData?.order?.orderType=="1") "Normal Order" else "Custom Order"
 
             when(orderType) {
                 1,2 -> {

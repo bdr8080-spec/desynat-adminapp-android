@@ -85,7 +85,7 @@ data class GetActiveOrderResponse(
             @SerializedName("r_e_approve")
             val rEApprove: String,
             @SerializedName("return_image")
-            val returnImage: String,
+            val returnImage: ArrayList<String>,
             @SerializedName("return_reason")
             val returnReason: String,
             @SerializedName("return_type")
@@ -197,6 +197,8 @@ data class GetActiveOrderResponse(
                 val assignDate: String,
                 @SerializedName("assign_status")
                 val assignStatus: String,
+                @SerializedName("order_type")
+                val orderType: String,
                 @SerializedName("cancel_reason")
                 val cancelReason: Any,
                 @SerializedName("created_at")

@@ -127,6 +127,13 @@ class OrderDetailFragment : BaseFragment() {
                             tvCancellationReason.text = orderDetailData?.returnReason
                         }
 
+                        if (orderDetailData?.assignStatus=="0"){
+                            btnAssignDriver.isVisible = true
+                        }
+                        else{
+                            btnAssignDriver.isVisible = false
+                        }
+
                     }
                     else if(orderDetailData?.exchangeReason!=null){
                         tvStatus.text ="Exchange"
@@ -370,6 +377,48 @@ class OrderDetailFragment : BaseFragment() {
                             tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
                         }
                         "3"->{
+
+                            if (orderDetailData?.rEApprove=="1"){
+                                tvStatus.text ="Delivered"
+                                btnAssignDriver.isVisible = true
+                            }
+                            else if(orderDetailData?.returnType=="1"){
+                                tvStatus.text ="Return Req"
+                                btnAssignDriver.isVisible = false
+                                tvCancelReason.isVisible = false
+                                tvCancellationReason.isVisible = false
+                                clDriver.isVisible = true
+                                llComplete.isVisible = true
+                                ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                    crossfade(true)
+                                    placeholder(R.drawable.ic_placeholder)
+                                    error(R.drawable.ic_placeholder)
+                                }
+                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                                ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                                ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                            }
+
+                            else if(orderDetailData?.returnType=="2"){
+                                tvStatus.text ="Exchange"
+                                btnAssignDriver.isVisible = false
+                                tvCancelReason.isVisible = false
+                                tvCancellationReason.isVisible = false
+                                clDriver.isVisible = true
+                                llComplete.isVisible = true
+                                ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                    crossfade(true)
+                                    placeholder(R.drawable.ic_placeholder)
+                                    error(R.drawable.ic_placeholder)
+                                }
+                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                                ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                                ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+                                tvPicked.text = "Picked"
+                                tvDeliveredText.text = "Exchange"
+                            }
                             tvStatus.text ="Delivered"
                             btnAssignDriver.isVisible = false
                             tvCancelReason.isVisible = false
@@ -473,7 +522,7 @@ class OrderDetailFragment : BaseFragment() {
 
             tvOrderIdValue.text = "#${orderDetailData?.id}"
             tvDateTime.text = CommonMethod.customizeChangeDateFormat(orderDetailData?.createdAt.toString(), outputFormat = "dd/MM/yy 'at' hh:mm a")
-            tvOrderTypeValue.text = "Normal Orders"
+            tvOrderTypeValue.text =  if (orderDetailData?.order?.orderType=="1") "Normal Order" else "Custom Order"
             tvCustomerName.text = orderDetailData?.order?.deliveryDetails?.name
             tvSellerName.text = orderDetailData?.productDetails?.sellerDetails?.firstName+" "+orderDetailData?.productDetails?.sellerDetails?.lastName
             tvCountryValue.text = orderDetailData?.order?.deliveryDetails?.countryName
