@@ -102,6 +102,13 @@ interface ApiServices {
     ): Response<FileUploadResponse>
 
 
+  @Multipart
+    @POST(Constants.UPLOAD_WITH_RESOLUTION)
+    suspend fun uploadWithResolution(
+        @Part file: MultipartBody.Part? = null
+    ): Response<FileUploadResponse>
+
+
     @POST(Constants.LOGIN)
     suspend fun login(
         @Body body: HashMap<String, Any>

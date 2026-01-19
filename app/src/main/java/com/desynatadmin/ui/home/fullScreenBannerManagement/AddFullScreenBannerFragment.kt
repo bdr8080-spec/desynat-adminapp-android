@@ -1,9 +1,11 @@
 package com.desynatadmin.ui.home.fullScreenBannerManagement
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -114,6 +116,12 @@ class AddFullScreenBannerFragment : BaseFragment() {
                 findNavController().popBackStack()
             }
 
+            etFor.setOnClickListener {
+                showTypeDropdown(it) { value ->
+                    etFor.setText(value)
+                }
+            }
+
                     etCountry.setOnClickListener {
                         CommonMethod.showAllCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
                             etCountry.setText(selectedCountry.name)
@@ -166,7 +174,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
             }
         }
 
-        viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
+        viewModel.uploadWithResolutionResult.observe(viewLifecycleOwner) { response ->
             if (isImageObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
@@ -239,6 +247,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
    private fun addBanner(){
         val request = AddFullScreenBannerRequest(
             countryId = selectedCountryCode.toString(),
+            type = if (binding?.etFor?.text?.trim().toString()=="Web") "2" else "1",
             startDate = startDate.toString(),
             endDate = endDate.toString(),
             image = imageUrl,
@@ -257,7 +266,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
     }
 
     fun uploadFile(){
-        viewModel.uploadImage(image)
+        viewModel.uploadWithResolution(image)
         ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isImageObserver = true
     }
@@ -268,12 +277,30 @@ class AddFullScreenBannerFragment : BaseFragment() {
                 showToast("Please upload banner image")
                 return false
             }
+           else if (image != null) {
+                val type = binding?.etFor?.text.toString()
+
+                if (!validateBannerImage(image!!, type)) {
+                    showToast(
+                        if (type == "Mobile")
+                            "Please upload 9:16 image (720x1280 to 1440x2560)"
+                        else
+                            "Please upload 16:9 image (1280x720 to 2560x1440)"
+                    )
+                    return false
+                }
+            }
+
             else if (binding?.etTitle?.text?.toString()?.isBlank() == true ) {
                 showToast("Please enter title")
                 return false
             }
             else if (etCountry.text.toString().isBlank()) {
                 showToast("Please select country")
+                return false
+            }
+            else if (etFor.text.toString().trim().isEmpty()) {
+                showToast("Please select type")
                 return false
             }
             else if (etStartDate.text.toString().trim().isEmpty()) {
@@ -286,10 +313,11 @@ class AddFullScreenBannerFragment : BaseFragment() {
                 return false
             }
 
-            if (!isEndDateValid()) {
+            else if (!isEndDateValid()) {
                 showToast("From Date should be smaller then to date")
                 return false
             }
+
         }
         return true
     }
@@ -303,6 +331,65 @@ class AddFullScreenBannerFragment : BaseFragment() {
             end != null && start != null && end >= start
         } catch (e: Exception) {
             false
+        }
+    }
+
+    private fun showTypeDropdown(view: View, onSelect: (String) -> Unit) {
+        val popup = PopupMenu(requireContext(), view)
+        popup.menu.add("Mobile")
+        popup.menu.add("Web")
+        popup.setOnMenuItemClickListener {
+            onSelect(it.title.toString())
+            true
+        }
+        popup.show()
+    }
+
+    data class ImageMeta(
+        val width: Int,
+        val height: Int,
+        val ratio: Float
+    )
+
+    fun getImageMeta(file: File): ImageMeta {
+        val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(file.absolutePath, options)
+
+        val width = options.outWidth
+        val height = options.outHeight
+        val ratio = width.toFloat() / height.toFloat()
+
+        return ImageMeta(width, height, ratio)
+    }
+
+    fun validateBannerImage(
+        file: File,
+        type: String
+    ): Boolean {
+
+        val meta = getImageMeta(file)
+
+        return if (type == "Mobile") {
+            val minW = 720
+            val minH = 1280
+            val maxW = 1440
+            val maxH = 2560
+            val expectedRatio = 9f / 16f
+
+            meta.width in minW..maxW &&
+                    meta.height in minH..maxH &&
+                    kotlin.math.abs(meta.ratio - expectedRatio) < 0.02f
+
+        } else {
+            val minW = 1280
+            val minH = 720
+            val maxW = 2560
+            val maxH = 1440
+            val expectedRatio = 16f / 9f
+
+            meta.width in minW..maxW &&
+                    meta.height in minH..maxH &&
+                    kotlin.math.abs(meta.ratio - expectedRatio) < 0.02f
         }
     }
 

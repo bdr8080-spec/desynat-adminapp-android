@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class AddFullScreenBannerRequest(
     @SerializedName("country_id")
     val countryId: String,
+    @SerializedName("type")
+    val type: String,
     @SerializedName("end_date")
     val endDate: String,
     @SerializedName("image")
