@@ -37,11 +37,13 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AllCountryPickerAdapter
 import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.DeleteDialogLayoutBinding
+import com.desynatadmin.databinding.ImagePreviewDialogBinding
 import com.desynatadmin.databinding.SuccessDialogLayoutBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import java.io.File
@@ -107,11 +109,14 @@ object CommonMethod {
     fun uriToFile(context:Context,uri: Uri): File {
         val mimeType = context.contentResolver.getType(uri)
 
-        val extension = when {
-            mimeType == null -> "bin" // fallback
-            mimeType.startsWith("image") -> "jpg"
-            mimeType.startsWith("video") -> "mp4"
-            mimeType == "application/pdf" -> "pdf"
+        val extension = when (mimeType) {
+            "image/jpeg" -> "jpg"
+            "image/jpg" -> "jpg"
+            "image/png" -> "png"
+            "image/gif" -> "gif"
+            "image/webp" -> "webp"
+            "video/mp4" -> "mp4"
+            "application/pdf" -> "pdf"
             else -> "bin"
         }
         val inputStream = context.contentResolver.openInputStream(uri)
@@ -616,6 +621,39 @@ object CommonMethod {
             e.printStackTrace()
             null
         }
+    }
+
+    fun imagePreviewDialog(context: Context,image:String,onDismiss: (() -> Unit)? = null) {
+        val dialog = Dialog(context, R.style.CustomDialog)
+        val dialogBinding = ImagePreviewDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog?.setContentView(it) }
+
+        val window: Window = dialog?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            dialog.setOnDismissListener {
+                onDismiss?.invoke()
+            }
+
+            tvToolbar.setOnClickListener{
+                dialog.dismiss()
+            }
+
+            Glide.with(context).load(image).placeholder(R.drawable.ic_placeholder).into(phptoView)
+        }
+
+        dialog.show()
     }
 
 }

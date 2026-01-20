@@ -194,6 +194,7 @@ class UserManagementFragment : BaseFragment() {
             if (isCountryObserver) {
                 countryList.clear()
                 countryList.addAll(response.data)
+                SharedPreference.get(requireActivity()).saveUserCountryList(countryList)
                 isCountryObserver = false
             }
         }
@@ -284,7 +285,6 @@ class UserManagementFragment : BaseFragment() {
         viewModel.getUserCountry()
         isCountryObserver = true
     }
-
 
     private fun updateUserStatus(){
         val map = HashMap<String,Any>()

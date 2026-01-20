@@ -69,11 +69,7 @@ class StoryAdapter(
             if (isVideo(story.file)) {
                 ivPlay.isVisible = true
                 ivStory.setImageResource(R.drawable.ic_placeholder)
-                ivStory.load(story.file){
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }
+                Glide.with(context).load(story.file).placeholder(R.drawable.ic_placeholder).into(ivStory)
                 Thread {
                     val bitmap = getVideoThumbnail(story.file)
                     bitmap?.let {
@@ -86,11 +82,7 @@ class StoryAdapter(
             } else {
                 ivPlay.isVisible = false
                 ivStory.setImageResource(R.drawable.ic_placeholder)
-                ivStory.load(story.file){
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }
+                Glide.with(context).load(story.file).placeholder(R.drawable.ic_placeholder).into(ivStory)
             }
 
             tvPostedOn.text = CommonMethod.customizeChangeDateFormat(story.createdAt, outputFormat = "dd/MM/yyyy, hh:mma")

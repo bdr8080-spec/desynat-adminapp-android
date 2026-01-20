@@ -37,15 +37,59 @@ class StoryMediaPicker(
             }.show()
     }
 
+//    fun showCameraStoryPicker() {
+//        val options = arrayOf("Camera Photo", "Record Video","Gallery Photo", "Gallery Video")
+//        AlertDialog.Builder(context)
+//            .setTitle("Add Story")
+//            .setItems(options) { _, which ->
+//                when (which) {
+//                    0 -> openCameraImage()
+//                    1 -> openCameraVideo()
+//                    2 -> openGalleryImage()
+//                    3 -> openGalleryVideo()
+//                }
+//            }.show()
+//    }
+
+
     private fun openCameraImage() {
         if (!checkCameraPermission()) return
+
         cameraUri = createUri("IMG", "jpg")
-        cameraUri?.let { uri ->
-            imageCameraLauncher.launch(uri)
-        }
+
+        imageCameraLauncher.launch(cameraUri!!)
     }
 
+
+    /*
+        private fun openCameraImage() {
+            if (!checkCameraPermission()) return
+            cameraUri = createUri("IMG", "jpg")
+            cameraUri?.let { uri ->
+                imageCameraLauncher.launch(uri)
+            }
+        }
+    */
+
     private fun openCameraVideo() {
+        if (!checkCameraPermission()) return
+
+        cameraUri = createUri("VID", "mp4")
+
+        val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE).apply {
+            putExtra(MediaStore.EXTRA_OUTPUT, cameraUri)
+            putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30)
+            putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1)
+
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        }
+
+        videoCameraLauncher.launch(intent)
+    }
+
+
+    /*private fun openCameraVideo() {
         if (!checkCameraPermission()) return
 
         cameraUri = createUri("VID", "mp4")
@@ -58,13 +102,25 @@ class StoryMediaPicker(
 
         videoCameraLauncher.launch(intent)
     }
+*/
+    private fun openGalleryImage() {
+        imageGalleryLauncher.launch("image/*")
+    }
+
+    private fun openGalleryVideo() {
+        videoGalleryLauncher.launch("video/*")
+    }
 
     fun onImageCameraResult(success: Boolean) {
-        if (success) callback(cameraUri, "image") else callback(null, "")
+        if (success) callback(cameraUri, "image")
+        else callback(null, "")
+        cameraUri = null
     }
 
     fun onVideoCameraResult(success: Boolean) {
-        if (success) callback(cameraUri, "video") else callback(null, "")
+        if (success) callback(cameraUri, "video")
+        else callback(null, "")
+        cameraUri = null
     }
 
     fun onImageGalleryResult(uri: Uri?) {

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.EnrolledAdapter
 import com.desynatadmin.base.BaseFragment
@@ -95,6 +96,12 @@ class DealsDetailFragment : BaseFragment() {
                 updateDealStatus()
             }
 
+            ivDeal.setOnClickListener {
+                CommonMethod.imagePreviewDialog(requireActivity(),dealData?.image.toString()){
+
+                }
+            }
+
             btnDelete.setOnClickListener {
                 deleteDeal()
             }
@@ -165,11 +172,7 @@ class DealsDetailFragment : BaseFragment() {
             tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
             // tvTotalEnrolled.text = "${dealData }Sellers"
             tvDiscountValue.text = dealData?.discount+"%"
-            ivDeal.load(dealData?.image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
+            Glide.with(requireActivity()).load(dealData?.image).placeholder(R.drawable.ic_placeholder).into(ivDeal)
         }
     }
 

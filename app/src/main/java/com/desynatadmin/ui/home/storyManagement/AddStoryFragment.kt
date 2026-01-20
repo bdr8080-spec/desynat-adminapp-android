@@ -234,7 +234,7 @@ class AddStoryFragment : BaseFragment() {
 
     private fun previewDialog(uri: Uri) {
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
-        val dialogBinding = UploadStoryPreviewDialogBinding.inflate(LayoutInflater.from(context))
+        val dialogBinding = UploadStoryPreviewDialogBinding.inflate(LayoutInflater.from(requireActivity()))
         dialogBinding.root.let { dialog.setContentView(it) }
 
         val window: Window = dialog.window!!
@@ -250,6 +250,12 @@ class AddStoryFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding.apply {
+            ivImage.isVisible = false
+            ivImage.setImageDrawable(null)
+
+            videoView.isVisible = false
+            videoView.stopPlayback()
+            videoView.setVideoURI(null)
 
             if (mediaType == "image") {
                 ivImage.isVisible = true
@@ -261,7 +267,6 @@ class AddStoryFragment : BaseFragment() {
             }
 
             tvCancel.setOnClickListener {
-                mediaType = ""
                 dialog.dismiss()
             }
              tvUpload.setOnClickListener{
@@ -276,9 +281,7 @@ class AddStoryFragment : BaseFragment() {
         }
 
         dialog.setOnDismissListener {
-            if (mediaType == "video") {
-                dialogBinding.videoView.stopPlayback()
-            }
+            dialogBinding.videoView.stopPlayback()
         }
         dialog.show()
     }

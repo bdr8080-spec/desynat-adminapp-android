@@ -151,6 +151,41 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             val todayFormat1 = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
             binding?.tvSelectedDateToSlot?.text = "Today, "+todayFormat1.format(Calendar.getInstance().time)
 
+            liveRequestAdapter = LiveRequestAdapter(requireActivity(),liveRequestList,object :LiveRequestAdapter.OnClick{
+                override fun click(position: Int, clickType: Int) {
+                    selectedPos = position
+                    when(clickType){
+                        1->{
+                            acceptLiveRequest()
+                        }
+                        2->{
+                            rejectLiveRequest("")
+                        }
+                    }
+                }
+
+            })
+            rvLiveRequest.adapter = liveRequestAdapter
+
+            timeSlotAdapter = TimeSlotAdapter(requireActivity(),timeSlotList,object :TimeSlotAdapter.OnClick{
+                override fun click(position: Int, clickType: Int) {
+                    selectedTimeSlotPos = position
+                    when(clickType){
+                        1->{
+                            addTimeSlotDialog(true)
+
+                        }
+                        2->{
+                            deleteTimeSlot()
+                        }
+                        3->{
+                            updateTimeSlotStatus()
+                        }
+                    }
+                }
+
+            })
+            rvTimeSlot.adapter = timeSlotAdapter
 
             if (type==1){
                 type = 1
@@ -219,42 +254,6 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                     viewRejected.setBackgroundColor(Color.parseColor("#875C3A"))
                 }
             }
-
-            liveRequestAdapter = LiveRequestAdapter(requireActivity(),liveRequestList,object :LiveRequestAdapter.OnClick{
-                override fun click(position: Int, clickType: Int) {
-                    selectedPos = position
-                    when(clickType){
-                        1->{
-                            acceptLiveRequest()
-                        }
-                        2->{
-                            rejectLiveRequest("")
-                        }
-                    }
-                }
-
-            })
-            rvLiveRequest.adapter = liveRequestAdapter
-
-            timeSlotAdapter = TimeSlotAdapter(requireActivity(),timeSlotList,object :TimeSlotAdapter.OnClick{
-                override fun click(position: Int, clickType: Int) {
-                    selectedTimeSlotPos = position
-                    when(clickType){
-                        1->{
-                            addTimeSlotDialog(true)
-
-                        }
-                        2->{
-                            deleteTimeSlot()
-                        }
-                        3->{
-                            updateTimeSlotStatus()
-                        }
-                    }
-                }
-
-            })
-            rvTimeSlot.adapter = timeSlotAdapter
 
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(

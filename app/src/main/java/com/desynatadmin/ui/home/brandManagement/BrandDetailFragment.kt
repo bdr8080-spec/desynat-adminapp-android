@@ -90,6 +90,12 @@ class BrandDetailFragment : BaseFragment() {
                 updateBrandStatus()
             }
 
+            ivBrand.setOnClickListener {
+                CommonMethod.imagePreviewDialog(requireActivity(),brandData?.image.toString()){
+
+                }
+            }
+
         }
     }
 

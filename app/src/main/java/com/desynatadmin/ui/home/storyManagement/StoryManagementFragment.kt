@@ -14,6 +14,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.StoryAdapter
 import com.desynatadmin.base.BaseFragment
@@ -273,11 +274,7 @@ class StoryManagementFragment : BaseFragment() {
                 phptoView.isVisible = true
                 videoView.isVisible = false
                 ivPlay.isVisible = false
-                phptoView.load(image) {
-                    crossfade(true)
-                    placeholder(R.color.black)
-                    error(R.color.black)
-                }
+                Glide.with(requireActivity()).load(image).placeholder(R.drawable.ic_placeholder).into(phptoView)
             }
 
         }

@@ -105,7 +105,8 @@ interface ApiServices {
   @Multipart
     @POST(Constants.UPLOAD_WITH_RESOLUTION)
     suspend fun uploadWithResolution(
-        @Part file: MultipartBody.Part? = null
+        @Part file: MultipartBody.Part? = null,
+        @Part("type") type: RequestBody? = null
     ): Response<FileUploadResponse>
 
 

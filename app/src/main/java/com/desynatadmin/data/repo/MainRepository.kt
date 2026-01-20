@@ -79,8 +79,10 @@ import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.toMultipartPart
+import com.desynatadmin.utils.toPlainRequestBody
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -121,11 +123,11 @@ class MainRepository @Inject constructor(
 
     val responseUploadWithResolution = SingleLiveEvent<FileUploadResponse>()
     suspend fun uploadWithResolution(
-        imageFile: File? = null
+        imageFile: File? = null,type:String
     ) {
         handleApiCall(
             api = {
-                api.uploadWithResolution(imageFile?.toMultipartPart("image")
+                api.uploadWithResolution(imageFile?.toMultipartPart("image"),type.toPlainRequestBody()
                 )
             },
             responseLiveData = responseUploadWithResolution

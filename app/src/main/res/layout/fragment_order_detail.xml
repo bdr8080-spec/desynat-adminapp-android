@@ -305,7 +305,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Shipping Location"
+                android:text="Delivery Location"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@id/tvCustomer"

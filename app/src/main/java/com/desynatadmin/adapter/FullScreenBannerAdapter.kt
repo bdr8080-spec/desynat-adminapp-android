@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemFullScreenBannerBinding
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
@@ -42,11 +43,12 @@ class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<Get
             tvCountryName.text = bannerData?.countryInfo?.name
             tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-            ivBanner.load(bannerData?.image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
+//            ivBanner.load(bannerData?.image) {
+//                crossfade(true)
+//                placeholder(R.drawable.ic_placeholder)
+//                error(R.drawable.ic_placeholder)
+//            }
+            Glide.with(context).load(bannerData?.image).placeholder(R.drawable.ic_placeholder).into(ivBanner)
             when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
                 "Upcoming"->{
                     tvStatusValue.text = "Upcoming"

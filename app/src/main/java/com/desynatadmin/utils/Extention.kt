@@ -224,6 +224,7 @@ fun File.toMultipartPart(fieldName: String): MultipartBody.Part {
         "jpg", "jpeg" -> "image/jpeg"
         "png" -> "image/png"
         "webp" -> "image/webp"
+        "gif" -> "image/gif"
 
         // Video
         "mp4" -> "video/mp4"

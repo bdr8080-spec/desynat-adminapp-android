@@ -119,10 +119,10 @@ class HomeViewModel @Inject constructor(
         get() = repository.responseUploadWithResolution
 
     fun uploadWithResolution(
-        image: File?=null
+        image: File?=null,type:String
     ) {
         viewModelScope.launch {
-            repository.uploadWithResolution(image)
+            repository.uploadWithResolution(image,type)
         }
     }
 
@@ -180,7 +180,6 @@ class HomeViewModel @Inject constructor(
             repository.updateBrandStatus(map)
         }
     }
-
 
     val getAllCategoryResult: LiveData<GetCategoryResponse>
         get() = repository.categoryLiveData
@@ -248,7 +247,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     val hitCityList: LiveData<CityResponse>
         get() = repository.getCityData
 
@@ -258,7 +256,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     val getAddServiceCity: LiveData<AddServiceCityResponse>
         get() = repository.getAddServiceCity
 
@@ -267,7 +264,6 @@ class HomeViewModel @Inject constructor(
             repository.hitAddServiceCity(token,map)
         }
     }
-
 
     val updateSubCategoryStatusResult: LiveData<UpdateSubCategoryResponse>
         get() = repository.updateSubCategoryStatusLiveData
@@ -297,7 +293,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     val getDeleteCity : LiveData<CommonResponse>
         get() = repository.getDeleteServiceCity
 
@@ -317,7 +312,6 @@ class HomeViewModel @Inject constructor(
             hitAddZone(token,map)
         }
     }
-
 
     val getNewSellerList : LiveData<NewSellerResponse>
         get() = repository.getNewSellerList

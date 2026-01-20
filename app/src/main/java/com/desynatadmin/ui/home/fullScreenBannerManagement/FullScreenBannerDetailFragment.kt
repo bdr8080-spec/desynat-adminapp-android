@@ -11,9 +11,11 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
@@ -87,7 +89,7 @@ class FullScreenBannerDetailFragment : BaseFragment() {
             }
 
             ivBanner.setOnClickListener {
-                imagePreviewDialog(bannerData?.image?:"")
+                CommonMethod.imagePreviewDialog(requireActivity(),bannerData?.image?:"")
             }
 
             btnDelete.setOnClickListener {
@@ -117,11 +119,7 @@ class FullScreenBannerDetailFragment : BaseFragment() {
 
         binding?.apply {
 
-            ivBanner.load(bannerData?.image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
+            Glide.with(requireActivity()).load(bannerData?.image).placeholder(R.drawable.ic_placeholder).into(ivBanner)
 
             tvTitle.text = bannerData?.title
 
@@ -165,39 +163,6 @@ class FullScreenBannerDetailFragment : BaseFragment() {
                 isObserver = false
             }
         }
-    }
-
-    private fun imagePreviewDialog(image:String) {
-        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
-        val dialogBinding = ImagePreviewDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog?.setContentView(it) }
-
-        val window: Window = dialog?.window!!
-        window.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT
-        )
-        window.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog?.setCancelable(false)
-
-        val params: WindowManager.LayoutParams = window.attributes
-        params.gravity = Gravity.CENTER
-        window.attributes = params
-
-        dialogBinding.apply {
-
-            tvToolbar.setOnClickListener{
-                dialog?.dismiss()
-            }
-
-            phptoView.load(image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-        }
-
-        dialog?.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

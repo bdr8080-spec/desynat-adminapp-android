@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AssignDriverAdapter
 import com.desynatadmin.base.BaseFragment
@@ -103,11 +104,8 @@ class BannerRequestDetailFragment : BaseFragment() {
     private fun setData() {
         binding?.apply {
             updateStatus()
-            ivBanner.load(bannerData?.uploadBanner) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
+
+            Glide.with(requireActivity()).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)
             tvName.text = bannerData?.sellerDetails?.firstName+" "+bannerData?.sellerDetails?.lastName
             tvCountry.text = bannerData?.sellerDetails?.countryDetails?.name
             tvRequestId.text = "#${bannerData?.orderId}"
@@ -194,7 +192,9 @@ class BannerRequestDetailFragment : BaseFragment() {
             }
 
             ivBanner.setOnClickListener {
-                imagePreviewDialog(bannerData?.uploadBanner?:"")
+                CommonMethod.imagePreviewDialog(requireActivity(),bannerData?.uploadBanner.toString()){
+
+                }
             }
 
             ivSwitch.setOnClickListener {
@@ -326,39 +326,6 @@ class BannerRequestDetailFragment : BaseFragment() {
         }
 
         dialog.show()
-    }
-
-    private fun imagePreviewDialog(image:String) {
-        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
-        val dialogBinding = ImagePreviewDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog?.setContentView(it) }
-
-        val window: Window = dialog?.window!!
-        window.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT
-        )
-        window.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog?.setCancelable(false)
-
-        val params: WindowManager.LayoutParams = window.attributes
-        params.gravity = Gravity.CENTER
-        window.attributes = params
-
-        dialogBinding.apply {
-
-            tvToolbar.setOnClickListener{
-                dialog?.dismiss()
-            }
-
-            phptoView.load(image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-        }
-
-        dialog?.show()
     }
 
 }

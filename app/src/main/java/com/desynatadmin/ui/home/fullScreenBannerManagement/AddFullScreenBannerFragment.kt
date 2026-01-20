@@ -2,6 +2,7 @@ package com.desynatadmin.ui.home.fullScreenBannerManagement
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -266,30 +267,35 @@ class AddFullScreenBannerFragment : BaseFragment() {
     }
 
     fun uploadFile(){
-        viewModel.uploadWithResolution(image)
+        viewModel.uploadWithResolution(image,if(binding?.etFor?.text?.trim().toString()=="Web") "2" else "1")
         ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isImageObserver = true
     }
 
     private fun validation(): Boolean {
+        Log.e("image", "validation: ${image}")
         binding?.apply {
             if (image==null&&bannerData==null){
                 showToast("Please upload banner image")
                 return false
             }
-           else if (image != null) {
+            else if (image != null) {
                 val type = binding?.etFor?.text.toString()
-
-                if (!validateBannerImage(image!!, type)) {
-                    showToast(
-                        if (type == "Mobile")
-                            "Please upload 9:16 image (720x1280 to 1440x2560)"
-                        else
-                            "Please upload 16:9 image (1280x720 to 2560x1440)"
-                    )
-                    return false
+                if (!isGif(image!!)) {
+                    if (!validateBannerImage(image!!, type)) {
+                        showToast(
+                            if (type == "Mobile")
+                              //  "Please upload 9:16 image (720x1280 to 1440x2560)"
+                                "Please upload 9:16 image"
+                            else
+                               // "Please upload 16:9 image (1280x720 to 2560x1440)"
+                                "Please upload 16:9 image"
+                        )
+                        return false
+                    }
                 }
             }
+
 
             else if (binding?.etTitle?.text?.toString()?.isBlank() == true ) {
                 showToast("Please enter title")
@@ -343,6 +349,10 @@ class AddFullScreenBannerFragment : BaseFragment() {
             true
         }
         popup.show()
+    }
+
+    fun isGif(file: File): Boolean {
+        return file.extension.equals("gif", ignoreCase = true)
     }
 
     data class ImageMeta(
