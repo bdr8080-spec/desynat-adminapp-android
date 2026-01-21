@@ -12,7 +12,64 @@ import com.desynatadmin.utils.CommonMethod
 
 class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<GetLiveRequestResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<LiveRequestAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemLiveRequestBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val liveRequestData = liveRequestList[position]
+
+                tvName.text = liveRequestData?.sellerDetails?.firstName+" "+ liveRequestData?.sellerDetails?.lastName
+                tvReasonValue.text = liveRequestData?.rejectReason
+                tvCountry.text = liveRequestData?.sellerDetails?.countryDetails?.name
+                tvRequestId.text = "#${liveRequestData?.orderId}"
+                tvLiveRequestValue.text = "${CommonMethod.formatDate(liveRequestData?.timeslotDetails?.date.toString(),"yyyy-MM-dd","dd/MM/yyyy")} | ${liveRequestData?.timeslotDetails?.from}"
+                tvRequestOnValue.text = CommonMethod.formatDate(liveRequestData?.createdAt.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+
+                when(liveRequestData?.adminVerify){
+                    0->{
+                        tvStatusValue.text = "Pending"
+                        tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
+                        btnAccept.isVisible = true
+                        btnReject.isVisible = true
+                        viewStatus.isVisible = true
+                        tvReason.isVisible = false
+                        tvReasonValue.isVisible = false
+                        tvPaymentMode.isVisible = false
+                        tvPaymentModeValue.isVisible = false
+                    }
+                    1->{
+                        tvStatusValue.text = "Confirmed"
+                        tvStatusValue.setTextColor(Color.parseColor("#17854C"))
+                        viewStatus.isVisible = false
+                        btnAccept.isVisible = false
+                        btnReject.isVisible = false
+                        tvReason.isVisible = false
+                        tvReasonValue.isVisible = false
+                        tvPaymentMode.isVisible = true
+                        tvPaymentModeValue.isVisible = true
+                    }
+                    2->{
+                        tvStatusValue.text = "Rejected"
+                        tvStatusValue.setTextColor(Color.parseColor("#D91A1B"))
+                        btnAccept.isVisible = false
+                        btnReject.isVisible = false
+                        viewStatus.isVisible = true
+                        tvReason.isVisible = true
+                        tvReasonValue.isVisible = true
+                        tvPaymentMode.isVisible = true
+                        tvPaymentModeValue.isVisible = true
+                    }
+                }
+
+                btnAccept.setOnClickListener {
+                    onClick.click(position,1)
+                }
+
+                btnReject.setOnClickListener {
+                    onClick.click(position,2)
+                }
+
+            }
+
+        }
 
     interface OnClick{
         fun click(position: Int,type:Int)
@@ -29,61 +86,7 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var liveRequestData = liveRequestList[position]
-
-        holder.binding.apply {
-            tvName.text = liveRequestData?.sellerDetails?.firstName+" "+ liveRequestData?.sellerDetails?.lastName
-            tvReasonValue.text = liveRequestData?.rejectReason
-            tvCountry.text = liveRequestData?.sellerDetails?.countryDetails?.name
-            tvRequestId.text = "#${liveRequestData?.orderId}"
-            tvLiveRequestValue.text = "${CommonMethod.formatDate(liveRequestData?.timeslotDetails?.date.toString(),"yyyy-MM-dd","dd/MM/yyyy")} | ${liveRequestData?.timeslotDetails?.from}"
-            tvRequestOnValue.text = CommonMethod.formatDate(liveRequestData?.createdAt.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-
-            when(liveRequestData?.adminVerify){
-                0->{
-                   tvStatusValue.text = "Pending"
-                    tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
-                    btnAccept.isVisible = true
-                    btnReject.isVisible = true
-                    viewStatus.isVisible = true
-                    tvReason.isVisible = false
-                    tvReasonValue.isVisible = false
-                    tvPaymentMode.isVisible = false
-                    tvPaymentModeValue.isVisible = false
-                }
-                1->{
-                    tvStatusValue.text = "Confirmed"
-                    tvStatusValue.setTextColor(Color.parseColor("#17854C"))
-                    viewStatus.isVisible = false
-                    btnAccept.isVisible = false
-                    btnReject.isVisible = false
-                    tvReason.isVisible = false
-                    tvReasonValue.isVisible = false
-                    tvPaymentMode.isVisible = true
-                    tvPaymentModeValue.isVisible = true
-                }
-                2->{
-                    tvStatusValue.text = "Rejected"
-                    tvStatusValue.setTextColor(Color.parseColor("#D91A1B"))
-                    btnAccept.isVisible = false
-                    btnReject.isVisible = false
-                    viewStatus.isVisible = true
-                    tvReason.isVisible = true
-                    tvReasonValue.isVisible = true
-                    tvPaymentMode.isVisible = true
-                    tvPaymentModeValue.isVisible = true
-                }
-            }
-
-            btnAccept.setOnClickListener {
-                onClick.click(position,1)
-            }
-
-            btnReject.setOnClickListener {
-                onClick.click(position,2)
-            }
-
-        }
+     holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetLiveRequestResponse.Data.Data>) {

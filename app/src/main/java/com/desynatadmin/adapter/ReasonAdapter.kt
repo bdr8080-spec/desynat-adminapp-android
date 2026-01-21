@@ -15,7 +15,32 @@ import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResponse.Data.Data>, var reasonClick:ReasonClick) : RecyclerView.Adapter<ReasonAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemReasonBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val reasonData = reasonList[position]
+
+                tvReason.text = reasonData.reasonEnglish
+                if(reasonData.status==1){
+                    ivSwitch.setImageResource(R.drawable.switch_on)
+                }
+                else{
+                    ivSwitch.setImageResource(R.drawable.switch_off)
+                }
+
+                ivEdit.setOnClickListener {
+                    reasonClick.onReasonClick(position,1)
+                }
+
+                ivSwitch.setOnClickListener {
+                    reasonClick.onReasonClick(position,2)
+                }
+
+                ivDelete.setOnClickListener {
+                    reasonClick.onReasonClick(position,3)
+                }
+            }
+
+        }
 
     interface ReasonClick{
         fun onReasonClick(position: Int,type:Int)
@@ -32,30 +57,7 @@ class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResp
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var reasonData = reasonList[position]
-
-        holder.binding.apply {
-            tvReason.text = reasonData.reasonEnglish
-            if(reasonData.status==1){
-                ivSwitch.setImageResource(R.drawable.switch_on)
-            }
-            else{
-                ivSwitch.setImageResource(R.drawable.switch_off)
-            }
-
-            ivEdit.setOnClickListener {
-                reasonClick.onReasonClick(position,1)
-            }
-
-            ivSwitch.setOnClickListener {
-                reasonClick.onReasonClick(position,2)
-            }
-
-            ivDelete.setOnClickListener {
-                reasonClick.onReasonClick(position,3)
-            }
-        }
-
+       holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetReasonResponse.Data.Data>) {

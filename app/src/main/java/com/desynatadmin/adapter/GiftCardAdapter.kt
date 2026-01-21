@@ -12,7 +12,22 @@ import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardRespon
 
 class GiftCardAdapter(var context:Context, var giftCardList: ArrayList<GetAllGiftCardResponse.Data.Data>, var giftCardClick:GiftCardClick) : RecyclerView.Adapter<GiftCardAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCardBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val giftData = giftCardList[position]
+
+                tvGiftCardName.text = giftData.nameEnglish
+                ivGift.load(giftData.image) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
+
+            root.setOnClickListener {
+                giftCardClick.onGiftCardClick(position)
+            }
+        }
+        }
 
     interface GiftCardClick{
         fun onGiftCardClick(position: Int)
@@ -29,21 +44,7 @@ class GiftCardAdapter(var context:Context, var giftCardList: ArrayList<GetAllGif
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var giftData = giftCardList[position]
-
-        holder.binding.apply {
-            tvGiftCardName.text = giftData.nameEnglish
-            ivGift.load(giftData.image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-        }
-
-        holder.itemView.setOnClickListener {
-            giftCardClick.onGiftCardClick(position)
-
-        }
+      holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetAllGiftCardResponse.Data.Data>) {

@@ -1216,4 +1216,51 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
+
+    val getAllAffiliateUserResult: LiveData<GetUserResponse>
+        get() = repository.affiliateUserLiveData
+
+    fun getAllAffiliateUser(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getAllAffiliateUser(map)
+        }
+    }
+
+    val getAffiliateUserDetailResult: LiveData<GetUserDetailResponse>
+        get() = repository.userAllAffiliateDetailLiveData
+
+    fun getAffiliateUserDetail(userId:String) {
+        viewModelScope.launch {
+            repository.getAffiliateUserDetail(userId)
+        }
+    }
+
+    val updateAffiliateUserStatusResult: LiveData<BlockUnblockUserResponse>
+        get() = repository.updateAffiliateUserStatusLiveData
+
+    fun blockUnblockAffiliateUser(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.blockUnblockAffiliateUser(map)
+        }
+    }
+
+    val acceptAffiliateUserResult: LiveData<CommonResponse>
+        get() = repository.acceptAffiliateUserLiveData
+
+    fun acceptAffiliateUser(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.acceptAffiliateUser(map)
+        }
+    }
+
+    val rejectAffiliateUserResult: LiveData<CommonResponse>
+        get() = repository.rejectAffiliateUserLiveData
+
+    fun rejectAffiliateUser(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.rejectAffiliateUser(map)
+        }
+    }
+
+
 }

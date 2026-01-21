@@ -302,6 +302,11 @@ override fun onBackPressed() {
                 controller.navigate(R.id.storyManagement)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
+
+//            rlAffiliateManagement.setOnClickListener {
+//                controller.navigate(R.id.affiliateUserManagement)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
         }
 
     }

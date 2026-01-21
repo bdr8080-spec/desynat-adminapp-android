@@ -11,7 +11,19 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 
 class BannerPerDayPriceAdapter(var context:Context, var bannerList: ArrayList<GetBannerPricePerDayResponse.Data>, var countryMap: Map<Int, GetCountryResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<BannerPerDayPriceAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBannerPriceBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val bannerData = bannerList[position]
+            val countryData = countryMap[bannerData.countryId]
+                tvCountry.text = "${countryData?.name}"
+                tvPrice.text = "${bannerData.perDayPrice} KD"
+                ivFlag.text = "${countryData?.flag}"
+
+                ivEdit.setOnClickListener {
+                    onClick.onItemClick(position)
+                }
+        }
+        }
 
     interface OnClick{
         fun onItemClick(position: Int)
@@ -28,17 +40,6 @@ class BannerPerDayPriceAdapter(var context:Context, var bannerList: ArrayList<Ge
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var bannerData = bannerList[position]
-        val countryData = countryMap[bannerData.countryId]
-        holder.binding.apply {
-            tvCountry.text = "${countryData?.name}"
-            tvPrice.text = "${bannerData.perDayPrice} KD"
-            ivFlag.text = "${countryData?.flag}"
-
-            ivEdit.setOnClickListener {
-                onClick.onItemClick(position)
-            }
-        }
-
+      holder.bind(position)
     }
 }

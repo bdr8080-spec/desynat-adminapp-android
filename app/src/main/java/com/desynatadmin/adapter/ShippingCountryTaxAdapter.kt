@@ -17,7 +17,18 @@ import com.desynatadmin.utils.CommonMethod
 
 class ShippingCountryTaxAdapter(var context:Context, var shippingTaxList: ArrayList<GetShippingTaxResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<ShippingCountryTaxAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemShippingTaxBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val shippingTaxData = shippingTaxList[position]
+
+                tvCountry.text = "${shippingTaxData?.flag}  ${shippingTaxData.name}"
+                tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
+
+            root.setOnClickListener {
+                clickOnItem.onClickItem(position)
+            }
+        }
+        }
 
     interface ClickOnItem{
         fun onClickItem(position: Int)
@@ -34,18 +45,7 @@ class ShippingCountryTaxAdapter(var context:Context, var shippingTaxList: ArrayL
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var shippingTaxData = shippingTaxList[position]
-
-        holder.binding.apply {
-            tvCountry.text = "${shippingTaxData?.flag}  ${shippingTaxData.name}"
-            tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
-        }
-
-        holder.itemView.setOnClickListener {
-            clickOnItem.onClickItem(position)
-        }
-
-
+        holder.bind(position)
     }
 
 }

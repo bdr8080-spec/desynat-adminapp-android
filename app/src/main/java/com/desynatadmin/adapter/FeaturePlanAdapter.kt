@@ -11,22 +11,9 @@ class FeaturePlanAdapter(var context:Context, var featureList: ArrayList<Feature
         fun onSubscriptionClick(featurePosition: Int)
     }
     inner class ViewHolder(val binding: ItemPlanFeatureBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemPlanFeatureBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
-        )
-    }
-
-    override fun getItemCount(): Int {
-        return featureList.size
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.apply {
-            tvFeature.text = featureList[position].feature
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+                tvFeature.text = featureList[position].feature
                 if (featureList[position].feature=="Commission: "){
                     if (featureList[position].count!=0) {
                         tvCount.text = "${featureList[position].count.toString()}%"
@@ -43,14 +30,26 @@ class FeaturePlanAdapter(var context:Context, var featureList: ArrayList<Feature
                         tvCount.text = featureList[position].count.toString()
                     }
                 }
+            root.setOnClickListener {
+                onClick.onSubscriptionClick(position)
 
+            }
+        }
         }
 
-        holder.itemView.setOnClickListener {
-            onClick.onSubscriptionClick(position)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            ItemPlanFeatureBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false)
+        )
+    }
 
-        }
+    override fun getItemCount(): Int {
+        return featureList.size
+    }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(position)
     }
 
 

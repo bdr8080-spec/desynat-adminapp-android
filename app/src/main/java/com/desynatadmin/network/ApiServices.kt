@@ -770,4 +770,28 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<UpdateTimeSlotResponse>
 
+    @GET(Constants.GET_AFFILIATE_USER)
+    suspend fun getAllAffiliateUser(
+        @QueryMap map: HashMap<String,Any>): Response<GetUserResponse>
+
+    @GET(Constants.GET_AFFILIATE_USER_DETAIL)
+    suspend fun getAffiliateUserDetail(
+        @Query("user_id") userId : String,
+    ): Response<GetUserDetailResponse>
+
+    @POST(Constants.BLOCK_UNBLOCK_AFFILIATE_USER)
+    suspend fun blockUnblockAffiliateUser(
+        @Body body: HashMap<String, Any>
+    ): Response<BlockUnblockUserResponse>
+
+    @POST(Constants.ACCEPT_AFFILIATE_USER)
+    suspend fun acceptAffiliateUser(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.REJECT_AFFILIATE_USER)
+    suspend fun rejectAffiliateUser(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
 }

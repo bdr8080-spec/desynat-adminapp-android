@@ -16,7 +16,38 @@ import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class DeliveryBoyAdapter(var context:Context, var deliveryBoyList: ArrayList<GetAllDeliveryBoyResponse.Data.Data>, var deliveryBoyClick:DeliveryBoyClick) : RecyclerView.Adapter<DeliveryBoyAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemDeliveryBoyBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            var deliveryBoyData = deliveryBoyList[position]
+
+                tvName.text = deliveryBoyData.fullNameEnglish
+                tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(deliveryBoyData.createdAt)}"
+                tvEmail.text = deliveryBoyData.email
+                tvCall.text = deliveryBoyData.countryCode+"-"+deliveryBoyData.mobile
+                Glide.with(ivProfileImage).load(deliveryBoyData.profilePic).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
+                if(deliveryBoyData.status=="1"){
+                    ivSwitch.setImageResource(R.drawable.switch_on)
+                }
+                else{
+                    ivSwitch.setImageResource(R.drawable.switch_off)
+                }
+                ivSwitch.setOnClickListener {
+                    deliveryBoyClick.onDeliveryBoyClick(position,2)
+                }
+
+                btnEdit.setOnClickListener {
+                    deliveryBoyClick.onDeliveryBoyClick(position,4)
+                }
+
+                btnDelete.setOnClickListener {
+                    deliveryBoyClick.onDeliveryBoyClick(position,3)
+                }
+
+                cl1.setOnClickListener {
+                    deliveryBoyClick.onDeliveryBoyClick(position,1)
+                }
+            }
+        }
 
     interface DeliveryBoyClick{
         fun onDeliveryBoyClick(position: Int,type:Int)
@@ -33,36 +64,7 @@ class DeliveryBoyAdapter(var context:Context, var deliveryBoyList: ArrayList<Get
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var deliveryBoyData = deliveryBoyList[position]
-
-        holder.binding.apply {
-            tvName.text = deliveryBoyData.fullNameEnglish
-            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(deliveryBoyData.createdAt)}"
-            tvEmail.text = deliveryBoyData.email
-            tvCall.text = deliveryBoyData.countryCode+"-"+deliveryBoyData.mobile
-            Glide.with(ivProfileImage).load(deliveryBoyData.profilePic).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
-            if(deliveryBoyData.status=="1"){
-                ivSwitch.setImageResource(R.drawable.switch_on)
-            }
-            else{
-                ivSwitch.setImageResource(R.drawable.switch_off)
-            }
-            ivSwitch.setOnClickListener {
-                deliveryBoyClick.onDeliveryBoyClick(position,2)
-            }
-
-            btnEdit.setOnClickListener {
-                deliveryBoyClick.onDeliveryBoyClick(position,4)
-            }
-
-            btnDelete.setOnClickListener {
-                deliveryBoyClick.onDeliveryBoyClick(position,3)
-            }
-
-            cl1.setOnClickListener {
-                deliveryBoyClick.onDeliveryBoyClick(position,1)
-            }
-        }
+     holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetAllDeliveryBoyResponse.Data.Data>) {

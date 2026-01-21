@@ -9,14 +9,43 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemGalleryImgBinding
 import com.desynatadmin.ui.home.storyManagement.response.GalleryMedia
 
 class GalleryAdapter(var context:Context, private val items: MutableList<GalleryMedia>,private val listener: (GalleryMedia) -> Unit) : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemGalleryImgBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(private val binding: ItemGalleryImgBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
+        fun bind(item: GalleryMedia) = with(binding) {
+            ivGalleryImage.setImageDrawable(null)
+            ivPlay.isVisible = false
+            when (item) {
+                is GalleryMedia.Image -> {
+                    ivPlay.isVisible = false
+                    Glide.with(context)
+                        .load(item.uri)
+                        .placeholder(R.drawable.ic_placeholder)
+                        .into(ivGalleryImage)
+                }
+
+                is GalleryMedia.Video -> {
+                    ivPlay.isVisible = true
+                    Glide.with(context)
+                        .load(item.uri)
+                 //       .frame(1000000)
+                        .placeholder(R.drawable.ic_placeholder)
+                        .into(ivGalleryImage)
+
+                }
+            }
+
+            root.setOnClickListener {
+                listener(item)
+            }
+        }
+    }
     interface OnClick{
         fun onClick(position: Int)
     }
@@ -32,40 +61,7 @@ class GalleryAdapter(var context:Context, private val items: MutableList<Gallery
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-
-        holder.binding.apply {
-            when (item) {
-                is GalleryMedia.Image -> {
-                    holder.binding.ivPlay.isVisible = false
-                    holder.binding.ivGalleryImage.load(item.uri)
-                }
-                is GalleryMedia.Video -> {
-                    holder.binding.ivPlay.isVisible = true
-                    val bitmap = getVideoThumbnail(item.uri)
-                    if (bitmap != null) {
-                        ivGalleryImage.setImageBitmap(bitmap)
-                    } else {
-                        ivGalleryImage.setImageResource(R.color.black)
-                    }
-                }
-            }
-        }
-
-        holder.itemView.setOnClickListener { listener(item) }
-    }
-
-    private fun getVideoThumbnail(uri: Uri): Bitmap? {
-        return try {
-            val retriever = MediaMetadataRetriever()
-            retriever.setDataSource(context, uri)
-            val bitmap = retriever.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
-            retriever.release()
-            bitmap
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
+        holder.bind(items[position])
     }
 
     fun addItems(newItems: List<GalleryMedia>) {

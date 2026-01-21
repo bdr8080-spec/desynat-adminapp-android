@@ -18,7 +18,23 @@ class LiveRequestCountryAdapter(var context: Context,var list:ArrayList<GetCount
     }
 
     inner class ViewHolder(val binding: CountryRecylerBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+                if (selectedCountry?.id==list[position].id){
+                    name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.ic_radio_selected,0)
+                }
+                else{
+                    name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.ic_radio_unselected,0)
+
+                }
+                name.text="${list[position].flag}  ${list[position].name}"
+                root.setOnClickListener {
+                    selectedCountry = list[position]
+                    notifyDataSetChanged()
+                    onClick.onClick(position)
+                }
+        }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LiveRequestCountryAdapter.ViewHolder {
         val binding = CountryRecylerBinding.inflate(
@@ -30,22 +46,7 @@ class LiveRequestCountryAdapter(var context: Context,var list:ArrayList<GetCount
     }
 
     override fun onBindViewHolder(holder: LiveRequestCountryAdapter.ViewHolder, position: Int) {
-        holder.binding.apply {
-            if (selectedCountry?.id==list[position].id){
-                name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.ic_radio_selected,0)
-            }
-            else{
-                name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.ic_radio_unselected,0)
-
-            }
-            name.text="${list[position].flag}  ${list[position].name}"
-            root.setOnClickListener {
-                selectedCountry = list[position]
-                notifyDataSetChanged()
-                onClick.onClick(position)
-            }
-
-        }
+       holder.bind(position)
     }
 
     override fun getItemCount(): Int {

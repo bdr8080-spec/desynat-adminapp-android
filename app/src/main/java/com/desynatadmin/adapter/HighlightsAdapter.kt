@@ -8,7 +8,11 @@ import com.desynatadmin.databinding.HighlightsItemBinding
 
 class HighlightsAdapter : RecyclerView.Adapter<HighlightsAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: HighlightsItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+
+        }
+        }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

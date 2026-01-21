@@ -16,7 +16,56 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetUserR
 
    var userType = "1"
     inner class ViewHolder(val binding: ItemAffiliateUserBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val userData = userList[position]
+
+                when(userType){
+                    "1" ->{
+                        btnAccept.isVisible = true
+                        btnReject.isVisible = true
+                        clEarning.isVisible = false
+                        clRejected.isVisible = false
+                    }
+                    "2" ->{
+                        btnAccept.isVisible = false
+                        btnReject.isVisible = false
+                        clEarning.isVisible = true
+                        clRejected.isVisible = false
+                        tvTotalEarningsValue.text = ""
+                        tvTotalOrdersValue.text = ""
+                    }
+                    "3" ->{
+                        btnAccept.isVisible = false
+                        btnReject.isVisible = false
+                        clEarning.isVisible = false
+                        clRejected.isVisible = true
+                        tvRejectionDescription.text = ""
+                    }
+                }
+
+
+                tvName.text = userData.fullName
+                tvLocation.text = userData.countryInfo.name
+                tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
+                tvEmail.text = userData.email
+                tvCall.text = userData.countryCode+"-"+userData.mobile
+                Glide.with(ivProfileImage).load(userData.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
+                if(userData.status=="1"){
+                    ivSwitch.setImageResource(R.drawable.switch_on)
+                }
+                else{
+                    ivSwitch.setImageResource(R.drawable.switch_off)
+                }
+                btnAccept.setOnClickListener {
+                    affiliateUserClickk.onAffiliateUserClick(position,1)
+                }
+                btnReject.setOnClickListener {
+                    affiliateUserClickk.onAffiliateUserClick(position,2)
+                }
+            }
+
+        }
 
     interface AffiliateUserClick{
         fun onAffiliateUserClick(position: Int,type:Int)
@@ -33,50 +82,7 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetUserR
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var userData = userList[position]
-
-        holder.binding.apply {
-            when(userType){
-                "1" ->{
-                    btnAccept.isVisible = true
-                    btnReject.isVisible = true
-                    clEarning.isVisible = false
-                    clRejected.isVisible = false
-                }
-                "2" ->{
-                    btnAccept.isVisible = false
-                    btnReject.isVisible = false
-                    clEarning.isVisible = true
-                    clRejected.isVisible = false
-                }
-                "3" ->{
-                    btnAccept.isVisible = false
-                    btnReject.isVisible = false
-                    clEarning.isVisible = false
-                    clRejected.isVisible = true
-                }
-            }
-
-
-            tvName.text = userData.fullName
-            tvLocation.text = userData.countryInfo.name
-            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
-            tvEmail.text = userData.email
-            tvCall.text = userData.countryCode+"-"+userData.mobile
-            Glide.with(ivProfileImage).load(userData.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
-            if(userData.status=="1"){
-                ivSwitch.setImageResource(R.drawable.switch_on)
-            }
-            else{
-                ivSwitch.setImageResource(R.drawable.switch_off)
-            }
-            btnAccept.setOnClickListener {
-                affiliateUserClickk.onAffiliateUserClick(position,1)
-            }
-            btnReject.setOnClickListener {
-                affiliateUserClickk.onAffiliateUserClick(position,2)
-            }
-        }
+       holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetUserResponse.Data.Data>) {

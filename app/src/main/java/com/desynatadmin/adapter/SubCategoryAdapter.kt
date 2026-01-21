@@ -10,7 +10,23 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCat
 
 class SubCategoryAdapter(var context:Context, private var subCategoryList: ArrayList<GetSubCategoryResponse.Data.Data>, var subCategoryClick:SubCategoryClick) : RecyclerView.Adapter<SubCategoryAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSubCategoryBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val subCategoryData = subCategoryList[position]
+
+                tvBrandName.text = subCategoryData.nameEnglish
+                ivSubCategory.load(subCategoryData.image) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
+
+            root.setOnClickListener {
+                subCategoryClick.onSubCategoryClick(position)
+
+            }
+        }
+        }
 
     interface SubCategoryClick{
         fun onSubCategoryClick(position: Int)
@@ -28,21 +44,7 @@ class SubCategoryAdapter(var context:Context, private var subCategoryList: Array
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var subCategoryData = subCategoryList[position]
-
-        holder.binding.apply {
-            tvBrandName.text = subCategoryData.nameEnglish
-            ivSubCategory.load(subCategoryData.image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-        }
-
-        holder.itemView.setOnClickListener {
-            subCategoryClick.onSubCategoryClick(position)
-
-        }
+      holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetSubCategoryResponse.Data.Data>) {

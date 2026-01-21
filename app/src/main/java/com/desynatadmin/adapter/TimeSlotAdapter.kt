@@ -1,7 +1,6 @@
 package com.desynatadmin.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,26 +10,9 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTim
 
 class TimeSlotAdapter(var context:Context, var timeSLotList: ArrayList<GetTimeSlotResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<TimeSlotAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemTimeSlotBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    interface OnClick{
-        fun click(position: Int,type:Int)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemTimeSlotBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
-    }
-
-    override fun getItemCount(): Int {
-        return timeSLotList.size
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var timeSLotData = timeSLotList[position]
-
-        holder.binding.apply {
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val timeSLotData = timeSLotList[position]
 
             tvTime.text = "${timeSLotData?.from} TO ${timeSLotData?.to}"
 
@@ -52,9 +34,25 @@ class TimeSlotAdapter(var context:Context, var timeSLotList: ArrayList<GetTimeSl
             ivSwitch.setOnClickListener {
                 onClick.click(position,3)
             }
-
+        }
         }
 
+    interface OnClick{
+        fun click(position: Int,type:Int)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            ItemTimeSlotBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+    }
+
+    override fun getItemCount(): Int {
+        return timeSLotList.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(position)
     }
 
 }

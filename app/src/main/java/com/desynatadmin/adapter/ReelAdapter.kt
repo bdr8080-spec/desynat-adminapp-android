@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ApprovedItemBinding
 import com.desynatadmin.databinding.ReelItemBinding
 
-
 class ReelAdapter() :
     RecyclerView.Adapter<ReelAdapter.ViewHolder>() {
-    class ViewHolder(val binding: ReelItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ReelItemBinding) :
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            root.setOnClickListener {
+            }
+        }
+        }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,10 +28,7 @@ class ReelAdapter() :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.apply {
-            root.setOnClickListener {
-            }
-        }
+        holder.bind(position)
     }
 
     override fun getItemCount(): Int {

@@ -24,6 +24,13 @@ class StoryMediaPicker(
 ) {
 
     private var cameraUri: Uri? = null
+    private enum class PendingAction {
+        IMAGE_CAMERA,
+        VIDEO_CAMERA,
+        NONE
+    }
+
+    private var pendingAction = PendingAction.NONE
 
     fun showCameraStoryPicker() {
         val options = arrayOf("Camera Photo", "Record Video")
@@ -53,7 +60,7 @@ class StoryMediaPicker(
 
 
     private fun openCameraImage() {
-        if (!checkCameraPermission()) return
+        if (!checkCameraPermission(PendingAction.IMAGE_CAMERA)) return
 
         cameraUri = createUri("IMG", "jpg")
 
@@ -72,7 +79,7 @@ class StoryMediaPicker(
     */
 
     private fun openCameraVideo() {
-        if (!checkCameraPermission()) return
+        if (!checkCameraPermission(PendingAction.VIDEO_CAMERA)) return
 
         cameraUri = createUri("VID", "mp4")
 
@@ -132,16 +139,31 @@ class StoryMediaPicker(
     }
 
     fun onPermissionResult(granted: Boolean) {
-        if (!granted) callback(null, "")
+        if (!granted) {
+            callback(null, "")
+            pendingAction = PendingAction.NONE
+            return
+        }
+
+        when (pendingAction) {
+            PendingAction.IMAGE_CAMERA -> openCameraImage()
+            PendingAction.VIDEO_CAMERA -> openCameraVideo()
+            else -> Unit
+        }
+
+        pendingAction = PendingAction.NONE
     }
 
-    private fun checkCameraPermission(): Boolean {
-        return if (ContextCompat.checkSelfPermission(
+    private fun checkCameraPermission(action: PendingAction): Boolean {
+        return if (
+            ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
-        ) true
-        else {
+        ) {
+            true
+        } else {
+            pendingAction = action
             permissionLauncher.launch(Manifest.permission.CAMERA)
             false
         }

@@ -12,7 +12,26 @@ import com.desynatadmin.utils.CommonMethod
 
 class DealsAdapter(var context:Context, var dealsList: ArrayList<GetActiveDealResponse.Data.Data>, var dealsClick:DealsClick) : RecyclerView.Adapter<DealsAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemDealsBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val dealData = dealsList[position]
+
+                tvDealNameValue.text = dealData.nameEnglish
+                tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData.from, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData.to, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
+                // tvTotalEnrolled.text = "${dealData }Sellers"
+                tvDiscountValue.text = dealData.discount+"%"
+                ivDeal.load(dealData.image) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
+
+            root.setOnClickListener {
+                dealsClick.onDealsClick(position)
+
+            }
+        }
+        }
 
     interface DealsClick{
         fun onDealsClick(position: Int)
@@ -29,24 +48,7 @@ class DealsAdapter(var context:Context, var dealsList: ArrayList<GetActiveDealRe
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var dealData = dealsList[position]
-
-        holder.binding.apply {
-            tvDealNameValue.text = dealData.nameEnglish
-            tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData.from, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData.to, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
-           // tvTotalEnrolled.text = "${dealData }Sellers"
-            tvDiscountValue.text = dealData.discount+"%"
-            ivDeal.load(dealData.image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-        }
-
-        holder.itemView.setOnClickListener {
-            dealsClick.onDealsClick(position)
-
-        }
+       holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetActiveDealResponse.Data.Data>) {

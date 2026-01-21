@@ -20,6 +20,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.GalleryAdapter
 import com.desynatadmin.base.BaseFragment
@@ -259,7 +260,10 @@ class AddStoryFragment : BaseFragment() {
 
             if (mediaType == "image") {
                 ivImage.isVisible = true
-                ivImage.setImageURI(uri)
+                Glide.with(requireActivity())
+                    .load(uri)
+                    .placeholder(R.drawable.ic_placeholder)
+                    .into(ivImage)
             } else {
                 videoView.isVisible = true
                 videoView.setVideoURI(uri)
@@ -364,26 +368,55 @@ class AddStoryFragment : BaseFragment() {
 
     private fun checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            galleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+            galleryPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO
+                )
+            )
         } else {
-            galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            galleryPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            )
         }
     }
 
     private val galleryPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) {
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+
+            val imageGranted = permissions[Manifest.permission.READ_MEDIA_IMAGES] ?: false
+            val videoGranted = permissions[Manifest.permission.READ_MEDIA_VIDEO] ?: false
+            val storageGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+
+            if (imageGranted || videoGranted || storageGranted) {
                 loadGalleryMedia()
+            } else {
+                showToast("Permission required to access images and videos")
             }
         }
 
-    fun isVideoWithinLimit( uri: Uri, maxDurationSec: Int = 30): Boolean {
+    fun isVideoWithinLimit(uri: Uri, maxDurationSec: Int = 30): Boolean {
         val retriever = android.media.MediaMetadataRetriever()
-        retriever.setDataSource(requireActivity(), uri)
-        val durationMs = retriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLongOrNull()
-        retriever.release()
-        return durationMs != null && durationMs <= maxDurationSec * 1000
+        return try {
+            retriever.setDataSource(requireContext(), uri)
+
+            val durationMs = retriever.extractMetadata(
+                android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
+            )?.toLongOrNull()
+
+            durationMs != null && durationMs <= maxDurationSec * 1000
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false   // treat invalid video as not allowed
+        } finally {
+            try {
+                retriever.release()
+            } catch (e: Exception) { }
+        }
     }
+
 
     private fun compressAndUploadVideo(inputUri: Uri) {
         ProgressDialogUtils.getInstance().showProgress(requireActivity())

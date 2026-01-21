@@ -1,7 +1,5 @@
 package com.desynatadmin.adapter
 
-
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,21 +10,9 @@ import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class RejectedAdapter(var list : List<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
-    class ViewHolder(val binding: RejectedItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RejectedAdapter.ViewHolder {
-        val binding = RejectedItemBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.apply {
+    inner class ViewHolder(val binding: RejectedItemBinding) :
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
             root.setOnClickListener {
                 click.onClick(position)
             }
@@ -41,8 +27,21 @@ class RejectedAdapter(var list : List<RejectedListResponse.Data.Data>, val click
             RejectionDescription.text = item.reject_reason
             tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"
 
-
         }
+        }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RejectedAdapter.ViewHolder {
+        val binding = RejectedItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+           holder.bind(position)
     }
 
     override fun getItemCount(): Int {

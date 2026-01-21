@@ -10,7 +10,16 @@ import com.desynatadmin.utils.CommonMethod
 
 class AffiliateCommissionAdapter(var context:Context, var affiliateCommissionList: ArrayList<GetAffiliateCommissionResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<AffiliateCommissionAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemAffiliateCommissionBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val affiliateCommissionData = affiliateCommissionList[position]
+                tvCountry.text = "${affiliateCommissionData?.flag}  ${affiliateCommissionData.name}"
+                tvCommissionValue.text = "${CommonMethod.formatDoubleValue(affiliateCommissionData?.affiliateCommissionInfo?.commission?.toDouble())}%"
+                ivEdit.setOnClickListener {
+                    clickOnItem.onClickItem(position)
+                }
+        }
+        }
 
     interface ClickOnItem{
         fun onClickItem(position: Int)
@@ -27,19 +36,7 @@ class AffiliateCommissionAdapter(var context:Context, var affiliateCommissionLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var affiliateCommissionData = affiliateCommissionList[position]
-
-        holder.binding.apply {
-            tvCountry.text = "${affiliateCommissionData?.flag}  ${affiliateCommissionData.name}"
-            tvCommissionValue.text = "${CommonMethod.formatDoubleValue(affiliateCommissionData?.affiliateCommissionInfo?.commission?.toDouble())}%"
-            ivEdit.setOnClickListener {
-                clickOnItem.onClickItem(position)
-            }
-        }
-
-
-
-
+        holder.bind(position)
     }
 
 }

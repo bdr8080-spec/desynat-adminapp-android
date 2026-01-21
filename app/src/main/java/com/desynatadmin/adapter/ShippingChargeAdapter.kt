@@ -11,7 +11,36 @@ import com.desynatadmin.utils.CommonMethod
 
 class ShippingChargeAdapter(var context:Context, var shippingChargeList: ArrayList<GetShippingTaxResponse.Data.ShippingInfo>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<ShippingChargeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemShippingFeeBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val shippingChargeData = shippingChargeList[position]
+
+                tvDistance.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.rangeFrom?.toDouble())}km - ${CommonMethod.formatDoubleValue(shippingChargeData?.rangeTo?.toDouble())}km"
+
+
+                tvPrice.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.shippingFee?.toDouble())} KD"
+
+                if (shippingChargeData.status==1){
+                    ivSwitch.setImageResource(R.drawable.switch_on)
+                }
+                else{
+                    ivSwitch.setImageResource(R.drawable.switch_off)
+                }
+
+                ivDelete.setOnClickListener {
+                    clickOnItem.onClickItem(position,3)
+                }
+
+                ivEdit.setOnClickListener {
+                    clickOnItem.onClickItem(position,1)
+                }
+
+                ivSwitch.setOnClickListener {
+                    clickOnItem.onClickItem(position,2)
+                }
+            }
+
+        }
 
     interface ClickOnItem{
         fun onClickItem(position: Int,type:Int)
@@ -28,35 +57,7 @@ class ShippingChargeAdapter(var context:Context, var shippingChargeList: ArrayLi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var shippingChargeData = shippingChargeList[position]
-
-        holder.binding.apply {
-            tvDistance.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.rangeFrom?.toDouble())}km - ${CommonMethod.formatDoubleValue(shippingChargeData?.rangeTo?.toDouble())}km"
-
-
-            tvPrice.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.shippingFee?.toDouble())} KD"
-
-            if (shippingChargeData.status==1){
-                ivSwitch.setImageResource(R.drawable.switch_on)
-            }
-            else{
-                ivSwitch.setImageResource(R.drawable.switch_off)
-            }
-
-            ivDelete.setOnClickListener {
-                clickOnItem.onClickItem(position,3)
-            }
-
-            ivEdit.setOnClickListener {
-                clickOnItem.onClickItem(position,1)
-            }
-
-            ivSwitch.setOnClickListener {
-                clickOnItem.onClickItem(position,2)
-            }
-        }
-
-
+      holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetShippingTaxResponse.Data.ShippingInfo>) {

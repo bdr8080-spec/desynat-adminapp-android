@@ -15,7 +15,22 @@ class AllCountryPickerAdapter(var context:Context, var countryList: ArrayList<Ge
         fun onClickItem(position: Int)
     }
     inner class ViewHolder(val binding: ItemCountryBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+                if (isDialCode){
+                    tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name} (${countryList[position].dialCode})"
+                }
+                else{
+                    tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name}"
+                }
+                ivFlag.isVisible = false
+                // ivFlag.load(countryList[position].flag1)
+
+           root.setOnClickListener {
+                onClick.onClickItem(position)
+            }
+        }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -29,20 +44,7 @@ class AllCountryPickerAdapter(var context:Context, var countryList: ArrayList<Ge
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.apply {
-            if (isDialCode){
-                tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name} (${countryList[position].dialCode})"
-            }
-            else{
-                tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name}"
-            }
-            ivFlag.isVisible = false
-           // ivFlag.load(countryList[position].flag1)
-        }
-
-        holder.itemView.setOnClickListener {
-            onClick.onClickItem(position)
-        }
+       holder.bind(position)
 
     }
 

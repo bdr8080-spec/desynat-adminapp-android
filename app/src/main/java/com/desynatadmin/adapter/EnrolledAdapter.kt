@@ -8,7 +8,12 @@ import com.desynatadmin.databinding.ItemEnrolledSellerBinding
 
 class EnrolledAdapter(var context:Context, var enrolledList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<EnrolledAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemEnrolledSellerBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val enrolledData = enrolledList[position]
+
+        }
+        }
 
     interface ClickOnItem{
         fun onClickItem(position: Int)
@@ -25,15 +30,7 @@ class EnrolledAdapter(var context:Context, var enrolledList: ArrayList<String>, 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var enrolledData = enrolledList[position]
-
-        holder.binding.apply {
-
-        }
-
-
-
-
+        holder.bind(position)
     }
 
 }

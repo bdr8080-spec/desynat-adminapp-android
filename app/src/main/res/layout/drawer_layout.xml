@@ -582,6 +582,33 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rlAffiliateManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivAffiliate"
+                style="@style/drawer_image"
+                android:src="@drawable/ic_user_management" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAffiliate"
+                style="@style/drawer_text"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ivGoAffiliate"
+                android:layout_toEndOf="@id/ivAffiliate"
+                android:text="Affiliate User Management" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivGoAffiliate"
+                style="@style/drawer_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/relSubAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -604,33 +631,6 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGoSubAdmin"
-                style="@style/drawer_arrow" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlAffilateManagement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingVertical="@dimen/_6sdp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivAffilate"
-                style="@style/drawer_image"
-                android:src="@drawable/ic_user_management" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvAffilate"
-                style="@style/drawer_text"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ivGoAffilate"
-                android:layout_toEndOf="@id/ivAffilate"
-                android:text="Affiliate User Management" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivGoAffilate"
                 style="@style/drawer_arrow" />
 
         </RelativeLayout>

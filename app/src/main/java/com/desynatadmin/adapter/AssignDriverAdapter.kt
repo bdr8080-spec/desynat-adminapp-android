@@ -11,7 +11,33 @@ import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoy
 class AssignDriverAdapter(var context:Context, private var driverList: ArrayList<GetAvailableDeliveryBoyResponse.Data>, var driverClick:DriverClick) : RecyclerView.Adapter<AssignDriverAdapter.ViewHolder>() {
     var selected = -1
     inner class ViewHolder(val binding: ItemDriverBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val driverData = driverList[position]
+
+                tvDrive.text = driverData.fullNameEnglish
+
+                if (selected==position){
+                    ivRadio.setImageResource(R.drawable.ic_radio_selected)
+                }
+                else{
+                    ivRadio.setImageResource(R.drawable.ic_radio_unselected)
+                }
+
+            root.setOnClickListener {
+                val previousSelected = selected
+                selected = position
+
+                if (previousSelected != -1) {
+                    notifyItemChanged(previousSelected)
+                }
+                notifyItemChanged(selected)
+
+                driverClick.onDriverClick(position)
+
+            }
+        }
+        }
 
     interface DriverClick{
         fun onDriverClick(position: Int)
@@ -28,31 +54,7 @@ class AssignDriverAdapter(var context:Context, private var driverList: ArrayList
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var driverData = driverList[position]
-
-        holder.binding.apply {
-            tvDrive.text = driverData.fullNameEnglish
-
-            if (selected==position){
-                ivRadio.setImageResource(R.drawable.ic_radio_selected)
-            }
-            else{
-                ivRadio.setImageResource(R.drawable.ic_radio_unselected)
-            }
-        }
-
-        holder.itemView.setOnClickListener {
-            val previousSelected = selected
-            selected = position
-
-            if (previousSelected != -1) {
-                notifyItemChanged(previousSelected)
-            }
-            notifyItemChanged(selected)
-
-            driverClick.onDriverClick(position)
-
-        }
+       holder.bind(position)
     }
 
 }

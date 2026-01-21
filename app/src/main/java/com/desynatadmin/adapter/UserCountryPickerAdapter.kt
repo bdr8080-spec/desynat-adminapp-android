@@ -14,7 +14,17 @@ class UserCountryPickerAdapter(var context:Context, var countryList: ArrayList<G
         fun onClickItem(position: Int)
     }
     inner class ViewHolder(val binding: ItemCountryBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+                tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name}"
+                ivFlag.isVisible = false
+                //  ivFlag.load(countryList[position].flag)
+
+            root.setOnClickListener {
+                onClick.onClickItem(position)
+            }
+        }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -28,16 +38,7 @@ class UserCountryPickerAdapter(var context:Context, var countryList: ArrayList<G
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.apply {
-            tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name}"
-            ivFlag.isVisible = false
-          //  ivFlag.load(countryList[position].flag)
-        }
-
-        holder.itemView.setOnClickListener {
-            onClick.onClickItem(position)
-        }
-
+       holder.bind(position)
     }
 
 

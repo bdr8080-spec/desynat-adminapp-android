@@ -418,4 +418,22 @@
         tools:layout="@layout/fragment_live_request_and_timeslot_management"/>
 
 
+    <fragment
+        android:id="@+id/affiliateUserManagement"
+        android:name="com.desynatadmin.ui.home.affiliateUserManagement.AffiliateUserManagementFragment"
+        android:label="Affiliate User Management Fragment"
+        tools:layout="@layout/fragment_affiliate_user_management">
+
+    <action
+        android:id="@+id/action_affiliateUserManagement_to_affiliateUserDetailFragment"
+        app:destination="@id/affiliateUserDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/affiliateUserDetail"
+        android:name="com.desynatadmin.ui.home.affiliateUserManagement.AffiliateUserDetailFragment"
+        android:label="Affiliate User Detail Fragment"
+        tools:layout="@layout/fragment_affiliate_user_detail"/>
+
 </navigation>

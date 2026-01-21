@@ -11,7 +11,23 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCat
 
 class BrandAdapter(var context:Context, var brandList: ArrayList<GetBrandResponse.Data.Data>, var brandClick:BrandClick) : RecyclerView.Adapter<BrandAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBrandBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val brandData = brandList[position]
+
+                tvBrandName.text = brandData.nameEnglish
+                ivBrand.load(brandData.image) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
+
+            root.setOnClickListener {
+                brandClick.onBrandClick(position)
+
+            }
+        }
+        }
 
     interface BrandClick{
         fun onBrandClick(position: Int)
@@ -29,21 +45,7 @@ class BrandAdapter(var context:Context, var brandList: ArrayList<GetBrandRespons
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var brandData = brandList[position]
-
-        holder.binding.apply {
-            tvBrandName.text = brandData.nameEnglish
-            ivBrand.load(brandData.image) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
-        }
-
-        holder.itemView.setOnClickListener {
-            brandClick.onBrandClick(position)
-
-        }
+       holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetBrandResponse.Data.Data>) {

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemFullScreenBannerBinding
@@ -18,7 +17,35 @@ import java.time.format.DateTimeFormatter
 
 class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<GetFullScreenBannerResponse.Data.Data>, var bannerClick:BannerClick) : RecyclerView.Adapter<FullScreenBannerAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemFullScreenBannerBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+            val bannerData = bannerList[position]
+
+                tvTitleName.text = bannerData?.title
+                tvCountryName.text = bannerData?.countryInfo?.name
+                tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+                tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+                Glide.with(context).load(bannerData?.image).placeholder(R.drawable.ic_placeholder).into(ivBanner)
+                when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
+                    "Upcoming"->{
+                        tvStatusValue.text = "Upcoming"
+                        tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
+                    }
+                    "Active" ->{
+                        tvStatusValue.text = "Active"
+                        tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
+                    }
+                    "Expired"->{
+                        tvStatusValue.text = "Expired"
+                        tvStatusValue.setTextColor(Color.parseColor("#D53B36"))
+                    }
+                }
+
+            root.setOnClickListener {
+                bannerClick.onBannerClick(position)
+            }
+        }
+        }
 
     interface BannerClick{
         fun onBannerClick(position: Int)
@@ -36,39 +63,7 @@ class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<Get
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var bannerData = bannerList[position]
-
-        holder.binding.apply {
-            tvTitleName.text = bannerData?.title
-            tvCountryName.text = bannerData?.countryInfo?.name
-            tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-            tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-//            ivBanner.load(bannerData?.image) {
-//                crossfade(true)
-//                placeholder(R.drawable.ic_placeholder)
-//                error(R.drawable.ic_placeholder)
-//            }
-            Glide.with(context).load(bannerData?.image).placeholder(R.drawable.ic_placeholder).into(ivBanner)
-            when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
-                "Upcoming"->{
-                    tvStatusValue.text = "Upcoming"
-                    tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
-                }
-                "Active" ->{
-                    tvStatusValue.text = "Active"
-                    tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
-                }
-                "Expired"->{
-                    tvStatusValue.text = "Expired"
-                    tvStatusValue.setTextColor(Color.parseColor("#D53B36"))
-                }
-            }
-        }
-
-        holder.itemView.setOnClickListener {
-            bannerClick.onBannerClick(position)
-
-        }
+      holder.bind(position)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

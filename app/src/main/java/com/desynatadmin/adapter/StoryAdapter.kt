@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemStoryBinding
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
-import com.desynatadmin.utils.CommonMethod.getVideoThumbnail
 
 class StoryAdapter(
     val context: Context,
@@ -24,18 +22,10 @@ class StoryAdapter(
         fun onClick(position: Int, type: Int)
     }
 
-    class ViewHolder(val binding: ItemStoryBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(private val binding: ItemStoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        holder.binding.apply {
+        fun bind(position: Int) = with(binding) {
 
             ivStory.setImageDrawable(null)
             ivStory.setImageResource(R.drawable.ic_placeholder)
@@ -65,27 +55,17 @@ class StoryAdapter(
                 click.onClick(storyIndex, 3)
             }
 
+            Glide.with(context)
+                .load(story.file)
+                .placeholder(R.drawable.ic_placeholder)
+                .into(ivStory)
 
-            if (isVideo(story.file)) {
-                ivPlay.isVisible = true
-                ivStory.setImageResource(R.drawable.ic_placeholder)
-                Glide.with(context).load(story.file).placeholder(R.drawable.ic_placeholder).into(ivStory)
-                Thread {
-                    val bitmap = getVideoThumbnail(story.file)
-                    bitmap?.let {
-                        ivStory.post {
-                            ivStory.setImageBitmap(it)
-                        }
-                    }?: ivStory.setImageResource(R.color.black)
-                }.start()
+            ivPlay.isVisible = isVideo(story.file)
 
-            } else {
-                ivPlay.isVisible = false
-                ivStory.setImageResource(R.drawable.ic_placeholder)
-                Glide.with(context).load(story.file).placeholder(R.drawable.ic_placeholder).into(ivStory)
-            }
-
-            tvPostedOn.text = CommonMethod.customizeChangeDateFormat(story.createdAt, outputFormat = "dd/MM/yyyy, hh:mma")
+            tvPostedOn.text = CommonMethod.customizeChangeDateFormat(
+                story.createdAt,
+                outputFormat = "dd/MM/yyyy, hh:mma"
+            )
 
             when (story.status) {
                 1 -> {
@@ -98,20 +78,25 @@ class StoryAdapter(
                 }
             }
 
-        }
-        holder.itemView.setOnClickListener {
-
-            if (position == 0) return@setOnClickListener
-
-            val storyIndex = position - 1
-            val story = storyList[storyIndex]
-
-            if (isVideo(story.file)) {
-                click.onClick(storyIndex, 2)
-            } else {
-                click.onClick(storyIndex, 4)
+            root.setOnClickListener {
+                if (position == 0) return@setOnClickListener
+                if (isVideo(story.file)) {
+                    click.onClick(storyIndex, 2)
+                } else {
+                    click.onClick(storyIndex, 4)
+                }
             }
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding =
+            ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(position)
     }
 
     override fun getItemCount(): Int {

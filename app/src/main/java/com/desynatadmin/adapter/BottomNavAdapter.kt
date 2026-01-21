@@ -18,7 +18,48 @@ class BottomNavAdapter(var context:Context, var list: ArrayList<BottomNavItem>, 
 
     var selected = 0
     inner class ViewHolder(val binding: ItemBottomNavBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(position: Int) = with(binding){
+
+            tvName.text = list[position].name
+            ivImage.setImageResource(list[position].image)
+
+            if (selected==position&&selected!=2){
+                ivImage.setImageResource(list[position].selectedImage)
+                // tvName.setTextColor(context.getColor(R.color.brown))
+                applyGradientText(tvName)
+                tvName.typeface = ResourcesCompat.getFont(context, R.font.poppins_medium)
+                ivImage.isVisible = true
+                tvName.isVisible = true
+                ivScanner.isVisible = false
+            }
+            else if (position==2){
+                ivScanner.setImageResource(list[position].image)
+                ivImage.isVisible = false
+                tvName.isVisible = false
+                ivScanner.isVisible = true
+            }
+            else{
+                ivImage.setImageResource(list[position].image)
+                tvName.paint.shader = null
+                tvName.setTextColor(context.getColor(R.color.black))
+                tvName.typeface = ResourcesCompat.getFont(context, R.font.poppins_regular)
+                ivImage.isVisible = true
+                tvName.isVisible = true
+                ivScanner.isVisible = false
+            }
+
+            root.setOnClickListener {
+                if (selected!=position) {
+                    bottomNavItemClick.onBottomNavItemClick(position)
+                    val previousSelected = selected
+                    selected = position
+                    notifyItemChanged(previousSelected)
+                    notifyItemChanged(selected)
+                }
+            }
+        }
+        }
 
     interface BottomNavItemClick{
         fun onBottomNavItemClick(position: Int)
@@ -36,45 +77,7 @@ class BottomNavAdapter(var context:Context, var list: ArrayList<BottomNavItem>, 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        holder.binding.tvName.text = list[position].name
-        holder.binding.ivImage.setImageResource(list[position].image)
-
-        if (selected==position&&selected!=2){
-            holder.binding.ivImage.setImageResource(list[position].selectedImage)
-          //  holder.binding.tvName.setTextColor(context.getColor(R.color.brown))
-            applyGradientText(holder.binding.tvName)
-            holder.binding.tvName.typeface = ResourcesCompat.getFont(context, R.font.poppins_medium)
-            holder.binding.ivImage.isVisible = true
-            holder.binding.tvName.isVisible = true
-            holder.binding.ivScanner.isVisible = false
-        }
-        else if (position==2){
-            holder.binding.ivScanner.setImageResource(list[position].image)
-            holder.binding.ivImage.isVisible = false
-            holder.binding.tvName.isVisible = false
-            holder.binding.ivScanner.isVisible = true
-        }
-        else{
-            holder.binding.ivImage.setImageResource(list[position].image)
-            holder.binding.tvName.paint.shader = null
-            holder.binding.tvName.setTextColor(context.getColor(R.color.black))
-            holder.binding.tvName.typeface = ResourcesCompat.getFont(context, R.font.poppins_regular)
-            holder.binding.ivImage.isVisible = true
-            holder.binding.tvName.isVisible = true
-            holder.binding.ivScanner.isVisible = false
-        }
-
-        holder.itemView.setOnClickListener {
-            if (selected!=position) {
-                bottomNavItemClick.onBottomNavItemClick(position)
-                val previousSelected = selected
-                selected = position
-                notifyItemChanged(previousSelected)
-                notifyItemChanged(selected)
-            }
-        }
-
+        holder.bind(position)
     }
 
     fun setSelectedItem(position: Int) {

@@ -42,7 +42,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AffiliateUserManagementFragment :  BaseFragment() {
+class AffiliateUserManagementFragment : BaseFragment() {
     private var binding: FragmentAffiliateUserManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
@@ -94,10 +94,8 @@ class AffiliateUserManagementFragment :  BaseFragment() {
                     when(type){
                         1->{
                             selectedPos = position
-                        // acceptAffiliateUser()
-                            CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer approved successfully!"){
+                         acceptAffiliateUser()
 
-                            }
                         }
                         2->{
                             selectedPos = position
@@ -107,8 +105,9 @@ class AffiliateUserManagementFragment :  BaseFragment() {
                         3->{
                             val bundle = Bundle().apply {
                                 putString("userData", Gson().toJson(userList[position]))
+                                putString("userType", userType)
                             }
-                            findNavController().navigate(R.id.action_userFragment_to_userDetailFragment,bundle)
+                            findNavController().navigate(R.id.action_affiliateUserManagement_to_affiliateUserDetailFragment,bundle)
                         }
                     }
 
@@ -285,18 +284,37 @@ class AffiliateUserManagementFragment :  BaseFragment() {
             }
         }
 
-        viewModel.updateUserStatusResult.observe(viewLifecycleOwner) { response ->
+        viewModel.acceptAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
-                userList[selectedPos].status = response.data.status
-                affiliateUserAdapter?.notifyItemChanged(selectedPos)
+                userList.removeAt(selectedPos)
+                affiliateUserAdapter?.notifyItemRemoved(selectedPos)
+                affiliateUserAdapter?.notifyItemRangeChanged(selectedPos, userList.size)
+                checkData()
+                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer approved successfully!"){
+
+                }
                 selectedPos = -1
                 isObserver = false
             }
         }
 
-        viewModel.getAllUserResult.observe(viewLifecycleOwner) { response ->
+        viewModel.rejectAffiliateUserResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                userList.removeAt(selectedPos)
+                affiliateUserAdapter?.notifyItemRemoved(selectedPos)
+                affiliateUserAdapter?.notifyItemRangeChanged(selectedPos, userList.size)
+                checkData()
+                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer rejected successfully!"){
+
+                }
+                selectedPos = -1
+                isObserver = false
+            }
+        }
+
+        viewModel.getAllAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
@@ -360,7 +378,25 @@ class AffiliateUserManagementFragment :  BaseFragment() {
     }
 
     private fun getAllUser(loading:Boolean=true,search:String?=null){
-        viewModel.getAllUser(search = search, page = currentPage,fromDate=startDate, toDate = endDate, countryId = countryId)
+        val map = HashMap<String,Any>()
+        map["page"] = currentPage
+        map["limit"] = 10
+        if (search!=null&&search!="") {
+            map["search"] = search
+        }
+        if (startDate!=null) {
+            map["from_date"] = startDate.toString()
+        }
+        if (endDate!=null) {
+            map["to_date"] = endDate.toString()
+        }
+        if (countryId!=null) {
+            map["country_id"] = countryId.toString()
+        }
+//        if (countryId!=null) {
+//            map["country"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
+//        }
+        viewModel.getAllAffiliateUser(map)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -375,7 +411,7 @@ class AffiliateUserManagementFragment :  BaseFragment() {
     private fun acceptAffiliateUser(){
         val map = HashMap<String,Any>()
         map["user_id"] = userList[selectedPos].id
-        viewModel.blockUnblockUser(map)
+        viewModel.acceptAffiliateUser(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -385,7 +421,7 @@ class AffiliateUserManagementFragment :  BaseFragment() {
         map["user_id"] = userList[selectedPos].id
         map["reject_type"] = type
         map["reject_reason"] = reason
-        viewModel.blockUnblockUser(map)
+        viewModel.rejectAffiliateUser(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -531,7 +567,7 @@ class AffiliateUserManagementFragment :  BaseFragment() {
     }
 
     private fun rejectReasonDialog() {
-        var type = ""
+        var rejectionType = ""
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = RejectReasonLayoutBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -556,26 +592,26 @@ class AffiliateUserManagementFragment :  BaseFragment() {
             }
 
             rbComplete.setOnClickListener {
-                type = "complete"
+                rejectionType = "complete"
                 rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
                 rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
             }
 
             rbReject.setOnClickListener {
-                type = "document"
+                rejectionType = "document"
                 rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
                 rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
             }
 
             btnAccept.setOnClickListener {
-                if(type=="") {
+                if(rejectionType=="") {
                     showToast("Please select reason type")
                 }
                 else if(etReason.text?.trim().toString().isEmpty()) {
                     showToast("Please enter reason")
                 }
                 else{
-                    rejectAffiliateUser(etReason.text?.trim().toString(),type)
+                    rejectAffiliateUser(etReason.text?.trim().toString(),rejectionType)
                     dialog.dismiss()
                 }
             }
