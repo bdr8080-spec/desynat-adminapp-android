@@ -8,13 +8,14 @@
         android:id="@+id/ivName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semi_bold"
+        android:fontFamily="@font/poppins_medium"
         android:text="Name"
         android:gravity="start"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="12dp"
-        android:textSize="14sp" />
+        android:paddingVertical="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:textSize="@dimen/_12sdp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

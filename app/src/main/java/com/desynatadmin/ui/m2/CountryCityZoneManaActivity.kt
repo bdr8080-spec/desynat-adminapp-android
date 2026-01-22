@@ -12,6 +12,7 @@ import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.databinding.ActivityCountryCityZoneManaBinding
 import com.desynatadmin.databinding.ActivityHomeBinding
 import com.desynatadmin.databinding.AddCityBottomsheetBinding
+import com.desynatadmin.utils.CommonMethod
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,9 @@ class CountryCityZoneManaActivity : BaseActivity() {
     }
 
     override fun initView() {
+
+        CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         controller = navHostFragment.navController
         val navGraph = controller.navInflater.inflate(R.navigation.country_city_navigation_graph)
