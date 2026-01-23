@@ -6,6 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.desynatadmin.data.repo.MainRepository
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.AcceptAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -1217,17 +1221,35 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     }
 
 
-    val getAllAffiliateUserResult: LiveData<GetUserResponse>
-        get() = repository.affiliateUserLiveData
+    val getNewAffiliateUserResult: LiveData<GetNewAffiliateUserResponse>
+        get() = repository.newAffiliateUserLiveData
 
-    fun getAllAffiliateUser(map: HashMap<String, Any>) {
+    fun getNewAffiliateUser(map: HashMap<String, Any>) {
         viewModelScope.launch {
-            repository.getAllAffiliateUser(map)
+            repository.getNewAffiliateUser(map)
         }
     }
 
-    val getAffiliateUserDetailResult: LiveData<GetUserDetailResponse>
-        get() = repository.userAllAffiliateDetailLiveData
+    val getApprovedAffiliateUserResult: LiveData<GetNewAffiliateUserResponse>
+        get() = repository.approvedAffiliateUserLiveData
+
+    fun getApprovedAffiliateUser(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getApprovedAffiliateUser(map)
+        }
+    }
+
+    val getRejectedAffiliateUserResult: LiveData<GetNewAffiliateUserResponse>
+        get() = repository.rejectedAffiliateUserLiveData
+
+    fun getRejectedAffiliateUser(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getRejectedAffiliateUser(map)
+        }
+    }
+
+    val getAffiliateUserDetailResult: LiveData<GetAffiliateUserDetailResponse>
+        get() = repository.userAffiliateDetailLiveData
 
     fun getAffiliateUserDetail(userId:String) {
         viewModelScope.launch {
@@ -1235,7 +1257,7 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
-    val updateAffiliateUserStatusResult: LiveData<BlockUnblockUserResponse>
+    val updateAffiliateUserStatusResult: LiveData<BlockUnblockAffiliateUserResponse>
         get() = repository.updateAffiliateUserStatusLiveData
 
     fun blockUnblockAffiliateUser(map:HashMap<String,Any>) {
@@ -1244,7 +1266,7 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
-    val acceptAffiliateUserResult: LiveData<CommonResponse>
+    val acceptAffiliateUserResult: LiveData<AcceptAffiliateUserResponse>
         get() = repository.acceptAffiliateUserLiveData
 
     fun acceptAffiliateUser(map: HashMap<String, Any>) {
@@ -1253,7 +1275,7 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
-    val rejectAffiliateUserResult: LiveData<CommonResponse>
+    val rejectAffiliateUserResult: LiveData<AcceptAffiliateUserResponse>
         get() = repository.rejectAffiliateUserLiveData
 
     fun rejectAffiliateUser(map: HashMap<String, Any>) {

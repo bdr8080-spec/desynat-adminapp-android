@@ -1,46 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:background="@color/white"
 tools:context=".ui.m2.ApprovedDetailsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_15sdp"
+            android:src="@drawable/back_ic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_15sdp"
+            android:src="@drawable/toggle_ic"
+            app:layout_constraintBottom_toBottomOf="@id/ivBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/clToolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_marginTop="10dp"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="35dp"
-        android:padding="5dp"
-        android:src="@drawable/back_ic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/ivToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:src="@drawable/toggle_ic"
-        app:layout_constraintBottom_toBottomOf="@id/ivBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ivBack" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toggleContainer"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="25dp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/toggle_background"
         android:padding="1dp"
-        app:layout_constraintTop_toBottomOf="@id/ivBack"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -166,7 +180,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:fontFamily="@font/poppins_regular"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="10sp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt" />
 
@@ -178,7 +192,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:fontFamily="@font/poppins_regular"
                 android:text=""
                 android:textColor="#000000"
-                android:textSize="10sp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvLocation" />
 
@@ -190,7 +204,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:fontFamily="@font/poppins_regular"
                 android:text=""
                 android:textColor="#000000"
-                android:textSize="10sp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCall" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -459,6 +473,12 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             app:spanCount="2"
             tools:itemCount="10"
             tools:listitem="@layout/reel_item" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            app:layout_constraintTop_toBottomOf="@+id/reelRecyclerView"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -857,7 +877,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Pro Plan"
-                android:textSize="10sp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toStartOf="@id/tvProPlan"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/purchasePlanLayout" />
@@ -872,6 +892,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:gravity="end"
                 android:text="Monthly"
                 android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@id/tvProPlanLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvProPlanLabel"
@@ -894,7 +915,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Status"
-                android:textSize="10sp"
+                android:textSize="@dimen/_10sdp"
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toStartOf="@id/tvStatus"
                 app:layout_constraintStart_toStartOf="parent"
@@ -911,6 +932,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:gravity="end"
                 android:text="Active"
                 android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@id/tvStatusLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvStatusLabel"
@@ -922,7 +944,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Purchased On"
-                android:textSize="10sp"
+                android:textSize="@dimen/_10sdp"
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toStartOf="@id/tvPurchasedOn"
                 app:layout_constraintStart_toStartOf="parent"
@@ -939,6 +961,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:gravity="end"
                 android:text="21/08/2024 at 07:30 PM"
                 android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@id/tvPurchasedOnLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvPurchasedOnLabel"
@@ -950,7 +973,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Total Amount"
-                android:textSize="10sp"
+                android:textSize="@dimen/_10sdp"
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toStartOf="@id/tvTotalAmount"
                 app:layout_constraintStart_toStartOf="parent"
@@ -967,13 +990,23 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:gravity="end"
                 android:text="KD 299"
                 android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@id/tvTotalAmountLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvTotalAmountLabel"
                 app:layout_constraintTop_toTopOf="@id/tvTotalAmountLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/purchasePlanLayout"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

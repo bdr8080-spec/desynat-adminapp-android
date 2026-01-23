@@ -126,7 +126,7 @@ class UserManagementFragment : BaseFragment() {
                         pagination = false
                         isFromSwipe = false
                         if (!isObserver)
-                            getAllUser(search =  query.ifEmpty { null })
+                            getAllUser(search =  query.ifEmpty { null }, loading = false)
                     }
 
                 }

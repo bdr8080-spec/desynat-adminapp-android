@@ -3,6 +3,10 @@ package com.desynatadmin.network
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.AcceptAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -770,28 +774,36 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<UpdateTimeSlotResponse>
 
-    @GET(Constants.GET_AFFILIATE_USER)
-    suspend fun getAllAffiliateUser(
-        @QueryMap map: HashMap<String,Any>): Response<GetUserResponse>
+    @GET(Constants.GET_NEW_AFFILIATE_USER)
+    suspend fun getNewAffiliateUser(
+        @QueryMap map: HashMap<String,Any>): Response<GetNewAffiliateUserResponse>
+
+    @GET(Constants.GET_APPROVED_AFFILIATE_USER)
+    suspend fun getApprovedAffiliateUser(
+        @QueryMap map: HashMap<String,Any>): Response<GetNewAffiliateUserResponse>
+
+    @GET(Constants.GET_REJECTED_AFFILIATE_USER)
+    suspend fun getRejectedAffiliateUser(
+        @QueryMap map: HashMap<String,Any>): Response<GetNewAffiliateUserResponse>
 
     @GET(Constants.GET_AFFILIATE_USER_DETAIL)
     suspend fun getAffiliateUserDetail(
         @Query("user_id") userId : String,
-    ): Response<GetUserDetailResponse>
+    ): Response<GetAffiliateUserDetailResponse>
 
     @POST(Constants.BLOCK_UNBLOCK_AFFILIATE_USER)
     suspend fun blockUnblockAffiliateUser(
         @Body body: HashMap<String, Any>
-    ): Response<BlockUnblockUserResponse>
+    ): Response<BlockUnblockAffiliateUserResponse>
 
     @POST(Constants.ACCEPT_AFFILIATE_USER)
     suspend fun acceptAffiliateUser(
         @Body body: HashMap<String, Any>
-    ): Response<CommonResponse>
+    ): Response<AcceptAffiliateUserResponse>
 
     @POST(Constants.REJECT_AFFILIATE_USER)
     suspend fun rejectAffiliateUser(
         @Body body: HashMap<String, Any>
-    ): Response<CommonResponse>
+    ): Response<AcceptAffiliateUserResponse>
 
 }

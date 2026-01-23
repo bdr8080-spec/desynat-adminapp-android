@@ -9,10 +9,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAffiliateUserBinding
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.Data.Data>, var affiliateUserClickk:AffiliateUserClick) : RecyclerView.Adapter<AffiliateUserAdapter.ViewHolder>() {
+class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAffiliateUserResponse.Data.Data>, var affiliateUserClickk:AffiliateUserClick) : RecyclerView.Adapter<AffiliateUserAdapter.ViewHolder>() {
 
    var userType = "1"
     inner class ViewHolder(val binding: ItemAffiliateUserBinding) :
@@ -32,21 +33,21 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetUserR
                         btnReject.isVisible = false
                         clEarning.isVisible = true
                         clRejected.isVisible = false
-                        tvTotalEarningsValue.text = ""
-                        tvTotalOrdersValue.text = ""
+                        tvTotalEarningsValue.text = "0 KD"
+                        tvTotalOrdersValue.text = "0"
                     }
                     "3" ->{
                         btnAccept.isVisible = false
                         btnReject.isVisible = false
                         clEarning.isVisible = false
                         clRejected.isVisible = true
-                        tvRejectionDescription.text = ""
+                        tvRejectionDescription.text = userData?.rejectReason
                     }
                 }
 
 
                 tvName.text = userData.fullName
-                tvLocation.text = userData.countryInfo.name
+                tvLocation.text = userData.countryDetails?.name
                 tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
                 tvEmail.text = userData.email
                 tvCall.text = userData.countryCode+"-"+userData.mobile
@@ -63,6 +64,10 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetUserR
                 btnReject.setOnClickListener {
                     affiliateUserClickk.onAffiliateUserClick(position,2)
                 }
+
+            root.setOnClickListener {
+                affiliateUserClickk.onAffiliateUserClick(position,3)
+            }
             }
 
         }
@@ -85,7 +90,7 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetUserR
        holder.bind(position)
     }
 
-    fun setData(newList: ArrayList<GetUserResponse.Data.Data>) {
+    fun setData(newList: ArrayList<GetNewAffiliateUserResponse.Data.Data>) {
         userList = newList
         notifyDataSetChanged()
     }

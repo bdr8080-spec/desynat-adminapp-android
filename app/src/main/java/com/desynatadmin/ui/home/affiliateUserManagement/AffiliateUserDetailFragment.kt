@@ -19,6 +19,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAffiliateUserDetailBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -33,7 +34,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var userType = "1"
-    private var userData :GetUserResponse.Data.Data?=null
+    private var userData :GetNewAffiliateUserResponse.Data.Data?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,8 +55,9 @@ class AffiliateUserDetailFragment : BaseFragment() {
         val itemJson = arguments?.getString("userData")
         userType = arguments?.getString("userType").toString()
         if (!itemJson.isNullOrEmpty()) {
-            userData = Gson().fromJson(itemJson, GetUserResponse.Data.Data::class.java)
+            userData = Gson().fromJson(itemJson, GetNewAffiliateUserResponse.Data.Data::class.java)
             setData()
+            updateStatus()
             setStatusData()
         }
         binding?.apply {
@@ -82,11 +84,11 @@ class AffiliateUserDetailFragment : BaseFragment() {
             }
 
             doc1.setOnClickListener {
-               // CommonMethod.imagePreviewDialog(userData?.owner_document?.get(0)?.document_path?:"")
+                CommonMethod.imagePreviewDialog(requireActivity(),userData?.document1?:"")
             }
 
             doc2.setOnClickListener {
-               // CommonMethod.imagePreviewDialog(userData?.owner_document?.get(1)?.document_path?:"")
+                CommonMethod.imagePreviewDialog(requireActivity(),userData?.document2?:"")
             }
         }
     }
@@ -111,6 +113,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 showToast(response.message)
                userData?.status = response.data.status
+                updateStatus()
                 isObserver = false
             }
         }
@@ -131,6 +134,8 @@ class AffiliateUserDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer rejected successfully!"){
                     userType = "3"
+                    userData?.rejectReason = response.data.rejectReason
+                    userData?.rejectType = response.data.rejectType
                     setStatusData()
                 }
                 isObserver = false
@@ -159,8 +164,8 @@ class AffiliateUserDetailFragment : BaseFragment() {
                     relStatus.isVisible = true
                     clEarning.isVisible = true
                     clRejected.isVisible = false
-                    tvTotalEarningsValue.text = ""
-                    tvTotalOrdersValue.text = ""
+                    tvTotalEarningsValue.text = "0 KD"
+                    tvTotalOrdersValue.text = "0"
                 }
                 "3"->{
                     btnAccept.isVisible = false
@@ -170,24 +175,15 @@ class AffiliateUserDetailFragment : BaseFragment() {
                     relStatus.isVisible = false
                     clEarning.isVisible = false
                     clRejected.isVisible = true
-
-                    tvRejectionReason.text = ""
-                    tvRejectionDescription.text = ""
+                    tvRejectionReason.text = if (userData?.rejectType=="complete") "Complete" else "Document Reject"
+                    tvRejectionDescription.text = userData?.rejectReason
                 }
             }
         }
     }
 
-    private fun setData(){
+    private fun updateStatus(){
         binding?.apply {
-            tvName.text = userData?.fullName
-            tvLocation.text = userData?.countryInfo?.name
-            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData?.createdAt.toString())}"
-            tvEmail.text = userData?.email
-            tvCall.text = userData?.countryCode+"-"+userData?.mobile
-            Glide.with(ivProfileImage).load(userData?.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(
-                CircleCrop()
-            ).into(ivProfileImage)
             if(userData?.status=="1"){
                 ivSwitch.setImageResource(R.drawable.switch_on)
                 tvSwitch.text = "Active"
@@ -199,15 +195,41 @@ class AffiliateUserDetailFragment : BaseFragment() {
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
             }
 
-           tvAddress.text  = ""
-            Glide.with(requireActivity()).load("").into(doc1)
-            Glide.with(requireActivity()).load("").into(doc2)
+        }
+    }
 
-            tvIban.text = ""
-            tvswiftbic.text = ""
-            tvBankName.text = ""
-            tvAccountHolderName.text = ""
-            Glide.with(requireActivity()).load("").into(imAccountProof)
+    private fun setData(){
+        binding?.apply {
+            tvName.text = userData?.fullName
+            tvLocation.text = userData?.countryDetails?.name
+            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData?.createdAt.toString())}"
+            tvEmail.text = userData?.email
+            tvCall.text = userData?.countryCode+"-"+userData?.mobile
+            Glide.with(requireActivity()).load(userData?.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(
+                CircleCrop()
+            ).into(ivProfileImage)
+
+            Glide.with(requireActivity()).load(userData?.document1).placeholder(R.drawable.ic_placeholder).error(R.drawable.ic_placeholder).into(doc1)
+
+
+            Glide.with(requireActivity()).load(userData?.document2).placeholder(R.drawable.ic_placeholder).error(R.drawable.ic_placeholder).into(doc2)
+
+           tvAddress.text  = userData?.addressDetails?.address1+" "+userData?.addressDetails?.address2+", "+userData?.addressDetails?.town+", "+userData?.addressDetails?.city+", "+userData?.addressDetails?.state+", "+userData?.addressDetails?.pincode
+
+            tvIban.text = userData?.bankDetails?.iban
+            tvswiftbic.text = userData?.bankDetails?.swift
+            tvBankName.text = userData?.bankDetails?.bankName
+            tvAccountHolderName.text = userData?.bankDetails?.accountHolderName
+            tvAccountNumber.text = userData?.bankDetails?.accountNo
+            if (userData?.bankDetails?.uploadProof!="null" && userData?.bankDetails?.uploadProof!=null && userData?.bankDetails?.uploadProof!=""){
+                imAccountProof.isVisible = true
+                tvProofAccount.isVisible = true
+                Glide.with(requireActivity()).load(userData?.bankDetails?.uploadProof).into(imAccountProof)
+            }
+            else{
+                imAccountProof.isVisible = false
+                tvProofAccount.isVisible = false
+            }
         }
     }
 

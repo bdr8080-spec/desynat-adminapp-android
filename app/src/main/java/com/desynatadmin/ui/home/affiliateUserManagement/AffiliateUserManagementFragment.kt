@@ -28,8 +28,8 @@ import com.desynatadmin.databinding.FragmentAffiliateUserManagementBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
-import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
@@ -47,7 +47,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var isCountryObserver = true
-    private var userList = ArrayList<GetUserResponse.Data.Data>()
+    private var userList = ArrayList<GetNewAffiliateUserResponse.Data.Data>()
     private var affiliateUserAdapter : AffiliateUserAdapter?=null
     private var currentPage = 1
     private var lastPage = 1
@@ -133,7 +133,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                         pagination = false
                         isFromSwipe = false
                         if (!isObserver)
-                            getAllUser(search =  query.ifEmpty { null })
+                            getAllAffiliateUser(search =  query.ifEmpty { null }, loading = false)
                     }
 
                 }
@@ -142,7 +142,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
             when(userType){
                 "1"-> {
                     userType = "1"
-                    getAllUser()
+                    getAllAffiliateUser()
                     affiliateUserAdapter?.setType(userType)
                     tvNew.setTextColor(Color.parseColor("#875C3A"))
                     viewNew.setBackgroundColor(Color.parseColor("#875C3A"))
@@ -154,7 +154,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
 
                 "2"-> {
                     userType = "2"
-                    getAllUser()
+                    getAllAffiliateUser()
                     affiliateUserAdapter?.setType(userType)
                     tvNew.setTextColor(Color.parseColor("#C0BBBB"))
                     viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
@@ -166,7 +166,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
 
                 "3"-> {
                     userType = "3"
-                    getAllUser()
+                    getAllAffiliateUser()
                     affiliateUserAdapter?.setType(userType)
                     tvNew.setTextColor(Color.parseColor("#C0BBBB"))
                     viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
@@ -182,7 +182,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 isFromSwipe = true
                 pagination = false
                 currentPage = 1
-                getAllUser(false)
+                getAllAffiliateUser(false)
             }
         }
 
@@ -193,7 +193,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
             getUserCountryApi()
         }
 
-        getAllUser()
+        getAllAffiliateUser()
         }
 
     override fun initControl() {
@@ -209,7 +209,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
             ivNextArrow.setOnClickListener {
                 if (!isObserver && currentPage < lastPage&&totalItem!=0) {
                     currentPage += 1
-                    getAllUser(false)
+                    getAllAffiliateUser(false)
                     binding?.progressBar?.isVisible = true
                 }
             }
@@ -217,15 +217,14 @@ class AffiliateUserManagementFragment : BaseFragment() {
             ivBackArrow.setOnClickListener {
                 if (currentPage > 1) {
                     currentPage--
-                    getAllUser(false)
+                    getAllAffiliateUser(false)
                     binding?.progressBar?.isVisible = true
                 }
             }
 
             tvNew.setOnClickListener {
                 userType = "1"
-                getAllUser()
-                affiliateUserAdapter?.setType(userType)
+                getAllAffiliateUser()
                 tvNew.setTextColor(Color.parseColor("#875C3A"))
                 viewNew.setBackgroundColor(Color.parseColor("#875C3A"))
                 tvApproved.setTextColor(Color.parseColor("#C0BBBB"))
@@ -236,8 +235,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
 
             tvApproved.setOnClickListener {
                 userType = "2"
-                getAllUser()
-                affiliateUserAdapter?.setType(userType)
+                getAllAffiliateUser()
                 tvNew.setTextColor(Color.parseColor("#C0BBBB"))
                 viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
                 tvApproved.setTextColor(Color.parseColor("#875C3A"))
@@ -248,8 +246,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
 
             tvRejected.setOnClickListener {
                 userType = "3"
-                getAllUser()
-                affiliateUserAdapter?.setType(userType)
+                getAllAffiliateUser()
                 tvNew.setTextColor(Color.parseColor("#C0BBBB"))
                 viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
                 tvApproved.setTextColor(Color.parseColor("#C0BBBB"))
@@ -314,7 +311,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
             }
         }
 
-        viewModel.getAllAffiliateUserResult.observe(viewLifecycleOwner) { response ->
+        viewModel.getNewAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
@@ -368,6 +365,129 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 else{
                     affiliateUserAdapter?.notifyDataSetChanged()
                 }
+                affiliateUserAdapter?.setType(userType)
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getApprovedAffiliateUserResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = userList.size
+                if (!pagination){
+                    userList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                userList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        affiliateUserAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    affiliateUserAdapter?.notifyDataSetChanged()
+                }
+                affiliateUserAdapter?.setType(userType)
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getRejectedAffiliateUserResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = userList.size
+                if (!pagination){
+                    userList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                userList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        affiliateUserAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    affiliateUserAdapter?.notifyDataSetChanged()
+                }
+                affiliateUserAdapter?.setType(userType)
 
                 pagination = false
                 isFromSwipe = false
@@ -377,7 +497,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
 
     }
 
-    private fun getAllUser(loading:Boolean=true,search:String?=null){
+    private fun getAllAffiliateUser(loading:Boolean=true,search:String?=null){
         val map = HashMap<String,Any>()
         map["page"] = currentPage
         map["limit"] = 10
@@ -391,12 +511,20 @@ class AffiliateUserManagementFragment : BaseFragment() {
             map["to_date"] = endDate.toString()
         }
         if (countryId!=null) {
-            map["country_id"] = countryId.toString()
+            map["country"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
         }
-//        if (countryId!=null) {
-//            map["country"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
-//        }
-        viewModel.getAllAffiliateUser(map)
+        when(userType){
+            "1"->{
+                viewModel.getNewAffiliateUser(map)
+            }
+            "2"->{
+                viewModel.getApprovedAffiliateUser(map)
+            }
+            "3"->{
+                viewModel.getRejectedAffiliateUser(map)
+            }
+        }
+
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -512,7 +640,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 endDate = null
                 toTimestamp = 0L
                 fromTimestamp = 0L
-                getAllUser()
+                getAllAffiliateUser()
                 dialog.dismiss()
             }
 
@@ -528,7 +656,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                     endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
                 }
 
-                getAllUser()
+                getAllAffiliateUser()
                 dialog.dismiss()
             }
 

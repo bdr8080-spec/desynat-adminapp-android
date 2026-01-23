@@ -73,7 +73,6 @@ class HomeActivity : BaseActivity() {
 
         )
 
-
         controller.addOnDestinationChangedListener { _, destination, _ ->
 
             if (destination.id in bottomNavDestinations) {
@@ -303,10 +302,10 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
-//            rlAffiliateManagement.setOnClickListener {
-//                controller.navigate(R.id.affiliateUserManagement)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlAffiliateManagement.setOnClickListener {
+                controller.navigate(R.id.affiliateUserManagement)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
         }
 
     }

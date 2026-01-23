@@ -49,7 +49,7 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:background="@drawable/et_bg"
                 android:padding="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -216,7 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="KD 0"
+                        android:text="0 KD"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
                         app:layout_constraintStart_toEndOf="@id/tvTotalOrdersValue"
@@ -366,7 +366,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:background="@drawable/image_back"
-                android:padding="28dp"
+                android:padding="@dimen/_15sdp"
                 android:src="@drawable/rectangle"
                 app:layout_constraintEnd_toStartOf="@id/doc2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -379,7 +379,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:background="@drawable/image_back"
-                android:padding="28dp"
+                android:padding="@dimen/_15sdp"
                 android:src="@drawable/rectangle"
                 app:layout_constraintBottom_toBottomOf="@id/doc1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -548,7 +548,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Account holder name"
+                    android:text="Account Holder Name"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -569,6 +569,33 @@
                     app:layout_constraintTop_toBottomOf="@id/tvAccountHolderNameLabe" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAccountNumberLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Account Number"
+                    android:textColor="#99000000"
+                    android:textSize="@dimen/_11sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAccountHolderName" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAccountNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Rohan "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAccountNumberLabel" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
                     android:id="@+id/tvProofAccount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -579,9 +606,10 @@
                     android:textSize="@dimen/_11sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAccountHolderName" />
+                    app:layout_constraintTop_toBottomOf="@id/tvAccountNumber" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:visibility="gone"
                     android:id="@+id/imAccountProof"
                     android:layout_width="100dp"
                     android:layout_height="65dp"

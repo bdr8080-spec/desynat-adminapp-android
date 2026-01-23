@@ -154,9 +154,11 @@ object Constants {
     const val UPLOAD_VIDEO_IMAGE = "/api/uploadFile"
     const val UPLOAD_WITH_RESOLUTION = "/api/uploadWithResolution"
 
-    const val GET_AFFILIATE_USER = "/api/admin/get_users"
-    const val GET_AFFILIATE_USER_DETAIL = "/api/admin/get_user_details"
-    const val BLOCK_UNBLOCK_AFFILIATE_USER = "/api/admin/block_unblock_user"
-    const val ACCEPT_AFFILIATE_USER = "/api/admin/block_unblock_user"
-    const val REJECT_AFFILIATE_USER = "/api/admin/block_unblock_user"
+    const val GET_NEW_AFFILIATE_USER = "/api/admin/get_new_affilaited_users"
+    const val GET_APPROVED_AFFILIATE_USER = "/api/admin/get_approved_affilaited_users"
+    const val GET_REJECTED_AFFILIATE_USER = "/api/admin/get_rejected_affilaited_users"
+    const val GET_AFFILIATE_USER_DETAIL = "/api/admin/get_affiliate_user_details"
+    const val BLOCK_UNBLOCK_AFFILIATE_USER = "/api/admin/block_unblock_affiliate_user"
+    const val ACCEPT_AFFILIATE_USER = "/api/admin/accept_affiliate_user"
+    const val REJECT_AFFILIATE_USER = "/api/admin/reject_affiliate_user"
 }

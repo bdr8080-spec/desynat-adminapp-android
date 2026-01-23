@@ -9,6 +9,10 @@ import com.desynatadmin.network.ApiServices
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.AcceptAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -1508,29 +1512,51 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val affiliateUserLiveData = SingleLiveEvent<GetUserResponse>()
-    suspend fun getAllAffiliateUser(map:HashMap<String,Any>
+    val newAffiliateUserLiveData = SingleLiveEvent<GetNewAffiliateUserResponse>()
+    suspend fun getNewAffiliateUser(map:HashMap<String,Any>
     ) {
         handleApiCall(
             api = {
-                api.getAllAffiliateUser(map)
+                api.getNewAffiliateUser(map)
             },
-            responseLiveData = affiliateUserLiveData
+            responseLiveData = newAffiliateUserLiveData
         )
     }
 
-    val userAllAffiliateDetailLiveData = SingleLiveEvent<GetUserDetailResponse>()
+    val approvedAffiliateUserLiveData = SingleLiveEvent<GetNewAffiliateUserResponse>()
+    suspend fun getApprovedAffiliateUser(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getApprovedAffiliateUser(map)
+            },
+            responseLiveData = approvedAffiliateUserLiveData
+        )
+    }
+
+    val rejectedAffiliateUserLiveData = SingleLiveEvent<GetNewAffiliateUserResponse>()
+    suspend fun getRejectedAffiliateUser(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getRejectedAffiliateUser(map)
+            },
+            responseLiveData = rejectedAffiliateUserLiveData
+        )
+    }
+
+    val userAffiliateDetailLiveData = SingleLiveEvent<GetAffiliateUserDetailResponse>()
     suspend fun getAffiliateUserDetail(userId:String
     ) {
         handleApiCall(
             api = {
                 api.getAffiliateUserDetail(userId)
             },
-            responseLiveData = userAllAffiliateDetailLiveData
+            responseLiveData = userAffiliateDetailLiveData
         )
     }
 
-    val updateAffiliateUserStatusLiveData = SingleLiveEvent<BlockUnblockUserResponse>()
+    val updateAffiliateUserStatusLiveData = SingleLiveEvent<BlockUnblockAffiliateUserResponse>()
     suspend fun blockUnblockAffiliateUser(map:HashMap<String,Any>
     ) {
         handleApiCall(
@@ -1541,7 +1567,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val acceptAffiliateUserLiveData = SingleLiveEvent<CommonResponse>()
+ val acceptAffiliateUserLiveData = SingleLiveEvent<AcceptAffiliateUserResponse>()
     suspend fun acceptAffiliateUser(map:HashMap<String,Any>
     ) {
         handleApiCall(
@@ -1552,7 +1578,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val rejectAffiliateUserLiveData = SingleLiveEvent<CommonResponse>()
+ val rejectAffiliateUserLiveData = SingleLiveEvent<AcceptAffiliateUserResponse>()
     suspend fun rejectAffiliateUser(map:HashMap<String,Any>
     ) {
         handleApiCall(
