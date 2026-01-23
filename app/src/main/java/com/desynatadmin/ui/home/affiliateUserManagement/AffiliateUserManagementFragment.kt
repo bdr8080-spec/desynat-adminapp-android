@@ -1,7 +1,6 @@
 package com.desynatadmin.ui.home.affiliateUserManagement
 
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -12,18 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateUserAdapter
-import com.desynatadmin.adapter.UserCountryPickerAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentAffiliateUserManagementBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
@@ -642,7 +637,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                showUserCountryPicker(
+                CommonMethod.showAllCountryPicker(
                     requireContext(),
                     it,
                     countryList
@@ -681,35 +676,6 @@ class AffiliateUserManagementFragment : BaseFragment() {
         }
 
         dialog.show()
-    }
-
-    fun showUserCountryPicker(
-        context: Context,
-        anchor: View,
-        countryList: ArrayList<GetCountryResponse.Data>,
-        onCountrySelected: (GetCountryResponse.Data) -> Unit
-    ) {
-        val binding = CustomCountryPickerBinding.inflate(LayoutInflater.from(context))
-
-        val popupWindow = PopupWindow(
-            binding.root,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            true
-        )
-
-        popupWindow.isOutsideTouchable = true
-        popupWindow.elevation = 20f
-        popupWindow.showAsDropDown(anchor)
-
-        binding.rvCountry.adapter = UserCountryPickerAdapter(context, countryList,
-            object : UserCountryPickerAdapter.ClickOnItem {
-                override fun onClickItem(position: Int) {
-                    onCountrySelected(countryList[position])
-                    popupWindow.dismiss()
-                }
-            }
-        )
     }
 
     private fun rejectReasonDialog() {
