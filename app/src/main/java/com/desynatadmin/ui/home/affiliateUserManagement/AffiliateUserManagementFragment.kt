@@ -561,6 +561,24 @@ class AffiliateUserManagementFragment : BaseFragment() {
         }else{
             binding?.tvNoDataFound?.text = "No data found"
         }
+
+      /*  if (userList.isNotEmpty()){
+            binding?.tvCount?.isVisible = true
+            binding?.ivBackArrow?.isVisible = true
+            binding?.ivNextArrow?.isVisible = true
+            binding?.tvNoDataFound?.isVisible = false
+        }
+        else{
+            binding?.tvCount?.isVisible = false
+            binding?.ivBackArrow?.isVisible = false
+            binding?.ivNextArrow?.isVisible = false
+            binding?.tvNoDataFound?.isVisible = true
+            if (lastQuery!=null){
+                binding?.tvNoDataFound?.text = "No result found"
+            }else{
+                binding?.tvNoDataFound?.text = "No data found"
+            }
+        }*/
     }
 
     private fun updatePage() {
