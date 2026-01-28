@@ -18,7 +18,12 @@ class DealsAdapter(var context:Context, var dealsList: ArrayList<GetActiveDealRe
 
                 tvDealNameValue.text = dealData.nameEnglish
                 tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData.from, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData.to, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
-                // tvTotalEnrolled.text = "${dealData }Sellers"
+            val count = dealData.sellerEnrolled?.sellerCount ?: 0
+            tvTotalEnrolled.text = if (count == 1) {
+                "$count Seller"
+            } else {
+                "$count Sellers"
+            }
                 tvDiscountValue.text = dealData.discount+"%"
                 ivDeal.load(dealData.image) {
                     crossfade(true)

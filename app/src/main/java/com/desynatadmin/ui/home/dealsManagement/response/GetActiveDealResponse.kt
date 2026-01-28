@@ -60,6 +60,8 @@ data class GetActiveDealResponse(
             val nameArabic: String,
             @SerializedName("name_english")
             val nameEnglish: String,
+            @SerializedName("seller_enrolled")
+            val sellerEnrolled: SellerEnrolled,
             @SerializedName("status")
             var status: Int,
             @SerializedName("sub_category_details")
@@ -70,6 +72,12 @@ data class GetActiveDealResponse(
             val to: String,
             @SerializedName("updated_at")
             val updatedAt: String
+        )
+        data class SellerEnrolled(
+            @SerializedName("deal_id")
+            val dealId: Int,
+            @SerializedName("seller_count")
+            val sellerCount: Int
         )
         data class Link(
             @SerializedName("active")

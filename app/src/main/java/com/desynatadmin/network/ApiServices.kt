@@ -38,6 +38,8 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCat
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealProductResponse
 import com.desynatadmin.ui.home.dealsManagement.response.UpdateDealStatusResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
@@ -684,6 +686,16 @@ interface ApiServices {
     suspend fun deleteDeal(
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
+
+    @GET(Constants.GET_DEAL_DETAIL)
+    suspend fun getDealDetail(
+        @QueryMap body: HashMap<String,Any>
+    ): Response<GetDealDetailResponse>
+
+    @GET(Constants.DEAL_PRODUCT_LIST)
+    suspend fun getDealProduct(
+        @QueryMap body: HashMap<String,Any>
+    ): Response<GetDealProductResponse>
 
     @GET(Constants.GET_FULL_BANNER)
     suspend fun getFullScreenBanner(

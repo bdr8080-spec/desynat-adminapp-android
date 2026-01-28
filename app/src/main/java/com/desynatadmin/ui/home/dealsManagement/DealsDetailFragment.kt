@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.EnrolledAdapter
@@ -15,6 +15,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentDealsDetailBinding
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
@@ -27,7 +28,8 @@ class DealsDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var dealData: GetActiveDealResponse.Data.Data?=null
-    private var enrolledList = ArrayList<String>()
+    private var dealDetailData: GetDealDetailResponse.Data?=null
+    private var enrolledList = ArrayList<GetDealDetailResponse.Data.SellerDealrecord>()
     private var enrolledAdapter: EnrolledAdapter?=null
 
     override fun onCreateView(
@@ -47,36 +49,29 @@ class DealsDetailFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
-        findNavController().currentBackStackEntry
-            ?.savedStateHandle
-            ?.getLiveData<String>("updatedDealData")
-            ?.observe(viewLifecycleOwner) { json ->
-                json?.let {
-                    dealData = Gson().fromJson(json, GetActiveDealResponse.Data.Data::class.java)
-                    setData()
-                }
-            }
 
         val itemJson = arguments?.getString("dealsData")
 
+        if (!itemJson.isNullOrEmpty()) {
+            dealData = Gson().fromJson(itemJson, GetActiveDealResponse.Data.Data::class.java)
+        }
         binding?.apply {
             toolbar.tvToolbar.text = "Details"
 
             enrolledAdapter = EnrolledAdapter(requireActivity(),enrolledList,object :EnrolledAdapter.ClickOnItem{
                 override fun onClickItem(position: Int) {
-
+                    val bundle = Bundle().apply {
+                        putString("dealsData", Gson().toJson(enrolledList[position]))
+                    }
+                    findNavController().navigate(R.id.action_dealDetail_to_dealProductFragment,bundle)
                 }
-
             })
             rvEnrolled.adapter = enrolledAdapter
 
-            if (!itemJson.isNullOrEmpty()) {
-                dealData = Gson().fromJson(itemJson, GetActiveDealResponse.Data.Data::class.java)
-                setData()
-            }
-
+            getDealDetail()
 
         }
+
     }
 
     override fun initControl() {
@@ -144,6 +139,15 @@ class DealsDetailFragment : BaseFragment() {
                 isObserver = false
             }
         }
+
+        viewModel.getDealDetailResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                dealDetailData = response?.data
+                setData()
+                isObserver = false
+            }
+        }
     }
 
     private fun updateStatus() {
@@ -166,13 +170,16 @@ class DealsDetailFragment : BaseFragment() {
     private fun setData(){
         binding?.apply {
             updateStatus()
-            tvDealName.text = dealData?.nameEnglish
-            tvCategoryValue.text = dealData?.categoryDetails?.name
-            tvSubCategoryValue.text = dealData?.subCategoryDetails?.nameEnglish
-            tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
-            // tvTotalEnrolled.text = "${dealData }Sellers"
-            tvDiscountValue.text = dealData?.discount+"%"
-            Glide.with(requireActivity()).load(dealData?.image).placeholder(R.drawable.ic_placeholder).into(ivDeal)
+            enrolledList.clear()
+            dealDetailData?.sellerDealrecords?.let { enrolledList.addAll(it) }
+            enrolledAdapter?.notifyDataSetChanged()
+            checkData()
+            tvDealName.text = dealDetailData?.nameEnglish
+            tvCategoryValue.text = dealDetailData?.categoryDetails?.name
+            tvSubCategoryValue.text = dealDetailData?.subCategoryDetails?.nameEnglish
+            tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealDetailData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealDetailData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
+            tvDiscountValue.text = dealDetailData?.discount+"%"
+            Glide.with(requireActivity()).load(dealDetailData?.image).placeholder(R.drawable.ic_placeholder).into(ivDeal)
         }
     }
 
@@ -190,6 +197,18 @@ class DealsDetailFragment : BaseFragment() {
         viewModel.updateDealStatus(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
+    }
+
+    private fun getDealDetail(){
+        val map = HashMap<String,Any>()
+        map["deal_id"]=dealData?.id.toString()
+        viewModel.getDealDetail(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun checkData(){
+        binding?.tvNotData?.isVisible = enrolledList.isEmpty()
     }
 
 }

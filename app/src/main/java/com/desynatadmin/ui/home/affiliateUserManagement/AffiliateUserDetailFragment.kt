@@ -121,7 +121,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
         viewModel.acceptAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer approved successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Approved Successfully!"){
                     userType = "2"
                     setStatusData()
                 }
@@ -132,7 +132,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
         viewModel.rejectAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer rejected successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Rejected Successfully!"){
                     userType = "3"
                     userData?.rejectReason = response.data.rejectReason
                     userData?.rejectType = response.data.rejectType
@@ -175,7 +175,8 @@ class AffiliateUserDetailFragment : BaseFragment() {
                     relStatus.isVisible = false
                     clEarning.isVisible = false
                     clRejected.isVisible = true
-                    tvRejectionReason.text = if (userData?.rejectType=="complete") "Complete" else "Document Reject"
+                    tvRejectionReason.text = if (userData?.adminVerify=="3") "Complete"
+                    else if (userData?.adminVerify=="4") "Document Reject" else ""
                     tvRejectionDescription.text = userData?.rejectReason
                 }
             }
@@ -214,7 +215,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
 
             Glide.with(requireActivity()).load(userData?.document2).placeholder(R.drawable.ic_placeholder).error(R.drawable.ic_placeholder).into(doc2)
 
-           tvAddress.text  = userData?.addressDetails?.address1+" "+userData?.addressDetails?.address2+", "+userData?.addressDetails?.town+", "+userData?.addressDetails?.city+", "+userData?.addressDetails?.state+", "+userData?.addressDetails?.pincode
+           tvAddress.text  = userData?.addressDetails?.locations
 
             tvIban.text = userData?.bankDetails?.iban
             tvswiftbic.text = userData?.bankDetails?.swift

@@ -249,7 +249,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Document Reject"
+                        android:text=""
                         android:textColor="#D91A1B"
                         android:textAlignment="textEnd"
                         android:textSize="@dimen/_10sdp"
@@ -439,6 +439,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
                     android:id="@+id/tvAccountTypeLabe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -452,6 +453,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tvBankDetailsLabel" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
                     android:id="@+id/tvAccountType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -468,7 +470,7 @@
                     android:id="@+id/tvIbanLabe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="IBAN"
                     android:textColor="#99000000"

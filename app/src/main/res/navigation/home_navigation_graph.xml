@@ -379,12 +379,21 @@
         android:label="Deal Detail Fragment"
         tools:layout="@layout/fragment_deals_detail">
 
-
         <action
             android:id="@+id/action_dealDetail_to_addDealFragment"
             app:destination="@id/addDeal" />
 
+        <action
+            android:id="@+id/action_dealDetail_to_dealProductFragment"
+            app:destination="@id/dealProduct" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/dealProduct"
+        android:name="com.desynatadmin.ui.home.dealsManagement.EnrolledSellerDetailFragment"
+        android:label="Deal Product Fragment"
+        tools:layout="@layout/fragment_enrolled_seller_detail"/>
 
     <fragment
         android:id="@+id/addDeal"

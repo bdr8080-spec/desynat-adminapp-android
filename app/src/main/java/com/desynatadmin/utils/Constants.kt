@@ -137,6 +137,8 @@ object Constants {
     const val DELETE_DEAL = "/api/admin/delete_deal"
     const val ADD_DEALS = "/api/admin/add_deal"
     const val UPDATE_DEALS = "/api/admin/update_deal"
+    const val GET_DEAL_DETAIL = "/api/admin/get_deal_detail"
+    const val DEAL_PRODUCT_LIST = "/api/admin/get_deal_seller_product_list"
 
     const val ADD_STORY = "/api/admin/add_story"
     const val DELETE_STORY = "/api/admin/delete_story"

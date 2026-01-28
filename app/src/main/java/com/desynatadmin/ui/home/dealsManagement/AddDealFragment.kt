@@ -316,12 +316,6 @@ class AddDealFragment : BaseFragment() {
         viewModel.updateDealResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                dealData = response.data
-                dealData?.categoryDetails = selectedCategory!!
-                dealData?.subCategoryDetails = selectedSubCategory!!
-                findNavController().previousBackStackEntry
-                    ?.savedStateHandle
-                    ?.set("updatedDealData", Gson().toJson(dealData))
                 CommonMethod.showSuccessDialog(requireContext(), response.message){
                     findNavController().popBackStack()
                 }

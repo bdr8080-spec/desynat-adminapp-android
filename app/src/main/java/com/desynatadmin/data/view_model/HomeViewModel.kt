@@ -41,6 +41,8 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCat
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealProductResponse
 import com.desynatadmin.ui.home.dealsManagement.response.UpdateDealStatusResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
@@ -1073,6 +1075,24 @@ class HomeViewModel @Inject constructor(
     fun deleteDeal(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.deleteDeal(map)
+        }
+    }
+
+    val getDealDetailResult: LiveData<GetDealDetailResponse>
+        get() = repository.getDealDetailLiveData
+
+    fun getDealDetail(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getDealDetail(map)
+        }
+    }
+
+    val getDealProductResult: LiveData<GetDealProductResponse>
+        get() = repository.getDealProductLiveData
+
+    fun getDealProduct(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getDealProduct(map)
         }
     }
 

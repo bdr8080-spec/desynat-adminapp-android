@@ -44,6 +44,8 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCat
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealProductResponse
 import com.desynatadmin.ui.home.dealsManagement.response.UpdateDealStatusResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.AddDeliveryBoyRequest
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliveryBoyResponse
@@ -1332,6 +1334,28 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
                 api.deleteDeal(map)
             },
             responseLiveData = deleteDealLiveData
+        )
+    }
+
+    val getDealDetailLiveData = SingleLiveEvent<GetDealDetailResponse>()
+    suspend fun getDealDetail(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.getDealDetail(map)
+            },
+            responseLiveData = getDealDetailLiveData
+        )
+    }
+
+    val getDealProductLiveData = SingleLiveEvent<GetDealProductResponse>()
+    suspend fun getDealProduct(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.getDealProduct(map)
+            },
+            responseLiveData = getDealProductLiveData
         )
     }
 

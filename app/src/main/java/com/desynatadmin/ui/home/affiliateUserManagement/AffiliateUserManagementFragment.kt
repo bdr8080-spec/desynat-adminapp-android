@@ -62,6 +62,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
     var fromTimestamp=0L
     var toTimestamp=0L
     var userType = "1"
+    var filterType = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -181,11 +182,11 @@ class AffiliateUserManagementFragment : BaseFragment() {
             }
         }
 
-        if (SharedPreference.get(requireActivity()).getUserCountryList()!=null){
-            SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
+        if (SharedPreference.get(requireActivity()).getCountryList()!=null){
+            SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         }
         else{
-            getUserCountryApi()
+            getCountryApi()
         }
 
         getAllAffiliateUser()
@@ -267,7 +268,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
             }
         }
 
-        viewModel.getUserCountryResult.observe(viewLifecycleOwner) { response ->
+        viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
             if (isCountryObserver) {
                 countryList.clear()
                 countryList.addAll(response.data)
@@ -283,7 +284,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 affiliateUserAdapter?.notifyItemRemoved(selectedPos)
                 affiliateUserAdapter?.notifyItemRangeChanged(selectedPos, userList.size)
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer approved successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Approved Successfully!"){
 
                 }
                 selectedPos = -1
@@ -298,7 +299,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 affiliateUserAdapter?.notifyItemRemoved(selectedPos)
                 affiliateUserAdapter?.notifyItemRangeChanged(selectedPos, userList.size)
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate customer rejected successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Rejected Successfully!"){
 
                 }
                 selectedPos = -1
@@ -499,23 +500,50 @@ class AffiliateUserManagementFragment : BaseFragment() {
         if (search!=null&&search!="") {
             map["search"] = search
         }
-        if (startDate!=null) {
-            map["from_date"] = startDate.toString()
-        }
-        if (endDate!=null) {
-            map["to_date"] = endDate.toString()
-        }
-        if (countryId!=null) {
-            map["country"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
-        }
         when(userType){
             "1"->{
+                if (filterType==userType){
+                    if (startDate!=null) {
+                        map["from_date"] = startDate.toString()
+                    }
+                    if (endDate!=null) {
+                        map["to_date"] = endDate.toString()
+                    }
+                    if (countryId!=null) {
+                        map["country"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
+                    }
+                }
+
                 viewModel.getNewAffiliateUser(map)
             }
             "2"->{
+                if (filterType==userType) {
+                    if (startDate != null) {
+                        map["from_date1"] = startDate.toString()
+                    }
+                    if (endDate != null) {
+                        map["to_date1"] = endDate.toString()
+                    }
+                    if (countryId != null) {
+                        map["country1"] =
+                            countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
+                    }
+                }
                 viewModel.getApprovedAffiliateUser(map)
             }
             "3"->{
+                if (filterType==userType) {
+                    if (startDate != null) {
+                        map["from_date2"] = startDate.toString()
+                    }
+                    if (endDate != null) {
+                        map["to_date2"] = endDate.toString()
+                    }
+                    if (countryId != null) {
+                        map["country2"] =
+                            countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
+                    }
+                }
                 viewModel.getRejectedAffiliateUser(map)
             }
         }
@@ -526,8 +554,8 @@ class AffiliateUserManagementFragment : BaseFragment() {
         isObserver = true
     }
 
-    private fun getUserCountryApi(){
-        viewModel.getUserCountry()
+    private fun getCountryApi(){
+        viewModel.getCountry()
         isCountryObserver = true
     }
 
@@ -607,16 +635,19 @@ class AffiliateUserManagementFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding.apply {
-            if(countryId!=null){
-                etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
+            if (filterType==userType) {
+                if (countryId != null) {
+                    etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
+                }
+                if (startDate != null) {
+                    etFrom.text =
+                        CommonMethod.formatDate(startDate.toString(), "yyyy-MM-dd", "dd/MM/yyyy")
+                }
+                if (endDate != null) {
+                    etTo.text =
+                        CommonMethod.formatDate(endDate.toString(), "yyyy-MM-dd", "dd/MM/yyyy")
+                }
             }
-            if (startDate!=null){
-                etFrom.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-            }
-            if (endDate!=null){
-                etTo.text=CommonMethod.formatDate(endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-            }
-
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
             }
@@ -637,7 +668,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                CommonMethod.showAllCountryPicker(
+                CommonMethod.showCountryPicker(
                     requireContext(),
                     it,
                     countryList
@@ -653,6 +684,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 endDate = null
                 toTimestamp = 0L
                 fromTimestamp = 0L
+                filterType = ""
                 getAllAffiliateUser()
                 dialog.dismiss()
             }
@@ -669,6 +701,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                     endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
                 }
 
+                filterType = userType
                 getAllAffiliateUser()
                 dialog.dismiss()
             }

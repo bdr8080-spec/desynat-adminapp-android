@@ -41,11 +41,14 @@ import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AllCountryPickerAdapter
 import com.desynatadmin.adapter.CountryPickerAdapter
+import com.desynatadmin.adapter.ImagePreviewAdapter
 import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.DeleteDialogLayoutBinding
 import com.desynatadmin.databinding.ImagePreviewDialogBinding
+import com.desynatadmin.databinding.ImagePreviewListDialogBinding
 import com.desynatadmin.databinding.SuccessDialogLayoutBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.google.android.material.tabs.TabLayoutMediator
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -655,5 +658,39 @@ object CommonMethod {
 
         dialog.show()
     }
+
+     fun imagePreviewListDialog(context:Context,list:ArrayList<String>) {
+        val dialog = Dialog(context, R.style.CustomDialog)
+        val dialogBinding = ImagePreviewListDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog?.setContentView(it) }
+
+        val window: Window = dialog?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            ivCross.setOnClickListener{
+                dialog?.dismiss()
+            }
+
+            val imagePreviewAdapter = ImagePreviewAdapter(context,list)
+            viewPager?.adapter = imagePreviewAdapter
+
+            TabLayoutMediator(dotsIndicator, viewPager) { _, _ -> }.attach()
+
+        }
+
+        dialog?.show()
+    }
+
 
 }

@@ -62,12 +62,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvProductSold" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEnrolled"
+        android:id="@+id/tvTotalSoldAdded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="Total Enrolled"
-        android:textColor="@color/black"
+        android:text="0 Products"
+        android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginStart="@dimen/_10sdp"
@@ -75,16 +75,16 @@
         app:layout_constraintTop_toBottomOf="@id/tvProductSold" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTotalEnrolled"
+        android:id="@+id/tvTotalProductAdded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="100 Sellers"
+        android:text="0 Products"
         android:textColor="#68CA44"
         android:textSize="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvEnrolled"
-        app:layout_constraintBottom_toBottomOf="@+id/tvEnrolled"/>
+        app:layout_constraintTop_toTopOf="@id/tvTotalSoldAdded"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotalSoldAdded"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
