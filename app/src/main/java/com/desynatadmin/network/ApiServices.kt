@@ -159,10 +159,7 @@ interface ApiServices {
 
     @GET(Constants.BRAND)
     suspend fun getBrand(
-        @Query("search") search : String?=null,
-        @Query("page") page: Int,
-        @Query("limit") limit: Int? = 10,
-        ): Response<GetBrandResponse>
+        @QueryMap body: HashMap<String,Any>): Response<GetBrandResponse>
 
     @Multipart
     @POST(Constants.ADD_BRAND)

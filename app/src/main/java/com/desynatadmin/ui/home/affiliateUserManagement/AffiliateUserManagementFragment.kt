@@ -183,6 +183,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
         }
 
         if (SharedPreference.get(requireActivity()).getCountryList()!=null){
+            countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         }
         else{

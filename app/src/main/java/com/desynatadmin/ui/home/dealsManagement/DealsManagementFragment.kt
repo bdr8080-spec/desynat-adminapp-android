@@ -65,6 +65,7 @@ class DealsManagementFragment : BaseFragment() {
                 override fun onDealsClick(position: Int) {
                     val bundle = Bundle().apply {
                         putString("dealsData", Gson().toJson(dealsList[position]))
+                        putInt("dealType", type)
                     }
                     findNavController().navigate(R.id.action_dealManagement_to_dealDetailFragment,bundle)
                 }

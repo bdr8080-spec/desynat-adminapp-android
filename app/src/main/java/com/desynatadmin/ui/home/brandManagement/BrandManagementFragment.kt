@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.http.Query
 
 @AndroidEntryPoint
 class BrandManagementFragment : BaseFragment() {
@@ -264,7 +265,14 @@ class BrandManagementFragment : BaseFragment() {
     }
 
     private fun getAllBrand(loading:Boolean=true,search:String?=lastQuery){
-        viewModel.getAllBrand(search = search, page = currentPage)
+        val map = HashMap<String,Any>()
+
+        if (search!=null){
+            map["search"] = search
+        }
+        map["page"] = currentPage
+        map["limit"] = pageLimit
+        viewModel.getAllBrand(map)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }

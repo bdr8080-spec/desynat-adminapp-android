@@ -126,7 +126,7 @@ data class GetDealProductResponse(
                     @SerializedName("other_en")
                     val otherEn: String,
                     @SerializedName("product_active_status")
-                    val productActiveStatus: Int,
+                    val productActiveStatus: String,
                     @SerializedName("product_exchangable")
                     val productExchangable: String,
                     @SerializedName("product_name_ar")

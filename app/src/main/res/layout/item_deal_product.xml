@@ -20,6 +20,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:visibility="gone"
+        android:id="@+id/ivSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/switch_on"
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/tvBrand"
         android:layout_width="0dp"
@@ -30,7 +40,7 @@
         android:textColor="@color/black"
         android:layout_marginTop="@dimen/_1sdp"
         android:textSize="@dimen/_10sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="@+id/ivStore"
         app:layout_constraintEnd_toEndOf="@+id/ivStore"
         app:layout_constraintTop_toBottomOf="@+id/ivStore" />
@@ -39,7 +49,7 @@
         android:id="@+id/tvProductName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         android:fontFamily="@font/poppins_light"
         android:maxLines="1"
         android:layout_marginTop="@dimen/_1sdp"
@@ -54,7 +64,7 @@
         android:id="@+id/tvCategory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         android:fontFamily="@font/poppins_regular"
         android:maxLines="1"
         android:layout_marginTop="@dimen/_1sdp"
@@ -74,10 +84,9 @@
         android:layout_marginTop="@dimen/_1sdp"
         android:text="KD 239"
         android:textColor="@color/brown"
-        android:textSize="@dimen/_11sdp"
-        android:layout_marginStart="@dimen/_5sdp"
+        android:textSize="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_3sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvPrice"
         app:layout_constraintTop_toBottomOf="@+id/tvCategory" />
 
@@ -87,11 +96,11 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
         android:maxLines="1"
-        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_1sdp"
         android:text="KD 239"
         android:textColor="#99000000"
         android:textSize="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="@+id/ivStore"
         app:layout_constraintTop_toBottomOf="@+id/tvCategory" />
 
@@ -103,5 +112,21 @@
         app:layout_constraintEnd_toEndOf="@+id/tvPrice"
         app:layout_constraintTop_toTopOf="@+id/tvPrice"
         app:layout_constraintBottom_toBottomOf="@+id/tvPrice"/>
+
+    <TextView
+        android:id="@+id/tvDiscount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_regular"
+        android:maxLines="1"
+        android:text="20% off"
+        android:textColor="#E70000"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintStart_toEndOf="@+id/tvDiscountPrice"
+        app:layout_constraintTop_toTopOf="@+id/tvPrice"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPrice"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

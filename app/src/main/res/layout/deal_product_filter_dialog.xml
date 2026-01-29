@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingBottom="@dimen/_15sdp"
     android:background="@drawable/bottomsheet_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -36,7 +37,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etBrand"
             style="@style/edit_text"
             android:layout_centerVertical="true"
@@ -51,6 +52,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvBrand" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/etBrand"
+            android:elevation="3dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            tools:itemCount="7"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/rvBrand"
+            tools:listitem="@layout/item_brand_filter" />
 
         <TextView
             android:id="@+id/tvClear"
@@ -69,7 +82,7 @@
             app:layout_constraintEnd_toStartOf="@+id/tvApply"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etBrand" />
+            app:layout_constraintTop_toBottomOf="@+id/rvBrand" />
 
         <TextView
             android:id="@+id/tvApply"

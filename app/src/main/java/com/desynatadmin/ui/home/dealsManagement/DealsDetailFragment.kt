@@ -27,6 +27,7 @@ class DealsDetailFragment : BaseFragment() {
     private var binding: FragmentDealsDetailBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var dealType = 1
     private var dealData: GetActiveDealResponse.Data.Data?=null
     private var dealDetailData: GetDealDetailResponse.Data?=null
     private var enrolledList = ArrayList<GetDealDetailResponse.Data.SellerDealrecord>()
@@ -51,6 +52,7 @@ class DealsDetailFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
 
         val itemJson = arguments?.getString("dealsData")
+         dealType = arguments?.getInt("dealType")?:1
 
         if (!itemJson.isNullOrEmpty()) {
             dealData = Gson().fromJson(itemJson, GetActiveDealResponse.Data.Data::class.java)
@@ -58,10 +60,23 @@ class DealsDetailFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = "Details"
 
+            if (dealType==2){
+                relStatus.isVisible = false
+             btnEdit.isVisible = false
+             btnDelete.isVisible = false
+                llRevenue.isVisible = true
+            }
+            else{
+                llRevenue.isVisible = false
+                relStatus.isVisible = true
+                btnEdit.isVisible = true
+                btnDelete.isVisible = true
+            }
             enrolledAdapter = EnrolledAdapter(requireActivity(),enrolledList,object :EnrolledAdapter.ClickOnItem{
                 override fun onClickItem(position: Int) {
                     val bundle = Bundle().apply {
                         putString("dealsData", Gson().toJson(enrolledList[position]))
+                        putInt("dealType", dealType)
                     }
                     findNavController().navigate(R.id.action_dealDetail_to_dealProductFragment,bundle)
                 }

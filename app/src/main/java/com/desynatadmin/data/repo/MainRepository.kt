@@ -233,11 +233,11 @@ val subCategoryLiveData = SingleLiveEvent<GetSubCategoryResponse>()
     }
 
 val brandLiveData = SingleLiveEvent<GetBrandResponse>()
-    suspend fun getBrand(search:String?=null, page:Int
+    suspend fun getBrand(map:HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.getBrand(search,page)
+                api.getBrand(map)
             },
             responseLiveData = brandLiveData
         )

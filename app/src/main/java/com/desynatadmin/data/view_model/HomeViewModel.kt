@@ -145,9 +145,9 @@ class HomeViewModel @Inject constructor(
     val getAllBrandResult: LiveData<GetBrandResponse>
         get() = repository.brandLiveData
 
-    fun getAllBrand(search: String?=null, page:Int) {
+    fun getAllBrand(map:HashMap<String, Any>) {
         viewModelScope.launch {
-            repository.getBrand(search,page)
+            repository.getBrand(map)
         }
     }
 

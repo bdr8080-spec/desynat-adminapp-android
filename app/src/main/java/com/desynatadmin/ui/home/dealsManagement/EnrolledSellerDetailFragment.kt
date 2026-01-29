@@ -10,20 +10,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ArrayAdapter
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
+import com.desynatadmin.adapter.DealBrandFilterAdapter
 import com.desynatadmin.adapter.EnrolledSellerProductAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.DealProductFilterDialogBinding
 import com.desynatadmin.databinding.FragmentEnrolledSellerDetailBinding
+import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealProductResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -35,12 +40,21 @@ class EnrolledSellerDetailFragment : BaseFragment() {
     private var binding: FragmentEnrolledSellerDetailBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isBrandObserver = true
+    private var brandList = ArrayList<GetBrandResponse.Data.Data>()
+    private var dealBrandFilterAdapter: DealBrandFilterAdapter?=null
+    private var selectedBrand: GetBrandResponse.Data.Data?=null
+    private var filterBrand: GetBrandResponse.Data.Data?=null
+
     private var sellerDealRecord: GetDealDetailResponse.Data.SellerDealrecord?=null
     private var enrolledProductList = ArrayList<GetDealProductResponse.Data.SellerDealrecord.Product>()
     private var enrolledSellerProductAdapter: EnrolledSellerProductAdapter?=null
-
+    private var dealType = 1
     private var search: Job? = null
     private var lastQuery: String? = null
+
+    private var dialogBinding: DealProductFilterDialogBinding?=null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +74,7 @@ class EnrolledSellerDetailFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
 
         val itemJson = arguments?.getString("dealsData")
-
+        dealType = arguments?.getInt("dealType")?:1
         if (!itemJson.isNullOrEmpty()) {
             sellerDealRecord = Gson().fromJson(itemJson, GetDealDetailResponse.Data.SellerDealrecord::class.java)
             setData()
@@ -68,7 +82,14 @@ class EnrolledSellerDetailFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = "Details"
 
-            enrolledSellerProductAdapter = EnrolledSellerProductAdapter(requireActivity(),enrolledProductList,object :
+            if (dealType==2){
+                llRevenue.isVisible = true
+            }
+            else{
+                llRevenue.isVisible = false
+            }
+
+            enrolledSellerProductAdapter = EnrolledSellerProductAdapter(requireActivity(),dealType,enrolledProductList,object :
                 EnrolledSellerProductAdapter.ClickOnItem{
                 override fun onClickItem(position: Int) {
                     enrolledProductList[position].productDetails?.productVariants?.get(0)?.variantImage?.let {
@@ -134,6 +155,16 @@ class EnrolledSellerDetailFragment : BaseFragment() {
                 isObserver = false
             }
         }
+
+        viewModel.getAllBrandResult.observe(viewLifecycleOwner) { response ->
+            if (isBrandObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                brandList.clear()
+                response.data.data?.let { brandList.addAll(it) }
+                dealBrandFilterAdapter?.notifyDataSetChanged()
+                isBrandObserver = false
+            }
+        }
     }
 
     private fun setProductData(data: GetDealProductResponse.Data) {
@@ -147,7 +178,12 @@ class EnrolledSellerDetailFragment : BaseFragment() {
         binding?.apply {
             tvSellerName.text = sellerDealRecord?.sellerDetails?.firstName+" "+sellerDealRecord?.sellerDetails?.lastName
             tvCountry.text =  sellerDealRecord?.sellerDetails?.countryDetails?.name
-            tvTotalProductAdded.text = "${sellerDealRecord?.productCount} Products"
+            val count = sellerDealRecord?.productCount ?: 0
+            tvTotalProductAdded.text = if (count == 1) {
+                "$count Product"
+            } else {
+                "$count Products"
+            }
         }
     }
 
@@ -158,6 +194,9 @@ class EnrolledSellerDetailFragment : BaseFragment() {
         }
         map["deal_id"]=sellerDealRecord?.dealId.toString()
         map["seller_id"]=sellerDealRecord?.sellerId.toString()
+        if (filterBrand!=null){
+            map["filter"]= filterBrand?.nameEnglish.toString()
+        }
         viewModel.getDealProduct(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -169,8 +208,8 @@ class EnrolledSellerDetailFragment : BaseFragment() {
 
     private fun productFilterDialog() {
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
-        val dialogBinding = DealProductFilterDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog.setContentView(it) }
+        dialogBinding = DealProductFilterDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding?.root.let { it?.let { it1 -> dialog.setContentView(it1) } }
 
         val window: Window = dialog.window!!
         window.setLayout(
@@ -184,29 +223,64 @@ class EnrolledSellerDetailFragment : BaseFragment() {
         params.gravity = Gravity.BOTTOM
         window.attributes = params
 
-        dialogBinding.apply {
+        dialogBinding?.apply {
+
+            if (filterBrand!=null){
+                etBrand.setText(filterBrand?.nameEnglish)
+            }
+
+            dealBrandFilterAdapter=DealBrandFilterAdapter(requireActivity(),brandList,object :
+                DealBrandFilterAdapter.OnClick{
+                override fun onClick(position: Int) {
+                    etBrand.setText(brandList[position].nameEnglish)
+                    selectedBrand = brandList[position]
+                    rvBrand.isVisible = false
+                }
+
+            })
+            rvBrand.adapter = dealBrandFilterAdapter
 
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
             }
 
             etBrand.setOnClickListener {
-
+                if (brandList.size==0){
+                    rvBrand.isVisible = true
+                    getAllBrand()
+                }
+                else{
+                    rvBrand.isVisible = true
+                }
             }
 
             tvClear.setOnClickListener {
-
+                filterBrand = null
+                getDealProduct()
                 dialog.dismiss()
             }
 
             tvApply.setOnClickListener{
-                dialog.dismiss()
-            }
+                if (selectedBrand!=null){
+                    filterBrand = selectedBrand
+                    getDealProduct()
+                    dialog.dismiss()
+                }
+                else{
+                    showToast("Please select brand")
+                }
 
+            }
         }
 
         dialog.show()
     }
 
+    private fun getAllBrand(){
+        val map = HashMap<String,Any>()
+        viewModel.getAllBrand(map)
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isBrandObserver = true
+    }
 
 }

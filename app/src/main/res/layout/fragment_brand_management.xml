@@ -88,7 +88,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="01 of 230"
+        android:text="01 of 01"
         android:singleLine="true"
         android:ellipsize="end"
         android:textColor="@color/black"
@@ -107,7 +107,7 @@
         android:paddingBottom="@dimen/_25sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_next_brand"/>
+        android:src="@drawable/ic_next_brand_disable"/>
 
     <ProgressBar
         android:visibility="gone"
