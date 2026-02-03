@@ -15,17 +15,15 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AssignDriverAdapter
-import com.desynatadmin.adapter.ProductAdapter
+import com.desynatadmin.adapter.OrderProductAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AssignDriverDialogBinding
 import com.desynatadmin.databinding.FragmentOrderDetailBinding
-import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
-import com.desynatadmin.utils.openCustomDatePicker
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +36,7 @@ class OrderDetailFragment : BaseFragment() {
     private var isAssignObserver = true
 
     private var productList = ArrayList<GetActiveOrderResponse.Data.Data>()
-    private var productAdapter : ProductAdapter?=null
+    private var productAdapter : OrderProductAdapter?=null
 
     private var type = 0
     private var orderDetailData: GetActiveOrderResponse.Data.Data?=null
@@ -71,7 +69,7 @@ class OrderDetailFragment : BaseFragment() {
         binding?.apply {
 
             productList.clear()
-            productAdapter = ProductAdapter(requireActivity(),productList)
+            productAdapter = OrderProductAdapter(requireActivity(),productList)
             rvProduct.adapter = productAdapter
 
             if (!itemJson.isNullOrEmpty()) {

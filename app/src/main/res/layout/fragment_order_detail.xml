@@ -336,7 +336,7 @@
             android:background="@drawable/card_stroke15_background"
             android:backgroundTint="#14ADADAD"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            tools:listitem="@layout/item_product"
+            tools:listitem="@layout/item_order_product"
             tools:itemCount="2"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 

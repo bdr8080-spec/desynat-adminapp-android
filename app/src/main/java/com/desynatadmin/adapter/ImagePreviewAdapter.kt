@@ -27,11 +27,6 @@ class ImagePreviewAdapter(var context:Context, var productList: ArrayList<String
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val productData = productList[position]
         holder.binding.apply {
-//            ivProduct.load(productData) {
-//                crossfade(true)
-//                placeholder(R.drawable.ic_placeholder)
-//                error(R.drawable.ic_placeholder)
-//            }
             Glide.with(context).load(productData).placeholder(R.drawable.ic_placeholder).into(ivProduct)
         }
 

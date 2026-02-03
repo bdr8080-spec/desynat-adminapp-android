@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_4sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivColor"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:src="@color/brown"
+        android:clipToOutline="true"
+        app:shapeAppearanceOverlay="@style/circle_image"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:visibility="gone"
+        android:id="@+id/ivRectangleColor"
+        android:layout_width="@dimen/_28sdp"
+        android:layout_height="@dimen/_28sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:src="@color/brown"
+        android:clipToOutline="true"
+        android:layout_centerInParent="true"
+        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:visibility="gone"
+        android:id="@+id/ivBorderRectangleColor"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:clipToOutline="true"
+        android:layout_centerInParent="true"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/brown"
+        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"/>
+
+
+</RelativeLayout>

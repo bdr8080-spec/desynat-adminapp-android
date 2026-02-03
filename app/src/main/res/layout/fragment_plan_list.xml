@@ -46,7 +46,7 @@
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Selecte Country"
+                android:hint="Select Country"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
