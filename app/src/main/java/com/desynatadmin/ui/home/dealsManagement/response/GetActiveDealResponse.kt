@@ -64,10 +64,10 @@ data class GetActiveDealResponse(
             val sellerEnrolled: SellerEnrolled,
             @SerializedName("status")
             var status: Int,
-            @SerializedName("sub_category_details")
-            var subCategoryDetails: GetSubCategoryResponse.Data.Data,
+            @SerializedName("subCategory_details")
+            val subCategoryDetails: List<GetSubCategoryResponse.Data.Data>,
             @SerializedName("sub_category_id")
-            val subCategoryId: Int,
+            val subCategoryId: List<String>,
             @SerializedName("to")
             val to: String,
             @SerializedName("updated_at")

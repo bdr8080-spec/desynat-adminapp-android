@@ -17,7 +17,7 @@ data class AddDealRequest(
     @SerializedName("name_english")
     val nameEnglish: String,
     @SerializedName("sub_category_id")
-    val subCategoryId: String,
+    val subCategoryId: List<String>,
     @SerializedName("to")
     val to: String,
     @SerializedName("deal_id")

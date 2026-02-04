@@ -87,14 +87,13 @@ class AddFullScreenBannerFragment : BaseFragment() {
             CommonMethod.removeSpace(etTitle)
             if (!itemJson.isNullOrEmpty()) {
                 bannerData = Gson().fromJson(itemJson, GetFullScreenBannerResponse.Data.Data::class.java)
-                toolbar.tvToolbar.text = "Edit Advertisement"
+                toolbar.tvToolbar.text = "Edit Full Screen Banner"
                 btnSubmit.text = "Update"
                 setData()
 
             }
             else{
-                toolbar.tvToolbar.text = "Add Advertisement"
-
+                toolbar.tvToolbar.text = "Add Full Screen Banner"
             }
 
             imagePicker = ImagePicker(
@@ -161,7 +160,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
             }
 
             ivBanner.setOnClickListener {
-                imagePicker.showImageSourceDialog()
+                imagePicker.openGallery()
             }
         }
     }
@@ -221,6 +220,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
         binding?.apply {
 
             etTitle.setText(bannerData?.title)
+            etFor.setText(if(bannerData?.type=="2")"Web" else "Mobile")
             if (image==null) {
                 imageUrl = bannerData?.image.toString()
             }

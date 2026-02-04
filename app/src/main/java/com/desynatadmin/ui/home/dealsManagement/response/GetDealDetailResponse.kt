@@ -1,6 +1,8 @@
 package com.desynatadmin.ui.home.dealsManagement.response
 
 
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.google.gson.annotations.SerializedName
 
 data class GetDealDetailResponse(
@@ -13,7 +15,7 @@ data class GetDealDetailResponse(
 ) {
     data class Data(
         @SerializedName("category_details")
-        val categoryDetails: CategoryDetails,
+        val categoryDetails: GetCategoryResponse.Data,
         @SerializedName("category_id")
         val categoryId: Int,
         @SerializedName("created_at")
@@ -34,34 +36,15 @@ data class GetDealDetailResponse(
         val sellerDealrecords: List<SellerDealrecord>,
         @SerializedName("status")
         val status: Int,
-        @SerializedName("sub_category_details")
-        val subCategoryDetails: SubCategoryDetails,
+        @SerializedName("subCategory_details")
+        val subCategoryDetails: List<GetSubCategoryResponse.Data.Data>,
         @SerializedName("sub_category_id")
-        val subCategoryId: Int,
+        val subCategoryId: List<String>,
         @SerializedName("to")
         val to: String,
         @SerializedName("updated_at")
         val updatedAt: String
     ) {
-        data class CategoryDetails(
-            @SerializedName("color_code")
-            val colorCode: String,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("description")
-            val description: String,
-            @SerializedName("id")
-            val id: Int,
-            @SerializedName("image")
-            val image: String,
-            @SerializedName("name")
-            val name: String,
-            @SerializedName("status")
-            val status: Int,
-            @SerializedName("updated_at")
-            val updatedAt: String
-        )
-
         data class SellerDealrecord(
             @SerializedName("deal_id")
             val dealId: Int,

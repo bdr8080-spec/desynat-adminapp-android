@@ -8,19 +8,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.desynatadmin.R
+import com.desynatadmin.adapter.MultipleSubCategorySelectionAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAddDealBinding
+import com.desynatadmin.databinding.PopupSubcategoryBinding
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
+import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -40,13 +48,13 @@ class AddDealFragment : BaseFragment() {
     private var isObserver = true
     private var isSubCategoryObserver = true
 
-    private var dealData: GetActiveDealResponse.Data.Data?=null
+    private var dealData: GetDealDetailResponse.Data?=null
 
     private var categoryList = ArrayList<GetCategoryResponse.Data>()
     private var selectedCategory: GetCategoryResponse.Data? = null
 
     private var subCategoryList = ArrayList<GetSubCategoryResponse.Data.Data>()
-    private var selectedSubCategory: GetSubCategoryResponse.Data.Data? = null
+    private val selectedSubCategoryList = ArrayList<GetSubCategoryResponse.Data.Data>()
     var startDate:String?=null
     var endDate:String?=null
     var fromTimestamp=0L
@@ -72,7 +80,6 @@ class AddDealFragment : BaseFragment() {
         }
 
     private var originalCategoryName: String? = null
-    private var originalSubCategory: GetSubCategoryResponse.Data.Data? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,7 +105,7 @@ class AddDealFragment : BaseFragment() {
             CommonMethod.removeSpace(etEnglishFullName)
 
             if (!itemJson.isNullOrEmpty()) {
-                dealData = Gson().fromJson(itemJson, GetActiveDealResponse.Data.Data::class.java)
+                dealData = Gson().fromJson(itemJson, GetDealDetailResponse.Data::class.java)
                 toolbar.tvToolbar.text = "Edit"
                 btnSubmit.text = "Save Changes"
                 setData()
@@ -156,7 +163,6 @@ class AddDealFragment : BaseFragment() {
         binding?.apply {
             etEnglishFullName.setText(dealData?.nameEnglish)
             etArabicFullName.setText(dealData?.nameArabic)
-            etSubCategory.setText(dealData?.subCategoryDetails?.nameEnglish)
             etDiscount.setText(dealData?.discount)
             startDate = dealData?.from.toString()
             endDate = dealData?.to.toString()
@@ -171,10 +177,8 @@ class AddDealFragment : BaseFragment() {
                     error(R.drawable.ic_upload_brand)
                 }
                 selectedCategory = dealData?.categoryDetails
-                selectedSubCategory = dealData?.subCategoryDetails
 
                 originalCategoryName = selectedCategory?.name
-                originalSubCategory = selectedSubCategory
 
                 Log.e("category", "setData: $originalCategoryName" )
 
@@ -213,7 +217,7 @@ class AddDealFragment : BaseFragment() {
             }
 
             etSubCategory.setOnClickListener{
-                showSubCategoryDropdown(etSubCategory)
+                showMultipleSubCategoryDropdown(etSubCategory)
             }
 
             etFromDate.setOnClickListener{
@@ -299,6 +303,9 @@ class AddDealFragment : BaseFragment() {
 
                 subCategoryList.clear()
                 response.data.data?.let { subCategoryList.addAll(it) }
+                if (dealData != null) {
+                    preselectSubCategories()
+                }
                 isSubCategoryObserver = false
             }
         }
@@ -326,9 +333,11 @@ class AddDealFragment : BaseFragment() {
 
 
     private fun addDeal(){
+        val subCategoryIds = selectedSubCategoryList.map { it.id.toString() }
+
         val request = AddDealRequest(
             categoryId = selectedCategory?.id.toString(),
-            subCategoryId = selectedSubCategory?.id.toString(),
+            subCategoryId = subCategoryIds,
             discount = binding?.etDiscount?.text.toString(),
             from = startDate.toString(),
             to = endDate.toString(),
@@ -376,13 +385,9 @@ class AddDealFragment : BaseFragment() {
                     Log.e("category", "originalCategoryName: $originalCategoryName" )
 
                     if (match == originalCategoryName) {
-                        selectedSubCategory = originalSubCategory
-                        binding?.etSubCategory
-                            ?.setText(originalSubCategory?.nameEnglish ?: "")
-                        Log.e("category", "set: ${originalSubCategory?.nameEnglish}" )
+                       preselectSubCategories()
                     } else {
                         clearAllField()
-                        selectedSubCategory = null
                         Log.e("category", "clear: $originalCategoryName" )
 
                     }
@@ -392,23 +397,87 @@ class AddDealFragment : BaseFragment() {
         }
     }
 
-    private fun clearAllField(){
-        binding?.apply {
-            etSubCategory.setText("")
+    private fun clearAllField() {
+        subCategoryList.forEach { it.isSelected = false }
+        selectedSubCategoryList.clear()
+        binding?.etSubCategory?.setText("")
+    }
+
+    private fun showMultipleSubCategoryDropdown(view: AppCompatEditText) {
+
+        val popupBinding = PopupSubcategoryBinding.inflate(layoutInflater)
+
+        val tempList = subCategoryList.map { it.copy() }.toMutableList()
+
+        val adapter = MultipleSubCategorySelectionAdapter(tempList) {
+            updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+        }
+
+        popupBinding.rvSubCategory.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            this.adapter = adapter
+        }
+
+        updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+
+        popupBinding.layoutSelectAll.setOnClickListener {
+            val selectAll = tempList.any { !it.isSelected }
+            tempList.forEach { it.isSelected = selectAll }
+            adapter.notifyDataSetChanged()
+            updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+        }
+
+        val popupWindow = PopupWindow(
+            popupBinding.root,
+            view.width,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        ).apply {
+            elevation = 10f
+            showAsDropDown(view)
+        }
+
+        popupBinding.btnDone.setOnClickListener {
+
+            subCategoryList.forEach { original ->
+                original.isSelected =
+                    tempList.any { it.id == original.id && it.isSelected }
+            }
+
+            selectedSubCategoryList.clear()
+            selectedSubCategoryList.addAll(subCategoryList.filter { it.isSelected })
+
+            updateSelectedText(view, subCategoryList)
+            popupWindow.dismiss()
+        }
+
+        popupWindow.setOnDismissListener {
         }
     }
 
-    private fun showSubCategoryDropdown(view: AppCompatEditText) {
-        val list = subCategoryList.map { it.nameEnglish }
-        val popup = androidx.appcompat.widget.ListPopupWindow(requireActivity())
-        popup.anchorView = view
-        popup.setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, list))
-        popup.setOnItemClickListener { _, _, pos, _ ->
-            selectedSubCategory = subCategoryList[pos]
-            view.setText(subCategoryList[pos].nameEnglish)
-            popup.dismiss()
-        }
-        popup.show()
+    private fun updateSelectedText(
+        view: AppCompatEditText,
+        list: List<GetSubCategoryResponse.Data.Data>
+    ) {
+        val selected = list
+            .filter { it.isSelected }
+            .joinToString(", ") { it.nameEnglish }
+
+        view.setText(selected)
+    }
+
+    private fun updateSelectAllIcon(
+        iv: ImageView,
+        list: List<GetSubCategoryResponse.Data.Data>
+    ) {
+        val allSelected = list.isNotEmpty() && list.all { it.isSelected }
+
+        iv.setImageResource(
+            if (allSelected)
+                R.drawable.ic_checkbox
+            else
+                R.drawable.ic_checkbox_unselected
+        )
     }
 
     private fun validation(): Boolean {
@@ -433,9 +502,12 @@ class AddDealFragment : BaseFragment() {
                 showToast("Please select category")
                 return false
             }
-
-            if (etSubCategory.text.toString().trim().isEmpty()) {
-                showToast("Please select sub-category")
+//            if (etSubCategory.text.toString().trim().isEmpty()) {
+//                showToast("Please select sub-category")
+//                return false
+//            }
+            if (selectedSubCategoryList.isEmpty()) {
+                showToast("Please select at least one sub-category")
                 return false
             }
 
@@ -477,6 +549,21 @@ class AddDealFragment : BaseFragment() {
         } catch (e: Exception) {
             false
         }
+    }
+
+    private fun preselectSubCategories() {
+        val selectedIds = dealData?.subCategoryDetails
+            ?.map { it.id }
+            ?: emptyList()
+
+        subCategoryList.forEach { sub ->
+            sub.isSelected = selectedIds.contains(sub.id)
+        }
+
+        selectedSubCategoryList.clear()
+        selectedSubCategoryList.addAll(subCategoryList.filter { it.isSelected })
+
+        updateSelectedText(binding!!.etSubCategory, subCategoryList)
     }
 
 }

@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemDealProductBinding
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealProductResponse
 import com.desynatadmin.utils.CommonMethod
 
 class EnrolledSellerProductAdapter(var context:Context, var dealType:Int,var enrolledProductList: ArrayList<GetDealProductResponse.Data.SellerDealrecord.Product>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<EnrolledSellerProductAdapter.ViewHolder>() {
 
     var category : GetDealProductResponse.Data.CategoryDetails?=null
-    var subCategory : GetDealProductResponse.Data.SubCategoryDetails?=null
+    private val subCategoryList = mutableListOf<GetSubCategoryResponse.Data.Data>()
 
     inner class ViewHolder(val binding: ItemDealProductBinding) :
         RecyclerView.ViewHolder(binding.root){
@@ -35,7 +36,7 @@ class EnrolledSellerProductAdapter(var context:Context, var dealType:Int,var enr
                 ivSwitch.setImageResource(R.drawable.switch_off)
             }
 
-            tvCategory.text = "${category?.name} (${subCategory?.nameEnglish})"
+            tvCategory.text = "${category?.name} (${subCategoryList.firstOrNull { it.id == productData?.productDetails?.subcategoryId }})"
             tvProductName.text =  productData?.productDetails?.productNameEn
             tvBrand.text =  productData?.productDetails?.brand?.nameEnglish
             Glide.with(context).load(productData?.productDetails?.productVariants?.get(0)?.variantImage?.get(0)).placeholder(
@@ -71,9 +72,13 @@ class EnrolledSellerProductAdapter(var context:Context, var dealType:Int,var enr
         holder.bind(position)
     }
 
-    fun updateCategorySubCategory(categoryData:GetDealProductResponse.Data.CategoryDetails?=null,subCategoryData:GetDealProductResponse.Data.SubCategoryDetails?=null){
+    fun updateCategorySubCategory(
+        categoryData: GetDealProductResponse.Data.CategoryDetails?,
+        subCategoryData: List<GetSubCategoryResponse.Data.Data>?
+    ) {
         category = categoryData
-        subCategory = subCategoryData
+        subCategoryList.clear()
+        subCategoryData?.let { subCategoryList.addAll(it) }
         notifyDataSetChanged()
     }
 

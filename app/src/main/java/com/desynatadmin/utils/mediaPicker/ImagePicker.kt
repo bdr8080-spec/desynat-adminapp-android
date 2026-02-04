@@ -51,7 +51,7 @@ class ImagePicker(
         cameraLauncher.launch(cameraImageUri!!)
     }
 
-    private fun openGallery() {
+    fun openGallery() {
         galleryLauncher.launch("image/*")
     }
 

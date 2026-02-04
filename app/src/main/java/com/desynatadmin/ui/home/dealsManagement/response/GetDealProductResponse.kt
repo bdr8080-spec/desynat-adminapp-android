@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.home.dealsManagement.response
 
 
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.google.gson.annotations.SerializedName
 
 data class GetDealProductResponse(
@@ -34,10 +35,10 @@ data class GetDealProductResponse(
         val sellerDealrecords: List<SellerDealrecord>,
         @SerializedName("status")
         val status: Int,
-        @SerializedName("sub_category_details")
-        val subCategoryDetails: SubCategoryDetails,
+        @SerializedName("subCategory_details")
+        val subCategoryDetails: List<GetSubCategoryResponse.Data.Data>,
         @SerializedName("sub_category_id")
-        val subCategoryId: Int,
+        val subCategoryId: List<String>,
         @SerializedName("to")
         val to: String,
         @SerializedName("updated_at")
@@ -299,23 +300,5 @@ data class GetDealProductResponse(
             }
         }
 
-        data class SubCategoryDetails(
-            @SerializedName("category_id")
-            val categoryId: Int,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("id")
-            val id: Int,
-            @SerializedName("image")
-            val image: String,
-            @SerializedName("name_arabic")
-            val nameArabic: String,
-            @SerializedName("name_english")
-            val nameEnglish: String,
-            @SerializedName("status")
-            val status: Int,
-            @SerializedName("updated_at")
-            val updatedAt: String
-        )
     }
 }

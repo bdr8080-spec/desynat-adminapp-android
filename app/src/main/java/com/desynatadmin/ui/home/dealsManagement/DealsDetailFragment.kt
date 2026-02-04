@@ -97,7 +97,7 @@ class DealsDetailFragment : BaseFragment() {
 
             btnEdit.setOnClickListener {
                 val bundle = Bundle().apply {
-                    putString("dealsData", Gson().toJson(dealData))
+                    putString("dealsData", Gson().toJson(dealDetailData))
                 }
                 findNavController().navigate(R.id.action_dealDetail_to_addDealFragment,bundle)
             }
@@ -191,7 +191,7 @@ class DealsDetailFragment : BaseFragment() {
             checkData()
             tvDealName.text = dealDetailData?.nameEnglish
             tvCategoryValue.text = dealDetailData?.categoryDetails?.name
-            tvSubCategoryValue.text = dealDetailData?.subCategoryDetails?.nameEnglish
+            tvSubCategoryValue.text = dealDetailData?.subCategoryDetails?.joinToString(", ") { it.nameEnglish }
             tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealDetailData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealDetailData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
             tvDiscountValue.text = dealDetailData?.discount+"%"
             Glide.with(requireActivity()).load(dealDetailData?.image).placeholder(R.drawable.ic_placeholder).into(ivDeal)

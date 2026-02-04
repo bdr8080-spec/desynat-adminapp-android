@@ -58,6 +58,8 @@ data class GetFullScreenBannerResponse(
             val status: Int,
             @SerializedName("title")
             val title: String,
+            @SerializedName("type")
+            val type: String,
             @SerializedName("updated_at")
             val updatedAt: String
         ) {

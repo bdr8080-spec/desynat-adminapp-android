@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_upload_banner"
+                android:src="@drawable/ic_upload_full_banner"
                 android:background="@drawable/ic_dash"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
                 android:id="@+id/tvFor"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="For" />
+                android:text="Type" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etFor"

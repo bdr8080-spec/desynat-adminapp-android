@@ -59,6 +59,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
     var fromTimestamp = 0L
     var toTimestamp = 0L
     var countryId: String? = null
+    private var type = 1
     private var countryList = ArrayList<GetCountryResponse.Data>()
 
     override fun onCreateView(
@@ -81,7 +82,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
         binding?.apply {
             ProgressDialogUtils.getInstance().hideProgress()
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Full Screen Banner Management"
+            toolbar.tvToolbar.text = "Banner Management"
 
             bannerList.clear()
             bannerAdapter = FullScreenBannerAdapter(requireActivity(), bannerList, object :
@@ -138,9 +139,27 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                 currentPage = 1
                 getAllBanner(false)
             }
+
+            if (type==1){
+                currentPage = 1
+                type = 1
+                getAllBanner()
+                tvFullScreen.setTextColor(requireActivity().getColor(R.color.white))
+                tvPromotional.setTextColor(requireActivity().getColor(R.color.black))
+                tvFullScreen.setBackgroundResource(R.drawable.selected_left_border)
+                tvPromotional.background = null
+            }
+            else{
+                currentPage = 1
+                type = 2
+                getPromotionalBanner()
+                tvFullScreen.setTextColor(requireActivity().getColor(R.color.black))
+                tvPromotional.setTextColor(requireActivity().getColor(R.color.white))
+                tvPromotional.setBackgroundResource(R.drawable.selected_right_border)
+                tvFullScreen.background = null
+            }
         }
 
-            getAllBanner()
 
 
         if (SharedPreference.get(requireActivity()).getUserCountryList() == null) {
@@ -156,6 +175,26 @@ class FullScreenBannerManagementFragment : BaseFragment() {
         binding?.apply {
             toolbar.ivBack.setOnClickListener {
                 (requireActivity() as? HomeActivity)?.onBackPressed()
+            }
+
+            tvFullScreen.setOnClickListener {
+                currentPage = 1
+                type = 1
+                getAllBanner()
+                tvFullScreen.setTextColor(requireActivity().getColor(R.color.white))
+                tvPromotional.setTextColor(requireActivity().getColor(R.color.black))
+                tvFullScreen.setBackgroundResource(R.drawable.selected_left_border)
+                tvPromotional.background = null
+            }
+
+            tvPromotional.setOnClickListener {
+                currentPage = 1
+                type = 2
+                getPromotionalBanner()
+                tvFullScreen.setTextColor(requireActivity().getColor(R.color.black))
+                tvPromotional.setTextColor(requireActivity().getColor(R.color.white))
+                tvPromotional.setBackgroundResource(R.drawable.selected_right_border)
+                tvFullScreen.background = null
             }
 
             ivFilter.setOnClickListener {
@@ -272,6 +311,19 @@ class FullScreenBannerManagementFragment : BaseFragment() {
     }
 
     private fun getAllBanner(loading: Boolean = true, search: String? = lastQuery) {
+        viewModel.getFullScreenBanner(
+            search = search,
+            countryId,
+            startDate,
+            endDate,
+            page = currentPage
+        )
+        if (loading) {
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        }
+        isObserver = true
+    }
+    private fun getPromotionalBanner(loading: Boolean = true, search: String? = lastQuery) {
         viewModel.getFullScreenBanner(
             search = search,
             countryId,

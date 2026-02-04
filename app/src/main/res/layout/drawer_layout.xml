@@ -465,7 +465,7 @@
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_toStartOf="@+id/ivGoFullScreenBanner"
                 android:layout_toEndOf="@id/ivFullScreenBanner"
-                android:text="Full Screen Banner Management" />
+                android:text="Banner Management" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGoFullScreenBanner"
