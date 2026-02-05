@@ -833,9 +833,13 @@ interface ApiServices {
     suspend fun updatePromotionalBanner(
         @Body body: AddPromotionalBannerRequest
     ): Response<AddPromotionalBannerResponse>
-
     @POST(Constants.DELETE_PROMOTIONAL_BANNER)
     suspend fun deletePromotionalBanner(
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_PROMOTIONAL_BANNER_STATUS)
+    suspend fun updatePromotionalBannerStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<AddPromotionalBannerResponse>
 }

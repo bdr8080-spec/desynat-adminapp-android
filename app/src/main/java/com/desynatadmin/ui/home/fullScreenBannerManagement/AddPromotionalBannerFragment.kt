@@ -98,13 +98,13 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
                 if (!itemJson.isNullOrEmpty()) {
                     bannerData = Gson().fromJson(itemJson, GetPromotionalBannerResponse.Data.Data::class.java)
-                    toolbar.tvToolbar.text = "Edit Banner"
+                    toolbar.tvToolbar.text = "Edit Promotional Banner"
                     btnSubmit.text = "Update"
                     setData()
 
                 }
                 else{
-                    toolbar.tvToolbar.text = "Add Banner"
+                    toolbar.tvToolbar.text = "Add Promotional Banner"
                 }
 
                 imagePicker = ImagePicker(

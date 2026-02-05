@@ -68,7 +68,6 @@ class FullScreenBannerManagementFragment : BaseFragment() {
     var endDate1: String? = null
     var fromTimestamp1 = 0L
     var toTimestamp1 = 0L
-    var countryId1: String? = null
     private var selectedBannerType: String? = null
     private var selectedBannerType1: String? = null
     private var type = 1
@@ -447,10 +446,10 @@ class FullScreenBannerManagementFragment : BaseFragment() {
             map["search"] = search
         }
         if (startDate1!=null) {
-            map["from_date"] = startDate1.toString()
+            map["start_date"] = startDate1.toString()
         }
         if (endDate1!=null) {
-            map["to_date"] = endDate1.toString()
+            map["end_date"] = endDate1.toString()
         }
         if (selectedBannerType1!=null) {
             map["banner_position"] =
@@ -515,7 +514,9 @@ class FullScreenBannerManagementFragment : BaseFragment() {
         dialogBinding.apply {
 
             if (type==2){
-
+                tvType.text = "Banner Position"
+                etCountry.isVisible = false
+                tvCountry.isVisible = false
                 rbBoth.text = "Top"
                 rbApp.text = "Bottom"
                 rbWeb.text = "Category"
@@ -524,10 +525,6 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                     "top" -> rbBoth.isChecked = true
                     "bottom" -> rbApp.isChecked = true
                     "category" -> rbWeb.isChecked = true
-                }
-
-                if (countryId1 != null) {
-                    etCountry.text = countryList.firstOrNull { it.id.toString() == countryId1 }?.name
                 }
                 if (startDate1 != null) {
                     etFrom.text =
@@ -538,6 +535,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                 }
             }
             else{
+                tvType.text = "Type"
                 rbBoth.text = "Both"
                 rbApp.text = "App Banner"
                 rbWeb.text = "Web Banner"
@@ -604,7 +602,6 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                 if (type==2){
                     startDate1 = null
                     endDate1 = null
-                    countryId1 = null
                     selectedBannerType1 = null
                     toTimestamp1 = 0L
                     fromTimestamp1 = 0L
@@ -636,10 +633,6 @@ class FullScreenBannerManagementFragment : BaseFragment() {
 
             tvApply.setOnClickListener {
                 if (type==2){
-                    if (selectedCountryId != null) {
-                        countryId1 =
-                            countryList.firstOrNull { it.id.toString() == selectedCountryId }?.name
-                    }
                     if (selectedBannerTypeTemp != null) {
                         selectedBannerType1 = selectedBannerTypeTemp
                     }

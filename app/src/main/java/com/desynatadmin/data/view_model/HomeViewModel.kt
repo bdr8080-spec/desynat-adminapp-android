@@ -1333,13 +1333,21 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
             repository.updatePromotionalBanner(request)
         }
     }
-
     val deletePromotionalBannerResult: LiveData<CommonResponse>
         get() = repository.deletePromotionalBannerLiveData
 
     fun deletePromotionalBanner(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.deletePromotionalBanner(map)
+        }
+    }
+
+  val updatePromotionalBannerStatusResult: LiveData<AddPromotionalBannerResponse>
+        get() = repository.updatePromotionalBannerStatusLiveData
+
+    fun updatePromotionalBannerStatus(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updatePromotionalBannerStatus(map)
         }
     }
 

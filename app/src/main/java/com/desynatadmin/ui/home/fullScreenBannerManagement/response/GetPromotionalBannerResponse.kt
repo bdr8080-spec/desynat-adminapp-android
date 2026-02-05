@@ -71,7 +71,7 @@ data class GetPromotionalBannerResponse(
             @SerializedName("start_date")
             var startDate: String,
             @SerializedName("status")
-            val status: String,
+            var status: String,
             @SerializedName("subcategory_details")
             var subcategoryDetails: GetSubCategoryResponse.Data.Data?=null,
             @SerializedName("subcatgory")

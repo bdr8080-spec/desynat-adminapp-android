@@ -10,19 +10,19 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivBanner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_120sdp"
+        android:layout_height="@dimen/_130sdp"
         android:scaleType="centerCrop"
         android:layout_margin="1dp"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="@dimen/_10sdp"
         app:shapeAppearanceOverlay="@style/half_rounded_corner_10sdp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:fontFamily="@font/poppins_medium"
         android:text="Title"
@@ -57,7 +57,7 @@
         android:textSize="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
-     app:layout_constraintTop_toBottomOf="@+id/tvTitle"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCountryName"

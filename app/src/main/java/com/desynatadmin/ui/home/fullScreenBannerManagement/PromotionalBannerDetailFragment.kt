@@ -78,6 +78,7 @@ class PromotionalBannerDetailFragment : BaseFragment() {
     }
 
     private fun setData() {
+        updateStatus()
         binding?.apply {
             Glide.with(requireActivity()).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)
             when(bannerData?.bannerPosition){
@@ -130,6 +131,10 @@ class PromotionalBannerDetailFragment : BaseFragment() {
                 }
             }
 
+            ivSwitch.setOnClickListener {
+                updateStatusApi()
+            }
+
         }
     }
 
@@ -137,6 +142,25 @@ class PromotionalBannerDetailFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["banner_id"]=bannerData?.id.toString()
         viewModel.deletePromotionalBanner(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun updateStatus(){
+        binding?.apply {
+            if(bannerData?.status=="1"){
+                ivSwitch.setImageResource(R.drawable.switch_on)
+            }
+            else{
+                ivSwitch.setImageResource(R.drawable.switch_off)
+            }
+        }
+    }
+
+    private fun updateStatusApi(){
+        val map = HashMap<String,Any>()
+        map["banner_id"]=bannerData?.id.toString()
+        viewModel.updatePromotionalBannerStatus(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -155,6 +179,21 @@ class PromotionalBannerDetailFragment : BaseFragment() {
                 CommonMethod.showSuccessDialog(requireContext(), "Banner deleted successfully"){
                     findNavController().popBackStack()
                 }
+                isObserver = false
+            }
+        }
+
+        viewModel.updatePromotionalBannerStatusResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                bannerData?.status = response.data.staus
+                if (bannerData?.status=="1"){
+                    showToast("Banner Unblock Successfully")
+                }
+                else{
+                    showToast("Banner Block Successfully")
+                }
+                updateStatus()
                 isObserver = false
             }
         }

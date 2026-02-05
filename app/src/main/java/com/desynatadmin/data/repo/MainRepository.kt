@@ -1656,6 +1656,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+    val updatePromotionalBannerStatusLiveData = SingleLiveEvent<AddPromotionalBannerResponse>()
+    suspend fun updatePromotionalBannerStatus(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.updatePromotionalBannerStatus(map)
+            },
+            responseLiveData = updatePromotionalBannerStatusLiveData
+        )
+    }
+
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

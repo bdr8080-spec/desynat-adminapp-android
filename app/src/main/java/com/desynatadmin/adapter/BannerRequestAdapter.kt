@@ -18,10 +18,10 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
             val bannerRequestData = bannerList[position]
                 tvName.text = bannerRequestData.sellerDetails?.firstName+" "+bannerRequestData.sellerDetails?.lastName
                 tvCountry.text = bannerRequestData.sellerDetails?.countryDetails?.name
-                tvRequestId.text = "#${bannerRequestData.orderId}"
-                tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerRequestData.createdAt, outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+                tvRequestId.text = "#${bannerRequestData?.orderId}"
+                tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerRequestData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
                 tvDurationValue.text = bannerRequestData.totalDays
-                tvTotalAmountValue.text = "${CommonMethod.formatAmount(bannerRequestData.price)} KD"
+                tvTotalAmountValue.text = "${CommonMethod.formatAmount(bannerRequestData?.price?:"")} KD"
                 when(bannerRequestData?.bannerPosition) {
                     "1" -> {
                         tvBannerPositionValue.text = "Home Top"
