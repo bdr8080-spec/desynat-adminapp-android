@@ -1,14 +1,14 @@
 package com.desynatadmin.ui.home.fullScreenBannerManagement
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,16 +16,13 @@ import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.FragmentAddFullScreenBannerBinding
 import com.desynatadmin.databinding.FragmentAddPromotionalBannerBinding
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
-import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
-import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
-import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerRequest
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
-import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.showToast
@@ -42,20 +39,18 @@ class AddPromotionalBannerFragment : BaseFragment() {
         private var binding: FragmentAddPromotionalBannerBinding?=null
         private val viewModel: HomeViewModel by viewModels()
         private var isObserver = true
-
         private var isImageObserver = true
-
-        private var bannerData: GetFullScreenBannerResponse.Data.Data?=null
-        private var countryList = ArrayList<GetCountryResponse.Data>()
-        private var selectedCountryCode: String? = null
+        private var bannerData: GetPromotionalBannerResponse.Data.Data?=null
         var startDate:String?=null
         var endDate:String?=null
         var fromTimestamp=0L
         var toTimestamp=0L
+    var days = 0
 
         private lateinit var imagePicker: ImagePicker
         private var image: File? = null
         private var imageUrl = ""
+    private var bannerPosition = ""
         private val cameraLauncher =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
                 imagePicker.onCameraResult(success)
@@ -98,13 +93,11 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
 
         override fun initView() {
-            setCountry()
             val itemJson = arguments?.getString("bannerData")
             binding?.apply {
 
-                CommonMethod.removeSpace(etTitle)
                 if (!itemJson.isNullOrEmpty()) {
-                    bannerData = Gson().fromJson(itemJson, GetFullScreenBannerResponse.Data.Data::class.java)
+                    bannerData = Gson().fromJson(itemJson, GetPromotionalBannerResponse.Data.Data::class.java)
                     toolbar.tvToolbar.text = "Edit Banner"
                     btnSubmit.text = "Update"
                     setData()
@@ -136,25 +129,41 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
                 etPosition.setOnClickListener {
                     showTypeDropdown(it) { value ->
-                        if (value=="Category"){
-                            getCategory()
-                            tvCategory.isVisible = true
-                            rgCategory.isVisible = true
-                        }
-                        else{
-                            selectedCategory = null
-                            selectedSubCategory = null
-                            tvCategory.isVisible = false
-                            rgCategory.isVisible = false
-                            tvSubCategory.isVisible = false
-                            etSubCategory.isVisible = false
+                        when(value) {
+                            "Category" -> {
+                                bannerPosition = "3"
+                                getCategory()
+                                tvCategory.isVisible = true
+                                rgCategory.isVisible = true
+
+                            }
+
+                            "Home Top" -> {
+                                bannerPosition = "1"
+                                selectedCategory = null
+                                selectedSubCategory = null
+                                tvCategory.isVisible = false
+                                rgCategory.isVisible = false
+                                tvSubCategory.isVisible = false
+                                etSubCategory.isVisible = false
+                            }
+
+                            "Home Bottom" -> {
+                                bannerPosition = "2"
+                                selectedCategory = null
+                                selectedSubCategory = null
+                                tvCategory.isVisible = false
+                                rgCategory.isVisible = false
+                                tvSubCategory.isVisible = false
+                                etSubCategory.isVisible = false
+                            }
                         }
                         etPosition.setText(value)
                     }
                 }
 
                 etSubCategory.setOnClickListener{
-                   // showMultipleSubCategoryDropdown(etSubCategory)
+                    showSubCategoryDropdown(etSubCategory)
                 }
 
                 rgCategory.setOnCheckedChangeListener { group, checkedId ->
@@ -177,19 +186,14 @@ class AddPromotionalBannerFragment : BaseFragment() {
                     }
                 }
 
-                etCountry.setOnClickListener {
-                    CommonMethod.showAllCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
-                        etCountry.setText(selectedCountry.name)
-                        selectedCountryCode = selectedCountry.id.toString()
-                    }
-                }
-
                 etStartDate.setOnClickListener {
                     openCustomDatePicker(requireActivity(),
                         Calendar.getInstance().timeInMillis){ date, timestamp->
                         etStartDate.text=date
                         fromTimestamp=timestamp
                         startDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                        binding?.clDays?.isVisible = false
+                        days = 0
                     }
 
                 }
@@ -199,6 +203,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                         etEndDate.text=date
                         toTimestamp=timestamp
                         endDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                        calculateDays()
                     }
                 }
 
@@ -229,7 +234,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                 }
             }
 
-            viewModel.uploadWithResolutionResult.observe(viewLifecycleOwner) { response ->
+            viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
                 if (isImageObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
                     response?.let {
@@ -240,7 +245,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                 }
             }
 
-            viewModel.addFullScreenBannerResult.observe(viewLifecycleOwner) { response ->
+            viewModel.addPromotionalBannerResult.observe(viewLifecycleOwner) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
                     CommonMethod.showSuccessDialog(requireContext(), "Banner added successfully!"){
@@ -250,12 +255,19 @@ class AddPromotionalBannerFragment : BaseFragment() {
                 }
             }
 
-            viewModel.updateFullScreenBannerResult.observe(viewLifecycleOwner) { response ->
+            viewModel.updatePromotionalBannerResult.observe(viewLifecycleOwner) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
+                    bannerData?.uploadBanner = response.data.uploadBanner
+                    bannerData?.bannerPosition = response.data.bannerPosition
+                    bannerData?.startDate = response.data.startDate
+                    bannerData?.endDate = response.data.endDate
+                    bannerData?.totalDays = response.data.totalDays
+                    bannerData?.categoryDetails = selectedCategory?:null
+                    bannerData?.subcategoryDetails = selectedSubCategory?:null
                     findNavController().previousBackStackEntry
                         ?.savedStateHandle
-                        ?.set("updatedBannerData", Gson().toJson(response.data))
+                        ?.set("updatedPromotionalBannerData", Gson().toJson(bannerData))
                     CommonMethod.showSuccessDialog(requireContext(), response.message){
                         findNavController().popBackStack()
                     }
@@ -271,9 +283,9 @@ class AddPromotionalBannerFragment : BaseFragment() {
                     binding?.tvSubCategory?.isVisible = true
                     binding?.etSubCategory?.isVisible = true
 
-//                    if (dealData==null){
-//                        getCategoryId("Men")
-//                    }
+                    if (bannerData==null){
+                        getCategoryId("Men")
+                    }
 
                     isObserver = false
                 }
@@ -291,30 +303,73 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
         }
 
-        private fun setCountry() {
-            countryList.clear()
-            SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
+    private fun showSubCategoryDropdown(view: AppCompatEditText) {
+        val list = subCategoryList.map { it.nameEnglish }
+        val popup = androidx.appcompat.widget.ListPopupWindow(requireActivity())
+        popup.anchorView = view
+        popup.setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, list))
+        popup.setOnItemClickListener { _, _, pos, _ ->
+            selectedSubCategory = subCategoryList[pos]
+            view.setText(subCategoryList[pos].nameEnglish)
+            popup.dismiss()
         }
+        popup.show()
+    }
 
         private fun setData(){
 
             binding?.apply {
+                clDays.isVisible = true
+                tvTotalDays.text = bannerData?.totalDays
+                bannerPosition = bannerData?.bannerPosition.toString()
+                    when(bannerData?.bannerPosition) {
+                        "1" ->  {
+                            etPosition.setText("Home Top")
 
-                etTitle.setText(bannerData?.title)
+                        }
+                        "2" -> etPosition.setText("Home Bottom")
+                        "3" -> {
+                            selectedCategory = bannerData?.categoryDetails
+                            selectedSubCategory = bannerData?.subcategoryDetails
+                            getCategory()
+                            getSubCategory()
+                            etPosition.setText("Category")
+                                tvCategory.isVisible = true
+                                rgCategory.isVisible = true
+                                etSubCategory.isVisible = true
+                                tvSubCategory.isVisible = true
+                                etSubCategory.setText(bannerData?.subcategoryDetails?.nameEnglish)
+                            when (bannerData?.categoryDetails?.name) {
+                                "Women" -> {
+                                    rbWomen.isChecked = true
+                                    rbMen.isChecked = false
+                                    rbKids.isChecked = false
+                                }
+                                "Men" -> {
+                                    rbWomen.isChecked = false
+                                    rbMen.isChecked = true
+                                    rbKids.isChecked = false
+                                }
+                                "Kids"-> {
+                                    rbWomen.isChecked = false
+                                    rbMen.isChecked = false
+                                    rbKids.isChecked = true
+                                }
+                            }
+
+                        }
+                    }
+
                 if (image==null) {
-                    imageUrl = bannerData?.image.toString()
+                    imageUrl = bannerData?.uploadBanner.toString()
                 }
-                ivBanner.load(bannerData?.image) {
+                ivBanner.load(bannerData?.uploadBanner) {
                     crossfade(true)
                     placeholder(R.drawable.ic_placeholder)
                     error(R.drawable.ic_placeholder)
                 }
-                selectedCountryCode = bannerData?.countryId.toString()
                 startDate = bannerData?.startDate.toString()
                 endDate = bannerData?.endDate.toString()
-                if(selectedCountryCode!=null){
-                    etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
-                }
                 if (startDate!=null){
                     etStartDate.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 }
@@ -326,20 +381,21 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
 
         private fun addBanner(){
-            val request = AddFullScreenBannerRequest(
-                countryId = selectedCountryCode.toString(),
-                type = if (binding?.etPosition?.text?.trim().toString()=="Web") "2" else "1",
+            val request = AddPromotionalBannerRequest(
+                bannerPosition = bannerPosition,
                 startDate = startDate.toString(),
                 endDate = endDate.toString(),
-                image = imageUrl,
-                title = binding?.etTitle?.text.toString(),
-                bannerId = if(bannerData!=null) bannerData?.id.toString() else null
+                uploadBanner = imageUrl,
+                totalDays = days.toString(),
+                bannerId = if (bannerData != null) bannerData?.id.toString() else null,
+                category = if (bannerPosition=="3") selectedCategory?.id.toString() else null,
+                subcategory = if (bannerPosition=="3") selectedSubCategory?.id else null
             )
             if (bannerData!=null){
-                viewModel.updateFullScreenBanner(request)
+                viewModel.updatePromotionalBanner(request)
             }
             else{
-                viewModel.addFullScreenBanner(request)
+                viewModel.addPromotionalBanner(request)
             }
 
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
@@ -347,7 +403,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
 
         fun uploadFile(){
-            viewModel.uploadWithResolution(image,if(binding?.etPosition?.text?.trim().toString()=="Web") "2" else "1")
+            viewModel.uploadImage(image)
             ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
             isImageObserver = true
         }
@@ -357,32 +413,6 @@ class AddPromotionalBannerFragment : BaseFragment() {
             binding?.apply {
                 if (image==null&&bannerData==null){
                     showToast("Please upload banner image")
-                    return false
-                }
-                else if (image != null) {
-                    val type = binding?.etPosition?.text.toString()
-                    if (!isGif(image!!)) {
-                        if (!validateBannerImage(image!!, type)) {
-                            showToast(
-                                if (type == "Mobile")
-                                //  "Please upload 9:16 image (720x1280 to 1440x2560)"
-                                    "Please upload 9:16 image"
-                                else
-                                // "Please upload 16:9 image (1280x720 to 2560x1440)"
-                                    "Please upload 16:9 image"
-                            )
-                            return false
-                        }
-                    }
-                }
-
-
-                else if (binding?.etTitle?.text?.toString()?.isBlank() == true ) {
-                    showToast("Please enter title")
-                    return false
-                }
-                else if (etCountry.text.toString().isBlank()) {
-                    showToast("Please select country")
                     return false
                 }
                 else if (etPosition.text.toString().trim().isEmpty()) {
@@ -433,58 +463,6 @@ class AddPromotionalBannerFragment : BaseFragment() {
             popup.show()
         }
 
-        fun isGif(file: File): Boolean {
-            return file.extension.equals("gif", ignoreCase = true)
-        }
-
-        data class ImageMeta(
-            val width: Int,
-            val height: Int,
-            val ratio: Float
-        )
-
-        fun getImageMeta(file: File): ImageMeta {
-            val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-            BitmapFactory.decodeFile(file.absolutePath, options)
-
-            val width = options.outWidth
-            val height = options.outHeight
-            val ratio = width.toFloat() / height.toFloat()
-
-            return ImageMeta(width, height, ratio)
-        }
-
-        fun validateBannerImage(
-            file: File,
-            type: String
-        ): Boolean {
-
-            val meta = getImageMeta(file)
-
-            return if (type == "Mobile") {
-                val minW = 720
-                val minH = 1280
-                val maxW = 1440
-                val maxH = 2560
-                val expectedRatio = 9f / 16f
-
-                meta.width in minW..maxW &&
-                        meta.height in minH..maxH &&
-                        kotlin.math.abs(meta.ratio - expectedRatio) < 0.02f
-
-            } else {
-                val minW = 1280
-                val minH = 720
-                val maxW = 2560
-                val maxH = 1440
-                val expectedRatio = 16f / 9f
-
-                meta.width in minW..maxW &&
-                        meta.height in minH..maxH &&
-                        kotlin.math.abs(meta.ratio - expectedRatio) < 0.02f
-            }
-        }
-
     private fun getCategory(){
         viewModel.getAllCategory()
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
@@ -529,6 +507,20 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
     }
 
+    private fun calculateDays() {
+        if (fromTimestamp > 0 && toTimestamp > 0 && toTimestamp >= fromTimestamp) {
+            val diff = toTimestamp - fromTimestamp
+            days = ((diff / (1000 * 60 * 60 * 24)) + 1).toInt()
+            if (days<10){
+                binding?.tvTotalDays?.text = "0"+days.toString()
+            }
+            else{
+                binding?.tvTotalDays?.text = days.toString()
+            }
+
+            binding?.clDays?.isVisible = true
+        }
+    }
 
     }
 

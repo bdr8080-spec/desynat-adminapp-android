@@ -335,6 +335,13 @@
         <action
             android:id="@+id/action_fullScreenBanner_to_addFullScreenBannerFragment"
             app:destination="@id/addFullScreenBanner" />
+        <action
+            android:id="@+id/action_fullScreenBanner_to_promotionalBannerDetailFragment"
+            app:destination="@id/promotionalBannerDetail" />
+
+        <action
+            android:id="@+id/action_fullScreenBanner_to_addPromotionalBannerFragment"
+            app:destination="@id/addPromotionalBanner" />
 
     </fragment>
 
@@ -356,6 +363,25 @@
         android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.AddFullScreenBannerFragment"
         android:label="Add Full Screen Banner Fragment"
         tools:layout="@layout/fragment_add_full_screen_banner"/>
+
+    <fragment
+        android:id="@+id/promotionalBannerDetail"
+        android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.PromotionalBannerDetailFragment"
+        android:label="Promotion Banner Detail Fragment"
+        tools:layout="@layout/fragment_promotional_banner_detail">
+
+
+        <action
+            android:id="@+id/action_promotionalBannerDetail_to_addPromotionalBannerFragment"
+            app:destination="@id/addPromotionalBanner" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addPromotionalBanner"
+        android:name="com.desynatadmin.ui.home.fullScreenBannerManagement.AddPromotionalBannerFragment"
+        android:label="Add Promotional Banner Fragment"
+        tools:layout="@layout/fragment_add_promotional_banner"/>
 
     <fragment
         android:id="@+id/dealManagement"

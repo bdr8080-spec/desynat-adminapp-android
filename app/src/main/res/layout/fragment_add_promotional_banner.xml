@@ -36,42 +36,6 @@
                 app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/edit_text_title"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:text="Title"/>
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etTitle"
-                android:layout_width="match_parent"
-                style="@style/edit_text"
-                android:hint="Enter Title"
-                android:inputType="text"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/edit_back" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:visibility="gone"
-                android:id="@+id/tvCountry"
-                style="@style/edit_text_title"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:text="Select Country" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:visibility="gone"
-                android:id="@+id/etCountry"
-                style="@style/edit_text"
-                android:paddingVertical="@dimen/_9sdp"
-                android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Country"
-                android:editable="false"
-                android:clickable="true"
-                android:focusable="false"
-                android:layout_marginTop="5dp"
-                android:layout_centerVertical="true"
-                android:drawableEnd="@drawable/ic_drop_down"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPosition"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -230,6 +194,40 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:visibility="gone"
+                android:id="@+id/clDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_stroke_background"
+                app:layout_constraintTop_toBottomOf="@+id/etFrom"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:padding="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:text="Total days"
+                    android:textColor="@color/brown"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTotalDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:text=""
+                    android:textColor="@color/brown"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvDays"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDays"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btnSubmit"

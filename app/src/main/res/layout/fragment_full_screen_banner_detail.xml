@@ -149,6 +149,32 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvEndDateTitle" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Type"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvEndDateTitle"
+                    app:layout_constraintEnd_toStartOf="@id/tvTypeValue" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTypeValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:gravity="end"
+                    app:layout_constraintStart_toEndOf="@id/tvType"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvType" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

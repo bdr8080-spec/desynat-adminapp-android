@@ -51,7 +51,10 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDet
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerRequest
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
@@ -1099,9 +1102,9 @@ class HomeViewModel @Inject constructor(
     val getFullScreenBannerResult: LiveData<GetFullScreenBannerResponse>
         get() = repository.getFullScreenBannerLiveData
 
-    fun getFullScreenBanner(search: String?=null,country: String?=null,startDate: String?=null,enDate: String?=null, page:Int) {
+    fun getFullScreenBanner(search: String?=null,country: String?=null,type: String?=null,startDate: String?=null,enDate: String?=null, page:Int) {
         viewModelScope.launch {
-            repository.getFullScreenBanner(search,country,startDate,enDate,page)
+            repository.getFullScreenBanner(search,country,type,startDate,enDate,page)
         }
     }
 
@@ -1301,6 +1304,42 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     fun rejectAffiliateUser(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.rejectAffiliateUser(map)
+        }
+    }
+
+    val getPromotionalBannerResult: LiveData<GetPromotionalBannerResponse>
+        get() = repository.getPromotionalBannerLiveData
+
+    fun getPromotionalBanner(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getPromotionalBanner(map)
+        }
+    }
+
+    val addPromotionalBannerResult: LiveData<AddPromotionalBannerResponse>
+        get() = repository.addPromotionalBannerLiveData
+
+    fun addPromotionalBanner(request: AddPromotionalBannerRequest) {
+        viewModelScope.launch {
+            repository.addPromotionalBanner(request)
+        }
+    }
+
+    val updatePromotionalBannerResult: LiveData<AddPromotionalBannerResponse>
+        get() = repository.updatePromotionalBannerLiveData
+
+    fun updatePromotionalBanner(request:AddPromotionalBannerRequest) {
+        viewModelScope.launch {
+            repository.updatePromotionalBanner(request)
+        }
+    }
+
+    val deletePromotionalBannerResult: LiveData<CommonResponse>
+        get() = repository.deletePromotionalBannerLiveData
+
+    fun deletePromotionalBanner(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deletePromotionalBanner(map)
         }
     }
 

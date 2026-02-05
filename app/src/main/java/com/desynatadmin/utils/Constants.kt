@@ -163,4 +163,8 @@ object Constants {
     const val BLOCK_UNBLOCK_AFFILIATE_USER = "/api/admin/block_unblock_affiliate_user"
     const val ACCEPT_AFFILIATE_USER = "/api/admin/accept_affiliate_user"
     const val REJECT_AFFILIATE_USER = "/api/admin/reject_affiliate_user"
+    const val GET_PROMOTIONAL_BANNER = "/api/admin/get_promotional_banners"
+    const val ADD_PROMOTIONAL_BANNER = "/api/admin/add_promotional_banner'"
+    const val UPDATE_PROMOTIONAL_BANNER = "/api/admin/update_promotional_banner"
+    const val DELETE_PROMOTIONAL_BANNER = "/api/admin/delete_promotional_banner"
 }

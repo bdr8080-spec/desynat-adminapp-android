@@ -48,7 +48,10 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDet
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerRequest
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
@@ -698,6 +701,7 @@ interface ApiServices {
     suspend fun getFullScreenBanner(
         @Query("search") search : String?=null,
         @Query("country") country : String?=null,
+        @Query("type") type : String?=null,
         @Query("from_date") fromDate : String?=null,
         @Query("to_date") toDate : String?=null,
         @Query("page") page: Int,
@@ -815,4 +819,23 @@ interface ApiServices {
         @Body body: HashMap<String, Any>
     ): Response<AcceptAffiliateUserResponse>
 
+    @GET(Constants.GET_PROMOTIONAL_BANNER)
+    suspend fun getPromotionalBanner(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetPromotionalBannerResponse>
+
+    @POST(Constants.ADD_PROMOTIONAL_BANNER)
+    suspend fun addPromotionalBanner(
+        @Body body: AddPromotionalBannerRequest
+    ): Response<AddPromotionalBannerResponse>
+
+    @POST(Constants.UPDATE_PROMOTIONAL_BANNER)
+    suspend fun updatePromotionalBanner(
+        @Body body: AddPromotionalBannerRequest
+    ): Response<AddPromotionalBannerResponse>
+
+    @POST(Constants.DELETE_PROMOTIONAL_BANNER)
+    suspend fun deletePromotionalBanner(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
 }

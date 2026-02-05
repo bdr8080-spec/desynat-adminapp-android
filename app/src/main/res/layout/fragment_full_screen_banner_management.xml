@@ -117,6 +117,17 @@
                     tools:listitem="@layout/item_full_screen_banner"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
+                    android:id="@+id/rvPromotionalBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    tools:listitem="@layout/item_full_screen_banner"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_70sdp"/>

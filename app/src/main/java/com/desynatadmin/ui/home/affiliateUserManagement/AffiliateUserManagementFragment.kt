@@ -498,7 +498,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["page"] = currentPage
         map["limit"] = 10
-        if (search!=null&&search!="") {
+        if (search!=null) {
             map["search"] = search
         }
         when(userType){

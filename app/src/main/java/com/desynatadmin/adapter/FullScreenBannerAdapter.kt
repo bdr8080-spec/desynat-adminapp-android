@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter
 class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<GetFullScreenBannerResponse.Data.Data>, var bannerClick:BannerClick) : RecyclerView.Adapter<FullScreenBannerAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemFullScreenBannerBinding) :
         RecyclerView.ViewHolder(binding.root){
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(position: Int) = with(binding){
             val bannerData = bannerList[position]
 
@@ -26,6 +27,7 @@ class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<Get
                 tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 Glide.with(context).load(bannerData?.image).placeholder(R.drawable.ic_placeholder).into(ivBanner)
+                tvTypeValue.text = if (bannerData?.type=="2") "Web Banner" else "App Banner"
                 when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
                     "Upcoming"->{
                         tvStatusValue.text = "Upcoming"

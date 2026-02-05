@@ -1,26 +1,19 @@
 package com.desynatadmin.ui.home.fullScreenBannerManagement
 
-import android.app.Dialog
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentFullScreenBannerDetailBinding
-import com.desynatadmin.databinding.ImagePreviewDialogBinding
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
@@ -126,7 +119,7 @@ class FullScreenBannerDetailFragment : BaseFragment() {
             tvCountry.text =  countryList.firstOrNull { it.id.toString() == bannerData?.countryId.toString() }?.name
             tvStartDate.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             tvEndDate.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-
+            tvTypeValue.text = if (bannerData?.type=="2") "Web Banner" else "App Banner"
             when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
                 "Upcoming"->{
                     tvStatus.text = "Upcoming"

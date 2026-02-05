@@ -54,7 +54,10 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDet
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerRequest
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
@@ -1358,13 +1361,12 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = getDealProductLiveData
         )
     }
-
     val getFullScreenBannerLiveData = SingleLiveEvent<GetFullScreenBannerResponse>()
-    suspend fun getFullScreenBanner(search:String?=null,country:String?=null ,startDate: String?=null,enDate: String?=null,page:Int
+    suspend fun getFullScreenBanner(search:String?=null,country:String?=null ,type:String?=null ,startDate: String?=null,enDate: String?=null,page:Int
     ) {
         handleApiCall(
             api = {
-                api.getFullScreenBanner(search,country,startDate,enDate,page)
+                api.getFullScreenBanner(search,country,type,startDate,enDate,page)
             },
             responseLiveData = getFullScreenBannerLiveData
         )
@@ -1391,7 +1393,6 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updateFullScreenBannerLiveData
         )
     }
-
     val deleteFullScreenBannerLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun deleteFullScreenBanner(map:HashMap<String,Any>)
     {
@@ -1402,7 +1403,6 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = deleteFullScreenBannerLiveData
         )
     }
-
     val getAdminStoryLiveData = SingleLiveEvent<GetStoryResponse>()
     suspend fun getAdminStory(page:Int)
     {
@@ -1613,7 +1613,48 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
+    val getPromotionalBannerLiveData = SingleLiveEvent<GetPromotionalBannerResponse>()
+    suspend fun getPromotionalBanner(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getPromotionalBanner(map)
+            },
+            responseLiveData = getPromotionalBannerLiveData
+        )
+    }
 
+    val addPromotionalBannerLiveData = SingleLiveEvent<AddPromotionalBannerResponse>()
+    suspend fun addPromotionalBanner(request: AddPromotionalBannerRequest)
+    {
+        handleApiCall(
+            api = {
+                api.addPromotionalBanner(request)
+            },
+            responseLiveData = addPromotionalBannerLiveData
+        )
+    }
+
+    val updatePromotionalBannerLiveData = SingleLiveEvent<AddPromotionalBannerResponse>()
+    suspend fun updatePromotionalBanner(request:AddPromotionalBannerRequest)
+    {
+        handleApiCall(
+            api = {
+                api.updatePromotionalBanner(request)
+            },
+            responseLiveData = updatePromotionalBannerLiveData
+        )
+    }
+    val deletePromotionalBannerLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deletePromotionalBanner(map:HashMap<String,Any>)
+    {
+        handleApiCall(
+            api = {
+                api.deletePromotionalBanner(map)
+            },
+            responseLiveData = deletePromotionalBannerLiveData
+        )
+    }
 
 }
 
