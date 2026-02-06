@@ -40,7 +40,5 @@ data class AddPromotionalBannerResponse(
         val updatedAt: String,
         @SerializedName("upload_banner")
         val uploadBanner: String ,
-        @SerializedName("staus")
-        val staus: String
     )
 }

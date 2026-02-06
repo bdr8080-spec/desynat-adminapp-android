@@ -186,13 +186,8 @@ class PromotionalBannerDetailFragment : BaseFragment() {
         viewModel.updatePromotionalBannerStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                bannerData?.status = response.data.staus
-                if (bannerData?.status=="1"){
-                    showToast("Banner Unblock Successfully")
-                }
-                else{
-                    showToast("Banner Block Successfully")
-                }
+                bannerData?.status = response.data.status
+                showToast(response.message)
                 updateStatus()
                 isObserver = false
             }

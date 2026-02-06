@@ -52,6 +52,7 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotion
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.UpdatePromotionalBannerStatusResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
@@ -841,5 +842,5 @@ interface ApiServices {
     @POST(Constants.UPDATE_PROMOTIONAL_BANNER_STATUS)
     suspend fun updatePromotionalBannerStatus(
         @Body body: HashMap<String,Any>
-    ): Response<AddPromotionalBannerResponse>
+    ): Response<UpdatePromotionalBannerStatusResponse>
 }

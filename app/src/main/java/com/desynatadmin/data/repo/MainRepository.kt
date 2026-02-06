@@ -58,6 +58,7 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotion
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.UpdatePromotionalBannerStatusResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
@@ -1656,7 +1657,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
-    val updatePromotionalBannerStatusLiveData = SingleLiveEvent<AddPromotionalBannerResponse>()
+    val updatePromotionalBannerStatusLiveData = SingleLiveEvent<UpdatePromotionalBannerStatusResponse>()
     suspend fun updatePromotionalBannerStatus(map:HashMap<String,Any>)
     {
         handleApiCall(
