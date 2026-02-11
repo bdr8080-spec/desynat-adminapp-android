@@ -51,6 +51,7 @@
         tools:listitem="@layout/item_sub_category_selection"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/btnDone"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_10sdp"

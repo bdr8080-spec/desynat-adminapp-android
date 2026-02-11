@@ -257,6 +257,8 @@ class AddDealFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener {
+                selectedSubCategoryList.clear()
+                selectedSubCategoryList.addAll(subCategoryList.filter { it.isSelected })
                 if (validation()){
                     if (image!=null){
                         uploadFile()
@@ -407,10 +409,8 @@ class AddDealFragment : BaseFragment() {
 
         val popupBinding = PopupSubcategoryBinding.inflate(layoutInflater)
 
-        val tempList = subCategoryList.map { it.copy() }.toMutableList()
-
-        val adapter = MultipleSubCategorySelectionAdapter(tempList) {
-            updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+        val adapter = MultipleSubCategorySelectionAdapter(subCategoryList) {
+            updateSelectAllIcon(popupBinding.ivSelectAll, subCategoryList)
         }
 
         popupBinding.rvSubCategory.apply {
@@ -418,13 +418,13 @@ class AddDealFragment : BaseFragment() {
             this.adapter = adapter
         }
 
-        updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+        updateSelectAllIcon(popupBinding.ivSelectAll, subCategoryList)
 
         popupBinding.layoutSelectAll.setOnClickListener {
-            val selectAll = tempList.any { !it.isSelected }
-            tempList.forEach { it.isSelected = selectAll }
+            val selectAll = subCategoryList.any { !it.isSelected }
+            subCategoryList.forEach { it.isSelected = selectAll }
             adapter.notifyDataSetChanged()
-            updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+            updateSelectAllIcon(popupBinding.ivSelectAll, subCategoryList)
         }
 
         val popupWindow = PopupWindow(
@@ -437,23 +437,64 @@ class AddDealFragment : BaseFragment() {
             showAsDropDown(view)
         }
 
-        popupBinding.btnDone.setOnClickListener {
-
-            subCategoryList.forEach { original ->
-                original.isSelected =
-                    tempList.any { it.id == original.id && it.isSelected }
-            }
-
-            selectedSubCategoryList.clear()
-            selectedSubCategoryList.addAll(subCategoryList.filter { it.isSelected })
-
-            updateSelectedText(view, subCategoryList)
-            popupWindow.dismiss()
-        }
-
         popupWindow.setOnDismissListener {
         }
     }
+
+
+    /*
+        private fun showMultipleSubCategoryDropdown(view: AppCompatEditText) {
+
+            val popupBinding = PopupSubcategoryBinding.inflate(layoutInflater)
+
+            val tempList = subCategoryList.map { it.copy() }.toMutableList()
+
+            val adapter = MultipleSubCategorySelectionAdapter(tempList) {
+                updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+            }
+
+            popupBinding.rvSubCategory.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                this.adapter = adapter
+            }
+
+            updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+
+            popupBinding.layoutSelectAll.setOnClickListener {
+                val selectAll = tempList.any { !it.isSelected }
+                tempList.forEach { it.isSelected = selectAll }
+                adapter.notifyDataSetChanged()
+                updateSelectAllIcon(popupBinding.ivSelectAll, tempList)
+            }
+
+            val popupWindow = PopupWindow(
+                popupBinding.root,
+                view.width,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true
+            ).apply {
+                elevation = 10f
+                showAsDropDown(view)
+            }
+
+            popupBinding.btnDone.setOnClickListener {
+
+                subCategoryList.forEach { original ->
+                    original.isSelected =
+                        tempList.any { it.id == original.id && it.isSelected }
+                }
+
+                selectedSubCategoryList.clear()
+                selectedSubCategoryList.addAll(subCategoryList.filter { it.isSelected })
+
+                updateSelectedText(view, subCategoryList)
+                popupWindow.dismiss()
+            }
+
+            popupWindow.setOnDismissListener {
+            }
+        }
+    */
 
     private fun updateSelectedText(
         view: AppCompatEditText,
@@ -471,7 +512,7 @@ class AddDealFragment : BaseFragment() {
         list: List<GetSubCategoryResponse.Data.Data>
     ) {
         val allSelected = list.isNotEmpty() && list.all { it.isSelected }
-
+        updateSelectedText(binding!!.etSubCategory,subCategoryList)
         iv.setImageResource(
             if (allSelected)
                 R.drawable.ic_checkbox

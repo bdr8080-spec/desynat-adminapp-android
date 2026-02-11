@@ -91,11 +91,16 @@ class PromotionalBannerDetailFragment : BaseFragment() {
                 "3"->{
                     tvBannerPositionValue.text = "Category"
                     if (bannerData?.categoryDetails!=null){
+                        tvCategoryNameValue.isVisible = true
+                        tvCategoryName.isVisible = true
                         tvSubCategoryNameValue.isVisible = true
                         tvSubCategoryName.isVisible = true
                         tvSubCategoryNameValue.text = bannerData?.subcategoryDetails?.nameEnglish
+                        tvCategoryNameValue.text = bannerData?.categoryDetails?.name
                     }
                     else{
+                        tvCategoryNameValue.isVisible = false
+                        tvCategoryName.isVisible = false
                         tvSubCategoryNameValue.isVisible = false
                         tvSubCategoryName.isVisible = false
                     }

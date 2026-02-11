@@ -114,7 +114,7 @@
                     android:textSize="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvBannerPosition" />
+                    app:layout_constraintTop_toBottomOf="@id/tvCategoryName" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:visibility="gone"
@@ -129,6 +129,34 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@+id/tvSubCategoryName"
                     app:layout_constraintTop_toTopOf="@id/tvSubCategoryName" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
+                    android:id="@+id/tvCategoryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Category name"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvBannerPosition" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
+                    android:id="@+id/tvCategoryNameValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Dress"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCategoryName"
+                    app:layout_constraintTop_toTopOf="@id/tvCategoryName" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDuration"

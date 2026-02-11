@@ -30,6 +30,7 @@ class PromotionalBannerAdapter(var context:Context, var bannerList: ArrayList<Ge
                 tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 Glide.with(context).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)
+            tvType.text = "Banner Position"
                 tvTypeValue.text = when(bannerData?.bannerPosition){
                     "1"-> "Home Top"
                     "2"-> "Home Bottom"

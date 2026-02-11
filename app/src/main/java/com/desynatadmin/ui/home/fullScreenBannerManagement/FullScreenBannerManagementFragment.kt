@@ -517,7 +517,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                 tvType.text = "Banner Position"
                 etCountry.isVisible = false
                 tvCountry.isVisible = false
-                rbBoth.text = "Top"
+                rbBoth.text = "Home Top"
                 rbApp.text = "Bottom"
                 rbWeb.text = "Category"
 
