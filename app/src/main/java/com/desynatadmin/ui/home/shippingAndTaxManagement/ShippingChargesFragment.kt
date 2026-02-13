@@ -22,6 +22,7 @@ import com.desynatadmin.R
 import com.desynatadmin.adapter.ShippingChargeAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.AddDefaultShippingChargeDialogBinding
 import com.desynatadmin.databinding.AddShippingChargeDialogBinding
 import com.desynatadmin.databinding.AddTaxDialogBinding
 import com.desynatadmin.databinding.FragmentShippingChargesBinding
@@ -110,6 +111,7 @@ class ShippingChargesFragment : BaseFragment() {
         binding?.apply {
             tvCountry.text = "${shippingTaxData?.flag}  ${shippingTaxData?.name}"
             tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
+            tvPrice.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())} KD"
         }
     }
 
@@ -125,6 +127,10 @@ class ShippingChargesFragment : BaseFragment() {
 
             ivAdd.setOnClickListener {
                 addShippingChargeDialog()
+            }
+
+            ivEditDefault.setOnClickListener {
+                addDefaultShippingChargeDialog("2")
             }
 
             ivNextArrow.setOnClickListener {
@@ -299,8 +305,6 @@ class ShippingChargesFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isAddObserver = true
     }
-
-
     private fun updateShippingCharge(fee:String,rangFrom:String,rangeTo:String) {
         val map = HashMap<String,Any>()
         map["country_id"] = shippingList[selectedPos].countryId
@@ -308,7 +312,7 @@ class ShippingChargesFragment : BaseFragment() {
         map["range_to"] = rangeTo
         map["shipping_fee"] = fee
         map["shipping_charge_id"] = shippingList[selectedPos].id
-            viewModel.updateShippingCharge(map)
+        viewModel.updateShippingCharge(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -316,7 +320,7 @@ class ShippingChargesFragment : BaseFragment() {
     private fun updateShippingChargeStatus() {
         val map = HashMap<String,Any>()
         map["shipping_charge_id"] = shippingList[selectedPos].id
-            viewModel.updateShippingChargeStatus(map)
+        viewModel.updateShippingChargeStatus(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -426,6 +430,46 @@ class ShippingChargesFragment : BaseFragment() {
         dialog.show()
     }
 
+    private fun addDefaultShippingChargeDialog(amount: String) {
+        addShippingDialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = AddDefaultShippingChargeDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { addShippingDialog?.setContentView(it) }
+
+        val window: Window = addShippingDialog?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        addShippingDialog?.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            etAmount.setText(amount)
+
+            tvToolbar.setOnClickListener {
+                addShippingDialog?.dismiss()
+            }
+
+            btnSubmit.setOnClickListener {
+              if(isInvalid(etAmount, "Delivery Price")) {
+                    return@setOnClickListener
+                }
+                else{
+
+              }
+            }
+
+        }
+
+        addShippingDialog?.show()
+    }
+
+
     private fun addShippingChargeDialog(isEdit: Boolean =false) {
         addShippingDialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddShippingChargeDialogBinding.inflate(LayoutInflater.from(context))
@@ -462,26 +506,26 @@ class ShippingChargesFragment : BaseFragment() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
                 override fun afterTextChanged(s: Editable?) {
-                    if (isEditing) return
-                    isEditing = true
-
-                    s?.let {
-                        if (it.startsWith("0")) {
-                            it.replace(0, 1, "")
-                        }
-                    }
-
-                    isEditing = false
+//                    if (isEditing) return
+//                    isEditing = true
+//
+//                    s?.let {
+//                        if (it.startsWith("0")) {
+//                            it.replace(0, 1, "")
+//                        }
+//                    }
+//
+//                    isEditing = false
                 }
             })
 
-            etFrom.setOnClickListener{
-                showRangeList(etFrom)
-            }
-
-            etTo.setOnClickListener{
-                showRangeList(etTo)
-            }
+//            etFrom.setOnClickListener{
+//                showRangeList(etFrom)
+//            }
+//
+//            etTo.setOnClickListener{
+//                showRangeList(etTo)
+//            }
 
             tvToolbar.setOnClickListener {
                 addShippingDialog?.dismiss()
@@ -518,11 +562,11 @@ class ShippingChargesFragment : BaseFragment() {
             showToast("Please enter $fieldName")
             return true
         }
-        val num = value.toDoubleOrNull() ?: 0.0
-        if (num <= 0) {
-            showToast("$fieldName should be greater than 0")
-            return true
-        }
+//        val num = value.toDoubleOrNull() ?: 0.0
+//        if (num <= 0) {
+//            showToast("$fieldName should be greater than 0")
+//            return true
+//        }
         return false
     }
 

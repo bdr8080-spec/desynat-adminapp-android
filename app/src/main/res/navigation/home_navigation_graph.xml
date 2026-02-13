@@ -471,4 +471,40 @@
         android:label="Affiliate User Detail Fragment"
         tools:layout="@layout/fragment_affiliate_user_detail"/>
 
+    <fragment
+        android:id="@+id/event"
+        android:name="com.desynatadmin.ui.home.liveCoverage.EventFragment"
+        android:label="Event Fragment"
+        tools:layout="@layout/fragment_event">
+
+        <action
+            android:id="@+id/action_eventFragment_to_liveEventFragment"
+            app:destination="@id/liveEvent" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/liveEvent"
+        android:name="com.desynatadmin.ui.home.liveCoverage.LiveEventFragment"
+        android:label="Live Event Fragment"
+        tools:layout="@layout/fragment_live_event"/>
+
+    <fragment
+        android:id="@+id/productManagement"
+        android:name="com.desynatadmin.ui.home.productManagement.ProductManagementFragment"
+        android:label="Product Management Fragment"
+        tools:layout="@layout/fragment_product_management">
+
+        <action
+            android:id="@+id/action_productManagementManagement_to_productDetailFragment"
+            app:destination="@id/productDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/productDetail"
+        android:name="com.desynatadmin.ui.home.productManagement.ProductDetailFragment"
+        android:label="Product Detail Fragment"
+        tools:layout="@layout/fragment_product_detail"/>
+
 </navigation>

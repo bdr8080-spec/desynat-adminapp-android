@@ -9,8 +9,6 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.adapter.BottomNavAdapter
 import com.desynatadmin.base.BaseActivity
@@ -25,7 +23,6 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
-import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -97,18 +94,14 @@ class HomeActivity : BaseActivity() {
                     enableDrawer(false)
                 }
             }
-
-
         }
 
         binding?.apply {
             drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
             setUpDrawerContent()
-
         }
 
         setDrawerData(SharedPreference.get(this).getUser())
-
     }
 
     override fun initControl() {
@@ -125,7 +118,6 @@ class HomeActivity : BaseActivity() {
 
                     isObserver = false
                 }
-
             }
 
             viewModel.logoutResult.observe(this) { response ->
@@ -142,10 +134,7 @@ class HomeActivity : BaseActivity() {
                     isObserver = false
                 }
             }
-
         }
-
-
     fun setBottomAdapter(){
         bottomAdapter = BottomNavAdapter(this,bottonNavItemList, object :BottomNavAdapter.BottomNavItemClick{
             override fun onBottomNavItemClick(position: Int) {
@@ -154,28 +143,23 @@ class HomeActivity : BaseActivity() {
                         ProgressDialogUtils.getInstance().hideProgress()
                         controller.navigate(R.id.home)
                     }
-                   // 1 -> controller.navigate(R.id.catalog)
-                    //2 -> controller.navigate(R.id.catalog)
+                    1 -> controller.navigate(R.id.productManagement)
+                    2 -> controller.navigate(R.id.event)
                     3 -> {
                         ProgressDialogUtils.getInstance().hideProgress()
                         controller.navigate(R.id.planList)
                     }
                    // 4 -> controller.navigate(R.id.profile)
                 }
-
             }
-
-
         })
         binding?.rvBottomNav?.adapter = bottomAdapter
-
     }
 
     fun openDrawer(){
         isOpenDrawer = true
         binding?.drawerLayout?.openDrawer(GravityCompat.START)
     }
-
 
 override fun onBackPressed() {
     Log.e("ehdf", "onBackPressed: $isOpenDrawer   ${binding?.drawerLayout?.isDrawerOpen(GravityCompat.START)}")
@@ -190,7 +174,6 @@ override fun onBackPressed() {
         super.onBackPressed()
     }
 }
-
     fun setDrawerData(user: LoginResponse.Data?) {
         drawerBinding.tvName.text = user?.fullName
         drawerBinding.tvEmail.text = user?.email
@@ -212,7 +195,6 @@ override fun onBackPressed() {
                 viewModel.logout()
                 isObserver = true
                 ProgressDialogUtils.getInstance().showProgress(this@HomeActivity, false)
-
             }
 
             rlCategoryManagement.setOnClickListener {
@@ -243,6 +225,7 @@ override fun onBackPressed() {
             rlCountryCityManagement.setOnClickListener {
                 startActivity(Intent(this@HomeActivity, CountryCityZoneManaActivity::class.java))
             }
+
             rlSellereManagment.setOnClickListener {
                 startActivity(Intent(this@HomeActivity, SellerManagementActivity::class.java))
             }
@@ -307,9 +290,7 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
         }
-
     }
-
     private fun enableDrawer(enable: Boolean) {
         if (enable) {
             binding?.drawerLayout?.setDrawerLockMode(androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -319,7 +300,6 @@ override fun onBackPressed() {
             binding?.navigationView?.isVisible = false
         }
     }
-
 
 }
 

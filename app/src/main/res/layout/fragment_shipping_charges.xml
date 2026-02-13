@@ -90,6 +90,45 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
             android:layout_marginTop="@dimen/_15sdp"
+            android:text="Default Delivery Charges"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11sdp"
+            android:layout_centerVertical="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edit_back">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="2 KD"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:id="@+id/ivEditDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit_ic"
+                android:paddingVertical="@dimen/_10sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="@dimen/_15sdp"
             android:text="Delivery Charges"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
@@ -100,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             tools:listitem="@layout/item_shipping_fee"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 

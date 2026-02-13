@@ -436,7 +436,7 @@ object CommonMethod {
     }
 
     fun formatDoubleValue(value: Double?): String {
-        if (value == null || value == 0.0) return ""
+        if (value == null) return ""
         return if (value % 1.0 == 0.0) {
             value.toInt().toString()  // Convert to integer string if whole number
         } else {
