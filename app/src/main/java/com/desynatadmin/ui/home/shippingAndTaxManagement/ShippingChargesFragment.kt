@@ -26,6 +26,7 @@ import com.desynatadmin.databinding.AddDefaultShippingChargeDialogBinding
 import com.desynatadmin.databinding.AddShippingChargeDialogBinding
 import com.desynatadmin.databinding.AddTaxDialogBinding
 import com.desynatadmin.databinding.FragmentShippingChargesBinding
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -35,14 +36,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ShippingChargesFragment : BaseFragment() {
-    private var addShippingDialog: Dialog?=null
     private var binding: FragmentShippingChargesBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isDefaultObserver = true
     private var isAddObserver = true
     private var shippingList = ArrayList<GetShippingTaxResponse.Data.ShippingInfo>()
     private var shippingChargeAdapter : ShippingChargeAdapter?=null
     private var shippingTaxData : GetShippingTaxResponse.Data?=null
+    private var defaultShippingChargeData : GetDefaultShippingChargeResponse.Data?=null
 
     private var currentPage = 1
     private var lastPage = 1
@@ -54,6 +56,8 @@ class ShippingChargesFragment : BaseFragment() {
     var selectedPos = -1
     var add = false
     val rangeList = (1..100).map { it.toString() }
+    private var addShippingDialog: Dialog?=null
+    private var addDefaultShippingDialog: Dialog?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,13 +109,13 @@ class ShippingChargesFragment : BaseFragment() {
         }
 
         getShippingCharge()
+        getDefaultShippingFee()
     }
 
     private fun setTaxData() {
         binding?.apply {
             tvCountry.text = "${shippingTaxData?.flag}  ${shippingTaxData?.name}"
             tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
-            tvPrice.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())} KD"
         }
     }
 
@@ -130,7 +134,7 @@ class ShippingChargesFragment : BaseFragment() {
             }
 
             ivEditDefault.setOnClickListener {
-                addDefaultShippingChargeDialog("2")
+                addDefaultShippingChargeDialog()
             }
 
             ivNextArrow.setOnClickListener {
@@ -187,11 +191,31 @@ class ShippingChargesFragment : BaseFragment() {
             }
         }
 
+        viewModel.updateDefaultShippingFeeResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                addDefaultShippingDialog?.dismiss()
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast("Delivery Charge Updated Successfully")
+                defaultShippingChargeData?.shippingFee = response.data.shippingFee
+                setData()
+                isObserver = false
+            }
+        }
+
+        viewModel.getDefaultShippingFeeResult.observe(viewLifecycleOwner) { response ->
+            if (isDefaultObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                defaultShippingChargeData = response.data
+                setData()
+                isDefaultObserver = false
+            }
+        }
+
         viewModel.updateShippingChargeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 addShippingDialog?.dismiss()
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast("Delivery Charge Updated Successfully ")
+                showToast("Delivery Charge Updated Successfully")
                 shippingList[selectedPos] = response.data
                 shippingChargeAdapter?.notifyItemChanged(selectedPos)
                 selectedPos = -1
@@ -317,6 +341,20 @@ class ShippingChargesFragment : BaseFragment() {
         isObserver = true
     }
 
+ private fun updateDefaultShippingFee(fee:String) {
+        val map = HashMap<String,Any>()
+        map["shipping_fee"] = fee
+        map["id"] = defaultShippingChargeData?.id.toString()
+        viewModel.updateDefaultShippingFee(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+private fun getDefaultShippingFee() {
+        viewModel.getDefaultShippingFee(shippingTaxData?.taxInfo?.countryId.toString())
+        isDefaultObserver = true
+    }
+
     private fun updateShippingChargeStatus() {
         val map = HashMap<String,Any>()
         map["shipping_charge_id"] = shippingList[selectedPos].id
@@ -430,18 +468,18 @@ class ShippingChargesFragment : BaseFragment() {
         dialog.show()
     }
 
-    private fun addDefaultShippingChargeDialog(amount: String) {
-        addShippingDialog = Dialog(requireActivity(), R.style.CustomDialog)
+    private fun addDefaultShippingChargeDialog() {
+        addDefaultShippingDialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddDefaultShippingChargeDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { addShippingDialog?.setContentView(it) }
+        dialogBinding.root.let { addDefaultShippingDialog?.setContentView(it) }
 
-        val window: Window = addShippingDialog?.window!!
+        val window: Window = addDefaultShippingDialog?.window!!
         window.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         window.setBackgroundDrawableResource(android.R.color.transparent)
-        addShippingDialog?.setCancelable(false)
+        addDefaultShippingDialog?.setCancelable(false)
 
         val params: WindowManager.LayoutParams = window.attributes
         params.gravity = Gravity.BOTTOM
@@ -449,10 +487,10 @@ class ShippingChargesFragment : BaseFragment() {
 
         dialogBinding.apply {
 
-            etAmount.setText(amount)
+            etAmount.setText(CommonMethod.formatDoubleValue(defaultShippingChargeData?.shippingFee))
 
             tvToolbar.setOnClickListener {
-                addShippingDialog?.dismiss()
+                addDefaultShippingDialog?.dismiss()
             }
 
             btnSubmit.setOnClickListener {
@@ -460,13 +498,13 @@ class ShippingChargesFragment : BaseFragment() {
                     return@setOnClickListener
                 }
                 else{
-
+                  updateDefaultShippingFee(etAmount.text.toString())
               }
             }
 
         }
 
-        addShippingDialog?.show()
+        addDefaultShippingDialog?.show()
     }
 
 
@@ -585,6 +623,12 @@ class ShippingChargesFragment : BaseFragment() {
         popup.width = editText.width
         popup.isModal = true
         popup.show()
+    }
+
+    private fun setData(){
+        binding?.apply {
+            tvPrice.text = "${CommonMethod.formatDoubleValue(defaultShippingChargeData?.shippingFee)} KD"
+        }
     }
 
 }

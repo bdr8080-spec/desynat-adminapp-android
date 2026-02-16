@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemSizeBinding
-class SizeAdapter(var context:Context, var productSizeList: ArrayList<String>, var onClick:OnClick) : RecyclerView.Adapter<SizeAdapter.ViewHolder>() {
+import com.desynatadmin.ui.home.productManagement.response.ProductArrangeResponse
+
+class SizeAdapter(var context:Context, var productSizeList: ArrayList<ProductArrangeResponse.Product.ProductVariation>, var onClick:OnClick) : RecyclerView.Adapter<SizeAdapter.ViewHolder>() {
     var selectedPos = 0
     interface OnClick{
         fun onClickItem(position: Int)
@@ -16,7 +18,7 @@ class SizeAdapter(var context:Context, var productSizeList: ArrayList<String>, v
         fun bind(position: Int) = with(binding){
                 val productSize = productSizeList[position]
 
-              //  tvSize.text = productSize?.name
+                tvSize.text = productSize?.size?.name
 
                 if (selectedPos==position){
                     tvSize.setTextColor(Color.parseColor("#000000"))

@@ -169,4 +169,12 @@ object Constants {
     const val UPDATE_PROMOTIONAL_BANNER = "/api/admin/update_promotional_banner"
     const val DELETE_PROMOTIONAL_BANNER = "/api/admin/delete_promotional_banner"
     const val UPDATE_PROMOTIONAL_BANNER_STATUS = "/api/admin/block_unblock_promotional_banner"
+    const val UPDATE_DEFAULT_SHIPPING_FEE = "/api/admin/update_default_shipping_fee"
+    const val GET_DEFAULT_SHIPPING_FEE = "/api/admin/get_default_shipping_fee"
+
+    const val GET_ALL_PRODUCT = "/api/admin/get_products"
+    const val PRODUCT_DETAIL = "/api/admin/get_product_detail"
+    const val UPDATE_PRODUCT_STATUS = "/api/admin/block_unblock_product"
+    const val GET_ALL_EVENT = "/api/admin/get_event"
+
 }

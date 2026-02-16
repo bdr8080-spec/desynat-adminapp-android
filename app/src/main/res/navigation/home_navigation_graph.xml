@@ -9,7 +9,13 @@
         android:id="@+id/home"
         android:name="com.desynatadmin.ui.home.fragment.HomeFragment"
         android:label="Home Fragment"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_home_to_notificationFragment"
+            app:destination="@id/notification" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/planList"
@@ -506,5 +512,11 @@
         android:name="com.desynatadmin.ui.home.productManagement.ProductDetailFragment"
         android:label="Product Detail Fragment"
         tools:layout="@layout/fragment_product_detail"/>
+
+    <fragment
+        android:id="@+id/notification"
+        android:name="com.desynatadmin.ui.home.fragment.NotificationFragment"
+        android:label="Notification Fragment"
+        tools:layout="@layout/fragment_notification"/>
 
 </navigation>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bottomsheet_bg"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/tvToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/_15sdp"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:background="@drawable/bottomsheet_bg"
+    android:backgroundTint="#FFF7EA"
+    android:fontFamily="@font/poppins_medium"
+    android:text="Change Language"
+    android:textColor="@color/black"
+    android:drawableEnd="@drawable/close_icon"
+    android:textSize="@dimen/_13sdp"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+    <RelativeLayout
+        android:id="@+id/relEnglish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:background="@drawable/edit_back">
+
+        <CheckBox
+            android:id="@+id/cbEnglish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/english"
+            android:textColor="@color/black"
+            android:paddingVertical="@dimen/_12sdp"
+            android:button="@drawable/selector_radio_icon"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:paddingStart="@dimen/_8sdp"
+            android:checked="false"
+            app:buttonTint="@null"
+            android:drawableTint="@null"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_12sdp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relArabic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:background="@drawable/edit_back">
+
+        <CheckBox
+            android:id="@+id/cbArabic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/arabic"
+            android:textColor="@color/black"
+            android:paddingVertical="@dimen/_12sdp"
+            android:button="@drawable/selector_radio_icon"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:paddingStart="@dimen/_8sdp"
+            android:checked="false"
+            app:buttonTint="@null"
+            android:drawableTint="@null"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_12sdp"/>
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnSave"
+        style="@style/button"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:text="Save"/>
+
+</LinearLayout>

@@ -68,6 +68,9 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.Update
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
+import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
+import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
+import com.desynatadmin.ui.home.productManagement.response.UpdateProductStatusResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -76,8 +79,10 @@ import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
@@ -1097,7 +1102,6 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updateShippingChargeLiveData
         )
     }
-
  val deleteShippingChargeLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun deleteShippingCharge(map:HashMap<String,Any>
     ) {
@@ -1635,7 +1639,6 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = addPromotionalBannerLiveData
         )
     }
-
     val updatePromotionalBannerLiveData = SingleLiveEvent<AddPromotionalBannerResponse>()
     suspend fun updatePromotionalBanner(request:AddPromotionalBannerRequest)
     {
@@ -1656,7 +1659,6 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = deletePromotionalBannerLiveData
         )
     }
-
     val updatePromotionalBannerStatusLiveData = SingleLiveEvent<UpdatePromotionalBannerStatusResponse>()
     suspend fun updatePromotionalBannerStatus(map:HashMap<String,Any>)
     {
@@ -1665,6 +1667,57 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
                 api.updatePromotionalBannerStatus(map)
             },
             responseLiveData = updatePromotionalBannerStatusLiveData
+        )
+    }
+    val updateDefaultShippingFeeLiveData = SingleLiveEvent<UpdateDefaultShippingChargeResponse>()
+    suspend fun updateDefaultShippingFee(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateDefaultShippingFee(map)
+            },
+            responseLiveData = updateDefaultShippingFeeLiveData
+        )
+    }
+    val getDefaultShippingFeeLiveData = SingleLiveEvent<GetDefaultShippingChargeResponse>()
+    suspend fun getDefaultShippingFee(countryId: String
+    ) {
+        handleApiCall(
+            api = {
+                api.getDefaultShippingFee(countryId)
+            },
+            responseLiveData = getDefaultShippingFeeLiveData
+        )
+    }
+
+    val getAllProductLiveData = SingleLiveEvent<GetAllProductListResponse>()
+    suspend fun getAllProduct(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getAllProduct(map)
+            },
+            responseLiveData = getAllProductLiveData
+        )
+    }
+val getProductDetailLiveData = SingleLiveEvent<GetProductDetailResponse>()
+    suspend fun getProductDetail(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getProductDetail(map)
+            },
+            responseLiveData = getProductDetailLiveData
+        )
+    }
+val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
+    suspend fun updateProductStatus(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateProductStatus(map)
+            },
+            responseLiveData = updateProductStatusLiveData
         )
     }
 

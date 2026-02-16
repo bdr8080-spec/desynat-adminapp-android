@@ -62,6 +62,9 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.Update
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
+import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
+import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
+import com.desynatadmin.ui.home.productManagement.response.UpdateProductStatusResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -70,8 +73,10 @@ import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
@@ -843,4 +848,30 @@ interface ApiServices {
     suspend fun updatePromotionalBannerStatus(
         @Body body: HashMap<String,Any>
     ): Response<UpdatePromotionalBannerStatusResponse>
+
+    @POST(Constants.UPDATE_DEFAULT_SHIPPING_FEE)
+    suspend fun updateDefaultShippingFee(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateDefaultShippingChargeResponse>
+
+    @GET(Constants.GET_DEFAULT_SHIPPING_FEE)
+    suspend fun getDefaultShippingFee(
+        @Query("country_id") countryId: String,
+    ): Response<GetDefaultShippingChargeResponse>
+
+    @GET(Constants.GET_ALL_PRODUCT)
+    suspend fun getAllProduct(
+        @QueryMap(encoded = true) map: HashMap<String,Any>
+    ): Response<GetAllProductListResponse>
+
+    @GET(Constants.PRODUCT_DETAIL)
+    suspend fun getProductDetail(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetProductDetailResponse>
+
+    @POST(Constants.UPDATE_PRODUCT_STATUS)
+    suspend fun updateProductStatus(
+        @Body body: HashMap<String,Any>
+    ): Response<UpdateProductStatusResponse>
+
 }

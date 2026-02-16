@@ -53,7 +53,9 @@ data class GetBrandResponse(
             @SerializedName("status")
             val status: Int,
             @SerializedName("updated_at")
-            val updatedAt: String
+            val updatedAt: String,
+            @SerializedName("isSelected")
+            var isSelected: Boolean = false
         )
 
         data class Link(

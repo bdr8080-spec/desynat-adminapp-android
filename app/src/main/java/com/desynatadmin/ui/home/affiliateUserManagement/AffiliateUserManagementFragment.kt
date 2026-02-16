@@ -767,5 +767,4 @@ class AffiliateUserManagementFragment : BaseFragment() {
         dialog.show()
     }
 
-
 }

@@ -8,8 +8,9 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemColorBinding
+import com.desynatadmin.ui.home.productManagement.response.ProductArrangeResponse
 
-class ProductRectangleColorAdapter(var context:Context, var productColorList: ArrayList<String>,var onClick: OnClick) : RecyclerView.Adapter<ProductRectangleColorAdapter.ViewHolder>() {
+class ProductRectangleColorAdapter(var context:Context, var productColorList: ArrayList<ProductArrangeResponse.Product>, var onClick: OnClick) : RecyclerView.Adapter<ProductRectangleColorAdapter.ViewHolder>() {
     var selectedPos = 0
     interface OnClick{
         fun onClickItem(position: Int)
@@ -22,7 +23,7 @@ class ProductRectangleColorAdapter(var context:Context, var productColorList: Ar
                 ivColor.isVisible = false
                 ivRectangleColor.isVisible = true
 
-             //   ivRectangleColor.setColorFilter(Color.parseColor(colorCode))
+                ivRectangleColor.setColorFilter(Color.parseColor(productColor.color.hexCode))
 
                 if (selectedPos==position){
                     ivBorderRectangleColor.isVisible = true

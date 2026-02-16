@@ -95,7 +95,7 @@ class EventFragment : BaseFragment() {
                 countryList.clear()
                 countryList.addAll(response.data)
                 setDefaultCountry()
-                SharedPreference.get(requireActivity()).saveUserCountryList(countryList)
+                SharedPreference.get(requireActivity()).saveCountryList(countryList)
                 isCountryObserver = false
             }
         }

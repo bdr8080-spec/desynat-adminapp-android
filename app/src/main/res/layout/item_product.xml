@@ -89,8 +89,8 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvPrice"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="19dp"
         android:fontFamily="@font/poppins_light"
         android:text="250 KD"
         android:textColor="#99000000"
@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
         android:layout_marginStart="@dimen/_4sdp"
-        android:text=""
+        android:text="20 % off"
         android:textColor="#E70000"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"

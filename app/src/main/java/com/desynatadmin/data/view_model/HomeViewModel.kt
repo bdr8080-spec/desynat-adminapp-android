@@ -65,6 +65,9 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.Update
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
+import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
+import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
+import com.desynatadmin.ui.home.productManagement.response.UpdateProductStatusResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResponse
@@ -73,8 +76,10 @@ import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
+import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
@@ -1352,5 +1357,48 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
+    val updateDefaultShippingFeeResult: LiveData<UpdateDefaultShippingChargeResponse>
+        get() = repository.updateDefaultShippingFeeLiveData
+
+    fun updateDefaultShippingFee(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateDefaultShippingFee(map)
+        }
+    }
+    val getDefaultShippingFeeResult: LiveData<GetDefaultShippingChargeResponse>
+        get() = repository.getDefaultShippingFeeLiveData
+
+    fun getDefaultShippingFee(countryId: String) {
+        viewModelScope.launch {
+            repository.getDefaultShippingFee(countryId)
+        }
+    }
+
+    val getAllProductResult: LiveData<GetAllProductListResponse>
+        get() = repository.getAllProductLiveData
+
+    fun getAllProduct(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getAllProduct(map)
+        }
+    }
+
+    val getProductDetailResult: LiveData<GetProductDetailResponse>
+        get() = repository.getProductDetailLiveData
+
+    fun getProductDetail(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getProductDetail(map)
+        }
+    }
+
+    val updateProductStatusResult: LiveData<UpdateProductStatusResponse>
+        get() = repository.updateProductStatusLiveData
+
+    fun updateProductStatus(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateProductStatus(map)
+        }
+    }
 
 }

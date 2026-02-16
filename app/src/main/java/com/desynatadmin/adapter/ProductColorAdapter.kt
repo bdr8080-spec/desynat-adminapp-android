@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemColorBinding
+import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
 
-class ProductColorAdapter(var context:Context, var productColorList: List<String>) : RecyclerView.Adapter<ProductColorAdapter.ViewHolder>() {
+class ProductColorAdapter(var context:Context, var productColorList: List<GetAllProductListResponse.Data.Data.ProductVariant>) : RecyclerView.Adapter<ProductColorAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemColorBinding) :
         RecyclerView.ViewHolder(binding.root){
@@ -16,7 +17,7 @@ class ProductColorAdapter(var context:Context, var productColorList: List<String
             val productColor = productColorList[position]
                 ivColor.isVisible = true
                 ivRectangleColor.isVisible = false
-          //  ivColor.setColorFilter(Color.parseColor(colorCode))
+            ivColor.setColorFilter(Color.parseColor(productColor?.color?.hexCode))
         }
         }
 

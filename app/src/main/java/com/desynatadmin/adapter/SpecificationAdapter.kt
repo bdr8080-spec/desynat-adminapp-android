@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemSpecificationBinding
+import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
 
-class SpecificationAdapter(var context:Context, var specificationList: ArrayList<String>) : RecyclerView.Adapter<SpecificationAdapter.ViewHolder>() {
+class SpecificationAdapter(var context:Context, var specificationList: ArrayList<GetProductDetailResponse.Data.ProductSpecification>) : RecyclerView.Adapter<SpecificationAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemSpecificationBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
-          //  tvDescription.text = "${specificationList[position].nameEn} - ${specificationList[position].featureEn}"
+            tvDescription.text = "${specificationList[position].nameEn} - ${specificationList[position].featureEn}"
         }
         }
 
