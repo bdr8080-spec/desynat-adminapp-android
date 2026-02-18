@@ -127,7 +127,6 @@
                 android:numStars="5"
                 android:progressBackgroundTint="#C7C7C7"
                 android:progressTint="#FFA41B"
-                android:rating="2.5"
                 android:secondaryProgressTint="#FFA41B"
                 android:stepSize="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tvBrand"
@@ -139,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_1sdp"
                 android:fontFamily="@font/poppins_light"
-                android:text="(123K)"
+                android:text="(0)"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
@@ -871,5 +870,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/mainProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/brown" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

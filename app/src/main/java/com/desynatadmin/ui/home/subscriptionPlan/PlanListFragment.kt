@@ -119,6 +119,7 @@ class PlanListFragment : BaseFragment() {
 
         viewModel.subscriptionPlanResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
+                binding?.mainProgressBar?.isVisible = false
                 ProgressDialogUtils.getInstance().hideProgress()
                 subscriptionList.clear()
                 subscriptionList.addAll(response.data)
@@ -138,7 +139,7 @@ class PlanListFragment : BaseFragment() {
             viewModel.getSubscriptionPlan()
         }
         if (isLoading) {
-            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+            binding?.mainProgressBar?.isVisible = true
         }
         isObserver = true
         }

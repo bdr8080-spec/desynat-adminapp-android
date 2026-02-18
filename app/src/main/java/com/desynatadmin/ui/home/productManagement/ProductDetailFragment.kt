@@ -1,13 +1,18 @@
 package com.desynatadmin.ui.home.productManagement
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.ProductImageAdapter
@@ -17,11 +22,13 @@ import com.desynatadmin.adapter.SpecificationAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentProductDetailBinding
+import com.desynatadmin.databinding.SizeGuideChartDialogBinding
 import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
 import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
 import com.desynatadmin.ui.home.productManagement.response.ProductArrangeResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -121,6 +128,10 @@ class ProductDetailFragment : BaseFragment() {
             tvSwitch.setOnClickListener {
                 updateProductStatus()
             }
+
+            tvSizeGuide.setOnClickListener {
+                sizeGuideDialog()
+            }
         }
     }
 
@@ -133,6 +144,7 @@ class ProductDetailFragment : BaseFragment() {
         }
         viewModel.getProductDetailResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
+                binding?.mainProgressBar?.isVisible = false
                 ProgressDialogUtils.getInstance().hideProgress()
                 productDetailData = response.data
                 productDetailData?.productVariants?.let { mapVariantsToProducts(it) }?.let { productInfo.addAll(it) }
@@ -143,7 +155,9 @@ class ProductDetailFragment : BaseFragment() {
 
         viewModel.updateProductStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
+                binding?.mainProgressBar?.isVisible = false
                 ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
                 productDetailData?.productActiveStatus = response.data.productActiveStatus
                 productData?.productActiveStatus = response.data.productActiveStatus
                 updateStatus()
@@ -156,6 +170,7 @@ class ProductDetailFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["id"] = productData?.id.toString()
         viewModel.getProductDetail(map)
+        binding?.mainProgressBar?.isVisible = true
         isObserver = true
     }
 
@@ -163,6 +178,7 @@ class ProductDetailFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["id"] = productData?.id.toString()
         viewModel.updateProductStatus(map)
+        binding?.mainProgressBar?.isVisible = true
         isObserver = true
     }
 
@@ -334,6 +350,40 @@ class ProductDetailFragment : BaseFragment() {
                     )
                 }
         )
+    }
+
+    private fun sizeGuideDialog() {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = SizeGuideChartDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            tvToolbar.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            ivSizeChart.load(productData?.uploadSizeChart) {
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
+
+        }
+
+        dialog.show()
     }
 
 }

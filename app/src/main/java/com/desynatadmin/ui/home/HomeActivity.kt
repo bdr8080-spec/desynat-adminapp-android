@@ -66,8 +66,8 @@ class HomeActivity : BaseActivity() {
 
         val bottomNavDestinations = setOf(
             R.id.home,
+            R.id.productManagement,
             R.id.planList,
-
         )
 
         controller.addOnDestinationChangedListener { _, destination, _ ->
@@ -87,6 +87,10 @@ class HomeActivity : BaseActivity() {
                 }
                 R.id.planList -> {
                     bottomAdapter?.setSelectedItem(3)
+                    enableDrawer(false)
+                }
+                R.id.productManagement -> {
+                    bottomAdapter?.setSelectedItem(1)
                     enableDrawer(false)
                 }
 
@@ -143,8 +147,11 @@ class HomeActivity : BaseActivity() {
                         ProgressDialogUtils.getInstance().hideProgress()
                         controller.navigate(R.id.home)
                     }
-                    1 -> controller.navigate(R.id.productManagement)
-                    2 -> controller.navigate(R.id.event)
+                    1 ->{
+                        ProgressDialogUtils.getInstance().hideProgress()
+                        controller.navigate(R.id.productManagement)
+                    }
+                 //   2 -> controller.navigate(R.id.event)
                     3 -> {
                         ProgressDialogUtils.getInstance().hideProgress()
                         controller.navigate(R.id.planList)

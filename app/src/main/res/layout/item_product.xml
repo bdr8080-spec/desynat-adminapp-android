@@ -44,7 +44,7 @@
         android:textColor="@color/brown"
         android:textSize="@dimen/_11sdp"
         android:singleLine="true"
-        app:layout_constraintEnd_toStartOf="@+id/ivSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvBrand"
         app:layout_constraintTop_toBottomOf="@id/tvBrand" />
 
@@ -89,8 +89,8 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvPrice"
-        android:layout_width="40dp"
-        android:layout_height="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_light"
         android:text="250 KD"
         android:textColor="#99000000"

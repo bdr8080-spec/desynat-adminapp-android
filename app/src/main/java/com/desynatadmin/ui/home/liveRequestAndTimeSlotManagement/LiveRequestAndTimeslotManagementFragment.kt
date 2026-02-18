@@ -27,6 +27,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddTimeSlotDialogBinding
 import com.desynatadmin.databinding.FragmentLiveRequestAndTimeslotManagementBinding
 import com.desynatadmin.databinding.RadioCustomCountryPickerBinding
+import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
@@ -159,7 +160,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                             acceptLiveRequest()
                         }
                         2->{
-                            rejectLiveRequest("")
+                            rejectReasonDialog()
                         }
                     }
                 }
@@ -1194,6 +1195,46 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         })
         customBinding.rvCountry.adapter = liveRequestCountryAdapter
 
+    }
+
+    private fun rejectReasonDialog() {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = RejectReasonLayoutBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+            rbComplete.isVisible = false
+            rbReject.isVisible = false
+
+            closeBtn.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            btnAccept.setOnClickListener {
+               if(etReason.text?.trim().toString().isEmpty()) {
+                    showToast("Please enter reason")
+                }
+                else{
+                    rejectLiveRequest(etReason.text?.trim().toString())
+                    dialog.dismiss()
+                }
+            }
+
+        }
+
+        dialog.show()
     }
 
 }

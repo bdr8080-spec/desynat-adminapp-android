@@ -94,7 +94,7 @@ class ProductManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-
+            ProgressDialogUtils.getInstance().hideProgress()
             if (SharedPreference.get(requireActivity()).getCountryList()!=null){
                 countryList.clear()
                 SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
@@ -147,7 +147,7 @@ class ProductManagementFragment : BaseFragment() {
                         pagination = false
                         isFromSwipe = false
                         if (!isObserver)
-                            getProduct(search =  query.ifEmpty { null })
+                            getProduct(isLoading = false, search =  query.ifEmpty { null })
                     }
 
                 }
@@ -215,6 +215,7 @@ class ProductManagementFragment : BaseFragment() {
 
         viewModel.getAllProductResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
+                binding?.mainProgressBar?.isVisible = false
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
@@ -274,15 +275,6 @@ class ProductManagementFragment : BaseFragment() {
             }
         }
 
-        viewModel.getCountryListResult.observe(viewLifecycleOwner) { response ->
-            if (isCountryObserver) {
-                countryList.clear()
-                countryList.addAll(response.data)
-                SharedPreference.get(requireActivity()).saveCountryList(countryList)
-                isCountryObserver = false
-            }
-        }
-
         viewModel.getAllBrandResult.observe(viewLifecycleOwner) { response ->
             if (isBrandObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -317,22 +309,37 @@ class ProductManagementFragment : BaseFragment() {
         }
 
         viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
+            if (isCountryObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 countryList.clear()
                 countryList.addAll(response.data)
                 filterCountryAdapter?.notifyDataSetChanged()
-                isObserver = false
+                isCountryObserver = false
             }
         }
 
         viewModel.updateProductStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
                 productList[selectedPos].productActiveStatus = response.data.productActiveStatus
                 productAdapter?.notifyItemChanged(selectedPos)
                 selectedPos = -1
                 isObserver = false
+            }
+        }
+    }
+    private fun checkData(){
+        binding?.tvNoDataFound?.isVisible = productList.isEmpty()
+    }
+
+    private fun updatePage() {
+        val start = (currentPage - 1) * itemsPerPage
+        val end = minOf(start + itemsPerPage, productList.size)
+        if (start>=0&&end>=0) {
+            if (start < end) {
+                val pageData = productList.subList(start, end)
+                productAdapter?.setData(ArrayList(pageData))
             }
         }
     }
@@ -367,26 +374,10 @@ class ProductManagementFragment : BaseFragment() {
 
         viewModel.getAllProduct(map)
         if (isLoading){
-            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+            binding?.mainProgressBar?.isVisible = true
         }
         isObserver = true
     }
-
-    private fun checkData(){
-        binding?.tvNoDataFound?.isVisible = productList.isEmpty()
-    }
-
-    private fun updatePage() {
-        val start = (currentPage - 1) * itemsPerPage
-        val end = minOf(start + itemsPerPage, productList.size)
-        if (start>=0&&end>=0) {
-            if (start < end) {
-                val pageData = productList.subList(start, end)
-                productAdapter?.setData(ArrayList(pageData))
-            }
-        }
-    }
-
     private fun getAllSubCategory(id: String){
         viewModel.getAllSUbCategory(categoryId = id,search=null, page = 1)
         isSubCategoryObserver = true
@@ -407,11 +398,12 @@ class ProductManagementFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["id"] = productList[selectedPos].id
         viewModel.updateProductStatus(map)
-        isBrandObserver = true
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
     }
 
     private fun getCountryApi(){
-        viewModel.getCountryList()
+        viewModel.getCountry()
         isCountryObserver = true
     }
 
