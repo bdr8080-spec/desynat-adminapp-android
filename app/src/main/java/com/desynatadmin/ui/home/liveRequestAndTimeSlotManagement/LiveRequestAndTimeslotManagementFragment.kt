@@ -334,6 +334,8 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                 llLiveRequest.isVisible = true
                 llTimeSlot.isVisible = false
                 btnAddTimeSlot.isVisible = false
+                tvCountry.isVisible = false
+                etCountry.isVisible = false
                 tvLiveRequestTimeslot.setTextColor(requireActivity().getColor(R.color.black))
                 tvLiveRequest.setTextColor(requireActivity().getColor(R.color.white))
                 tvLiveRequest.setBackgroundResource(R.drawable.selected_right_border)
@@ -576,9 +578,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         if (filterCountryId!=null) {
             map["country"] = countryList.firstOrNull { it.id.toString() == filterCountryId }?.name.toString()
         }
-      else{
-            map["country"] = selectedCountryId?.name.toString()
-        }
+
         map["page"] = currentPage
         map["limit"] = 10
         viewModel.getLiveRequest(

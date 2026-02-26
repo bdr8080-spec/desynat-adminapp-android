@@ -2,17 +2,25 @@ package com.desynatadmin.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemLiveRequestBinding
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.utils.CommonMethod
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<GetLiveRequestResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<LiveRequestAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemLiveRequestBinding) :
         RecyclerView.ViewHolder(binding.root){
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(position: Int) = with(binding){
             val liveRequestData = liveRequestList[position]
 
@@ -21,7 +29,7 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
                 tvCountry.text = liveRequestData?.sellerDetails?.countryDetails?.name
                 tvRequestId.text = "#${liveRequestData?.orderId}"
                 tvLiveRequestValue.text = "${CommonMethod.formatDate(liveRequestData?.timeslotDetails?.date.toString(),"yyyy-MM-dd","dd/MM/yyyy")} | ${liveRequestData?.timeslotDetails?.from}"
-                tvRequestOnValue.text = CommonMethod.formatDate(liveRequestData?.createdAt.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+                tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(liveRequestData?.createdAt.toString(),  outputFormat= "dd/MM/yyyy | hh:mm a")
 
                 when(liveRequestData?.adminVerify){
                     0->{
@@ -36,15 +44,15 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
                         tvPaymentModeValue.isVisible = false
                     }
                     1->{
-                        tvStatusValue.text = "Confirmed"
+                        tvStatusValue.text = getStatus(liveRequestData?.timeslotDetails?.date.toString(),liveRequestData?.timeslotDetails?.from.toString(),liveRequestData?.timeslotDetails?.to.toString())
                         tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                         viewStatus.isVisible = false
                         btnAccept.isVisible = false
                         btnReject.isVisible = false
                         tvReason.isVisible = false
                         tvReasonValue.isVisible = false
-                        tvPaymentMode.isVisible = true
-                        tvPaymentModeValue.isVisible = true
+                        tvPaymentMode.isVisible = false
+                        tvPaymentModeValue.isVisible = false
                     }
                     2->{
                         tvStatusValue.text = "Rejected"
@@ -56,6 +64,8 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
                         tvReasonValue.isVisible = true
                         tvPaymentMode.isVisible = true
                         tvPaymentModeValue.isVisible = true
+                        tvPaymentMode.text = "Rejected On"
+                        tvPaymentModeValue.text = CommonMethod.customizeChangeDateFormat(liveRequestData?.createdAt.toString(),  outputFormat= "dd/MM/yyyy | hh:mm a")
                     }
                 }
 
@@ -94,4 +104,26 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
         notifyDataSetChanged()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getStatus(
+        date: String,
+        from: String,
+        to: String
+    ): String {
+
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a", Locale.ENGLISH)
+
+        val slotDate = LocalDate.parse(date.trim(), dateFormatter)
+        val toTime = LocalTime.parse(to.trim(), timeFormatter)
+
+        val slotEndDateTime = LocalDateTime.of(slotDate, toTime)
+        val currentDateTime = LocalDateTime.now()
+
+        return if (currentDateTime.isAfter(slotEndDateTime)) {
+            "Completed"
+        } else {
+            "Confirmed"
+        }
+    }
 }

@@ -207,9 +207,10 @@ class ProductDetailFragment : BaseFragment() {
                 productImageAdapter?.notifyDataSetChanged()
                 viewPager.setCurrentItem(0, false)
 
-                tvBrand.text =
-                    if (productDetailData?.brand?.nameEnglish.toString() == "Other") productDetailData?.otherEn.toString() else productDetailData?.brand?.nameEnglish.toString()
+                tvBrand.text = if (productDetailData?.brand?.nameEnglish.toString() == "Other") productDetailData?.otherEn.toString() else productDetailData?.brand?.nameEnglish.toString()
                 tvName.text = productDetailData?.productNameEn
+                tvBrandName.text = "${productDetailData?.productNameEn} (by ${productDetailData?.sellerDetails?.firstName.toString()} ${productDetailData?.sellerDetails?.lastName.toString()})"
+
                 tvStore.text =
                     productDetailData?.store?.storeName + " (${productDetailData?.category?.name})"
 

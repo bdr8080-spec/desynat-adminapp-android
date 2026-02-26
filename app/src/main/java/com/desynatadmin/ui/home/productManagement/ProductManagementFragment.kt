@@ -354,19 +354,34 @@ class ProductManagementFragment : BaseFragment() {
         map["limit"] = pageLimit
 
         if (selectedBrandList.isNotEmpty()) {
-            map["\"brand\""] = selectedBrandList.map { it.id }
+            map["brand"] = selectedBrandList.map { it.id }
                 .joinToString(prefix = "[", postfix = "]", separator = ",")
         }
 
         if (selectedSubCategoryList.isNotEmpty()) {
-            map["\"subcategory\""] = selectedSubCategoryList.map { it.id }
+            map["subcategory"] = selectedSubCategoryList.map { it.id }
                 .joinToString(prefix = "[", postfix = "]", separator = ",")
         }
 
         if (selectedCountryList.isNotEmpty()) {
-            map["\"country\""] = selectedCountryList.map { it.id }
+            map["country"] = selectedCountryList.map { it.id }
                 .joinToString(prefix = "[", postfix = "]", separator = ",")
         }
+
+//        if (selectedBrandList.isNotEmpty()) {
+//            map["\"brand\""] = selectedBrandList.map { it.id }
+//                .joinToString(prefix = "[", postfix = "]", separator = ",")
+//        }
+//
+//        if (selectedSubCategoryList.isNotEmpty()) {
+//            map["\"subcategory\""] = selectedSubCategoryList.map { it.id }
+//                .joinToString(prefix = "[", postfix = "]", separator = ",")
+//        }
+//
+//        if (selectedCountryList.isNotEmpty()) {
+//            map["\"country\""] = selectedCountryList.map { it.id }
+//                .joinToString(prefix = "[", postfix = "]", separator = ",")
+//        }
 
         if (selectedCategory != null) {
             map["category"] = selectedCategory?.id.toString()
@@ -445,11 +460,18 @@ class ProductManagementFragment : BaseFragment() {
                 }
             }
 
-
-            if (selectedSubCategoryList.isNotEmpty()) {
-                subCategoryList.forEach { subCategory ->
-                    subCategory.isSelected = selectedSubCategoryList.any { it.id == subCategory.id }
+            if (selectedCategory!=null){
+                if (selectedSubCategoryList.isNotEmpty()) {
+                    subCategoryList.forEach { subCategory ->
+                        subCategory.isSelected = selectedSubCategoryList.any { it.id == subCategory.id }
+                    }
                 }
+                tvSubCategory.isVisible = true
+                rvSubCategory.isVisible = true
+            }
+            else{
+                tvSubCategory.isVisible = false
+                rvSubCategory.isVisible = false
             }
 
             filterSubCategoryAdapter = FilterSubCategoryAdapter(requireActivity(),subCategoryList,object :FilterSubCategoryAdapter.OnClick{
@@ -477,8 +499,21 @@ class ProductManagementFragment : BaseFragment() {
 
             filterCategoryAdapter = FilterCategoryAdapter(requireActivity(), categoryList,object :FilterCategoryAdapter.OnClick{
                 override fun onClickItem(position: Int) {
-                    category = categoryList[position]
-                    getAllSubCategory(category.id.toString())
+                    if (position==-1){
+                        category = null
+                        subCategoryList.clear()
+                        filterSubCategoryAdapter?.notifyDataSetChanged()
+                        tvSubCategory.isVisible = false
+                        rvSubCategory.isVisible = false
+                    }
+                    else{
+                        category = categoryList[position]
+                        subCategoryList.clear()
+                        getAllSubCategory(category?.id.toString())
+                        tvSubCategory.isVisible = true
+                        rvSubCategory.isVisible = true
+                    }
+
                 }
 
             })
@@ -501,6 +536,8 @@ class ProductManagementFragment : BaseFragment() {
             tvApply.setOnClickListener{
                 selectedCategory = category
                 selectedBrandList.clear()
+                selectedSubCategoryList.clear()
+                selectedCountryList.clear()
                 for(i in 0 until brandList.size){
                     if (brandList[i].isSelected) {
                         selectedBrandList.add(brandList[i])

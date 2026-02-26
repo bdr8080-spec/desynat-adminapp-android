@@ -68,6 +68,7 @@
             tools:itemCount="2"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubCategory"
             style="@style/edit_text_title"
             android:layout_marginTop="16sp"
             android:text="Sub-Category"

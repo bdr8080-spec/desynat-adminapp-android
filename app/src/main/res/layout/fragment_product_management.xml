@@ -82,6 +82,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
                     android:id="@+id/btnExport"
                     style="@style/button"
                     android:layout_marginHorizontal="@dimen/_15sdp"

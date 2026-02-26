@@ -42,8 +42,13 @@ class FilterCategoryAdapter(var context:Context, var categoryList: ArrayList<Get
         }
 
         holder.itemView.setOnClickListener {
-            selectedPos = position
-            onClick.onClickItem(position)
+            if (selectedPos==position){
+                selectedPos = -1
+            }
+            else{
+                selectedPos = position
+            }
+            onClick.onClickItem(selectedPos)
             notifyDataSetChanged()
         }
 
