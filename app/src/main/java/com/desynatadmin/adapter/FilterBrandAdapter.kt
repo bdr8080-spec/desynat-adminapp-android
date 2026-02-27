@@ -9,6 +9,7 @@ import com.desynatadmin.databinding.ItemCheckboxBrandBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 
 class FilterBrandAdapter(var context:Context, var brandList: ArrayList<GetBrandResponse.Data.Data>, var onClick: OnClick) : RecyclerView.Adapter<FilterBrandAdapter.ViewHolder>() {
+    var selectedPos = -1
 
     interface OnClick{
         fun onClickItem(position: Int)
@@ -33,6 +34,7 @@ class FilterBrandAdapter(var context:Context, var brandList: ArrayList<GetBrandR
             tvBrand.text = brandList[position].nameEnglish
 
             if (brandList[position].isSelected){
+                selectedPos = position
                 ivImage.setImageResource(R.drawable.ic_checkbox)
             }
             else{
@@ -43,8 +45,19 @@ class FilterBrandAdapter(var context:Context, var brandList: ArrayList<GetBrandR
 
 
         holder.itemView.setOnClickListener {
-            brandList[position].isSelected = !brandList[position].isSelected
-                        notifyDataSetChanged()
+            if (selectedPos==position){
+                selectedPos = -1
+                brandList[position].isSelected = !brandList[position].isSelected
+            }
+            else{
+                if (selectedPos!=-1){
+                    brandList[selectedPos].isSelected = false
+                }
+                selectedPos = position
+                brandList[position].isSelected = !brandList[position].isSelected
+            }
+
+            notifyDataSetChanged()
         }
 
     }

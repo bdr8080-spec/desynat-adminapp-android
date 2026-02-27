@@ -63,6 +63,9 @@ class ProductManagementFragment : BaseFragment() {
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var brandList = ArrayList<GetBrandResponse.Data.Data>()
     private var selectedBrandList = ArrayList<GetBrandResponse.Data.Data>()
+    private var selectedSubCategory: GetSubCategoryResponse.Data.Data?=null
+    private var selectedBrand: GetBrandResponse.Data.Data?=null
+    private var selectedCountry: GetCountryResponse.Data?=null
     private var selectedCountryList = ArrayList<GetCountryResponse.Data>()
     private var selectedSubCategoryList = ArrayList<GetSubCategoryResponse.Data.Data>()
     private var selectedCategory: GetCategoryResponse.Data?=null
@@ -353,20 +356,30 @@ class ProductManagementFragment : BaseFragment() {
         map["page"] = currentPage
         map["limit"] = pageLimit
 
-        if (selectedBrandList.isNotEmpty()) {
-            map["brand"] = selectedBrandList.map { it.id }
-                .joinToString(prefix = "[", postfix = "]", separator = ",")
+//        if (selectedBrandList.isNotEmpty()) {
+//            map["brand"] = selectedBrandList.map { it.id }
+//                .joinToString(prefix = "[", postfix = "]", separator = ",")
+//        }
+//
+//        if (selectedSubCategoryList.isNotEmpty()) {
+//            map["subcategory"] = selectedSubCategoryList.map { it.id }
+//                .joinToString(prefix = "[", postfix = "]", separator = ",")
+//        }
+
+        if (selectedBrand!=null) {
+            map["brand"] = selectedBrand?.id.toString()
+        }
+        if (selectedSubCategory!=null) {
+            map["subcategory"] = selectedSubCategory?.id.toString()
+        }
+        if (selectedCountry!=null) {
+            map["country"] = selectedCountry?.id.toString()
         }
 
-        if (selectedSubCategoryList.isNotEmpty()) {
-            map["subcategory"] = selectedSubCategoryList.map { it.id }
-                .joinToString(prefix = "[", postfix = "]", separator = ",")
-        }
-
-        if (selectedCountryList.isNotEmpty()) {
-            map["country"] = selectedCountryList.map { it.id }
-                .joinToString(prefix = "[", postfix = "]", separator = ",")
-        }
+//        if (selectedCountryList.isNotEmpty()) {
+//            map["country"] = selectedCountryList.map { it.id }
+//                .joinToString(prefix = "[", postfix = "]", separator = ",")
+//        }
 
 //        if (selectedBrandList.isNotEmpty()) {
 //            map["\"brand\""] = selectedBrandList.map { it.id }
@@ -448,16 +461,34 @@ class ProductManagementFragment : BaseFragment() {
             categoryList.forEach { it.isSelected = false }
             subCategoryList.forEach { it.isSelected = false }
 
-            if (selectedBrandList.isNotEmpty()) {
-                brandList.forEach { brand ->
-                    brand.isSelected = selectedBrandList.any { it.id == brand.id }
+//            if (selectedBrandList.isNotEmpty()) {
+//                brandList.forEach { brand ->
+//                    brand.isSelected = selectedBrandList.any { it.id == brand.id }
+//                }
+//            }
+
+            if (selectedBrand!=null){
+                if (brandList.isNotEmpty()) {
+                    brandList.forEach { brand ->
+                        brand.isSelected = selectedBrand?.id.toString()==brand.id.toString()
+                    }
                 }
             }
 
-            if (selectedCountryList.isNotEmpty()) {
-                countryList.forEach { country ->
-                    country.isSelected = selectedCountryList.any { it.id == country.id }
+
+//            if (selectedCountryList.isNotEmpty()) {
+//                countryList.forEach { country ->
+//                    country.isSelected = selectedCountryList.any { it.id == country.id }
+//                }
+//            }
+
+            if (selectedCountry!=null){
+                if (countryList.isNotEmpty()) {
+                    countryList.forEach { country ->
+                        country.isSelected = selectedCountry?.id.toString()==country.id.toString()
+                    }
                 }
+
             }
 
             if (selectedCategory!=null){
@@ -492,6 +523,7 @@ class ProductManagementFragment : BaseFragment() {
 
             filterCountryAdapter = FilterCountryAdapter(requireActivity(), countryList,object :FilterCountryAdapter.OnClick{
                 override fun onClickItem(position: Int) {
+
                 }
 
             })
@@ -526,6 +558,10 @@ class ProductManagementFragment : BaseFragment() {
 
             tvClear.setOnClickListener {
                 selectedCategory = null
+                selectedSubCategory = null
+                selectedBrand = null
+                selectedCategory = null
+                selectedCountry = null
                 selectedBrandList.clear()
                 selectedCountryList.clear()
                 selectedSubCategoryList.clear()
@@ -534,6 +570,7 @@ class ProductManagementFragment : BaseFragment() {
             }
 
             tvApply.setOnClickListener{
+                selectedCountry = null
                 selectedCategory = category
                 selectedBrandList.clear()
                 selectedSubCategoryList.clear()
@@ -541,16 +578,19 @@ class ProductManagementFragment : BaseFragment() {
                 for(i in 0 until brandList.size){
                     if (brandList[i].isSelected) {
                         selectedBrandList.add(brandList[i])
+                        selectedBrand = brandList[i]
                     }
                 }
                 for(i in 0 until subCategoryList.size){
                     if (subCategoryList[i].isSelected) {
                         selectedSubCategoryList.add(subCategoryList[i])
+                        selectedSubCategory = subCategoryList[i]
                     }
                 }
                 for(i in 0 until countryList.size){
                     if (countryList[i].isSelected) {
                         selectedCountryList.add(countryList[i])
+                        selectedCountry = countryList[i]
                     }
                 }
                 getProduct()

@@ -106,9 +106,76 @@ data class GetLiveRequestResponse(
                 val rejectReason: Any,
                 @SerializedName("store_information")
                 val storeInformation: String,
+                @SerializedName("store_info")
+                val storeInfo: StoreInfo,
                 @SerializedName("updated_at")
                 val updatedAt: String
             ) {
+                data class StoreInfo(
+                    @SerializedName("address_line1")
+                    val addressLine1: String,
+                    @SerializedName("address_line2")
+                    val addressLine2: String,
+                    @SerializedName("bio")
+                    val bio: String,
+                    @SerializedName("country")
+                    val country: String,
+                    @SerializedName("country_code")
+                    val countryCode: String,
+                    @SerializedName("country_info")
+                    val countryInfo: CountryInfo,
+                    @SerializedName("created_at")
+                    val createdAt: String,
+                    @SerializedName("id")
+                    val id: Int,
+                    @SerializedName("let")
+                    val let: String,
+                    @SerializedName("long")
+                    val long: String,
+                    @SerializedName("seller_id")
+                    val sellerId: Int,
+                    @SerializedName("store_address")
+                    val storeAddress: String,
+                    @SerializedName("Store_Availability")
+                    val storeAvailability: Int,
+                    @SerializedName("store_image")
+                    val storeImage: String,
+                    @SerializedName("store_mail_id")
+                    val storeMailId: String,
+                    @SerializedName("store_name")
+                    val storeName: String,
+                    @SerializedName("store_phone")
+                    val storePhone: String,
+                    @SerializedName("updated_at")
+                    val updatedAt: String
+                ) {
+                    data class CountryInfo(
+                        @SerializedName("created_at")
+                        val createdAt: String,
+                        @SerializedName("currency_code")
+                        val currencyCode: String,
+                        @SerializedName("currency_name")
+                        val currencyName: String,
+                        @SerializedName("currency_symbol")
+                        val currencySymbol: String,
+                        @SerializedName("dial_code")
+                        val dialCode: String,
+                        @SerializedName("exchange_rate_to_kwd")
+                        val exchangeRateToKwd: String,
+                        @SerializedName("flag")
+                        val flag: String,
+                        @SerializedName("flag1")
+                        val flag1: String,
+                        @SerializedName("id")
+                        val id: Int,
+                        @SerializedName("iso_code")
+                        val isoCode: String,
+                        @SerializedName("name")
+                        val name: String,
+                        @SerializedName("updated_at")
+                        val updatedAt: String
+                    )
+                }
                 data class CountryDetails(
                     @SerializedName("created_at")
                     val createdAt: String,

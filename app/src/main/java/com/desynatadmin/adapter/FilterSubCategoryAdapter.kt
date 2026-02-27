@@ -9,6 +9,7 @@ import com.desynatadmin.R
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 
 class FilterSubCategoryAdapter(var context:Context, var subCategoryList: ArrayList<GetSubCategoryResponse.Data.Data>, var onClick: OnClick) : RecyclerView.Adapter<FilterSubCategoryAdapter.ViewHolder>() {
+    var selectedPos = -1
 
     interface OnClick{
         fun onClickItem(position: Int)
@@ -33,6 +34,7 @@ class FilterSubCategoryAdapter(var context:Context, var subCategoryList: ArrayLi
             tvBrand.text = subCategoryList[position].nameEnglish
 
             if (subCategoryList[position].isSelected){
+                selectedPos = position
                 ivImage.setImageResource(R.drawable.ic_checkbox)
             }
             else{
@@ -43,7 +45,18 @@ class FilterSubCategoryAdapter(var context:Context, var subCategoryList: ArrayLi
 
 
         holder.itemView.setOnClickListener {
-            subCategoryList[position].isSelected = !subCategoryList[position].isSelected
+            if (selectedPos==position){
+                selectedPos = -1
+                subCategoryList[position].isSelected = !subCategoryList[position].isSelected
+            }
+            else{
+                if (selectedPos!=-1){
+                    subCategoryList[selectedPos].isSelected = false
+                }
+                selectedPos = position
+                subCategoryList[position].isSelected = !subCategoryList[position].isSelected
+            }
+
             notifyDataSetChanged()
         }
 

@@ -10,7 +10,7 @@ import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 
 class FilterCountryAdapter(var context:Context, var countryList: ArrayList<GetCountryResponse.Data>, var onClick: OnClick) : RecyclerView.Adapter<FilterCountryAdapter.ViewHolder>() {
-
+    var selectedPos = -1
     interface OnClick{
         fun onClickItem(position: Int)
     }
@@ -34,6 +34,7 @@ class FilterCountryAdapter(var context:Context, var countryList: ArrayList<GetCo
             tvBrand.text = countryList[position].name
 
             if (countryList[position].isSelected){
+                selectedPos = position
                 ivImage.setImageResource(R.drawable.ic_checkbox)
             }
             else{
@@ -44,7 +45,18 @@ class FilterCountryAdapter(var context:Context, var countryList: ArrayList<GetCo
 
 
         holder.itemView.setOnClickListener {
-            countryList[position].isSelected = !countryList[position].isSelected
+            if (selectedPos==position){
+                selectedPos = -1
+                countryList[position].isSelected = !countryList[position].isSelected
+            }
+            else{
+                if (selectedPos!=-1){
+                    countryList[selectedPos].isSelected = false
+                }
+                selectedPos = position
+                countryList[position].isSelected = !countryList[position].isSelected
+            }
+
                         notifyDataSetChanged()
         }
 

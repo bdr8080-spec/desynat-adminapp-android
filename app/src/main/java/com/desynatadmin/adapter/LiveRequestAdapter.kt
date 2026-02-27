@@ -26,7 +26,7 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
 
                 tvName.text = liveRequestData?.sellerDetails?.firstName+" "+ liveRequestData?.sellerDetails?.lastName
                 tvReasonValue.text = liveRequestData?.rejectReason
-                tvCountry.text = liveRequestData?.sellerDetails?.countryDetails?.name
+                tvCountry.text = liveRequestData?.sellerDetails?.storeInfo?.countryInfo?.name
                 tvRequestId.text = "#${liveRequestData?.orderId}"
                 tvLiveRequestValue.text = "${CommonMethod.formatDate(liveRequestData?.timeslotDetails?.date.toString(),"yyyy-MM-dd","dd/MM/yyyy")} | ${liveRequestData?.timeslotDetails?.from}"
                 tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(liveRequestData?.createdAt.toString(),  outputFormat= "dd/MM/yyyy | hh:mm a")

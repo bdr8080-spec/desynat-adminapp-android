@@ -248,6 +248,9 @@ class ProductDetailFragment : BaseFragment() {
                 tvCashOnDeliveryStatus.text =
                     if (productDetailData?.cashOnDelivery == "1") "Yes" else "No"
 
+                tvMinCartQuantity.text = productDetailData?.minCardQuantity
+                tvMaxCartQuantity.text = productDetailData?.maxCardQuantity
+
                 if (productDetailData?.category?.name == "Women") {
                     clWomenSize.isVisible = true
                     tvBustSize.text =
