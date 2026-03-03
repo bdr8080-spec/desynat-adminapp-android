@@ -26,14 +26,15 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     private var binding: FragmentAffiliateWithdrawalRequestBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var affiliateWithdrawalRequestAdapter: AffiliateWithdrawalRequestAdapter?=null
+    private var affiliateWithdrawalRequestAdapter: AffiliateWithdrawalRequestAdapter? = null
     private var withdrawalList = ArrayList<GetLiveRequestResponse.Data.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAffiliateWithdrawalRequestBinding.inflate(layoutInflater, container, false)
+        binding =
+            FragmentAffiliateWithdrawalRequestBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -46,21 +47,23 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            affiliateWithdrawalRequestAdapter = AffiliateWithdrawalRequestAdapter(requireActivity(),withdrawalList,object :
-                AffiliateWithdrawalRequestAdapter.OnClick{
-                override fun click(position: Int, type: Int) {
-                    when(type){
-                        1->{
+            affiliateWithdrawalRequestAdapter =
+                AffiliateWithdrawalRequestAdapter(requireActivity(), withdrawalList, object :
+                    AffiliateWithdrawalRequestAdapter.OnClick {
+                    override fun click(position: Int, type: Int) {
+                        when (type) {
+                            1 -> {
 
+                            }
+
+                            2 -> {
+                                rejectReasonDialog()
+                            }
                         }
-                        2->{
-                            rejectReasonDialog()
-                        }
+
                     }
 
-                }
-
-            })
+                })
             rvAffiliateWithdrawalRequest.adapter = affiliateWithdrawalRequestAdapter
         }
 
@@ -104,10 +107,9 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
             }
 
             btnAccept.setOnClickListener {
-                if(etReason.text?.trim().toString().isEmpty()) {
+                if (etReason.text?.trim().toString().isEmpty()) {
                     showToast("Please enter reason")
-                }
-                else{
+                } else {
                     rejectWithdrawalRequest(etReason.text?.trim().toString())
                     dialog.dismiss()
                 }
@@ -118,7 +120,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         dialog.show()
     }
 
-    private fun rejectWithdrawalRequest(reason:String){
+    private fun rejectWithdrawalRequest(reason: String) {
 
     }
 
