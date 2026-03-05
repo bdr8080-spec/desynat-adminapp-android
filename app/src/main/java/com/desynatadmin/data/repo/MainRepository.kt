@@ -1710,6 +1710,7 @@ val getProductDetailLiveData = SingleLiveEvent<GetProductDetailResponse>()
             responseLiveData = getProductDetailLiveData
         )
     }
+
 val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     suspend fun updateProductStatus(map: HashMap<String, Any>
     ) {
@@ -1721,6 +1722,38 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
         )
     }
 
+    val getWithdrawalRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getWithdrawalRequest(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getWithdrawalRequest(map)
+            },
+            responseLiveData = getWithdrawalRequestLiveData
+        )
+    }
+
+    val acceptWithdrawalRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun acceptWithdrawalRequest(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.acceptWithdrawalRequest(map)
+            },
+            responseLiveData = acceptWithdrawalRequestLiveData
+        )
+    }
+
+    val rejectWithdrawalRequestLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun rejectWithdrawalRequest(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.rejectWithdrawalRequest(map)
+            },
+            responseLiveData = rejectWithdrawalRequestLiveData
+        )
+    }
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

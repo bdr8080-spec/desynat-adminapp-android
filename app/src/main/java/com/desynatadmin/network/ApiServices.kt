@@ -874,4 +874,21 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<UpdateProductStatusResponse>
 
+    @GET(Constants.GET_WITHDRAWAL_REQUEST)
+    suspend fun getWithdrawalRequest(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.ACCEPT_WITHDRAWAL_REQUEST)
+    suspend fun acceptWithdrawalRequest(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+
+    @POST(Constants.REJECT_WITHDRAWAL_REQUEST)
+    suspend fun rejectWithdrawalRequest(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+
 }

@@ -296,6 +296,27 @@ override fun onBackPressed() {
                 controller.navigate(R.id.affiliateUserManagement)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
+
+            rlAffiliateWithdrawal.setOnClickListener {
+                controller.navigate(R.id.withdrawalRequest)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+
+//            rlTicketManagement.setOnClickListener {
+//                controller.navigate(R.id.ticketManagement)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+
+//            rlSupportChat.setOnClickListener {
+//                controller.navigate(R.id.supportChat)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+//
+//            rlCms.setOnClickListener {
+//                controller.navigate(R.id.cmsManagement)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
         }
     }
     private fun enableDrawer(enable: Boolean) {

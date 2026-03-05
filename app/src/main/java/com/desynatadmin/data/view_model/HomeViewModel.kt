@@ -1400,5 +1400,31 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
             repository.updateProductStatus(map)
         }
     }
+    val getWithdrawalRequestResult: LiveData<CommonResponse>
+        get() = repository.getWithdrawalRequestLiveData
+
+    fun getWithdrawalRequest(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getWithdrawalRequest(map)
+        }
+    }
+
+    val acceptWithdrawalRequestResult: LiveData<AcceptAffiliateUserResponse>
+        get() = repository.WithdrawalRequestLiveData
+
+    fun acceptWithdrawalRequest(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.acceptWithdrawalRequest(map)
+        }
+    }
+
+    val rejectWithdrawalRequestResult: LiveData<AcceptAffiliateUserResponse>
+        get() = repository.rejectWithdrawalRequestLiveData
+
+    fun rejectWithdrawalRequest(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.rejectWithdrawalRequest(map)
+        }
+    }
 
 }

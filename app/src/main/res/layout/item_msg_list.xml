@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/relOther"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_80sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/relOtherMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:visibility="gone"
+                android:id="@+id/ivOtherMsg"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/dummy"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOtherMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:background="@drawable/other_msg"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                android:text="Hello John Deo! consectetur adipiscing elit ames."/>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOtherMsgTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:32 AM"
+            android:textSize="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_light"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_below="@+id/relOtherMsg"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relMy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_80sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relOther">
+
+        <RelativeLayout
+            android:id="@+id/relMyMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:visibility="gone"
+                android:id="@+id/ivMyMsg"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/dummy"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                android:layout_alignParentEnd="true"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMyMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:background="@drawable/my_msg"
+                android:textAlignment="textEnd"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp"
+                android:text="Hello John Deo!"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_msg_read"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@+id/relMyMsg"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMyMsgTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:32 AM"
+            android:textSize="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_light"
+            android:textColor="@color/black"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/ivRead"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

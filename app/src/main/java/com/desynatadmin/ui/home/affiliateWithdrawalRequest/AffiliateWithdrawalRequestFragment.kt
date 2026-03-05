@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.home.affiliateWithdrawalRequest
 
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateWithdrawalRequestAdapter
 import com.desynatadmin.base.BaseFragment
@@ -17,6 +19,8 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAffiliateWithdrawalRequestBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
+import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
@@ -28,6 +32,16 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     private var isObserver = true
     private var affiliateWithdrawalRequestAdapter: AffiliateWithdrawalRequestAdapter? = null
     private var withdrawalList = ArrayList<GetLiveRequestResponse.Data.Data>()
+    private var selectedPos = -1
+    private var type = "1"
+    private var currentPage = 1
+    private var lastPage = 1
+    private var totalPage = 0
+    private var totalItem=0
+    private var pageLimit=10
+    private val itemsPerPage = 10
+    private var isFromSwipe=false
+    private var pagination=false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,15 +61,24 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+            toolbar.tvToolbar.text = "Affiliate Withdrawal Requests"
+
+            swipeRefreshLayout.setOnRefreshListener {
+                isFromSwipe = true
+                pagination = false
+                currentPage = 1
+                getWithdrawalRequest(false)
+            }
+
             affiliateWithdrawalRequestAdapter =
                 AffiliateWithdrawalRequestAdapter(requireActivity(), withdrawalList, object :
                     AffiliateWithdrawalRequestAdapter.OnClick {
                     override fun click(position: Int, type: Int) {
+                        selectedPos = position
                         when (type) {
                             1 -> {
-
+                                acceptAffiliateUser()
                             }
-
                             2 -> {
                                 rejectReasonDialog()
                             }
@@ -67,19 +90,169 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
             rvAffiliateWithdrawalRequest.adapter = affiliateWithdrawalRequestAdapter
         }
 
+        getWithdrawalRequest()
+
     }
 
     override fun initControl() {
         binding?.apply {
+            toolbar.tvToolbar.setOnClickListener {
+                findNavController().popBackStack()
+            }
 
+            ivNextArrow.setOnClickListener {
+                if (!isObserver && currentPage < lastPage&&totalItem!=0) {
+                    currentPage += 1
+                    getWithdrawalRequest(false)
+                    binding?.progressBar?.isVisible = true
+                }
+            }
+
+            ivBackArrow.setOnClickListener {
+                if (currentPage > 1) {
+                    currentPage--
+                    getWithdrawalRequest(false)
+                    binding?.progressBar?.isVisible = true
+                }
+            }
+
+            tvNew.setOnClickListener {
+                newRequest()
+            }
+
+            tvApproved.setOnClickListener {
+               approvedRequest()
+            }
+
+            tvRejected.setOnClickListener {
+               rejectRequest()
+            }
         }
     }
 
     override fun observe() {
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.acceptWithdrawalRequestResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                withdrawalList.removeAt(selectedPos)
+                affiliateWithdrawalRequestAdapter?.notifyItemRemoved(selectedPos)
+                affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(selectedPos, withdrawalList.size)
+                checkData()
+                CommonMethod.showSuccessDialog(requireActivity(),"Withdrawal Request Approved Successfully!"){
+
+                }
+                selectedPos = -1
+                isObserver = false
+            }
+        }
+
+        viewModel.rejectWithdrawalRequestResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                withdrawalList.removeAt(selectedPos)
+                affiliateWithdrawalRequestAdapter?.notifyItemRemoved(selectedPos)
+                affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(selectedPos, withdrawalList.size)
+                checkData()
+                CommonMethod.showSuccessDialog(requireActivity(),"Withdrawal Request Rejected Successfully!"){
+
+                }
+                selectedPos = -1
+                isObserver = false
+            }
+        }
+
+        viewModel.getWithdrawalRequestResult.observe(viewLifecycleOwner) { response ->
+          /*  if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = withdrawalList.size
+                if (!pagination){
+                    withdrawalList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                withdrawalList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        affiliateWithdrawalRequestAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    affiliateWithdrawalRequestAdapter?.notifyDataSetChanged()
+                }
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }*/
+        }
+    }
+
+    private fun updatePage() {
+        val start = (currentPage - 1) * itemsPerPage
+        val end = minOf(start + itemsPerPage, withdrawalList.size)
+        if (start>=0&&end>=0) {
+            if (start < end) {
+                val pageData = withdrawalList.subList(start, end)
+                affiliateWithdrawalRequestAdapter?.setData(ArrayList(pageData))
+            }
+        }
+
+    }
+
+    private fun checkData() {
+        binding?.tvNoDataFound?.isVisible = withdrawalList.isEmpty()
     }
 
     private fun rejectReasonDialog() {
-        var rejectionType = ""
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = RejectReasonLayoutBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -120,8 +293,71 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         dialog.show()
     }
 
-    private fun rejectWithdrawalRequest(reason: String) {
+    private fun newRequest(){
+        binding?.apply {
+            type = "1"
+            getWithdrawalRequest()
+            tvNew.setTextColor(Color.parseColor("#875C3A"))
+            viewNew.setBackgroundColor(Color.parseColor("#875C3A"))
+            tvApproved.setTextColor(Color.parseColor("#C0BBBB"))
+            viewApproved.setBackgroundColor(Color.parseColor("#C0BBBB"))
+            tvRejected.setTextColor(Color.parseColor("#C0BBBB"))
+            viewRejected.setBackgroundColor(Color.parseColor("#C0BBBB"))
+        }
+    }
 
+    private fun approvedRequest(){
+        binding?.apply {
+            type = "2"
+            getWithdrawalRequest()
+            tvNew.setTextColor(Color.parseColor("#C0BBBB"))
+            viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
+            tvApproved.setTextColor(Color.parseColor("#875C3A"))
+            viewApproved.setBackgroundColor(Color.parseColor("#875C3A"))
+            tvRejected.setTextColor(Color.parseColor("#C0BBBB"))
+            viewRejected.setBackgroundColor(Color.parseColor("#C0BBBB"))
+        }
+    }
+
+    private fun rejectRequest(){
+        binding?.apply {
+            type = "3"
+            getWithdrawalRequest()
+            tvNew.setTextColor(Color.parseColor("#C0BBBB"))
+            viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
+            tvApproved.setTextColor(Color.parseColor("#C0BBBB"))
+            viewApproved.setBackgroundColor(Color.parseColor("#C0BBBB"))
+            tvRejected.setTextColor(Color.parseColor("#875C3A"))
+            viewRejected.setBackgroundColor(Color.parseColor("#875C3A"))
+        }
+    }
+
+    private fun getWithdrawalRequest(loading:Boolean=true){
+        val map = HashMap<String,Any>()
+        map["page"] = currentPage
+        map["limit"] = 10
+        viewModel.getWithdrawalRequest(map)
+        if (loading){
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        }
+        isObserver = true
+    }
+
+    private fun acceptAffiliateUser(){
+        val map = HashMap<String,Any>()
+        map["withdrawal_id"] = withdrawalList[selectedPos].id
+        viewModel.acceptWithdrawalRequest(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    private fun rejectWithdrawalRequest(reason: String) {
+        val map = HashMap<String,Any>()
+        map["withdrawal_id"] = withdrawalList[selectedPos].id
+        map["reject_reason"] = reason
+        viewModel.rejectWithdrawalRequest(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
     }
 
 }

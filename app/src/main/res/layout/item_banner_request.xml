@@ -32,7 +32,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="Atif Aslam"
         android:textColor="@color/black"
-        android:maxLength="25"
+        android:maxLength="30"
         android:ellipsize="end"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintStart_toStartOf="@id/tvRequestBy"

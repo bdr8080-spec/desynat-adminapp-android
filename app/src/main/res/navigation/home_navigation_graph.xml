@@ -519,4 +519,53 @@
         android:label="Notification Fragment"
         tools:layout="@layout/fragment_notification"/>
 
+
+    <fragment
+        android:id="@+id/cmsManagement"
+        android:name="com.desynatadmin.ui.home.cmsManagement.CmsManagementFragment"
+        android:label="Cms Management Fragment"
+        tools:layout="@layout/fragment_cms_management"/>
+
+    <fragment
+        android:id="@+id/supportChat"
+        android:name="com.desynatadmin.ui.home.supportChatManagement.SupportChatFragment"
+        android:label="Support Chat Fragment"
+        tools:layout="@layout/fragment_support_chat">
+
+    <action
+        android:id="@+id/action_supportChatManagement_to_chatMessageFragment"
+        app:destination="@id/chatMessageFragment" />
+
+</fragment>
+
+    <fragment
+        android:id="@+id/chatMessageFragment"
+        android:name="com.desynatadmin.ui.home.supportChatManagement.ChatMessageFragment"
+        android:label="Chat Message Fragment"
+        tools:layout="@layout/fragment_chat_message"/>
+
+    <fragment
+        android:id="@+id/withdrawalRequest"
+        android:name="com.desynatadmin.ui.home.affiliateWithdrawalRequest.AffiliateWithdrawalRequestFragment"
+        android:label="Affiliate Withdrawal Request Fragment"
+        tools:layout="@layout/fragment_affiliate_withdrawal_request"/>
+
+    <fragment
+        android:id="@+id/ticketManagement"
+        android:name="com.desynatadmin.ui.home.ticketManagement.TicketManagementFragment"
+        android:label="Ticket Management Fragment"
+        tools:layout="@layout/fragment_ticket_management">
+
+        <action
+            android:id="@+id/action_ticketManagement_to_ticketDetailFragment"
+            app:destination="@id/ticketDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ticketDetail"
+        android:name="com.desynatadmin.ui.home.ticketManagement.TicketDetailFragment"
+        android:label="Ticket Detail Fragment"
+        tools:layout="@layout/fragment_ticket_detail"/>
+
 </navigation>
