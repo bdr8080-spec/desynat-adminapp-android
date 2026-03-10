@@ -10,6 +10,7 @@ import com.desynatadmin.ui.home.affiliateUserManagement.response.AcceptAffiliate
 import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAffiliateUserResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -1400,7 +1401,7 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
             repository.updateProductStatus(map)
         }
     }
-    val getWithdrawalRequestResult: LiveData<CommonResponse>
+    val getWithdrawalRequestResult: LiveData<GetWithdrawalRequestResponse>
         get() = repository.getWithdrawalRequestLiveData
 
     fun getWithdrawalRequest(map: HashMap<String, Any>) {
@@ -1409,8 +1410,8 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
-    val acceptWithdrawalRequestResult: LiveData<AcceptAffiliateUserResponse>
-        get() = repository.WithdrawalRequestLiveData
+    val acceptWithdrawalRequestResult: LiveData<CommonResponse>
+        get() = repository.acceptWithdrawalRequestLiveData
 
     fun acceptWithdrawalRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
@@ -1418,7 +1419,7 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
-    val rejectWithdrawalRequestResult: LiveData<AcceptAffiliateUserResponse>
+    val rejectWithdrawalRequestResult: LiveData<CommonResponse>
         get() = repository.rejectWithdrawalRequestLiveData
 
     fun rejectWithdrawalRequest(map: HashMap<String, Any>) {

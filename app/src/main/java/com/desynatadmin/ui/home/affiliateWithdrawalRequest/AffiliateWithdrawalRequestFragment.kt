@@ -1,8 +1,10 @@
 package com.desynatadmin.ui.home.affiliateWithdrawalRequest
 
 import android.app.Dialog
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateWithdrawalRequestAdapter
@@ -18,11 +21,15 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAffiliateWithdrawalRequestBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
-import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
+import com.desynatadmin.network.ApiServices
+import com.desynatadmin.payoutRetrofit.PayoutRetrofit
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutRequest
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -31,9 +38,9 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var affiliateWithdrawalRequestAdapter: AffiliateWithdrawalRequestAdapter? = null
-    private var withdrawalList = ArrayList<GetLiveRequestResponse.Data.Data>()
+    private var withdrawalList = ArrayList<GetWithdrawalRequestResponse.Data.Data>()
     private var selectedPos = -1
-    private var type = "1"
+    private var type = "0"
     private var currentPage = 1
     private var lastPage = 1
     private var totalPage = 0
@@ -77,6 +84,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                         selectedPos = position
                         when (type) {
                             1 -> {
+                               // callPayoutApi()
                                 acceptAffiliateUser()
                             }
                             2 -> {
@@ -127,6 +135,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
             tvRejected.setOnClickListener {
                rejectRequest()
             }
+
         }
     }
 
@@ -176,7 +185,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         }
 
         viewModel.getWithdrawalRequestResult.observe(viewLifecycleOwner) { response ->
-          /*  if (isObserver) {
+            if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
@@ -232,7 +241,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                 pagination = false
                 isFromSwipe = false
                 isObserver = false
-            }*/
+            }
         }
     }
 
@@ -295,7 +304,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     private fun newRequest(){
         binding?.apply {
-            type = "1"
+            type = "0"
             getWithdrawalRequest()
             tvNew.setTextColor(Color.parseColor("#875C3A"))
             viewNew.setBackgroundColor(Color.parseColor("#875C3A"))
@@ -308,7 +317,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     private fun approvedRequest(){
         binding?.apply {
-            type = "2"
+            type = "1"
             getWithdrawalRequest()
             tvNew.setTextColor(Color.parseColor("#C0BBBB"))
             viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
@@ -321,7 +330,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     private fun rejectRequest(){
         binding?.apply {
-            type = "3"
+            type = "2"
             getWithdrawalRequest()
             tvNew.setTextColor(Color.parseColor("#C0BBBB"))
             viewNew.setBackgroundColor(Color.parseColor("#C0BBBB"))
@@ -334,6 +343,10 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     private fun getWithdrawalRequest(loading:Boolean=true){
         val map = HashMap<String,Any>()
+        map["req_type"] = type //0-pending,1-approved,2-rejected
+//        map["from_date"] = currentPage
+//        map["to_date"] = currentPage
+//        map["search"] = currentPage
         map["page"] = currentPage
         map["limit"] = 10
         viewModel.getWithdrawalRequest(map)
@@ -345,7 +358,9 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     private fun acceptAffiliateUser(){
         val map = HashMap<String,Any>()
-        map["withdrawal_id"] = withdrawalList[selectedPos].id
+        map["req_id"] = withdrawalList[selectedPos].id
+        map["transaction_id"] = "TXN${withdrawalList[selectedPos].requestId}"
+        map["payment_status"] = 1
         viewModel.acceptWithdrawalRequest(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -353,11 +368,52 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     private fun rejectWithdrawalRequest(reason: String) {
         val map = HashMap<String,Any>()
-        map["withdrawal_id"] = withdrawalList[selectedPos].id
+        map["req_id"] = withdrawalList[selectedPos].id
         map["reject_reason"] = reason
         viewModel.rejectWithdrawalRequest(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
+
+    fun callPayoutApi() {
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        val request = PayoutRequest(
+            CustomerName = withdrawalList[selectedPos].affiliateDetails?.fullName.toString(),
+            Amount = withdrawalList[selectedPos].amount.toDoubleOrNull()?:0.0,
+            CurrencyCode = "KWD",
+            IBAN = withdrawalList[selectedPos].bankDetails?.iban.toString(),
+         //   BankCode = withdrawalList[selectedPos].bankDetails?.bankName.toString(),
+            BankCode = "NBK",
+            AccountNumber = withdrawalList[selectedPos].bankDetails?.accountNo.toString()
+        )
+        lifecycleScope.launch {
+            try {
+                val response = PayoutRetrofit.api.sendTransfer(
+                    "Bearer SK_KWT_z05HvVtA7meJtUkqI1EyvRBdhADWLu61vb0qfLibYSFdIGEntxDwJrWNE84ktpZY",
+                    "https://api.myfatoorah.com/v2/SendTransfer",
+                    request
+                )
+                ProgressDialogUtils.getInstance().hideProgress()
+                if (response.isSuccessful) {
+
+                    val body = response.body()
+                    Log.d("PAYOUT_SUCCESS", body.toString())
+
+                } else {
+
+                    val errorBody = response.errorBody()?.string()
+                    val errorCode = response.code()
+
+                    Log.d("PAYOUT_FAILED", "Code: $errorCode")
+                    Log.d("PAYOUT_FAILED", "Error: $errorBody")
+                }
+
+            } catch (e: Exception) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                Log.e("Payout_ERROR", e.message ?: "Error")
+            }
+        }
+    }
+
 
 }

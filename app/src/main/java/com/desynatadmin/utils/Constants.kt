@@ -177,8 +177,8 @@ object Constants {
     const val UPDATE_PRODUCT_STATUS = "/api/admin/block_unblock_product"
     const val GET_ALL_EVENT = "/api/admin/get_event"
 
-    const val GET_WITHDRAWAL_REQUEST = "/api/admin/withdrawal_request"
-    const val ACCEPT_WITHDRAWAL_REQUEST = "/api/admin/accept_withdrawal_request"
-    const val REJECT_WITHDRAWAL_REQUEST = "/api/admin/reject_withdrawal_request"
+    const val GET_WITHDRAWAL_REQUEST = "/api/admin/get_withdraw_requests"
+    const val ACCEPT_WITHDRAWAL_REQUEST = "/api/admin/approve_withdraw_request"
+    const val REJECT_WITHDRAWAL_REQUEST = "/api/admin/reject_withdraw_request"
 
 }

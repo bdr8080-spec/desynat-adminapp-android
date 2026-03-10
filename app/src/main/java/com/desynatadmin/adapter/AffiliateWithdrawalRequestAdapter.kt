@@ -7,32 +7,34 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemAffiliateWithdrawalRequestBinding
-import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.utils.CommonMethod
 
 class AffiliateWithdrawalRequestAdapter(
     var context: Context,
-    var requestList: ArrayList<GetLiveRequestResponse.Data.Data>,
+    var requestList: ArrayList<GetWithdrawalRequestResponse.Data.Data>,
     var onClick: OnClick
 ) : RecyclerView.Adapter<AffiliateWithdrawalRequestAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemAffiliateWithdrawalRequestBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) = with(binding) {
-            val liveRequestData = requestList[position]
+            val withdrawalRequestData = requestList[position]
 
-            tvRequestByValue.text =
-                liveRequestData?.sellerDetails?.firstName + " " + liveRequestData?.sellerDetails?.lastName + " | " + liveRequestData?.sellerDetails?.countryDetails?.name
-            tvReasonValue.text = liveRequestData?.rejectReason
-            tvRequestId.text = "#${liveRequestData?.orderId}"
-//                tvRequestedAmountValue.text = "${CommonMethod.formatDoubleValue(liveRequestData?.orderId)} KD"
-//                tvAvailableAmount.text = "${CommonMethod.formatDoubleValue(liveRequestData?.orderId)} KD"
+            tvRequestByValue.text = withdrawalRequestData?.affiliateDetails?.fullName + " | " + withdrawalRequestData?.affiliateDetails?.countryDetails?.name
+            tvReasonValue.text = withdrawalRequestData?.rejectReason
+            tvBankAccount.text = CommonMethod.maskAccountNumber(withdrawalRequestData?.bankDetails?.accountNo.toString(),6)
+            tvRequestIdValue.text = "#${withdrawalRequestData?.requestId}"
+                tvRequestedAmountValue.text = "${CommonMethod.formatDoubleValue(withdrawalRequestData?.amount?.toDoubleOrNull()?:0.0)} KD"
+                tvAvailableAmount.text = "${CommonMethod.formatDoubleValue(withdrawalRequestData?.totalEarning?.toDoubleOrNull()?:0.0)} KD"
             tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(
-                liveRequestData?.createdAt.toString(),
+                withdrawalRequestData?.createdAt.toString(),
                 outputFormat = "dd/MM/yyyy 'at' hh:mm a"
             )
 
-            when (liveRequestData?.adminVerify) {
+            when (withdrawalRequestData?.adminVerify) {
                 0 -> {
+                    tvStatus.isVisible = false
+                    tvStatusValue.isVisible = false
                     tvStatusValue.text = "Pending"
                     tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
                     btnApprove.isVisible = true
@@ -42,6 +44,8 @@ class AffiliateWithdrawalRequestAdapter(
                 }
 
                 1 -> {
+                    tvStatus.isVisible = true
+                    tvStatusValue.isVisible = true
                     tvStatusValue.text = "Completed"
                     tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                     btnApprove.isVisible = false
@@ -51,6 +55,8 @@ class AffiliateWithdrawalRequestAdapter(
                 }
 
                 2 -> {
+                    tvStatus.isVisible = true
+                    tvStatusValue.isVisible = true
                     tvStatusValue.text = "Rejected"
                     tvStatusValue.setTextColor(Color.parseColor("#D91A1B"))
                     btnApprove.isVisible = false
@@ -92,7 +98,7 @@ class AffiliateWithdrawalRequestAdapter(
         holder.bind(position)
     }
 
-    fun setData(newList: ArrayList<GetLiveRequestResponse.Data.Data>) {
+    fun setData(newList: ArrayList<GetWithdrawalRequestResponse.Data.Data>) {
         requestList = newList
         notifyDataSetChanged()
     }

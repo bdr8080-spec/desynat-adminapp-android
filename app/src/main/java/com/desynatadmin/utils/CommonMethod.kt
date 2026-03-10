@@ -692,5 +692,13 @@ object CommonMethod {
         dialog?.show()
     }
 
+    fun maskAccountNumber(accountNumber: String, visibleDigits: Int = 4): String {
+        if (accountNumber.length <= visibleDigits) return accountNumber
+
+        val maskedPart = "X".repeat(accountNumber.length - visibleDigits)
+        val visiblePart = accountNumber.takeLast(visibleDigits)
+
+        return maskedPart + visiblePart
+    }
 
 }

@@ -7,6 +7,9 @@ import com.desynatadmin.ui.home.affiliateUserManagement.response.AcceptAffiliate
 import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAffiliateUserResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutRequest
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -101,6 +104,7 @@ import retrofit2.http.PartMap
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
+import retrofit2.http.Url
 
 interface ApiServices {
 
@@ -877,7 +881,7 @@ interface ApiServices {
     @GET(Constants.GET_WITHDRAWAL_REQUEST)
     suspend fun getWithdrawalRequest(
         @QueryMap map: HashMap<String,Any>
-    ): Response<CommonResponse>
+    ): Response<GetWithdrawalRequestResponse>
 
     @POST(Constants.ACCEPT_WITHDRAWAL_REQUEST)
     suspend fun acceptWithdrawalRequest(
@@ -889,6 +893,13 @@ interface ApiServices {
     suspend fun rejectWithdrawalRequest(
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
+
+    @POST
+    suspend fun sendTransfer(
+        @Header("Authorization") token: String,
+        @Url url: String,
+        @Body request: PayoutRequest
+    ): Response<PayoutResponse>
 
 
 }

@@ -13,6 +13,7 @@ import com.desynatadmin.ui.home.affiliateUserManagement.response.AcceptAffiliate
 import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAffiliateUserResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
+import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -1722,7 +1723,7 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
         )
     }
 
-    val getWithdrawalRequestLiveData = SingleLiveEvent<CommonResponse>()
+    val getWithdrawalRequestLiveData = SingleLiveEvent<GetWithdrawalRequestResponse>()
     suspend fun getWithdrawalRequest(map: HashMap<String, Any>
     ) {
         handleApiCall(
