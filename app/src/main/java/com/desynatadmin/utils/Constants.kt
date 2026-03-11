@@ -180,5 +180,6 @@ object Constants {
     const val GET_WITHDRAWAL_REQUEST = "/api/admin/get_withdraw_requests"
     const val ACCEPT_WITHDRAWAL_REQUEST = "/api/admin/approve_withdraw_request"
     const val REJECT_WITHDRAWAL_REQUEST = "/api/admin/reject_withdraw_request"
+    const val WITHDRAWAL_TRANSFER = "/api/admin/transfer_withdraw_request"
 
 }

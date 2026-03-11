@@ -1755,6 +1755,17 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
             responseLiveData = rejectWithdrawalRequestLiveData
         )
     }
+
+    val WithdrawalTransferLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun WithdrawalTransfer(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.WithdrawalTransfer(map)
+            },
+            responseLiveData = WithdrawalTransferLiveData
+        )
+    }
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

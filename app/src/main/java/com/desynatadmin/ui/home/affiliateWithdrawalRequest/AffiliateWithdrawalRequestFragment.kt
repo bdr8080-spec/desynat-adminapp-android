@@ -37,6 +37,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     private var binding: FragmentAffiliateWithdrawalRequestBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isTransferObserver = true
     private var affiliateWithdrawalRequestAdapter: AffiliateWithdrawalRequestAdapter? = null
     private var withdrawalList = ArrayList<GetWithdrawalRequestResponse.Data.Data>()
     private var selectedPos = -1
@@ -181,6 +182,12 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                 }
                 selectedPos = -1
                 isObserver = false
+            }
+        }
+
+        viewModel.WithdrawalTransferResult.observe(viewLifecycleOwner) { response ->
+            if (isTransferObserver) {
+                isTransferObserver = false
             }
         }
 
@@ -373,6 +380,14 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         viewModel.rejectWithdrawalRequest(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
+    }
+
+    private fun WithdrawalTransfer() {
+        val map = HashMap<String,Any>()
+        map["withdraw_request_id"] = withdrawalList[selectedPos].id
+        viewModel.WithdrawalTransfer(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isTransferObserver = true
     }
 
     fun callPayoutApi() {

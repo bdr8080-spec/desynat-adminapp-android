@@ -1428,4 +1428,13 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
+    val WithdrawalTransferResult: LiveData<CommonResponse>
+        get() = repository.WithdrawalTransferLiveData
+
+    fun WithdrawalTransfer(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.WithdrawalTransfer(map)
+        }
+    }
+
 }

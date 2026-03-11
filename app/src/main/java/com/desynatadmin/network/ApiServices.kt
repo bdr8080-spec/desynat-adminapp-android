@@ -894,6 +894,11 @@ interface ApiServices {
         @Body body: HashMap<String,Any>
     ): Response<CommonResponse>
 
+    @POST(Constants.WITHDRAWAL_TRANSFER)
+    suspend fun WithdrawalTransfer(
+        @Body body: HashMap<String,Any>
+    ): Response<CommonResponse>
+
     @POST
     suspend fun sendTransfer(
         @Header("Authorization") token: String,

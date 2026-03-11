@@ -182,6 +182,32 @@
         app:layout_constraintTop_toTopOf="@id/tvRequestedAmount" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Transaction Id"
+        android:textColor="#80000000"
+        android:textSize="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRequestedAmount" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTransactionId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="400 KD"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTransaction"
+        app:layout_constraintTop_toTopOf="@id/tvTransaction" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"
         android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
@@ -193,7 +219,7 @@
         android:textSize="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRequestedAmount" />
+        app:layout_constraintTop_toBottomOf="@id/tvTransaction" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"

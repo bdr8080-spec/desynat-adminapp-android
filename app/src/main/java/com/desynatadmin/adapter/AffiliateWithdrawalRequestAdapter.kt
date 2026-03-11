@@ -52,6 +52,9 @@ class AffiliateWithdrawalRequestAdapter(
                     btnReject.isVisible = false
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
+                    tvTransactionId.isVisible = true
+                    tvTransaction.isVisible = true
+                    tvTransactionId.text = "#${withdrawalRequestData?.transactionId?:withdrawalRequestData?.requestId}"
                 }
 
                 2 -> {
