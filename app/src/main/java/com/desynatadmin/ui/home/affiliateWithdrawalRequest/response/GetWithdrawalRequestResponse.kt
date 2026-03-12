@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.home.affiliateWithdrawalRequest.response
 
 
+import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse.Data.Data.AddressDetails
 import com.google.gson.annotations.SerializedName
 
 data class GetWithdrawalRequestResponse(
@@ -80,8 +81,6 @@ data class GetWithdrawalRequestResponse(
                 val bankUpdateStatus: String,
                 @SerializedName("country_code")
                 val countryCode: String,
-                @SerializedName("country_details")
-                val countryDetails: CountryDetails,
                 @SerializedName("created_at")
                 val createdAt: String,
                 @SerializedName("device_token")
@@ -127,8 +126,43 @@ data class GetWithdrawalRequestResponse(
                 @SerializedName("updated_at")
                 val updatedAt: String,
                 @SerializedName("user_id")
-                val userId: Int
-            ) {
+                val userId: Int,
+                @SerializedName("address_details")
+                val addressDetails: AddressDetails,
+            )
+            data class AddressDetails(
+                @SerializedName("address1")
+                val address1: String,
+                @SerializedName("address2")
+                val address2: String,
+                @SerializedName("affiliate_id")
+                val affiliateId: String,
+                @SerializedName("city")
+                val city: String,
+                @SerializedName("country")
+                val country: String,
+                @SerializedName("created_at")
+                val createdAt: String,
+                @SerializedName("id")
+                val id: String,
+                @SerializedName("let")
+                val let: String,
+                @SerializedName("locations")
+                val locations: String,
+                @SerializedName("long")
+                val long: String,
+                @SerializedName("pincode")
+                val pincode: String,
+                @SerializedName("state")
+                val state: String,
+                @SerializedName("town")
+                val town: String,
+                @SerializedName("updated_at")
+                val updatedAt: String,
+                @SerializedName("country_details")
+                val countryDetails: CountryDetails,
+            )
+            {
                 data class CountryDetails(
                     @SerializedName("code")
                     val code: String,
@@ -156,7 +190,6 @@ data class GetWithdrawalRequestResponse(
                     val name: String
                 )
             }
-
             data class BankDetails(
                 @SerializedName("account_holder_name")
                 val accountHolderName: String,

@@ -20,7 +20,7 @@ class AffiliateWithdrawalRequestAdapter(
         fun bind(position: Int) = with(binding) {
             val withdrawalRequestData = requestList[position]
 
-            tvRequestByValue.text = withdrawalRequestData?.affiliateDetails?.fullName + " | " + withdrawalRequestData?.affiliateDetails?.countryDetails?.name
+            tvRequestByValue.text = withdrawalRequestData?.affiliateDetails?.fullName + " | " + withdrawalRequestData?.affiliateDetails?.addressDetails?.countryDetails?.name
             tvReasonValue.text = withdrawalRequestData?.rejectReason
             tvBankAccount.text = CommonMethod.maskAccountNumber(withdrawalRequestData?.bankDetails?.accountNo.toString(),6)
             tvRequestIdValue.text = "#${withdrawalRequestData?.requestId}"

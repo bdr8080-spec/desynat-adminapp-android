@@ -38,7 +38,6 @@ class OrderAdapter(var context:Context, var orderList: ArrayList<GetActiveOrderR
                         else{
                             btnAssignOrder.isVisible = true
                         }
-
                     }
                     else ->{
                         btnAssignOrder.isVisible = false
