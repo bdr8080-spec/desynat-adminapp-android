@@ -43,6 +43,14 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetAboutUsResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetCancellationPolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetContactResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetExchangePolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetFaqResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetReturnPolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetTermsAndConditionResponse
+import com.desynatadmin.ui.home.cmsManagement.response.UpdateFaqResponse
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
@@ -1764,6 +1772,172 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
                 api.WithdrawalTransfer(map)
             },
             responseLiveData = WithdrawalTransferLiveData
+        )
+    }
+
+
+    val getTermsAndConditionLiveData = SingleLiveEvent<GetTermsAndConditionResponse>()
+    suspend fun getTermsAndCondition(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getTermsAndCondition(map)
+            },
+            responseLiveData = getTermsAndConditionLiveData
+        )
+    }
+
+    val createUpdateTermsAndConditionLiveData = SingleLiveEvent<GetTermsAndConditionResponse>()
+    suspend fun createUpdateTermsAndCondition(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.createUpdateTermsAndCondition(map)
+            },
+            responseLiveData = createUpdateTermsAndConditionLiveData
+        )
+    }
+
+    val getAboutUsLiveData = SingleLiveEvent<GetAboutUsResponse>()
+    suspend fun getAboutUs(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getAboutUs(map)
+            },
+            responseLiveData = getAboutUsLiveData
+        )
+    }
+
+    val createUpdateAboutUsLiveData = SingleLiveEvent<GetAboutUsResponse>()
+    suspend fun createUpdateAboutUs(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.createUpdateAboutUs(map)
+            },
+            responseLiveData = createUpdateAboutUsLiveData
+        )
+    }
+
+    val getCancellationPolicyLiveData = SingleLiveEvent<GetCancellationPolicyResponse>()
+    suspend fun getCancellationPolicy(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getCancellationPolicy(map)
+            },
+            responseLiveData = getCancellationPolicyLiveData
+        )
+    }
+
+    val createUpdateCancellationPolicyLiveData = SingleLiveEvent<GetCancellationPolicyResponse>()
+    suspend fun createUpdateCancellationPolicy(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.createUpdateCancellationPolicy(map)
+            },
+            responseLiveData = createUpdateCancellationPolicyLiveData
+        )
+    }
+
+    val getReturnPolicyLiveData = SingleLiveEvent<GetReturnPolicyResponse>()
+    suspend fun getReturnPolicy(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getReturnPolicy(map)
+            },
+            responseLiveData = getReturnPolicyLiveData
+        )
+    }
+
+    val createUpdateReturnPolicyLiveData = SingleLiveEvent<GetReturnPolicyResponse>()
+    suspend fun createUpdateReturnPolicy(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.createUpdateReturnPolicy(map)
+            },
+            responseLiveData = createUpdateReturnPolicyLiveData
+        )
+    }
+
+    val getExchangePolicyLiveData = SingleLiveEvent<GetExchangePolicyResponse>()
+    suspend fun getExchangePolicy(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getExchangePolicy(map)
+            },
+            responseLiveData = getExchangePolicyLiveData
+        )
+    }
+
+    val createUpdateExchangePolicyLiveData = SingleLiveEvent<GetExchangePolicyResponse>()
+    suspend fun createUpdateExchangePolicy(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.createUpdateExchangePolicy(map)
+            },
+            responseLiveData = createUpdateExchangePolicyLiveData
+        )
+    }
+
+    val getContactUsLiveData = SingleLiveEvent<GetContactResponse>()
+    suspend fun getContactUs(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getContactUs(map)
+            },
+            responseLiveData = getContactUsLiveData
+        )
+    }
+
+    val createUpdateContactUsLiveData = SingleLiveEvent<GetContactResponse>()
+    suspend fun createUpdateContactUs(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.createUpdateContactUs(map)
+            },
+            responseLiveData = createUpdateContactUsLiveData
+        )
+    }
+
+    val getFaqLiveData = SingleLiveEvent<GetFaqResponse>()
+    suspend fun getFaq(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getFaq(map)
+            },
+            responseLiveData = getFaqLiveData
+        )
+    }
+
+    val addFaqLiveData = SingleLiveEvent<UpdateFaqResponse>()
+    suspend fun addFaq(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.addFaq(map)
+            },
+            responseLiveData = addFaqLiveData
+        )
+    }
+
+    val updateFaqLiveData = SingleLiveEvent<UpdateFaqResponse>()
+    suspend fun updateFaq(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateFaq(map)
+            },
+            responseLiveData = updateFaqLiveData
         )
     }
 }

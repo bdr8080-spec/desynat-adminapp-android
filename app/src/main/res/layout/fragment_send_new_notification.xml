@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".ui.home.notificationManagement.SendNewNotificationFragment">
+
+   <include
+       android:id="@+id/toolbar"
+       layout="@layout/common_toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="Notification Title"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="In English"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEnglishTitle"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter notification title"
+                android:inputType="textCapSentences"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:background="@drawable/edit_back" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="Notification Title"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="In Arabic"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etArabicTitle"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                style="@style/edit_text"
+                android:hint="Enter notification title"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="text"
+                android:singleLine="true"
+                android:background="@drawable/edit_back" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="Notification Description"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="In English"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEnglishDescription"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter notification description"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:minLines="3"
+                android:gravity="start"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:background="@drawable/edit_back" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="Notification Description"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:text="In Arabic"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etArabicDescription"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                style="@style/edit_text"
+                android:hint="Enter notification description"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:minLines="3"
+                android:gravity="start"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Send To"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupStories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbCustomer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbSeller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seller"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbDriver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Driver"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSendType"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="All"
+                android:drawableStart="@drawable/ic_checkbox"
+                android:drawablePadding="@dimen/_8sdp"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="number"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnSend"
+                style="@style/button"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:text="Send"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

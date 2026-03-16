@@ -171,15 +171,41 @@ object Constants {
     const val UPDATE_PROMOTIONAL_BANNER_STATUS = "/api/admin/block_unblock_promotional_banner"
     const val UPDATE_DEFAULT_SHIPPING_FEE = "/api/admin/update_default_shipping_fee"
     const val GET_DEFAULT_SHIPPING_FEE = "/api/admin/get_default_shipping_fee"
-
     const val GET_ALL_PRODUCT = "/api/admin/get_products"
     const val PRODUCT_DETAIL = "/api/admin/get_product_detail"
     const val UPDATE_PRODUCT_STATUS = "/api/admin/block_unblock_product"
     const val GET_ALL_EVENT = "/api/admin/get_event"
-
     const val GET_WITHDRAWAL_REQUEST = "/api/admin/get_withdraw_requests"
     const val ACCEPT_WITHDRAWAL_REQUEST = "/api/admin/approve_withdraw_request"
     const val REJECT_WITHDRAWAL_REQUEST = "/api/admin/reject_withdraw_request"
     const val WITHDRAWAL_TRANSFER = "/api/admin/transfer_withdraw_request"
+
+    const val SEND_NOTIFICATION = "/api/admin/send_notification"
+    const val GET_SEND_NOTIFICATION_LIST = "/api/admin/get_send_notifications_list"
+    const val READ_NOTIFICATION = "/api/admin/mark_notification_as_read"
+
+    const val GET_MY_NOTIFICATION_LIST = "/api/admin/get_my_notifications_list"
+
+    const val GET_TERMS_AND_CONDITION = "/api/admin/get_terms_condition"
+    const val CREATE_UPDATE_TERMS_AND_CONDITION = "/api/admin/create_update_terms_condition"
+
+    const val GET_RETURN_POLICY = "/api/admin/get_return_policy"
+    const val CREATE_UPDATE_RETURN_POLICY = "/api/admin/create_update_return_policy"
+
+    const val GET_CANCELLATION_POLICY = "/api/admin/get_cancellation_policy"
+    const val CREATE_UPDATE_CANCELLATION_POLICY = "/api/admin/create_update_cancellation_policy"
+
+    const val GET_ABOUT_US = "/api/admin/get_about_us"
+    const val CREATE_UPDATE_ABOUT_US = "/api/admin/create_update_about_us"
+
+    const val GET_FAQ = "/api/admin/get_faq"
+    const val ADD_FAQ = "/api/admin/add_faq"
+    const val UPDATE_FAQ = "/api/admin/update_faq"
+
+    const val GET_CONTACT_US = "/api/admin/get_contact_us"
+    const val CREATE_UPDATE_CONTACT_US = "/api/admin/create_update_contact_us"
+
+    const val GET_EXCHANGE_POLICY = "/api/admin/get_exchange_policy"
+    const val CREATE_UPDATE_EXCHANGE_POLICY = "/api/admin/create_update_exchange_policy"
 
 }

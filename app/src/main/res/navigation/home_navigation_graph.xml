@@ -515,9 +515,9 @@
 
     <fragment
         android:id="@+id/notification"
-        android:name="com.desynatadmin.ui.home.fragment.NotificationFragment"
+        android:name="com.desynatadmin.ui.home.notificationManagement.MyNotificationFragment"
         android:label="Notification Fragment"
-        tools:layout="@layout/fragment_notification"/>
+        tools:layout="@layout/fragment_my_notification"/>
 
 
     <fragment

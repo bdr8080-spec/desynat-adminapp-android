@@ -39,6 +39,14 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetAboutUsResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetCancellationPolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetContactResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetExchangePolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetFaqResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetReturnPolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetTermsAndConditionResponse
+import com.desynatadmin.ui.home.cmsManagement.response.UpdateFaqResponse
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
@@ -905,6 +913,81 @@ interface ApiServices {
         @Url url: String,
         @Body request: PayoutRequest
     ): Response<PayoutResponse>
+
+    @GET(Constants.GET_TERMS_AND_CONDITION)
+    suspend fun getTermsAndCondition(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetTermsAndConditionResponse>
+
+    @POST(Constants.CREATE_UPDATE_TERMS_AND_CONDITION)
+    suspend fun createUpdateTermsAndCondition(
+        @Body map: HashMap<String,Any>
+    ): Response<GetTermsAndConditionResponse>
+
+    @GET(Constants.GET_ABOUT_US)
+    suspend fun getAboutUs(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetAboutUsResponse>
+
+    @POST(Constants.CREATE_UPDATE_ABOUT_US)
+    suspend fun createUpdateAboutUs(
+        @Body map: HashMap<String,Any>
+    ): Response<GetAboutUsResponse>
+
+    @GET(Constants.GET_RETURN_POLICY)
+    suspend fun getReturnPolicy(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetReturnPolicyResponse>
+
+    @POST(Constants.CREATE_UPDATE_RETURN_POLICY)
+    suspend fun createUpdateReturnPolicy(
+        @Body map: HashMap<String,Any>
+    ): Response<GetReturnPolicyResponse>
+
+    @GET(Constants.GET_CANCELLATION_POLICY)
+    suspend fun getCancellationPolicy(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetCancellationPolicyResponse>
+
+    @POST(Constants.CREATE_UPDATE_CANCELLATION_POLICY)
+    suspend fun createUpdateCancellationPolicy(
+        @Body map: HashMap<String,Any>
+    ): Response<GetCancellationPolicyResponse>
+
+    @GET(Constants.GET_EXCHANGE_POLICY)
+    suspend fun getExchangePolicy(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetExchangePolicyResponse>
+
+    @POST(Constants.CREATE_UPDATE_EXCHANGE_POLICY)
+    suspend fun createUpdateExchangePolicy(
+        @Body map: HashMap<String,Any>
+    ): Response<GetExchangePolicyResponse>
+
+    @GET(Constants.GET_FAQ)
+    suspend fun getFaq(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetFaqResponse>
+
+    @POST(Constants.ADD_FAQ)
+    suspend fun addFaq(
+        @Body map: HashMap<String,Any>
+    ): Response<UpdateFaqResponse>
+
+    @POST(Constants.UPDATE_FAQ)
+    suspend fun updateFaq(
+        @Body map: HashMap<String,Any>
+    ): Response<UpdateFaqResponse>
+
+    @GET(Constants.GET_CONTACT_US)
+    suspend fun getContactUs(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetContactResponse>
+
+    @POST(Constants.CREATE_UPDATE_CONTACT_US)
+    suspend fun createUpdateContactUs(
+        @Body map: HashMap<String,Any>
+    ): Response<GetContactResponse>
 
 
 }

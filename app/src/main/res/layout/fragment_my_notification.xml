@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.fragment.NotificationFragment">
+    tools:context=".ui.home.notificationManagement.MyNotificationFragment">
 
     <include
         android:id="@+id/toolbar"
@@ -29,13 +29,13 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvNotification"
+                    android:id="@+id/rvMyNotification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginHorizontal="@dimen/_15sdp"
-                    tools:listitem="@layout/item_notification"
+                    tools:listitem="@layout/item_my_notification"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
                 <View

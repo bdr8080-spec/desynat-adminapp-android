@@ -1,16 +1,23 @@
 package com.desynatadmin.ui.home.cmsManagement
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
+import com.desynatadmin.databinding.AddCmsContentDialogBinding
+import com.desynatadmin.databinding.AddFaqDialogBinding
 import com.desynatadmin.databinding.FragmentCmsManagementBinding
+import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
@@ -130,4 +137,44 @@ class CmsManagementFragment : BaseFragment() {
 
         }
     }
+
+    private fun AddCmsContentDialog(content:String) {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = AddCmsContentDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding?.apply {
+
+            etDescription.setText(content)
+
+            tvToolbar.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            btnSave.setOnClickListener {
+                if (etDescription.text?.trim().toString().isEmpty()){
+                    showToast("Please enter")
+                }
+                else{
+
+                }
+            }
+
+        }
+
+        dialog.show()
+    }
+
 }

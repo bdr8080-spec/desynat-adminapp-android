@@ -40,6 +40,14 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.UpdateSubCategoryResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetAboutUsResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetCancellationPolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetContactResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetExchangePolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetFaqResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetReturnPolicyResponse
+import com.desynatadmin.ui.home.cmsManagement.response.GetTermsAndConditionResponse
+import com.desynatadmin.ui.home.cmsManagement.response.UpdateFaqResponse
 import com.desynatadmin.ui.home.dealsManagement.response.AddDealRequest
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
@@ -1427,13 +1435,147 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
             repository.rejectWithdrawalRequest(map)
         }
     }
-
     val WithdrawalTransferResult: LiveData<CommonResponse>
         get() = repository.WithdrawalTransferLiveData
 
     fun WithdrawalTransfer(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.WithdrawalTransfer(map)
+        }
+    }
+
+    val getTermsAndConditionResult: LiveData<GetTermsAndConditionResponse>
+        get() = repository.getTermsAndConditionLiveData
+
+    fun getTermsAndCondition(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getTermsAndCondition(map)
+        }
+    }
+
+    val createUpdateTermsAndConditionResult: LiveData<GetTermsAndConditionResponse>
+        get() = repository.createUpdateTermsAndConditionLiveData
+
+    fun createUpdateTermsAndCondition(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.createUpdateTermsAndCondition(map)
+        }
+    }
+
+    val getAboutUsnResult: LiveData<GetAboutUsResponse>
+        get() = repository.getAboutUsLiveData
+
+    fun getAboutUs(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getAboutUs(map)
+        }
+    }
+
+    val createUpdateAboutUsResult: LiveData<GetAboutUsResponse>
+        get() = repository.createUpdateAboutUsLiveData
+
+    fun createUpdateAboutUs(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.createUpdateAboutUs(map)
+        }
+    }
+
+    val getCancellationPolicyResult: LiveData<GetCancellationPolicyResponse>
+        get() = repository.getCancellationPolicyLiveData
+
+    fun getCancellationPolicy(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getCancellationPolicy(map)
+        }
+    }
+
+    val createUpdateCancellationPolicyResult: LiveData<GetCancellationPolicyResponse>
+        get() = repository.createUpdateCancellationPolicyLiveData
+
+    fun createUpdateCancellationPolicy(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.createUpdateCancellationPolicy(map)
+        }
+    }
+
+    val getReturnPolicyResult: LiveData<GetReturnPolicyResponse>
+        get() = repository.getReturnPolicyLiveData
+
+    fun getReturnPolicy(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getReturnPolicy(map)
+        }
+    }
+
+    val createUpdateReturnPolicyResult: LiveData<GetReturnPolicyResponse>
+        get() = repository.createUpdateReturnPolicyLiveData
+
+    fun createUpdateReturnPolicy(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.createUpdateReturnPolicy(map)
+        }
+    }
+
+    val getExchangePolicyResult: LiveData<GetExchangePolicyResponse>
+        get() = repository.getExchangePolicyLiveData
+
+    fun getExchangePolicy(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getExchangePolicy(map)
+        }
+    }
+
+    val createUpdateExchangePolicyResult: LiveData<GetExchangePolicyResponse>
+        get() = repository.createUpdateExchangePolicyLiveData
+
+    fun createUpdateExchangePolicy(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.createUpdateExchangePolicy(map)
+        }
+    }
+
+    val getFaqResult: LiveData<GetFaqResponse>
+        get() = repository.getFaqLiveData
+
+    fun getFaq(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getFaq(map)
+        }
+    }
+
+    val addFaqResult: LiveData<UpdateFaqResponse>
+        get() = repository.addFaqLiveData
+
+    fun addFaq(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.addFaq(map)
+        }
+    }
+
+    val updateFaqResult: LiveData<UpdateFaqResponse>
+        get() = repository.updateFaqLiveData
+
+    fun updateFaq(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.updateFaq(map)
+        }
+    }
+
+    val getContactUsResult: LiveData<GetContactResponse>
+        get() = repository.getContactUsLiveData
+
+    fun getContactUs(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getContactUs(map)
+        }
+    }
+
+    val createUpdateContactUsResult: LiveData<GetContactResponse>
+        get() = repository.createUpdateContactUsLiveData
+
+    fun createUpdateContactUs(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.createUpdateContactUs(map)
         }
     }
 

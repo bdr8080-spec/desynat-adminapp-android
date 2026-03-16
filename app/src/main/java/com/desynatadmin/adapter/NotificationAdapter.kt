@@ -1,28 +1,35 @@
 package com.desynatadmin.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemNotificationBinding
+import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
+import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 
-class NotificationAdapter(var context:Context, var notificationList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
+class NotificationAdapter(var context:Context, var notificationList: ArrayList<GetSendNotificationListResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemNotificationBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val notificationData = notificationList[position]
-            tvTitle.text = ""
-            tvDescription.text = ""
-            tvDate.text = ""
-//            if (notificationData.isRead){
-//                ivBell.setImageResource(R.drawable.icon_read_bell)
-//                clMain.setBackgroundResource(R.drawable.notification_read_background)
-//            }
-//            else{
-//                ivBell.setImageResource(R.drawable.icon_unread_bell)
-//                clMain.setBackgroundResource(R.drawable.notification_unread_background)
-//            }
+            tvTitle.text = if (Constants.language=="ar") notificationData?.titleArabic else notificationData?.titleEnglish
+            tvDescription.text = if (Constants.language=="ar") notificationData?.descriptionArabic else notificationData?.descriptionEnglish
+            tvDate.text = CommonMethod.customizeChangeDateFormat(notificationData.createdAt, outputFormat = "dd/Mm/yyyy")
+            tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.fullName}"
+            if (notificationData.isRead==1){
+                ivBell.setImageResource(R.drawable.icon_read_bell)
+                clMain.setBackgroundResource(R.drawable.notification_read_background)
+                tvSentName.setTextColor(Color.parseColor("#99000000"))
+            }
+            else{
+                ivBell.setImageResource(R.drawable.icon_unread_bell)
+                clMain.setBackgroundResource(R.drawable.notification_unread_background)
+                tvSentName.setTextColor(Color.parseColor("#6E4527"))
+            }
         }
         }
 
@@ -42,6 +49,11 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<S
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
+    }
+
+    fun setData(newList: ArrayList<GetSendNotificationListResponse.Data>) {
+        notificationList = newList
+        notifyDataSetChanged()
     }
 
 }
