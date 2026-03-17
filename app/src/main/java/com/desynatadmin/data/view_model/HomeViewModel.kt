@@ -71,6 +71,9 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTim
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
+import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
+import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -908,185 +911,144 @@ class HomeViewModel @Inject constructor(
 
     val updateShippingChargeStatusResult: LiveData<UpdateShippingChargeResponse>
         get() = repository.updateShippingChargeStatusLiveData
-
     fun updateShippingChargeStatus(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.updateShippingChargeStatus(map)
         }
     }
-
     val bannerRequestResult: LiveData<GetBannerRequestResponse>
         get() = repository.bannerRequestLiveData
-
     fun getBannerRequest(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page: Int) {
         viewModelScope.launch {
             repository.getBannerRequest(type,search,fromDate, toDate, countryId, page)
         }
     }
-
     val updateBannerStatusResult: LiveData<UpdateBannerRequestStatusResponse>
         get() = repository.updateBannerStatusLiveData
-
     fun updateBannerStatus(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateBannerStatus(map)
         }
     }
-
-
     val approveBannerRequestResult: LiveData<CommonResponse>
         get() = repository.approveBannerRequestLiveData
-
     fun approveBannerRequest(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.approveBannerRequest(map)
         }
     }
-
     val rejectBannerRequestResult: LiveData<RejectionResponse>
         get() = repository.rejectBannerRequestLiveData
-
     fun rejectBannerRequest(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.rejectBannerRequest(map)
         }
     }
-
     val getAffiliatedCommissionResult: LiveData<GetAffiliateCommissionResponse>
         get() = repository.getAffiliatedCommissionLiveData
-
     fun getAffiliatedCommission() {
         viewModelScope.launch {
             repository.getAffiliatedCommission()
         }
     }
-
     val updateAffiliateCommissionResult: LiveData<UpdateAffiliateCommissionResponse>
         get() = repository.updateAffiliateCommissionLiveData
-
     fun updateAffiliateCommission(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.updateAffiliateCommission(map)
         }
     }
-
     val getActiveOrderListResult: LiveData<GetActiveOrderResponse>
         get() = repository.activeOrderListLiveData
-
     fun getActiveOrderList(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getActiveOrderList(map)
         }
     }
-
     val getOrderDetailResult: LiveData<GetSingleOrderDetailResponse>
         get() = repository.getOrderDetailLiveData
-
     fun getOrderDetail(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getOrderDetail(map)
         }
     }
-
     val getCompletedOrderListResult: LiveData<GetActiveOrderResponse>
         get() = repository.completedOrderListLiveData
-
     fun getCompletedOrderList(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getCompletedOrderList(map)
         }
     }
-
     val getReturnOrderListResult: LiveData<GetActiveOrderResponse>
         get() = repository.returnOrderListLiveData
-
     fun getReturnOrderList(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getReturnOrderList(map)
         }
     }
-
     val getCancelledOrderListResult: LiveData<GetActiveOrderResponse>
         get() = repository.cancelledOrderListLiveData
-
     fun getCancelledOrderList(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getCancelledOrderList(map)
         }
     }
-
     val getAssignDriverListResult: LiveData<GetAvailableDeliveryBoyResponse>
         get() = repository.getAssignDriverListLiveData
-
     fun getDriverToAssign(orderId:String) {
         viewModelScope.launch {
             repository.getDriverToAssign(orderId)
         }
     }
-
     val assignDriverResult: LiveData<CommonResponse>
         get() = repository.assignDriverLiveData
-
     fun assignDriver(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.assignDriver(map)
         }
     }
-
     val invoiceResult: LiveData<CommonResponse>
         get() = repository.invoiceLiveData
-
     fun getInvoice(id:String) {
         viewModelScope.launch {
             repository.getInvoice(id)
         }
     }
-
     val getActiveDealsResult: LiveData<GetActiveDealResponse>
         get() = repository.getActiveDealsLiveData
-
     fun getActiveDeals(search: String?=null, page:Int) {
         viewModelScope.launch {
             repository.getActiveDeals(search,page)
         }
     }
-
     val getExpiredDealsResult: LiveData<GetActiveDealResponse>
         get() = repository.getExpiredDealsLiveData
-
     fun getExpiredDeals(search: String?=null, page:Int) {
         viewModelScope.launch {
             repository.getExpiredDeals(search,page)
         }
     }
-
     val addDealResult: LiveData<CommonResponse>
         get() = repository.addDealLiveData
-
     fun addDeal(request:AddDealRequest) {
         viewModelScope.launch {
             repository.addDeal(request)
         }
     }
-
     val updateDealResult: LiveData<UpdateDealStatusResponse>
         get() = repository.updateDealLiveData
-
     fun updateDeal(request:AddDealRequest) {
         viewModelScope.launch {
             repository.updateDeal(request)
         }
     }
-
     val updateDealStatusResult: LiveData<UpdateDealStatusResponse>
         get() = repository.updateDealStatusLiveData
-
     fun updateDealStatus(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateDealStatus(map)
         }
     }
-
     val deleteDealResult: LiveData<CommonResponse>
         get() = repository.deleteDealLiveData
 
@@ -1095,254 +1057,197 @@ class HomeViewModel @Inject constructor(
             repository.deleteDeal(map)
         }
     }
-
     val getDealDetailResult: LiveData<GetDealDetailResponse>
         get() = repository.getDealDetailLiveData
-
     fun getDealDetail(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getDealDetail(map)
         }
     }
-
     val getDealProductResult: LiveData<GetDealProductResponse>
         get() = repository.getDealProductLiveData
-
     fun getDealProduct(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getDealProduct(map)
         }
     }
-
     val getFullScreenBannerResult: LiveData<GetFullScreenBannerResponse>
         get() = repository.getFullScreenBannerLiveData
-
     fun getFullScreenBanner(search: String?=null,country: String?=null,type: String?=null,startDate: String?=null,enDate: String?=null, page:Int) {
         viewModelScope.launch {
             repository.getFullScreenBanner(search,country,type,startDate,enDate,page)
         }
     }
-
     val addFullScreenBannerResult: LiveData<AddFullScreenBannerResponse>
         get() = repository.addFullScreenBannerLiveData
-
     fun addFullScreenBanner(request:AddFullScreenBannerRequest) {
         viewModelScope.launch {
             repository.addFullScreenBanner(request)
         }
     }
-
 val updateFullScreenBannerResult: LiveData<AddFullScreenBannerResponse>
         get() = repository.updateFullScreenBannerLiveData
-
     fun updateFullScreenBanner(request:AddFullScreenBannerRequest) {
         viewModelScope.launch {
             repository.updateFullScreenBanner(request)
         }
     }
-
 val deleteFullScreenBannerResult: LiveData<CommonResponse>
         get() = repository.deleteFullScreenBannerLiveData
-
     fun deleteFullScreenBanner(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.deleteFullScreenBanner(map)
         }
     }
-
     val addStoryResult: LiveData<CommonResponse>
         get() = repository.addStoryLiveData
-
     fun addStory(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.addStory(map)
         }
     }
-
     val deleteStoryResult: LiveData<CommonResponse>
         get() = repository.deleteStoryLiveData
-
     fun deleteStory(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.deleteStory(map)
         }
     }
-
     val getSellerStoryResult: LiveData<GetStoryResponse>
         get() = repository.getSellerStoryLiveData
-
     fun getSellerStory(page:Int) {
         viewModelScope.launch {
             repository.getSellerStory(page)
         }
     }
-
     val getAdminStoryResult: LiveData<GetStoryResponse>
         get() = repository.getAdminStoryLiveData
-
     fun getAdminStory(page:Int) {
         viewModelScope.launch {
             repository.getAdminStory(page)
         }
     }
-
     val getLiveRequestResult: LiveData<GetLiveRequestResponse>
         get() = repository.getLiveRequestLiveData
-
     fun getLiveRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getLiveRequest(map)
         }
     }
-
     val acceptLiveRequestResult: LiveData<CommonResponse>
         get() = repository.acceptLiveRequestLiveData
-
     fun acceptLiveRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.acceptLiveRequest(map)
         }
     }
-
     val rejectLiveRequestResult: LiveData<CommonResponse>
         get() = repository.rejectLiveRequestLiveData
-
     fun rejectLiveRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.rejectLiveRequest(map)
         }
     }
-
     val getTimeSlotResult: LiveData<GetTimeSlotResponse>
         get() = repository.getTimeSlotLiveData
-
     fun getTimeSlot(countryId:String,date:String){
         viewModelScope.launch {
             repository.getTimeSlot(countryId,date)
         }
     }
-
     val addTimeSlotLiveDataResult: LiveData<UpdateTimeSlotResponse>
         get() = repository.addTimeSlotLiveData
-
     fun addTimeSlot(request:AddTimeSlotRequest) {
         viewModelScope.launch {
             repository.addTimeSlot(request)
         }
     }
-
     val updateTimeSlotLiveDataResult: LiveData<UpdateTimeSlotResponse>
         get() = repository.updateTimeSlotLiveData
-
     fun updateTimeSlot(request:AddTimeSlotRequest) {
         viewModelScope.launch {
             repository.updateTimeSlot(request)
         }
     }
-
     val updateTimeSlotStatusResult: LiveData<UpdateTimeSlotResponse>
         get() = repository.updateTimeSlotStatusLiveData
-
     fun updateTimeSlotStatus(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateTimeSlotStatus(map)
         }
     }
-
     val deleteTimeSlotResult: LiveData<CommonResponse>
         get() = repository.deleteTimeSlotLiveData
-
     fun deleteTimeSlot(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.deleteTimeSlot(map)
         }
     }
-
-
     val getNewAffiliateUserResult: LiveData<GetNewAffiliateUserResponse>
         get() = repository.newAffiliateUserLiveData
-
     fun getNewAffiliateUser(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getNewAffiliateUser(map)
         }
     }
-
     val getApprovedAffiliateUserResult: LiveData<GetNewAffiliateUserResponse>
         get() = repository.approvedAffiliateUserLiveData
-
     fun getApprovedAffiliateUser(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getApprovedAffiliateUser(map)
         }
     }
-
     val getRejectedAffiliateUserResult: LiveData<GetNewAffiliateUserResponse>
         get() = repository.rejectedAffiliateUserLiveData
-
     fun getRejectedAffiliateUser(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getRejectedAffiliateUser(map)
         }
     }
-
     val getAffiliateUserDetailResult: LiveData<GetAffiliateUserDetailResponse>
         get() = repository.userAffiliateDetailLiveData
-
     fun getAffiliateUserDetail(userId:String) {
         viewModelScope.launch {
             repository.getAffiliateUserDetail(userId)
         }
     }
-
     val updateAffiliateUserStatusResult: LiveData<BlockUnblockAffiliateUserResponse>
         get() = repository.updateAffiliateUserStatusLiveData
-
     fun blockUnblockAffiliateUser(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.blockUnblockAffiliateUser(map)
         }
     }
-
     val acceptAffiliateUserResult: LiveData<AcceptAffiliateUserResponse>
         get() = repository.acceptAffiliateUserLiveData
-
     fun acceptAffiliateUser(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.acceptAffiliateUser(map)
         }
     }
-
     val rejectAffiliateUserResult: LiveData<AcceptAffiliateUserResponse>
         get() = repository.rejectAffiliateUserLiveData
-
     fun rejectAffiliateUser(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.rejectAffiliateUser(map)
         }
     }
-
     val getPromotionalBannerResult: LiveData<GetPromotionalBannerResponse>
         get() = repository.getPromotionalBannerLiveData
-
     fun getPromotionalBanner(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getPromotionalBanner(map)
         }
     }
-
     val addPromotionalBannerResult: LiveData<AddPromotionalBannerResponse>
         get() = repository.addPromotionalBannerLiveData
-
     fun addPromotionalBanner(request: AddPromotionalBannerRequest) {
         viewModelScope.launch {
             repository.addPromotionalBanner(request)
         }
     }
-
     val updatePromotionalBannerResult: LiveData<AddPromotionalBannerResponse>
         get() = repository.updatePromotionalBannerLiveData
-
     fun updatePromotionalBanner(request:AddPromotionalBannerRequest) {
         viewModelScope.launch {
             repository.updatePromotionalBanner(request)
@@ -1350,25 +1255,20 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     }
     val deletePromotionalBannerResult: LiveData<CommonResponse>
         get() = repository.deletePromotionalBannerLiveData
-
     fun deletePromotionalBanner(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.deletePromotionalBanner(map)
         }
     }
-
   val updatePromotionalBannerStatusResult: LiveData<UpdatePromotionalBannerStatusResponse>
         get() = repository.updatePromotionalBannerStatusLiveData
-
     fun updatePromotionalBannerStatus(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updatePromotionalBannerStatus(map)
         }
     }
-
     val updateDefaultShippingFeeResult: LiveData<UpdateDefaultShippingChargeResponse>
         get() = repository.updateDefaultShippingFeeLiveData
-
     fun updateDefaultShippingFee(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.updateDefaultShippingFee(map)
@@ -1376,34 +1276,27 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     }
     val getDefaultShippingFeeResult: LiveData<GetDefaultShippingChargeResponse>
         get() = repository.getDefaultShippingFeeLiveData
-
     fun getDefaultShippingFee(countryId: String) {
         viewModelScope.launch {
             repository.getDefaultShippingFee(countryId)
         }
     }
-
     val getAllProductResult: LiveData<GetAllProductListResponse>
         get() = repository.getAllProductLiveData
-
     fun getAllProduct(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getAllProduct(map)
         }
     }
-
     val getProductDetailResult: LiveData<GetProductDetailResponse>
         get() = repository.getProductDetailLiveData
-
     fun getProductDetail(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getProductDetail(map)
         }
     }
-
     val updateProductStatusResult: LiveData<UpdateProductStatusResponse>
         get() = repository.updateProductStatusLiveData
-
     fun updateProductStatus(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.updateProductStatus(map)
@@ -1411,25 +1304,20 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     }
     val getWithdrawalRequestResult: LiveData<GetWithdrawalRequestResponse>
         get() = repository.getWithdrawalRequestLiveData
-
     fun getWithdrawalRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getWithdrawalRequest(map)
         }
     }
-
     val acceptWithdrawalRequestResult: LiveData<CommonResponse>
         get() = repository.acceptWithdrawalRequestLiveData
-
     fun acceptWithdrawalRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.acceptWithdrawalRequest(map)
         }
     }
-
     val rejectWithdrawalRequestResult: LiveData<CommonResponse>
         get() = repository.rejectWithdrawalRequestLiveData
-
     fun rejectWithdrawalRequest(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.rejectWithdrawalRequest(map)
@@ -1437,112 +1325,88 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     }
     val WithdrawalTransferResult: LiveData<CommonResponse>
         get() = repository.WithdrawalTransferLiveData
-
     fun WithdrawalTransfer(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.WithdrawalTransfer(map)
         }
     }
-
     val getTermsAndConditionResult: LiveData<GetTermsAndConditionResponse>
         get() = repository.getTermsAndConditionLiveData
-
     fun getTermsAndCondition(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getTermsAndCondition(map)
         }
     }
-
     val createUpdateTermsAndConditionResult: LiveData<GetTermsAndConditionResponse>
         get() = repository.createUpdateTermsAndConditionLiveData
-
     fun createUpdateTermsAndCondition(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.createUpdateTermsAndCondition(map)
         }
     }
-
-    val getAboutUsnResult: LiveData<GetAboutUsResponse>
+    val getAboutUsResult: LiveData<GetAboutUsResponse>
         get() = repository.getAboutUsLiveData
-
     fun getAboutUs(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getAboutUs(map)
         }
     }
-
     val createUpdateAboutUsResult: LiveData<GetAboutUsResponse>
         get() = repository.createUpdateAboutUsLiveData
-
     fun createUpdateAboutUs(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.createUpdateAboutUs(map)
         }
     }
-
     val getCancellationPolicyResult: LiveData<GetCancellationPolicyResponse>
         get() = repository.getCancellationPolicyLiveData
-
     fun getCancellationPolicy(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getCancellationPolicy(map)
         }
     }
-
     val createUpdateCancellationPolicyResult: LiveData<GetCancellationPolicyResponse>
         get() = repository.createUpdateCancellationPolicyLiveData
-
     fun createUpdateCancellationPolicy(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.createUpdateCancellationPolicy(map)
         }
     }
-
     val getReturnPolicyResult: LiveData<GetReturnPolicyResponse>
         get() = repository.getReturnPolicyLiveData
-
     fun getReturnPolicy(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getReturnPolicy(map)
         }
     }
-
     val createUpdateReturnPolicyResult: LiveData<GetReturnPolicyResponse>
         get() = repository.createUpdateReturnPolicyLiveData
-
     fun createUpdateReturnPolicy(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.createUpdateReturnPolicy(map)
         }
     }
-
     val getExchangePolicyResult: LiveData<GetExchangePolicyResponse>
         get() = repository.getExchangePolicyLiveData
-
     fun getExchangePolicy(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getExchangePolicy(map)
         }
     }
-
     val createUpdateExchangePolicyResult: LiveData<GetExchangePolicyResponse>
         get() = repository.createUpdateExchangePolicyLiveData
-
     fun createUpdateExchangePolicy(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.createUpdateExchangePolicy(map)
         }
     }
-
     val getFaqResult: LiveData<GetFaqResponse>
         get() = repository.getFaqLiveData
-
     fun getFaq(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getFaq(map)
         }
     }
-
     val addFaqResult: LiveData<UpdateFaqResponse>
         get() = repository.addFaqLiveData
 
@@ -1551,31 +1415,57 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
             repository.addFaq(map)
         }
     }
-
     val updateFaqResult: LiveData<UpdateFaqResponse>
         get() = repository.updateFaqLiveData
-
     fun updateFaq(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateFaq(map)
         }
     }
-
     val getContactUsResult: LiveData<GetContactResponse>
         get() = repository.getContactUsLiveData
-
     fun getContactUs(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getContactUs(map)
         }
     }
-
-    val createUpdateContactUsResult: LiveData<GetContactResponse>
+    val createUpdateContactUsResult: LiveData<CommonResponse>
         get() = repository.createUpdateContactUsLiveData
-
     fun createUpdateContactUs(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.createUpdateContactUs(map)
+        }
+    }
+
+    val getMyNotificationResult: LiveData<CommonResponse>
+        get() = repository.getMyNotificationLiveData
+    fun getMyNotification(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getMyNotification(map)
+        }
+    }
+
+    val readNotificationResult: LiveData<CommonResponse>
+        get() = repository.readNotificationLiveData
+    fun readNotification(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.readNotification(map)
+        }
+    }
+
+    val getSendNotificationResult: LiveData<GetSendNotificationListResponse>
+        get() = repository.getSendNotificationLiveData
+    fun getSendNotification(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getSendNotification(map)
+        }
+    }
+
+    val sendNotificationResult: LiveData<SendNotificationResponse>
+        get() = repository.sendNotificationLiveData
+    fun sendNotification(request: SendNotificationRequest) {
+        viewModelScope.launch {
+            repository.sendNotification(request)
         }
     }
 

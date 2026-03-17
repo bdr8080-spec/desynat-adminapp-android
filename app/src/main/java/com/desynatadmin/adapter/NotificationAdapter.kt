@@ -11,7 +11,7 @@ import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificat
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 
-class NotificationAdapter(var context:Context, var notificationList: ArrayList<GetSendNotificationListResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
+class NotificationAdapter(var context:Context, var notificationList: ArrayList<GetSendNotificationListResponse.Data.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemNotificationBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
@@ -19,8 +19,17 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<G
             tvTitle.text = if (Constants.language=="ar") notificationData?.titleArabic else notificationData?.titleEnglish
             tvDescription.text = if (Constants.language=="ar") notificationData?.descriptionArabic else notificationData?.descriptionEnglish
             tvDate.text = CommonMethod.customizeChangeDateFormat(notificationData.createdAt, outputFormat = "dd/Mm/yyyy")
-            tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.fullName}"
-            if (notificationData.isRead==1){
+            if (notificationData?.totalReceivers?:0 > 1 ) {
+                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullNameEnglish} + ${notificationData?.totalReceivers?:0-1}"
+            }
+            else {
+                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullNameEnglish}"
+            }
+
+
+
+
+            if (notificationData?.receiverDetails?.get(0)?.status?:0==1){
                 ivBell.setImageResource(R.drawable.icon_read_bell)
                 clMain.setBackgroundResource(R.drawable.notification_read_background)
                 tvSentName.setTextColor(Color.parseColor("#99000000"))
@@ -51,7 +60,7 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<G
         holder.bind(position)
     }
 
-    fun setData(newList: ArrayList<GetSendNotificationListResponse.Data>) {
+    fun setData(newList: ArrayList<GetSendNotificationListResponse.Data.Data>) {
         notificationList = newList
         notifyDataSetChanged()
     }

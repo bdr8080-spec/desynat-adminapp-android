@@ -161,7 +161,7 @@
                 android:text="Send To"/>
 
             <RadioGroup
-                android:id="@+id/radioGroupStories"
+                android:id="@+id/radioSendTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_15sdp"
@@ -230,6 +230,7 @@
             </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/tvSendType"
                 android:layout_width="match_parent"
                 style="@style/edit_text"

@@ -21,29 +21,73 @@
         android:textSize="@dimen/_13sdp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
+    <RelativeLayout
+        android:id="@+id/relEnglish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Terms &amp; Condition"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12sdp" />
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitleEnglish"
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:text="Terms &amp; Condition"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:text="In English"
+            android:layout_alignParentEnd="true"
+            android:textColor="#80000000"
+            android:textSize="@dimen/_10sdp"/>
+
+    </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etDescription"
+        android:id="@+id/etEnglishDescription"
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/edit_back"
         android:hint="Enter Terms &amp; Condition"
-        android:inputType="textCapSentences"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"/>
+        android:inputType="textCapSentences"/>
+
+    <RelativeLayout
+        android:id="@+id/relArabic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitleArabic"
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:text="Terms &amp; Condition"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:text="In Arabic"
+            android:layout_alignParentEnd="true"
+            android:textColor="#80000000"
+            android:textSize="@dimen/_10sdp"/>
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etArabicDescription"
+        style="@style/edit_text"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/edit_back"
+        android:hint="Enter Terms &amp; Condition"
+        android:inputType="textCapSentences"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btnSave"

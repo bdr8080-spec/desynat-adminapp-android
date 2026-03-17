@@ -70,6 +70,9 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTim
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
+import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
+import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -987,7 +990,29 @@ interface ApiServices {
     @POST(Constants.CREATE_UPDATE_CONTACT_US)
     suspend fun createUpdateContactUs(
         @Body map: HashMap<String,Any>
-    ): Response<GetContactResponse>
+    ): Response<CommonResponse>
+
+    @GET(Constants.GET_MY_NOTIFICATION_LIST)
+    suspend fun getMyNotification(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.READ_NOTIFICATION)
+    suspend fun readNotification(
+        @Body map: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+
+    @GET(Constants.GET_SEND_NOTIFICATION_LIST)
+    suspend fun getSendNotification(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetSendNotificationListResponse>
+
+
+    @POST(Constants.SEND_NOTIFICATION)
+    suspend fun sendNotification(
+        @Body request: SendNotificationRequest
+    ): Response<SendNotificationResponse>
 
 
 }

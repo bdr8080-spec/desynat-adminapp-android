@@ -63,6 +63,7 @@ class MyNotificationFragment : BaseFragment() {
                 getNotification(false)
             }
         }
+        getMyNotification()
     }
 
     override fun initControl() {
@@ -75,13 +76,13 @@ class MyNotificationFragment : BaseFragment() {
 
     private fun getNotification(isLoading: Boolean=true){
         if (isLoading){
-            ProgressDialogUtils.Companion.getInstance().showProgress(requireActivity())
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
     }
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver) {
-                ProgressDialogUtils.Companion.getInstance().hideProgress()
+                ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
@@ -91,5 +92,40 @@ class MyNotificationFragment : BaseFragment() {
                 isObserver = false
             }
         }
+
+        viewModel.getMyNotificationResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                    myNotificationList.clear()
+
+
+              //  myNotificationList.addAll(response.data)
+                checkData()
+                myNotificationAdapter?.notifyDataSetChanged()
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
     }
+
+private fun getMyNotification(loading:Boolean=true){
+    val map = HashMap<String,Any>()
+
+    viewModel.getMyNotification(map)
+    if (loading){
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+    }
+    isObserver = true
+}
+
+    private fun checkData(){
+        binding?.tvNoDataFound?.isVisible = myNotificationList.isEmpty()
+    }
+
 }

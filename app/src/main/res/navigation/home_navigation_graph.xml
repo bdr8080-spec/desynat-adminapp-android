@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_home_to_notificationFragment"
-            app:destination="@id/notification" />
+            android:id="@+id/action_home_to_my_notificationFragment"
+            app:destination="@id/myNotification" />
 
     </fragment>
 
@@ -514,17 +514,66 @@
         tools:layout="@layout/fragment_product_detail"/>
 
     <fragment
-        android:id="@+id/notification"
+        android:id="@+id/myNotification"
         android:name="com.desynatadmin.ui.home.notificationManagement.MyNotificationFragment"
-        android:label="Notification Fragment"
+        android:label="My Notification Fragment"
         tools:layout="@layout/fragment_my_notification"/>
 
+    <fragment
+        android:id="@+id/notification"
+        android:name="com.desynatadmin.ui.home.notificationManagement.NotificationManagementFragment"
+        android:label="Notification Fragment"
+        tools:layout="@layout/fragment_notification_management">
+
+        <action
+            android:id="@+id/action_notificationManagement_to_sendNotificationFragment"
+            app:destination="@id/sendNotification" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/sendNotification"
+        android:name="com.desynatadmin.ui.home.notificationManagement.SendNewNotificationFragment"
+        android:label="Send Notification Fragment"
+        tools:layout="@layout/fragment_send_new_notification"/>
 
     <fragment
         android:id="@+id/cmsManagement"
         android:name="com.desynatadmin.ui.home.cmsManagement.CmsManagementFragment"
         android:label="Cms Management Fragment"
-        tools:layout="@layout/fragment_cms_management"/>
+        tools:layout="@layout/fragment_cms_management">
+
+        <action
+            android:id="@+id/action_cmsManagementManagement_to_faqFragment"
+            app:destination="@id/faq" />
+
+        <action
+            android:id="@+id/action_cmsManagementManagement_to_contactUsFragment"
+            app:destination="@id/contactUs" />
+
+        <action
+            android:id="@+id/action_cmsManagementManagement_to_commonCmsContentFragment"
+            app:destination="@id/commonCmsContent" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/commonCmsContent"
+        android:name="com.desynatadmin.ui.home.cmsManagement.CommonCmsPreviewFragment"
+        android:label="Common Cms Fragment"
+        tools:layout="@layout/fragment_common_cms_preview"/>
+
+    <fragment
+    android:id="@+id/faq"
+    android:name="com.desynatadmin.ui.home.cmsManagement.FaqFragment"
+    android:label="Faq Fragment"
+    tools:layout="@layout/fragment_faq"/>
+
+    <fragment
+    android:id="@+id/contactUs"
+    android:name="com.desynatadmin.ui.home.cmsManagement.ContactUsFragment"
+    android:label="Contact Us Fragment"
+    tools:layout="@layout/fragment_contact_us"/>
 
     <fragment
         android:id="@+id/supportChat"

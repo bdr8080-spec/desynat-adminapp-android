@@ -96,5 +96,5 @@ dependencies {
 
     implementation ("com.google.android.material:material:1.11.0")
     implementation ("com.otaliastudios:transcoder:0.11.2")
-
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.26")
 }

@@ -74,6 +74,9 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTim
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
+import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
+import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
@@ -1897,7 +1900,7 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
         )
     }
 
-    val createUpdateContactUsLiveData = SingleLiveEvent<GetContactResponse>()
+    val createUpdateContactUsLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun createUpdateContactUs(map: HashMap<String, Any>
     ) {
         handleApiCall(
@@ -1938,6 +1941,52 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
                 api.updateFaq(map)
             },
             responseLiveData = updateFaqLiveData
+        )
+    }
+
+    val getMyNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getMyNotification(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getMyNotification(map)
+            },
+            responseLiveData = getMyNotificationLiveData
+        )
+    }
+
+    val readNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun readNotification(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.readNotification(map)
+            },
+            responseLiveData = readNotificationLiveData
+        )
+    }
+
+
+    val getSendNotificationLiveData = SingleLiveEvent<GetSendNotificationListResponse>()
+    suspend fun getSendNotification(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getSendNotification(map)
+            },
+            responseLiveData = getSendNotificationLiveData
+        )
+    }
+
+
+    val sendNotificationLiveData = SingleLiveEvent<SendNotificationResponse>()
+    suspend fun sendNotification(request: SendNotificationRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.sendNotification(request)
+            },
+            responseLiveData = sendNotificationLiveData
         )
     }
 }

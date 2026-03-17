@@ -80,12 +80,11 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@drawable/city_item_bg"
-                    android:orientation="vertical">
+                    android:background="@drawable/city_item_bg">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSelect"
@@ -94,7 +93,6 @@
                     android:paddingVertical="@dimen/_8sdp"
                     android:drawablePadding="@dimen/_5sdp"
                     android:text="Terms &amp; Conditions"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:paddingHorizontal="@dimen/_10sdp"
@@ -107,9 +105,28 @@
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/city_item_bg">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTerms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/_8sdp"
+                        android:text="Terms &amp; Conditions"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:drawableEnd="@drawable/ic_arrow_up"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#D9D9D9"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvReturnPolicy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -208,7 +225,7 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clEnglish"
@@ -257,7 +274,6 @@
                     android:text="Sed ut perspiciatis unde omnis iste natus  error sit voluptatem accusantium  doloremque laudantium, totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_light"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -307,7 +323,6 @@
                     android:text="Sed ut perspiciatis unde omnis iste natus  error sit voluptatem accusantium  doloremque laudantium, totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_light"/>
 
                 <View

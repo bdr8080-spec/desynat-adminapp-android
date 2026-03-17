@@ -31,7 +31,7 @@ class NotificationManagementFragment :  BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var isFromSwipe=false
-    private var notificationList = ArrayList<GetSendNotificationListResponse.Data>()
+    private var notificationList = ArrayList<GetSendNotificationListResponse.Data.Data>()
     private var notificationAdapter: NotificationAdapter?=null
     private var search: Job? = null
     private var lastQuery: String? = null
@@ -66,7 +66,6 @@ class NotificationManagementFragment :  BaseFragment() {
             notificationAdapter = NotificationAdapter(requireActivity(), notificationList, object :
                 NotificationAdapter.ClickOnItem {
                 override fun onClickItem(position: Int) {
-
                 }
             })
             rvNotification.adapter = notificationAdapter
@@ -107,6 +106,8 @@ class NotificationManagementFragment :  BaseFragment() {
                 getNotification(false)
             }
         }
+
+        getNotification()
     }
 
     override fun initControl() {
@@ -116,7 +117,7 @@ class NotificationManagementFragment :  BaseFragment() {
             }
 
             tvSendNewNotification.setOnClickListener {
-
+                findNavController().navigate(R.id.action_notificationManagement_to_sendNotificationFragment)
             }
 
             ivNextArrow.setOnClickListener {
@@ -138,14 +139,23 @@ class NotificationManagementFragment :  BaseFragment() {
     }
 
     private fun getNotification(isLoading: Boolean=true,search: String?=null){
+        val map = HashMap<String,Any>()
+
+        if (search!=null){
+            map["search"] = search
+        }
+        map["page"] = currentPage
+        map["limit"] = pageLimit
+        viewModel.getSendNotification(map)
         if (isLoading){
-            ProgressDialogUtils.Companion.getInstance().showProgress(requireActivity())
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
     }
+
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver) {
-                ProgressDialogUtils.Companion.getInstance().hideProgress()
+                ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
@@ -155,6 +165,68 @@ class NotificationManagementFragment :  BaseFragment() {
                 isObserver = false
             }
         }
+
+        viewModel.getSendNotificationResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = notificationList.size
+                if (!pagination){
+                    notificationList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                notificationList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        notificationAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    notificationAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
     }
 
     private fun checkData(){

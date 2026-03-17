@@ -70,11 +70,11 @@ class HomeFragment : BaseFragment() {
             }
 
             ivNotification.setOnClickListener {
-              //  findNavController().navigate(R.id.action_home_to_notificationFragment)
+                findNavController().navigate(R.id.action_home_to_my_notificationFragment)
             }
 
             ivLanguage.setOnClickListener {
-               // changeLanguageDialog()
+                changeLanguageDialog()
             }
         }
     }

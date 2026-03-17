@@ -14,7 +14,7 @@ class AssignUserAdapter(var context:Context, private var driverList: ArrayList<S
         fun bind(position: Int) = with(binding){
             val driverData = driverList[position]
 
-                tvUser.text = driverData.fullNameEnglish
+               // tvUser.text = driverData.fullNameEnglish
 
                 if (selected==position){
                     ivRadio.setImageResource(R.drawable.ic_radio_selected)

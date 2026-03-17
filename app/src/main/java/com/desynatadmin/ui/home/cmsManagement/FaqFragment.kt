@@ -35,6 +35,9 @@ class FaqFragment : BaseFragment() {
     private var selectedPos : Int= -1
     private var userType = 1
 
+    private var faqDialog: Dialog?=null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +55,7 @@ class FaqFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+            userType = arguments?.getInt("userType")?:1
             toolbar.tvToolbar.text = "FAQ's"
 
             faqAdapter = FaqAdapter(requireActivity(),faqList,object : FaqAdapter.ClickOnItem{
@@ -111,6 +115,7 @@ class FaqFragment : BaseFragment() {
         viewModel.addFaqResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                faqDialog?.dismiss()
                 CommonMethod.showSuccessDialog(requireActivity(),"FAQ added successfully!")
                 faqList.add(response.data)
                 faqAdapter?.notifyDataSetChanged()
@@ -122,8 +127,9 @@ class FaqFragment : BaseFragment() {
         viewModel.updateFaqResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                faqDialog?.dismiss()
                 CommonMethod.showSuccessDialog(requireActivity(),"FAQ updated successfully!")
-                faqList.add(selectedPos,response.data)
+                faqList[selectedPos] = response.data
                 faqAdapter?.notifyDataSetChanged()
                 checkData()
                 selectedPos = -1
@@ -134,17 +140,17 @@ class FaqFragment : BaseFragment() {
     }
 
     private fun addFaqDialog(isEdit: Boolean=false) {
-        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        faqDialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddFaqDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog.setContentView(it) }
+        dialogBinding.root.let { faqDialog?.setContentView(it) }
 
-        val window: Window = dialog.window!!
+        val window: Window = faqDialog?.window!!
         window.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         window.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setCancelable(false)
+        faqDialog?.setCancelable(false)
 
         val params: WindowManager.LayoutParams = window.attributes
         params.gravity = Gravity.BOTTOM
@@ -168,7 +174,7 @@ class FaqFragment : BaseFragment() {
             }
 
             tvToolbar.setOnClickListener {
-                dialog.dismiss()
+                faqDialog?.dismiss()
             }
 
             btnAdd.setOnClickListener {
@@ -192,7 +198,7 @@ class FaqFragment : BaseFragment() {
                     map["question_arabic"] = etArabicQuestion.text?.trim().toString()
                     map["answer_arabic"] = etArabicAnswer.text?.trim().toString()
                     if (isEdit){
-                        map["faq_id"] = etArabicAnswer.text?.trim().toString()
+                        map["faq_id"] = faqList[selectedPos].id
                         updateFaq(map)
                     }
                     else{
@@ -203,7 +209,7 @@ class FaqFragment : BaseFragment() {
 
         }
 
-        dialog.show()
+        faqDialog?.show()
     }
 
     private fun getFaq(loading:Boolean=true){

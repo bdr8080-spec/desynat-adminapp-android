@@ -312,11 +312,16 @@ override fun onBackPressed() {
 //                controller.navigate(R.id.supportChat)
 //                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
 //            }
-//
-//            rlCms.setOnClickListener {
-//                controller.navigate(R.id.cmsManagement)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+
+            rlCms.setOnClickListener {
+                controller.navigate(R.id.cmsManagement)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlNotificationManagement.setOnClickListener {
+                controller.navigate(R.id.notification)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
         }
     }
     private fun enableDrawer(enable: Boolean) {
