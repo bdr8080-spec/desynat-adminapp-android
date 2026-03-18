@@ -702,10 +702,10 @@ object CommonMethod {
 
         return maskedPart + visiblePart
     }
-
     fun setHtmlText(html: String): Spanned {
-        val cleanHtml = html.replace("\\/", "/")
-
+        val cleanHtml = html
+            .replace("\\/", "/")
+            .replace("\n", "<br>")
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(cleanHtml, Html.FROM_HTML_MODE_COMPACT)
         } else {

@@ -47,7 +47,7 @@ data class GetNewAffiliateUserResponse(
             @SerializedName("admin_verify")
             val adminVerify: String,
             @SerializedName("bank_details")
-            val bankDetails: BankDetails,
+            val bankDetails: ArrayList<BankDetails>,
             @SerializedName("bank_update_status")
             val bankUpdateStatus: String,
             @SerializedName("country_code")
@@ -97,7 +97,9 @@ data class GetNewAffiliateUserResponse(
             @SerializedName("updated_at")
             val updatedAt: String,
             @SerializedName("user_id")
-            val userId: Int
+            val userId: Int,
+            @SerializedName("isSelected")
+            var isSelected: Boolean=false
         ) {
             data class AddressDetails(
                 @SerializedName("address1")

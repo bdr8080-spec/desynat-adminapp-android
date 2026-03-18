@@ -46,7 +46,8 @@ data class ApprovedSellerResponse(
             var store_info: StoreInfo,
             var store_information: String,
             var subcription_plan: Any,
-            var updated_at: String
+            var updated_at: String,
+            var isSelected: Boolean = false
         ) {
             data class OwnerDocument(
                 var created_at: String,

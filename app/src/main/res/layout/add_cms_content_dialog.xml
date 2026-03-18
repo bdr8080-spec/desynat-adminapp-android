@@ -53,7 +53,10 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/edit_back"
         android:hint="Enter Terms &amp; Condition"
-        android:inputType="textCapSentences"/>
+        android:inputType="textMultiLine"
+        android:textSize="@dimen/_11sdp"
+        android:minLines="1"
+        android:maxLines="5"/>
 
     <RelativeLayout
         android:id="@+id/relArabic"
@@ -87,7 +90,10 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/edit_back"
         android:hint="Enter Terms &amp; Condition"
-        android:inputType="textCapSentences"/>
+        android:inputType="textMultiLine"
+        android:textSize="@dimen/_11sdp"
+        android:minLines="1"
+        android:maxLines="5"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btnSave"

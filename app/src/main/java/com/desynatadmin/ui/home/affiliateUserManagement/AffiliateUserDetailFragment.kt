@@ -217,15 +217,15 @@ class AffiliateUserDetailFragment : BaseFragment() {
 
            tvAddress.text  = userData?.addressDetails?.locations
 
-            tvIban.text = userData?.bankDetails?.iban
-            tvswiftbic.text = userData?.bankDetails?.swift
-            tvBankName.text = userData?.bankDetails?.bankName
-            tvAccountHolderName.text = userData?.bankDetails?.accountHolderName
-            tvAccountNumber.text = userData?.bankDetails?.accountNo
-            if (userData?.bankDetails?.uploadProof!="null" && userData?.bankDetails?.uploadProof!=null && userData?.bankDetails?.uploadProof!=""){
+            tvIban.text = userData?.bankDetails?.get(0)?.iban
+            tvswiftbic.text = userData?.bankDetails?.get(0)?.swift
+            tvBankName.text = userData?.bankDetails?.get(0)?.bankName
+            tvAccountHolderName.text = userData?.bankDetails?.get(0)?.accountHolderName
+            tvAccountNumber.text = userData?.bankDetails?.get(0)?.accountNo
+            if (userData?.bankDetails?.get(0)?.uploadProof!="null" && userData?.bankDetails?.get(0)?.uploadProof!=null && userData?.bankDetails?.get(0)?.uploadProof!=""){
                 imAccountProof.isVisible = true
                 tvProofAccount.isVisible = true
-                Glide.with(requireActivity()).load(userData?.bankDetails?.uploadProof).into(imAccountProof)
+                Glide.with(requireActivity()).load(userData?.bankDetails?.get(0)?.uploadProof).into(imAccountProof)
             }
             else{
                 imAccountProof.isVisible = false

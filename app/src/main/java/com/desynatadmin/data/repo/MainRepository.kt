@@ -128,7 +128,8 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.uploadImage(imageFile?.toMultipartPart("image")
+                api.uploadImage(
+                    imageFile?.toMultipartPart("image")
                 )
             },
             responseLiveData = responseUploadImage
@@ -141,7 +142,8 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.uploadVideoImage(imageFile?.toMultipartPart("file")
+                api.uploadVideoImage(
+                    imageFile?.toMultipartPart("file")
                 )
             },
             responseLiveData = responseUploadVideoImage
@@ -150,11 +152,12 @@ class MainRepository @Inject constructor(
 
     val responseUploadWithResolution = SingleLiveEvent<FileUploadResponse>()
     suspend fun uploadWithResolution(
-        imageFile: File? = null,type:String
+        imageFile: File? = null, type: String
     ) {
         handleApiCall(
             api = {
-                api.uploadWithResolution(imageFile?.toMultipartPart("image"),type.toPlainRequestBody()
+                api.uploadWithResolution(
+                    imageFile?.toMultipartPart("image"), type.toPlainRequestBody()
                 )
             },
             responseLiveData = responseUploadWithResolution
@@ -163,7 +166,7 @@ class MainRepository @Inject constructor(
 
     val loginLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun login(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -175,7 +178,7 @@ class MainRepository @Inject constructor(
 
     val otpVerifyLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun otpVerification(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -187,7 +190,7 @@ class MainRepository @Inject constructor(
 
     val resendOtpLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun resendOtp(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -199,7 +202,7 @@ class MainRepository @Inject constructor(
 
     val forgotPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun forgotPassword(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -211,7 +214,7 @@ class MainRepository @Inject constructor(
 
     val createPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun createPassword(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -221,7 +224,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-val logoutLiveData = SingleLiveEvent<CommonResponse>()
+    val logoutLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun logout(
     ) {
         handleApiCall(
@@ -232,7 +235,7 @@ val logoutLiveData = SingleLiveEvent<CommonResponse>()
         )
     }
 
-val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
+    val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
     suspend fun getCategory(
     ) {
         handleApiCall(
@@ -242,19 +245,22 @@ val categoryLiveData = SingleLiveEvent<GetCategoryResponse>()
             responseLiveData = categoryLiveData
         )
     }
-val subCategoryLiveData = SingleLiveEvent<GetSubCategoryResponse>()
-    suspend fun getSubCategory(categoryId:String,search:String?=null, page:Int
+
+    val subCategoryLiveData = SingleLiveEvent<GetSubCategoryResponse>()
+    suspend fun getSubCategory(
+        categoryId: String, search: String? = null, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getSubCategory(categoryId,search,page)
+                api.getSubCategory(categoryId, search, page)
             },
             responseLiveData = subCategoryLiveData
         )
     }
 
-val brandLiveData = SingleLiveEvent<GetBrandResponse>()
-    suspend fun getBrand(map:HashMap<String, Any>
+    val brandLiveData = SingleLiveEvent<GetBrandResponse>()
+    suspend fun getBrand(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -265,7 +271,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val addBrandLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addBrand(map:HashMap<String, RequestBody>
+    suspend fun addBrand(
+        map: HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -276,7 +283,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val editBrandLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun editBrand(map:HashMap<String, RequestBody>
+    suspend fun editBrand(
+        map: HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -287,7 +295,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val addSubCategoryLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addSubCategory(map:HashMap<String, RequestBody>
+    suspend fun addSubCategory(
+        map: HashMap<String, RequestBody>
     ) {
         handleApiCall(
             api = {
@@ -340,7 +349,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         country_id: String,
         limit: String,
         search: String,
-        page : String
+        page: String
 
     ) {
         handleApiCall(
@@ -427,7 +436,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val subscriptionPlanLiveData = SingleLiveEvent<GetAllPlanResponse>()
-    suspend fun getSubscriptionPlan(countryId:String?=null
+    suspend fun getSubscriptionPlan(
+        countryId: String? = null
     ) {
         handleApiCall(
             api = {
@@ -437,8 +447,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val subscriptionPlanDetailLiveData = SingleLiveEvent<UpdatePlanStatusResponse>()
-    suspend fun getSubscriptionPlanDetail(planId:String?=null
+    val subscriptionPlanDetailLiveData = SingleLiveEvent<UpdatePlanStatusResponse>()
+    suspend fun getSubscriptionPlanDetail(
+        planId: String? = null
     ) {
         handleApiCall(
             api = {
@@ -449,7 +460,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val addSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addSubscriptionPlan(request: AddPlanRequest
+    suspend fun addSubscriptionPlan(
+        request: AddPlanRequest
     ) {
         handleApiCall(
             api = {
@@ -460,7 +472,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val editSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun updateSubscriptionPlan(request: AddPlanRequest
+    suspend fun updateSubscriptionPlan(
+        request: AddPlanRequest
     ) {
         handleApiCall(
             api = {
@@ -471,7 +484,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateSubscriptionPlanStatusLiveData = SingleLiveEvent<UpdatePlanStatusResponse>()
-    suspend fun updateSubscriptionPlanStatus(map:HashMap<String, Any>
+    suspend fun updateSubscriptionPlanStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -482,7 +496,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteSubscriptionPlanLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteSubscriptionPlan(map: HashMap<String, Any>
+    suspend fun deleteSubscriptionPlan(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -506,11 +521,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getChangeStatus = SingleLiveEvent<ChangeCityStatusResponse>()
     suspend fun hitChangeCityStatus(
-        token : String,map: HashMap<String, Any>
+        token: String, map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.hitChangeStatus(token,map)
+                api.hitChangeStatus(token, map)
             },
             responseLiveData = getChangeStatus
         )
@@ -518,11 +533,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getDeleteServiceCity = SingleLiveEvent<CommonResponse>()
     suspend fun hitDeleteCityService(
-        token : String,map: HashMap<String, Any>
+        token: String, map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.hitDeleteServiceCity(token,map)
+                api.hitDeleteServiceCity(token, map)
             },
             responseLiveData = getDeleteServiceCity
         )
@@ -530,11 +545,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getAddZoneData = SingleLiveEvent<AddZoneResponse>()
     suspend fun hitAddZone(
-        token : String,map:AddZoneRequest
+        token: String, map: AddZoneRequest
     ) {
         handleApiCall(
             api = {
-                api.hitAddZone(token,map)
+                api.hitAddZone(token, map)
             },
             responseLiveData = getAddZoneData
         )
@@ -542,17 +557,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getNewSellerList = SingleLiveEvent<NewSellerResponse>()
     suspend fun hitNewSellerList(
-        token : String,
-        country_id : String,
-        from_date : String,
-        to_date : String,
-        limit : String,
-        page : String,
-        search : String,
+        token: String,
+        country_id: String,
+        from_date: String,
+        to_date: String,
+        limit: String,
+        page: String,
+        search: String,
     ) {
         handleApiCall(
             api = {
-                api.hitNewSelleList(token,country_id,from_date, to_date,limit,page,search)
+                api.hitNewSelleList(token, country_id, from_date, to_date, limit, page, search)
             },
             responseLiveData = getNewSellerList
         )
@@ -560,31 +575,31 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getApprovedData = SingleLiveEvent<ApprovedSellerResponse>()
     suspend fun hitApprovedSellerList(
-        token : String,
-        country_id : String,
-        from_date : String,
-        to_date : String,
-        limit : String,
-        search : String,
+        token: String?=null,
+        country_id: String?=null,
+        from_date: String?=null,
+        to_date: String?=null,
+        limit: String?=null,
+        search: String?=null,
     ) {
         handleApiCall(
-            api = { api.hitApprovedSeller(token,country_id,from_date, to_date,limit,search) },
+            api = { api.hitApprovedSeller(token, country_id, from_date, to_date, limit, search) },
             responseLiveData = getApprovedData
         )
     }
 
     val getRejectSellerList = SingleLiveEvent<RejectedListResponse>()
     suspend fun hitRejectedSellerList(
-        token : String,
-        country_id : String,
-        from_date : String,
-        to_date : String,
-        limit : String,
-        search : String,
+        token: String,
+        country_id: String,
+        from_date: String,
+        to_date: String,
+        limit: String,
+        search: String,
     ) {
         handleApiCall(
             api = {
-                api.hitRejectedSeller(token,country_id,from_date, to_date,limit,search)
+                api.hitRejectedSeller(token, country_id, from_date, to_date, limit, search)
             },
             responseLiveData = getRejectSellerList
         )
@@ -593,12 +608,12 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getSellerDetail = SingleLiveEvent<SellerDetailResponse>()
     suspend fun hitSellerDetail(
-        token : String,
-        seller_id : String,
+        token: String,
+        seller_id: String,
     ) {
         handleApiCall(
             api = {
-                api.hitSellerDetail(token,seller_id)
+                api.hitSellerDetail(token, seller_id)
             },
             responseLiveData = getSellerDetail
         )
@@ -606,12 +621,12 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getAcceptSeller = SingleLiveEvent<AcceptSellerResponse>()
     suspend fun hitAcceptSeller(
-        token : String,
+        token: String,
         map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.hitAcceptSeller(token,map)
+                api.hitAcceptSeller(token, map)
             },
             responseLiveData = getAcceptSeller
         )
@@ -619,12 +634,12 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getRejectSeller = SingleLiveEvent<AcceptSellerResponse>()
     suspend fun hitRejectSeller(
-        token : String,
+        token: String,
         map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.hitRejectSeller(token,map)
+                api.hitRejectSeller(token, map)
             },
             responseLiveData = getRejectSeller
         )
@@ -632,12 +647,12 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getDeleteZone = SingleLiveEvent<AcceptSellerResponse>()
     suspend fun hitDeleteZone(
-        token : String,
+        token: String,
         map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.hitDeleteZone(token,map)
+                api.hitDeleteZone(token, map)
             },
             responseLiveData = getDeleteZone
         )
@@ -645,12 +660,12 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getUpdateSellerData = SingleLiveEvent<SellerStatusResponse>()
     suspend fun hitUpdateSeller(
-        token : String,
+        token: String,
         map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.hitSellerStatus(token,map)
+                api.hitSellerStatus(token, map)
             },
             responseLiveData = getUpdateSellerData
         )
@@ -658,11 +673,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getLocation = SingleLiveEvent<PlacesResponse>()
     suspend fun hitPlaceResponse(
-        input:String,key:String
+        input: String, key: String
     ) {
         handleApiCall(
             api = {
-                api.getPlaceSuggestions(input = input,apiKey=key,"en")
+                api.getPlaceSuggestions(input = input, apiKey = key, "en")
             },
             responseLiveData = getLocation
         )
@@ -670,13 +685,13 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getZoneList = SingleLiveEvent<ZoneListResponse>()
     suspend fun hitZoneList(
-        token : String,
-        country_id : String,
-        city_id : String,
+        token: String,
+        country_id: String,
+        city_id: String,
     ) {
         handleApiCall(
             api = {
-                api.hitZoneList(token,country_id, city_id)
+                api.hitZoneList(token, country_id, city_id)
             },
             responseLiveData = getZoneList
         )
@@ -684,24 +699,25 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val getUpdateZoneData = SingleLiveEvent<UpdateZonResponse>()
     suspend fun hitUpdateZone(
-        token : String,
-       req : AddZoneRequest
+        token: String,
+        req: AddZoneRequest
     ) {
         handleApiCall(
             api = {
-                api.hitUpdateZone(token,req)
+                api.hitUpdateZone(token, req)
             },
             responseLiveData = getUpdateZoneData
         )
     }
+
     val getUpdateZoneStatusData = SingleLiveEvent<UpdateZoneStatusResponse>()
     suspend fun hitUpdateZoneStatus(
-        token : String,
-       map : HashMap<String, Any>
+        token: String,
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.hitUpdateZoneStatus(token,map)
+                api.hitUpdateZoneStatus(token, map)
             },
             responseLiveData = getUpdateZoneStatusData
         )
@@ -709,12 +725,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val filterNewSeller = SingleLiveEvent<UpdateZonResponse>()
     suspend fun hitNewSeller(
-        token : String,
-        country_id: String,from_date: String,to_date: String
+        token: String,
+        country_id: String, from_date: String, to_date: String
     ) {
         handleApiCall(
             api = {
-                api.filter(Token =token,country_id = country_id, from_date = from_date, to_date = to_date)
+                api.filter(
+                    Token = token,
+                    country_id = country_id,
+                    from_date = from_date,
+                    to_date = to_date
+                )
             },
             responseLiveData = filterNewSeller
         )
@@ -722,7 +743,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
     val fetchLocation = SingleLiveEvent<PlaceDetailsResponse>()
     suspend fun hitPlaceDetail(
-        placeId:String,key:String
+        placeId: String, key: String
     ) {
         handleApiCall(
             api = {
@@ -737,18 +758,24 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val userLiveData = SingleLiveEvent<GetUserResponse>()
-    suspend fun getAllUser(search:String?=null, page:Int,countryId:String?=null,fromDate:String?=null,toDate:String?=null
+    suspend fun getAllUser(
+        search: String? = null,
+        page: String?=null,
+        countryId: String? = null,
+        fromDate: String? = null,
+        toDate: String? = null
     ) {
         handleApiCall(
             api = {
-                api.getUser(search,page,countryId,fromDate,toDate)
+                api.getUser(search, page, countryId, fromDate, toDate)
             },
             responseLiveData = userLiveData
         )
     }
 
     val userDetailLiveData = SingleLiveEvent<GetUserDetailResponse>()
-    suspend fun getUserDetail(userId:String
+    suspend fun getUserDetail(
+        userId: String
     ) {
         handleApiCall(
             api = {
@@ -759,7 +786,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateUserStatusLiveData = SingleLiveEvent<BlockUnblockUserResponse>()
-    suspend fun blockUnblockUser(map:HashMap<String,Any>
+    suspend fun blockUnblockUser(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -770,7 +798,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val walletBalanceLiveData = SingleLiveEvent<AddWalletBalanceResponse>()
-    suspend fun addWalletAmount(map:HashMap<String,Any>
+    suspend fun addWalletAmount(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -781,18 +810,20 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val reasonLiveData = SingleLiveEvent<GetReasonResponse>()
-    suspend fun getReason(type:Int,search:String?=null, page:Int
+    suspend fun getReason(
+        type: Int, search: String? = null, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getReason(type,search,page)
+                api.getReason(type, search, page)
             },
             responseLiveData = reasonLiveData
         )
     }
 
     val addReasonLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addReason(map:HashMap<String,Any>
+    suspend fun addReason(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -803,7 +834,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateReasonLiveData = SingleLiveEvent<UpdateReasonResponse>()
-    suspend fun updateReason(map:HashMap<String,Any>
+    suspend fun updateReason(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -813,7 +845,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val kuwaitLiveData = SingleLiveEvent<GetKuwaitZoneResponse>()
+    val kuwaitLiveData = SingleLiveEvent<GetKuwaitZoneResponse>()
     suspend fun getKuwaitZone(
     ) {
         handleApiCall(
@@ -836,7 +868,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateReasonStatusLiveData = SingleLiveEvent<BlockUnblockReasonResponse>()
-    suspend fun blockUnblockReason(map:HashMap<String,Any>
+    suspend fun blockUnblockReason(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -847,7 +880,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteReasonLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteReason(map:HashMap<String,Any>
+    suspend fun deleteReason(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -858,18 +892,20 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deliveryBoyLiveData = SingleLiveEvent<GetAllDeliveryBoyResponse>()
-    suspend fun getDeliveryBoy(search:String?=null, page:Int,fromDate:String?=null,toDate:String?=null
+    suspend fun getDeliveryBoy(
+        search: String? = null, page: String?=null, fromDate: String? = null, toDate: String? = null
     ) {
         handleApiCall(
             api = {
-                api.getDeliveryBoy(search,page,fromDate,toDate)
+                api.getDeliveryBoy(search, page, fromDate, toDate)
             },
             responseLiveData = deliveryBoyLiveData
         )
     }
 
     val deliveryBoyDetailLiveData = SingleLiveEvent<GetDeliveryBoyDetailResponse>()
-    suspend fun getDeliveryBoyDetail(userId:String
+    suspend fun getDeliveryBoyDetail(
+        userId: String
     ) {
         handleApiCall(
             api = {
@@ -880,7 +916,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val addDeliveryBoyLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addDeliveryBoy(request: AddDeliveryBoyRequest
+    suspend fun addDeliveryBoy(
+        request: AddDeliveryBoyRequest
     ) {
         handleApiCall(
             api = {
@@ -891,7 +928,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateDeliveryBoyLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun updateDeliveryBoy(request: AddDeliveryBoyRequest
+    suspend fun updateDeliveryBoy(
+        request: AddDeliveryBoyRequest
     ) {
         handleApiCall(
             api = {
@@ -902,7 +940,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateDeliveryBoyStatusLiveData = SingleLiveEvent<BlockUnblockDeliveryBoyResponse>()
-    suspend fun blockUnblockDeliveryBoy(map:HashMap<String,Any>
+    suspend fun blockUnblockDeliveryBoy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -913,7 +952,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteDeliveryBoyLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteDeliveryBoy(map:HashMap<String,Any>
+    suspend fun deleteDeliveryBoy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -925,18 +965,23 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val promoCodeLiveData = SingleLiveEvent<GetPromoCodeResponse>()
-    suspend fun getPromoCode(search:String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null
+    suspend fun getPromoCode(
+        search: String? = null,
+        fromDate: String? = null,
+        toDate: String? = null,
+        countryId: String? = null
     ) {
         handleApiCall(
             api = {
-                api.getPromoCode(search,fromDate,toDate,countryId)
+                api.getPromoCode(search, fromDate, toDate, countryId)
             },
             responseLiveData = promoCodeLiveData
         )
     }
 
     val addPromoCodeLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addPromoCode(request: AddPromoCodeRequest
+    suspend fun addPromoCode(
+        request: AddPromoCodeRequest
     ) {
         handleApiCall(
             api = {
@@ -947,7 +992,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updatePromoCodeLiveData = SingleLiveEvent<UpdatePromoCodeResponse>()
-    suspend fun updatePromoCode(request: AddPromoCodeRequest
+    suspend fun updatePromoCode(
+        request: AddPromoCodeRequest
     ) {
         handleApiCall(
             api = {
@@ -958,7 +1004,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updatePromoCodeStatusLiveData = SingleLiveEvent<UpdatePromoCodeResponse>()
-    suspend fun updatePromoCodeStatus(map:HashMap<String,Any>
+    suspend fun updatePromoCodeStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -969,7 +1016,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deletePromoCodeLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deletePromoCode(map:HashMap<String,Any>
+    suspend fun deletePromoCode(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -980,18 +1028,20 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val giftCardLiveData = SingleLiveEvent<GetAllGiftCardResponse>()
-    suspend fun getGiftCard(search:String?=null, page:Int
+    suspend fun getGiftCard(
+        search: String? = null, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getGiftCard(search,page)
+                api.getGiftCard(search, page)
             },
             responseLiveData = giftCardLiveData
         )
     }
 
     val addGiftCardLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addGiftCard(map:HashMap<String, Any>
+    suspend fun addGiftCard(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1002,7 +1052,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val editGiftCardLiveData = SingleLiveEvent<UpdateGiftCardResponse>()
-    suspend fun editGiftCard(map:HashMap<String, Any>
+    suspend fun editGiftCard(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1037,17 +1088,18 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val shippingChargeLiveData = SingleLiveEvent<GetShippingChargeResponse>()
-    suspend fun getShippingCharge(countryId:String,page:Int
+    suspend fun getShippingCharge(
+        countryId: String, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getShippingCharge(countryId,page)
+                api.getShippingCharge(countryId, page)
             },
             responseLiveData = shippingChargeLiveData
         )
     }
 
-  val shippingTaxLiveData = SingleLiveEvent<GetShippingTaxResponse>()
+    val shippingTaxLiveData = SingleLiveEvent<GetShippingTaxResponse>()
     suspend fun getShippingTax(
     ) {
         handleApiCall(
@@ -1059,8 +1111,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
-  val bannerPerDayPriceLiveData = SingleLiveEvent<GetBannerPricePerDayResponse>()
-    suspend fun getBannerPerDay(type:Int
+    val bannerPerDayPriceLiveData = SingleLiveEvent<GetBannerPricePerDayResponse>()
+    suspend fun getBannerPerDay(
+        type: Int
     ) {
         handleApiCall(
             api = {
@@ -1070,8 +1123,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val updateBannerPerDayPriceLiveData = SingleLiveEvent<UpdateBannerPriceResponse>()
-    suspend fun updateBannerPerDayPrice(map:HashMap<String,Any>
+    val updateBannerPerDayPriceLiveData = SingleLiveEvent<UpdateBannerPriceResponse>()
+    suspend fun updateBannerPerDayPrice(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1082,8 +1136,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
 
- val addTaxLiveData = SingleLiveEvent<AddTaxResponse>()
-    suspend fun addTax(map:HashMap<String,Any>
+    val addTaxLiveData = SingleLiveEvent<AddTaxResponse>()
+    suspend fun addTax(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1093,8 +1148,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val addShippingChargeLiveData = SingleLiveEvent<UpdateShippingChargeResponse>()
-    suspend fun addShippingCharge(map:HashMap<String,Any>
+    val addShippingChargeLiveData = SingleLiveEvent<UpdateShippingChargeResponse>()
+    suspend fun addShippingCharge(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1104,8 +1160,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val updateShippingChargeLiveData = SingleLiveEvent<UpdateShippingChargeResponse>()
-    suspend fun updateShippingCharge(map:HashMap<String,Any>
+    val updateShippingChargeLiveData = SingleLiveEvent<UpdateShippingChargeResponse>()
+    suspend fun updateShippingCharge(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1114,8 +1171,10 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updateShippingChargeLiveData
         )
     }
- val deleteShippingChargeLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteShippingCharge(map:HashMap<String,Any>
+
+    val deleteShippingChargeLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteShippingCharge(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1125,8 +1184,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val updateShippingChargeStatusLiveData = SingleLiveEvent<UpdateShippingChargeResponse>()
-    suspend fun updateShippingChargeStatus(map:HashMap<String,Any>
+    val updateShippingChargeStatusLiveData = SingleLiveEvent<UpdateShippingChargeResponse>()
+    suspend fun updateShippingChargeStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1138,18 +1198,25 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val bannerRequestLiveData = SingleLiveEvent<GetBannerRequestResponse>()
-    suspend fun getBannerRequest(type:Int,search: String?=null,fromDate:String?=null,toDate:String?=null, countryId :String?=null,page:Int
+    suspend fun getBannerRequest(
+        type: Int,
+        search: String? = null,
+        fromDate: String? = null,
+        toDate: String? = null,
+        countryId: String? = null,
+        page: Int
     ) {
         handleApiCall(
             api = {
-                api.getBannerRequest(type,search,fromDate, toDate, countryId, page)
+                api.getBannerRequest(type, search, fromDate, toDate, countryId, page)
             },
             responseLiveData = bannerRequestLiveData
         )
     }
 
     val updateBannerStatusLiveData = SingleLiveEvent<UpdateBannerRequestStatusResponse>()
-    suspend fun updateBannerStatus(map:HashMap<String,Any>
+    suspend fun updateBannerStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1158,8 +1225,10 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updateBannerStatusLiveData
         )
     }
+
     val approveBannerRequestLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun approveBannerRequest(map:HashMap<String,Any>
+    suspend fun approveBannerRequest(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1170,7 +1239,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val rejectBannerRequestLiveData = SingleLiveEvent<RejectionResponse>()
-    suspend fun rejectBannerRequest(map:HashMap<String,Any>
+    suspend fun rejectBannerRequest(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1192,7 +1262,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateAffiliateCommissionLiveData = SingleLiveEvent<UpdateAffiliateCommissionResponse>()
-    suspend fun updateAffiliateCommission(map:HashMap<String,Any>
+    suspend fun updateAffiliateCommission(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1203,7 +1274,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val activeOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
-    suspend fun getActiveOrderList(map:HashMap<String,Any>
+    suspend fun getActiveOrderList(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1214,7 +1286,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getOrderDetailLiveData = SingleLiveEvent<GetSingleOrderDetailResponse>()
-    suspend fun getOrderDetail(map:HashMap<String,Any>
+    suspend fun getOrderDetail(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1225,7 +1298,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val completedOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
-    suspend fun getCompletedOrderList(map:HashMap<String,Any>
+    suspend fun getCompletedOrderList(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1236,7 +1310,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val cancelledOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
-    suspend fun getCancelledOrderList(map:HashMap<String,Any>
+    suspend fun getCancelledOrderList(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1247,7 +1322,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val returnOrderListLiveData = SingleLiveEvent<GetActiveOrderResponse>()
-    suspend fun getReturnOrderList(map:HashMap<String,Any>
+    suspend fun getReturnOrderList(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1258,7 +1334,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getAssignDriverListLiveData = SingleLiveEvent<GetAvailableDeliveryBoyResponse>()
-    suspend fun getDriverToAssign(orderId:String
+    suspend fun getDriverToAssign(
+        orderId: String
     ) {
         handleApiCall(
             api = {
@@ -1269,7 +1346,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val assignDriverLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun assignDriver(map:HashMap<String,Any>
+    suspend fun assignDriver(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1280,8 +1358,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val invoiceLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun getInvoice(id:String)
-    {
+    suspend fun getInvoice(id: String) {
         handleApiCall(
             api = {
                 api.getInvoice(id)
@@ -1292,30 +1369,31 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val getActiveDealsLiveData = SingleLiveEvent<GetActiveDealResponse>()
-    suspend fun getActiveDeals(search:String?=null, page:Int
+    suspend fun getActiveDeals(
+        search: String? = null, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getActiveDeals(search,page)
+                api.getActiveDeals(search, page)
             },
             responseLiveData = getActiveDealsLiveData
         )
     }
 
     val getExpiredDealsLiveData = SingleLiveEvent<GetActiveDealResponse>()
-    suspend fun getExpiredDeals(search:String?=null, page:Int
+    suspend fun getExpiredDeals(
+        search: String? = null, page: Int
     ) {
         handleApiCall(
             api = {
-                api.getExpiredDeals(search,page)
+                api.getExpiredDeals(search, page)
             },
             responseLiveData = getExpiredDealsLiveData
         )
     }
 
     val addDealLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addDeal(request:AddDealRequest)
-    {
+    suspend fun addDeal(request: AddDealRequest) {
         handleApiCall(
             api = {
                 api.addDeal(request)
@@ -1325,8 +1403,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateDealLiveData = SingleLiveEvent<UpdateDealStatusResponse>()
-    suspend fun updateDeal(request:AddDealRequest)
-    {
+    suspend fun updateDeal(request: AddDealRequest) {
         handleApiCall(
             api = {
                 api.updateDeal(request)
@@ -1336,8 +1413,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateDealStatusLiveData = SingleLiveEvent<UpdateDealStatusResponse>()
-    suspend fun updateDealStatus(map:HashMap<String,Any>)
-    {
+    suspend fun updateDealStatus(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.updateDealStatus(map)
@@ -1347,8 +1423,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteDealLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteDeal(map:HashMap<String,Any>)
-    {
+    suspend fun deleteDeal(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.deleteDeal(map)
@@ -1358,8 +1433,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getDealDetailLiveData = SingleLiveEvent<GetDealDetailResponse>()
-    suspend fun getDealDetail(map:HashMap<String,Any>)
-    {
+    suspend fun getDealDetail(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.getDealDetail(map)
@@ -1369,8 +1443,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getDealProductLiveData = SingleLiveEvent<GetDealProductResponse>()
-    suspend fun getDealProduct(map:HashMap<String,Any>)
-    {
+    suspend fun getDealProduct(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.getDealProduct(map)
@@ -1378,20 +1451,26 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = getDealProductLiveData
         )
     }
+
     val getFullScreenBannerLiveData = SingleLiveEvent<GetFullScreenBannerResponse>()
-    suspend fun getFullScreenBanner(search:String?=null,country:String?=null ,type:String?=null ,startDate: String?=null,enDate: String?=null,page:Int
+    suspend fun getFullScreenBanner(
+        search: String? = null,
+        country: String? = null,
+        type: String? = null,
+        startDate: String? = null,
+        enDate: String? = null,
+        page: Int
     ) {
         handleApiCall(
             api = {
-                api.getFullScreenBanner(search,country,type,startDate,enDate,page)
+                api.getFullScreenBanner(search, country, type, startDate, enDate, page)
             },
             responseLiveData = getFullScreenBannerLiveData
         )
     }
 
     val addFullScreenBannerLiveData = SingleLiveEvent<AddFullScreenBannerResponse>()
-    suspend fun addFullScreenBanner(request:AddFullScreenBannerRequest)
-    {
+    suspend fun addFullScreenBanner(request: AddFullScreenBannerRequest) {
         handleApiCall(
             api = {
                 api.addFullScreenBanner(request)
@@ -1401,8 +1480,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateFullScreenBannerLiveData = SingleLiveEvent<AddFullScreenBannerResponse>()
-    suspend fun updateFullScreenBanner(request:AddFullScreenBannerRequest)
-    {
+    suspend fun updateFullScreenBanner(request: AddFullScreenBannerRequest) {
         handleApiCall(
             api = {
                 api.updateFullScreenBanner(request)
@@ -1410,9 +1488,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updateFullScreenBannerLiveData
         )
     }
+
     val deleteFullScreenBannerLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteFullScreenBanner(map:HashMap<String,Any>)
-    {
+    suspend fun deleteFullScreenBanner(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.deleteFullScreenBanner(map)
@@ -1420,9 +1498,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = deleteFullScreenBannerLiveData
         )
     }
+
     val getAdminStoryLiveData = SingleLiveEvent<GetStoryResponse>()
-    suspend fun getAdminStory(page:Int)
-    {
+    suspend fun getAdminStory(page: Int) {
         handleApiCall(
             api = {
                 api.getAdminStory(page)
@@ -1432,8 +1510,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getSellerStoryLiveData = SingleLiveEvent<GetStoryResponse>()
-    suspend fun getSellerStory(page:Int)
-    {
+    suspend fun getSellerStory(page: Int) {
         handleApiCall(
             api = {
                 api.getSellerStory(page)
@@ -1443,8 +1520,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val addStoryLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun addStory(map:HashMap<String,Any>)
-    {
+    suspend fun addStory(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.addStory(map)
@@ -1454,8 +1530,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteStoryLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteStory(map:HashMap<String,Any>)
-    {
+    suspend fun deleteStory(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.deleteStory(map)
@@ -1466,8 +1541,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
 
 
     val getLiveRequestLiveData = SingleLiveEvent<GetLiveRequestResponse>()
-    suspend fun getLiveRequest(map: HashMap<String, Any>)
-    {
+    suspend fun getLiveRequest(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.getLiveRequest(map)
@@ -1477,8 +1551,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val acceptLiveRequestLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun acceptLiveRequest(map:HashMap<String,Any>)
-    {
+    suspend fun acceptLiveRequest(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.acceptLiveRequest(map)
@@ -1488,8 +1561,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val rejectLiveRequestLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun rejectLiveRequest(map:HashMap<String,Any>)
-    {
+    suspend fun rejectLiveRequest(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.rejectLiveRequest(map)
@@ -1499,19 +1571,17 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getTimeSlotLiveData = SingleLiveEvent<GetTimeSlotResponse>()
-    suspend fun getTimeSlot(countryId:String,date:String)
-    {
+    suspend fun getTimeSlot(countryId: String, date: String) {
         handleApiCall(
             api = {
-                api.getTimeSlot(countryId,date)
+                api.getTimeSlot(countryId, date)
             },
             responseLiveData = getTimeSlotLiveData
         )
     }
 
     val addTimeSlotLiveData = SingleLiveEvent<UpdateTimeSlotResponse>()
-    suspend fun addTimeSlot(request:AddTimeSlotRequest)
-    {
+    suspend fun addTimeSlot(request: AddTimeSlotRequest) {
         handleApiCall(
             api = {
                 api.addTimeSlot(request)
@@ -1521,8 +1591,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateTimeSlotLiveData = SingleLiveEvent<UpdateTimeSlotResponse>()
-    suspend fun updateTimeSlot(request:AddTimeSlotRequest)
-    {
+    suspend fun updateTimeSlot(request: AddTimeSlotRequest) {
         handleApiCall(
             api = {
                 api.updateTimeSlot(request)
@@ -1532,8 +1601,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateTimeSlotStatusLiveData = SingleLiveEvent<UpdateTimeSlotResponse>()
-    suspend fun updateTimeSlotStatus(map:HashMap<String,Any>)
-    {
+    suspend fun updateTimeSlotStatus(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.updateTimeSlotStatus(map)
@@ -1543,8 +1611,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val deleteTimeSlotLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deleteTimeSlot(map:HashMap<String,Any>)
-    {
+    suspend fun deleteTimeSlot(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.deleteTimeSlot(map)
@@ -1554,7 +1621,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val newAffiliateUserLiveData = SingleLiveEvent<GetNewAffiliateUserResponse>()
-    suspend fun getNewAffiliateUser(map:HashMap<String,Any>
+    suspend fun getNewAffiliateUser(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1565,7 +1633,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val approvedAffiliateUserLiveData = SingleLiveEvent<GetNewAffiliateUserResponse>()
-    suspend fun getApprovedAffiliateUser(map:HashMap<String,Any>
+    suspend fun getApprovedAffiliateUser(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1576,7 +1645,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val rejectedAffiliateUserLiveData = SingleLiveEvent<GetNewAffiliateUserResponse>()
-    suspend fun getRejectedAffiliateUser(map:HashMap<String,Any>
+    suspend fun getRejectedAffiliateUser(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1587,7 +1657,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val userAffiliateDetailLiveData = SingleLiveEvent<GetAffiliateUserDetailResponse>()
-    suspend fun getAffiliateUserDetail(userId:String
+    suspend fun getAffiliateUserDetail(
+        userId: String
     ) {
         handleApiCall(
             api = {
@@ -1598,7 +1669,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val updateAffiliateUserStatusLiveData = SingleLiveEvent<BlockUnblockAffiliateUserResponse>()
-    suspend fun blockUnblockAffiliateUser(map:HashMap<String,Any>
+    suspend fun blockUnblockAffiliateUser(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1608,8 +1680,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val acceptAffiliateUserLiveData = SingleLiveEvent<AcceptAffiliateUserResponse>()
-    suspend fun acceptAffiliateUser(map:HashMap<String,Any>
+    val acceptAffiliateUserLiveData = SingleLiveEvent<AcceptAffiliateUserResponse>()
+    suspend fun acceptAffiliateUser(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1619,8 +1692,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
         )
     }
 
- val rejectAffiliateUserLiveData = SingleLiveEvent<AcceptAffiliateUserResponse>()
-    suspend fun rejectAffiliateUser(map:HashMap<String,Any>
+    val rejectAffiliateUserLiveData = SingleLiveEvent<AcceptAffiliateUserResponse>()
+    suspend fun rejectAffiliateUser(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1631,7 +1705,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getPromotionalBannerLiveData = SingleLiveEvent<GetPromotionalBannerResponse>()
-    suspend fun getPromotionalBanner(map: HashMap<String, Any>
+    suspend fun getPromotionalBanner(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1642,8 +1717,7 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val addPromotionalBannerLiveData = SingleLiveEvent<AddPromotionalBannerResponse>()
-    suspend fun addPromotionalBanner(request: AddPromotionalBannerRequest)
-    {
+    suspend fun addPromotionalBanner(request: AddPromotionalBannerRequest) {
         handleApiCall(
             api = {
                 api.addPromotionalBanner(request)
@@ -1651,9 +1725,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = addPromotionalBannerLiveData
         )
     }
+
     val updatePromotionalBannerLiveData = SingleLiveEvent<AddPromotionalBannerResponse>()
-    suspend fun updatePromotionalBanner(request:AddPromotionalBannerRequest)
-    {
+    suspend fun updatePromotionalBanner(request: AddPromotionalBannerRequest) {
         handleApiCall(
             api = {
                 api.updatePromotionalBanner(request)
@@ -1661,9 +1735,9 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updatePromotionalBannerLiveData
         )
     }
+
     val deletePromotionalBannerLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun deletePromotionalBanner(map:HashMap<String,Any>)
-    {
+    suspend fun deletePromotionalBanner(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.deletePromotionalBanner(map)
@@ -1671,9 +1745,11 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = deletePromotionalBannerLiveData
         )
     }
-    val updatePromotionalBannerStatusLiveData = SingleLiveEvent<UpdatePromotionalBannerStatusResponse>()
-    suspend fun updatePromotionalBannerStatus(map:HashMap<String,Any>)
-    {
+
+    val updatePromotionalBannerStatusLiveData =
+        SingleLiveEvent<UpdatePromotionalBannerStatusResponse>()
+
+    suspend fun updatePromotionalBannerStatus(map: HashMap<String, Any>) {
         handleApiCall(
             api = {
                 api.updatePromotionalBannerStatus(map)
@@ -1681,8 +1757,10 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updatePromotionalBannerStatusLiveData
         )
     }
+
     val updateDefaultShippingFeeLiveData = SingleLiveEvent<UpdateDefaultShippingChargeResponse>()
-    suspend fun updateDefaultShippingFee(map:HashMap<String,Any>
+    suspend fun updateDefaultShippingFee(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1691,8 +1769,10 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = updateDefaultShippingFeeLiveData
         )
     }
+
     val getDefaultShippingFeeLiveData = SingleLiveEvent<GetDefaultShippingChargeResponse>()
-    suspend fun getDefaultShippingFee(countryId: String
+    suspend fun getDefaultShippingFee(
+        countryId: String
     ) {
         handleApiCall(
             api = {
@@ -1703,7 +1783,8 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
     }
 
     val getAllProductLiveData = SingleLiveEvent<GetAllProductListResponse>()
-    suspend fun getAllProduct(map: HashMap<String, Any>
+    suspend fun getAllProduct(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1712,8 +1793,10 @@ val brandLiveData = SingleLiveEvent<GetBrandResponse>()
             responseLiveData = getAllProductLiveData
         )
     }
-val getProductDetailLiveData = SingleLiveEvent<GetProductDetailResponse>()
-    suspend fun getProductDetail(map: HashMap<String, Any>
+
+    val getProductDetailLiveData = SingleLiveEvent<GetProductDetailResponse>()
+    suspend fun getProductDetail(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1723,8 +1806,9 @@ val getProductDetailLiveData = SingleLiveEvent<GetProductDetailResponse>()
         )
     }
 
-val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
-    suspend fun updateProductStatus(map: HashMap<String, Any>
+    val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
+    suspend fun updateProductStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1735,7 +1819,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val getWithdrawalRequestLiveData = SingleLiveEvent<GetWithdrawalRequestResponse>()
-    suspend fun getWithdrawalRequest(map: HashMap<String, Any>
+    suspend fun getWithdrawalRequest(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1746,7 +1831,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val acceptWithdrawalRequestLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun acceptWithdrawalRequest(map: HashMap<String, Any>
+    suspend fun acceptWithdrawalRequest(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1757,7 +1843,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val rejectWithdrawalRequestLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun rejectWithdrawalRequest(map: HashMap<String, Any>
+    suspend fun rejectWithdrawalRequest(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1768,7 +1855,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val WithdrawalTransferLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun WithdrawalTransfer(map: HashMap<String, Any>
+    suspend fun WithdrawalTransfer(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1780,7 +1868,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
 
 
     val getTermsAndConditionLiveData = SingleLiveEvent<GetTermsAndConditionResponse>()
-    suspend fun getTermsAndCondition(map: HashMap<String, Any>
+    suspend fun getTermsAndCondition(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1791,7 +1880,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val createUpdateTermsAndConditionLiveData = SingleLiveEvent<GetTermsAndConditionResponse>()
-    suspend fun createUpdateTermsAndCondition(map: HashMap<String, Any>
+    suspend fun createUpdateTermsAndCondition(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1802,7 +1892,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val getAboutUsLiveData = SingleLiveEvent<GetAboutUsResponse>()
-    suspend fun getAboutUs(map: HashMap<String, Any>
+    suspend fun getAboutUs(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1813,7 +1904,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val createUpdateAboutUsLiveData = SingleLiveEvent<GetAboutUsResponse>()
-    suspend fun createUpdateAboutUs(map: HashMap<String, Any>
+    suspend fun createUpdateAboutUs(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1824,7 +1916,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val getCancellationPolicyLiveData = SingleLiveEvent<GetCancellationPolicyResponse>()
-    suspend fun getCancellationPolicy(map: HashMap<String, Any>
+    suspend fun getCancellationPolicy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1835,7 +1928,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val createUpdateCancellationPolicyLiveData = SingleLiveEvent<GetCancellationPolicyResponse>()
-    suspend fun createUpdateCancellationPolicy(map: HashMap<String, Any>
+    suspend fun createUpdateCancellationPolicy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1846,7 +1940,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val getReturnPolicyLiveData = SingleLiveEvent<GetReturnPolicyResponse>()
-    suspend fun getReturnPolicy(map: HashMap<String, Any>
+    suspend fun getReturnPolicy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1857,7 +1952,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val createUpdateReturnPolicyLiveData = SingleLiveEvent<GetReturnPolicyResponse>()
-    suspend fun createUpdateReturnPolicy(map: HashMap<String, Any>
+    suspend fun createUpdateReturnPolicy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1868,7 +1964,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val getExchangePolicyLiveData = SingleLiveEvent<GetExchangePolicyResponse>()
-    suspend fun getExchangePolicy(map: HashMap<String, Any>
+    suspend fun getExchangePolicy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1879,7 +1976,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val createUpdateExchangePolicyLiveData = SingleLiveEvent<GetExchangePolicyResponse>()
-    suspend fun createUpdateExchangePolicy(map: HashMap<String, Any>
+    suspend fun createUpdateExchangePolicy(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1890,7 +1988,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val getContactUsLiveData = SingleLiveEvent<GetContactResponse>()
-    suspend fun getContactUs(map: HashMap<String, Any>
+    suspend fun getContactUs(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1901,7 +2000,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val createUpdateContactUsLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun createUpdateContactUs(map: HashMap<String, Any>
+    suspend fun createUpdateContactUs(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1912,7 +2012,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val getFaqLiveData = SingleLiveEvent<GetFaqResponse>()
-    suspend fun getFaq(map: HashMap<String, Any>
+    suspend fun getFaq(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1923,7 +2024,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val addFaqLiveData = SingleLiveEvent<UpdateFaqResponse>()
-    suspend fun addFaq(map: HashMap<String, Any>
+    suspend fun addFaq(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1934,7 +2036,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val updateFaqLiveData = SingleLiveEvent<UpdateFaqResponse>()
-    suspend fun updateFaq(map: HashMap<String, Any>
+    suspend fun updateFaq(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1944,8 +2047,21 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
         )
     }
 
+    val deleteFaqLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteFaq(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteFaq(map)
+            },
+            responseLiveData = deleteFaqLiveData
+        )
+    }
+
     val getMyNotificationLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun getMyNotification(map: HashMap<String, Any>
+    suspend fun getMyNotification(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1956,7 +2072,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
     }
 
     val readNotificationLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun readNotification(map: HashMap<String, Any>
+    suspend fun readNotification(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1968,7 +2085,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
 
 
     val getSendNotificationLiveData = SingleLiveEvent<GetSendNotificationListResponse>()
-    suspend fun getSendNotification(map: HashMap<String, Any>
+    suspend fun getSendNotification(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -1980,7 +2098,8 @@ val updateProductStatusLiveData = SingleLiveEvent<UpdateProductStatusResponse>()
 
 
     val sendNotificationLiveData = SingleLiveEvent<SendNotificationResponse>()
-    suspend fun sendNotification(request: SendNotificationRequest
+    suspend fun sendNotification(
+        request: SendNotificationRequest
     ) {
         handleApiCall(
             api = {

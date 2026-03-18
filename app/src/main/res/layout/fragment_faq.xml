@@ -34,6 +34,10 @@
         tools:listitem="@layout/item_faq"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

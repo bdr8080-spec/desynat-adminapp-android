@@ -1,11 +1,15 @@
 package com.desynatadmin.ui.home.notificationManagement
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -16,8 +20,14 @@ import com.desynatadmin.adapter.NotificationAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentNotificationManagementBinding
+import com.desynatadmin.databinding.UserFilterDialogBinding
+import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.openCustomDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -42,6 +52,14 @@ class NotificationManagementFragment :  BaseFragment() {
     private var pageLimit=10
     private val itemsPerPage = 10
     private var pagination=false
+    private var countryList = ArrayList<GetCountryResponse.Data>()
+    var countryId:String?=null
+
+    var startDate:String?=null
+    var endDate:String?=null
+    var fromTimestamp = 0L
+    var toTimestamp = 0L
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +79,11 @@ class NotificationManagementFragment :  BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
+
             toolbar.tvToolbar.text = "Notifications"
+
+            countryList.clear()
+            SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
 
             notificationAdapter = NotificationAdapter(requireActivity(), notificationList, object :
                 NotificationAdapter.ClickOnItem {
@@ -113,7 +135,11 @@ class NotificationManagementFragment :  BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.ivBack.setOnClickListener {
-                findNavController().popBackStack()
+                (requireActivity() as? HomeActivity)?.onBackPressed()
+            }
+
+            ivFilter.setOnClickListener {
+                filterDialog()
             }
 
             tvSendNewNotification.setOnClickListener {
@@ -144,9 +170,19 @@ class NotificationManagementFragment :  BaseFragment() {
         if (search!=null){
             map["search"] = search
         }
+        if (countryId!=null){
+            map["countryId"] = countryId.toString()
+        }
+        if (startDate!=null){
+            map["from_date"] = startDate.toString()
+        }
+        if (endDate!=null){
+            map["to_date"] = endDate.toString()
+        }
         map["page"] = currentPage
         map["limit"] = pageLimit
         viewModel.getSendNotification(map)
+        isObserver = true
         if (isLoading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -198,7 +234,6 @@ class NotificationManagementFragment :  BaseFragment() {
                     binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
                 }
 
-
                 val oldSize = notificationList.size
                 if (!pagination){
                     notificationList.clear()
@@ -243,4 +278,96 @@ class NotificationManagementFragment :  BaseFragment() {
             }
         }
     }
+
+    private fun filterDialog() {
+        var selectedCountryId:String?=null
+
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = UserFilterDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            if(countryId!=null){
+                etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
+            }
+            if (startDate!=null){
+                etFrom.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
+            if (endDate!=null){
+                etTo.text=CommonMethod.formatDate(endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
+            tvToolbar.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            etFrom.setOnClickListener {
+                openCustomDatePicker(requireActivity()){date,timestamp->
+                    etFrom.text=date
+                    fromTimestamp=timestamp
+                }
+
+            }
+            etTo.setOnClickListener {
+                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
+                    etTo.text=date
+                    toTimestamp=timestamp
+                }
+
+            }
+
+            etCountry.setOnClickListener {
+                CommonMethod.showCountryPicker(
+                    requireContext(),
+                    it,
+                    countryList
+                ) { selectedCountry ->
+                    etCountry.text = selectedCountry.name
+                    selectedCountryId = selectedCountry.id.toString()
+                }
+            }
+
+            tvClear.setOnClickListener {
+                countryId = null
+                startDate = null
+                endDate = null
+                toTimestamp = 0L
+                fromTimestamp = 0L
+                getNotification()
+                dialog.dismiss()
+            }
+
+            tvApply.setOnClickListener{
+                if (selectedCountryId!=null) {
+                    countryId = selectedCountryId
+                }
+                if (etFrom.text.isNotEmpty()){
+                    startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                }
+
+                if (etTo.text.isNotEmpty()){
+                    endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                }
+
+                getNotification()
+                dialog.dismiss()
+            }
+
+        }
+
+        dialog.show()
+    }
+
 }

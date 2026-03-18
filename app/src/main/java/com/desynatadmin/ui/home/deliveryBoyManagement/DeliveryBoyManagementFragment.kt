@@ -193,7 +193,7 @@ class DeliveryBoyManagementFragment : BaseFragment() {
     }
 
     private fun getAllDeliveryBoy(loading:Boolean=true,search:String?=null){
-        viewModel.getDeliveryBoy(search = search, page = currentPage, fromDate = startDate, toDate = endDate)
+        viewModel.getDeliveryBoy(search = search, page = currentPage.toString(), fromDate = startDate, toDate = endDate)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }

@@ -164,68 +164,71 @@
                 android:id="@+id/radioSendTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="4"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rbCustomer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Customer"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
-                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingStart="@dimen/_3sdp"
                     app:buttonTint="@null"
                     android:drawableTint="@null"
                     android:fontFamily="@font/poppins_medium"
-                    android:textSize="@dimen/_11sdp"/>
+                    android:textSize="@dimen/_10sdp"/>
 
                 <RadioButton
                     android:id="@+id/rbSeller"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Seller"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingStart="@dimen/_5sdp"
                     app:buttonTint="@null"
                     android:drawableTint="@null"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_medium"
-                    android:textSize="@dimen/_11sdp"/>
+                    android:textSize="@dimen/_10sdp"/>
 
                 <RadioButton
                     android:id="@+id/rbDriver"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Driver"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingStart="@dimen/_5sdp"
                     app:buttonTint="@null"
                     android:drawableTint="@null"
                     android:fontFamily="@font/poppins_medium"
-                    android:textSize="@dimen/_11sdp"/>
+                    android:textSize="@dimen/_10sdp"/>
 
                 <RadioButton
-                    android:id="@+id/rbAll"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/rbAffiliate"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="All"
+                    android:layout_weight="1"
+                    android:text="Affiliate"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
-                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
                     app:buttonTint="@null"
                     android:drawableTint="@null"
                     android:fontFamily="@font/poppins_medium"
-                    android:textSize="@dimen/_11sdp"/>
+                    android:textSize="@dimen/_10sdp"/>
 
             </RadioGroup>
 
@@ -234,8 +237,8 @@
                 android:id="@+id/tvSendType"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="All"
-                android:drawableStart="@drawable/ic_checkbox"
+                android:hint="Select"
+                android:drawableStart="@drawable/ic_checkbox_unselected"
                 android:drawablePadding="@dimen/_8sdp"
                 android:drawableEnd="@drawable/ic_drop_down"
                 android:layout_marginTop="@dimen/_5sdp"

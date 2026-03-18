@@ -314,12 +314,12 @@ interface ApiServices {
 
     @GET(Constants.APPROVED_SELLER)
     suspend fun hitApprovedSeller(
-        @Header("Token") Token: String,
-        @Query("country_id1") country_id: String,
-        @Query("from_date1") from_date: String,
-        @Query("to_date1") to_date: String,
-        @Query("limit1") limit: String,
-        @Query("search1") search: String,
+        @Header("Token") Token: String?=null,
+        @Query("country_id1") country_id: String?=null,
+        @Query("from_date1") from_date: String?=null,
+        @Query("to_date1") to_date: String?=null,
+        @Query("limit1") limit: String?=null,
+        @Query("search1") search: String?=null,
     ): Response<ApprovedSellerResponse>
 
     @GET(Constants.REJECTED_SELLER)
@@ -410,7 +410,7 @@ interface ApiServices {
     @GET(Constants.GET_USER)
     suspend fun getUser(
         @Query("search") search : String?=null,
-        @Query("page") page: Int,
+        @Query("page") page: String?=null,
         @Query("country_id") countryId : String?=null,
         @Query("from_date") fromDate : String?=null,
         @Query("to_date") toDate : String?=null,
@@ -469,7 +469,7 @@ interface ApiServices {
     @GET(Constants.GET_DELIVERY_BOY)
     suspend fun getDeliveryBoy(
         @Query("search") search : String?=null,
-        @Query("page") page: Int,
+        @Query("page") page: String?=null,
         @Query("from_date") fromDate : String?=null,
         @Query("to_date") toDate : String?=null,
         @Query("limit") limit: Int? = 10, ): Response<GetAllDeliveryBoyResponse>
@@ -981,6 +981,11 @@ interface ApiServices {
     suspend fun updateFaq(
         @Body map: HashMap<String,Any>
     ): Response<UpdateFaqResponse>
+
+    @POST(Constants.DELETE_FAQ)
+    suspend fun deleteFaq(
+        @Body map: HashMap<String,Any>
+    ): Response<CommonResponse>
 
     @GET(Constants.GET_CONTACT_US)
     suspend fun getContactUs(

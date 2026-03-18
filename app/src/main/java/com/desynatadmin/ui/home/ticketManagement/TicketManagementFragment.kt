@@ -11,6 +11,7 @@ import com.desynatadmin.adapter.TicketAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentTicketManagementBinding
+import com.desynatadmin.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
@@ -57,7 +58,7 @@ class TicketManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                findNavController().popBackStack()
+                (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 
             ivFilter.setOnClickListener {

@@ -274,7 +274,7 @@ class UserManagementFragment : BaseFragment() {
     }
 
     private fun getAllUser(loading:Boolean=true,search:String?=null){
-        viewModel.getAllUser(search = search, page = currentPage,fromDate=startDate, toDate = endDate, countryId = countryId)
+        viewModel.getAllUser(search = search, page = currentPage.toString(),fromDate=startDate, toDate = endDate, countryId = countryId)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }

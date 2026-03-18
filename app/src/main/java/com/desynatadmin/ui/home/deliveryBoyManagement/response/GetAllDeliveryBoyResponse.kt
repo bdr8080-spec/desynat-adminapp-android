@@ -107,7 +107,9 @@ data class GetAllDeliveryBoyResponse(
             @SerializedName("zone_id")
             val zoneId: String,
             @SerializedName("zone_info")
-            val zoneInfo: ZoneInfo
+            val zoneInfo: ZoneInfo,
+            @SerializedName("isSelected")
+            var isSelected: Boolean = false
         ) {
             data class DrivingLicense(
                 @SerializedName("created_at")

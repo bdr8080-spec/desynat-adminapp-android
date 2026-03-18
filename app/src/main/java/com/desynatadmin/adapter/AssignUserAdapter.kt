@@ -6,32 +6,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemSelectNotificationUserBinding
+import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 
-class AssignUserAdapter(var context:Context, private var driverList: ArrayList<String>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignUserAdapter.ViewHolder>() {
-    var selected = -1
+class AssignUserAdapter(var context:Context, private var userList: ArrayList<GetUserResponse.Data.Data>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignUserAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSelectNotificationUserBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
-            val driverData = driverList[position]
+            val userData = userList[position]
 
-               // tvUser.text = driverData.fullNameEnglish
+                tvUser.text = userData.fullName
 
-                if (selected==position){
-                    ivRadio.setImageResource(R.drawable.ic_radio_selected)
+                if (userData.isSelected){
+                    ivRadio.setImageResource(R.drawable.ic_checkbox)
                 }
                 else{
-                    ivRadio.setImageResource(R.drawable.ic_radio_unselected)
+                    ivRadio.setImageResource(R.drawable.ic_checkbox_unselected)
                 }
 
             root.setOnClickListener {
-                val previousSelected = selected
-                selected = position
-
-                if (previousSelected != -1) {
-                    notifyItemChanged(previousSelected)
-                }
-                notifyItemChanged(selected)
-
+                userList[position].isSelected = !userList[position].isSelected
+                notifyDataSetChanged()
                 onUserClick.onClick(position)
 
             }
@@ -49,7 +43,7 @@ class AssignUserAdapter(var context:Context, private var driverList: ArrayList<S
     }
 
     override fun getItemCount(): Int {
-        return driverList.size
+        return userList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

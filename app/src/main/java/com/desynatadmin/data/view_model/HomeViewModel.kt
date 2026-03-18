@@ -362,12 +362,12 @@ class HomeViewModel @Inject constructor(
         get() = repository.getApprovedData
 
     fun hitApprovedSellerList(
-        token : String,
-        country_id : String,
-        from_date : String,
-        to_date : String,
-        limit : String,
-        search : String,
+        token : String?=null,
+        country_id : String?=null,
+        from_date : String?=null,
+        to_date : String?=null,
+        limit : String?=null,
+        search : String?=null,
     ) {
         viewModelScope.launch {
             repository.
@@ -605,7 +605,7 @@ class HomeViewModel @Inject constructor(
     val getAllUserResult: LiveData<GetUserResponse>
         get() = repository.userLiveData
 
-    fun getAllUser(search: String?=null, page:Int,countryId:String?=null,fromDate:String?=null,toDate:String?=null) {
+    fun getAllUser(search: String?=null, page:String?=null,countryId:String?=null,fromDate:String?=null,toDate:String?=null) {
         viewModelScope.launch {
             repository.getAllUser(search,page,countryId,fromDate,toDate)
         }
@@ -695,7 +695,7 @@ class HomeViewModel @Inject constructor(
     val getDeliveryBoyResult: LiveData<GetAllDeliveryBoyResponse>
         get() = repository.deliveryBoyLiveData
 
-    fun getDeliveryBoy(search: String?=null, page:Int,fromDate:String?=null,toDate:String?=null) {
+    fun getDeliveryBoy(search: String?=null, page:String?=null,fromDate:String?=null,toDate:String?=null) {
         viewModelScope.launch {
             repository.getDeliveryBoy(search,page,fromDate,toDate)
         }
@@ -1420,6 +1420,14 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     fun updateFaq(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.updateFaq(map)
+        }
+    }
+
+    val deleteFaqResult: LiveData<CommonResponse>
+        get() = repository.deleteFaqLiveData
+    fun deleteFaq(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.deleteFaq(map)
         }
     }
     val getContactUsResult: LiveData<GetContactResponse>

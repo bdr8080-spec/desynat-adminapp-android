@@ -33,7 +33,7 @@ data class GetUserResponse(
         @SerializedName("per_page")
         val perPage: Int,
         @SerializedName("prev_page_url")
-        val prevPageUrl: Any,
+        val prevPageUrl: String,
         @SerializedName("to")
         val to: Int,
         @SerializedName("total")
@@ -47,21 +47,21 @@ data class GetUserResponse(
             @SerializedName("created_at")
             val createdAt: String,
             @SerializedName("device_token")
-            val deviceToken: Any,
+            val deviceToken: String,
             @SerializedName("device_type")
             val deviceType: String,
             @SerializedName("email")
             val email: String,
             @SerializedName("email_verified_at")
-            val emailVerifiedAt: Any,
+            val emailVerifiedAt: String,
             @SerializedName("full_name")
             val fullName: String,
             @SerializedName("id")
             val id: Int,
             @SerializedName("let")
-            val let: Any,
+            val let: String,
             @SerializedName("long")
-            val long: Any,
+            val long: String,
             @SerializedName("mobile")
             val mobile: String,
             @SerializedName("otp")
@@ -75,7 +75,9 @@ data class GetUserResponse(
             @SerializedName("updated_at")
             val updatedAt: String,
             @SerializedName("wallet_info")
-            val walletInfo: WalletInfo
+            val walletInfo: WalletInfo,
+            @SerializedName("isSelected")
+            var isSelected: Boolean = false
         ) {
             data class CountryInfo(
                 @SerializedName("code")

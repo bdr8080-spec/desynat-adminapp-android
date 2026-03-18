@@ -28,6 +28,7 @@
             android:text="Q1. Lorem ipsum dolor sit amet."
             android:textColor="#1C1C1C"
             android:textSize="@dimen/_11sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivDropDown"/>

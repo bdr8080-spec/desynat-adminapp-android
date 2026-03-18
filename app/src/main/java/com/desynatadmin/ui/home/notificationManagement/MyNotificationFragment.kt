@@ -22,6 +22,7 @@ class MyNotificationFragment : BaseFragment() {
     private var binding: FragmentMyNotificationBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isReadObserver = true
     private var isFromSwipe=false
 
     private var myNotificationList = ArrayList<String>()
@@ -112,6 +113,11 @@ class MyNotificationFragment : BaseFragment() {
             }
         }
 
+        viewModel.getMyNotificationResult.observe(viewLifecycleOwner) { response ->
+            if (isReadObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+            }
+        }
     }
 
 private fun getMyNotification(loading:Boolean=true){
@@ -123,6 +129,14 @@ private fun getMyNotification(loading:Boolean=true){
     }
     isObserver = true
 }
+
+    private fun readNotification(){
+        val idList = arrayListOf("1", "2")
+        val map = HashMap<String,Any>()
+        map["notification_id"] = idList
+        viewModel.readNotification(map)
+        isReadObserver = true
+    }
 
     private fun checkData(){
         binding?.tvNoDataFound?.isVisible = myNotificationList.isEmpty()

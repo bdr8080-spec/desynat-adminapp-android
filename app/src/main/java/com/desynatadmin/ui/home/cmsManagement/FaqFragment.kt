@@ -66,7 +66,7 @@ class FaqFragment : BaseFragment() {
                            addFaqDialog(true)
                         }
                         2->{
-
+                           // deleteFaq()
                         }
                     }
                 }
@@ -137,6 +137,19 @@ class FaqFragment : BaseFragment() {
             }
         }
 
+        viewModel.deleteFaqResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast("Faq delete Successfully")
+                faqList.removeAt(selectedPos)
+                faqAdapter?.notifyItemRemoved(selectedPos)
+                faqAdapter?.notifyItemRangeChanged(selectedPos,faqList.size)
+                selectedPos = -1
+                checkData()
+                isObserver = false
+            }
+        }
+
     }
 
     private fun addFaqDialog(isEdit: Boolean=false) {
@@ -157,9 +170,12 @@ class FaqFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding?.apply {
-            val faqData = faqList[selectedPos]
-
+            CommonMethod.removeSpace(etEnglishQuestion)
+            CommonMethod.removeSpace(etEnglishAnswer)
+            CommonMethod.applyArabicOnlyFilter(etArabicQuestion)
+            CommonMethod.applyArabicOnlyFilter(etArabicAnswer)
             if (isEdit){
+                val faqData = faqList[selectedPos]
                 tvToolbar.text = "Edit FAQ"
                 btnAdd.text = "Edit"
                 etEnglishQuestion.setText(faqData.questionEnglish)
@@ -230,6 +246,14 @@ class FaqFragment : BaseFragment() {
 
     private fun updateFaq(map: HashMap<String, Any>) {
         viewModel.updateFaq(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+   private fun deleteFaq() {
+       val map = HashMap<String,Any>()
+       map["faq_id"] = faqList[selectedPos].id
+        viewModel.deleteFaq(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }

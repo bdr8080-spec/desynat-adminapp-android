@@ -8,6 +8,7 @@ object Constants {
     const val ENGLISH = "en"
     const val ARABIC = "ar"
     var isLogout = false
+    var currentScreen = ""
 
     var location=""
     var latitude=0.0
@@ -201,6 +202,7 @@ object Constants {
     const val GET_FAQ = "/api/admin/get_faq"
     const val ADD_FAQ = "/api/admin/add_faq"
     const val UPDATE_FAQ = "/api/admin/update_faq"
+    const val DELETE_FAQ = "/api/admin/delete_faq"
 
     const val GET_CONTACT_US = "/api/admin/get_contact_us"
     const val CREATE_UPDATE_CONTACT_US = "/api/admin/create_update_contact_us"

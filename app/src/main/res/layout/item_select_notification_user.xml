@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/edit_back"
+    android:paddingHorizontal="@dimen/_10sdp"
     android:layout_marginBottom="@dimen/_10sdp">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -18,6 +19,9 @@
         android:layout_width="match_parent"
         style="@style/edit_text"
         android:hint="User 01"
+        android:paddingVertical="@dimen/_8sdp"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:textSize="@dimen/_10sdp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/ivRadio"
         android:background="@null"/>

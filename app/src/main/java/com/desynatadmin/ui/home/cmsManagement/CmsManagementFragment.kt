@@ -16,6 +16,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddCmsContentDialogBinding
 import com.desynatadmin.databinding.FragmentCmsManagementBinding
+import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.cmsManagement.response.GetAboutUsResponse
 import com.desynatadmin.ui.home.cmsManagement.response.GetCancellationPolicyResponse
 import com.desynatadmin.ui.home.cmsManagement.response.GetExchangePolicyResponse
@@ -39,6 +40,7 @@ class CmsManagementFragment : BaseFragment() {
     private var cancellationPolicyResponse: GetCancellationPolicyResponse.Data? = null
     private var returnPolicyResponse: GetReturnPolicyResponse.Data? = null
     private var exchangePolicyResponse: GetExchangePolicyResponse.Data? = null
+    private var dialog: Dialog?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +74,7 @@ class CmsManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                findNavController().popBackStack()
+                (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 
             tvSelect.setOnClickListener {
@@ -199,6 +201,7 @@ class CmsManagementFragment : BaseFragment() {
         viewModel.createUpdateTermsAndConditionResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                dialog?.dismiss()
                 termsAndConditionResponse = response.data
                 setData()
                 isObserver = false
@@ -216,6 +219,7 @@ class CmsManagementFragment : BaseFragment() {
         viewModel.createUpdateAboutUsResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                dialog?.dismiss()
                 aboutUsResponse = response.data
                 setData()
                 isObserver = false
@@ -233,6 +237,7 @@ class CmsManagementFragment : BaseFragment() {
         viewModel.createUpdateCancellationPolicyResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                dialog?.dismiss()
                 cancellationPolicyResponse = response.data
                 setData()
                 isObserver = false
@@ -251,6 +256,7 @@ class CmsManagementFragment : BaseFragment() {
         viewModel.createUpdateReturnPolicyResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                dialog?.dismiss()
                 returnPolicyResponse = response.data
                 setData()
                 isObserver = false
@@ -269,6 +275,7 @@ class CmsManagementFragment : BaseFragment() {
         viewModel.createUpdateExchangePolicyResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                dialog?.dismiss()
                 exchangePolicyResponse = response.data
                 setData()
                 isObserver = false
@@ -316,23 +323,26 @@ class CmsManagementFragment : BaseFragment() {
     }
 
     private fun addCmsContentDialog(isArabic: Boolean=false) {
-        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = AddCmsContentDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog.setContentView(it) }
+        dialogBinding.root.let { dialog?.setContentView(it) }
 
-        val window: Window = dialog.window!!
+        val window: Window = dialog?.window!!
         window.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         window.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setCancelable(false)
+        dialog?.setCancelable(false)
 
         val params: WindowManager.LayoutParams = window.attributes
         params.gravity = Gravity.BOTTOM
         window.attributes = params
 
         dialogBinding?.apply {
+
+            CommonMethod.applyArabicOnlyFilter(etArabicDescription)
+            CommonMethod.removeSpace(etEnglishDescription)
 
             if (isArabic){
                 relEnglish.isVisible = false
@@ -390,7 +400,7 @@ class CmsManagementFragment : BaseFragment() {
             }
 
             tvToolbar.setOnClickListener {
-                dialog.dismiss()
+                dialog?.dismiss()
             }
 
             btnSave.setOnClickListener {
@@ -419,7 +429,7 @@ class CmsManagementFragment : BaseFragment() {
                 }
             }
         }
-        dialog.show()
+        dialog?.show()
     }
 
     private fun getTermsAndCondition() {

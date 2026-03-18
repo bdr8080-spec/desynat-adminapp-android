@@ -2,6 +2,7 @@ package com.desynatadmin.ui.auth.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,9 @@ import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.desynatadmin.utils.togglePasswordVisibility
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.text.get
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment() {
@@ -35,6 +38,13 @@ class SignInFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                SharedPreference.get(requireActivity()).deviceToken = token
+                Log.d("App Token", token)
+            }
+        }
         initView()
         initControl()
         observe()
@@ -63,7 +73,6 @@ class SignInFragment : BaseFragment() {
                 }
             }
         }
-
     }
 
     private fun loginWithPassword(){
@@ -72,6 +81,7 @@ class SignInFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["email"] = binding?.etEmail?.text?.trim().toString()
         map["password"] = binding?.etPassword?.text?.trim().toString()
+        map["fcm_token"] = SharedPreference.get(requireActivity()).deviceToken
         viewModel.login(map)
     }
 
@@ -82,7 +92,6 @@ class SignInFragment : BaseFragment() {
 
                 isObserver = false
             }
-
         }
 
         viewModel.loginResult.observe(viewLifecycleOwner) { response ->
