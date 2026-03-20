@@ -15,6 +15,7 @@ import com.desynatadmin.data.view_model.AuthViewModel
 import com.desynatadmin.databinding.FragmentSignInBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -39,11 +40,14 @@ class SignInFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val token = task.result
-                SharedPreference.get(requireActivity()).deviceToken = token
-                Log.d("App Token", token)
+            if (!task.isSuccessful) {
+                Log.e("FCM_ERROR", "Token failed", task.exception)
+                return@addOnCompleteListener
             }
+
+            val token = task.result
+            Log.d("FCM_TOKEN", token)
+            SharedPreference.get(requireActivity()).deviceToken = token
         }
         initView()
         initControl()
@@ -81,6 +85,7 @@ class SignInFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["email"] = binding?.etEmail?.text?.trim().toString()
         map["password"] = binding?.etPassword?.text?.trim().toString()
+        map["device_type"] = Constants.DEVICE_TYPE
         map["fcm_token"] = SharedPreference.get(requireActivity()).deviceToken
         viewModel.login(map)
     }

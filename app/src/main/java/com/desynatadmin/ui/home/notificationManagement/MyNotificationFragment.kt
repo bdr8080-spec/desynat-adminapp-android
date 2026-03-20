@@ -23,6 +23,7 @@ class MyNotificationFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var isReadObserver = true
+    private var isAllReadObserver = true
     private var isFromSwipe=false
 
     private var myNotificationList = ArrayList<String>()
@@ -46,8 +47,6 @@ class MyNotificationFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "My Notifications"
-
             myNotificationAdapter = MyNotificationAdapter(requireActivity(), myNotificationList, object :
                 MyNotificationAdapter.ClickOnItem {
                 override fun onClickItem(position: Int) {
@@ -69,8 +68,12 @@ class MyNotificationFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
+            }
+
+            tvReadAll.setOnClickListener {
+                readAllNotification()
             }
         }
     }
@@ -113,9 +116,17 @@ class MyNotificationFragment : BaseFragment() {
             }
         }
 
-        viewModel.getMyNotificationResult.observe(viewLifecycleOwner) { response ->
+        viewModel.readNotificationResult.observe(viewLifecycleOwner) { response ->
             if (isReadObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                isReadObserver = false
+            }
+        }
+
+        viewModel.allReadNotificationResult.observe(viewLifecycleOwner) { response ->
+            if (isAllReadObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                isAllReadObserver = false
             }
         }
     }
@@ -138,8 +149,17 @@ private fun getMyNotification(loading:Boolean=true){
         isReadObserver = true
     }
 
+    private fun readAllNotification(){
+        val map = HashMap<String,Any>()
+        map["receiver_type"] = 1
+        viewModel.allReadNotification(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isAllReadObserver = true
+    }
+
     private fun checkData(){
         binding?.tvNoDataFound?.isVisible = myNotificationList.isEmpty()
+        binding?.tvReadAll?.isVisible = myNotificationList.isNotEmpty()
     }
 
 }

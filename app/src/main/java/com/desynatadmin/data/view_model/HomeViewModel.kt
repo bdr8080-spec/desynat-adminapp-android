@@ -1461,6 +1461,14 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
+    val allReadNotificationResult: LiveData<CommonResponse>
+        get() = repository.allReadNotificationLiveData
+    fun allReadNotification(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.allReadNotification(map)
+        }
+    }
+
     val getSendNotificationResult: LiveData<GetSendNotificationListResponse>
         get() = repository.getSendNotificationLiveData
     fun getSendNotification(map: HashMap<String, Any>) {

@@ -66,7 +66,7 @@ class FaqFragment : BaseFragment() {
                            addFaqDialog(true)
                         }
                         2->{
-                           // deleteFaq()
+                            deleteFaq()
                         }
                     }
                 }
@@ -140,7 +140,7 @@ class FaqFragment : BaseFragment() {
         viewModel.deleteFaqResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast("Faq delete Successfully")
+                CommonMethod.showSuccessDialog(requireActivity(),"FAQ deleted Successfully")
                 faqList.removeAt(selectedPos)
                 faqAdapter?.notifyItemRemoved(selectedPos)
                 faqAdapter?.notifyItemRangeChanged(selectedPos,faqList.size)

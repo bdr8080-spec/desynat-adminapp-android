@@ -617,4 +617,36 @@
         android:label="Ticket Detail Fragment"
         tools:layout="@layout/fragment_ticket_detail"/>
 
+
+    <fragment
+        android:id="@+id/sellerPayout"
+        android:name="com.desynatadmin.ui.home.sellerPayout.SellerPayoutManagementFragment"
+        android:label="Seller Payout Management Fragment"
+        tools:layout="@layout/fragment_seller_payout_management">
+
+        <action
+            android:id="@+id/action_sellerPayoutManagement_to_managePayoutFragment"
+            app:destination="@id/managePayout" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/managePayout"
+        android:name="com.desynatadmin.ui.home.sellerPayout.ManagePayoutFragment"
+        android:label="Manage Payout Fragment"
+        tools:layout="@layout/fragment_manage_payout"/>
+
+    <fragment
+        android:id="@+id/paymentManagement"
+        android:name="com.desynatadmin.ui.home.paymentManagement.PaymentManagementFragment"
+        android:label="Payment Management Fragment"
+        tools:layout="@layout/fragment_payment_management"/>
+
+    <fragment
+        android:id="@+id/refundManagement"
+        android:name="com.desynatadmin.ui.home.refundManagement.RefundManagementFragment"
+        android:label="Refund Management Fragment"
+        tools:layout="@layout/fragment_refund_management"/>
+
+
 </navigation>

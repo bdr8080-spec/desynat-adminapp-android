@@ -20,7 +20,7 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<G
             tvDescription.text = if (Constants.language=="ar") notificationData?.descriptionArabic else notificationData?.descriptionEnglish
             tvDate.text = CommonMethod.customizeChangeDateFormat(notificationData.createdAt, outputFormat = "dd/MM/yyyy")
             if (notificationData?.totalReceivers?:0 > 1 ) {
-                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish} + ${notificationData?.totalReceivers?:0-1}"
+                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish} + ${(notificationData?.totalReceivers ?: 0) - 1}"
             }
             else {
                 tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish}"

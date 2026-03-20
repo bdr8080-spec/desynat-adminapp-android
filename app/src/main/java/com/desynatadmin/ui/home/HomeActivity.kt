@@ -68,6 +68,7 @@ class HomeActivity : BaseActivity() {
             R.id.home,
             R.id.productManagement,
             R.id.planList,
+            R.id.paymentManagement,
         )
 
         controller.addOnDestinationChangedListener { _, destination, _ ->
@@ -85,12 +86,21 @@ class HomeActivity : BaseActivity() {
                     bottomAdapter?.setSelectedItem(0)
                     enableDrawer(true)
                 }
+                R.id.productManagement -> {
+                    bottomAdapter?.setSelectedItem(1)
+                    enableDrawer(false)
+                }
+                R.id.event -> {
+                    bottomAdapter?.setSelectedItem(2)
+                    enableDrawer(false)
+                }
                 R.id.planList -> {
                     bottomAdapter?.setSelectedItem(3)
                     enableDrawer(false)
                 }
-                R.id.productManagement -> {
-                    bottomAdapter?.setSelectedItem(1)
+
+                R.id.paymentManagement -> {
+                    bottomAdapter?.setSelectedItem(4)
                     enableDrawer(false)
                 }
 
@@ -156,7 +166,10 @@ class HomeActivity : BaseActivity() {
                         ProgressDialogUtils.getInstance().hideProgress()
                         controller.navigate(R.id.planList)
                     }
-                   // 4 -> controller.navigate(R.id.profile)
+                    4 -> {
+//                        ProgressDialogUtils.getInstance().hideProgress()
+//                        controller.navigate(R.id.paymentManagement)
+                    }
                 }
             }
         })
@@ -310,6 +323,16 @@ override fun onBackPressed() {
 
 //            rlSupportChat.setOnClickListener {
 //                controller.navigate(R.id.supportChat)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+
+//            rlPayoutManagement.setOnClickListener {
+//                controller.navigate(R.id.sellerPayout)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+
+//            rlRefundManagement.setOnClickListener {
+//                controller.navigate(R.id.refundManagement)
 //                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
 //            }
 

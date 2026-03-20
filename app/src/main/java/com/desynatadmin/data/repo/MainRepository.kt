@@ -2083,6 +2083,18 @@ class MainRepository @Inject constructor(
         )
     }
 
+   val allReadNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun allReadNotification(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.allReadNotification(map)
+            },
+            responseLiveData = allReadNotificationLiveData
+        )
+    }
+
 
     val getSendNotificationLiveData = SingleLiveEvent<GetSendNotificationListResponse>()
     suspend fun getSendNotification(

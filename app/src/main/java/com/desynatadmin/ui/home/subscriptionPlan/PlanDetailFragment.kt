@@ -98,7 +98,7 @@ class PlanDetailFragment : BaseFragment() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-
+                binding?.mainProgressBar?.isVisible = false
                 isObserver = false
             }
         }
@@ -106,6 +106,7 @@ class PlanDetailFragment : BaseFragment() {
         viewModel.deleteSubscriptionResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                binding?.mainProgressBar?.isVisible = false
                 CommonMethod.showSuccessDialog(requireContext(), "Plan deleted successfully!"){
                     findNavController().popBackStack()
                 }
@@ -116,6 +117,7 @@ class PlanDetailFragment : BaseFragment() {
         viewModel.subscriptionPlanDetailResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                binding?.mainProgressBar?.isVisible = false
                 subscriptionData = response.data
                 setData()
                 isObserver = false
@@ -125,6 +127,8 @@ class PlanDetailFragment : BaseFragment() {
         viewModel.updateSubscriptionPlanStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                binding?.mainProgressBar?.isVisible = false
+                binding?.mainProgressBar?.isVisible = false
                 subscriptionData = response.data
                 if (response.data.status==1){
 //                    CommonMethod.showSuccessDialog(requireContext(), "Plan active successfully")
@@ -145,7 +149,7 @@ class PlanDetailFragment : BaseFragment() {
         map["plan_id"] = subscriptionData?.id.toString()
         viewModel.updateSubscriptionPlanStatus(map)
 
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        binding?.mainProgressBar?.isVisible = true
         isObserver = true
     }
 
@@ -154,7 +158,7 @@ class PlanDetailFragment : BaseFragment() {
         map["plan_id"] = subscriptionData?.id.toString()
         viewModel.deleteSubscriptionPlan(map)
 
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        binding?.mainProgressBar?.isVisible = true
         isObserver = true
     }
 
@@ -248,7 +252,7 @@ class PlanDetailFragment : BaseFragment() {
     private fun getSubscriptionPlan(){
 
             viewModel.getSubscriptionPlanDetail(subscriptionData?.id.toString())
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        binding?.mainProgressBar?.isVisible = true
         isObserver = true
     }
 }

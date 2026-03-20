@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bottomsheet_bg"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/_15sdp"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:background="@drawable/bottomsheet_bg"
+    android:backgroundTint="#FFF7EA"
+    android:fontFamily="@font/poppins_medium"
+    android:text="Add payout amount"
+    android:textColor="@color/black"
+    android:drawableEnd="@drawable/close_icon"
+    android:textSize="@dimen/_13sdp"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Enter amount to be send"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etAmount"
+        style="@style/edit_text"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:padding="@dimen/_10sdp"
+        android:hint="Enter amount"
+        android:maxLength="10"
+        android:inputType="number"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Enter transaction id"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etTransactionId"
+        style="@style/edit_text"
+        android:drawablePadding="10dp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:padding="@dimen/_10sdp"
+        android:hint="Enter transaction id"
+        android:maxLength="10"
+        android:inputType="number"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnSubmit"
+        style="@style/button"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:text="Submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relAmount"/>
+
+</LinearLayout>
+
+

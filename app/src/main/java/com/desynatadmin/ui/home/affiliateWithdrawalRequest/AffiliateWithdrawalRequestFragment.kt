@@ -23,6 +23,7 @@ import com.desynatadmin.databinding.FragmentAffiliateWithdrawalRequestBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.network.ApiServices
 import com.desynatadmin.payoutRetrofit.PayoutRetrofit
+import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutRequest
 import com.desynatadmin.utils.CommonMethod
@@ -106,7 +107,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                findNavController().popBackStack()
+                (requireActivity() as? HomeActivity)?.onBackPressed()
             }
 
             ivNextArrow.setOnClickListener {

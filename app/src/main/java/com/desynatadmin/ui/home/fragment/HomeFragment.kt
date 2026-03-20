@@ -74,7 +74,7 @@ class HomeFragment : BaseFragment() {
             }
 
             ivLanguage.setOnClickListener {
-                changeLanguageDialog()
+             //   changeLanguageDialog()
             }
         }
     }

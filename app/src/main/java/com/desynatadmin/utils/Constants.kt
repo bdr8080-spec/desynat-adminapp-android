@@ -13,7 +13,7 @@ object Constants {
     var location=""
     var latitude=0.0
     var longitude=0.0
-    var DEVICE_TYPE=1
+    var DEVICE_TYPE=2
 
     const val UPLOAD = "/api/upload"
     const val LOGIN = "/api/admin/admin_login"
@@ -186,6 +186,7 @@ object Constants {
     const val READ_NOTIFICATION = "/api/admin/mark_notification_as_read"
 
     const val GET_MY_NOTIFICATION_LIST = "/api/admin/get_my_notifications_list"
+    const val MARK_ALL_READ_NOTIFICATION = "/api/admin/mark_all_notification_as_read"
 
     const val GET_TERMS_AND_CONDITION = "/api/admin/get_terms_condition"
     const val CREATE_UPDATE_TERMS_AND_CONDITION = "/api/admin/create_update_terms_condition"

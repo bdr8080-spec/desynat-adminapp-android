@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -173,6 +174,10 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 }
             }
 
+
+            swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(requireActivity(), R.color.brown)
+            )
 
             swipeRefreshLayout.setOnRefreshListener {
                 isFromSwipe = true

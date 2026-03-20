@@ -11,4 +11,6 @@
 
     <string name="channel">desynat notification</string>
     <string name="channel_description">desynat notification for admin alert</string>
+    <string name="view_more"><u>View More</u></string>
+    <string name="view_less"><u>View Less</u></string>
 </resources>

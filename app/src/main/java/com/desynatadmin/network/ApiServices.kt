@@ -1007,6 +1007,10 @@ interface ApiServices {
         @Body map: HashMap<String,Any>
     ): Response<CommonResponse>
 
+  @POST(Constants.MARK_ALL_READ_NOTIFICATION)
+    suspend fun allReadNotification(
+        @Body map: HashMap<String,Any>
+    ): Response<CommonResponse>
 
     @GET(Constants.GET_SEND_NOTIFICATION_LIST)
     suspend fun getSendNotification(
