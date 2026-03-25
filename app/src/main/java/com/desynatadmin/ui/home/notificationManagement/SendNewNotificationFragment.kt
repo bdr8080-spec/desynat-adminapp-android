@@ -11,6 +11,8 @@ import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AssignAffiliateUserAdapter
 import com.desynatadmin.adapter.AssignDeliveryBoyAdapter
@@ -21,9 +23,13 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentSendNewNotificationBinding
 import com.desynatadmin.databinding.SelectNotificationUserDialogBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
@@ -36,6 +42,7 @@ import kotlin.getValue
 
 @AndroidEntryPoint
 class SendNewNotificationFragment : BaseFragment(){
+    private var dialogBinding: SelectNotificationUserDialogBinding?=null
     private var binding: FragmentSendNewNotificationBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
@@ -43,16 +50,21 @@ class SendNewNotificationFragment : BaseFragment(){
     private var assignDriverAdapter: AssignDeliveryBoyAdapter?=null
     private var assignAffiliateUserAdapter: AssignAffiliateUserAdapter?=null
     private var assignSellerAdapter: AssignSellerAdapter?=null
-    private var userList = ArrayList<GetUserResponse.Data.Data>()
-    private var affiliateUserList = ArrayList<GetNewAffiliateUserResponse.Data.Data>()
-    private var driverList = ArrayList<GetAllDeliveryBoyResponse.Data.Data>()
-    private var sellerList = ArrayList<ApprovedSellerResponse.Data.Data>()
+    private var userList = ArrayList<AssignUserResponse.Data>()
+    private var affiliateUserList = ArrayList<GetAssignAffiliateUserResponse.Data>()
+    private var driverList = ArrayList<GetAssignDeliveryBoyResponse.Data>()
+    private var sellerList = ArrayList<AssignSellerResponse.Data>()
     private var dialog: Dialog?=null
     private var receiverType = 0 //1-admin,2-user,3-seller,4-affiliate,5-driver
     private var senderType = 1
 
     private var isAllSelected = false
     private var selectedReceiverList = ArrayList<String>()
+
+    private var tempUserList = ArrayList<AssignUserResponse.Data>()
+    private var tempSellerList = ArrayList<AssignSellerResponse.Data>()
+    private var tempDriverList = ArrayList<GetAssignDeliveryBoyResponse.Data>()
+    private var tempAffiliateUserList = ArrayList<GetAssignAffiliateUserResponse.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,8 +87,10 @@ class SendNewNotificationFragment : BaseFragment(){
 
             CommonMethod.applyArabicOnlyFilter(etArabicTitle)
             CommonMethod.applyArabicOnlyFilter(etArabicDescription)
-            CommonMethod.removeSpace(etEnglishTitle)
-            CommonMethod.removeSpace(etArabicDescription)
+            CommonMethod.applyEnglishOnlyFilter(etEnglishTitle)
+            CommonMethod.applyEnglishOnlyFilter(etEnglishDescription)
+//            CommonMethod.removeSpace(etEnglishTitle)
+//            CommonMethod.removeSpace(etArabicDescription)
         }
     }
 
@@ -101,6 +115,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     R.id.rbCustomer -> {
                         receiverType = 2
                         tvSendType.isVisible = true
+                        isAllSelected = false
 
                         if (userList.isEmpty()){
                             getAllUser()
@@ -110,6 +125,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     }
                     R.id.rbSeller -> {
                         receiverType = 3
+                        isAllSelected = false
                         tvSendType.isVisible = true
                         if (sellerList.isEmpty()){
                             getAllSeller()
@@ -118,6 +134,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     }
                     R.id.rbAffiliate -> {
                         receiverType = 4
+                        isAllSelected = false
                         tvSendType.isVisible = true
                         if (affiliateUserList.isEmpty()){
                             getAffiliateUser()
@@ -126,6 +143,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     }
                     R.id.rbDriver -> {
                         receiverType = 5
+                        isAllSelected = false
                         tvSendType.isVisible = true
                         if (driverList.isEmpty()){
                             getDeliveryBoy()
@@ -195,38 +213,38 @@ class SendNewNotificationFragment : BaseFragment(){
             }
         }
 
-        viewModel.getAllUserResult.observe(viewLifecycleOwner) { response ->
+        viewModel.getAssignUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                userList.clear()
-                userList.addAll(response.data.data)
+                    userList.clear()
+                userList.addAll(response.data)
                 isObserver = false
             }
         }
 
-        viewModel.getApprovedSellerList.observe(viewLifecycleOwner) { response ->
+        viewModel.assignSellerListResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                sellerList.clear()
-                sellerList.addAll(response.data.data)
+                    sellerList.clear()
+                sellerList.addAll(response.data)
                 isObserver = false
             }
         }
 
-        viewModel.getDeliveryBoyResult.observe(viewLifecycleOwner) { response ->
+        viewModel.assignDeliveryBoyResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                driverList.clear()
-                driverList.addAll(response.data.data)
+                    driverList.clear()
+                driverList.addAll(response.data)
                 isObserver = false
             }
         }
 
-        viewModel.getApprovedAffiliateUserResult.observe(viewLifecycleOwner) { response ->
+        viewModel.getAssignAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                affiliateUserList.clear()
-                affiliateUserList.addAll(response.data.data)
+                    affiliateUserList.clear()
+                affiliateUserList.addAll(response.data)
                 isObserver = false
             }
         }
@@ -234,45 +252,48 @@ class SendNewNotificationFragment : BaseFragment(){
 
     private fun selectUserDialog() {
         val gson = Gson()
-
-        val tempUserList = ArrayList(
+        tempUserList.clear()
+        tempUserList.addAll(
             userList.map {
-                gson.fromJson(
-                    gson.toJson(it),
-                    GetUserResponse.Data.Data::class.java
-                )
+                gson.fromJson(gson.toJson(it), AssignUserResponse.Data::class.java)
             }
         )
-        val tempSellerList = ArrayList(
+
+
+        tempSellerList.clear()
+        tempSellerList.addAll(
             sellerList.map {
-                gson.fromJson(
-                    gson.toJson(it),
-                    ApprovedSellerResponse.Data.Data::class.java
-                )
+                gson.fromJson(gson.toJson(it), AssignSellerResponse.Data::class.java)
             }
         )
 
-        val tempDriverList = ArrayList(
-            driverList.map {
-                gson.fromJson(
-                    gson.toJson(it),
-                    GetAllDeliveryBoyResponse.Data.Data::class.java
-                )
-            }
-        )
 
-        val tempAffiliateUserList = ArrayList(
+        tempAffiliateUserList.clear()
+        tempAffiliateUserList.addAll(
             affiliateUserList.map {
-                gson.fromJson(
-                    gson.toJson(it),
-                    GetNewAffiliateUserResponse.Data.Data::class.java
-                )
+                gson.fromJson(gson.toJson(it), GetAssignAffiliateUserResponse.Data::class.java)
             }
         )
+
+
+        tempDriverList.clear()
+        tempDriverList.addAll(
+            driverList.map {
+                gson.fromJson(gson.toJson(it), GetAssignDeliveryBoyResponse.Data::class.java)
+            }
+        )
+
+        isAllSelected = when (receiverType) {
+            2 -> tempUserList.all { it.isSelected }
+            3 -> tempSellerList.all { it.isSelected }
+            4 -> tempAffiliateUserList.all { it.isSelected }
+            5 -> tempDriverList.all { it.isSelected }
+            else -> false
+        }
 
         dialog = Dialog(requireActivity(), R.style.CustomDialog)
-        val dialogBinding = SelectNotificationUserDialogBinding.inflate(LayoutInflater.from(context))
-        dialogBinding.root.let { dialog?.setContentView(it) }
+        dialogBinding = SelectNotificationUserDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding?.root.let { it?.let { it1 -> dialog?.setContentView(it1) } }
 
         val window: Window = dialog?.window!!
         window.setLayout(
@@ -286,23 +307,46 @@ class SendNewNotificationFragment : BaseFragment(){
         params.gravity = Gravity.BOTTOM
         window.attributes = params
 
-        dialogBinding.apply {
+        dialogBinding?.apply {
+
+            val layoutManager = rvUser.layoutManager as LinearLayoutManager
+            updateSelectAllUI(dialogBinding!!)
+
+//            tvSelectAllUser.setOnClickListener {
+//
+//                isAllSelected = !isAllSelected
+//
+//                when (receiverType) {
+//                    2 -> userList.forEach { it.isSelected = isAllSelected }
+//                    3 -> sellerList.forEach { it.isSelected = isAllSelected }
+//                    4 -> affiliateUserList.forEach { it.isSelected = isAllSelected }
+//                    5 -> driverList.forEach { it.isSelected = isAllSelected }
+//                }
+//
+//                updateSelectAllUI(dialogBinding)
+//                assignUserAdapter?.notifyDataSetChanged()
+//                assignSellerAdapter?.notifyDataSetChanged()
+//                assignDriverAdapter?.notifyDataSetChanged()
+//                assignAffiliateUserAdapter?.notifyDataSetChanged()
+//            }
 
             tvSelectAllUser.setOnClickListener {
 
                 isAllSelected = !isAllSelected
 
                 when (receiverType) {
-                    2 -> userList.forEach { it.isSelected = isAllSelected }
-                    3 -> sellerList.forEach { it.isSelected = isAllSelected }
-                    4 -> affiliateUserList.forEach { it.isSelected = isAllSelected }
-                    5 -> driverList.forEach { it.isSelected = isAllSelected }
+                    2 -> tempUserList.forEach { it.isSelected = isAllSelected }
+                    3 -> tempSellerList.forEach { it.isSelected = isAllSelected }
+                    4 -> tempAffiliateUserList.forEach { it.isSelected = isAllSelected }
+                    5 -> tempDriverList.forEach { it.isSelected = isAllSelected }
                 }
 
-                updateSelectAllUI(dialogBinding)
+                updateSelectAllUI(dialogBinding!!)
+
                 assignUserAdapter?.notifyDataSetChanged()
                 assignSellerAdapter?.notifyDataSetChanged()
                 assignDriverAdapter?.notifyDataSetChanged()
+                assignAffiliateUserAdapter?.notifyDataSetChanged()
             }
 
             when(receiverType){
@@ -314,7 +358,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     assignUserAdapter = AssignUserAdapter(requireActivity(), tempUserList, object :
                         AssignUserAdapter.OnUserClick {
                         override fun onClick(position: Int) {
-                            checkIfAllSelected(dialogBinding, tempUserList)
+                            checkIfAllSelected(dialogBinding!!, tempUserList)
                         }
 
                     })
@@ -325,7 +369,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     assignSellerAdapter = AssignSellerAdapter(requireActivity(), tempSellerList, object :
                         AssignSellerAdapter.OnUserClick {
                         override fun onClick(position: Int) {
-                            checkIfAllSelected(dialogBinding, tempSellerList)
+                            checkIfAllSelected(dialogBinding!!, tempSellerList)
                         }
 
                     })
@@ -337,7 +381,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     assignAffiliateUserAdapter = AssignAffiliateUserAdapter(requireActivity(), tempAffiliateUserList, object :
                         AssignAffiliateUserAdapter.OnUserClick {
                         override fun onClick(position: Int) {
-                            checkIfAllSelected(dialogBinding, tempAffiliateUserList)
+                            checkIfAllSelected(dialogBinding!!, tempAffiliateUserList)
                         }
 
                     })
@@ -349,7 +393,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     assignDriverAdapter = AssignDeliveryBoyAdapter(requireActivity(), tempDriverList, object :
                         AssignDeliveryBoyAdapter.OnClick {
                         override fun onClick(position: Int) {
-                            checkIfAllSelected(dialogBinding, tempDriverList)
+                            checkIfAllSelected(dialogBinding!!, tempDriverList)
                         }
 
                     })
@@ -510,29 +554,40 @@ class SendNewNotificationFragment : BaseFragment(){
     }
 
     private fun getAllUser(loading:Boolean=true){
-        viewModel.getAllUser()
+        val map = HashMap<String,Any>()
+//        map["page"] = currentPage
+//        map["limit"] = 10
+        viewModel.getAssignUser()
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
         isObserver = true
     }
     private fun getAffiliateUser(loading:Boolean=true){
-        val map = HashMap<String, Any>()
-        viewModel.getApprovedAffiliateUser(map)
+        val map = HashMap<String,Any>()
+//        map["page"] = currentPage
+//        map["limit"] = 10
+        viewModel.getAssignAffiliateUser(map)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
         isObserver = true
     }
     private fun getAllSeller(loading:Boolean=true){
-        viewModel.hitApprovedSellerList()
+
+      //  viewModel.hitApprovedSellerList(page = currentPage.toString())
+        viewModel.assignSellerList( )
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
         isObserver = true
     }
     private fun getDeliveryBoy(loading:Boolean=true){
-        viewModel.getDeliveryBoy()
+        val map = HashMap<String,Any>()
+//        map["page"] = currentPage
+//        map["limit"] = 10
+     //   viewModel.getDeliveryBoy(page = currentPage.toString())
+        viewModel.getAssignDeliveryBoy()
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }

@@ -70,6 +70,10 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTim
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
@@ -320,7 +324,12 @@ interface ApiServices {
         @Query("to_date1") to_date: String?=null,
         @Query("limit1") limit: String?=null,
         @Query("search1") search: String?=null,
+        @Query("page") page: String?=null,
     ): Response<ApprovedSellerResponse>
+
+    @GET(Constants.APPROVED_SELLER)
+    suspend fun assignSellerList(
+    ): Response<AssignSellerResponse>
 
     @GET(Constants.REJECTED_SELLER)
     suspend fun hitRejectedSeller(
@@ -418,6 +427,11 @@ interface ApiServices {
 
         ): Response<GetUserResponse>
 
+    @GET(Constants.GET_USER)
+    suspend fun getAssignUser(
+
+        ): Response<AssignUserResponse>
+
     @GET(Constants.GET_USER_DETAIL)
     suspend fun getUserDetail(
         @Query("user_id") userId : String,
@@ -473,6 +487,9 @@ interface ApiServices {
         @Query("from_date") fromDate : String?=null,
         @Query("to_date") toDate : String?=null,
         @Query("limit") limit: Int? = 10, ): Response<GetAllDeliveryBoyResponse>
+
+    @GET(Constants.GET_DELIVERY_BOY)
+    suspend fun getAssignDeliveryBoy(): Response<GetAssignDeliveryBoyResponse>
 
     @POST(Constants.GET_DELIVERY_BOY_DETAIL)
     suspend fun getDeliveryBoyDetail(
@@ -815,6 +832,10 @@ interface ApiServices {
     @GET(Constants.GET_APPROVED_AFFILIATE_USER)
     suspend fun getApprovedAffiliateUser(
         @QueryMap map: HashMap<String,Any>): Response<GetNewAffiliateUserResponse>
+
+    @GET(Constants.GET_APPROVED_AFFILIATE_USER)
+    suspend fun getAssignAffiliateUser(
+        @QueryMap map: HashMap<String,Any>): Response<GetAssignAffiliateUserResponse>
 
     @GET(Constants.GET_REJECTED_AFFILIATE_USER)
     suspend fun getRejectedAffiliateUser(

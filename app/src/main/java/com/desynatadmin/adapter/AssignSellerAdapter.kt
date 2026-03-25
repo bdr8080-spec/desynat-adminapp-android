@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemSelectNotificationUserBinding
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResponse
 
-class AssignSellerAdapter(var context:Context, private var sellerList: ArrayList<ApprovedSellerResponse.Data.Data>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignSellerAdapter.ViewHolder>() {
+class AssignSellerAdapter(var context:Context, private var sellerList: ArrayList<AssignSellerResponse.Data>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignSellerAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSelectNotificationUserBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
@@ -23,7 +24,7 @@ class AssignSellerAdapter(var context:Context, private var sellerList: ArrayList
                     ivRadio.setImageResource(R.drawable.ic_checkbox_unselected)
                 }
 
-            root.setOnClickListener {
+            ivRadio.setOnClickListener {
                 sellerList[position].isSelected = !sellerList[position].isSelected
                 notifyDataSetChanged()
 

@@ -271,10 +271,24 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:maxLines="5"
                     android:text="Sed ut perspiciatis unde omnis iste natus  error sit voluptatem accusantium  doloremque laudantium, totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_light"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvViewMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="View More"
+                    android:textColor="@color/brown"
+                    android:textSize="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:layout_gravity="end" />
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clArabic"
@@ -320,10 +334,23 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:maxLines="5"
                     android:text="Sed ut perspiciatis unde omnis iste natus  error sit voluptatem accusantium  doloremque laudantium, totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt totam rem aperiam,  eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_light"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvViewMoreArabic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="View More"
+                    android:textColor="@color/brown"
+                    android:textSize="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:layout_gravity="end" />
 
                 <View
                     android:layout_width="match_parent"

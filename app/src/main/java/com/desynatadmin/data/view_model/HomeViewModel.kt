@@ -3,6 +3,7 @@ package com.desynatadmin.data.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.desynatadmin.adapter.AssignAffiliateUserAdapter
 import com.desynatadmin.data.repo.MainRepository
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
@@ -71,6 +72,10 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTim
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
@@ -368,10 +373,22 @@ class HomeViewModel @Inject constructor(
         to_date : String?=null,
         limit : String?=null,
         search : String?=null,
+        page: String?=null,
     ) {
         viewModelScope.launch {
             repository.
-            hitApprovedSellerList(token,country_id,from_date, to_date,limit,search)
+            hitApprovedSellerList(token,country_id,from_date, to_date,limit,search,page)
+        }
+    }
+
+    val assignSellerListResult : LiveData<AssignSellerResponse>
+        get() = repository.getAssignSellerLiveData
+
+    fun assignSellerList(
+    ) {
+        viewModelScope.launch {
+            repository.
+            assignSellerList()
         }
     }
 
@@ -611,6 +628,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getAssignUserResult: LiveData<AssignUserResponse>
+        get() = repository.getAssignUserLiveData
+
+    fun getAssignUser() {
+        viewModelScope.launch {
+            repository.getAssignUser()
+        }
+    }
+
     val getUserDetailResult: LiveData<GetUserDetailResponse>
         get() = repository.userDetailLiveData
 
@@ -698,6 +724,16 @@ class HomeViewModel @Inject constructor(
     fun getDeliveryBoy(search: String?=null, page:String?=null,fromDate:String?=null,toDate:String?=null) {
         viewModelScope.launch {
             repository.getDeliveryBoy(search,page,fromDate,toDate)
+        }
+    }
+
+
+    val assignDeliveryBoyResult: LiveData<GetAssignDeliveryBoyResponse>
+        get() = repository.assignDeliveryBoyLiveData
+
+    fun getAssignDeliveryBoy() {
+        viewModelScope.launch {
+            repository.getAssignDeliveryBoy()
         }
     }
 
@@ -1197,6 +1233,15 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
             repository.getApprovedAffiliateUser(map)
         }
     }
+
+    val getAssignAffiliateUserResult: LiveData<GetAssignAffiliateUserResponse>
+        get() = repository.getAssignAffiliateUserLiveData
+    fun getAssignAffiliateUser(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getAssignAffiliateUser(map)
+        }
+    }
+
     val getRejectedAffiliateUserResult: LiveData<GetNewAffiliateUserResponse>
         get() = repository.rejectedAffiliateUserLiveData
     fun getRejectedAffiliateUser(map: HashMap<String, Any>) {

@@ -2,12 +2,17 @@ package com.desynatadmin.ui.home.cmsManagement
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -154,6 +159,28 @@ class CmsManagementFragment : BaseFragment() {
 
             ivArabic.setOnClickListener {
                 addCmsContentDialog(true)
+            }
+
+            tvViewMore.setOnClickListener {
+
+                if (tvViewMore.text == "View More") {
+                    tvEnglishTerms.maxLines = Int.MAX_VALUE
+                    tvViewMore.text = "View Less"
+                } else {
+                    tvEnglishTerms.maxLines = 5
+                    tvViewMore.text = "View More"
+                }
+            }
+
+            tvViewMoreArabic.setOnClickListener {
+
+                if (tvViewMoreArabic.text == "View More") {
+                    tvArabicTerms.maxLines = Int.MAX_VALUE
+                    tvViewMoreArabic.text = "View Less"
+                } else {
+                    tvArabicTerms.maxLines = 5
+                    tvViewMoreArabic.text = "View More"
+                }
             }
 
             tvEnglishTerms.setOnClickListener {
@@ -342,7 +369,8 @@ class CmsManagementFragment : BaseFragment() {
         dialogBinding?.apply {
 
             CommonMethod.applyArabicOnlyFilter(etArabicDescription)
-            CommonMethod.removeSpace(etEnglishDescription)
+            CommonMethod.applyEnglishOnlyFilter(etEnglishDescription)
+         //   CommonMethod.removeSpace(etEnglishDescription)
 
             if (isArabic){
                 relEnglish.isVisible = false
@@ -411,19 +439,23 @@ class CmsManagementFragment : BaseFragment() {
                 } else {
                     when(optionType){
                         1->{
-                            createUpdateTermsAndCondition(etEnglishDescription.text?.trim().toString(),etArabicDescription.text?.trim().toString())
+                            createUpdateTermsAndCondition(if(etEnglishDescription.text?.trim().toString()!="") etEnglishDescription.text?.trim().toString() else termsAndConditionResponse?.contentEnglish?:"",if(etArabicDescription.text?.trim().toString()!="") etArabicDescription.text?.trim().toString() else termsAndConditionResponse?.contentArabic?:"")
                         }
                         2->{
-                            createUpdateAboutUs(etEnglishDescription.text?.trim().toString(),etArabicDescription.text?.trim().toString())
+                            createUpdateAboutUs(if(etEnglishDescription.text?.trim().toString()!="") etEnglishDescription.text?.trim().toString() else aboutUsResponse?.contentEnglish?:"",if(etArabicDescription.text?.trim().toString()!="") etArabicDescription.text?.trim().toString() else aboutUsResponse?.contentArabic?:"")
+
                         }
                         3->{
-                            createUpdateCancellationPolicy(etEnglishDescription.text?.trim().toString(),etArabicDescription.text?.trim().toString())
+                            createUpdateCancellationPolicy(if(etEnglishDescription.text?.trim().toString()!="") etEnglishDescription.text?.trim().toString() else cancellationPolicyResponse?.contentEnglish?:"",if(etArabicDescription.text?.trim().toString()!="") etArabicDescription.text?.trim().toString() else cancellationPolicyResponse?.contentArabic?:"")
+
                         }
                         4->{
-                            createUpdateReturnPolicy(etEnglishDescription.text?.trim().toString(),etArabicDescription.text?.trim().toString())
+                            createUpdateReturnPolicy(if(etEnglishDescription.text?.trim().toString()!="") etEnglishDescription.text?.trim().toString() else returnPolicyResponse?.contentEnglish?:"",if(etArabicDescription.text?.trim().toString()!="") etArabicDescription.text?.trim().toString() else returnPolicyResponse?.contentArabic?:"")
+
                         }
                         5->{
-                            createUpdateExchangePolicy(etEnglishDescription.text?.trim().toString(),etArabicDescription.text?.trim().toString())
+                            createUpdateExchangePolicy(if(etEnglishDescription.text?.trim().toString()!="") etEnglishDescription.text?.trim().toString() else exchangePolicyResponse?.contentEnglish?:"",if(etArabicDescription.text?.trim().toString()!="") etArabicDescription.text?.trim().toString() else exchangePolicyResponse?.contentArabic?:"")
+
                         }
                     }
                 }
@@ -551,6 +583,7 @@ class CmsManagementFragment : BaseFragment() {
             when (optionType) {
                 1 -> {
                     tvSelect.text = "Terms & Conditions"
+
                     tvEnglishTerms.text =
                         CommonMethod.setHtmlText(termsAndConditionResponse?.contentEnglish.toString())
                     tvArabicTerms.text =
@@ -588,6 +621,45 @@ class CmsManagementFragment : BaseFragment() {
                     tvArabicTerms.text =
                         CommonMethod.setHtmlText(exchangePolicyResponse?.contentArabic.toString())
                 }
+            }
+            tvEnglishTerms.post {
+                tvViewMore.isVisible = tvEnglishTerms.lineCount > 5
+            }
+
+            tvArabicTerms.post {
+                tvViewMoreArabic.isVisible = tvArabicTerms.lineCount > 5
+            }
+
+        }
+    }
+
+    fun makeExpandable(textView: AppCompatTextView, maxLines: Int = 5) {
+
+        textView.post {
+
+            if (textView.lineCount > maxLines) {
+
+                val text = textView.text.toString()
+                val truncated = text.substring(0, text.length - 20)
+
+                val spannable = SpannableString("$truncated... View More")
+
+                val clickableSpan = object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        textView.maxLines = Int.MAX_VALUE
+                        textView.text = "$text View Less"
+                    }
+                }
+
+                spannable.setSpan(
+                    clickableSpan,
+                    spannable.length - 9,
+                    spannable.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                textView.text = spannable
+                textView.movementMethod = LinkMovementMethod.getInstance()
             }
         }
     }

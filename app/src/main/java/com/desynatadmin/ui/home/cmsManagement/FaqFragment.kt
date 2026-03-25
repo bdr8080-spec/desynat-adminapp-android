@@ -165,13 +165,16 @@ class FaqFragment : BaseFragment() {
         window.setBackgroundDrawableResource(android.R.color.transparent)
         faqDialog?.setCancelable(false)
 
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         val params: WindowManager.LayoutParams = window.attributes
         params.gravity = Gravity.BOTTOM
         window.attributes = params
 
         dialogBinding?.apply {
-            CommonMethod.removeSpace(etEnglishQuestion)
-            CommonMethod.removeSpace(etEnglishAnswer)
+//            CommonMethod.removeSpace(etEnglishQuestion)
+//            CommonMethod.removeSpace(etEnglishAnswer)
+            CommonMethod.applyEnglishOnlyFilter(etEnglishQuestion)
+            CommonMethod.applyEnglishOnlyFilter(etEnglishAnswer)
             CommonMethod.applyArabicOnlyFilter(etArabicQuestion)
             CommonMethod.applyArabicOnlyFilter(etArabicAnswer)
             if (isEdit){

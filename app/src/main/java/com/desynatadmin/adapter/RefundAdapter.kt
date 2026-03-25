@@ -10,7 +10,7 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<String>, var 
     inner class ViewHolder(val binding: ItemRefundBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
-            valrefundListData = refundListList[position]
+           var refundData = refundList[position]
 //
 //                tvName.text = payoutData.nameEnglish
 //                tvLocation.text = payoutData.nameEnglish
@@ -48,7 +48,7 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<String>, var 
     }
 
     fun setData(newList: ArrayList<String>) {
-        payoutList = newList
+        refundList = newList
         notifyDataSetChanged()
     }
 

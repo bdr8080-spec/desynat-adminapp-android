@@ -19,12 +19,33 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<G
             tvTitle.text = if (Constants.language=="ar") notificationData?.titleArabic else notificationData?.titleEnglish
             tvDescription.text = if (Constants.language=="ar") notificationData?.descriptionArabic else notificationData?.descriptionEnglish
             tvDate.text = CommonMethod.customizeChangeDateFormat(notificationData.createdAt, outputFormat = "dd/MM/yyyy")
-            if (notificationData?.totalReceivers?:0 > 1 ) {
-                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish} + ${(notificationData?.totalReceivers ?: 0) - 1}"
+//            if (notificationData?.totalReceivers?:0 > 1 ) {
+//                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish} + ${(notificationData?.totalReceivers ?: 0) - 1}"
+//            }
+//            else {
+//                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish}"
+//            }
+
+            val firstReceiver = notificationData?.receiverDetails?.firstOrNull()
+
+            val name = if (firstReceiver?.fullNameEnglish!=null&&firstReceiver?.fullNameEnglish!="null"){
+                firstReceiver?.fullNameEnglish
             }
-            else {
-                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish}"
+                else if(firstReceiver?.fullName!=null&&firstReceiver?.fullName!="null"){
+                firstReceiver?.fullName
             }
+            else{
+                firstReceiver?.firstName+" "+firstReceiver?.lastName
+            }
+
+            val total = notificationData?.totalReceivers ?: 0
+
+            tvSentName.text =
+                if (total > 1) {
+                    "Sent To- $name + ${total - 1}"
+                } else {
+                    "Sent To- $name"
+                }
 
             if (notificationData?.receiverDetails?.get(0)?.status?:0==1){
                 ivBell.setImageResource(R.drawable.icon_read_bell)

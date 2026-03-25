@@ -74,6 +74,10 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTim
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.UpdateTimeSlotResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResponse
+import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
@@ -581,10 +585,20 @@ class MainRepository @Inject constructor(
         to_date: String?=null,
         limit: String?=null,
         search: String?=null,
+        page: String?=null,
     ) {
         handleApiCall(
-            api = { api.hitApprovedSeller(token, country_id, from_date, to_date, limit, search) },
+            api = { api.hitApprovedSeller(token, country_id, from_date, to_date, limit, search,page) },
             responseLiveData = getApprovedData
+        )
+    }
+
+    val getAssignSellerLiveData = SingleLiveEvent<AssignSellerResponse>()
+    suspend fun assignSellerList(
+    ) {
+        handleApiCall(
+            api = { api.assignSellerList() },
+            responseLiveData = getAssignSellerLiveData
         )
     }
 
@@ -773,6 +787,17 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val getAssignUserLiveData = SingleLiveEvent<AssignUserResponse>()
+    suspend fun getAssignUser(
+    ) {
+        handleApiCall(
+            api = {
+                api.getAssignUser()
+            },
+            responseLiveData = getAssignUserLiveData
+        )
+    }
+
     val userDetailLiveData = SingleLiveEvent<GetUserDetailResponse>()
     suspend fun getUserDetail(
         userId: String
@@ -900,6 +925,17 @@ class MainRepository @Inject constructor(
                 api.getDeliveryBoy(search, page, fromDate, toDate)
             },
             responseLiveData = deliveryBoyLiveData
+        )
+    }
+
+    val assignDeliveryBoyLiveData = SingleLiveEvent<GetAssignDeliveryBoyResponse>()
+    suspend fun getAssignDeliveryBoy(
+    ) {
+        handleApiCall(
+            api = {
+                api.getAssignDeliveryBoy()
+            },
+            responseLiveData = assignDeliveryBoyLiveData
         )
     }
 
@@ -1641,6 +1677,17 @@ class MainRepository @Inject constructor(
                 api.getApprovedAffiliateUser(map)
             },
             responseLiveData = approvedAffiliateUserLiveData
+        )
+    }
+    val getAssignAffiliateUserLiveData = SingleLiveEvent<GetAssignAffiliateUserResponse>()
+    suspend fun getAssignAffiliateUser(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getAssignAffiliateUser(map)
+            },
+            responseLiveData = getAssignAffiliateUserLiveData
         )
     }
 

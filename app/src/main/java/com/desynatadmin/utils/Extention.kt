@@ -365,6 +365,48 @@ fun openCustomDatePicker(
     datePickerDialog.show()
 }
 
+fun openCustomizeDatePicker(
+    context: Context,
+    minDate: Long? = null,
+    maxDate: Long? = null,
+    onClick: (String, Long) -> Unit
+) {
+    val today = Calendar.getInstance()
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        R.style.DialogTheme,
+        { _, year, month, dayOfMonth ->
+
+            val selectedCal = Calendar.getInstance()
+            selectedCal.set(Calendar.YEAR, year)
+            selectedCal.set(Calendar.MONTH, month)
+            selectedCal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            selectedCal.set(Calendar.HOUR_OF_DAY, 0)
+            selectedCal.set(Calendar.MINUTE, 0)
+            selectedCal.set(Calendar.SECOND, 0)
+            selectedCal.set(Calendar.MILLISECOND, 0)
+
+            val selectedDate = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+            val timestamp = selectedCal.timeInMillis
+
+            onClick(selectedDate, timestamp)
+        },
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH),
+        today.get(Calendar.DAY_OF_MONTH)
+    )
+
+    minDate?.let {
+        datePickerDialog.datePicker.minDate = it
+    }
+
+    maxDate?.let {
+        datePickerDialog.datePicker.maxDate = it
+    }
+
+    datePickerDialog.show()
+}
 
 fun String?.orDash(): String = if (this.isNullOrBlank()) "-" else this
 

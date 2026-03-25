@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemSelectNotificationUserBinding
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 
-class AssignAffiliateUserAdapter(var context:Context, private var userList: ArrayList<GetNewAffiliateUserResponse.Data.Data>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignAffiliateUserAdapter.ViewHolder>() {
+class AssignAffiliateUserAdapter(var context:Context, private var userList: ArrayList<GetAssignAffiliateUserResponse.Data>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignAffiliateUserAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSelectNotificationUserBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
@@ -23,7 +24,7 @@ class AssignAffiliateUserAdapter(var context:Context, private var userList: Arra
                     ivRadio.setImageResource(R.drawable.ic_checkbox_unselected)
                 }
 
-            root.setOnClickListener {
+            ivRadio.setOnClickListener {
                 userList[position].isSelected = !userList[position].isSelected
                 notifyDataSetChanged()
                 onUserClick.onClick(position)

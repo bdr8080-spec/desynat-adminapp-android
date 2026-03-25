@@ -189,19 +189,63 @@ object CommonMethod {
 
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
 
-            // Block English alphabets
-            val englishRegex = Regex("[a-zA-Z]")
+            for (i in start until end) {
+                val char = source[i]
 
-            if (source != null && source.contains(englishRegex)) {
-                return@InputFilter ""
+                val isArabic = char in '\u0600'..'\u06FF'
+                val isNumber = char.isDigit()
+                val isSpace = char == ' '
+                val isNewLine = char == '\n' || char == '\r'
+                val isEmoji = Character.isSurrogate(char)
+
+                val isSymbol = char in listOf(
+                    '@','#','%','&','*','!','?','.',',','-','_','(',')','/','+','='
+                )
+
+                if (!isArabic && !isNumber && !isSpace && !isNewLine && !isEmoji && !isSymbol) {
+                    return@InputFilter ""
+                }
             }
 
-            // Block leading space
             if (dstart == 0 && source.startsWith(" ")) {
                 return@InputFilter ""
             }
 
-            return@InputFilter null
+            null
+        }
+
+        editText.filters = arrayOf(filter)
+    }
+
+    fun applyEnglishOnlyFilter(editText: EditText) {
+
+        val allowedSymbols = setOf(
+            '@','#','%','&','*','!','?','.',',','-','_','(',')','/','+','='
+        )
+
+        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+
+            for (i in start until end) {
+                val char = source[i]
+
+                val isEnglish = char in 'A'..'Z' || char in 'a'..'z'
+                val isNumber = char.isDigit()
+                val isSpace = char == ' '
+                val isNewLine = char == '\n' || char == '\r'
+                val isEmoji = Character.isSurrogate(char)
+                val isSymbol = char in allowedSymbols
+
+                if (!isEnglish && !isNumber && !isSpace && !isEmoji && !isSymbol &&!isNewLine) {
+                    return@InputFilter ""
+                }
+            }
+
+            // block leading space
+            if (dstart == 0 && source.startsWith(" ")) {
+                return@InputFilter ""
+            }
+
+            null
         }
 
         editText.filters = arrayOf(filter)

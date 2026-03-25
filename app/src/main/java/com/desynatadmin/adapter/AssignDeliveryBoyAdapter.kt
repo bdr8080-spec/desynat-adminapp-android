@@ -8,9 +8,10 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemDriverBinding
 import com.desynatadmin.databinding.ItemSelectNotificationUserBinding
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 
-class AssignDeliveryBoyAdapter(var context:Context, private var driverList: ArrayList<GetAllDeliveryBoyResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<AssignDeliveryBoyAdapter.ViewHolder>() {
+class AssignDeliveryBoyAdapter(var context:Context, private var driverList: ArrayList<GetAssignDeliveryBoyResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<AssignDeliveryBoyAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSelectNotificationUserBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
@@ -25,7 +26,7 @@ class AssignDeliveryBoyAdapter(var context:Context, private var driverList: Arra
                 ivRadio.setImageResource(R.drawable.ic_checkbox_unselected)
             }
 
-            root.setOnClickListener {
+            ivRadio.setOnClickListener {
                 driverList[position].isSelected = !driverList[position].isSelected
                 notifyDataSetChanged()
 

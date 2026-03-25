@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemSelectNotificationUserBinding
+import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 
-class AssignUserAdapter(var context:Context, private var userList: ArrayList<GetUserResponse.Data.Data>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignUserAdapter.ViewHolder>() {
+class AssignUserAdapter(var context:Context, private var userList: ArrayList<AssignUserResponse.Data>, var onUserClick:OnUserClick) : RecyclerView.Adapter<AssignUserAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSelectNotificationUserBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){

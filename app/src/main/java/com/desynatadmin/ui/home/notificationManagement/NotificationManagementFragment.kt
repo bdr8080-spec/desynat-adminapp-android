@@ -28,6 +28,7 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
+import com.desynatadmin.utils.openCustomizeDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -314,14 +315,14 @@ class NotificationManagementFragment :  BaseFragment() {
             }
 
             etFrom.setOnClickListener {
-                openCustomDatePicker(requireActivity()){date,timestamp->
+                openCustomizeDatePicker(requireActivity(),maxDate = System.currentTimeMillis()){date,timestamp->
                     etFrom.text=date
                     fromTimestamp=timestamp
                 }
 
             }
             etTo.setOnClickListener {
-                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
+                openCustomizeDatePicker(requireActivity(), minDate = fromTimestamp,maxDate = System.currentTimeMillis()){date,timestamp->
                     etTo.text=date
                     toTimestamp=timestamp
                 }
