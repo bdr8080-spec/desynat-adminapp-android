@@ -49,12 +49,24 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/navigationView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:layout_marginStart="-64dp"-->
+<!--        android:paddingTop="@dimen/_20sdp"-->
+<!--        app:headerLayout="@layout/drawer_layout"/>-->
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
         android:layout_marginStart="-64dp"
-        app:headerLayout="@layout/drawer_layout"/>
+        android:layout_gravity="start">
+
+        <include layout="@layout/drawer_layout"/>
+
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

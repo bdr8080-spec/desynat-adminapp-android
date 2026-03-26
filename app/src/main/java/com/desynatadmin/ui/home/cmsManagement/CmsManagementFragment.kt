@@ -162,28 +162,6 @@ class CmsManagementFragment : BaseFragment() {
             }
 
             tvViewMore.setOnClickListener {
-
-                if (tvViewMore.text == "View More") {
-                    tvEnglishTerms.maxLines = Int.MAX_VALUE
-                    tvViewMore.text = "View Less"
-                } else {
-                    tvEnglishTerms.maxLines = 5
-                    tvViewMore.text = "View More"
-                }
-            }
-
-            tvViewMoreArabic.setOnClickListener {
-
-                if (tvViewMoreArabic.text == "View More") {
-                    tvArabicTerms.maxLines = Int.MAX_VALUE
-                    tvViewMoreArabic.text = "View Less"
-                } else {
-                    tvArabicTerms.maxLines = 5
-                    tvViewMoreArabic.text = "View More"
-                }
-            }
-
-            tvEnglishTerms.setOnClickListener {
                 val bundle = Bundle().apply {
                     putString("title", tvSelect.text.toString())
                     putString("content", tvEnglishTerms.text.toString())
@@ -192,9 +170,17 @@ class CmsManagementFragment : BaseFragment() {
                     R.id.action_cmsManagementManagement_to_commonCmsContentFragment,
                     bundle
                 )
+//                if (tvViewMore.text == "View More") {
+//                    tvEnglishTerms.maxLines = Int.MAX_VALUE
+//                    tvViewMore.text = "View Less"
+//                } else {
+//                    tvEnglishTerms.maxLines = 5
+//                    tvViewMore.text = "View More"
+//                }
             }
 
-            tvArabicTerms.setOnClickListener {
+            tvViewMoreArabic.setOnClickListener {
+
                 val bundle = Bundle().apply {
                     putString("title", tvSelect.text.toString())
                     putString("content", tvArabicTerms.text.toString())
@@ -203,6 +189,36 @@ class CmsManagementFragment : BaseFragment() {
                     R.id.action_cmsManagementManagement_to_commonCmsContentFragment,
                     bundle
                 )
+
+//                if (tvViewMoreArabic.text == "View More") {
+//                    tvArabicTerms.maxLines = Int.MAX_VALUE
+//                    tvViewMoreArabic.text = "View Less"
+//                } else {
+//                    tvArabicTerms.maxLines = 5
+//                    tvViewMoreArabic.text = "View More"
+//                }
+            }
+
+            tvEnglishTerms.setOnClickListener {
+//                val bundle = Bundle().apply {
+//                    putString("title", tvSelect.text.toString())
+//                    putString("content", tvEnglishTerms.text.toString())
+//                }
+//                findNavController().navigate(
+//                    R.id.action_cmsManagementManagement_to_commonCmsContentFragment,
+//                    bundle
+//                )
+            }
+
+            tvArabicTerms.setOnClickListener {
+//                val bundle = Bundle().apply {
+//                    putString("title", tvSelect.text.toString())
+//                    putString("content", tvArabicTerms.text.toString())
+//                }
+//                findNavController().navigate(
+//                    R.id.action_cmsManagementManagement_to_commonCmsContentFragment,
+//                    bundle
+//                )
             }
         }
     }
@@ -622,13 +638,13 @@ class CmsManagementFragment : BaseFragment() {
                         CommonMethod.setHtmlText(exchangePolicyResponse?.contentArabic.toString())
                 }
             }
-            tvEnglishTerms.post {
-                tvViewMore.isVisible = tvEnglishTerms.lineCount > 5
-            }
-
-            tvArabicTerms.post {
-                tvViewMoreArabic.isVisible = tvArabicTerms.lineCount > 5
-            }
+//            tvEnglishTerms.post {
+//                tvViewMore.isVisible = tvEnglishTerms.lineCount > 5
+//            }
+//
+//            tvArabicTerms.post {
+//                tvViewMoreArabic.isVisible = tvArabicTerms.lineCount > 5
+//            }
 
         }
     }

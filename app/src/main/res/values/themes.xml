@@ -3,7 +3,7 @@
 <style name="Base.Theme.DesynatAdmin" parent="Theme.AppCompat.Light.NoActionBar">
     <!-- Customize your light theme here. -->
     <item name="colorPrimary">@color/brown</item>
-    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:statusBarColor">@color/brown</item>
     <!-- allow content to draw under status bar -->
     <item name="android:windowTranslucentStatus">true</item>
     <item name="android:windowLightStatusBar">false</item> <!-- white icons -->

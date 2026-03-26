@@ -250,7 +250,7 @@
                 android:id="@+id/btnSend"
                 style="@style/button"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:text="Send"/>
 

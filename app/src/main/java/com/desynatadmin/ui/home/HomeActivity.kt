@@ -111,7 +111,10 @@ class HomeActivity : BaseActivity() {
         }
 
         binding?.apply {
-            drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
+          //  drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
+            drawerBinding = DrawerLayoutBinding.bind(
+                binding!!.navigationView.findViewById(R.id.drawerRoot)
+            )
             setUpDrawerContent()
         }
 
