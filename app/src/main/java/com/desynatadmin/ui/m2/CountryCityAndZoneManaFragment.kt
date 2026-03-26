@@ -104,7 +104,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             binding?.recyclerView?.visibility = View.GONE
             binding?.tvCountry?.visibility = View.GONE
             binding?.tvDropdown?.visibility = View.GONE
-            binding?.pagingLayout?.visibility = View.GONE
+            binding?.pagingLayout?.visibility = View.INVISIBLE
             binding?.zoneListRecyclerView?.visibility = View.VISIBLE
         } else {
             hitServiceApi()
@@ -132,7 +132,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                 binding?.recyclerView?.visibility = View.GONE
                 binding?.tvCountry?.visibility = View.GONE
                 binding?.tvDropdown?.visibility = View.GONE
-                binding?.pagingLayout?.visibility = View.GONE
+                binding?.pagingLayout?.visibility = View.INVISIBLE
                 binding?.zoneListRecyclerView?.visibility = View.VISIBLE
             } else {
                 binding?.recyclerView?.visibility = View.VISIBLE
@@ -147,7 +147,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                         recyclerView.visibility = View.GONE
                         tvCountry.visibility = View.GONE
                         tvDropdown.visibility = View.GONE
-                        pagingLayout.visibility = View.GONE
+                        pagingLayout.visibility = View.INVISIBLE
                         //   zoneListRecyclerView.visibility = View.VISIBLE
                         SingleTonDataPass.countryId = serviceCityList?.get(position)?.country_id ?: ""
                         SingleTonDataPass.cityId = serviceCityList?.get(position)?.id ?: ""

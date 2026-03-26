@@ -322,7 +322,8 @@ interface ApiServices {
         @Query("country_id1") country_id: String?=null,
         @Query("from_date1") from_date: String?=null,
         @Query("to_date1") to_date: String?=null,
-        @Query("limit1") limit: String?=null,
+        @Query("limit1") limit1: String?=null,
+        @Query("limit") limit: String?=null,
         @Query("search1") search: String?=null,
         @Query("page") page: String?=null,
     ): Response<ApprovedSellerResponse>
@@ -339,6 +340,7 @@ interface ApiServices {
         @Query("to_date2") to_date: String,
         @Query("limit2") limit: String,
         @Query("search2") search: String,
+        @Query("page") page: String,
     ): Response<RejectedListResponse>
 
     @GET(Constants.SELLER_DETAIL)

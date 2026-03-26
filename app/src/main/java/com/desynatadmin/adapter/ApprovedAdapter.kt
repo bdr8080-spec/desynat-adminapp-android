@@ -7,10 +7,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.databinding.ApprovedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
-import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class ApprovedAdapter(var list : List<ApprovedSellerResponse.Data.Data>, val click : OnCLick) :
+class ApprovedAdapter(var list : ArrayList<ApprovedSellerResponse.Data.Data>, val click : OnCLick) :
     RecyclerView.Adapter<ApprovedAdapter.ViewHolder>() {
     class ViewHolder(val binding: ApprovedItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -30,11 +29,11 @@ class ApprovedAdapter(var list : List<ApprovedSellerResponse.Data.Data>, val cli
         holder.binding.apply {
             val item = list[position]
             tvName.text = item.first_name
-            tvLocation.text = item.store_info.country_info.name
+            tvLocation.text = item?.store_info?.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic).transform(CircleCrop()).into(ivProfileImage)
             tvEmail.text = item.email
-            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(item.updated_at)}"
+            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(item?.updated_at.toString())}"
 
             root.setOnClickListener {
                 click.onClick(position)

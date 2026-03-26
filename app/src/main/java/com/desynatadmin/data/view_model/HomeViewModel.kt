@@ -402,10 +402,11 @@ class HomeViewModel @Inject constructor(
         to_date : String,
         limit : String,
         search : String,
+        page: String
     ) {
         viewModelScope.launch {
             repository.
-            hitRejectedSellerList(token,country_id,from_date, to_date,limit,search)
+            hitRejectedSellerList(token,country_id,from_date, to_date,limit,search,page)
         }
     }
 

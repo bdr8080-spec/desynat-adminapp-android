@@ -18,14 +18,14 @@ class RejectedAdapter(var list : List<RejectedListResponse.Data.Data>, val click
             }
             val item = list[position]
             tvName.text = item.first_name
-            tvLocation.text = item.store_info.country_info.name
+            tvLocation.text = item?.store_info?.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             tvEmail.text = item.email
             Glide.with(ivProfileImage).load(item.profile_pic)
                 .transform(CircleCrop())
                 .into(ivProfileImage)
             RejectionDescription.text = item.reject_reason
-            tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"
+            tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item?.updated_at.toString())}"
 
         }
         }

@@ -588,7 +588,7 @@ class MainRepository @Inject constructor(
         page: String?=null,
     ) {
         handleApiCall(
-            api = { api.hitApprovedSeller(token, country_id, from_date, to_date, limit, search,page) },
+            api = { api.hitApprovedSeller(token, country_id, from_date, to_date, limit,limit, search,page) },
             responseLiveData = getApprovedData
         )
     }
@@ -610,10 +610,11 @@ class MainRepository @Inject constructor(
         to_date: String,
         limit: String,
         search: String,
+        page: String
     ) {
         handleApiCall(
             api = {
-                api.hitRejectedSeller(token, country_id, from_date, to_date, limit, search)
+                api.hitRejectedSeller(token, country_id, from_date, to_date, limit, search,page)
             },
             responseLiveData = getRejectSellerList
         )
