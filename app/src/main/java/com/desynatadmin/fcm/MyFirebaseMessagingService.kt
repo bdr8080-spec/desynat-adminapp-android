@@ -50,6 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.e("onMessageReceived", "Notification Tag: ${it.tag}")
             Log.e("onMessageReceived", "Notification ChannelId: ${it.channelId}")
             Log.e("onMessageReceived", "Notification ClickAction: ${it.clickAction}")
+            sendNotification(it.title.toString(),it.body.toString())
         }
 
         // Data payload
@@ -86,11 +87,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     @SuppressLint("InvalidWakeLockTag")
-    private fun sendNotification(notificationData: NotificationInfoModel) {
+  //  private fun sendNotification(notificationData: NotificationInfoModel) {
+    private fun sendNotification(titleText: String, body: String) {
 
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("from", "push")
-        intent.putExtra("notificationData", notificationData)
+      //  intent.putExtra("notificationData", notificationData)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         var pendingIntent: PendingIntent? = null
@@ -112,8 +114,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
         }
 
-        val message = notificationData.body
-        val title = getString(R.string.app_name)
+        val message = body
+        val title = titleText
+      //  val title = getString(R.string.app_name)
         val channelId = getString(R.string.channel)
         val defaultSoundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 

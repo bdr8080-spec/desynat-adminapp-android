@@ -617,7 +617,6 @@
         android:label="Ticket Detail Fragment"
         tools:layout="@layout/fragment_ticket_detail"/>
 
-
     <fragment
         android:id="@+id/sellerPayout"
         android:name="com.desynatadmin.ui.home.sellerPayout.SellerPayoutManagementFragment"
@@ -648,5 +647,34 @@
         android:label="Refund Management Fragment"
         tools:layout="@layout/fragment_refund_management"/>
 
+    <fragment
+        android:id="@+id/subAdminManagement"
+        android:name="com.desynatadmin.ui.home.subAdminManagement.SubAdminManagementFragment"
+        android:label="SubAdmin Management Fragment"
+        tools:layout="@layout/fragment_sub_admin_management">
+
+        <action
+            android:id="@+id/action_subAdminManagement_to_subAdminDetailFragment"
+            app:destination="@id/subAdminDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/subAdminDetail"
+        android:name="com.desynatadmin.ui.home.subAdminManagement.SubAdminDetailFragment"
+        android:label="SubAdmin Detail Fragment"
+        tools:layout="@layout/fragment_sub_admin_detail">
+
+        <action
+            android:id="@+id/action_subAdminDetailFragment_to_addSubAdminFragment"
+            app:destination="@id/addSubAdmin" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addSubAdmin"
+        android:name="com.desynatadmin.ui.home.subAdminManagement.AddSubAdminFragment"
+        android:label="Add SubAdmin Fragment"
+        tools:layout="@layout/fragment_add_sub_admin"/>
 
 </navigation>
