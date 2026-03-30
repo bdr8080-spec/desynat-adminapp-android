@@ -78,6 +78,7 @@ import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResp
 import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetNotificationCountResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
@@ -2153,6 +2154,18 @@ class MainRepository @Inject constructor(
                 api.getSendNotification(map)
             },
             responseLiveData = getSendNotificationLiveData
+        )
+    }
+
+ val getNotificationCountLiveData = SingleLiveEvent<GetNotificationCountResponse>()
+    suspend fun getNotificationCount(
+
+    ) {
+        handleApiCall(
+            api = {
+                api.getNotificationCount()
+            },
+            responseLiveData = getNotificationCountLiveData
         )
     }
 

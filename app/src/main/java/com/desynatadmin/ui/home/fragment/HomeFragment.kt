@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
@@ -30,6 +31,7 @@ class HomeFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var isCountryObserver = true
+    private var isNotificationObserver = true
     var user : LoginResponse.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
 
@@ -50,6 +52,7 @@ class HomeFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
+        getNotificationCount()
         if(SharedPreference.get(requireActivity()).getCountryList() == null) {
             getCountryApi()
         }
@@ -82,6 +85,10 @@ class HomeFragment : BaseFragment() {
     private fun getCountryApi(){
         viewModel.getCountry()
     }
+private fun getNotificationCount(){
+        viewModel.getNotificationCount()
+    isNotificationObserver = true
+    }
 
     private fun setCountry() {
         if (!countryList.isNullOrEmpty()) {
@@ -100,6 +107,16 @@ class HomeFragment : BaseFragment() {
                 countryList.clear()
                 countryList.addAll(response.data)
                 setCountry()
+        }
+        viewModel.getNotificationCountResult.observe(viewLifecycleOwner) { response ->
+            if (isNotificationObserver){
+                ProgressDialogUtils.getInstance().hideProgress()
+                if (response.data!=0){
+                    setNotificationCount(response.data?:0)
+                }
+                isNotificationObserver = false
+            }
+
         }
     }
 
@@ -177,6 +194,11 @@ class HomeFragment : BaseFragment() {
         }
 
         dialog.show()
+    }
+
+    private fun setNotificationCount(data: Int) {
+        binding?.relCount?.isVisible = true
+        binding?.tvCount?.text = data.toString()
     }
 
 }

@@ -74,6 +74,7 @@ import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResp
 import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetNotificationCountResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
@@ -1046,5 +1047,8 @@ interface ApiServices {
         @Body request: SendNotificationRequest
     ): Response<SendNotificationResponse>
 
+    @GET(Constants.NOTIFICATION_COUNT)
+    suspend fun getNotificationCount(
+    ): Response<GetNotificationCountResponse>
 
 }

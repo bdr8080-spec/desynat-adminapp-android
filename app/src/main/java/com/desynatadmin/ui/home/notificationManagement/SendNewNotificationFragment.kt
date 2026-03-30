@@ -46,6 +46,9 @@ class SendNewNotificationFragment : BaseFragment(){
     private var binding: FragmentSendNewNotificationBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isAffiliateObserver = true
+    private var isDriverObserver = true
+    private var isSellerObserver = true
     private var assignUserAdapter: AssignUserAdapter?=null
     private var assignDriverAdapter: AssignDeliveryBoyAdapter?=null
     private var assignAffiliateUserAdapter: AssignAffiliateUserAdapter?=null
@@ -107,25 +110,66 @@ class SendNewNotificationFragment : BaseFragment(){
             }
 
             tvSendType.setOnClickListener {
-                selectUserDialog()
+                if (receiverType!= 6){
+                    selectUserDialog()
+                }
             }
 
             radioSendTo.setOnCheckedChangeListener { group, checkedId ->
                 when (checkedId) {
+                    R.id.rbAll -> {
+                        receiverType = 6
+                        tvSendType.isVisible = true
+                        isAllSelected = true
+                        tvSendType.text = "All"
+                        tvSendType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox,0,0,0)
+                        if (userList.isEmpty()){
+                            getAllUser()
+                        }
+                        else{
+                            userList.forEach { it.isSelected = true }
+                            assignUserAdapter?.notifyDataSetChanged()
+
+                        }
+                        if (sellerList.isEmpty()){
+                            getAllSeller()
+                        }
+                        else{
+                            sellerList.forEach { it.isSelected = true }
+                            assignSellerAdapter?.notifyDataSetChanged()
+                        }
+                        if (affiliateUserList.isEmpty()){
+                            getAffiliateUser()
+                        }
+                        else{
+                            affiliateUserList.forEach { it.isSelected = true }
+                            assignAffiliateUserAdapter?.notifyDataSetChanged()
+                        }
+                        if (driverList.isEmpty()){
+                            getDeliveryBoy()
+                        }
+                        else{
+                            driverList.forEach { it.isSelected = true }
+                            assignDriverAdapter?.notifyDataSetChanged()
+                        }
+                    }
+
                     R.id.rbCustomer -> {
                         receiverType = 2
                         tvSendType.isVisible = true
-                        isAllSelected = false
+
+                        isAllSelected = userList.all { it.isSelected }
 
                         if (userList.isEmpty()){
                             getAllUser()
                         }
-                        updateSelectedNames()
 
+                        updateSelectedNames()
                     }
+
                     R.id.rbSeller -> {
                         receiverType = 3
-                        isAllSelected = false
+                        isAllSelected = sellerList.all { it.isSelected }
                         tvSendType.isVisible = true
                         if (sellerList.isEmpty()){
                             getAllSeller()
@@ -134,7 +178,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     }
                     R.id.rbAffiliate -> {
                         receiverType = 4
-                        isAllSelected = false
+                        isAllSelected = affiliateUserList.all { it.isSelected }
                         tvSendType.isVisible = true
                         if (affiliateUserList.isEmpty()){
                             getAffiliateUser()
@@ -143,7 +187,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     }
                     R.id.rbDriver -> {
                         receiverType = 5
-                        isAllSelected = false
+                        isAllSelected = driverList.all { it.isSelected }
                         tvSendType.isVisible = true
                         if (driverList.isEmpty()){
                             getDeliveryBoy()
@@ -218,34 +262,46 @@ class SendNewNotificationFragment : BaseFragment(){
                 ProgressDialogUtils.getInstance().hideProgress()
                     userList.clear()
                 userList.addAll(response.data)
+                if (receiverType == 6) {
+                    userList.forEach { it.isSelected = true }
+                }
                 isObserver = false
             }
         }
 
         viewModel.assignSellerListResult.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
+            if (isSellerObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                     sellerList.clear()
                 sellerList.addAll(response.data)
-                isObserver = false
+                if (receiverType == 6) {
+                    sellerList.forEach { it.isSelected = true }
+                }
+                isSellerObserver = false
             }
         }
 
         viewModel.assignDeliveryBoyResult.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
+            if (isDriverObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                     driverList.clear()
                 driverList.addAll(response.data)
-                isObserver = false
+                if (receiverType == 6) {
+                    driverList.forEach { it.isSelected = true }
+                }
+                isDriverObserver = false
             }
         }
 
         viewModel.getAssignAffiliateUserResult.observe(viewLifecycleOwner) { response ->
-            if (isObserver) {
+            if (isAffiliateObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                     affiliateUserList.clear()
                 affiliateUserList.addAll(response.data)
-                isObserver = false
+                if (receiverType == 6) {
+                    affiliateUserList.forEach { it.isSelected = true }
+                }
+                isAffiliateObserver = false
             }
         }
     }
@@ -477,12 +533,20 @@ class SendNewNotificationFragment : BaseFragment(){
             else -> emptyList()
         }
 
-         if (selectedNames.isEmpty()) {
+         if (selectedNames.isEmpty()&&receiverType!=6) {
              binding?.tvSendType?.text =  "Select"
              binding?.tvSendType?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_unselected,0,0,0)
-        } else if (selectedNames.size == userList.size ||
-            selectedNames.size == sellerList.size ||
-            selectedNames.size == driverList.size) {
+        }
+         else if(receiverType==6){
+             binding?.tvSendType?.text = "All"
+             binding?.tvSendType?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox,0,0,0)
+         }
+         else if (
+             (receiverType == 2 && selectedNames.size == userList.size) ||
+             (receiverType == 3 && selectedNames.size == sellerList.size) ||
+             (receiverType == 4 && selectedNames.size == affiliateUserList.size) ||
+             (receiverType == 5 && selectedNames.size == driverList.size)
+         ) {
              binding?.tvSendType?.text = "All"
              binding?.tvSendType?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox,0,0,0)
         } else {
@@ -499,6 +563,7 @@ class SendNewNotificationFragment : BaseFragment(){
             is GetUserResponse.Data.Data -> (list as List<GetUserResponse.Data.Data>).all { it.isSelected }
             is ApprovedSellerResponse.Data.Data -> (list as List<ApprovedSellerResponse.Data.Data>).all { it.isSelected }
             is GetAllDeliveryBoyResponse.Data.Data -> (list as List<GetAllDeliveryBoyResponse.Data.Data>).all { it.isSelected }
+            is GetAssignAffiliateUserResponse.Data -> (list as List<GetAssignAffiliateUserResponse.Data>).all { it.isSelected }
             else -> false
         }
 
@@ -510,7 +575,8 @@ class SendNewNotificationFragment : BaseFragment(){
             binding.tvSelectAllUser.setCompoundDrawablesWithIntrinsicBounds(
                 R.drawable.ic_checkbox, 0, 0, 0
             )
-        } else {
+        }
+         else {
             binding.tvSelectAllUser.setCompoundDrawablesWithIntrinsicBounds(
                 R.drawable.ic_checkbox_unselected, 0, 0, 0
             )
@@ -545,7 +611,7 @@ class SendNewNotificationFragment : BaseFragment(){
                 return false
             }
 
-            if (selectedReceiverList.isEmpty()) {
+            if (selectedReceiverList.isEmpty()&&receiverType!=6) {
                 showToast("Please select at least one receiver")
                 return false
             }
@@ -571,7 +637,7 @@ class SendNewNotificationFragment : BaseFragment(){
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
-        isObserver = true
+        isAffiliateObserver = true
     }
     private fun getAllSeller(loading:Boolean=true){
 
@@ -580,7 +646,7 @@ class SendNewNotificationFragment : BaseFragment(){
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
-        isObserver = true
+        isSellerObserver = true
     }
     private fun getDeliveryBoy(loading:Boolean=true){
         val map = HashMap<String,Any>()
@@ -591,6 +657,6 @@ class SendNewNotificationFragment : BaseFragment(){
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
-        isObserver = true
+        isDriverObserver = true
     }
 }

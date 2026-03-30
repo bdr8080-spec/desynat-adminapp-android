@@ -7,5 +7,5 @@ import kotlinx.android.parcel.Parcelize
 data class NotificationInfoModel(
     val title: String? = "",
     val body: String? = "",
-    val orderId: String? = "",
+    val badge: Int? = 0
 ) : Parcelable

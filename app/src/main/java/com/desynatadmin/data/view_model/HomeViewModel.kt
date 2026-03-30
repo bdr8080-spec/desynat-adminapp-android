@@ -76,6 +76,7 @@ import com.desynatadmin.ui.home.notificationManagement.response.AssignSellerResp
 import com.desynatadmin.ui.home.notificationManagement.response.AssignUserResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetAssignAffiliateUserResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
+import com.desynatadmin.ui.home.notificationManagement.response.GetNotificationCountResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetSendNotificationListResponse
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationResponse
@@ -1520,6 +1521,14 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     fun getSendNotification(map: HashMap<String, Any>) {
         viewModelScope.launch {
             repository.getSendNotification(map)
+        }
+    }
+
+    val getNotificationCountResult: LiveData<GetNotificationCountResponse>
+        get() = repository.getNotificationCountLiveData
+    fun getNotificationCount() {
+        viewModelScope.launch {
+            repository.getNotificationCount()
         }
     }
 

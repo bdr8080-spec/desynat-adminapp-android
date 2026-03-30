@@ -24,6 +24,8 @@ import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
+import me.leolin.shortcutbadger.ShortcutBadger
+import kotlin.collections.get
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
@@ -358,6 +360,15 @@ override fun onBackPressed() {
             binding?.drawerLayout?.setDrawerLockMode(androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             binding?.navigationView?.isVisible = false
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        SharedPreference.get(this).badgeCount = 0
+        ShortcutBadger.removeCount(this)
+        //   NotificationManagerCompat.from(this).cancelAll()
     }
 
 }
