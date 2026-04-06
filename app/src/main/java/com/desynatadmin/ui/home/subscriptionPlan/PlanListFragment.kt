@@ -72,8 +72,12 @@ class PlanListFragment : BaseFragment() {
         else{
             countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
-            setCountry()
-
+            if (selectedCountryCode==null){
+                setCountry()
+            }
+            else{
+                getSubscriptionPlan()
+            }
         }
     }
 

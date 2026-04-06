@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:text="Select language"
+            android:text="@string/select_language"
             android:layout_marginTop="@dimen/_30sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_13sdp"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/poppins_medium"
-            android:text="Choose the language and continue to get the experience the app in your preferred language."
+            android:text="@string/choose_the_language_and_continue_to_get_the_experience_the_app_in_your_preferred_language"
             android:textColor="#80000000"
             android:textSize="@dimen/_10sdp"/>
 
@@ -82,6 +82,6 @@
             style="@style/button"
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:text="Continue"/>
+            android:text="@string/continue_text"/>
 
 </LinearLayout>

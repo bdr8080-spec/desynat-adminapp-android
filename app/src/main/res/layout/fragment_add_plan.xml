@@ -190,6 +190,49 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Product Type"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupProductType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbDefined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Defined"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbUnlimited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unlimited"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+            </RadioGroup>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,20 +240,27 @@
                 android:weightSum="2">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNoOfProduct"
+                    android:visibility="gone"
                     style="@style/edit_text_title"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
-                    android:text="No. of Videos"/>
+                    android:text="No. of Products"/>
+
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/viewTvProduct"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="wrap_content"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:text="No. of Products"/>
+                    android:text="No. of Videos"/>
 
             </LinearLayout>
 
@@ -221,25 +271,33 @@
                 android:weightSum="2">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etNoOfVideo"
-                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/etNoOfProducts"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
                     style="@style/edit_text"
                     android:hint="Enter number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:background="@drawable/edit_back" />
 
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/viewProduct"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="wrap_content"/>
+
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etNoOfProducts"
-                    android:layout_width="match_parent"
+                    android:id="@+id/etNoOfVideo"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
                     style="@style/edit_text"
                     android:hint="Enter number"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:background="@drawable/edit_back" />
 
             </LinearLayout>
@@ -283,6 +341,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:background="@drawable/edit_back" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -294,6 +353,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:background="@drawable/edit_back" />
 
             </LinearLayout>
@@ -354,7 +414,7 @@
                 style="@style/edit_text"
                 android:hint="Enter price"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -372,7 +432,7 @@
                 style="@style/edit_text"
                 android:hint="Enter new price"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -434,6 +494,68 @@
                 android:hint="Enter commission"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="number"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Free Month"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupFreeMonth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbYesFreeMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbNoFreeMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tvNoOfFreeMonth"
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="No. of Free Month"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:visibility="gone"
+                android:id="@+id/etNoOfFreeMonth"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter number of free months"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:inputType="number"
+                android:maxLength="2"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView

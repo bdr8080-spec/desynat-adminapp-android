@@ -40,7 +40,7 @@ class ForgetPasswordFragment : BaseFragment() {
     override fun initView() {
         binding?.apply {
             CommonMethod.removeAllTextSpaces(etEmail)
-            toolbar.tvToolbar.text = "Forgot Password"
+            toolbar.tvToolbar.text = getString(R.string.forgot_password)
         }
     }
 
@@ -80,7 +80,8 @@ class ForgetPasswordFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    CommonMethod.showSuccessDialog(requireActivity(),"OTP sent to your email address successfully"){
+                    CommonMethod.showSuccessDialog(requireActivity(),
+                        getString(R.string.otp_sent_to_your_email_address_successfully)){
                         val bundle = Bundle().apply {
                             putString("adminId", response.data.id)
                             putString("email", binding?.etEmail?.text.toString().trim())
@@ -99,11 +100,11 @@ class ForgetPasswordFragment : BaseFragment() {
     private fun validation():Boolean{
         val email = binding?.etEmail?.text.toString().trim()
 if (email.isBlank()) {
-            showToast("Please Enter Email Address")
+            showToast(getString(R.string.please_enter_email_address))
             return false
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showToast("Please Enter Valid Email Address")
+            showToast(getString(R.string.please_enter_valid_email_address))
             return false
         }
         return true

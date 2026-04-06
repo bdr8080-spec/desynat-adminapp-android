@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemLiveRequestBinding
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.utils.CommonMethod
@@ -33,7 +34,7 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
 
                 when(liveRequestData?.adminVerify){
                     0->{
-                        tvStatusValue.text = "Pending"
+                        tvStatusValue.text = context.getString(R.string.pending)
                         tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
                         btnAccept.isVisible = true
                         btnReject.isVisible = true
@@ -55,7 +56,7 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
                         tvPaymentModeValue.isVisible = false
                     }
                     2->{
-                        tvStatusValue.text = "Rejected"
+                        tvStatusValue.text = context.getString(R.string.rejected)
                         tvStatusValue.setTextColor(Color.parseColor("#D91A1B"))
                         btnAccept.isVisible = false
                         btnReject.isVisible = false

@@ -70,6 +70,8 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotion
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.UpdatePromotionalBannerStatusResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveCoverage.response.GetAgoraTokenResponse
+import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
@@ -2169,6 +2171,16 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val getLiveStreamingRoomLiveData = SingleLiveEvent<GetLiveStreamingRoomResponse>()
+    suspend fun getLiveStreamingRoom(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getLiveStreamingRoom(map)
+            },
+            responseLiveData = getLiveStreamingRoomLiveData
+        )
+    }
 
     val sendNotificationLiveData = SingleLiveEvent<SendNotificationResponse>()
     suspend fun sendNotification(
@@ -2179,6 +2191,17 @@ class MainRepository @Inject constructor(
                 api.sendNotification(request)
             },
             responseLiveData = sendNotificationLiveData
+        )
+    }
+
+    val getAgoraTokenLiveData = SingleLiveEvent<GetAgoraTokenResponse>()
+    suspend fun getAgoraToken(token: String, map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getAgoraToken(token,map)
+            },
+            responseLiveData = getAgoraTokenLiveData
         )
     }
 }

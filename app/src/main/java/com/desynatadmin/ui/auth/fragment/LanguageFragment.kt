@@ -76,7 +76,7 @@ class LanguageFragment : BaseFragment() {
 
             btnContinue.setOnClickListener {
                 if (Constants.language==""){
-                    showToast("Please select language")
+                    showToast(getString(R.string.please_select_language))
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language

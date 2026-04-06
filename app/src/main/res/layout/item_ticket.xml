@@ -151,7 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="Pending"
+        android:text="@string/pending"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"

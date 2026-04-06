@@ -68,6 +68,8 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotion
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.UpdatePromotionalBannerStatusResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveCoverage.response.GetAgoraTokenResponse
+import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
@@ -1532,11 +1534,29 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
         }
     }
 
+    val getLiveStreamingRoomResult: LiveData<GetLiveStreamingRoomResponse>
+        get() = repository.getLiveStreamingRoomLiveData
+
+    fun getLiveStreamingRoom(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getLiveStreamingRoom(map)
+        }
+    }
+
     val sendNotificationResult: LiveData<SendNotificationResponse>
         get() = repository.sendNotificationLiveData
     fun sendNotification(request: SendNotificationRequest) {
         viewModelScope.launch {
             repository.sendNotification(request)
+        }
+    }
+
+    val getAgoraTokenResult: LiveData<GetAgoraTokenResponse>
+        get() = repository.getAgoraTokenLiveData
+
+    fun getAgoraToken(token: String, map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getAgoraToken(token,map)
         }
     }
 

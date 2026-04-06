@@ -41,6 +41,15 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a")
+            isUniversalApk = false
+        }
+    }
 }
 
 dependencies {
@@ -99,11 +108,14 @@ dependencies {
     implementation ("com.otaliastudios:transcoder:0.11.2")
     implementation("com.googlecode.libphonenumber:libphonenumber:8.13.26")
 
-    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation ("com.google.firebase:firebase-database-ktx")
+    implementation ("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-analytics")
 
     implementation ("com.google.firebase:firebase-messaging:25.0.1")
     implementation ("org.greenrobot:eventbus:3.3.1")
     implementation("me.leolin:ShortcutBadger:1.1.22@aar")
+    implementation("io.agora.rtc:full-sdk:4.2.3")
 
 }

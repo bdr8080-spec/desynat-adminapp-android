@@ -66,6 +66,8 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotion
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.UpdatePromotionalBannerStatusResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
+import com.desynatadmin.ui.home.liveCoverage.response.GetAgoraTokenResponse
+import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
@@ -102,6 +104,8 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.supportChatManagement.translation.TranslateRequest
+import com.desynatadmin.ui.home.supportChatManagement.translation.TranslateResponse
 import com.desynatadmin.ui.home.userManagement.response.AddWalletBalanceResponse
 import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
@@ -1050,5 +1054,22 @@ interface ApiServices {
     @GET(Constants.NOTIFICATION_COUNT)
     suspend fun getNotificationCount(
     ): Response<GetNotificationCountResponse>
+
+    @GET(Constants.GET_LIVE_STREAMING_ROOM)
+    suspend fun getLiveStreamingRoom(@QueryMap map: HashMap<String,Any>): Response<GetLiveStreamingRoomResponse>
+
+    @POST("https://desynat.com${Constants.GET_AGORA_TOKEN}")
+    suspend fun getAgoraToken(
+        @Header("Authorization") token: String,
+        @Body  map: HashMap<String, Any>
+    ): Response<GetAgoraTokenResponse>
+
+    @POST("https://translation.googleapis.com/language/translate/v2")
+    suspend fun googleTranslator(
+        @Query("key") apiKey: String,
+        @Body request: TranslateRequest
+    ): Response<TranslateResponse>
+
+
 
 }

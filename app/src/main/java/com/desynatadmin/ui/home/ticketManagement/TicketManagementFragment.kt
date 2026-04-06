@@ -42,7 +42,7 @@ class TicketManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "Ticket Management"
+            toolbar.tvToolbar.text = getString(R.string.ticket_management)
 
             ticketAdapter =
                 TicketAdapter(requireActivity(), ticketList, object : TicketAdapter.TicketClick {

@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Sign In"
+                android:text="@string/sign_in"
                 android:textColor="#000000"
                 android:textSize="@dimen/_22sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Welcome back !"
+                android:text="@string/welcome_back"
                 android:textColor="#875C3A"
                 android:textSize="@dimen/_22sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
                 android:id="@+id/tvEmail"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:text="Email Address"
+                android:text="@string/email_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
@@ -70,7 +70,7 @@
                 android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/email_"
                 android:drawablePadding="10dp"
-                android:hint="Enter Email Address"
+                android:hint="@string/enter_email_address"
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +100,7 @@
                     android:layout_width="match_parent"
                     android:drawableStart="@drawable/password_iv"
                     android:drawablePadding="@dimen/_10sdp"
-                    android:hint="Enter password"
+                    android:hint="@string/enter_password"
                     android:inputType="textPassword"
                     android:paddingEnd="@dimen/_10sdp"
                     android:background="@null"
@@ -126,7 +126,7 @@
                 android:paddingVertical="@dimen/_20sdp"
                 android:paddingHorizontal="@dimen/_20sdp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Forget Password?"
+                android:text="@string/forget_password"
                 android:textColor="@color/brown"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/_11sdp"
@@ -140,7 +140,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/button"
-                android:text="Login"
+                android:text="@string/login"
                 android:layout_marginTop="@dimen/_20sdp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

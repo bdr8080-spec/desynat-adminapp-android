@@ -24,6 +24,8 @@ import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import me.leolin.shortcutbadger.ShortcutBadger
+import kotlin.text.get
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
@@ -62,7 +64,7 @@ class HomeFragment : BaseFragment() {
         }
         user = SharedPreference.get(requireActivity()).getUser()
        binding?.apply {
-           tvName.text = "Hi ${user?.fullName}"
+           tvName.text = getString(R.string.hi, user?.fullName)
        }
     }
 
@@ -113,6 +115,11 @@ private fun getNotificationCount(){
                 ProgressDialogUtils.getInstance().hideProgress()
                 if (response.data!=0){
                     setNotificationCount(response.data?:0)
+                }
+                else{
+                    SharedPreference.get(requireActivity()).badgeCount = 0
+                    ShortcutBadger.removeCount(requireActivity())
+
                 }
                 isNotificationObserver = false
             }
@@ -184,7 +191,7 @@ private fun getNotificationCount(){
                 }
 
                 if (Constants.language==""){
-                    showToast("Please select language")
+                    showToast(getString(R.string.please_select_language))
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
@@ -199,6 +206,7 @@ private fun getNotificationCount(){
     private fun setNotificationCount(data: Int) {
         binding?.relCount?.isVisible = true
         binding?.tvCount?.text = data.toString()
+        ShortcutBadger.applyCount(requireActivity(), data)
     }
 
 }

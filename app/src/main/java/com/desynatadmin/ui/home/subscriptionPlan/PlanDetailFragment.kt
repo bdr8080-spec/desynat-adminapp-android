@@ -202,12 +202,17 @@ class PlanDetailFragment : BaseFragment() {
                 }
             }
 
-            setVisibilityIfZero(llProduct, subscriptionData?.noOfProducts)
+           // setVisibilityIfZero(llProduct, subscriptionData?.noOfProducts)
             setVisibilityIfZero(llVideos, subscriptionData?.noOfVideos)
             setVisibilityIfZero(llHighlights, subscriptionData?.noOfHighlights)
             setVisibilityIfZero(llEmployees, subscriptionData?.noOfEmployee)
+            if (subscriptionData?.productType==1){
+                tvProduct.text = "Unlimited"
+            }
+            else{
+                tvProduct.text = subscriptionData?.noOfProducts.toString()
+            }
 
-            tvProduct.text = subscriptionData?.noOfProducts.toString()
             tvReel.text = subscriptionData?.noOfVideos.toString()
             tvHighlights.text = subscriptionData?.noOfHighlights.toString()
             tvStories.text = if(subscriptionData?.stories==1)"Open" else "Close"
@@ -221,7 +226,15 @@ class PlanDetailFragment : BaseFragment() {
                 tvCommission.text = "No"
             }
 
-            tvProduct.text = subscriptionData?.noOfProducts.toString()
+            val freeMonth = subscriptionData?.noOfFreeMonths
+            if (freeMonth != null && freeMonth != "null"&& freeMonth != "") {
+                llFreeMonth.isVisible = true
+                tvNoOfFreeMonth.text =  subscriptionData?.noOfFreeMonths
+            }
+            else{
+                llFreeMonth.isVisible = false
+            }
+
             if(subscriptionData?.status==1){
                 tvSwitch.text = "Active"
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))

@@ -69,6 +69,7 @@ class HomeActivity : BaseActivity() {
         val bottomNavDestinations = setOf(
             R.id.home,
             R.id.productManagement,
+            R.id.event,
             R.id.planList,
             R.id.paymentManagement,
         )
@@ -166,7 +167,7 @@ class HomeActivity : BaseActivity() {
                         ProgressDialogUtils.getInstance().hideProgress()
                         controller.navigate(R.id.productManagement)
                     }
-                 //   2 -> controller.navigate(R.id.event)
+                    2 -> controller.navigate(R.id.event)
                     3 -> {
                         ProgressDialogUtils.getInstance().hideProgress()
                         controller.navigate(R.id.planList)
@@ -366,8 +367,8 @@ override fun onBackPressed() {
     override fun onResume() {
         super.onResume()
 
-        SharedPreference.get(this).badgeCount = 0
-        ShortcutBadger.removeCount(this)
+//        SharedPreference.get(this).badgeCount = 0
+//        ShortcutBadger.removeCount(this)
         //   NotificationManagerCompat.from(this).cancelAll()
     }
 

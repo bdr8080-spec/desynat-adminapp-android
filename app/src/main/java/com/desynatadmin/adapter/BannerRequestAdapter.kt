@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemBannerRequestBinding
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.utils.CommonMethod
@@ -66,13 +67,13 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
 
                         tvStatusValue.setTextColor(Color.parseColor("#68CA44"))
                         if (bannerRequestData.paymentStatus=="1"){
-                            tvStatusValue.text = "Active"
-                            tvPaymentStatusValue.text = "Paid"
+                            tvStatusValue.text = context.getString(R.string.active)
+                            tvPaymentStatusValue.text = context.getString(R.string.paid)
                             tvPaymentStatusValue.setTextColor(Color.parseColor("#68CA44"))
                         }
                         else{
-                            tvStatusValue.text = "Upcoming"
-                            tvPaymentStatusValue.text = "Pending"
+                            tvStatusValue.text = context.getString(R.string.upcoming)
+                            tvPaymentStatusValue.text =  context.getString(R.string.pending)
                             tvPaymentStatusValue.setTextColor(Color.parseColor("#D53B36"))
                         }
                     }
@@ -81,7 +82,7 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
                         tvStatusValue.isVisible = true
                         btnReject.isVisible = false
                         btnAccept.isVisible = false
-                        tvStatusValue.text = "Rejected"
+                        tvStatusValue.text =  context.getString(R.string.rejected)
                         tvStatusValue.setTextColor(Color.parseColor("#D53B36"))
 
                         tvReason.isVisible = true

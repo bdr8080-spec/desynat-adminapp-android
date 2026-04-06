@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAffiliateWithdrawalRequestBinding
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.utils.CommonMethod
@@ -35,7 +36,7 @@ class AffiliateWithdrawalRequestAdapter(
                 0 -> {
                     tvStatus.isVisible = false
                     tvStatusValue.isVisible = false
-                    tvStatusValue.text = "Pending"
+                    tvStatusValue.text =  context.getString(R.string.pending)
                     tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
                     btnApprove.isVisible = true
                     btnReject.isVisible = true
@@ -46,7 +47,7 @@ class AffiliateWithdrawalRequestAdapter(
                 1 -> {
                     tvStatus.isVisible = true
                     tvStatusValue.isVisible = true
-                    tvStatusValue.text = "Completed"
+                    tvStatusValue.text = context.getString(R.string.completed)
                     tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                     btnApprove.isVisible = false
                     btnReject.isVisible = false
@@ -60,7 +61,7 @@ class AffiliateWithdrawalRequestAdapter(
                 2 -> {
                     tvStatus.isVisible = true
                     tvStatusValue.isVisible = true
-                    tvStatusValue.text = "Rejected"
+                    tvStatusValue.text = context.getString(R.string.rejected)
                     tvStatusValue.setTextColor(Color.parseColor("#D91A1B"))
                     btnApprove.isVisible = false
                     btnReject.isVisible = false

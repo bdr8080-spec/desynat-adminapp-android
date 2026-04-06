@@ -477,9 +477,14 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 CommonMethod.showSuccessDialog(requireActivity(),response.message)
-                timeSlotList.removeAt(selectedTimeSlotPos)
-                timeSlotAdapter?.notifyItemRemoved(selectedPos)
-                timeSlotAdapter?.notifyItemRangeChanged(selectedPos, timeSlotList.size)
+                if (timeSlotList.isNotEmpty() && selectedTimeSlotPos in timeSlotList.indices) {
+                    timeSlotList.removeAt(selectedTimeSlotPos)
+                    timeSlotAdapter?.notifyItemRemoved(selectedTimeSlotPos)
+                    timeSlotAdapter?.notifyItemRangeChanged(selectedTimeSlotPos, timeSlotList.size)
+                } else {
+                   timeSlotAdapter?.notifyDataSetChanged()
+                }
+
                 checkTimeSlotData()
                 selectedTimeSlotPos = -1
                 isObserver = false

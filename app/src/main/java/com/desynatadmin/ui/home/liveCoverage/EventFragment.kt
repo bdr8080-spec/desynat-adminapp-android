@@ -1,9 +1,12 @@
 package com.desynatadmin.ui.home.liveCoverage
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
@@ -11,12 +14,16 @@ import com.desynatadmin.adapter.EventAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentEventBinding
+import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
+import kotlin.toString
+
 @AndroidEntryPoint
 class EventFragment : BaseFragment() {
     private var binding: FragmentEventBinding?=null
@@ -24,7 +31,7 @@ class EventFragment : BaseFragment() {
     private var isObserver = true
     private var isCountryObserver = true
     private var eventAdapter : EventAdapter?=null
-    private var eventList = ArrayList<String>()
+    private var eventList = ArrayList<GetLiveStreamingRoomResponse.Data>()
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var selectedCountryId : GetCountryResponse.Data?=null
 
@@ -46,9 +53,13 @@ class EventFragment : BaseFragment() {
     override fun initView() {
         binding?.apply {
 
+            eventList.clear()
             eventAdapter = EventAdapter(requireActivity(),eventList,object : EventAdapter.OnCLick{
                 override fun onClick(position: Int) {
-                    findNavController().navigate(R.id.action_eventFragment_to_liveEventFragment)
+                    val bundle = Bundle().apply {
+                        putString("eventData", Gson().toJson(eventList[position]))
+                    }
+                    findNavController().navigate(R.id.action_eventFragment_to_liveEventFragment,bundle)
                 }
 
             })
@@ -65,6 +76,9 @@ class EventFragment : BaseFragment() {
 
         }
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            checkData()
+        },500)
     }
 
     override fun initControl() {
@@ -77,6 +91,7 @@ class EventFragment : BaseFragment() {
                 ) { selectedCountry ->
                     etCountry.setText(selectedCountry.name)
                     selectedCountryId = selectedCountry
+                    getLiveStreaming()
                 }
             }
         }
@@ -99,11 +114,30 @@ class EventFragment : BaseFragment() {
                 isCountryObserver = false
             }
         }
+
+        viewModel.getLiveStreamingRoomResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                eventList.clear()
+                eventList.addAll(response.data)
+                eventAdapter?.notifyDataSetChanged()
+                checkData()
+
+                isObserver = false
+            }
+        }
     }
 
     private fun getCountry() {
         viewModel.getCountry()
         isCountryObserver = true
+    }
+
+    private fun getLiveStreaming(){
+        val map = HashMap<String, Any>()
+        map["country_id"] = selectedCountryId?.id.toString()
+        viewModel.getLiveStreamingRoom(map)
+        isObserver = true
     }
 
     fun setDefaultCountry(){
@@ -112,7 +146,12 @@ class EventFragment : BaseFragment() {
                 selectedCountryId = countryList[i]
                 selectedCountryId = countryList[i]
                 binding?.etCountry?.setText(countryList[i].name)
+                getLiveStreaming()
             }
         }
+    }
+
+    private fun  checkData(){
+        binding?.tvNoDataFound?.isVisible = eventList.isEmpty()
     }
 }

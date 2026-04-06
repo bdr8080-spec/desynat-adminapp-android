@@ -214,4 +214,7 @@ object Constants {
     const val GET_EXCHANGE_POLICY = "/api/admin/get_exchange_policy"
     const val CREATE_UPDATE_EXCHANGE_POLICY = "/api/admin/create_update_exchange_policy"
 
+    const val GET_LIVE_STREAMING_ROOM = "/api/admin/admin-all-live-request"
+    const val GET_AGORA_TOKEN = "/api/agora/token"
+
 }

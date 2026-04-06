@@ -120,6 +120,36 @@ class AddPlanFragment : BaseFragment() {
                 }
             }
 
+            radioGroupFreeMonth.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rbYesFreeMonth -> {
+                        tvNoOfFreeMonth.visibility = View.VISIBLE
+                        etNoOfFreeMonth.visibility = View.VISIBLE
+                    }
+                    R.id.rbNoFreeMonth -> {
+                        tvNoOfFreeMonth.visibility = View.GONE
+                        etNoOfFreeMonth.visibility = View.GONE
+                    }
+                }
+            }
+
+            radioGroupProductType.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rbDefined -> {
+                        tvNoOfProduct.visibility = View.VISIBLE
+                        etNoOfProducts.visibility = View.VISIBLE
+                        viewProduct.visibility = View.VISIBLE
+                        viewTvProduct.visibility = View.VISIBLE
+                    }
+                    R.id.rbUnlimited -> {
+                        tvNoOfProduct.visibility = View.GONE
+                        etNoOfProducts.visibility = View.GONE
+                        viewProduct.visibility = View.GONE
+                        viewTvProduct.visibility = View.GONE
+                    }
+                }
+            }
+
             etMonth.setOnClickListener {
                 val options = arrayOf("Month", "Year")
 
@@ -175,7 +205,7 @@ class AddPlanFragment : BaseFragment() {
                     durationType = durationType,
                     noOfHighlights = etNoOfHighlight.text?.trim().toString(),
                     noOfEmployee = etNoOfEmployee.text?.trim().toString(),
-                    noOfProducts = etNoOfProducts.text?.trim().toString(),
+                    noOfProducts =  if (rbDefined.isChecked) etNoOfProducts.text?.trim().toString() else null,
                     noOfVideos = etNoOfVideo.text?.trim().toString(),
                     planNameArabic = etArabicPlanName.text?.trim().toString(),
                     planNameEnglish = etEnglishPlanName.text?.trim().toString(),
@@ -184,7 +214,11 @@ class AddPlanFragment : BaseFragment() {
                     plan_id = planId,
                     discounted_price = etNewPrice.text?.trim().toString(),
                     new_duration = etNewDuration.text?.trim().toString(),
-                    new_duration_type = newDurationType
+                    new_duration_type = newDurationType,
+
+                    productType = if (rbUnlimited.isChecked) "1" else "0",
+                    isFreeMonths = if (rbYesFreeMonth.isChecked) "1" else "0",
+                    noOfFreeMonths = if (rbYesFreeMonth.isChecked) etNoOfFreeMonth.text?.trim().toString() else null,
                 )
             viewModel.updateSubscriptionPlan(request)
         }
@@ -197,13 +231,17 @@ class AddPlanFragment : BaseFragment() {
                     durationType = durationType,
                     noOfHighlights = etNoOfHighlight.text?.trim().toString(),
                     noOfEmployee = etNoOfEmployee.text?.trim().toString(),
-                    noOfProducts = etNoOfProducts.text?.trim().toString(),
+                    noOfProducts =  if (rbDefined.isChecked) etNoOfProducts.text?.trim().toString() else null,
                     noOfVideos = etNoOfVideo.text?.trim().toString(),
                     planNameArabic = etArabicPlanName.text?.trim().toString(),
                     planNameEnglish = etEnglishPlanName.text?.trim().toString(),
                     price = etPrice.text?.trim().toString(),
                     stories = if (rbOpen.isChecked) "1" else "0",
-                    plan_id = planId
+                    plan_id = planId,
+
+                    productType = if (rbUnlimited.isChecked) "1" else "0",
+                    isFreeMonths = if (rbYesFreeMonth.isChecked) "1" else "0",
+                    noOfFreeMonths = if (rbYesFreeMonth.isChecked) etNoOfFreeMonth.text?.trim().toString() else null,
                 )
             viewModel.addSubscriptionPlan(request)
         }
@@ -254,7 +292,6 @@ class AddPlanFragment : BaseFragment() {
                 etNewDuration.setText(subscriptionData?.newDuration.toString())
             }
             etNoOfVideo.setText(subscriptionData?.noOfVideos.toString())
-            etNoOfProducts.setText(subscriptionData?.noOfProducts.toString())
             etNoOfHighlight.setText(subscriptionData?.noOfHighlights.toString())
             etNoOfEmployee.setText(subscriptionData?.noOfEmployee.toString())
 
@@ -283,6 +320,27 @@ class AddPlanFragment : BaseFragment() {
                 "1" -> etNewMonth.setText("Month")
                 "2" -> etNewMonth.setText("Year")
                 else -> etNewMonth.setText("")
+            }
+
+            rbUnlimited.isChecked = subscriptionData?.productType==1
+            rbDefined.isChecked = subscriptionData?.productType==0
+            if(subscriptionData?.productType==0){
+                etNoOfProducts.isVisible = true
+                tvNoOfProduct.isVisible = true
+                viewProduct.isVisible = true
+                viewTvProduct.isVisible = true
+
+                etNoOfProducts.setText(subscriptionData?.noOfProducts.toString())
+
+            }
+            rbYesFreeMonth.isChecked = subscriptionData?.isFreeMonths==1
+            rbNoFreeMonth.isChecked = subscriptionData?.isFreeMonths==0
+            if(subscriptionData?.isFreeMonths==1){
+                etNoOfFreeMonth.isVisible = true
+                tvNoOfFreeMonth.isVisible = true
+
+                etNoOfFreeMonth.setText(subscriptionData?.noOfFreeMonths.toString())
+
             }
         }
     }
@@ -317,11 +375,17 @@ class AddPlanFragment : BaseFragment() {
                     return false
                 }
                 isInvalid(etNoOfVideo, "No. of Videos")-> return false
-                etNoOfProducts.text.isNullOrBlank() -> {
+
+                !rbUnlimited.isChecked && !rbDefined.isChecked -> {
+                    showToast("Please select product type option (Yes/No)")
+                    return false
+                }
+                rbDefined.isChecked && etNoOfProducts.text.isNullOrBlank() -> {
                     showToast("Please enter number of products")
                     return false
                 }
-                isInvalid(etNoOfProducts, "No. of Products")-> return false
+
+              //  isInvalid(etNoOfProducts, "No. of Products")-> return false
                 etNoOfHighlight.text.isNullOrBlank() -> {
                     showToast("Please enter number of highlights")
                     return false
@@ -348,7 +412,7 @@ class AddPlanFragment : BaseFragment() {
                     showToast("Please enter new price")
                     return false
                 }*/
-                isInvalid(etPrice, "Price")-> return false
+              //  isInvalid(etPrice, "Price")-> return false
                 !rbYes.isChecked && !rbNo.isChecked -> {
                     showToast("Please select commission option (Yes/No)")
                     return false
@@ -359,6 +423,15 @@ class AddPlanFragment : BaseFragment() {
                 }
                 rbYes.isChecked && etCommission.text.toString().toDoubleOrNull()?.let { it < 0 || it > 100 } == true -> {
                     showToast("Commission should be between 0 and 100")
+                    return false
+                }
+
+                !rbYesFreeMonth.isChecked && !rbNoFreeMonth.isChecked -> {
+                    showToast("Please select free month option (Yes/No)")
+                    return false
+                }
+                rbYesFreeMonth.isChecked && etNoOfFreeMonth.text.isNullOrBlank() -> {
+                    showToast("Please enter number of free month")
                     return false
                 }
             }

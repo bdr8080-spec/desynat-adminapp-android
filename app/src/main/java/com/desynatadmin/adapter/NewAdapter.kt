@@ -1,6 +1,5 @@
 package com.desynatadmin.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +29,7 @@ class NewAdapter(var list: List<NewSellerResponse.Data.Data>, val click: OnClick
         holder.binding.apply {
             val item = list[position]
             tvName.text = item.first_name
-            tvLocation.text = item.store_info.address_line1
+            tvLocation.text = item.store_info.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic)
                 .transform(CircleCrop())

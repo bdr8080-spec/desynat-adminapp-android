@@ -119,15 +119,15 @@ class SignInFragment : BaseFragment() {
 
     private fun validation():Boolean{
         if (binding?.etEmail?.text?.toString()?.isBlank() == true ) {
-            showToast("Please Enter Email Address")
+            showToast(getString(R.string.please_enter_email_address))
             return false
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(binding?.etEmail?.text.toString()).matches()) {
-            showToast("Please Enter Valid Email Address")
+            showToast(getString(R.string.please_enter_valid_email_address))
             return false
         }
         else if (binding?.etPassword?.text?.toString()?.isBlank() == true ) {
-            showToast("Please Enter Password")
+            showToast(getString(R.string.please_enter_password))
             return false
         }
         return true

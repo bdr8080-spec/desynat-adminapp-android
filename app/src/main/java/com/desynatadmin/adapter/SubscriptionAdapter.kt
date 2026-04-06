@@ -68,7 +68,8 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
 
             subscriptionData.apply {
                 if (noOfProducts != 0)
-                    featureList.add(FeatureList("Number of Products: ", noOfProducts))
+                    featureList.add(FeatureList("${context.getString(R.string.number_of_products)}: ", noOfProducts))
+                else  featureList.add(FeatureList("${context.getString(R.string.number_of_products)}: ", 0))
 
                 if (noOfVideos != 0)
                     featureList.add(FeatureList("Number of Videos (Reels): ", noOfVideos))
@@ -96,6 +97,10 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
                 } else {
                     featureList.add(FeatureList("Commission: ", 0))
                 }
+
+                if (noOfFreeMonths != null&&noOfFreeMonths != "null"&&noOfFreeMonths != "")
+                    featureList.add(FeatureList("Number of Free Month: ", noOfFreeMonths.toIntOrNull()))
+
             }
 
             rvFeature.apply {
@@ -111,6 +116,9 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
                     })
                 setHasFixedSize(true)
                 isNestedScrollingEnabled = false
+                isClickable = false
+                isFocusable = false
+                isFocusableInTouchMode = false
 
             }
             root.setOnClickListener {

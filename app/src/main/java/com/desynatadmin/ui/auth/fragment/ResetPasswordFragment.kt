@@ -40,7 +40,7 @@ class ResetPasswordFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "Reset Password"
+            toolbar.tvToolbar.text = getString(R.string.reset_password)
             CommonMethod.removeAllTextSpaces(etPassword)
             CommonMethod.removeAllTextSpaces(etConfirmPassword)
 
@@ -106,7 +106,7 @@ class ResetPasswordFragment : BaseFragment() {
         val confirmPassword = binding?.etConfirmPassword?.text.toString().trim()
 
         if (password.isEmpty()) {
-            showToast("Please Enter New Password")
+            showToast(getString(R.string.please_enter_new_password))
             return false
         }
        /* else if (!CommonMethod.isValidPassword(password)) {
@@ -114,11 +114,11 @@ class ResetPasswordFragment : BaseFragment() {
             return false
         }*/
         else if (confirmPassword.isEmpty() ) {
-            showToast("Please Re-Enter Confirm Password")
+            showToast(getString(R.string.please_re_enter_confirm_password))
             return false
         }
         else if (password!=confirmPassword) {
-            showToast("Password and Confirm Password didn't match")
+            showToast(getString(R.string.password_and_confirm_password_didn_t_match))
             return false
         }
         return true

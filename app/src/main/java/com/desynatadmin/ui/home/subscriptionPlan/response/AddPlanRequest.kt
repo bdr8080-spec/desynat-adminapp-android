@@ -18,8 +18,8 @@ data class AddPlanRequest(
     val noOfHighlights: String,
     @SerializedName("no_of_employee")
     val noOfEmployee: String,
-    @SerializedName("no_of_products")
-    val noOfProducts: String,
+    @SerializedName("no_of_products")//required if product_type is 0
+    val noOfProducts: String? = null,
     @SerializedName("no_of_videos")
     val noOfVideos: String,
     @SerializedName("plan_name_arabic")
@@ -37,5 +37,12 @@ data class AddPlanRequest(
     @SerializedName("new_duration")
     val new_duration: String?=null,
     @SerializedName("new_duration_type")
-    val new_duration_type: String?=null
+    val new_duration_type: String? = null,
+
+    @SerializedName("product_type")
+    val productType: String? = null,//0-defined,1-unlimited
+    @SerializedName("is_free_months")
+    val isFreeMonths: String? = null, //0-no,1-yes
+    @SerializedName("no_of_free_months")
+    val noOfFreeMonths: String? = null //if is_free_month is 1
 )

@@ -1,16 +1,122 @@
 <resources>
     <string name="app_name">Desynat Admin</string>
     <string name="map_key">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
+    <string name="agora_app_id">564c1a00b81c4d1c91d0a3a22db4a8bd</string>
+    <string name="agora_token">007eJxTYDhyJbPbYHp1B9M0qyLnXaEaa4xfOCnYb2J5wP5vkbh5fJICg6mZSbJhooFBkoVhskmKYbKlYYpBonGikVFKkkmiRVLK/5NnMhsCGRk8db8xMzJAIIjPx5CTWZbqnJGYl5eaY2hkzMAAADQZIig=</string>
+    <string name="google_translator_api_key">AIzaSyB4mtISC8aJQl8DkwEd8DAIpBvuHCleO7s</string>
+
+    //language
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
-    <string name="resend_otp">Resend OTP</string>
-    <string name="password_reset_successfully">Password Reset successfully !</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="please_select_language">Please select language</string>
+    <string name="select_language">Select language</string>
+    <string name="choose_the_language_and_continue_to_get_the_experience_the_app_in_your_preferred_language">Choose the language and continue to get the experience the app in your preferred language.</string>
 
     <string name="channel">desynat notification</string>
     <string name="channel_description">desynat notification for admin alert</string>
     <string name="view_more"><u>View More</u></string>
     <string name="view_less"><u>View Less</u></string>
+
+    //signup
+    <string name="welcome_back">Welcome back !</string>
+    <string name="sign_in">Sign In</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="email_address">Email Address</string>
+    <string name="enter_password">Enter password</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="login">Login</string>
+    <string name="please_enter_email_address">Please Enter Email Address</string>
+    <string name="please_enter_valid_email_address">Please Enter Valid Email Address</string>
+    <string name="please_enter_password">Please Enter Password</string>
+
+    //otp
+    <string name="resend_otp">Resend OTP</string>
+    <string name="a_verification_code_has_been_sent_to">A verification code has been sent to</string>
+    <string name="resend_otp_in">Resend OTP in</string>
+    <string name="verify">Verify</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="please_enter_otp">Please enter OTP</string>
+    <string name="please_enter_a_valid_6_digit_otp">Please enter a valid 6-digit OTP</string>
+
+    //forgot password
+    <string name="forgot_password">Forgot Password</string>
+    <string name="please_select_an_option_to_get_verified_then_we_ll_send_an_otp_to_verify_that_it_s_you">Please select an option to get verified then we’ll send an OTP to verify that it’s you</string>
+    <string name="enter_registered_email_address">Enter Registered Email Address</string>
+    <string name="continue_text">Continue</string>
+    <string name="otp_sent_to_your_email_address_successfully">OTP sent to your email address successfully</string>
+
+    // reset password
+    <string name="great_now_you_can_create_your_new_password">Great! Now you can create your new password</string>
+    <string name="your_password_must_be_at_least_8_characters_and_should_include_a_combination_of_numbers_letters_and_special_characters">Your password must be at least 8 characters and should include a combination of numbers,letters and special characters.</string>
+    <string name="create_new_password">Create New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="done">Done</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="please_enter_new_password">Please Enter New Password</string>
+    <string name="please_re_enter_confirm_password">Please Re-Enter Confirm Password</string>
+    <string name="password_and_confirm_password_didn_t_match">"Password and Confirm Password didn't match"</string>
+    <string name="password_reset_successfully">Password Reset successfully !</string>
+
+  //home
+    <string name="hi">Hi %1$s</string>
+    <string name="welcome">Welcome !</string>
+    <string name="choose_country">Choose Country</string>
+    <string name="choose_date">Choose date</string>
+    <string name="today">Today</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="total_revenue_generated">Total Revenue Generated</string>
+    <string name="by_orders">By Orders</string>
+    <string name="by_subscription_plan">By Subscription Plan</string>
+    <string name="by_affiliate_orders">By Affiliate Orders</string>
+    <string name="by_banner">By Banner</string>
+    <string name="new_text">New</string>
+    <string name="resolved">Resolved</string>
+    <string name="un_resolved">Un-resolved</string>
+    <string name="no_of_user_visit_app">No. of User Visit App</string>
+    <string name="no_of_user_visit_website">No. of User Visit Website</string>
+    <string name="export">Export</string>
+
+    //plans
+    <string name="plans">Plans</string>
+    <string name="select_country">Select Country</string>
+    <string name="number_of_products">"Number of Products"</string>
+
+    //chat
+    <string name="chats">Chats</string>
+    <string name="type_here">Type Here...</string>
+    <string name="customer">Customer</string>
+    <string name="seller">Seller</string>
+    <string name="driver">Driver</string>
+    <string name="search">Search</string>
+
+    //ticket management
+    <string name="ticket_management">Ticket Management</string>
+    <string name="new_text_caps">New</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="past">Past</string>
+    <string name="details">Details</string>
+    <string name="in_progress">In progress</string>
+    <string name="request_by">Request By</string>
+    <string name="ticket_id">Ticket Id</string>
+    <string name="submitted_by">Submitted By</string>
+    <string name="ticket_type">Ticket Type</string>
+    <string name="raised_on">Raised On</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="attachments">Attachments</string>
+    <string name="status">Status</string>
+    <string name="update_status">Update Status</string>
+
+    //status
+    <string name="pending">Pending</string>
+    <string name="completed">Completed</string>
+    <string name="rejected">Rejected</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="paid">Paid</string>
+    <string name="active">Active</string>
+
+
+
 </resources>

@@ -47,7 +47,7 @@ class OtpVerificationFragment : BaseFragment() {
         adminId = arguments?.getString("adminId").toString()
 
         binding?.apply {
-            toolbar.tvToolbar.text = "OTP Verification"
+            toolbar.tvToolbar.text = getString(R.string.otp_verification)
             tvEmail.text = email
         }
     }
@@ -67,10 +67,10 @@ class OtpVerificationFragment : BaseFragment() {
 
                 when {
                     otp.isEmpty() -> {
-                        showToast("Please enter OTP")
+                        showToast(getString(R.string.please_enter_otp))
                     }
                     otp.length < 6 -> {
-                        showToast("Please enter a valid 6-digit OTP")
+                        showToast(getString(R.string.please_enter_a_valid_6_digit_otp))
                     }
                     else -> {
                         verifyOtp()
@@ -125,7 +125,7 @@ class OtpVerificationFragment : BaseFragment() {
         viewModel.resendOtpResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast("OTP sent to your email address successfully")
+                showToast(getString(R.string.otp_sent_to_your_email_address_successfully))
                 response?.let {
                     startTimer()
 
