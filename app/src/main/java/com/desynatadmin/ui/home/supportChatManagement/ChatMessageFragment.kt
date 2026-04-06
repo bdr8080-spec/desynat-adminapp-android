@@ -117,7 +117,7 @@ class ChatMessageFragment : BaseFragment() {
                     chatMessageAdapter?.notifyItemInserted(chatList.size - 1)
                     rvChat.scrollToPosition(chatList.size - 1)
 
-                    if (message.by.toSafeString() != "user" && message.read.toSafeInt() == 0 && message.id.toSafeString() != null && message.id.toSafeString() != "") {
+                    if (message.by.toSafeString() != "admin" && message.read.toSafeInt() == 0 && message.id.toSafeString() != null && message.id.toSafeString() != "") {
                         markMessageRead(uniqueId, message.id.toSafeString())
                     }
                 },
@@ -309,7 +309,7 @@ class ChatMessageFragment : BaseFragment() {
 
             } catch (e: Exception) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                Log.e("VISION_ERROR", e.message ?: "Error")
+                Log.e("chat_response", e.message ?: "Error")
             }
         }
     }
@@ -324,7 +324,7 @@ class ChatMessageFragment : BaseFragment() {
 
         val msg = SendMessageRequest(
             id = messageId,
-            by = "user",
+            by = "admin",
             message = message,
             messageAr = messageAr,
             type = type,

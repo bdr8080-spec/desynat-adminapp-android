@@ -672,6 +672,36 @@ object CommonMethod {
         }
     }
 
+    fun getVideoThumbnailFile(context: Context, uri: Uri): File? {
+        val retriever = MediaMetadataRetriever()
+
+        return try {
+            retriever.setDataSource(context, uri)
+
+            val bitmap = retriever.getFrameAtTime(0) // first frame
+
+            bitmap?.let {
+                val file = File(
+                    context.cacheDir,
+                    "thumb_${System.currentTimeMillis()}.jpg"
+                )
+                val fos = file.outputStream()
+                it.compress(Bitmap.CompressFormat.JPEG, 80, fos)
+                fos.flush()
+                fos.close()
+
+                file
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            retriever.release()
+        }
+    }
+
+
     fun imagePreviewDialog(context: Context,image:String,onDismiss: (() -> Unit)? = null) {
         val dialog = Dialog(context, R.style.CustomDialog)
         val dialogBinding = ImagePreviewDialogBinding.inflate(LayoutInflater.from(context))

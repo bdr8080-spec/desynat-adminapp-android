@@ -50,7 +50,7 @@ class AddStoryFragment : BaseFragment() {
 
     private lateinit var storyMediaPicker: StoryMediaPicker
     private var mediaType = ""
-    private var galleryAdapter: GalleryAdapter?=null
+    private var galleryAdapter: GalleryAdapter? = null
     private val imageList = mutableListOf<Uri>()
     private var offset = 0
     private var isLoading = false
@@ -85,6 +85,12 @@ class AddStoryFragment : BaseFragment() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             storyMediaPicker.onVideoGalleryResult(uri)
         }
+
+    private var thumbnailFile: File? = null
+    private var uploadThumbnail = ""
+
+    private var isThumbnailUploading = false
+    private var isVideoUploading = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -171,7 +177,7 @@ class AddStoryFragment : BaseFragment() {
 
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            if (isObserver||isImageObserver) {
+            if (isObserver || isImageObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
 
                 isImageObserver = false
@@ -179,20 +185,60 @@ class AddStoryFragment : BaseFragment() {
             }
         }
 
+        /*  viewModel.uploadVideoImageResult.observe(viewLifecycleOwner) { response ->
+              if (isImageObserver) {
+                  response?.let {
+                      addStory(response.data.url)
+                      compressedVideoFile?.delete()
+                  }
+                  isImageObserver = false
+              }
+          }*/
+
         viewModel.uploadVideoImageResult.observe(viewLifecycleOwner) { response ->
             if (isImageObserver) {
                 response?.let {
-                    addStory(response.data.url)
-                    compressedVideoFile?.delete()
+/*
+ addStory(response.data.url)
+                     compressedVideoFile?.delete()
+
+*/
+
+
+                    val url = response.data.url
+
+                    when {
+                        isThumbnailUploading -> {
+                            uploadThumbnail = url
+                            isThumbnailUploading = false
+
+                            isVideoUploading = true
+                            uploadCompressedVideo(compressedVideoFile)
+                        }
+
+                        isVideoUploading -> {
+                            isVideoUploading = false
+
+                            addStory(url)
+                            compressedVideoFile?.delete()
+                            isImageObserver = false
+                        }
+
+                        else -> {
+                            addStory(url)
+                            isImageObserver = false// image case
+                        }
+                    }
                 }
-                isImageObserver = false
+//                isImageObserver = false
             }
         }
+
 
         viewModel.addStoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Story added successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(), "Story added successfully!") {
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -203,6 +249,9 @@ class AddStoryFragment : BaseFragment() {
     fun addStory(url: String) {
         val map = HashMap<String, Any>()
         map["file"] = url
+        if (mediaType != "image" && uploadThumbnail != "") {
+            map["thumbnail"] = uploadThumbnail
+        }
         viewModel.addStory(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -221,10 +270,12 @@ class AddStoryFragment : BaseFragment() {
         isImageObserver = true
     }
 
-    private fun uploadCompressedVideo(file: File) {
-        if (!file.exists()) {
-            showToast("Compressed file not found")
-            return
+    private fun uploadCompressedVideo(file: File?) {
+        file?.exists()?.let {
+            if (!it) {
+                showToast("Compressed file not found")
+                return
+            }
         }
 
         viewModel.uploadVideoImage(file)
@@ -235,7 +286,8 @@ class AddStoryFragment : BaseFragment() {
 
     private fun previewDialog(uri: Uri) {
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
-        val dialogBinding = UploadStoryPreviewDialogBinding.inflate(LayoutInflater.from(requireActivity()))
+        val dialogBinding =
+            UploadStoryPreviewDialogBinding.inflate(LayoutInflater.from(requireActivity()))
         dialogBinding.root.let { dialog.setContentView(it) }
 
         val window: Window = dialog.window!!
@@ -273,15 +325,30 @@ class AddStoryFragment : BaseFragment() {
             tvCancel.setOnClickListener {
                 dialog.dismiss()
             }
-             tvUpload.setOnClickListener{
-                 if (mediaType == "video") {
-                     compressAndUploadVideo(uri)
-                 } else {
-                     uploadFile(uri)
-                 }
-                 dialog.dismiss()
-             }
+            /*   tvUpload.setOnClickListener{
+                   if (mediaType == "video") {
+                       compressAndUploadVideo(uri)
+                   } else {
+                       uploadFile(uri)
+                   }
+                   dialog.dismiss()
+               }*/
 
+            tvUpload.setOnClickListener {
+                if (mediaType == "image") {
+                    uploadFile(uri)
+                } else {
+
+                    if (!isVideoWithinLimit(uri, 30)) {
+                        showToast("Video must not be more than 30 seconds")
+                        return@setOnClickListener
+                    }
+                    thumbnailFile = CommonMethod.getVideoThumbnailFile(requireActivity(), uri)
+                    compressAndUploadVideo(uri)
+                }
+
+                dialog.dismiss()
+            }
         }
 
         dialog.setOnDismissListener {
@@ -345,8 +412,10 @@ class AddStoryFragment : BaseFragment() {
                 val uri = when (type) {
                     MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE ->
                         ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+
                     MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO ->
                         ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
+
                     else -> null
                 }
                 uri?.let {
@@ -413,7 +482,8 @@ class AddStoryFragment : BaseFragment() {
         } finally {
             try {
                 retriever.release()
-            } catch (e: Exception) { }
+            } catch (e: Exception) {
+            }
         }
     }
 
@@ -445,12 +515,26 @@ class AddStoryFragment : BaseFragment() {
                 override fun onTranscodeProgress(progress: Double) {
                 }
 
+                /*  override fun onTranscodeCompleted(successCode: Int) {
+                      requireActivity().runOnUiThread {
+                          ProgressDialogUtils.getInstance().hideProgress()
+
+                          compressedVideoFile = outputFile
+                          uploadCompressedVideo(outputFile)
+                      }
+                  }
+  */
                 override fun onTranscodeCompleted(successCode: Int) {
                     requireActivity().runOnUiThread {
                         ProgressDialogUtils.getInstance().hideProgress()
 
                         compressedVideoFile = outputFile
-                        uploadCompressedVideo(outputFile)
+
+                        isThumbnailUploading = true
+                        uploadThumbnailApi(thumbnailFile)
+
+                        /*   compressedVideoFile = outputFile
+                           uploadCompressedVideo(outputFile)*/
                     }
                 }
 
@@ -470,6 +554,16 @@ class AddStoryFragment : BaseFragment() {
                 }
             })
             .transcode()
+    }
+
+    private fun uploadThumbnailApi(file: File?) {
+        file?.exists()?.let {
+            if (!it) {
+                showToast("Thumbnail not found")
+                return
+            }
+        }
+        viewModel.uploadVideoImage(file)
     }
 
 

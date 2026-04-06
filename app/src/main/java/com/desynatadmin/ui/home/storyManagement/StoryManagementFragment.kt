@@ -26,6 +26,8 @@ import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.text.compareTo
+import kotlin.text.toFloat
 
 @AndroidEntryPoint
 class StoryManagementFragment : BaseFragment() {
@@ -252,6 +254,28 @@ class StoryManagementFragment : BaseFragment() {
                 videoView.requestFocus()
 
                 videoView.setOnPreparedListener { mp ->
+
+                    val videoWidth = mp.videoWidth
+                    val videoHeight = mp.videoHeight
+
+                    val viewWidth = videoView.width
+                    val viewHeight = videoView.height
+
+                    val videoRatio = videoWidth.toFloat() / videoHeight
+                    val viewRatio = viewWidth.toFloat() / viewHeight
+
+                    val layoutParams = videoView.layoutParams
+
+                    if (videoRatio > viewRatio) {
+                        layoutParams.height = viewHeight
+                        layoutParams.width = (viewHeight * videoRatio).toInt()
+                    } else {
+                        layoutParams.width = viewWidth
+                        layoutParams.height = (viewWidth / videoRatio).toInt()
+                    }
+
+                    videoView.layoutParams = layoutParams
+
                     progressBar.isVisible = false
                     mp.isLooping = false
                     videoView.start()

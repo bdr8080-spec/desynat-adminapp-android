@@ -40,7 +40,7 @@ class ChatMessageAdapter(var context:Context, var chatList: ArrayList<ChatMessag
             val arText = chatData.messageAr.toSafeString()
             val enText = chatData.message.toSafeString()
 
-            if (chatData.by.toSafeString() == "user") {
+            if (chatData.by.toSafeString() == "admin") {
                 relMy.isVisible = true
                 relOther.isVisible = false
 
