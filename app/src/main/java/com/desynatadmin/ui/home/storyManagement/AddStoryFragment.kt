@@ -55,6 +55,7 @@ class AddStoryFragment : BaseFragment() {
     private var offset = 0
     private var isLoading = false
     private val PAGE_SIZE = 40
+    private var videoUri: Uri?=null
 
     private var compressedVideoFile: File? = null
 
@@ -120,13 +121,8 @@ class AddStoryFragment : BaseFragment() {
                         previewDialog(media.uri)
                     }
                     is GalleryMedia.Video -> {
-                        if(isVideoWithinLimit(media.uri,30)) {
-                            mediaType = "video"
-                            previewDialog(media.uri)
-                        }
-                        else{
-                            showToast("Please select a video of 30 seconds or less.")
-                        }
+                        mediaType = "video"
+                        previewDialog(media.uri)
                     }
                 }
             }
@@ -147,12 +143,6 @@ class AddStoryFragment : BaseFragment() {
             ) { uri, type ->
                 uri?.let {
                     mediaType = type
-//                    if (type == "image") {
-//                        binding?.ivAddStory?.setImageURI(it)
-//                    } else {
-//                        binding?.ivAddStory?.setImageResource(R.drawable.ic_placeholder)
-//                    }
-
                     previewDialog(it)
                 }
             }
@@ -185,25 +175,9 @@ class AddStoryFragment : BaseFragment() {
             }
         }
 
-        /*  viewModel.uploadVideoImageResult.observe(viewLifecycleOwner) { response ->
-              if (isImageObserver) {
-                  response?.let {
-                      addStory(response.data.url)
-                      compressedVideoFile?.delete()
-                  }
-                  isImageObserver = false
-              }
-          }*/
-
         viewModel.uploadVideoImageResult.observe(viewLifecycleOwner) { response ->
             if (isImageObserver) {
                 response?.let {
-/*
- addStory(response.data.url)
-                     compressedVideoFile?.delete()
-
-*/
-
 
                     val url = response.data.url
 
@@ -213,7 +187,8 @@ class AddStoryFragment : BaseFragment() {
                             isThumbnailUploading = false
 
                             isVideoUploading = true
-                            uploadCompressedVideo(compressedVideoFile)
+                            val file = videoUri?.let { uri -> CommonMethod.uriToFileForStory(requireActivity(), uri) }
+                            uploadCompressedVideo(file)
                         }
 
                         isVideoUploading -> {
@@ -230,7 +205,6 @@ class AddStoryFragment : BaseFragment() {
                         }
                     }
                 }
-//                isImageObserver = false
             }
         }
 
@@ -273,7 +247,7 @@ class AddStoryFragment : BaseFragment() {
     private fun uploadCompressedVideo(file: File?) {
         file?.exists()?.let {
             if (!it) {
-                showToast("Compressed file not found")
+                showToast("Video not found")
                 return
             }
         }
@@ -325,29 +299,24 @@ class AddStoryFragment : BaseFragment() {
             tvCancel.setOnClickListener {
                 dialog.dismiss()
             }
-            /*   tvUpload.setOnClickListener{
-                   if (mediaType == "video") {
-                       compressAndUploadVideo(uri)
-                   } else {
-                       uploadFile(uri)
-                   }
-                   dialog.dismiss()
-               }*/
-
             tvUpload.setOnClickListener {
-                if (mediaType == "image") {
-                    uploadFile(uri)
-                } else {
-
-                    if (!isVideoWithinLimit(uri, 30)) {
-                        showToast("Video must not be more than 30 seconds")
-                        return@setOnClickListener
+                if (uri!= null) {
+                    if (mediaType == "image") {
+                        uploadFile(uri)
+                    } else {
+                      /*  if (!isVideoWithinLimit(uri, 30)) {
+                            showToast("Video must not be more than 30 seconds")
+                            return@setOnClickListener
+                        }*/
+                        thumbnailFile = CommonMethod.getVideoThumbnailFile(requireActivity(), uri)
+                        isThumbnailUploading = true
+                        videoUri = uri
+                        uploadThumbnailApi(thumbnailFile)
+                     //   compressAndUploadVideo(uri)
                     }
-                    thumbnailFile = CommonMethod.getVideoThumbnailFile(requireActivity(), uri)
-                    compressAndUploadVideo(uri)
-                }
 
-                dialog.dismiss()
+                    dialog.dismiss()
+                }
             }
         }
 
@@ -500,14 +469,14 @@ class AddStoryFragment : BaseFragment() {
             .addDataSource(requireContext(), inputUri)
             .setVideoTrackStrategy(
                 DefaultVideoStrategy.Builder()
-                    .addResizer(AtMostResizer(1280)) // 720p
-                    .bitRate(1_500_000)              // 1.5 Mbps
+
+                    .bitRate(2_500_000)
                     .frameRate(30)
                     .build()
             )
             .setAudioTrackStrategy(
                 DefaultAudioStrategy.Builder()
-                    .bitRate(96_000)
+                    .bitRate(128_000)
                     .build()
             )
             .setListener(object : TranscoderListener {

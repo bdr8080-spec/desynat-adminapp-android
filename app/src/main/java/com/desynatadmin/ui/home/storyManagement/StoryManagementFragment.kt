@@ -65,6 +65,7 @@ class StoryManagementFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
             toolbar.tvToolbar.text = "Story Management"
+            currentPage = 1
 
             storyAdapter = StoryAdapter(requireActivity(),storyList,object :StoryAdapter.OnClick{
                 override fun onClick(position: Int, type: Int) {
@@ -99,9 +100,9 @@ class StoryManagementFragment : BaseFragment() {
                 if (lastChild != null) {
                     val diff = lastChild.bottom - (nestedScrollView.height + scrollY)
                     if (diff == 0 && scrollY > oldScrollY) {
-                        if(totalPage==0)
+                        if(totalItem==0)
                             return@setOnScrollChangeListener
-                        if (!isObserver && currentPage < lastPage) {
+                        if (!isObserver && !pagination && currentPage < lastPage) {
                             pagination = true
                             isFromSwipe = false
                             currentPage += 1
@@ -163,25 +164,24 @@ class StoryManagementFragment : BaseFragment() {
                 lastPage = response.data.lastPage
 
                 val oldSize = storyList.size
-                if (!pagination){
-                    storyList.clear()
-                }
                 val newItems = response.data.data ?: emptyList()
 
-                storyList.addAll(newItems)
+//                storyList.addAll(newItems)
+//
+//                storyAdapter?.notifyDataSetChanged()
 
-                storyAdapter?.notifyDataSetChanged()
+                if (pagination){
 
-//                if (pagination){
-//                    response.data.data?.size?.let {
-//                        storyAdapter?.notifyItemRangeInserted(oldSize,
-//                            it
-//                        )
-//                    }
-//                }
-//                else{
-//                    storyAdapter?.notifyDataSetChanged()
-//                }
+                    storyList.addAll(newItems)
+
+                  //  storyAdapter?.notifyItemRangeInserted(oldSize, newItems.size)
+                    storyAdapter?.notifyItemRangeInserted(oldSize + 1, newItems.size)
+                }
+                else{
+                    storyList.clear()
+                    storyList.addAll(newItems)
+                    storyAdapter?.notifyDataSetChanged()
+                }
 
                 pagination = false
                 isFromSwipe = false
@@ -193,9 +193,16 @@ class StoryManagementFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 CommonMethod.showSuccessDialog(requireContext(), "Story deleted successfully!"){
-                    storyList.removeAt(selectedPos)
+                   /* storyList.removeAt(selectedPos)
                     storyAdapter?.notifyItemRemoved(selectedPos + 1)
                     storyAdapter?.notifyItemRangeChanged(selectedPos + 1, storyList.size)
+*/
+                    val adapterPosition = selectedPos + 1
+
+                    storyList.removeAt(selectedPos)
+                    storyAdapter?.notifyItemRemoved(adapterPosition)
+                    storyAdapter?.notifyItemRangeChanged(adapterPosition, storyList.size - selectedPos)
+
                     selectedPos = -1
                 }
                 isObserver = false

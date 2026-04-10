@@ -1,18 +1,23 @@
 package com.desynatadmin.ui.home.liveCoverage
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentLiveEventBinding
 import com.desynatadmin.ui.home.liveCoverage.agora.AgoraManager
 import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -23,6 +28,7 @@ import io.agora.rtc2.Constants
 import io.agora.rtc2.IRtcEngineEventHandler
 import io.agora.rtc2.RtcEngine
 import io.agora.rtc2.video.VideoCanvas
+import kotlinx.coroutines.launch
 import kotlin.getValue
 import kotlin.text.toIntOrNull
 import kotlin.toString
@@ -37,8 +43,17 @@ class LiveEventFragment : BaseFragment() {
     private var channelId = ""
     private var token = ""
     private var appId = ""
+    private var basicAuth = ""
     private var uidValue = 0
     private var isMuted = false
+
+    private val userCountHandler = Handler(Looper.getMainLooper())
+    private val userCountRunnable = object : Runnable {
+        override fun run() {
+            getLiveUserCount()
+            userCountHandler.postDelayed(this, 5000)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,6 +70,7 @@ class LiveEventFragment : BaseFragment() {
     }
 
     override fun initView() {
+        convertBase64()
         val itemJson = arguments?.getString("eventData")
         if (!itemJson.isNullOrEmpty()) {
             eventData = Gson().fromJson(itemJson, GetLiveStreamingRoomResponse.Data::class.java)
@@ -112,7 +128,7 @@ class LiveEventFragment : BaseFragment() {
     private fun getAgoraToken(id: String){
         val map = HashMap<String,Any>()
         map["id"] = id
-        map["role"] = 2
+        map["role"] = 1
         viewModel.getAgoraToken(SharedPreference.get(requireActivity()).accessToken,map)
         isTokenObserver = true
     }
@@ -208,8 +224,11 @@ class LiveEventFragment : BaseFragment() {
                 AgoraManager.getEngine()?.setupRemoteVideo(
                     VideoCanvas(null, VideoCanvas.RENDER_MODE_HIDDEN, uid)
                 )
+                CommonMethod.showSuccessDialog(requireActivity(),"Host left"){
+                    findNavController().popBackStack()
+                }
 
-                showNoDataUI(true)
+           //     showNoDataUI(true)
             }
 
         }
@@ -237,6 +256,7 @@ class LiveEventFragment : BaseFragment() {
             tvNoDataFound.isVisible = isShow
             tvToolbar.isVisible = isShow
             tvLive.isVisible = !isShow
+            tvAudienceCount.isVisible = !isShow
             relMute.isVisible = !isShow
             tvNoDataFound.text = "Waiting for host to join..."
         }
@@ -262,6 +282,8 @@ class LiveEventFragment : BaseFragment() {
             uidValue,
             options
         )
+        userCountHandler.post(userCountRunnable)
+
     }
 
     private fun setupRemoteVideo(uid: Int) {
@@ -277,6 +299,7 @@ class LiveEventFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        userCountHandler.removeCallbacks(userCountRunnable)
 
         AgoraManager.getEngine()?.apply {
             stopPreview()
@@ -302,10 +325,55 @@ class LiveEventFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        userCountHandler.removeCallbacks(userCountRunnable)
 
         AgoraManager.getEngine()?.leaveChannel()
 
         binding = null
+    }
+
+    private fun getLiveUserCount() {
+        lifecycleScope.launch {
+            try {
+                val response = AgoraRetrofit.api.getLiveUserCount(
+                    basicAuth,
+                    appId,
+                    channelId
+                )
+
+                val count = response.body()?.data?.audienceTotal ?: 0
+
+                activity?.runOnUiThread {
+                    setUserCountData(count)
+                }
+
+            } catch (e: Exception) {
+                Log.e("LIVE_TEST", e.message ?: "Error")
+            }
+        }
+    }
+
+    private fun setUserCountData(audienceTotal: Int?) {
+        binding?.apply {
+            if ((audienceTotal ?: 0) > 0) {
+                tvAudienceCount.isVisible = true
+                tvAudienceCount.text = "Viewers : $audienceTotal"
+            } else {
+                //   tvAudienceCount.isVisible = false
+                tvAudienceCount.isVisible = true
+                tvAudienceCount.text = "Viewers : 0"
+            }
+        }
+    }
+
+    private fun convertBase64(){
+        val customerID = "0ddf0359302c4e3b995282b44470e25e"
+        val customerCertificate = "c258c2e0e578420fbdb0e43baf5b1ee3"
+        val credentials = "$customerID:$customerCertificate"
+        val base64Encoded = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
+        println(base64Encoded)
+        basicAuth = "Basic " + base64Encoded
+        Log.d("LIVE_TEST", "base64Encoded: $base64Encoded")
     }
 
 }

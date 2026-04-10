@@ -279,22 +279,22 @@ class AddFullScreenBannerFragment : BaseFragment() {
                 showToast("Please upload banner image")
                 return false
             }
-            else if (image != null) {
-                val type = binding?.etFor?.text.toString()
-                if (!isGif(image!!)) {
-                    if (!validateBannerImage(image!!, type)) {
-                        showToast(
-                            if (type == "Mobile")
-                              //  "Please upload 9:16 image (720x1280 to 1440x2560)"
-                                "Please upload 9:16 image"
-                            else
-                               // "Please upload 16:9 image (1280x720 to 2560x1440)"
-                                "Please upload 16:9 image"
-                        )
-                        return false
-                    }
-                }
-            }
+//            else if (image != null) {
+//                val type = binding?.etFor?.text.toString()
+//                if (!isGif(image!!)) {
+//                    if (!validateBannerImage(image!!, type)) {
+//                        showToast(
+//                            if (type == "Mobile")
+//                              //  "Please upload 9:16 image (720x1280 to 1440x2560)"
+//                                "Please upload 9:16 image"
+//                            else
+//                               // "Please upload 16:9 image (1280x720 to 2560x1440)"
+//                                "Please upload 16:9 image"
+//                        )
+//                        return false
+//                    }
+//                }
+//            }
 
 
             else if (binding?.etTitle?.text?.toString()?.isBlank() == true ) {

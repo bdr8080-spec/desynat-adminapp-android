@@ -137,6 +137,7 @@ class EventFragment : BaseFragment() {
         val map = HashMap<String, Any>()
         map["country_id"] = selectedCountryId?.id.toString()
         viewModel.getLiveStreamingRoom(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(),false)
         isObserver = true
     }
 

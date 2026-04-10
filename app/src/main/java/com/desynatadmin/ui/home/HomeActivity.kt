@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -43,6 +45,10 @@ class HomeActivity : BaseActivity() {
         enableEdgeToEdge()
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightNavigationBars = false
 
         initView()
         initControl()
@@ -173,8 +179,8 @@ class HomeActivity : BaseActivity() {
                         controller.navigate(R.id.planList)
                     }
                     4 -> {
-//                        ProgressDialogUtils.getInstance().hideProgress()
-//                        controller.navigate(R.id.paymentManagement)
+                        ProgressDialogUtils.getInstance().hideProgress()
+                        controller.navigate(R.id.paymentManagement)
                     }
                 }
             }

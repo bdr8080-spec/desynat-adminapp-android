@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.desynatadmin.R
 import com.desynatadmin.databinding.NewItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
@@ -32,7 +33,7 @@ class NewAdapter(var list: List<NewSellerResponse.Data.Data>, val click: OnClick
             tvLocation.text = item.store_info.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic)
-                .transform(CircleCrop())
+                .transform(CircleCrop()).placeholder(R.drawable.ic_user)
                 .into(ivProfileImage)
             tvEmail.text = item.email
             tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"

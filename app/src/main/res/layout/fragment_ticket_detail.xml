@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="@id/ivBack" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvStatusvalue"
+        android:id="@+id/tvStatusValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
@@ -254,6 +254,7 @@ laboris nisi ut aliquip ex ea commodo consequat. "
             app:layout_constraintTop_toBottomOf="@+id/tvDescriptionValue"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvAttachments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -266,6 +267,7 @@ laboris nisi ut aliquip ex ea commodo consequat. "
             app:layout_constraintTop_toBottomOf="@+id/viewDescription" />
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:visibility="gone"
             android:id="@+id/ivAttachment"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_90sdp"
@@ -279,6 +281,7 @@ laboris nisi ut aliquip ex ea commodo consequat. "
             app:layout_constraintTop_toBottomOf="@+id/tvAttachments"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -292,6 +295,7 @@ laboris nisi ut aliquip ex ea commodo consequat. "
             app:layout_constraintTop_toBottomOf="@id/ivAttachment" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvStatusDropDown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -311,6 +315,7 @@ laboris nisi ut aliquip ex ea commodo consequat. "
             app:layout_constraintTop_toBottomOf="@id/tvStatus" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/btnUpdateStatus"
             style="@style/button"
             android:text="@string/update_status"

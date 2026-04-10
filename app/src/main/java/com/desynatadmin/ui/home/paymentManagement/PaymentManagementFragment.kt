@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +25,10 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentPaymentManagementBinding
 import com.desynatadmin.databinding.PaymentFilterDialogBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
+import com.desynatadmin.ui.home.paymentManagement.response.GetBannerPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetGiftCardPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetPlanPaymentResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -48,15 +53,16 @@ class PaymentManagementFragment : BaseFragment() {
     private var giftCardPaymentAdapter: GiftCardPaymentAdapter? = null
     private var bannerPaymentAdapter: BannerPaymentAdapter? = null
 
-    private var orderPaymentList = ArrayList<String>()
-    private var planPaymentList = ArrayList<String>()
-    private var giftCardPaymentList = ArrayList<String>()
-    private var bannerPaymentList = ArrayList<String>()
+    private var orderPaymentList = ArrayList<GetOrderPaymentResponse.Data.Orders.Data>()
+    private var planPaymentList = ArrayList<GetPlanPaymentResponse.Data.Orders.Data>()
+    private var giftCardPaymentList = ArrayList<GetGiftCardPaymentResponse.Data.Orders.Data>()
+    private var bannerPaymentList = ArrayList<GetBannerPaymentResponse.Data.Orders.Data>()
     private var type = 1
 
     private var pagination=false
     private val itemsPerPage = 10
     private var currentPage = 1
+    private var isFromSwipe=false
 
     private var lastPage = 1
     private var totalPage = 0
@@ -72,7 +78,32 @@ class PaymentManagementFragment : BaseFragment() {
     var countryName:String?=null
     var countryId:String?=null
 
+    var startDateGift:String?=null
+    var endDateGift:String?=null
+    var fromTimestampGift = 0L
+    var toTimestampGift = 0L
+    var countryNameGift:String?=null
+    var countryIdGift:String?=null
+
+    var startDatePlan:String?=null
+    var endDatePlan:String?=null
+    var fromTimestampPlan = 0L
+    var toTimestampPlan = 0L
+    var countryNamePlan:String?=null
+    var countryIdPlan:String?=null
+
+    var startDateBanner:String?=null
+    var endDateBanner:String?=null
+    var fromTimestampBanner = 0L
+    var toTimestampBanner = 0L
+    var countryNameBanner:String?=null
+    var countryIdBanner:String?=null
+
     private var countryList = ArrayList<GetCountryResponse.Data>()
+
+    private var totalRevenue=0.0
+    private var orderCommission=0.0
+    private var specialCommission=0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -149,6 +180,7 @@ class PaymentManagementFragment : BaseFragment() {
                     search = lifecycleScope.launch {
                         delay(600)
                         if (!isObserver)
+                            currentPage = 1
                             when (type) {
                                 1 -> {
                                     getOrderPayment(search = query.ifEmpty { null })
@@ -172,6 +204,30 @@ class PaymentManagementFragment : BaseFragment() {
                 }
             })
 
+            swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(requireActivity(), R.color.brown)
+            )
+
+            swipeRefreshLayout.setOnRefreshListener {
+                isFromSwipe = true
+                pagination = false
+                currentPage = 1
+               when(type){
+                   1 -> {
+                       getOrderPayment(false)
+                   }
+                   2 -> {
+                       getPlanPayment(false)
+                   }
+                   3 -> {
+                       getGiftCardPayment(false)
+                   }
+                   4 -> {
+                       getBannerPayment(false)
+                   }
+               }
+            }
+
         }
     }
 
@@ -186,6 +242,22 @@ class PaymentManagementFragment : BaseFragment() {
 
             btnExport.setOnClickListener {
 
+            }
+
+            tvOrders.setOnClickListener {
+                order()
+            }
+
+            tvPlan.setOnClickListener {
+                plan()
+            }
+
+            tvGiftCard.setOnClickListener {
+                giftCard()
+            }
+
+            tvBanner.setOnClickListener {
+                banner()
             }
 
             ivFilter.setOnClickListener {
@@ -257,6 +329,262 @@ class PaymentManagementFragment : BaseFragment() {
                 isCountryObserver = false
             }
         }
+
+        viewModel.getOrderPaymentResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                orderCommission = response.data.totalCommission
+                specialCommission = response.data.totalCustomOrderRevenue
+                totalRevenue = response.data.totalRevenue
+
+                setData()
+
+                currentPage = response.data.orders.currentPage
+                totalItem = response.data.orders.total
+
+                lastPage = response.data.orders.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderPaymentList.size
+                if (!pagination){
+                    orderPaymentList.clear()
+                }
+                updatePage()
+                val newItems = response.data.orders.data ?: emptyList()
+
+                orderPaymentList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.orders?.data?.size?.let {
+                        orderPaymentAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    orderPaymentAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getPlanPaymentResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                totalRevenue = response.data.totalRevenue
+                currentPage = response.data.orders.currentPage
+                totalItem = response.data.orders.total
+                setData()
+
+                lastPage = response.data.orders.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderPaymentList.size
+                if (!pagination){
+                    orderPaymentList.clear()
+                }
+                updatePage()
+                val newItems = response.data.orders.data ?: emptyList()
+
+                planPaymentList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.orders?.data?.size?.let {
+                        planPaymentAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    planPaymentAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getBannerPaymentResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+                totalRevenue = response.data.totalRevenue
+                currentPage = response.data.orders.currentPage
+                totalItem = response.data.orders.total
+                setData()
+
+                lastPage = response.data.orders.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderPaymentList.size
+                if (!pagination){
+                    orderPaymentList.clear()
+                }
+                updatePage()
+                val newItems = response.data.orders.data ?: emptyList()
+
+                bannerPaymentList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.orders?.data?.size?.let {
+                        bannerPaymentAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    bannerPaymentAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getGiftCardPaymentResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+                totalRevenue = response.data.totalRevenue
+                currentPage = response.data.orders.currentPage
+                totalItem = response.data.orders.total
+                setData()
+
+                lastPage = response.data.orders.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = orderPaymentList.size
+                if (!pagination){
+                    orderPaymentList.clear()
+                }
+                updatePage()
+                val newItems = response.data.orders.data ?: emptyList()
+
+                giftCardPaymentList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.orders?.data?.size?.let {
+                        giftCardPaymentAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    giftCardPaymentAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+
     }
 
     private fun order() {
@@ -282,7 +610,7 @@ class PaymentManagementFragment : BaseFragment() {
 
     private fun plan() {
         binding?.apply {
-            type = 1
+            type = 2
             getPlanPayment()
             clOrderData.isVisible = false
             clDate.isVisible = true
@@ -303,7 +631,7 @@ class PaymentManagementFragment : BaseFragment() {
 
     private fun giftCard() {
         binding?.apply {
-            type = 1
+            type = 3
             getGiftCardPayment()
             clOrderData.isVisible = false
             clDate.isVisible = true
@@ -324,7 +652,7 @@ class PaymentManagementFragment : BaseFragment() {
 
     private fun banner() {
         binding?.apply {
-            type = 1
+            type = 4
             getBannerPayment()
             clOrderData.isVisible = false
             clDate.isVisible = true
@@ -341,6 +669,54 @@ class PaymentManagementFragment : BaseFragment() {
             tvGiftCard.background = null
             tvOrders.background = null
         }
+    }
+
+    private fun updatePage() {
+
+        when(type){
+            1->{
+                val start = (currentPage - 1) * itemsPerPage
+                val end = minOf(start + itemsPerPage, orderPaymentList.size)
+                if (start>=0&&end>=0) {
+                    if (start < end) {
+                        val pageData = orderPaymentList.subList(start, end)
+                        orderPaymentAdapter?.setData(ArrayList(pageData))
+                    }
+                }
+            }
+            2->{
+                val start = (currentPage - 1) * itemsPerPage
+                val end = minOf(start + itemsPerPage, planPaymentList.size)
+                if (start>=0&&end>=0) {
+                    if (start < end) {
+                        val pageData = planPaymentList.subList(start, end)
+                        planPaymentAdapter?.setData(ArrayList(pageData))
+                    }
+                }
+            }
+            3->{
+                val start = (currentPage - 1) * itemsPerPage
+                val end = minOf(start + itemsPerPage, giftCardPaymentList.size)
+                if (start>=0&&end>=0) {
+                    if (start < end) {
+                        val pageData = giftCardPaymentList.subList(start, end)
+                        giftCardPaymentAdapter?.setData(ArrayList(pageData))
+                    }
+                }
+            }
+            4->{
+                val start = (currentPage - 1) * itemsPerPage
+                val end = minOf(start + itemsPerPage, bannerPaymentList.size)
+                if (start>=0&&end>=0) {
+                    if (start < end) {
+                        val pageData = bannerPaymentList.subList(start, end)
+                        bannerPaymentAdapter?.setData(ArrayList(pageData))
+                    }
+                }
+            }
+        }
+
+
     }
 
     private fun checkData() {
@@ -364,6 +740,23 @@ class PaymentManagementFragment : BaseFragment() {
     }
 
     private fun getOrderPayment(loading: Boolean = true, search: String? = null) {
+        val map = HashMap<String, Any>()
+        map["limit"] = 10
+        map["page"] = currentPage
+        if (search!=null){
+            map["search"] = search
+        }
+
+        if (startDate!=null){
+            map["from_date"] = startDate.toString()
+        }
+        if (endDate!=null){
+            map["to_date"] = endDate.toString()
+        }
+        if (countryId!=null){
+            map["country_id"] = countryId.toString()
+        }
+        viewModel.getOrderPayment(map)
         if (loading) {
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -371,6 +764,23 @@ class PaymentManagementFragment : BaseFragment() {
     }
 
     private fun getPlanPayment(loading: Boolean = true, search: String? = null) {
+        val map = HashMap<String, Any>()
+        map["limit"] = 10
+        map["page"] = currentPage
+        if (search!=null){
+            map["search"] = search
+        }
+
+        if (startDatePlan!=null){
+            map["from_date"] = startDatePlan.toString()
+        }
+        if (endDatePlan!=null){
+            map["to_date"] = endDatePlan.toString()
+        }
+        if (countryIdPlan!=null){
+            map["country_id"] = countryIdPlan.toString()
+        }
+        viewModel.getPlanPayment(map)
         if (loading) {
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -378,6 +788,22 @@ class PaymentManagementFragment : BaseFragment() {
     }
 
     private fun getGiftCardPayment(loading: Boolean = true, search: String? = null) {
+        val map = HashMap<String, Any>()
+        map["limit"] = 10
+        map["page"] = currentPage
+        if (search!=null){
+            map["search"] = search
+        }
+        if (startDateGift!=null){
+            map["from_date"] = startDateGift.toString()
+        }
+        if (endDateGift!=null){
+            map["to_date"] = endDateGift.toString()
+        }
+        if (countryIdGift!=null){
+            map["country_id"] = countryIdGift.toString()
+        }
+        viewModel.getGiftCardPayment(map)
         if (loading) {
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -385,6 +811,24 @@ class PaymentManagementFragment : BaseFragment() {
     }
 
     private fun getBannerPayment(loading: Boolean = true, search: String? = null) {
+        val map = HashMap<String, Any>()
+        map["limit"] = 10
+        map["page"] = currentPage
+        if (search!=null){
+            map["search"] = search
+        }
+        if (startDateBanner!=null){
+            map["from_date"] = startDateBanner.toString()
+        }
+        if (endDateBanner!=null){
+            map["to_date"] = endDateBanner.toString()
+        }
+
+        if (countryIdBanner!=null){
+            map["country_id"] = countryIdBanner.toString()
+        }
+
+        viewModel.getBannerPayment(map)
         if (loading) {
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -404,6 +848,10 @@ class PaymentManagementFragment : BaseFragment() {
 
     private fun paymentFilterDialog() {
         var selectedCountryId:String?=null
+        var selectedStartDate:String?=null
+        var selectedEndDate:String?=null
+        var selectedStartDateTimeStamp = 0L
+        var selectedEndDateTimeStamp = 0L
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = PaymentFilterDialogBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -422,6 +870,38 @@ class PaymentManagementFragment : BaseFragment() {
 
         dialogBinding.apply {
 
+            when(type){
+                1->{
+                    selectedCountryId = countryId
+                    selectedStartDate = startDate
+                    selectedStartDateTimeStamp = fromTimestamp
+                    selectedEndDate = endDate
+                    selectedEndDateTimeStamp = toTimestamp
+                }
+                2->{
+                    selectedCountryId = countryIdPlan
+                    selectedStartDate = startDatePlan
+                    selectedStartDateTimeStamp = fromTimestampPlan
+                    selectedEndDate = endDatePlan
+                    selectedEndDateTimeStamp = toTimestampPlan
+                }
+
+                3->{
+                    selectedCountryId = countryIdGift
+                    selectedStartDate = startDateGift
+                    selectedStartDateTimeStamp = fromTimestampGift
+                    selectedEndDate = endDateGift
+                    selectedEndDateTimeStamp = toTimestampGift
+                }
+                4->{
+                    selectedCountryId = countryIdBanner
+                    selectedStartDate = startDateBanner
+                    selectedStartDateTimeStamp = fromTimestampBanner
+                    selectedEndDate = endDateBanner
+                    selectedEndDateTimeStamp = toTimestampBanner
+                }
+            }
+
             if(SharedPreference.get(requireActivity()).getCountryList() == null) {
                 getCountryApi()
             }
@@ -430,14 +910,14 @@ class PaymentManagementFragment : BaseFragment() {
                 SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
             }
 
-            if(countryId!=null){
-                etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
+            if(selectedCountryId!=null){
+                etCountry.text = countryList.firstOrNull { it.id.toString() == selectedCountryId }?.name
             }
-            if (startDate!=null){
-                etFrom.text= CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            if (selectedStartDate!=null){
+                etFrom.text= CommonMethod.formatDate(selectedStartDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             }
-            if (endDate!=null){
-                etTo.text= CommonMethod.formatDate(endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            if (selectedEndDate!=null){
+                etTo.text= CommonMethod.formatDate(selectedEndDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             }
             tvTitle.setOnClickListener {
                 dialog.dismiss()
@@ -446,14 +926,14 @@ class PaymentManagementFragment : BaseFragment() {
             etFrom.setOnClickListener {
                 openCustomDatePicker(requireActivity()){date,timestamp->
                     etFrom.text=date
-                    fromTimestamp=timestamp
+                    selectedStartDateTimeStamp=timestamp
                 }
 
             }
             etTo.setOnClickListener {
                 openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
                     etTo.text=date
-                    toTimestamp=timestamp
+                    selectedEndDateTimeStamp=timestamp
                 }
 
             }
@@ -484,23 +964,44 @@ class PaymentManagementFragment : BaseFragment() {
             }
 
             clear.setOnClickListener {
-                startDate = null
-                endDate = null
-                countryId = null
-                countryName = null
-                toTimestamp = 0L
-                fromTimestamp = 0L
+
+
+                currentPage = 1
                 when(type) {
                     1 -> {
+                        startDate = null
+                        endDate = null
+                        countryId = null
+                        countryName = null
+                        toTimestamp = 0L
+                        fromTimestamp = 0L
                         getOrderPayment()
                     }
                     2 -> {
+                        startDatePlan = null
+                        endDatePlan = null
+                        countryIdPlan = null
+                        countryNamePlan = null
+                        toTimestampPlan = 0L
+                        fromTimestampPlan = 0L
                         getPlanPayment()
                     }
                     3 -> {
+                        startDateGift = null
+                        endDateGift = null
+                        countryIdGift = null
+                        countryNameGift = null
+                        toTimestampGift = 0L
+                        fromTimestampGift = 0L
                         getGiftCardPayment()
                     }
                     4 -> {
+                        startDateBanner = null
+                        endDateBanner = null
+                        countryIdBanner = null
+                        countryNameBanner = null
+                        toTimestampBanner = 0L
+                        fromTimestampBanner = 0L
                         getBannerPayment()
                     }
                 }
@@ -509,16 +1010,62 @@ class PaymentManagementFragment : BaseFragment() {
 
             apply.setOnClickListener{
                 if (selectedCountryId!=null) {
-                    countryId = selectedCountryId
-                    countryName = countryList.firstOrNull { it.id.toString() == countryId }?.name
+                    when(type) {
+                        1 -> {
+                            countryId = selectedCountryId
+                            countryName = countryList.firstOrNull { it.id.toString() == countryId }?.name
+                        }
+                        2 -> {
+                            countryIdPlan = selectedCountryId
+                            countryNamePlan = countryList.firstOrNull { it.id.toString() == countryId }?.name
+                        }
+                        3 -> {
+                            countryIdGift = selectedCountryId
+                            countryNameGift = countryList.firstOrNull { it.id.toString() == countryId }?.name
+                        }
+                        4 -> {
+                            countryIdBanner = selectedCountryId
+                            countryNameBanner = countryList.firstOrNull { it.id.toString() == countryId }?.name
+                        }
+                    }
+
                 }
                 if (etFrom.text.isNotEmpty()){
-                    startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                    val date = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                    when(type) {
+                        1 -> {
+                            startDate = date
+                        }
+                        2 -> {
+                            startDatePlan = date
+                        }
+                        3 -> {
+                            startDateGift = date
+                        }
+                        4 -> {
+                            startDateBanner = date
+                        }
+                    }
                 }
 
                 if (etTo.text.isNotEmpty()){
-                    endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                    val date  = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                    when(type) {
+                        1 -> {
+                            endDate = date
+                        }
+                        2 -> {
+                            endDatePlan = date
+                        }
+                        3 -> {
+                            endDateGift = date
+                        }
+                        4 -> {
+                            endDateBanner = date
+                        }
+                    }
                 }
+                currentPage = 1
                 when(type) {
                     1 -> {
                         getOrderPayment()
@@ -559,6 +1106,22 @@ class PaymentManagementFragment : BaseFragment() {
 
 
         popup.show()
+    }
+
+    private fun setData(){
+        binding?.apply {
+            when(type){
+                1->{
+                    clOrderData.isVisible = true
+                    tvSpecial.text = "${CommonMethod.formatDoubleValue(specialCommission)} KD"
+                    tvCommission.text = "${CommonMethod.formatDoubleValue(orderCommission)} KD"
+                }
+                else ->{
+                    clOrderData.isVisible = false
+                }
+            }
+            tvTotalRevenue.text = "${CommonMethod.formatDoubleValue(totalRevenue)} KD"
+        }
     }
 
 }

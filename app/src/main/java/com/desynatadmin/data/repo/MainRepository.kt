@@ -87,6 +87,10 @@ import com.desynatadmin.ui.home.notificationManagement.response.SendNotification
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetBannerPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetGiftCardPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetPlanPaymentResponse
 import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
 import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
 import com.desynatadmin.ui.home.productManagement.response.UpdateProductStatusResponse
@@ -108,6 +112,8 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
+import com.desynatadmin.ui.home.ticketManagement.response.UpdateTicketStatusResponse
 import com.desynatadmin.ui.home.userManagement.response.AddWalletBalanceResponse
 import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
@@ -135,8 +141,8 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.uploadImage(
-                    imageFile?.toMultipartPart("image")
+                api.uploadVideoImage(
+                    imageFile?.toMultipartPart("file")
                 )
             },
             responseLiveData = responseUploadImage
@@ -2202,6 +2208,94 @@ class MainRepository @Inject constructor(
                 api.getAgoraToken(token,map)
             },
             responseLiveData = getAgoraTokenLiveData
+        )
+    }
+
+    val getNewTicketLiveData = SingleLiveEvent<GetNewTicketResponse>()
+    suspend fun getNewTicket(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getNewTicket(map)
+            },
+            responseLiveData = getNewTicketLiveData
+        )
+    }
+
+    val getOngoingTicketLiveData = SingleLiveEvent<GetNewTicketResponse>()
+    suspend fun getOngoingTicket(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getOngoingTicket(map)
+            },
+            responseLiveData = getOngoingTicketLiveData
+        )
+    }
+
+    val getResolvedTicketLiveData = SingleLiveEvent<GetNewTicketResponse>()
+    suspend fun getResolvedTicket(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getResolvedTicket(map)
+            },
+            responseLiveData = getResolvedTicketLiveData
+        )
+    }
+
+    val updateTicketStatusLiveData = SingleLiveEvent<UpdateTicketStatusResponse>()
+    suspend fun updateTicketStatus(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateTicketStatus(map)
+            },
+            responseLiveData = updateTicketStatusLiveData
+        )
+    }
+
+    val getGiftCardPaymentLiveData = SingleLiveEvent<GetGiftCardPaymentResponse>()
+    suspend fun getGiftCardPayment(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getGiftCardPayment(map)
+            },
+            responseLiveData = getGiftCardPaymentLiveData
+        )
+    }
+
+    val getBannerPaymentLiveData = SingleLiveEvent<GetBannerPaymentResponse>()
+    suspend fun getBannerPayment(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getBannerPayment(map)
+            },
+            responseLiveData = getBannerPaymentLiveData
+        )
+    }
+
+    val getPlanPaymentLiveData = SingleLiveEvent<GetPlanPaymentResponse>()
+    suspend fun getPlanPayment(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getPlanPayment(map)
+            },
+            responseLiveData = getPlanPaymentLiveData
+        )
+    }
+
+    val getOrderPaymentLiveData = SingleLiveEvent<GetOrderPaymentResponse>()
+    suspend fun getOrderPayment(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getOrderPayment(map)
+            },
+            responseLiveData = getOrderPaymentLiveData
         )
     }
 }

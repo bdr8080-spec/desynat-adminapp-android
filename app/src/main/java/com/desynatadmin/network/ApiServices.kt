@@ -68,6 +68,7 @@ import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardRespon
 import com.desynatadmin.ui.home.giftCardManagement.response.UpdateGiftCardResponse
 import com.desynatadmin.ui.home.liveCoverage.response.GetAgoraTokenResponse
 import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
+import com.desynatadmin.ui.home.liveCoverage.response.GetLiveUserCountResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
@@ -83,6 +84,10 @@ import com.desynatadmin.ui.home.notificationManagement.response.SendNotification
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetBannerPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetGiftCardPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetPlanPaymentResponse
 import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
 import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
 import com.desynatadmin.ui.home.productManagement.response.UpdateProductStatusResponse
@@ -106,6 +111,8 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
 import com.desynatadmin.ui.home.supportChatManagement.translation.TranslateRequest
 import com.desynatadmin.ui.home.supportChatManagement.translation.TranslateResponse
+import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
+import com.desynatadmin.ui.home.ticketManagement.response.UpdateTicketStatusResponse
 import com.desynatadmin.ui.home.userManagement.response.AddWalletBalanceResponse
 import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
@@ -1070,6 +1077,58 @@ interface ApiServices {
         @Body request: TranslateRequest
     ): Response<TranslateResponse>
 
+
+    @GET(Constants.GET_NEW_TICKET)
+    suspend fun getNewTicket(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetNewTicketResponse>
+
+    @GET(Constants.GET_ONGOING_TICKET)
+    suspend fun getOngoingTicket(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetNewTicketResponse>
+
+    @GET(Constants.GET_RESOLVED_TICKET)
+    suspend fun getResolvedTicket(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetNewTicketResponse>
+
+    @POST(Constants.UPDATE_TICKET_STATUS)
+    suspend fun updateTicketStatus(
+        @Body map: HashMap<String,Any>
+    ): Response<UpdateTicketStatusResponse>
+
+    @GET(Constants.GET_ORDER_PAYMENT)
+    suspend fun getOrderPayment(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetOrderPaymentResponse>
+
+
+    @GET(Constants.GET_GIFT_PAYMENT)
+    suspend fun getGiftCardPayment(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetGiftCardPaymentResponse>
+
+
+    @GET(Constants.GET_PLAN_PAYMENT)
+    suspend fun getPlanPayment(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetPlanPaymentResponse>
+
+
+    @GET(Constants.GET_BANNER_PAYMENT)
+    suspend fun getBannerPayment(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetBannerPaymentResponse>
+
+
+    @GET("channel/user/{appid}/{channelName}")
+    suspend fun getLiveUserCount(
+        @Header("Authorization") auth: String,
+        @Path("appid") appid: String,
+        @Path("channelName") channelName: String
+    )
+            : Response<GetLiveUserCountResponse>
 
 
 }

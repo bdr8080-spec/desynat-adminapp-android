@@ -23,11 +23,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@+id/tvToolbar"
         app:layout_constraintBottom_toTopOf="@+id/ivBackArrow">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -158,7 +165,7 @@
                     android:background="@drawable/ic_order_commission"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:paddingVertical="@dimen/_12sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOrder"
+                   app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/clSpecial"
                     app:layout_constraintStart_toStartOf="parent">
 
@@ -419,6 +426,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivBackArrow"

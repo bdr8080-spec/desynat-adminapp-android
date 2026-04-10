@@ -5,14 +5,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemPaymentBinding
+import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
+import com.desynatadmin.utils.CommonMethod
 
-class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayList<String>, var paymentClick: PaymentClick) : RecyclerView.Adapter<OrderPaymentAdapter.ViewHolder>() {
+class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayList<GetOrderPaymentResponse.Data.Orders.Data>, var paymentClick: PaymentClick) : RecyclerView.Adapter<OrderPaymentAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemPaymentBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val paymentData = paymentList[position]
-
+            tvUserName.text = paymentData?.userDetails?.fullName
+                tvOrderId.text = "#${paymentData?.order?.id}"
+            tvTransactionId.text = "#${paymentData?.order?.transactionId?:"28673"}"
+            tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.order?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvTotalAmount.text = "${CommonMethod.formatPrice(paymentData?.order?.totalAmount?.toDoubleOrNull()?:0.0)} KD"
+            tvPaymentMode.text =  if (paymentData?.order?.paymentMethod=="1") "Card"
+            else if (paymentData?.order?.paymentMethod=="1") "Wallet" else "COD"
 
             root.setOnClickListener {
                 paymentClick.onPaymentClick(position,0)
@@ -38,6 +46,11 @@ class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayLis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        holder.bind(position)
+    }
+
+    fun setData(newList: ArrayList<GetOrderPaymentResponse.Data.Orders.Data>) {
+        paymentList = newList
+        notifyDataSetChanged()
     }
 
 }

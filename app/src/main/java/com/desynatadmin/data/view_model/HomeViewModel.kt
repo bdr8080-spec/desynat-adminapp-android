@@ -85,6 +85,10 @@ import com.desynatadmin.ui.home.notificationManagement.response.SendNotification
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetSingleOrderDetailResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetBannerPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetGiftCardPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
+import com.desynatadmin.ui.home.paymentManagement.response.GetPlanPaymentResponse
 import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
 import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
 import com.desynatadmin.ui.home.productManagement.response.UpdateProductStatusResponse
@@ -106,6 +110,8 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.UpdatePlanStatusResponse
+import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
+import com.desynatadmin.ui.home.ticketManagement.response.UpdateTicketStatusResponse
 import com.desynatadmin.ui.home.userManagement.response.AddWalletBalanceResponse
 import com.desynatadmin.ui.home.userManagement.response.BlockUnblockUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserDetailResponse
@@ -1557,6 +1563,83 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     fun getAgoraToken(token: String, map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getAgoraToken(token,map)
+        }
+    }
+
+    val getNewTicketResult: LiveData<GetNewTicketResponse>
+        get() = repository.getNewTicketLiveData
+
+    fun getNewTicket(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getNewTicket(map)
+        }
+    }
+
+    val getOngoingTicketResult: LiveData<GetNewTicketResponse>
+        get() = repository.getOngoingTicketLiveData
+
+    fun getOngoingTicket(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getOngoingTicket(map)
+        }
+    }
+
+
+    val getResolvedTicketResult: LiveData<GetNewTicketResponse>
+        get() = repository.getResolvedTicketLiveData
+
+    fun getResolvedTicket(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getResolvedTicket(map)
+        }
+    }
+
+    val updateTicketStatusResult: LiveData<UpdateTicketStatusResponse>
+        get() = repository.updateTicketStatusLiveData
+
+    fun updateTicketStatus(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateTicketStatus(map)
+        }
+    }
+
+
+    val getGiftCardPaymentResult: LiveData<GetGiftCardPaymentResponse>
+        get() = repository.getGiftCardPaymentLiveData
+
+    fun getGiftCardPayment(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getGiftCardPayment(map)
+        }
+    }
+
+
+    val getBannerPaymentResult: LiveData<GetBannerPaymentResponse>
+        get() = repository.getBannerPaymentLiveData
+
+    fun getBannerPayment(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getBannerPayment(map)
+        }
+    }
+
+
+    val getPlanPaymentResult: LiveData<GetPlanPaymentResponse>
+        get() = repository.getPlanPaymentLiveData
+
+    fun getPlanPayment(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getPlanPayment(map)
+        }
+    }
+
+
+    val getOrderPaymentResult: LiveData<GetOrderPaymentResponse>
+        get() = repository.getOrderPaymentLiveData
+
+    fun getOrderPayment(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getOrderPayment(map)
         }
     }
 

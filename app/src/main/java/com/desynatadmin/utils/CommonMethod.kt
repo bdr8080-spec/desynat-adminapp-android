@@ -153,15 +153,6 @@ object CommonMethod {
             }
         }
 
-       /* if (extension=="mp4") {
-            val maxSize = 5 * 1024 * 1024 // 5 MB in bytes
-            if (file.length() > maxSize) {
-                file.delete()
-                context.showToast("Upload size exceed to 5 MB")
-                return null
-            }
-        }*/
-
         return file
     }
 

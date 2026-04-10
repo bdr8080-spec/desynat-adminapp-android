@@ -42,6 +42,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
+        android:id="@+id/tvAudienceCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Viewers : 0"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@color/white"
+        android:drawableStart="@drawable/ic_black_user"
+        android:drawableTint="@color/white"
+        android:drawablePadding="@dimen/_5sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:background="@drawable/search_bg"
+        android:backgroundTint="#4D000000"
+        android:paddingStart="@dimen/_5sdp"
+        android:gravity="center"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tvLive"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/relMute"
