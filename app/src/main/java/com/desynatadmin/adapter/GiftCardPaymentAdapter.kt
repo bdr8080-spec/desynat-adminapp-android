@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemPaymentBinding
 import com.desynatadmin.ui.home.paymentManagement.response.GetGiftCardPaymentResponse
@@ -14,7 +15,11 @@ class GiftCardPaymentAdapter(var context:Context, private var paymentList: Array
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val paymentData = paymentList[position]
+            tvUser.text = "Purchased By"
             tvUserName.text = paymentData?.userDetails?.fullName
+            tvCountry.isVisible = true
+            tvCountryValue.isVisible = true
+            tvCountryValue.text = paymentData?.userDetails?.countryInfo?.name
             tvOrderId.text = "#${paymentData?.id}"
             tvTransactionId.text = "#${paymentData?.transactionId?:"28673"}"
             tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")

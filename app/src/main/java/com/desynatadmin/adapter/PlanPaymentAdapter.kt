@@ -14,6 +14,7 @@ class PlanPaymentAdapter(var context:Context, private var paymentList: ArrayList
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val paymentData = paymentList[position]
+            tvUser.text = "Seller Name"
             tvUserName.text = paymentData?.sellerDetails?.firstName+" "+paymentData?.sellerDetails?.lastName
             tvOrderId.text = "#${paymentData?.id}"
             tvTransactionId.text = "#${paymentData?.transactionId?:"28673"}"

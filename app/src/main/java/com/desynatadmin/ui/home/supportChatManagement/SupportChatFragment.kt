@@ -1,5 +1,7 @@
 package com.desynatadmin.ui.home.supportChatManagement
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,9 +46,23 @@ class SupportChatFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = getString(R.string.chats)
 
+            chatList.clear()
+            chatList.add("")
+            chatList.add("")
+            chatList.add("")
+            chatList.add("")
             chatListAdapter = ChatListAdapter(requireActivity(),chatList,object: ChatListAdapter.ChatClick{
                 override fun onChatClick(position: Int) {
-                    findNavController().navigate(R.id.action_supportChatManagement_to_chatMessageFragment)
+                 //   findNavController().navigate(R.id.action_supportChatManagement_to_chatMessageFragment)
+
+             /*       val name = "Harsh"
+                    val email = "harsh@gmail.com"
+                    val role = "admin"
+                    val uniqueId = "${role}_$email"
+                    val url = "https://tidiowebsite.com?name=$name&email=$email"
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+*/
+                    findNavController().navigate(R.id.action_supportChatManagement_to_tidioChatFragment)
                 }
 
             } )

@@ -51,7 +51,7 @@ data class GetOrderPaymentResponse(
         ) {
             data class Data(
                 @SerializedName("admin_commission")
-                val adminCommission: Any,
+                val adminCommission: String,
                 @SerializedName("affiliate_admin_commission")
                 val affiliateAdminCommission: String,
                 @SerializedName("affiliate_commission")
@@ -133,7 +133,7 @@ data class GetOrderPaymentResponse(
                 @SerializedName("tax")
                 val tax: String,
                 @SerializedName("total_discount")
-                val totalDiscount: Int,
+                val totalDiscount: String,
                 @SerializedName("unique_id")
                 val uniqueId: Any,
                 @SerializedName("updated_at")
@@ -181,13 +181,13 @@ data class GetOrderPaymentResponse(
                     @SerializedName("payment_status")
                     val paymentStatus: String,
                     @SerializedName("promocode_details")
-                    val promocodeDetails: Any,
+                    val promocodeDetails: PromocodeDetails,
                     @SerializedName("promocode_id")
-                    val promocodeId: Any,
+                    val promocodeId: String,
                     @SerializedName("promocode_status")
                     val promocodeStatus: String,
                     @SerializedName("promocode_value")
-                    val promocodeValue: Any,
+                    val promocodeValue: String,
                     @SerializedName("shipping_fees")
                     val shippingFees: String,
                     @SerializedName("tax")
@@ -206,7 +206,40 @@ data class GetOrderPaymentResponse(
                     val userId: Int,
                     @SerializedName("wallet_amount")
                     val walletAmount: Any
-                )
+                ){
+                    data class PromocodeDetails(
+                        @SerializedName("applicable_for")
+                        val applicableFor: Int,
+                        @SerializedName("country_id")
+                        val countryId: Int,
+                        @SerializedName("created_at")
+                        val createdAt: String,
+                        @SerializedName("description_arabic")
+                        val descriptionArabic: String,
+                        @SerializedName("description_english")
+                        val descriptionEnglish: String,
+                        @SerializedName("discount_percent")
+                        val discountPercent: String,
+                        @SerializedName("end_date")
+                        val endDate: String,
+                        @SerializedName("id")
+                        val id: Int,
+                        @SerializedName("min_order_value")
+                        val minOrderValue: String,
+                        @SerializedName("name_arabic")
+                        val nameArabic: String,
+                        @SerializedName("name_english")
+                        val nameEnglish: String,
+                        @SerializedName("start_date")
+                        val startDate: String,
+                        @SerializedName("status")
+                        val status: Int,
+                        @SerializedName("updated_at")
+                        val updatedAt: String,
+                        @SerializedName("upto_discount")
+                        val uptoDiscount: String
+                    )
+                }
 
                 data class ProductDetails(
                     @SerializedName("affiliated_commission")
@@ -268,6 +301,7 @@ data class GetOrderPaymentResponse(
                     @SerializedName("upload_size_chart")
                     val uploadSizeChart: String
                 ) {
+
                     data class SellerDetails(
                         @SerializedName("accept_terms")
                         val acceptTerms: String,

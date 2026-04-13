@@ -1,11 +1,15 @@
 package com.desynatadmin.ui.home.ticketManagement
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -16,9 +20,13 @@ import com.desynatadmin.adapter.TicketAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentTicketManagementBinding
+import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.openCustomDatePicker
+import com.desynatadmin.utils.openCustomizeDatePicker
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -45,6 +53,21 @@ class TicketManagementFragment : BaseFragment() {
     private var searchJob: Job? = null
     private var lastQuery: String? = null
     private val itemsPerPage = 10
+
+    var startDateNew:String?=null
+    var endDateNew:String?=null
+    var fromTimestampNew=0L
+    var toTimestampNew=0L
+
+    var startDateOngoing:String?=null
+    var endDateOngoing:String?=null
+    var fromTimestampOngoing=0L
+    var toTimestampOngoing=0L
+
+    var startDatePast:String?=null
+    var endDatePast:String?=null
+    var fromTimestampPast=0L
+    var toTimestampPast=0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -126,7 +149,7 @@ class TicketManagementFragment : BaseFragment() {
             }
 
             ivFilter.setOnClickListener {
-
+                ticketFilterDialog()
             }
 
             tvNew.setOnClickListener {
@@ -412,17 +435,33 @@ class TicketManagementFragment : BaseFragment() {
             map["search"] = search
         }
 
-        map["from_date"] = ""
-        map["to_date"] = ""
 
        when(type){
            1->{
+               if (startDateNew!=null){
+                   map["from_date"] = startDateNew.toString()
+               }
+               if (endDateNew!=null){
+                   map["to_date"] = endDateNew.toString()
+               }
                viewModel.getNewTicket(map)
            }
            2->{
+               if (startDateOngoing!=null){
+                   map["from_date"] = startDateOngoing.toString()
+               }
+               if (endDateOngoing!=null){
+                   map["to_date"] = endDateOngoing.toString()
+               }
                viewModel.getOngoingTicket(map)
            }
            3->{
+               if (startDatePast!=null){
+                   map["from_date"] = startDatePast.toString()
+               }
+               if (endDatePast!=null){
+                   map["to_date"] = endDatePast.toString()
+               }
                viewModel.getResolvedTicket(map)
            }
        }
@@ -447,4 +486,145 @@ class TicketManagementFragment : BaseFragment() {
         }
 
     }
+
+    private fun ticketFilterDialog() {
+        var selectedStartDate:String?=null
+        var selectedEndDate:String?=null
+        var selectedStartDateTimeStamp = 0L
+        var selectedEndDateTimeStamp = 0L
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = UserFilterDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+            etCountry.isVisible = false
+            tvCountry.isVisible = false
+
+            when(type){
+                1->{
+                    selectedStartDate = startDateNew
+                    selectedStartDateTimeStamp = fromTimestampNew
+                    selectedEndDate = endDateNew
+                    selectedEndDateTimeStamp = toTimestampNew
+                }
+                2->{
+                    selectedStartDate = startDateOngoing
+                    selectedStartDateTimeStamp = fromTimestampOngoing
+                    selectedEndDate = endDateOngoing
+                    selectedEndDateTimeStamp = toTimestampOngoing
+                }
+                3->{
+                    selectedStartDate = startDatePast
+                    selectedStartDateTimeStamp = fromTimestampPast
+                    selectedEndDate = endDatePast
+                    selectedEndDateTimeStamp = toTimestampPast
+                }
+            }
+            if (selectedStartDate!=null){
+                etFrom.text=CommonMethod.formatDate(selectedStartDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
+            if (selectedEndDate!=null){
+                etTo.text=CommonMethod.formatDate(selectedEndDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
+            }
+
+
+            tvToolbar.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            etFrom.setOnClickListener {
+                openCustomizeDatePicker(requireActivity(),maxDate = System.currentTimeMillis()){date,timestamp->
+                    etFrom.text=date
+                    selectedStartDateTimeStamp=timestamp
+                }
+
+            }
+            etTo.setOnClickListener {
+                openCustomizeDatePicker(requireActivity(), minDate = selectedStartDateTimeStamp,maxDate = System.currentTimeMillis()){date,timestamp->
+                    etTo.text=date
+                    selectedEndDateTimeStamp=timestamp
+                }
+
+            }
+
+            tvClear.setOnClickListener {
+                when(type) {
+                    1 -> {
+                        startDateNew = null
+                        endDateNew = null
+                        fromTimestampNew = 0L
+                        toTimestampNew = 0L
+                    }
+                    2 -> {
+                        startDateOngoing = null
+                        endDateOngoing = null
+                        fromTimestampOngoing = 0L
+                        toTimestampOngoing = 0L
+                    }
+                    3 -> {
+                        startDatePast = null
+                        endDatePast = null
+                        fromTimestampPast = 0L
+                        toTimestampPast = 0L
+                    }
+
+                }
+                getTicket()
+                dialog.dismiss()
+            }
+
+            tvApply.setOnClickListener{
+                if (etFrom.text.isNotEmpty()){
+                    val startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                    when(type) {
+                        1 -> {
+                            startDateNew = startDate
+                        }
+                        2 -> {
+                            startDateOngoing = startDate
+                        }
+                        3 -> {
+                            startDatePast = startDate
+                        }
+
+                    }
+                }
+
+                if (etTo.text.isNotEmpty()){
+                    val endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                    when(type) {
+                        1 -> {
+                            endDateNew = endDate
+                        }
+                        2 -> {
+                            endDateOngoing = endDate
+                        }
+                        3 -> {
+                            endDatePast = endDate
+                        }
+
+                    }
+                }
+
+                getTicket()
+                dialog.dismiss()
+            }
+
+        }
+
+        dialog.show()
+    }
+
 }

@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemPaymentBinding
 import com.desynatadmin.ui.home.paymentManagement.response.GetBannerPaymentResponse
@@ -14,6 +15,10 @@ class BannerPaymentAdapter(var context:Context, private var paymentList: ArrayLi
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val paymentData = paymentList[position]
+            tvUser.text = "Purchased By"
+            tvCountry.isVisible = true
+            tvCountryValue.isVisible = true
+            tvCountryValue.text = paymentData?.sellerDetails?.storeInfo?.countryInfo?.name
             tvUserName.text = paymentData?.sellerDetails?.firstName+" "+paymentData?.sellerDetails?.lastName
             tvOrderId.text = "#${paymentData?.id}"
             tvTransactionId.text = "#${paymentData?.transactionId?:"28673"}"

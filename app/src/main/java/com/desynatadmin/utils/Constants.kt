@@ -222,8 +222,8 @@ object Constants {
     const val GET_RESOLVED_TICKET = "/api/admin/get_resolved_tickets"
     const val UPDATE_TICKET_STATUS = "/api/admin/update_ticket_status"
     const val GET_ORDER_PAYMENT = "/api/admin/get_order_payments"
-    const val GET_GIFT_PAYMENT = "/api/admin/get_order_payments"
-    const val GET_PLAN_PAYMENT = "/api/admin/get_giftcard_payments"
+    const val GET_GIFT_PAYMENT = "/api/admin/get_giftcard_payments"
+    const val GET_PLAN_PAYMENT = "/api/admin/get_plan_payments"
     const val GET_BANNER_PAYMENT = "/api/admin/get_banner_payments"
 
 }

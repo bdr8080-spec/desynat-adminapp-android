@@ -585,6 +585,10 @@
         android:id="@+id/action_supportChatManagement_to_chatMessageFragment"
         app:destination="@id/chatMessageFragment" />
 
+    <action
+        android:id="@+id/action_supportChatManagement_to_tidioChatFragment"
+        app:destination="@id/tidioChat" />
+
 </fragment>
 
     <fragment
@@ -592,6 +596,12 @@
         android:name="com.desynatadmin.ui.home.supportChatManagement.ChatMessageFragment"
         android:label="Chat Message Fragment"
         tools:layout="@layout/fragment_chat_message"/>
+
+    <fragment
+        android:id="@+id/tidioChat"
+        android:name="com.desynatadmin.ui.home.supportChatManagement.TidioChatFragment"
+        android:label="Tidio Chat Fragment"
+        tools:layout="@layout/fragment_tidio_chat"/>
 
     <fragment
         android:id="@+id/withdrawalRequest"

@@ -34,10 +34,12 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
+import com.desynatadmin.utils.openCustomizeDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -104,6 +106,15 @@ class PaymentManagementFragment : BaseFragment() {
     private var totalRevenue=0.0
     private var orderCommission=0.0
     private var specialCommission=0.0
+
+    private val months = listOf(
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+    )
+
+    private var selectedMonthIndex: Int = -1
+    private var selectedYear: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -240,6 +251,26 @@ class PaymentManagementFragment : BaseFragment() {
                 4 -> banner()
             }
 
+            etMonth.setOnClickListener {
+                openMonthPopup(it) { index, month ->
+                    selectedMonthIndex = index
+                    binding?.etMonth?.text = month
+                    applyMonthYearFilter()
+                }
+            }
+
+            etYear.setOnClickListener {
+                openYearPopup(it) { year ->
+                    selectedYear = year
+                    binding?.etYear?.text = year.toString()
+                    applyMonthYearFilter()
+                }
+            }
+
+            btnReset.setOnClickListener {
+                resetMonthYearFilter()
+            }
+
             btnExport.setOnClickListener {
 
             }
@@ -315,6 +346,7 @@ class PaymentManagementFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
+                binding?.mainProgressBar?.isVisible = false
                 pagination = false
                 isObserver = false
             }
@@ -332,6 +364,7 @@ class PaymentManagementFragment : BaseFragment() {
 
         viewModel.getOrderPaymentResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
+                binding?.mainProgressBar?.isVisible = false
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
@@ -401,6 +434,7 @@ class PaymentManagementFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
+                binding?.mainProgressBar?.isVisible = false
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
@@ -432,9 +466,9 @@ class PaymentManagementFragment : BaseFragment() {
                 }
 
 
-                val oldSize = orderPaymentList.size
+                val oldSize = planPaymentList.size
                 if (!pagination){
-                    orderPaymentList.clear()
+                    planPaymentList.clear()
                 }
                 updatePage()
                 val newItems = response.data.orders.data ?: emptyList()
@@ -463,6 +497,7 @@ class PaymentManagementFragment : BaseFragment() {
         viewModel.getBannerPaymentResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                binding?.mainProgressBar?.isVisible = false
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
@@ -494,9 +529,9 @@ class PaymentManagementFragment : BaseFragment() {
                 }
 
 
-                val oldSize = orderPaymentList.size
+                val oldSize = bannerPaymentList.size
                 if (!pagination){
-                    orderPaymentList.clear()
+                    bannerPaymentList.clear()
                 }
                 updatePage()
                 val newItems = response.data.orders.data ?: emptyList()
@@ -525,6 +560,7 @@ class PaymentManagementFragment : BaseFragment() {
         viewModel.getGiftCardPaymentResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                binding?.mainProgressBar?.isVisible = false
                 binding?.progressBar?.isVisible = false
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
@@ -556,9 +592,9 @@ class PaymentManagementFragment : BaseFragment() {
                 }
 
 
-                val oldSize = orderPaymentList.size
+                val oldSize = giftCardPaymentList.size
                 if (!pagination){
-                    orderPaymentList.clear()
+                    giftCardPaymentList.clear()
                 }
                 updatePage()
                 val newItems = response.data.orders.data ?: emptyList()
@@ -597,6 +633,14 @@ class PaymentManagementFragment : BaseFragment() {
             rvPlan.isVisible = false
             rvGift.isVisible = false
             rvBanner.isVisible = false
+            if (startDate!=null){
+                etMonth.text= CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","MMMM")
+                etYear.text= CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","yyyy")
+            }
+            else{
+                etMonth.text= ""
+                etYear.text= ""
+            }
             tvOrders.setTextColor(requireActivity().getColor(R.color.white))
             tvPlan.setTextColor(requireActivity().getColor(R.color.black))
             tvGiftCard.setTextColor(requireActivity().getColor(R.color.black))
@@ -618,6 +662,14 @@ class PaymentManagementFragment : BaseFragment() {
             rvPlan.isVisible = true
             rvGift.isVisible = false
             rvBanner.isVisible = false
+            if (startDatePlan!=null){
+                etMonth.text= CommonMethod.formatDate(startDatePlan.toString(),"yyyy-MM-dd","MMMM")
+                etYear.text= CommonMethod.formatDate(startDatePlan.toString(),"yyyy-MM-dd","yyyy")
+            }
+            else{
+                etMonth.text= ""
+                etYear.text= ""
+            }
             tvPlan.setTextColor(requireActivity().getColor(R.color.white))
             tvOrders.setTextColor(requireActivity().getColor(R.color.black))
             tvGiftCard.setTextColor(requireActivity().getColor(R.color.black))
@@ -639,6 +691,13 @@ class PaymentManagementFragment : BaseFragment() {
             rvPlan.isVisible = false
             rvGift.isVisible = true
             rvBanner.isVisible = false
+            if (startDateGift!=null){
+                etMonth.text= CommonMethod.formatDate(startDateGift.toString(),"yyyy-MM-dd","MMMM")
+                etYear.text= CommonMethod.formatDate(startDateGift.toString(),"yyyy-MM-dd","yyyy")
+            } else{
+                etMonth.text= ""
+                etYear.text= ""
+            }
             tvGiftCard.setTextColor(requireActivity().getColor(R.color.white))
             tvPlan.setTextColor(requireActivity().getColor(R.color.black))
             tvOrders.setTextColor(requireActivity().getColor(R.color.black))
@@ -660,6 +719,15 @@ class PaymentManagementFragment : BaseFragment() {
             rvPlan.isVisible = false
             rvGift.isVisible = false
             rvBanner.isVisible = true
+            if (startDateBanner!=null){
+                etMonth.text= CommonMethod.formatDate(startDateBanner.toString(),"yyyy-MM-dd","MMMM")
+
+                etYear.text= CommonMethod.formatDate(startDateBanner.toString(),"yyyy-MM-dd","yyyy")
+            }
+            else{
+                etMonth.text= ""
+                etYear.text= ""
+            }
             tvBanner.setTextColor(requireActivity().getColor(R.color.white))
             tvPlan.setTextColor(requireActivity().getColor(R.color.black))
             tvGiftCard.setTextColor(requireActivity().getColor(R.color.black))
@@ -758,7 +826,7 @@ class PaymentManagementFragment : BaseFragment() {
         }
         viewModel.getOrderPayment(map)
         if (loading) {
-            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+            binding?.mainProgressBar?.isVisible = true
         }
         isObserver = true
     }
@@ -782,7 +850,7 @@ class PaymentManagementFragment : BaseFragment() {
         }
         viewModel.getPlanPayment(map)
         if (loading) {
-            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+            binding?.mainProgressBar?.isVisible = true
         }
         isObserver = true
     }
@@ -805,7 +873,7 @@ class PaymentManagementFragment : BaseFragment() {
         }
         viewModel.getGiftCardPayment(map)
         if (loading) {
-            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+            binding?.mainProgressBar?.isVisible = true
         }
         isObserver = true
     }
@@ -830,7 +898,7 @@ class PaymentManagementFragment : BaseFragment() {
 
         viewModel.getBannerPayment(map)
         if (loading) {
-            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+           binding?.mainProgressBar?.isVisible = true
         }
         isObserver = true
     }
@@ -924,14 +992,14 @@ class PaymentManagementFragment : BaseFragment() {
             }
 
             etFrom.setOnClickListener {
-                openCustomDatePicker(requireActivity()){date,timestamp->
+                openCustomizeDatePicker(requireActivity(),maxDate = System.currentTimeMillis()){date,timestamp->
                     etFrom.text=date
                     selectedStartDateTimeStamp=timestamp
                 }
 
             }
             etTo.setOnClickListener {
-                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
+                openCustomizeDatePicker(requireActivity(), minDate = selectedStartDateTimeStamp,maxDate = System.currentTimeMillis()){date,timestamp->
                     etTo.text=date
                     selectedEndDateTimeStamp=timestamp
                 }
@@ -1035,15 +1103,20 @@ class PaymentManagementFragment : BaseFragment() {
                     when(type) {
                         1 -> {
                             startDate = date
+                           fromTimestamp = selectedStartDateTimeStamp
                         }
                         2 -> {
                             startDatePlan = date
+                            fromTimestampPlan = selectedStartDateTimeStamp
                         }
+
                         3 -> {
                             startDateGift = date
+                            fromTimestampGift = selectedStartDateTimeStamp
                         }
                         4 -> {
                             startDateBanner = date
+                            fromTimestampBanner = selectedStartDateTimeStamp
                         }
                     }
                 }
@@ -1053,15 +1126,19 @@ class PaymentManagementFragment : BaseFragment() {
                     when(type) {
                         1 -> {
                             endDate = date
+                            toTimestamp = selectedEndDateTimeStamp
                         }
                         2 -> {
                             endDatePlan = date
+                            toTimestampPlan = selectedEndDateTimeStamp
                         }
                         3 -> {
                             endDateGift = date
+                            toTimestampGift = selectedEndDateTimeStamp
                         }
                         4 -> {
                             endDateBanner = date
+                            toTimestampBanner = selectedEndDateTimeStamp
                         }
                     }
                 }
@@ -1121,6 +1198,132 @@ class PaymentManagementFragment : BaseFragment() {
                 }
             }
             tvTotalRevenue.text = "${CommonMethod.formatDoubleValue(totalRevenue)} KD"
+        }
+    }
+
+    private fun openMonthPopup(anchor: View, onMonthSelected: (Int, String) -> Unit) {
+        val popup = PopupMenu(requireContext(), anchor)
+
+        months.forEachIndexed { index, month ->
+            popup.menu.add(0, index, index, month)
+        }
+
+        popup.setOnMenuItemClickListener { item ->
+            val monthIndex = item.itemId
+            val monthName = months[monthIndex]
+            onMonthSelected(monthIndex, monthName)
+            true
+        }
+
+        popup.show()
+    }
+
+    private fun openYearPopup(anchor: View, onYearSelected: (Int) -> Unit) {
+        val popup = PopupMenu(requireContext(), anchor)
+
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
+        for (year in currentYear downTo 2000) {
+            popup.menu.add(0, year, year, year.toString())
+        }
+
+        popup.setOnMenuItemClickListener { item ->
+            val selectedYear = item.itemId
+            onYearSelected(selectedYear)
+            true
+        }
+
+        popup.show()
+    }
+
+    private fun applyMonthYearFilter() {
+        if (selectedMonthIndex == -1 || selectedYear == -1) return
+
+        binding?.btnReset?.isVisible = true
+        val calendar = Calendar.getInstance()
+
+        calendar.set(selectedYear, selectedMonthIndex, 1)
+        val startDateStr = CommonMethod.formatDate(
+            "${selectedYear}-${selectedMonthIndex + 1}-01",
+            "yyyy-M-dd",
+            "yyyy-MM-dd"
+        )
+
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+        val lastDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val endDateStr = CommonMethod.formatDate(
+            "${selectedYear}-${selectedMonthIndex + 1}-$lastDay",
+            "yyyy-M-dd",
+            "yyyy-MM-dd"
+        )
+
+        when (type) {
+            1 -> {
+                startDate = startDateStr
+                endDate = endDateStr
+            }
+            2 -> {
+                startDatePlan = startDateStr
+                endDatePlan = endDateStr
+            }
+            3 -> {
+                startDateGift = startDateStr
+                endDateGift = endDateStr
+            }
+            4 -> {
+                startDateBanner = startDateStr
+                endDateBanner = endDateStr
+            }
+        }
+
+        currentPage = 1
+
+        when (type) {
+            1 -> getOrderPayment()
+            2 -> getPlanPayment()
+            3 -> getGiftCardPayment()
+            4 -> getBannerPayment()
+        }
+    }
+
+    private fun resetMonthYearFilter() {
+        binding?.btnReset?.isVisible = false
+        selectedMonthIndex = -1
+        selectedYear = -1
+
+        binding?.etMonth?.text = ""
+        binding?.etYear?.text = ""
+
+        binding?.etMonth?.hint = "Select Month"
+        binding?.etYear?.hint = "Select Year"
+
+        when (type) {
+            1 -> {
+                startDate = null
+                endDate = null
+            }
+            2 -> {
+                startDatePlan = null
+                endDatePlan = null
+            }
+            3 -> {
+                startDateGift = null
+                endDateGift = null
+            }
+            4 -> {
+                startDateBanner = null
+                endDateBanner = null
+            }
+        }
+
+        currentPage = 1
+
+        when (type) {
+            1 -> getOrderPayment()
+            2 -> getPlanPayment()
+            3 -> getGiftCardPayment()
+            4 -> getBannerPayment()
         }
     }
 

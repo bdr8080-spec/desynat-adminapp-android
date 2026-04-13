@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemPaymentBinding
 import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
@@ -14,6 +15,47 @@ class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayLis
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val paymentData = paymentList[position]
+            tvViewMore.isVisible = true
+            tvViewMore.setOnClickListener {
+                if (tvViewMore.text == "View More"){
+                    tvViewMore.text = "View Less"
+                    view2.isVisible = true
+                    tvDiscount.isVisible = true
+                    tvDiscountValue.isVisible = true
+                    tvCommission.isVisible = true
+                    tvCommissionEarned.isVisible = true
+
+                    tvSeller.isVisible = true
+                    tvSellerName.isVisible = true
+                    if (paymentData?.order?.promocodeDetails!=null){
+                        tvApplied.isVisible = true
+                        tvAppliedPromocode.isVisible = true
+                    }
+                    else{
+                        tvApplied.isVisible = false
+                        tvAppliedPromocode.isVisible = false
+                    }
+                }
+                else{
+                    tvViewMore.text = "View More"
+                    view2.isVisible = false
+
+                    tvDiscount.isVisible = false
+                    tvDiscountValue.isVisible = false
+                    tvCommission.isVisible = false
+                    tvCommissionEarned.isVisible = false
+                    tvApplied.isVisible = false
+                    tvAppliedPromocode.isVisible = false
+                    tvSeller.isVisible = false
+                    tvSellerName.isVisible = false
+                }
+            }
+
+            tvSellerName.text = paymentData?.productDetails?.sellerDetails?.firstName+" "+ paymentData?.productDetails?.sellerDetails?.lastName
+            tvAppliedPromocode.text = paymentData?.order?.promocodeDetails?.nameEnglish
+            tvCommissionEarned.text = "${CommonMethod.formatPrice(paymentData?.adminCommission?.toDoubleOrNull()?:0.0)} KD"
+            tvDiscountValue.text = "${CommonMethod.formatPrice(paymentData?.totalDiscount?.toDoubleOrNull()?:0.0)} KD"
+
             tvUserName.text = paymentData?.userDetails?.fullName
                 tvOrderId.text = "#${paymentData?.order?.id}"
             tvTransactionId.text = "#${paymentData?.order?.transactionId?:"28673"}"

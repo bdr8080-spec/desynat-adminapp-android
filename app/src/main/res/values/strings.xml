@@ -57,7 +57,7 @@
     <string name="password_and_confirm_password_didn_t_match">"Password and Confirm Password didn't match"</string>
     <string name="password_reset_successfully">Password Reset successfully !</string>
 
-  //home
+    //home
     <string name="hi">Hi %1$s</string>
     <string name="welcome">Welcome !</string>
     <string name="choose_country">Choose Country</string>
@@ -116,7 +116,8 @@
     <string name="upcoming">Upcoming</string>
     <string name="paid">Paid</string>
     <string name="active">Active</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

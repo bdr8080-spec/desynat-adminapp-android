@@ -43,6 +43,8 @@ class LiveEventFragment : BaseFragment() {
     private var channelId = ""
     private var token = ""
     private var appId = ""
+    private var isVideoSetup = false
+
     private var basicAuth = ""
     private var uidValue = 0
     private var isMuted = false
@@ -191,10 +193,15 @@ class LiveEventFragment : BaseFragment() {
         override fun onUserJoined(uid: Int, elapsed: Int) {
             Log.d("LIVE_TEST", "Host joined: $uid")
 
+            if (!isVideoSetup) {
+                isVideoSetup = true
+
                 activity?.runOnUiThread {
                     setupRemoteVideo(uid)
                     showNoDataUI(false)
+                    startUserCount()
                 }
+            }
 
         }
 
@@ -211,14 +218,22 @@ class LiveEventFragment : BaseFragment() {
             elapsed: Int
         ) {
             Log.d("LIVE_TEST", "Remote video state: $state uid: $uid")
+            if (state == 2 && !isVideoSetup) { // decoding
+                isVideoSetup = true
 
+                activity?.runOnUiThread {
+                    setupRemoteVideo(uid)
+                    showNoDataUI(false)
+                    startUserCount()
+                }
+            }
         }
 
 
         override fun onUserOffline(uid: Int, reason: Int) {
             Log.d("LIVE_TEST", "Host left")
             activity?.runOnUiThread {
-
+                stopUserCount()
                 binding?.videoContainer?.removeAllViews()
 
                 AgoraManager.getEngine()?.setupRemoteVideo(
@@ -246,8 +261,10 @@ class LiveEventFragment : BaseFragment() {
             tvNoDataFound.isVisible = isShow
             tvToolbar.isVisible = isShow
             tvLive.isVisible = !isShow
+            tvAudienceCount.isVisible = !isShow
             relMute.isVisible = !isShow
             tvNoDataFound.text = "No event found"
+            if (isShow) stopUserCount()
         }
     }
 
@@ -259,6 +276,7 @@ class LiveEventFragment : BaseFragment() {
             tvAudienceCount.isVisible = !isShow
             relMute.isVisible = !isShow
             tvNoDataFound.text = "Waiting for host to join..."
+            if (isShow) stopUserCount()
         }
     }
 
@@ -282,7 +300,6 @@ class LiveEventFragment : BaseFragment() {
             uidValue,
             options
         )
-        userCountHandler.post(userCountRunnable)
 
     }
 
@@ -356,11 +373,11 @@ class LiveEventFragment : BaseFragment() {
     private fun setUserCountData(audienceTotal: Int?) {
         binding?.apply {
             if ((audienceTotal ?: 0) > 0) {
-                tvAudienceCount.isVisible = true
+             //   tvAudienceCount.isVisible = true
                 tvAudienceCount.text = "Viewers : $audienceTotal"
             } else {
                 //   tvAudienceCount.isVisible = false
-                tvAudienceCount.isVisible = true
+              //  tvAudienceCount.isVisible = true
                 tvAudienceCount.text = "Viewers : 0"
             }
         }
@@ -374,6 +391,15 @@ class LiveEventFragment : BaseFragment() {
         println(base64Encoded)
         basicAuth = "Basic " + base64Encoded
         Log.d("LIVE_TEST", "base64Encoded: $base64Encoded")
+    }
+
+    private fun startUserCount() {
+        userCountHandler.removeCallbacks(userCountRunnable)
+        userCountHandler.post(userCountRunnable)
+    }
+
+    private fun stopUserCount() {
+        userCountHandler.removeCallbacks(userCountRunnable)
     }
 
 }

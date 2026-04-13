@@ -27,7 +27,7 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         app:layout_constraintTop_toBottomOf="@+id/tvToolbar"
         app:layout_constraintBottom_toTopOf="@+id/ivBackArrow">
 
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/tab"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:weightSum="4"
         app:layout_constraintTop_toBottomOf="@+id/tvToolbar">
@@ -174,7 +174,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="102893.00 KD"
+                        tools:text="102893.00 KD"
                         android:textSize="@dimen/_12sdp"
                         android:textColor="@color/black"
                         android:gravity="center"
@@ -215,7 +215,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="102893.00 KD"
+                        tools:text="102893.00 KD"
                         android:textSize="@dimen/_12sdp"
                         android:textColor="@color/black"
                         android:gravity="center"
@@ -242,7 +242,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/clDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -253,28 +253,26 @@
                     android:id="@+id/tvChooseMonth"
                     style="@style/edit_text_title"
                     android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:text="Choose Month"
                     android:textSize="@dimen/_12sdp"
                     android:fontFamily="@font/poppins_medium"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tvChooseYear"
-                    app:layout_constraintTop_toBottomOf="@+id/etCountry" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvChooseYear"
                     style="@style/edit_text_title"
                     android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:text="Choose Year"
                     android:textSize="@dimen/_12sdp"
                     android:fontFamily="@font/poppins_medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvChooseMonth"
-                    app:layout_constraintTop_toBottomOf="@+id/etCountry" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/etFrom"
+                    android:id="@+id/etMonth"
                     style="@style/edit_text"
                     android:layout_width="0dp"
                     android:layout_centerVertical="true"
@@ -286,12 +284,12 @@
                     android:focusable="false"
                     android:hint="Jan"
                     android:paddingVertical="@dimen/_7sdp"
-                    app:layout_constraintEnd_toStartOf="@+id/etTo"
+                    app:layout_constraintEnd_toStartOf="@+id/etYear"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvChooseMonth" />
 
                 <TextView
-                    android:id="@+id/etTo"
+                    android:id="@+id/etYear"
                     style="@style/edit_text"
                     android:layout_width="0dp"
                     android:layout_centerVertical="true"
@@ -303,10 +301,20 @@
                     android:focusable="false"
                     android:hint="2026"
                     android:paddingVertical="@dimen/_7sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/etFrom"
+                    app:layout_constraintBottom_toBottomOf="@+id/etMonth"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/etFrom"
-                    app:layout_constraintTop_toTopOf="@+id/etFrom" />
+                    app:layout_constraintStart_toEndOf="@+id/etMonth"
+                    app:layout_constraintTop_toTopOf="@+id/etMonth" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
+                    android:id="@+id/btnReset"
+                    app:layout_constraintTop_toBottomOf="@id/etMonth"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/button"
+                    android:text="Reset"
+                    android:layout_marginTop="@dimen/_10sdp" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -353,7 +361,7 @@
                 android:id="@+id/btnExport"
                 style="@style/button"
                 android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:background="@drawable/button_stroke"
                 android:text="Export"
                 android:textColor="@color/brown"
@@ -367,7 +375,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 tools:listitem="@layout/item_payment"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
@@ -378,7 +386,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 tools:listitem="@layout/item_payment"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
@@ -389,7 +397,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 tools:listitem="@layout/item_payment"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
@@ -400,7 +408,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 tools:listitem="@layout/item_payment"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
@@ -433,7 +441,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_back_brand_disable"/>
@@ -459,7 +467,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/_15sdp"
-        android:paddingBottom="@dimen/_25sdp"
+        android:paddingBottom="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_next_brand"/>
@@ -470,6 +478,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/brown" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/mainProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

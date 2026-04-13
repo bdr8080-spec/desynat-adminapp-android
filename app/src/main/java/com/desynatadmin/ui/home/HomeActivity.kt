@@ -328,15 +328,15 @@ override fun onBackPressed() {
             }
 
 
-//            rlTicketManagement.setOnClickListener {
-//                controller.navigate(R.id.ticketManagement)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlTicketManagement.setOnClickListener {
+                controller.navigate(R.id.ticketManagement)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
 
-//            rlSupportChat.setOnClickListener {
-//                controller.navigate(R.id.supportChat)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlSupportChat.setOnClickListener {
+                controller.navigate(R.id.supportChat)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
 
 //            rlPayoutManagement.setOnClickListener {
 //                controller.navigate(R.id.sellerPayout)
