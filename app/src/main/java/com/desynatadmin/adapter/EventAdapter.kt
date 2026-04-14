@@ -10,6 +10,11 @@ import com.desynatadmin.databinding.ItemEventBinding
 import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.TimeZone
+import kotlin.to
 
 class EventAdapter(var context: Context,var list : List<GetLiveStreamingRoomResponse.Data>, val click : OnCLick) :
     RecyclerView.Adapter<EventAdapter.ViewHolder>() {
@@ -35,8 +40,13 @@ class EventAdapter(var context: Context,var list : List<GetLiveStreamingRoomResp
             Glide.with(ivProfileImage).load(item?.sellerDetails?.profilePic).transform(CircleCrop()).into(ivProfileImage)
             tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item?.createdAt.toString())}"
             tvLiveTiming.text = "Live Timing ${CommonMethod.customizeChangeDateFormat(item?.timeslotDetails?.date.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yy")}"
-
-            tvTime.text = "${item?.timeslotDetails?.from}"
+            val isShow = isLiveTime(item.timeslotDetails)
+            btnWatchLive.apply {
+                alpha = if (isShow) 1f else 0.4f
+                isClickable = isShow
+                isEnabled = isShow
+            }
+            tvTime.text = "${CommonMethod.customizeChangeDateFormatKuwait(item?.timeslotDetails?.from.toString(),"hh:mm a","hh:mm a")}"
             btnWatchLive.setOnClickListener {
                 click.onClick(position)
             }
@@ -50,6 +60,31 @@ class EventAdapter(var context: Context,var list : List<GetLiveStreamingRoomResp
     interface OnCLick{
         fun onClick(position: Int)
     }
+
+    private fun isLiveTime(timeslot: GetLiveStreamingRoomResponse.Data.TimeslotDetails): Boolean {
+        return try {
+            val date = timeslot.date
+            val fromTime = timeslot.from
+            val toTime = timeslot.to
+
+            val formatter = SimpleDateFormat("yyyy-MM-dd hh:mm a", java.util.Locale.ENGLISH)
+
+            val fromTimeDefault = CommonMethod.customizeChangeDateFormatKuwait(fromTime,"hh:mm a","hh:mm a")
+            val toTimeDefault = CommonMethod.customizeChangeDateFormatKuwait(toTime,"hh:mm a","hh:mm a")
+
+            val startDateTime = formatter.parse("$date $fromTimeDefault")
+            val endDateTime = formatter.parse("$date $toTimeDefault")
+
+            val currentTime = Date()
+
+            currentTime.after(startDateTime) && currentTime.before(endDateTime)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
 
 }
 

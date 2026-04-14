@@ -152,6 +152,9 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             val todayFormat1 = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
             binding?.tvSelectedDateToSlot?.text = "Today, "+todayFormat1.format(Calendar.getInstance().time)
 
+            val current =  SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            timeSlotDate = current.format(Calendar.getInstance().time)
+
             liveRequestAdapter = LiveRequestAdapter(requireActivity(),liveRequestList,object :LiveRequestAdapter.OnClick{
                 override fun click(position: Int, clickType: Int) {
                     selectedPos = position

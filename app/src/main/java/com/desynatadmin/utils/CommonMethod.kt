@@ -405,8 +405,25 @@ object CommonMethod {
     fun customizeChangeDateFormat(inputDate: String,inputFormat:String="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",outputFormat:String="dd MMM,yyyy"): String {
         val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.ENGLISH).apply {
             timeZone = TimeZone.getTimeZone("UTC")}
-        val targetFormat = SimpleDateFormat(outputFormat, Locale.ENGLISH)
+        val targetFormat = SimpleDateFormat(outputFormat, Locale.ENGLISH).apply {
+            timeZone = TimeZone.getDefault()
+        }
+        val date: Date
+        try {
+            date = originalFormat.parse(inputDate)
+            return targetFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            return ""
+        }
+    }
 
+    fun customizeChangeDateFormatKuwait(inputDate: String,inputFormat:String="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",outputFormat:String="dd MMM,yyyy"): String {
+        val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.ENGLISH).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Kuwait")}
+        val targetFormat = SimpleDateFormat(outputFormat, Locale.ENGLISH).apply {
+            timeZone = TimeZone.getDefault()
+        }
         val date: Date
         try {
             date = originalFormat.parse(inputDate)
@@ -426,7 +443,9 @@ object CommonMethod {
 
     fun formatDate(date:String,input:String="dd/MM/yyyy",output:String="yyyy-MM-dd"):String{
         val inputFormat = SimpleDateFormat(input, Locale.getDefault())
-        val outputFormat = SimpleDateFormat(output, Locale.getDefault())
+        val outputFormat = SimpleDateFormat(output, Locale.ENGLISH).apply {
+            timeZone = TimeZone.getDefault()
+        }
         val date = inputFormat.parse(date)
         return outputFormat.format(date!!)
     }

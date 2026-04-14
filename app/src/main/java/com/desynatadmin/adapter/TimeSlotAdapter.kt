@@ -7,14 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemTimeSlotBinding
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
+import com.desynatadmin.utils.CommonMethod
 
 class TimeSlotAdapter(var context:Context, var timeSLotList: ArrayList<GetTimeSlotResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<TimeSlotAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemTimeSlotBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val timeSLotData = timeSLotList[position]
+            tvTime.text = "${CommonMethod.customizeChangeDateFormatKuwait(timeSLotData?.from.toString(),"hh:mm a", outputFormat = "hh:mm a")} - ${CommonMethod.customizeChangeDateFormatKuwait(timeSLotData?.to.toString(),"hh:mm a", outputFormat = "hh:mm a")}"
 
-            tvTime.text = "${timeSLotData?.from} TO ${timeSLotData?.to}"
+          //  tvTime.text = "${timeSLotData?.from} TO ${timeSLotData?.to}"
 
             if(timeSLotData?.status==1){
                 ivSwitch.setImageResource(R.drawable.switch_on)

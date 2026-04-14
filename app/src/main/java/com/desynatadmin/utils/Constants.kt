@@ -1,10 +1,14 @@
 package com.desynatadmin.utils
 
+import java.util.TimeZone
+
 object Constants {
 
     // const val BASE_URL = "http://157.241.119.72" //old
 //    const val BASE_URL = "http://65.2.12.223" //new
     const val BASE_URL = "https://desynat.com"
+
+    val KUWAIT_TIMEZONE: TimeZone = TimeZone.getTimeZone("Asia/Kuwait")
 
     var language=""
     const val ENGLISH = "en"
