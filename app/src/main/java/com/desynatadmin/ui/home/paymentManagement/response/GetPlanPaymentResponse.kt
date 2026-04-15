@@ -93,15 +93,15 @@ data class GetPlanPaymentResponse(
             ) {
                 data class PlanInfo(
                     @SerializedName("commission")
-                    val commission: Int,
+                    val commission: String,
                     @SerializedName("commission_percentage")
-                    val commissionPercentage: Int,
+                    val commissionPercentage: String,
                     @SerializedName("country_id")
                     val countryId: Int,
                     @SerializedName("created_at")
                     val createdAt: String,
                     @SerializedName("discounted_price")
-                    val discountedPrice: Any,
+                    val discountedPrice: String,
                     @SerializedName("duration")
                     val duration: Int,
                     @SerializedName("duration_type")
@@ -129,7 +129,7 @@ data class GetPlanPaymentResponse(
                     @SerializedName("plan_name_english")
                     val planNameEnglish: String,
                     @SerializedName("price")
-                    val price: Int,
+                    val price: String,
                     @SerializedName("product_type")
                     val productType: String,
                     @SerializedName("status")

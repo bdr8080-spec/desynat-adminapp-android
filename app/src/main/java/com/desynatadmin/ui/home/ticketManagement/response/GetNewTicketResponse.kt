@@ -91,6 +91,14 @@ data class GetNewTicketResponse(
                 val fcmToken: String,
                 @SerializedName("full_name")
                 val fullName: String,
+                @SerializedName("first_name")
+                val firstName: String,
+                @SerializedName("last_name")
+                val lastName: String,
+                @SerializedName("full_name_english")
+                val fullNameEnglish: String,
+                @SerializedName("full_name_arabic")
+                val fullNameArabic: String,
                 @SerializedName("id")
                 val id: Int,
                 @SerializedName("lang")

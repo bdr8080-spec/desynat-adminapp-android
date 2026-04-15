@@ -19,12 +19,23 @@ class TicketAdapter(var context:Context, private var ticketList: ArrayList<GetNe
             val ticketData = ticketList[position]
 
             when(ticketData?.senderType){
-                1-> tvSubmittedBy.text = "Customer"
-                2-> tvSubmittedBy.text = "Seller"
-                3-> tvSubmittedBy.text = "Affiliate"
-                4-> tvSubmittedBy.text = "Driver"
+                1-> {
+                    tvSubmittedBy.text = "Customer"
+                    tvRequestByName.text = ticketData?.senderDetails?.fullName
+                }
+                2->{
+                    tvRequestByName.text = ticketData?.senderDetails?.firstName+" "+ticketData?.senderDetails?.lastName
+                 tvSubmittedBy.text = "Seller"}
+                3-> {
+                    tvRequestByName.text = ticketData?.senderDetails?.fullName
+                    tvSubmittedBy.text = "Affiliate"
             }
-            tvRequestByName.text = ticketData?.senderDetails?.fullName
+                4-> {
+                    tvRequestByName.text = ticketData?.senderDetails?.fullNameEnglish
+                    tvSubmittedBy.text = "Driver"
+                }
+            }
+
             tvTicketIdValue.text = ticketData?.ticketId
             tvTicketTypeValue.text = ticketData?.ticketTypeDetails?.name
             tvRaisedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd MMM yy, hh:mm a")

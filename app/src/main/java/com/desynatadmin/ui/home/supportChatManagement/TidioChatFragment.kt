@@ -1,5 +1,9 @@
 package com.desynatadmin.ui.home.supportChatManagement
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -10,14 +14,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentTidioChatBinding
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class TidioChatFragment : BaseFragment() {
@@ -25,6 +32,8 @@ class TidioChatFragment : BaseFragment() {
     private var binding: FragmentTidioChatBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var userInfo : LoginResponse.Data?=null
+    private var filePathCallback: ValueCallback<Array<Uri>>? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,80 +60,121 @@ class TidioChatFragment : BaseFragment() {
                 databaseEnabled = true
                 allowFileAccess = true
                 allowContentAccess = true
-                useWideViewPort = true
-                loadWithOverviewMode = true
                 javaScriptCanOpenWindowsAutomatically = true
                 loadsImagesAutomatically = true
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                 }
-
-                userAgentString =
-                    "Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 Chrome/100 Safari/537.36"
             }
 
-            webViewClient = object : WebViewClient() {
+            // JS bridge for loader hide
+            addJavascriptInterface(WebAppInterface(), "Android")
 
+            webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
 
-                    Log.d("WEBVIEW", "url : ${url}")
                     Log.d("WEBVIEW", "Page Loaded")
-                    if (!url.isNullOrEmpty() && url.contains("tidio_chat.html")) {
-                        injectUserData(view)
-                    }
-
-                    if (!url.isNullOrEmpty() && url.contains("#mobile-widget")) {
-                        Log.d("WEBVIEW", "Chat fully loaded")
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            binding?.progressBar?.visibility = View.GONE
-                            binding?.view?.visibility = View.GONE
-                        },300)
-
-                    }
-                }
-
-                override fun onReceivedError(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                    error: WebResourceError?
-                ) {
-                    Log.e("WEBVIEW", "Error: ${error?.description}")
+                    injectUserData(view)
                 }
             }
 
-            webChromeClient = WebChromeClient()
+            webChromeClient = object : WebChromeClient() {
+
+                override fun onShowFileChooser(
+                    webView: WebView?,
+                    filePathCallback: ValueCallback<Array<Uri>>?,
+                    fileChooserParams: FileChooserParams?
+                ): Boolean {
+
+                    this@TidioChatFragment.filePathCallback?.onReceiveValue(null)
+                    this@TidioChatFragment.filePathCallback = filePathCallback
+
+                    return try {
+                        val intent = fileChooserParams?.createIntent()
+
+                        intent?.addFlags(
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                        )
+
+                        fileChooserLauncher.launch(intent)
+                        true
+                    } catch (e: Exception) {
+                        this@TidioChatFragment.filePathCallback = null
+                        false
+                    }
+                }
+            }
 
             loadUrl("file:///android_asset/tidio_chat.html")
         }
     }
 
+    private var fileChooserLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+            if (filePathCallback == null) return@registerForActivityResult
+
+            val data = result.data
+
+            val results = if (result.resultCode == Activity.RESULT_OK && data != null) {
+
+                val uri = data.data
+
+                if (uri != null) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        val file = uriToFileSafe(requireContext(), uri)
+
+                        file?.let {
+                            arrayOf(Uri.fromFile(it))
+                        }
+
+                    } else {
+                        arrayOf(uri)
+                    }
+
+                } else null
+
+            } else null
+
+            if (results == null) {
+                filePathCallback?.onReceiveValue(null)
+            } else {
+                filePathCallback?.onReceiveValue(results)
+            }
+
+            filePathCallback = null
+        }
 
     private fun injectUserData(view: WebView?) {
 
-        val name = "${userInfo?.fullName ?: ""}".trim()
+        val name = userInfo?.fullName ?: ""
         val email = userInfo?.email ?: ""
-        val userId = userInfo?.id.toString() ?: ""
-        val role = "admin"
+        val userId = userInfo?.id.toString()
 
-        val safeName = escapeJs(name)
-        val safeEmail = escapeJs(email)
-        val safeUserId = escapeJs(userId)
-        val safeRole = escapeJs(role)
+        val js = "javascript:setUserData('$name','$email','$userId','user')"
 
-        val js = "javascript:setUserData('$safeName','$safeEmail','$safeUserId','$safeRole')"
+        view?.evaluateJavascript(js) {
+            Log.d("WEBVIEW", "User injected")
+        }
+    }
 
-        view?.postDelayed({
-            view.evaluateJavascript(js) {
-                Log.d("WEBVIEW", "User injected")
+
+    inner class WebAppInterface {
+        @JavascriptInterface
+        fun onChatLoaded() {
+            Handler(Looper.getMainLooper()).post {
+                binding?.progressBar?.visibility = View.GONE
+                binding?.view?.visibility = View.GONE
             }
-        }, 500) // 🔥 Important delay for stability
+        }
     }
 
     override fun initControl() {
         binding?.apply {
-
             ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -143,12 +193,26 @@ class TidioChatFragment : BaseFragment() {
 
     }
 
-    private fun escapeJs(value: String): String {
-        return value.replace("'", "\\'")
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
+
+
+    fun uriToFileSafe(context: Context, uri: Uri): File? {
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+
+            val file = File(context.cacheDir, "picked_image_${System.currentTimeMillis()}.jpg")
+            file.outputStream().use { output ->
+                inputStream.copyTo(output)
+            }
+
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 }

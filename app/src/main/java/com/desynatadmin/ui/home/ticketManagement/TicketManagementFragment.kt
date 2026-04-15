@@ -68,6 +68,8 @@ class TicketManagementFragment : BaseFragment() {
     var endDatePast:String?=null
     var fromTimestampPast=0L
     var toTimestampPast=0L
+    var isHandled = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,6 +89,32 @@ class TicketManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+
+
+            val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
+
+            val openPast = savedStateHandle?.get<Boolean>("openPastTab")
+
+            if (openPast == true) {
+                type = 3
+                past()
+            } else {
+                when(type){
+                    1->new()
+                    2->ongoing()
+                    3->past()
+                }
+            }
+
+           savedStateHandle?.getLiveData<Boolean>("openPastTab")
+                ?.observe(viewLifecycleOwner) { shouldOpenPast ->
+                    if (shouldOpenPast == true) {
+                        past()
+
+                        savedStateHandle.remove<Boolean>("openPastTab")
+                    }
+                }
+
             toolbar.tvToolbar.text = getString(R.string.ticket_management)
 
             ticketAdapter =
@@ -134,11 +162,7 @@ class TicketManagementFragment : BaseFragment() {
                 }
             })
 
-            when(type){
-                1-> new()
-                2-> ongoing()
-                3-> past()
-            }
+
         }
     }
 

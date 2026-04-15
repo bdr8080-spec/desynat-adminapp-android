@@ -88,8 +88,19 @@ class TicketDetailFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 CommonMethod.showSuccessDialog(requireActivity(),response.message)
-                ticketData?.status = response.data.status
-                updateTicketStatusData()
+
+                if (response.data.status == 1) {
+                    findNavController().previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("openPastTab", true)
+
+                    findNavController().popBackStack()
+                }
+                else{
+                    findNavController().popBackStack()
+                }
+//                ticketData?.status = response.data.status
+//                updateTicketStatusData()
                 isObserver = false
             }
         }
@@ -134,9 +145,9 @@ class TicketDetailFragment : BaseFragment() {
 
                 }
                 1->{
-                    btnUpdateStatus.isVisible = false
-                    tvStatusDropDown.isVisible = false
-                    tvStatus.isVisible = false
+                    btnUpdateStatus.isVisible = true
+                    tvStatusDropDown.isVisible = true
+                    tvStatus.isVisible = true
                     tvStatusValue.text = "Resolved"
                     tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                 }
@@ -174,6 +185,13 @@ class TicketDetailFragment : BaseFragment() {
 
             ivBack.setOnClickListener {
                 dialog.dismiss()
+            }
+
+            if(ticketData?.status==1){
+                rbPending.isVisible = true
+            }
+            else{
+                rbPending.isVisible = false
             }
 
             dialogBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
