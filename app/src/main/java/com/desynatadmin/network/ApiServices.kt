@@ -1131,4 +1131,14 @@ interface ApiServices {
             : Response<GetLiveUserCountResponse>
 
 
+    @POST(Constants.UPDATE_PASSWORD)
+    suspend fun updatePassword(
+        @Body map: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.ACCOUNT_SETTING)
+    suspend fun accountSetting(
+        @Body map: HashMap<String,Any>
+    ): Response<LoginResponse>
+
 }

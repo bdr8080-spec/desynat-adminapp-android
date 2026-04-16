@@ -73,6 +73,12 @@ class TicketDetailFragment : BaseFragment() {
             btnUpdateStatus.setOnClickListener {
                 updateTicketStatus()
             }
+
+           ivAttachment.setOnClickListener {
+               CommonMethod.imagePreviewDialog(requireActivity(),ticketData?.file.toString()){
+
+               }
+           }
         }
     }
 

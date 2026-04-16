@@ -23,8 +23,10 @@ import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +38,7 @@ class PromotionalBannerDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     var bannerData: GetPromotionalBannerResponse.Data.Data?=null
+    private var countryList = ArrayList<GetCountryResponse.Data>()
 
 
     override fun onCreateView(
@@ -80,6 +83,11 @@ class PromotionalBannerDetailFragment : BaseFragment() {
     private fun setData() {
         updateStatus()
         binding?.apply {
+            /*SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
+            if(bannerData?.countryId!=null){
+                tvCountry.text = countryList.firstOrNull { it.id == bannerData?.countryId }?.name
+
+            }*/
             Glide.with(requireActivity()).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)
             when(bannerData?.bannerPosition){
                 "1" ->{

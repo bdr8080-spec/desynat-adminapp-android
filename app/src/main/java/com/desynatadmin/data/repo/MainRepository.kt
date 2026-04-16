@@ -2277,6 +2277,28 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val updatePasswordLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updatePassword(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updatePassword(map)
+            },
+            responseLiveData = updatePasswordLiveData
+        )
+    }
+
+    val accountSettingLiveData = SingleLiveEvent<LoginResponse>()
+    suspend fun accountSetting(map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.accountSetting(map)
+            },
+            responseLiveData = accountSettingLiveData
+        )
+    }
+
     val getPlanPaymentLiveData = SingleLiveEvent<GetPlanPaymentResponse>()
     suspend fun getPlanPayment(map: HashMap<String, Any>
     ) {

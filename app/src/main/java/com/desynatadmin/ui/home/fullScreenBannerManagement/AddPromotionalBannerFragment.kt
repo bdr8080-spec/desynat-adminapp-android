@@ -21,8 +21,10 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerRequest
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
+import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.showToast
@@ -41,6 +43,10 @@ class AddPromotionalBannerFragment : BaseFragment() {
         private var isObserver = true
         private var isImageObserver = true
         private var bannerData: GetPromotionalBannerResponse.Data.Data?=null
+
+    private var countryList = ArrayList<GetCountryResponse.Data>()
+    private var selectedCountryCode: String? = null
+
         var startDate:String?=null
         var endDate:String?=null
         var fromTimestamp=0L
@@ -93,6 +99,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
 
         override fun initView() {
+            setCountry()
             val itemJson = arguments?.getString("bannerData")
             binding?.apply {
 
@@ -125,6 +132,13 @@ class AddPromotionalBannerFragment : BaseFragment() {
             binding?.apply {
                 toolbar.ivBack.setOnClickListener {
                     findNavController().popBackStack()
+                }
+
+                etCountry.setOnClickListener {
+                    CommonMethod.showAllCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
+                        etCountry.setText(selectedCountry.name)
+                        selectedCountryCode = selectedCountry.id.toString()
+                    }
                 }
 
                 etPosition.setOnClickListener {
@@ -258,6 +272,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
             viewModel.updatePromotionalBannerResult.observe(viewLifecycleOwner) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
+                //    bannerData?.countryId = selectedCountryCode?.toIntOrNull()?:0
                     bannerData?.uploadBanner = response.data.uploadBanner
                     bannerData?.bannerPosition = response.data.bannerPosition
                     bannerData?.startDate = response.data.startDate
@@ -360,6 +375,10 @@ class AddPromotionalBannerFragment : BaseFragment() {
                         }
                     }
 
+                selectedCountryCode = bannerData?.countryId.toString()
+                if(selectedCountryCode!=null){
+                    etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
+                }
                 if (image==null) {
                     imageUrl = bannerData?.uploadBanner.toString()
                 }
@@ -382,6 +401,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
         private fun addBanner(){
             val request = AddPromotionalBannerRequest(
+              //  countryId = selectedCountryCode.toString(),
                 bannerPosition = bannerPosition,
                 startDate = startDate.toString(),
                 endDate = endDate.toString(),
@@ -411,25 +431,29 @@ class AddPromotionalBannerFragment : BaseFragment() {
         private fun validation(): Boolean {
             Log.e("image", "validation: ${image}")
             binding?.apply {
-                if (image==null&&bannerData==null){
+                if(image==null&&bannerData==null){
                     showToast("Please upload banner image")
                     return false
                 }
-                else if (etPosition.text.toString().trim().isEmpty()) {
+              /*  else if(etCountry.text.toString().isBlank()) {
+                    showToast("Please select country")
+                    return false
+                }*/
+                else if(etPosition.text.toString().trim().isEmpty()) {
                     showToast("Please select position")
                     return false
                 }
-                else if (etStartDate.text.toString().trim().isEmpty()) {
+                else if(etStartDate.text.toString().trim().isEmpty()) {
                     showToast("Please select start date")
                     return false
                 }
 
-                else if (etEndDate.text.toString().trim().isEmpty()) {
+                else if(etEndDate.text.toString().trim().isEmpty()) {
                     showToast("Please select end date")
                     return false
                 }
 
-                else if (!isEndDateValid()) {
+                else if(!isEndDateValid()) {
                     showToast("From Date should be smaller then to date")
                     return false
                 }
@@ -520,6 +544,11 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
             binding?.clDays?.isVisible = true
         }
+    }
+
+    private fun setCountry() {
+        countryList.clear()
+        SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
     }
 
     }

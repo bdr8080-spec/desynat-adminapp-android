@@ -27,6 +27,7 @@ class PromotionalBannerAdapter(var context:Context, var bannerList: ArrayList<Ge
             tvTitleName.isVisible = false
             tvCountryName.isVisible = false
             tvCountry.isVisible = false
+         //   tvCountryName.text = bannerData?.countryInfo?.name
                 tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 Glide.with(context).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)

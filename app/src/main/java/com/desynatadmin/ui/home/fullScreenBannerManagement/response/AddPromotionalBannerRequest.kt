@@ -4,6 +4,8 @@ package com.desynatadmin.ui.home.fullScreenBannerManagement.response
 import com.google.gson.annotations.SerializedName
 
 data class AddPromotionalBannerRequest(
+   /* @SerializedName("country_id")
+    val countryId: String,*/
     @SerializedName("banner_id")
     val bannerId: String?=null,
     @SerializedName("category")

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desynatadmin.adapter.AssignAffiliateUserAdapter
 import com.desynatadmin.data.repo.MainRepository
+import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.AcceptAffiliateUserResponse
@@ -1620,6 +1621,24 @@ val deleteFullScreenBannerResult: LiveData<CommonResponse>
     fun getBannerPayment(map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getBannerPayment(map)
+        }
+    }
+
+val updatePasswordResult: LiveData<CommonResponse>
+        get() = repository.updatePasswordLiveData
+
+    fun updatePassword(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updatePassword(map)
+        }
+    }
+
+val accountSettingResult: LiveData<LoginResponse>
+        get() = repository.accountSettingLiveData
+
+    fun accountSetting(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.accountSetting(map)
         }
     }
 

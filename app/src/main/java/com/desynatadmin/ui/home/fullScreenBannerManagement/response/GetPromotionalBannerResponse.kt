@@ -42,6 +42,10 @@ data class GetPromotionalBannerResponse(
         val total: Int
     ) {
         data class Data(
+            @SerializedName("country_id")
+            var countryId: Int,
+            @SerializedName("country_info")
+            val countryInfo: CountryInfo,
             @SerializedName("added_by")
             val addedBy: String,
             @SerializedName("Admin_verify")
@@ -83,8 +87,34 @@ data class GetPromotionalBannerResponse(
             @SerializedName("updated_at")
             val updatedAt: String,
             @SerializedName("upload_banner")
-            var uploadBanner: String
+            var uploadBanner: String,
         ) {
+                data class CountryInfo(
+                    @SerializedName("code")
+                    val code: String,
+                    @SerializedName("currency_code")
+                    val currencyCode: String,
+                    @SerializedName("currency_name")
+                    val currencyName: String,
+                    @SerializedName("currency_symbol")
+                    val currencySymbol: String,
+                    @SerializedName("dial_code")
+                    val dialCode: String,
+                    @SerializedName("exchange_rate_to_usd")
+                    val exchangeRateToUsd: String,
+                    @SerializedName("flag")
+                    val flag: String,
+                    @SerializedName("flag1")
+                    val flag1: String,
+                    @SerializedName("id")
+                    val id: Int,
+                    @SerializedName("iso_code")
+                    val isoCode: String,
+                    @SerializedName("iso_code_number")
+                    val isoCodeNumber: String,
+                    @SerializedName("name")
+                    val name: String
+                )
             data class CategoryDetails(
                 @SerializedName("color_code")
                 val colorCode: String,
