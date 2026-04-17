@@ -312,7 +312,7 @@
                 android:id="@+id/tvGiftCard"
                 style="@style/drawer_text"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_toLeftOf="@+id/ivGoGiftCard"
+                android:layout_toStartOf="@+id/ivGoGiftCard"
                 android:layout_toEndOf="@id/ivGiftCard"
                 android:text="Gift Card Category Management"
                 tools:ignore="RtlHardcoded" />
