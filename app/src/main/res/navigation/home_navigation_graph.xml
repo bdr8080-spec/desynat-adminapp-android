@@ -64,6 +64,25 @@
     </fragment>
 
     <fragment
+        android:id="@+id/adminProfile"
+        android:name="com.desynatadmin.ui.home.fragment.AdminProfileDetailFragment"
+        android:label="Admin Profile Fragment"
+        tools:layout="@layout/fragment_admin_profile_detail">
+
+        <action
+            android:id="@+id/action_adminProfile_to_subcategoryFragment"
+            app:destination="@id/changePassword" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/changePassword"
+        android:name="com.desynatadmin.ui.home.fragment.ChangePasswordFragment"
+        android:label="Change Password Fragment"
+        tools:layout="@layout/fragment_change_password"/>
+
+    <fragment
         android:id="@+id/subcategory"
         android:name="com.desynatadmin.ui.home.categorySubCategoryManagement.SubCategoryFragment"
         android:label="Sub Category Fragment"

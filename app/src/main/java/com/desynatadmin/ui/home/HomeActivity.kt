@@ -11,6 +11,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.BottomNavAdapter
 import com.desynatadmin.base.BaseActivity
@@ -126,8 +128,6 @@ class HomeActivity : BaseActivity() {
             )
             setUpDrawerContent()
         }
-
-        setDrawerData(SharedPreference.get(this).getUser())
     }
 
     override fun initControl() {
@@ -209,19 +209,29 @@ override fun onBackPressed() {
     fun setDrawerData(user: LoginResponse.Data?) {
         drawerBinding.tvName.text = user?.fullName
         drawerBinding.tvEmail.text = user?.email
-        /*drawerBinding.ivProfileImage.load(user?.profileImage) {
-            crossfade(true)
-            placeholder(R.drawable.placeholder)
-            error(R.drawable.placeholder)
-        }*/
+
+        Glide.with(this).load(user?.profilePic).placeholder(R.drawable.ic_user).into(drawerBinding.ivProfileImage)
+
     }
 
     private fun setUpDrawerContent(){
         drawerBinding.apply {
 
+            ivProfileImage.setOnClickListener {
+                val user = SharedPreference.get(this@HomeActivity).getUser()
+                if (user?.profilePic!=null){
+                    CommonMethod.imagePreviewDialog(this@HomeActivity,user?.profilePic.toString())
+                }
+            }
+
             ivBack.setOnClickListener {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
+
+         /*   ivEdit.setOnClickListener {
+                controller.navigate(R.id.adminProfile)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }*/
 
             relLogout.setOnClickListener {
                 viewModel.logout()

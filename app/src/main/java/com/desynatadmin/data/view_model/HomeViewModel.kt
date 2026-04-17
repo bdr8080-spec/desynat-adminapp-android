@@ -1632,6 +1632,14 @@ val updatePasswordResult: LiveData<CommonResponse>
             repository.updatePassword(map)
         }
     }
+val getProfileResult: LiveData<LoginResponse>
+        get() = repository.getProfileLiveData
+
+    fun getProfile() {
+        viewModelScope.launch {
+            repository.getProfile()
+        }
+    }
 
 val accountSettingResult: LiveData<LoginResponse>
         get() = repository.accountSettingLiveData
@@ -1641,7 +1649,6 @@ val accountSettingResult: LiveData<LoginResponse>
             repository.accountSetting(map)
         }
     }
-
 
     val getPlanPaymentResult: LiveData<GetPlanPaymentResponse>
         get() = repository.getPlanPaymentLiveData

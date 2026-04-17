@@ -23,6 +23,7 @@ import com.desynatadmin.databinding.FragmentOrderDetailBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -251,7 +252,7 @@ class OrderDetailFragment : BaseFragment() {
                             tvCancellationReason.isVisible = false
                             llComplete.isVisible = false
                             btnInvoice.isVisible = true
-                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivPicked.setImageResource(R.drawable.ic_order_picked)
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
@@ -270,11 +271,38 @@ class OrderDetailFragment : BaseFragment() {
                             }
                             else{
                                 clDriver.isVisible = false
-                                btnAssignDriver.isVisible = true
+                                btnAssignDriver.isVisible = false
                             }
                         }
 
                         "2"->{
+                            tvStatus.text ="Active"
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            llComplete.isVisible = false
+                            btnInvoice.isVisible = true
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+
+                            if (orderDetailData?.assignStatus=="1"){
+                                btnAssignDriver.isVisible = false
+                                clDriver.isVisible = true
+                                ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                    crossfade(true)
+                                    placeholder(R.drawable.ic_placeholder)
+                                    error(R.drawable.ic_placeholder)
+                                }
+                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+
+                            }
+                            else{
+                                btnAssignDriver.isVisible = true
+                            }
+
+                        }
+
+                        "2.1"->{
                             tvStatus.text ="Active"
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
@@ -567,7 +595,7 @@ class OrderDetailFragment : BaseFragment() {
             }
 
             btnInvoice.setOnClickListener {
-                CommonMethod.openPdfInBrowser(requireActivity(),"http://157.241.119.72/Invoice/${orderDetailData?.order?.orderId.toString()}")
+                CommonMethod.openPdfInBrowser(requireActivity(),"${Constants.BASE_URL}/Invoice/${orderDetailData?.order?.orderId.toString()}")
                // getInvoice()
               //  CommonMethod.downloadPdf(requireActivity(),orderDetailData?.adminCommission)
             }

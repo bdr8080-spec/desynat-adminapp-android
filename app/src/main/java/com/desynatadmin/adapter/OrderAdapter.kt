@@ -35,8 +35,11 @@ class OrderAdapter(var context:Context, var orderList: ArrayList<GetActiveOrderR
                         if (orderData?.assignStatus=="1"){
                             btnAssignOrder.isVisible = false
                         }
-                        else{
+                        else if(orderData?.deliveryStatus=="2.1"){
                             btnAssignOrder.isVisible = true
+                        }
+                        else{
+                            btnAssignOrder.isVisible = false
                         }
                     }
                     else ->{

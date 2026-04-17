@@ -1136,6 +1136,10 @@ interface ApiServices {
         @Body map: HashMap<String,Any>
     ): Response<CommonResponse>
 
+    @GET(Constants.GET_PROFILE)
+    suspend fun getProfile(
+    ): Response<LoginResponse>
+
     @POST(Constants.ACCOUNT_SETTING)
     suspend fun accountSetting(
         @Body map: HashMap<String,Any>
