@@ -23,6 +23,7 @@ import com.desynatadmin.databinding.FragmentOrderDetailBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.ui.home.orderManagement.response.GetAvailableDeliveryBoyResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -567,7 +568,7 @@ class OrderDetailFragment : BaseFragment() {
             }
 
             btnInvoice.setOnClickListener {
-                CommonMethod.openPdfInBrowser(requireActivity(),"http://157.241.119.72/Invoice/${orderDetailData?.order?.orderId.toString()}")
+                CommonMethod.openPdfInBrowser(requireActivity(),"${Constants.BASE_URL}/Invoice/${orderDetailData?.order?.orderId.toString()}")
                // getInvoice()
               //  CommonMethod.downloadPdf(requireActivity(),orderDetailData?.adminCommission)
             }

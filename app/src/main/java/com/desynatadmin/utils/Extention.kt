@@ -48,6 +48,28 @@ fun AppCompatActivity.statusBarTransparentWithWhite() {
     }
 }
 
+val englishFilter = InputFilter { source, start, end, dest, dstart, dend ->
+
+    val newText = dest.substring(0, dstart) +
+            source.substring(start, end) +
+            dest.substring(dend)
+
+    val regex = Regex("^[a-zA-Z\\s]*$") // 👈 allow empty
+
+    if (regex.matches(newText)) null else ""
+}
+
+
+val arabicFilter = InputFilter { source, start, end, dest, dstart, dend ->
+
+    val newText = dest.substring(0, dstart) +
+            source.substring(start, end) +
+            dest.substring(dend)
+
+    val regex = Regex("^[\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\s]*$") // 👈 allow empty
+
+    if (regex.matches(newText)) null else ""
+}
 
 fun Activity.moveActivity(activity: Activity) {
     startActivity(Intent(this, activity::class.java))

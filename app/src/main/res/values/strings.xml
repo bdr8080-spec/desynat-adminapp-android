@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Desynat Admin</string>
-    <string name="map_key_old">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
-    <string name="map_key">AIzaSyB5LK7zzKS4q9ov0R4LFLgaRyPZdZsTKz4</string>
-    <string name="agora_app_id">564c1a00b81c4d1c91d0a3a22db4a8bd</string>
-    <string name="agora_token">007eJxTYDhyJbPbYHp1B9M0qyLnXaEaa4xfOCnYb2J5wP5vkbh5fJICg6mZSbJhooFBkoVhskmKYbKlYYpBonGikVFKkkmiRVLK/5NnMhsCGRk8db8xMzJAIIjPx5CTWZbqnJGYl5eaY2hkzMAAADQZIig=</string>
-    <string name="google_translator_api_key">AIzaSyB4mtISC8aJQl8DkwEd8DAIpBvuHCleO7s</string>
+    <string name="app_name" translatable="false">Desynat Admin</string>
+    <string name="map_key_old" translatable="false">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
+    <string name="map_key" translatable="false">AIzaSyB5LK7zzKS4q9ov0R4LFLgaRyPZdZsTKz4</string>
+    <string name="agora_app_id" translatable="false">564c1a00b81c4d1c91d0a3a22db4a8bd</string>
+    <string name="agora_token" translatable="false">007eJxTYDhyJbPbYHp1B9M0qyLnXaEaa4xfOCnYb2J5wP5vkbh5fJICg6mZSbJhooFBkoVhskmKYbKlYYpBonGikVFKkkmiRVLK/5NnMhsCGRk8db8xMzJAIIjPx5CTWZbqnJGYl5eaY2hkzMAAADQZIig=</string>
+    <string name="google_translator_api_key" translatable="false">AIzaSyB4mtISC8aJQl8DkwEd8DAIpBvuHCleO7s</string>
 
     //language
     <string name="arabic">Arabic</string>
@@ -12,7 +12,6 @@
     <string name="please_select_language">Please select language</string>
     <string name="select_language">Select language</string>
     <string name="choose_the_language_and_continue_to_get_the_experience_the_app_in_your_preferred_language">Choose the language and continue to get the experience the app in your preferred language.</string>
-
     <string name="channel">desynat notification</string>
     <string name="channel_description">desynat notification for admin alert</string>
     <string name="view_more"><u>View More</u></string>
@@ -117,7 +116,6 @@
     <string name="upcoming">Upcoming</string>
     <string name="paid">Paid</string>
     <string name="active">Active</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 

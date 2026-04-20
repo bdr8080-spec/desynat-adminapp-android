@@ -244,6 +244,12 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
+            ivEdit.setOnClickListener {
+                controller.navigate(R.id.profileDetailsFragment)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+
             rlDeliveryBoyManagement.setOnClickListener {
                 controller.navigate(R.id.deliveryBoy)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)

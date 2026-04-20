@@ -59,8 +59,7 @@ class AdminProfileDetailFragment : BaseFragment() {
             }
         }
     }
-
-    override fun observe() {
+        override fun observe() {
     }
 
 }

@@ -30,6 +30,8 @@ import com.desynatadmin.ui.home.brandManagement.response.AddZoneRequest
 import com.desynatadmin.ui.home.brandManagement.response.PlacePrediction
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.SingleTonDataPass
+import com.desynatadmin.utils.arabicFilter
+import com.desynatadmin.utils.englishFilter
 import com.desynatadmin.utils.showToast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -93,6 +95,9 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     override fun initView() {
+        binding?.etZonaNameAr?.filters = arrayOf(arabicFilter)
+        binding?.etZonaNameEn?.filters = arrayOf(englishFilter)
+
         locationSearchAdapter = LocationSearchAdapter(list) {
             viewModel.httpDetailPlace(it.place_id, getString(R.string.map_key))
             binding?.rvLocation?.isVisible = false
@@ -221,7 +226,6 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
             googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100))
         }
 
-        // 👇 Use custom drawable marker when adding polygon points
         googleMap?.setOnMapClickListener { latLng ->
             polygonPoints.add(latLng)
             googleMap?.addMarker(
