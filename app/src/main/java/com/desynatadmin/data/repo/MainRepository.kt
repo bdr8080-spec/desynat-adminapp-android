@@ -2288,6 +2288,16 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val getProfileLiveData = SingleLiveEvent<LoginResponse>()
+    suspend fun getProfile() {
+        handleApiCall(
+            api = {
+                api.getProfile()
+            },
+            responseLiveData = getProfileLiveData
+        )
+    }
+
     val accountSettingLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun accountSetting(map: HashMap<String, Any>
     ) {

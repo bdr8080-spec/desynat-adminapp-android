@@ -252,7 +252,7 @@ class OrderDetailFragment : BaseFragment() {
                             tvCancellationReason.isVisible = false
                             llComplete.isVisible = false
                             btnInvoice.isVisible = true
-                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivPicked.setImageResource(R.drawable.ic_order_picked)
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
@@ -271,11 +271,38 @@ class OrderDetailFragment : BaseFragment() {
                             }
                             else{
                                 clDriver.isVisible = false
-                                btnAssignDriver.isVisible = true
+                                btnAssignDriver.isVisible = false
                             }
                         }
 
                         "2"->{
+                            tvStatus.text ="Active"
+                            tvCancelReason.isVisible = false
+                            tvCancellationReason.isVisible = false
+                            llComplete.isVisible = false
+                            btnInvoice.isVisible = true
+                            ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
+                            ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
+                            ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
+
+                            if (orderDetailData?.assignStatus=="1"){
+                                btnAssignDriver.isVisible = false
+                                clDriver.isVisible = true
+                                ivDriver.load(orderDetailData?.driverDetails?.profilePic){
+                                    crossfade(true)
+                                    placeholder(R.drawable.ic_placeholder)
+                                    error(R.drawable.ic_placeholder)
+                                }
+                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+
+                            }
+                            else{
+                                btnAssignDriver.isVisible = true
+                            }
+
+                        }
+
+                        "2.1"->{
                             tvStatus.text ="Active"
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false

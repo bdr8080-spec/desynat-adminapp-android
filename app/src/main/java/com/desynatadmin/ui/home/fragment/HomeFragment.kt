@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
@@ -34,6 +35,7 @@ class HomeFragment : BaseFragment() {
     private var isObserver = true
     private var isCountryObserver = true
     private var isNotificationObserver = true
+    private var isProfileObserver = true
     var user : LoginResponse.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
 
@@ -55,6 +57,7 @@ class HomeFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         getNotificationCount()
+        getProfile()
         if(SharedPreference.get(requireActivity()).getCountryList() == null) {
             getCountryApi()
         }
@@ -62,10 +65,6 @@ class HomeFragment : BaseFragment() {
             countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         }
-        user = SharedPreference.get(requireActivity()).getUser()
-       binding?.apply {
-           tvName.text = getString(R.string.hi, user?.fullName)
-       }
     }
 
     override fun initControl() {
@@ -92,6 +91,11 @@ private fun getNotificationCount(){
     isNotificationObserver = true
     }
 
+private fun getProfile(){
+        viewModel.getProfile()
+    isProfileObserver = true
+    }
+
     private fun setCountry() {
         if (!countryList.isNullOrEmpty()) {
             SharedPreference.get(requireActivity()).saveCountryList(countryList)
@@ -110,6 +114,18 @@ private fun getNotificationCount(){
                 countryList.addAll(response.data)
                 setCountry()
         }
+
+        viewModel.getProfileResult.observe(viewLifecycleOwner) { response ->
+            if (isProfileObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                user = response.data
+                SharedPreference.get(requireActivity()).saveUser(response.data)
+                (requireActivity() as? HomeActivity)?.setDrawerData(SharedPreference.get(requireActivity()).getUser())
+                setData()
+                isProfileObserver = false
+            }
+        }
+
         viewModel.getNotificationCountResult.observe(viewLifecycleOwner) { response ->
             if (isNotificationObserver){
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -207,6 +223,13 @@ private fun getNotificationCount(){
         binding?.relCount?.isVisible = true
         binding?.tvCount?.text = data.toString()
         ShortcutBadger.applyCount(requireActivity(), data)
+    }
+
+    private fun setData(){
+        binding?.apply {
+            tvName.text = getString(R.string.hi, user?.fullName)
+            Glide.with(requireActivity()).load(user?.profilePic).placeholder(R.drawable.ic_user).into(ivProfileImage)
+        }
     }
 
 }

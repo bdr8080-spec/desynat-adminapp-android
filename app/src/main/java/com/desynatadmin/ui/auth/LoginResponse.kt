@@ -16,6 +16,8 @@ data class LoginResponse(
         val accessToken: String,
         @SerializedName("country_code")
         val countryCode: String,
+        @SerializedName("profile_pic")
+        val profilePic: String,
         @SerializedName("created_at")
         val createdAt: String,
         @SerializedName("device_type")

@@ -230,6 +230,7 @@ object Constants {
     const val GET_PLAN_PAYMENT = "/api/admin/get_plan_payments"
     const val GET_BANNER_PAYMENT = "/api/admin/get_banner_payments"
     const val UPDATE_PASSWORD = "/api/admin/update_password"
+    const val GET_PROFILE = "/api/admin/get_profile"
     const val ACCOUNT_SETTING = "/api/admin/account_setting"
 
 }
