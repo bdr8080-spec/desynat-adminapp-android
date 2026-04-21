@@ -117,10 +117,9 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     }
 
     override fun initView() {
-        if(SharedPreference.get(requireActivity()).getCountryList() == null) {
+        if (SharedPreference.get(requireActivity()).getCountryList() == null) {
             viewModel.getCountry()
-        }
-        else{
+        } else {
             countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
             setCountry()
@@ -149,7 +148,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                         tvDropdown.visibility = View.GONE
                         pagingLayout.visibility = View.INVISIBLE
                         //   zoneListRecyclerView.visibility = View.VISIBLE
-                        SingleTonDataPass.countryId = serviceCityList?.get(position)?.country_id ?: ""
+                        SingleTonDataPass.countryId =
+                            serviceCityList?.get(position)?.country_id ?: ""
                         SingleTonDataPass.cityId = serviceCityList?.get(position)?.id ?: ""
                         hitZoneList()
                         SingleTonDataPass.cityName = serviceCityList?.get(position)?.name ?: ""
@@ -220,7 +220,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 //update
         binding?.apply {
             tvToolbar.setOnClickListener {
-                 handleBackPress()
+                handleBackPress()
             }
             tvDropdown.setOnClickListener {
                 if (cuountyVisible) {
@@ -236,69 +236,68 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             floatingAction.setOnClickListener {
                 when (key) {
                     "1" -> {
-                        Log.e("citylist", "initControl: ${cityList}" )
-                            val dialog = BottomSheetDialog(requireContext())
-                            val sheetBinding = AddCityBottomsheetBinding.inflate(layoutInflater)
-                            dialog.setContentView(sheetBinding.root)
-                            var isCityVisible = false
-                            sheetBinding.btnClose.setOnClickListener { dialog.dismiss() }
-                            var cityId = ""
-                            if (!cityList.isNullOrEmpty()) {
-                                sheetBinding.apply {
-                                    tvCountry.isVisible = true
-                                    tvDropdown.isVisible = true
-                                    submitBtn.isVisible = true
-                                    tvAlreadyAdded.isVisible = false
-                                }
-                                sheetBinding.cityRecycler.adapter = ListAdapter(
-                                    cityList ?: arrayListOf(),
-                                    object : ListAdapter.OnCLick {
-                                        override fun onClick(position: Int) {
-                                            sheetBinding.tvDropdown.text =
-                                                cityList?.get(position)?.name
-                                            cityId = cityList?.get(position)?.id.toString()
-                                            sheetBinding.cityRecycler.isVisible = false
-                                            isCityVisible = false
-                                        }
-                                    })
+                        Log.e("citylist", "initControl: ${cityList}")
+                        val dialog = BottomSheetDialog(requireContext())
+                        val sheetBinding = AddCityBottomsheetBinding.inflate(layoutInflater)
+                        dialog.setContentView(sheetBinding.root)
+                        var isCityVisible = false
+                        sheetBinding.btnClose.setOnClickListener { dialog.dismiss() }
+                        var cityId = ""
+                        if (!cityList.isNullOrEmpty()) {
+                            sheetBinding.apply {
+                                tvCountry.isVisible = true
+                                tvDropdown.isVisible = true
+                                submitBtn.isVisible = true
+                                tvAlreadyAdded.isVisible = false
                             }
-                            else{
-                                sheetBinding.apply {
-                                    tvCountry.isVisible = false
-                                    tvDropdown.isVisible = false
-                                    submitBtn.isVisible = false
-                                    tvAlreadyAdded.isVisible = true
-                                    if (message!="") {
-                                        tvAlreadyAdded.text = message
+                            sheetBinding.cityRecycler.adapter = ListAdapter(
+                                cityList ?: arrayListOf(),
+                                object : ListAdapter.OnCLick {
+                                    override fun onClick(position: Int) {
+                                        sheetBinding.tvDropdown.text =
+                                            cityList?.get(position)?.name
+                                        cityId = cityList?.get(position)?.id.toString()
+                                        sheetBinding.cityRecycler.isVisible = false
+                                        isCityVisible = false
                                     }
+                                })
+                        } else {
+                            sheetBinding.apply {
+                                tvCountry.isVisible = false
+                                tvDropdown.isVisible = false
+                                submitBtn.isVisible = false
+                                tvAlreadyAdded.isVisible = true
+                                if (message != "") {
+                                    tvAlreadyAdded.text = message
                                 }
                             }
+                        }
 
-                            sheetBinding.submitBtn.setOnClickListener {
-                                if (cityId.isNullOrEmpty()) {
-                                    showToast("Please select city")
-                                } else {
-                                    val map = HashMap<String, Any>()
-                                    map["city_id"] = cityId
-                                    viewModel.hitAddServiceCity(
-                                        SharedPreference.get(requireContext()).accessToken,
-                                        map
-                                    )
-                                    dialog?.dismiss()
-                                }
+                        sheetBinding.submitBtn.setOnClickListener {
+                            if (cityId.isNullOrEmpty()) {
+                                showToast("Please select city")
+                            } else {
+                                val map = HashMap<String, Any>()
+                                map["city_id"] = cityId
+                                viewModel.hitAddServiceCity(
+                                    SharedPreference.get(requireContext()).accessToken,
+                                    map
+                                )
+                                dialog?.dismiss()
                             }
+                        }
 
-                            sheetBinding.tvDropdown.setOnClickListener {
-                                if (isCityVisible) {
-                                    sheetBinding.cityRecycler.isVisible = false
-                                    isCityVisible = false
-                                } else {
-                                    sheetBinding.cityRecycler.isVisible = true
-                                    isCityVisible = true
-                                }
+                        sheetBinding.tvDropdown.setOnClickListener {
+                            if (isCityVisible) {
+                                sheetBinding.cityRecycler.isVisible = false
+                                isCityVisible = false
+                            } else {
+                                sheetBinding.cityRecycler.isVisible = true
+                                isCityVisible = true
                             }
+                        }
 
-                            dialog.show()
+                        dialog.show()
                     }
 
                     "2" -> {
@@ -309,19 +308,19 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                 }
             }
 
-           /* // Optional back button to return from Zone → City view
-            imBackward.setOnClickListener {
-                if (key == "2") {
-                    recyclerView.visibility = View.VISIBLE
-                    tvCountry.visibility = View.VISIBLE
-                    tvDropdown.visibility = View.VISIBLE
-                    pagingLayout.visibility = View.VISIBLE
-                    zoneListRecyclerView.visibility = View.GONE
-                    key = "1"
-                } else {
-                    navController.popBackStack()
-                }
-            }*/
+            /* // Optional back button to return from Zone → City view
+             imBackward.setOnClickListener {
+                 if (key == "2") {
+                     recyclerView.visibility = View.VISIBLE
+                     tvCountry.visibility = View.VISIBLE
+                     tvDropdown.visibility = View.VISIBLE
+                     pagingLayout.visibility = View.VISIBLE
+                     zoneListRecyclerView.visibility = View.GONE
+                     key = "1"
+                 } else {
+                     navController.popBackStack()
+                 }
+             }*/
         }
     }
 
@@ -415,7 +414,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             cityList?.clear()
             cityList?.addAll(response.data)
             message = response.message
-            if (key!="2"){
+            if (key != "2") {
                 hitServiceApi()
             }
 
@@ -432,26 +431,24 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             binding?.tvPages?.text = "$pageNo/$lastPage"
             serviceCityList?.clear()
             serviceCityList?.addAll(response?.data?.data ?: arrayListOf())
-            if (serviceCityList.isNullOrEmpty()){
+            if (serviceCityList.isNullOrEmpty()) {
                 binding?.noData?.isVisible = true
                 binding?.recyclerView?.isVisible = false
-            }else{
+            } else {
                 binding?.noData?.isVisible = false
                 binding?.recyclerView?.isVisible = true
             }
             cityAdapter.notifyDataSetChanged()
 
-            if (pageNo<lastPage){
+            if (pageNo < lastPage) {
                 binding?.imForward?.setImageResource(R.drawable.ic_next_brand)
-            }
-            else{
+            } else {
                 binding?.imForward?.setImageResource(R.drawable.ic_next_brand_disable)
             }
 
-            if (pageNo>1){
+            if (pageNo > 1) {
                 binding?.imBackward?.setImageResource(R.drawable.ic_back_brand)
-            }
-            else{
+            } else {
                 binding?.imBackward?.setImageResource(R.drawable.ic_back_brand_disable)
             }
 
@@ -459,10 +456,9 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
         viewModel.getChangeCityStatus.observe(viewLifecycleOwner) { response ->
             ProgressDialogUtils.getInstance().hideProgress()
-            if(response?.data?.status == 0){
+            if (response?.data?.status == 0) {
                 showToast("City Unblock successfully")
-            }
-            else{
+            } else {
                 showToast("City block successfully")
             }
             hitServiceApi()
