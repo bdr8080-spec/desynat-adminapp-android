@@ -248,7 +248,17 @@ class AddPromotionalBannerFragment : BaseFragment() {
                 }
             }
 
-            viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
+          /*  viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
+                if (isImageObserver) {
+                    ProgressDialogUtils.getInstance().hideProgress()
+                    response?.let {
+                        imageUrl = response.data.url
+                        addBanner()
+                    }
+                    isImageObserver = false
+                }
+            }*/
+            viewModel.uploadWithResolutionPromotionalApiResult.observe(viewLifecycleOwner) { response ->
                 if (isImageObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
                     response?.let {
@@ -423,7 +433,8 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
 
         fun uploadFile(){
-            viewModel.uploadImage(image)
+//            viewModel.uploadImage(image)
+            viewModel.uploadWithResolutionPromotionalApi(image)
             ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
             isImageObserver = true
         }

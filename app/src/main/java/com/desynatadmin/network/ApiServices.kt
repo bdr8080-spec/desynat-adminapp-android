@@ -155,6 +155,12 @@ interface ApiServices {
         @Part("type") type: RequestBody? = null
     ): Response<FileUploadResponse>
 
+  @Multipart
+    @POST(Constants.UPLOAD_WITH_RESOLUTION_PROMOTIONAL)
+    suspend fun uploadWithResolutionPromotional(
+        @Part file: MultipartBody.Part? = null,
+    ): Response<FileUploadResponse>
+
 
     @POST(Constants.LOGIN)
     suspend fun login(

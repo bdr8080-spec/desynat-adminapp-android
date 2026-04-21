@@ -162,6 +162,7 @@ object Constants {
     const val UPDATE_TIME_SLOT_STATUS = "/api/admin/block_unblock_timeslot"
     const val UPLOAD_VIDEO_IMAGE = "/api/uploadFile"
     const val UPLOAD_WITH_RESOLUTION = "/api/uploadWithResolution"
+    const val UPLOAD_WITH_RESOLUTION_PROMOTIONAL = "/api/uploadWithResolutionPromotional"
 
     const val GET_NEW_AFFILIATE_USER = "/api/admin/get_new_affilaited_users"
     const val GET_APPROVED_AFFILIATE_USER = "/api/admin/get_approved_affilaited_users"

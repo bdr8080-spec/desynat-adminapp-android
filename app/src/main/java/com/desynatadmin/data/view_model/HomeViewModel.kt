@@ -167,6 +167,16 @@ class HomeViewModel @Inject constructor(
             repository.uploadWithResolution(image,type)
         }
     }
+ val uploadWithResolutionPromotionalApiResult: LiveData<FileUploadResponse>
+        get() = repository.uploadWithResolutionPromotional
+
+    fun uploadWithResolutionPromotionalApi(
+        image: File?=null
+    ) {
+        viewModelScope.launch {
+            repository.uploadWithResolutionPromotionalApi(image)
+        }
+    }
 
 
     val logoutResult: LiveData<CommonResponse>

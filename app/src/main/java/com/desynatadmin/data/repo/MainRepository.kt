@@ -122,7 +122,6 @@ import com.desynatadmin.utils.toMultipartPart
 import com.desynatadmin.utils.toPlainRequestBody
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -174,6 +173,20 @@ class MainRepository @Inject constructor(
                 )
             },
             responseLiveData = responseUploadWithResolution
+        )
+    }
+
+    val uploadWithResolutionPromotional = SingleLiveEvent<FileUploadResponse>()
+    suspend fun uploadWithResolutionPromotionalApi(
+        imageFile: File? = null
+    ) {
+        handleApiCall(
+            api = {
+                api.uploadWithResolutionPromotional(
+                    imageFile?.toMultipartPart("image")
+                )
+            },
+            responseLiveData = uploadWithResolutionPromotional
         )
     }
 
@@ -588,16 +601,27 @@ class MainRepository @Inject constructor(
 
     val getApprovedData = SingleLiveEvent<ApprovedSellerResponse>()
     suspend fun hitApprovedSellerList(
-        token: String?=null,
-        country_id: String?=null,
-        from_date: String?=null,
-        to_date: String?=null,
-        limit: String?=null,
-        search: String?=null,
-        page: String?=null,
+        token: String? = null,
+        country_id: String? = null,
+        from_date: String? = null,
+        to_date: String? = null,
+        limit: String? = null,
+        search: String? = null,
+        page: String? = null,
     ) {
         handleApiCall(
-            api = { api.hitApprovedSeller(token, country_id, from_date, to_date, limit,limit, search,page) },
+            api = {
+                api.hitApprovedSeller(
+                    token,
+                    country_id,
+                    from_date,
+                    to_date,
+                    limit,
+                    limit,
+                    search,
+                    page
+                )
+            },
             responseLiveData = getApprovedData
         )
     }
@@ -623,7 +647,7 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.hitRejectedSeller(token, country_id, from_date, to_date, limit, search,page)
+                api.hitRejectedSeller(token, country_id, from_date, to_date, limit, search, page)
             },
             responseLiveData = getRejectSellerList
         )
@@ -784,7 +808,7 @@ class MainRepository @Inject constructor(
     val userLiveData = SingleLiveEvent<GetUserResponse>()
     suspend fun getAllUser(
         search: String? = null,
-        page: String?=null,
+        page: String? = null,
         countryId: String? = null,
         fromDate: String? = null,
         toDate: String? = null
@@ -928,7 +952,10 @@ class MainRepository @Inject constructor(
 
     val deliveryBoyLiveData = SingleLiveEvent<GetAllDeliveryBoyResponse>()
     suspend fun getDeliveryBoy(
-        search: String? = null, page: String?=null, fromDate: String? = null, toDate: String? = null
+        search: String? = null,
+        page: String? = null,
+        fromDate: String? = null,
+        toDate: String? = null
     ) {
         handleApiCall(
             api = {
@@ -1689,6 +1716,7 @@ class MainRepository @Inject constructor(
             responseLiveData = approvedAffiliateUserLiveData
         )
     }
+
     val getAssignAffiliateUserLiveData = SingleLiveEvent<GetAssignAffiliateUserResponse>()
     suspend fun getAssignAffiliateUser(
         map: HashMap<String, Any>
@@ -2140,7 +2168,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-   val allReadNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    val allReadNotificationLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun allReadNotification(
         map: HashMap<String, Any>
     ) {
@@ -2165,7 +2193,7 @@ class MainRepository @Inject constructor(
         )
     }
 
- val getNotificationCountLiveData = SingleLiveEvent<GetNotificationCountResponse>()
+    val getNotificationCountLiveData = SingleLiveEvent<GetNotificationCountResponse>()
     suspend fun getNotificationCount(
 
     ) {
@@ -2178,7 +2206,8 @@ class MainRepository @Inject constructor(
     }
 
     val getLiveStreamingRoomLiveData = SingleLiveEvent<GetLiveStreamingRoomResponse>()
-    suspend fun getLiveStreamingRoom(map: HashMap<String, Any>
+    suspend fun getLiveStreamingRoom(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2201,18 +2230,20 @@ class MainRepository @Inject constructor(
     }
 
     val getAgoraTokenLiveData = SingleLiveEvent<GetAgoraTokenResponse>()
-    suspend fun getAgoraToken(token: String, map: HashMap<String,Any>
+    suspend fun getAgoraToken(
+        token: String, map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.getAgoraToken(token,map)
+                api.getAgoraToken(token, map)
             },
             responseLiveData = getAgoraTokenLiveData
         )
     }
 
     val getNewTicketLiveData = SingleLiveEvent<GetNewTicketResponse>()
-    suspend fun getNewTicket(map: HashMap<String, Any>
+    suspend fun getNewTicket(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2223,7 +2254,8 @@ class MainRepository @Inject constructor(
     }
 
     val getOngoingTicketLiveData = SingleLiveEvent<GetNewTicketResponse>()
-    suspend fun getOngoingTicket(map: HashMap<String, Any>
+    suspend fun getOngoingTicket(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2234,7 +2266,8 @@ class MainRepository @Inject constructor(
     }
 
     val getResolvedTicketLiveData = SingleLiveEvent<GetNewTicketResponse>()
-    suspend fun getResolvedTicket(map: HashMap<String, Any>
+    suspend fun getResolvedTicket(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2245,7 +2278,8 @@ class MainRepository @Inject constructor(
     }
 
     val updateTicketStatusLiveData = SingleLiveEvent<UpdateTicketStatusResponse>()
-    suspend fun updateTicketStatus(map: HashMap<String, Any>
+    suspend fun updateTicketStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2256,7 +2290,8 @@ class MainRepository @Inject constructor(
     }
 
     val getGiftCardPaymentLiveData = SingleLiveEvent<GetGiftCardPaymentResponse>()
-    suspend fun getGiftCardPayment(map: HashMap<String, Any>
+    suspend fun getGiftCardPayment(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2267,7 +2302,8 @@ class MainRepository @Inject constructor(
     }
 
     val getBannerPaymentLiveData = SingleLiveEvent<GetBannerPaymentResponse>()
-    suspend fun getBannerPayment(map: HashMap<String, Any>
+    suspend fun getBannerPayment(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2278,7 +2314,8 @@ class MainRepository @Inject constructor(
     }
 
     val updatePasswordLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun updatePassword(map: HashMap<String, Any>
+    suspend fun updatePassword(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2299,7 +2336,8 @@ class MainRepository @Inject constructor(
     }
 
     val accountSettingLiveData = SingleLiveEvent<LoginResponse>()
-    suspend fun accountSetting(map: HashMap<String, Any>
+    suspend fun accountSetting(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2310,7 +2348,8 @@ class MainRepository @Inject constructor(
     }
 
     val getPlanPaymentLiveData = SingleLiveEvent<GetPlanPaymentResponse>()
-    suspend fun getPlanPayment(map: HashMap<String, Any>
+    suspend fun getPlanPayment(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -2321,7 +2360,8 @@ class MainRepository @Inject constructor(
     }
 
     val getOrderPaymentLiveData = SingleLiveEvent<GetOrderPaymentResponse>()
-    suspend fun getOrderPayment(map: HashMap<String, Any>
+    suspend fun getOrderPayment(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
