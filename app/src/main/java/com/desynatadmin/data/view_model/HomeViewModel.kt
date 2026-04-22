@@ -99,6 +99,7 @@ import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResp
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
+import com.desynatadmin.ui.home.refundManagement.response.GetRefundOrderResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
@@ -107,6 +108,11 @@ import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTax
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.AddSubAdminRequest
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminPanelModuleResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.UpdateSubAdminStatusResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -511,9 +517,9 @@ class HomeViewModel @Inject constructor(
     val getZoneData : LiveData<ZoneListResponse>
         get() = repository.getZoneList
 
-    fun hitZoneList(input:String,country_id : String , city_id:String) {
+    fun hitZoneList(input:String,country_id : String,search : String , city_id:String) {
         viewModelScope.launch {
-            repository.hitZoneList(input,country_id, city_id)
+            repository.hitZoneList(input,country_id, search,city_id)
         }
     }
 
@@ -1659,7 +1665,6 @@ val accountSettingResult: LiveData<LoginResponse>
             repository.accountSetting(map)
         }
     }
-
     val getPlanPaymentResult: LiveData<GetPlanPaymentResponse>
         get() = repository.getPlanPaymentLiveData
 
@@ -1668,14 +1673,111 @@ val accountSettingResult: LiveData<LoginResponse>
             repository.getPlanPayment(map)
         }
     }
-
-
     val getOrderPaymentResult: LiveData<GetOrderPaymentResponse>
         get() = repository.getOrderPaymentLiveData
 
     fun getOrderPayment(map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getOrderPayment(map)
+        }
+    }
+
+    val getSubAdminResult: LiveData<GetSubAdminResponse>
+        get() = repository.getSubAdminLiveData
+
+    fun getSubAdmin(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getSubAdmin(map)
+        }
+    }
+
+    val getActiveSubAdminResult: LiveData<GetSubAdminResponse>
+        get() = repository.getActiveSubAdminLiveData
+
+    fun getActiveSubAdmin(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getActiveSubAdmin(map)
+        }
+    }
+
+    val getInactiveSubAdminResult: LiveData<GetSubAdminResponse>
+        get() = repository.getInactiveSubAdminLiveData
+
+    fun getInactiveSubAdmin(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getInactiveSubAdmin(map)
+        }
+    }
+
+    val getSubAdminDetailResult: LiveData<GetSubAdminDetailResponse>
+        get() = repository.getSubAdminDetailLiveData
+
+    fun getSubAdminDetail(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getSubAdminDetail(map)
+        }
+    }
+
+    val updateSubAdminStatusResult: LiveData<UpdateSubAdminStatusResponse>
+        get() = repository.updateSubAdminStatusLiveData
+
+    fun updateSubAdminStatus(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.updateSubAdminStatus(map)
+        }
+    }
+
+    val deleteSubAdminResult: LiveData<CommonResponse>
+        get() = repository.deleteSubAdminLiveData
+
+    fun deleteSubAdmin(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.deleteSubAdmin(map)
+        }
+    }
+
+    val sendSubAdminCredentialResult: LiveData<CommonResponse>
+        get() = repository.sendSubAdminCredentialLiveData
+
+    fun sendSubAdminCredential(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.sendSubAdminCredential(map)
+        }
+    }
+
+    val getAdminPanelModuleResult: LiveData<GetSubAdminPanelModuleResponse>
+        get() = repository.getAdminPanelModuleLiveData
+
+    fun getAdminPanelModule() {
+        viewModelScope.launch {
+            repository.getAdminPanelModule()
+        }
+    }
+
+    val addSubAdminResult: LiveData<CommonResponse>
+        get() = repository.addSubAdminLiveData
+
+    fun addSubAdmin(request: AddSubAdminRequest) {
+        viewModelScope.launch {
+            repository.addSubAdmin(request)
+        }
+    }
+
+    val updateSubAdminResult: LiveData<CommonResponse>
+        get() = repository.updateSubAdminLiveData
+
+    fun updateSubAdmin(request: AddSubAdminRequest) {
+        viewModelScope.launch {
+            repository.updateSubAdmin(request)
+        }
+    }
+
+    val getRefundOrderResult: LiveData<GetRefundOrderResponse>
+        get() = repository.getRefundOrderLiveData
+
+    fun getRefundOrder(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getRefundOrder(map)
         }
     }
 

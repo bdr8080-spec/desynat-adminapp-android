@@ -230,8 +230,20 @@ object Constants {
     const val GET_GIFT_PAYMENT = "/api/admin/get_giftcard_payments"
     const val GET_PLAN_PAYMENT = "/api/admin/get_plan_payments"
     const val GET_BANNER_PAYMENT = "/api/admin/get_banner_payments"
+
     const val UPDATE_PASSWORD = "/api/admin/update_password"
     const val GET_PROFILE = "/api/admin/get_profile"
     const val ACCOUNT_SETTING = "/api/admin/account_setting"
+    const val GET_SUB_ADMIN = "/api/admin/get_sub_admins"
+    const val GET_ACTIVE_SUB_ADMIN = "/api/admin/get_active_sub_admins"
+    const val GET_INACTIVE_SUB_ADMIN = "/api/admin/get_inactive_sub_admins"
+    const val SUB_ADMIN_DETAIL = "/api/admin/sub_admin_details"
+    const val ADD_SUB_ADMIN = "/api/admin/add_sub_admin"
+    const val UPDATE_SUB_ADMIN = "/api/admin/update_sub_admin"
+    const val UPDATE_SUB_ADMIN_STATUS = "/api/admin/update_subadmin_status"
+    const val DELETE_SUB_ADMIN = "/api/admin/delete_sub_admin"
+    const val GET_ADMIN_PANEL_MODULES = "/api/admin/get_admin_panel_modules"
+    const val GET_REFUND_ORDER = "/api/admin/get_refund_orders"
+    const val SEND_SUB_ADMIN_CREDENTIAL = "/api/admin/send_subadmin_credentials"
 
 }

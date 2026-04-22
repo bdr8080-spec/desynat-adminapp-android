@@ -97,6 +97,7 @@ import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResp
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
+import com.desynatadmin.ui.home.refundManagement.response.GetRefundOrderResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
@@ -105,6 +106,11 @@ import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTax
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.AddSubAdminRequest
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminPanelModuleResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.UpdateSubAdminStatusResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -399,6 +405,7 @@ interface ApiServices {
     suspend fun hitZoneList(
         @Header("Token") Token: String,
         @Query("country_id") country_id: String,
+        @Query("search") search: String,
         @Query("city_id") city_id: String,
     ): Response<ZoneListResponse>
 
@@ -1150,5 +1157,59 @@ interface ApiServices {
     suspend fun accountSetting(
         @Body map: HashMap<String,Any>
     ): Response<LoginResponse>
+
+    @POST(Constants.ADD_SUB_ADMIN)
+    suspend fun addSubAdmin(
+        @Body request: AddSubAdminRequest
+    ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_SUB_ADMIN)
+    suspend fun updateSubAdmin(
+        @Body request: AddSubAdminRequest
+    ): Response<CommonResponse>
+
+    @POST(Constants.UPDATE_SUB_ADMIN_STATUS)
+    suspend fun updateSubAdminStatus(
+        @Body map: HashMap<String,Any>
+    ): Response<UpdateSubAdminStatusResponse>
+
+    @POST(Constants.DELETE_SUB_ADMIN)
+    suspend fun deleteSubAdmin(
+        @Body map: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.SEND_SUB_ADMIN_CREDENTIAL)
+    suspend fun sendSubAdminCredential(
+        @Body map: HashMap<String,Any>
+    ): Response<CommonResponse>
+
+    @GET(Constants.GET_SUB_ADMIN)
+    suspend fun getSubAdmin(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetSubAdminResponse>
+
+    @GET(Constants.GET_ACTIVE_SUB_ADMIN)
+    suspend fun getActiveSubAdmin(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetSubAdminResponse>
+
+    @GET(Constants.GET_INACTIVE_SUB_ADMIN)
+    suspend fun getInactiveSubAdmin(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetSubAdminResponse>
+
+    @GET(Constants.SUB_ADMIN_DETAIL)
+    suspend fun getSubAdminDetail(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetSubAdminDetailResponse>
+
+    @GET(Constants.GET_ADMIN_PANEL_MODULES)
+    suspend fun getAdminPanelModule(
+    ): Response<GetSubAdminPanelModuleResponse>
+
+    @GET(Constants.GET_REFUND_ORDER)
+    suspend fun getRefundOrder(
+        @QueryMap map: HashMap<String,Any>
+    ): Response<GetRefundOrderResponse>
 
 }

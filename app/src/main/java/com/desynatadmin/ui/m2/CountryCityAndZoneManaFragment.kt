@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
@@ -30,6 +31,9 @@ import com.desynatadmin.utils.SingleTonDataPass
 import com.desynatadmin.utils.showToast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CountryCityAndZoneManaFragment : BaseFragment() {
@@ -49,6 +53,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
     private var key = "1"
     private var pageNo = 1
     private var lastPage = 1
+    private var searchJob: Job? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +81,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
     private fun handleBackPress() {
         if (key == "2") {
+            binding?.etSearch?.setText("")
+            searchCondition = ""
             hitServiceApi()
             binding?.recyclerView?.visibility = View.VISIBLE
             binding?.tvCountry?.visibility = View.VISIBLE
@@ -92,6 +100,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         viewModel.hitZoneList(
             SharedPreference.get(requireContext()).accessToken,
             SingleTonDataPass.countryId,
+            searchCondition,
             SingleTonDataPass.cityId,
         )
 
@@ -198,7 +207,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             }
         }
 
-
+/*
         binding?.etSearch?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -215,6 +224,26 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
+            }
+        })*/
+
+        binding?.etSearch?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+                    delay(600)
+                    searchCondition = s.toString().trim()
+                    if (key == "1") {
+                        hitServiceApi()
+                    } else {
+                        hitZoneList()
+                    }
+                }
+
             }
         })
 //update
@@ -392,21 +421,29 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                 SharedPreference.get(requireContext()).accessToken,
                 response?.data?.get(0)?.id.toString()
             )
-            binding?.tvDropdown?.text = response?.data?.get(0)?.name
-            countryId = response?.data?.get(0)?.id.toString()
-            binding?.countryRecycler?.adapter =
-                ListAdapter(response.data, object : ListAdapter.OnCLick {
-                    override fun onClick(position: Int) {
-                        cuountyVisible = false
-                        binding?.countryRecycler?.isVisible = false
-                        countryId = response?.data?.get(position)?.id.toString()
-                        binding?.tvDropdown?.text = response?.data?.get(position)?.name
-                        viewModel.hitCity(
-                            SharedPreference.get(requireContext()).accessToken,
-                            countryId
-                        )
+                response?.data?.size?.let {
+                    for (i in 0 until it){
+                        if (response.data[i].name=="Kuwait"){
+                            binding?.tvDropdown?.text = response?.data?.get(i)?.name
+                            countryId = response?.data?.get(i)?.id.toString()
+                        }
                     }
-                })
+                }
+
+                binding?.countryRecycler?.adapter =
+                    ListAdapter(response.data, object : ListAdapter.OnCLick {
+                        override fun onClick(position: Int) {
+                            cuountyVisible = false
+                            binding?.countryRecycler?.isVisible = false
+                            countryId = response?.data?.get(position)?.id.toString()
+                            binding?.tvDropdown?.text = response?.data?.get(position)?.name
+                            viewModel.hitCity(
+                                SharedPreference.get(requireContext()).accessToken,
+                                countryId
+                            )
+                        }
+                    })
+
         }
 
         viewModel.hitCityList.observe(viewLifecycleOwner) { response ->
@@ -503,8 +540,15 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                 SharedPreference.get(requireContext()).accessToken,
                 countryList?.get(0)?.id.toString()
             )
-            binding?.tvDropdown?.text = countryList?.get(0)?.name
-            countryId = countryList?.get(0)?.id.toString()
+
+                for (i in 0 until countryList.size){
+                    if (countryList[i].name=="Kuwait"){
+                        binding?.tvDropdown?.text = countryList?.get(i)?.name
+                        countryId = countryList?.get(i)?.id.toString()
+                    }
+                }
+//            binding?.tvDropdown?.text = countryList?.get(0)?.name
+//            countryId = countryList?.get(0)?.id.toString()
             binding?.countryRecycler?.adapter =
                 ListAdapter(countryList, object : ListAdapter.OnCLick {
                     override fun onClick(position: Int) {

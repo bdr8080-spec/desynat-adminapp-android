@@ -686,6 +686,10 @@
             android:id="@+id/action_subAdminManagement_to_subAdminDetailFragment"
             app:destination="@id/subAdminDetail" />
 
+        <action
+            android:id="@+id/action_subAdminManagement_to_addSubAdminFragment"
+            app:destination="@id/addSubAdmin" />
+
     </fragment>
 
     <fragment
@@ -705,10 +709,5 @@
         android:name="com.desynatadmin.ui.home.subAdminManagement.AddSubAdminFragment"
         android:label="Add SubAdmin Fragment"
         tools:layout="@layout/fragment_add_sub_admin"/>
-    <fragment
-        android:id="@+id/profileDetailsFragment"
-        android:name="com.desynatadmin.ProfileDetailsFragment"
-        android:label="fragment_profile_details"
-        tools:layout="@layout/fragment_profile_details" />
 
 </navigation>

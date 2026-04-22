@@ -176,6 +176,16 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAddSubAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ivBackArrow"
+        android:src="@drawable/ic_add_brand"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivBackArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

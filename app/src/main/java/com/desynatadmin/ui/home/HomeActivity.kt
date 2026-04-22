@@ -228,10 +228,10 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
-         /*   ivEdit.setOnClickListener {
+            ivEdit.setOnClickListener {
                 controller.navigate(R.id.adminProfile)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-            }*/
+            }
 
             relLogout.setOnClickListener {
                 viewModel.logout()
@@ -253,12 +253,6 @@ override fun onBackPressed() {
                 controller.navigate(R.id.user)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
-
-            ivEdit.setOnClickListener {
-                controller.navigate(R.id.profileDetailsFragment)
-                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-            }
-
 
             rlDeliveryBoyManagement.setOnClickListener {
                 controller.navigate(R.id.deliveryBoy)
@@ -354,15 +348,20 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
+            relSubAdmin.setOnClickListener {
+                controller.navigate(R.id.subAdminManagement)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
 //            rlPayoutManagement.setOnClickListener {
 //                controller.navigate(R.id.sellerPayout)
 //                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
 //            }
 
-//            rlRefundManagement.setOnClickListener {
-//                controller.navigate(R.id.refundManagement)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlRefundManagement.setOnClickListener {
+                controller.navigate(R.id.refundManagement)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
 
             rlCms.setOnClickListener {
                 controller.navigate(R.id.cmsManagement)

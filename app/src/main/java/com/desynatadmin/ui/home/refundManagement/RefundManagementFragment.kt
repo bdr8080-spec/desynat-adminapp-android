@@ -24,6 +24,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentRefundManagementBinding
 import com.desynatadmin.databinding.RefundFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.refundManagement.response.GetRefundOrderResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -42,7 +43,7 @@ class RefundManagementFragment : BaseFragment() {
     private var isObserver = true
 
     private var isCountryObserver = true
-    private var refundList = ArrayList<String>()
+    private var refundList = ArrayList<GetRefundOrderResponse.Data.Data>()
     private var refundAdapter : RefundAdapter?=null
     private var searchJob: Job? = null
     private var lastQuery: String? = null
@@ -125,13 +126,15 @@ class RefundManagementFragment : BaseFragment() {
             }
         }
 
-        if (SharedPreference.get(requireActivity()).getCountryList()!=null){
+        if (SharedPreference.get(requireActivity()).getUserCountryList()!=null){
             countryList.clear()
-            SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
+            SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
         }
         else{
             getCountryApi()
         }
+
+        getRefundList()
 
     }
 
@@ -168,7 +171,7 @@ class RefundManagementFragment : BaseFragment() {
     }
 
     private fun getCountryApi(){
-        viewModel.getCountry()
+        viewModel.getUserCountry()
         isCountryObserver = true
     }
 
@@ -190,9 +193,9 @@ class RefundManagementFragment : BaseFragment() {
             map["to_date"] = endDate.toString()
         }
         if (countryId!=null) {
-            map["country"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
+            map["country_name"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
         }
-
+        viewModel.getRefundOrder(map)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -215,7 +218,7 @@ class RefundManagementFragment : BaseFragment() {
             }
         }
 
-        viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
+        viewModel.getUserCountryResult.observe(viewLifecycleOwner) { response ->
             if (isCountryObserver) {
                 countryList.clear()
                 countryList.addAll(response.data)
@@ -224,66 +227,66 @@ class RefundManagementFragment : BaseFragment() {
             }
         }
 
-//                viewModel.getRefunListResult.observe(viewLifecycleOwner) { response ->
-//            if (isObserver) {
-//                ProgressDialogUtils.getInstance().hideProgress()
-//                binding?.progressBar?.isVisible = false
-//                if (isFromSwipe){
-//                    binding?.swipeRefreshLayout?.isRefreshing = false
-//                }
-//
-//                currentPage = response.data.currentPage
-//                totalItem = response.data.total
-//
-//                lastPage = response.data.lastPage
-//
-//                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
-//                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
-//
-//                binding?.tvCount?.text = "$currentStr of $lastStr"
-//
-//                if (currentPage<lastPage){
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
-//                }
-//                else{
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
-//                }
-//
-//                if (currentPage>1){
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
-//                }
-//                else{
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
-//                }
-//
-//
-//                val oldSize = refundList.size
-//                if (!pagination){
-//                    refundList.clear()
-//                }
-//                updatePage()
-//                val newItems = response.data.data ?: emptyList()
-//
-//                refundList.addAll(newItems)
-//                checkData()
-//
-//                if (pagination){
-//
-//                    response.data.data?.size?.let {
-//                        refundAdapter?.notifyItemRangeInserted(oldSize,
-//                            it
-//                        )
-//                    }
-//                }
-//                else{
-//                    refundAdapter?.notifyDataSetChanged()
-//                }
-//
-//                pagination = false
-//                isFromSwipe = false
-//                isObserver = false
-//            }
-//        }
+                viewModel.getRefundOrderResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.currentPage
+                totalItem = response.data.total
+
+                lastPage = response.data.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = refundList.size
+                if (!pagination){
+                    refundList.clear()
+                }
+                updatePage()
+                val newItems = response.data.data ?: emptyList()
+
+                refundList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.data?.size?.let {
+                        refundAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    refundAdapter?.notifyDataSetChanged()
+                }
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
     }
 
     private fun checkData() {
@@ -358,7 +361,7 @@ class RefundManagementFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                CommonMethod.showCountryPicker(
+                CommonMethod.showAllCountryPicker(
                     requireContext(),
                     it,
                     countryList

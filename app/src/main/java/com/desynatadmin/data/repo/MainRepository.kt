@@ -100,6 +100,7 @@ import com.desynatadmin.ui.home.promoCodeManagement.response.UpdatePromoCodeResp
 import com.desynatadmin.ui.home.reasonManagement.response.BlockUnblockReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.reasonManagement.response.UpdateReasonResponse
+import com.desynatadmin.ui.home.refundManagement.response.GetRefundOrderResponse
 import com.desynatadmin.ui.home.response.CommonResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.AddTaxResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
@@ -108,6 +109,11 @@ import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTax
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.UpdateShippingChargeResponse
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.AddSubAdminRequest
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminPanelModuleResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.UpdateSubAdminStatusResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
@@ -735,11 +741,12 @@ class MainRepository @Inject constructor(
     suspend fun hitZoneList(
         token: String,
         country_id: String,
+        search: String,
         city_id: String,
     ) {
         handleApiCall(
             api = {
-                api.hitZoneList(token, country_id, city_id)
+                api.hitZoneList(token, country_id, search,city_id)
             },
             responseLiveData = getZoneList
         )
@@ -2370,6 +2377,139 @@ class MainRepository @Inject constructor(
             responseLiveData = getOrderPaymentLiveData
         )
     }
+
+    val getSubAdminLiveData = SingleLiveEvent<GetSubAdminResponse>()
+    suspend fun getSubAdmin(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getSubAdmin(map)
+            },
+            responseLiveData = getSubAdminLiveData
+        )
+    }
+
+    val getActiveSubAdminLiveData = SingleLiveEvent<GetSubAdminResponse>()
+    suspend fun getActiveSubAdmin(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getActiveSubAdmin(map)
+            },
+            responseLiveData = getActiveSubAdminLiveData
+        )
+    }
+
+    val getInactiveSubAdminLiveData = SingleLiveEvent<GetSubAdminResponse>()
+    suspend fun getInactiveSubAdmin(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getInactiveSubAdmin(map)
+            },
+            responseLiveData = getInactiveSubAdminLiveData
+        )
+    }
+
+    val getSubAdminDetailLiveData = SingleLiveEvent<GetSubAdminDetailResponse>()
+    suspend fun getSubAdminDetail(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getSubAdminDetail(map)
+            },
+            responseLiveData = getSubAdminDetailLiveData
+        )
+    }
+
+    val updateSubAdminLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updateSubAdmin(
+        request: AddSubAdminRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.updateSubAdmin(request)
+            },
+            responseLiveData = updateSubAdminLiveData
+        )
+    }
+
+    val addSubAdminLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addSubAdmin(
+        request: AddSubAdminRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.addSubAdmin(request)
+            },
+            responseLiveData = addSubAdminLiveData
+        )
+    }
+
+    val updateSubAdminStatusLiveData = SingleLiveEvent<UpdateSubAdminStatusResponse>()
+    suspend fun updateSubAdminStatus(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateSubAdminStatus(map)
+            },
+            responseLiveData = updateSubAdminStatusLiveData
+        )
+    }
+
+    val deleteSubAdminLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteSubAdmin(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteSubAdmin(map)
+            },
+            responseLiveData = deleteSubAdminLiveData
+        )
+    }
+
+    val sendSubAdminCredentialLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun sendSubAdminCredential(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.sendSubAdminCredential(map)
+            },
+            responseLiveData = sendSubAdminCredentialLiveData
+        )
+    }
+
+    val getAdminPanelModuleLiveData = SingleLiveEvent<GetSubAdminPanelModuleResponse>()
+    suspend fun getAdminPanelModule(
+    ) {
+        handleApiCall(
+            api = {
+                api.getAdminPanelModule()
+            },
+            responseLiveData = getAdminPanelModuleLiveData
+
+        )
+    }
+
+    val getRefundOrderLiveData = SingleLiveEvent<GetRefundOrderResponse>()
+    suspend fun getRefundOrder(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getRefundOrder(map)
+            },
+            responseLiveData = getRefundOrderLiveData
+        )
+    }
+
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

@@ -22,8 +22,8 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentSubAdminManagementBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
-import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
@@ -42,7 +42,7 @@ class SubAdminManagementFragment : BaseFragment() {
     private var isObserver = true
 
     private var isCountryObserver = true
-    private var subAdminList = ArrayList<GetUserResponse.Data.Data>()
+    private var subAdminList = ArrayList<GetSubAdminResponse.Data.List.Data>()
     private var subAdminAdapter : SubAdminAdapter?=null
     private var type = 1
     private var currentPage = 1
@@ -79,6 +79,8 @@ class SubAdminManagementFragment : BaseFragment() {
 
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
+        countryList.clear()
+        SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
 
             subAdminList.clear()
@@ -87,9 +89,17 @@ class SubAdminManagementFragment : BaseFragment() {
                     when(type){
                         1->{
                             val bundle = Bundle().apply {
-                                putString("subAdminData", Gson().toJson(subAdminList[position]))
+                                putString("id", subAdminList[position].id.toString())
                             }
                             findNavController().navigate(R.id.action_subAdminManagement_to_subAdminDetailFragment,bundle)
+                        }
+                        2->{
+                            selectedPos = position
+                            updateSubAdminStatus()
+                        }
+                        3->{
+                            selectedPos = position
+                            shareSubAdminCredential()
                         }
 
                     }
@@ -175,6 +185,10 @@ class SubAdminManagementFragment : BaseFragment() {
                     binding?.progressBar?.isVisible = true
                 }
             }
+
+            ivAddSubAdmin.setOnClickListener {
+                findNavController().navigate(R.id.action_subAdminManagement_to_addSubAdminFragment)
+            }
         }
 
     }
@@ -202,10 +216,251 @@ class SubAdminManagementFragment : BaseFragment() {
                 isCountryObserver = false
             }
         }
+
+        viewModel.getSubAdminResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.list.currentPage
+                totalItem = response.data.list.total
+
+                lastPage = response.data.list.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = subAdminList.size
+                if (!pagination){
+                    subAdminList.clear()
+                }
+                updatePage()
+                val newItems = response.data.list.data ?: emptyList()
+
+                subAdminList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.list.data?.size?.let {
+                        subAdminAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    subAdminAdapter?.notifyDataSetChanged()
+                }
+
+                setCount(response.data)
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getActiveSubAdminResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.list.currentPage
+                totalItem = response.data.list.total
+
+                lastPage = response.data.list.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = subAdminList.size
+                if (!pagination){
+                    subAdminList.clear()
+                }
+                updatePage()
+                val newItems = response.data.list.data ?: emptyList()
+
+                subAdminList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.list.data?.size?.let {
+                        subAdminAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    subAdminAdapter?.notifyDataSetChanged()
+                }
+
+                setCount(response.data)
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.getInactiveSubAdminResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                currentPage = response.data.list.currentPage
+                totalItem = response.data.list.total
+
+                lastPage = response.data.list.lastPage
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr of $lastStr"
+
+                if (currentPage<lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage>1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+
+                val oldSize = subAdminList.size
+                if (!pagination){
+                    subAdminList.clear()
+                }
+                updatePage()
+                val newItems = response.data.list.data ?: emptyList()
+
+                subAdminList.addAll(newItems)
+                checkData()
+
+                if (pagination){
+
+                    response.data.list.data?.size?.let {
+                        subAdminAdapter?.notifyItemRangeInserted(oldSize,
+                            it
+                        )
+                    }
+                }
+                else{
+                    subAdminAdapter?.notifyDataSetChanged()
+                }
+
+                setCount(response.data)
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
+
+        viewModel.updateSubAdminStatusResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                CommonMethod.showSuccessDialog(requireActivity(),response.message)
+                subAdminList[selectedPos].status = response.data.status
+                subAdminAdapter?.notifyItemChanged(selectedPos)
+                selectedPos = -1
+                isObserver = false
+            }
+        }
+
+        viewModel.sendSubAdminCredentialResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                CommonMethod.showSuccessDialog(requireActivity(),response.message){
+                    selectedPos = -1
+                }
+                isObserver = false
+            }
+        }
+
+
+    }
+
+    private fun updateSubAdminStatus(){
+        val map = HashMap<String,Any>()
+        map["id"] = subAdminList[selectedPos].id
+        viewModel.updateSubAdminStatus(map)
+        isObserver = true
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(),true)
+
     }
 
     private fun getSubAdmin(loading:Boolean=true,search:String?=null){
-      //  viewModel.getSubAdmin(search = search, page = currentPage.toString(),fromDate=startDate, toDate = endDate, countryId = countryId)
+        val map = HashMap<String,Any>()
+        if (search!=null&&search!=""&&search!="null"){
+            map["search"] = search
+        }
+        if (startDate!=null){
+            map["from_date"] = startDate.toString()
+        }
+        if (endDate!=null){
+            map["to_date"] = endDate.toString()
+        }
+        if (countryId!=null){
+            map["country_id"] = countryId.toString()
+        }
+        map["limit"] = pageLimit
+        map["page"] = currentPage
+        when(type){
+            1->viewModel.getSubAdmin(map)
+            2->viewModel.getActiveSubAdmin(map)
+            3->viewModel.getInactiveSubAdmin(map)
+        }
+
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -336,7 +591,7 @@ class SubAdminManagementFragment : BaseFragment() {
 
     private fun activeSubAdmin(){
         binding?.apply {
-            type = 1
+            type = 2
             getSubAdmin()
             tvActive.setTextColor(Color.parseColor("#875C3A"))
             viewActive.setBackgroundColor(Color.parseColor("#875C3A"))
@@ -349,7 +604,7 @@ class SubAdminManagementFragment : BaseFragment() {
 
     private fun inactiveSubAdmin(){
         binding?.apply {
-            type = 1
+            type = 3
             getSubAdmin()
             tvInactive.setTextColor(Color.parseColor("#875C3A"))
             viewInactive.setBackgroundColor(Color.parseColor("#875C3A"))
@@ -360,5 +615,22 @@ class SubAdminManagementFragment : BaseFragment() {
         }
     }
 
+    private fun checkData(){
+        binding?.tvNoDataFound?.isVisible = subAdminList.isEmpty()
+    }
 
+    private fun setCount(data: GetSubAdminResponse.Data){
+        binding?.tvAll?.text = "All(${data.totalCount})"
+        binding?.tvActive?.text = "Active(${data.totalActiveCount})"
+        binding?.tvInactive?.text = "Inactive(${data.totalInactiveCount})"
+    }
+
+    private fun shareSubAdminCredential(){
+        val map = HashMap<String,Any>()
+        map["id"] = subAdminList[selectedPos].id
+        viewModel.sendSubAdminCredential(map)
+        isObserver = true
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(),true)
+
+    }
 }

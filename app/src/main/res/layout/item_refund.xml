@@ -179,6 +179,7 @@
         app:layout_constraintTop_toTopOf="@id/tvCancelled" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvSeller"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -192,6 +193,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvCancelled" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvSellerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -205,6 +207,7 @@
         app:layout_constraintTop_toTopOf="@id/tvSeller" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -218,6 +221,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvSeller" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvCountryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -288,12 +292,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="@string/view_more"
+        android:text="More Info"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvStatusValue"
         app:layout_constraintTop_toTopOf="@id/tvStatusValue" />
+
+    <View
+        android:id="@+id/underline"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_marginTop="-5dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvViewMore"
+        app:layout_constraintStart_toStartOf="@+id/tvViewMore"
+        app:layout_constraintTop_toBottomOf="@id/tvViewMore" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
