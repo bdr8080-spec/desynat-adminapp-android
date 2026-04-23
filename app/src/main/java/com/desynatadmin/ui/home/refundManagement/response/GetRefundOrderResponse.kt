@@ -135,8 +135,88 @@ data class GetRefundOrderResponse(
             @SerializedName("variants_id")
             val variantsId: Int,
             @SerializedName("variation_details")
-            val variationDetails: VariationDetails
+            val variationDetails: VariationDetails,
+            @SerializedName("user_details")
+            val userDetails: UserDetails
         ) {
+
+            data class UserDetails(
+                @SerializedName("accessToken")
+                val accessToken: String,
+                @SerializedName("affiliated_userdetails")
+                val affiliatedUserdetails: Any,
+                @SerializedName("app_notification")
+                val appNotification: Int,
+                @SerializedName("banner_view")
+                val bannerView: String,
+                @SerializedName("country_code")
+                val countryCode: String,
+                @SerializedName("country_info")
+                val countryInfo: CountryInfo,
+                @SerializedName("created_at")
+                val createdAt: String,
+                @SerializedName("device_token")
+                val deviceToken: Any,
+                @SerializedName("device_type")
+                val deviceType: String,
+                @SerializedName("email")
+                val email: String,
+                @SerializedName("email_verified_at")
+                val emailVerifiedAt: Any,
+                @SerializedName("fcm_token")
+                val fcmToken: String,
+                @SerializedName("full_name")
+                val fullName: String,
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("lang")
+                val lang: String,
+                @SerializedName("let")
+                val let: Any,
+                @SerializedName("long")
+                val long: Any,
+                @SerializedName("mobile")
+                val mobile: String,
+                @SerializedName("notification")
+                val notification: Int,
+                @SerializedName("otp")
+                val otp: String,
+                @SerializedName("otp_verify")
+                val otpVerify: String,
+                @SerializedName("profile_image")
+                val profileImage: String,
+                @SerializedName("status")
+                val status: String,
+                @SerializedName("updated_at")
+                val updatedAt: String
+            ) {
+                data class CountryInfo(
+                    @SerializedName("code")
+                    val code: String,
+                    @SerializedName("currency_code")
+                    val currencyCode: String,
+                    @SerializedName("currency_name")
+                    val currencyName: String,
+                    @SerializedName("currency_symbol")
+                    val currencySymbol: String,
+                    @SerializedName("dial_code")
+                    val dialCode: String,
+                    @SerializedName("exchange_rate_to_usd")
+                    val exchangeRateToUsd: String,
+                    @SerializedName("flag")
+                    val flag: String,
+                    @SerializedName("flag1")
+                    val flag1: String,
+                    @SerializedName("id")
+                    val id: Int,
+                    @SerializedName("iso_code")
+                    val isoCode: String,
+                    @SerializedName("iso_code_number")
+                    val isoCodeNumber: String,
+                    @SerializedName("name")
+                    val name: String
+                )
+            }
             data class Order(
                 @SerializedName("assign_date")
                 val assignDate: Any,

@@ -14,14 +14,15 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<GetRefundOrde
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
            var refundData = refundList[position]
-                tvName.text = refundData.order?.deliveryDetails?.name
+                tvName.text = refundData.userDetails?.fullName
             tvSellerName.text = refundData.productDetails?.sellerDetails?.firstName+" "+refundData.productDetails?.sellerDetails?.lastName
             tvCountryName.text = refundData?.productDetails?.store?.countryInfo?.name
             tvOrderIdValue.text = "#${refundData?.order?.id}"
             tvTransactionId.text = "#${refundData?.order?.transactionId}"
-            tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(refundData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(refundData?.order?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvCancelledOn.text = CommonMethod.customizeChangeDateFormat(refundData?.order?.updatedAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(refundData?.order?.totalAmount?.toDoubleOrNull()?:0.0)} KD"
+
 
             tvViewMore.setOnClickListener {
                 if (tvViewMore.text == "Less View"){
@@ -30,6 +31,9 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<GetRefundOrde
                     tvCountryName.isVisible = false
                     tvSellerName.isVisible = false
                     tvSeller.isVisible = false
+                    view2.isVisible = false
+                    tvReason.isVisible = false
+                    tvReasonValue.isVisible = false
                 }
                 else{
                     tvViewMore.text = "Less View"
@@ -37,6 +41,29 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<GetRefundOrde
                     tvCountryName.isVisible = true
                     tvSellerName.isVisible = true
                     tvSeller.isVisible = true
+                    if (refundData?.returnReason!=null){
+                        view2.isVisible = true
+                        tvReason.isVisible = true
+                        tvReasonValue.isVisible = true
+                        tvReasonValue.text = refundData?.returnReason.toString()
+                    }
+                    else if (refundData?.exchangeReason!=null){
+                        view2.isVisible = true
+                        tvReason.isVisible = true
+                        tvReasonValue.isVisible = true
+                        tvReasonValue.text = refundData?.exchangeReason.toString()
+                    }
+                    else if (refundData?.cancelReason!=null){
+                        view2.isVisible = true
+                        tvReason.isVisible = true
+                        tvReasonValue.isVisible = true
+                        tvReasonValue.text = refundData?.cancelReason.toString()
+                    }
+                    else{
+                        view2.isVisible = false
+                        tvReason.isVisible = false
+                        tvReasonValue.isVisible = false
+                    }
                 }
 
             }

@@ -141,7 +141,11 @@ class SubAdminManagementFragment : BaseFragment() {
 
         }
 
-        getSubAdmin()
+        when(type){
+            1->allSubAdmin()
+            2->activeSubAdmin()
+            3->inactiveSubAdmin()
+        }
     }
 
     override fun initControl() {
