@@ -9,6 +9,7 @@ import coil.load
 import com.desynatadmin.databinding.ItemProductBinding
 import com.desynatadmin.R
 import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
+import com.desynatadmin.utils.SharedPreference
 
 class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProductListResponse.Data.Data>, var productClick:ProductClick) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
@@ -18,8 +19,20 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProdu
     inner class ViewHolder(val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
+            var actionAccess: Boolean=true
             val productData = productList[position]
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("product_management", true)
+                    }
 
+                actionAccess = module?.canAction == 1
+
+                ivSwitch.isClickable = actionAccess
+            }
                 tvBrand.text = if(productData?.brand?.nameEnglish.toString()=="Other") productData?.otherEn.toString() else productData?.brand?.nameEnglish.toString()
                 tvName.text = productData.productNameEn
 
@@ -37,7 +50,9 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProdu
                 }
 
             ivSwitch.setOnClickListener {
-                    productClick.onProductClick(position,2)
+                if (actionAccess) {
+                    productClick.onProductClick(position, 2)
+                }
                 }
 
                   val rating = productData?.averageRating?.product?.toFloatOrNull() ?: 0f

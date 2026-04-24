@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -10,13 +11,27 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemUserBinding
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.Data.Data>, var userClick:UserClick) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
+            var actionAccess = true
             val userData = userList[position]
+
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("user_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                ivSwitch.isClickable = actionAccess
+            }
 
             tvName.text = userData.fullName
             if (userData.walletInfo!=null){
@@ -36,7 +51,9 @@ class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.D
                 ivSwitch.setImageResource(R.drawable.switch_off)
             }
             ivSwitch.setOnClickListener {
-                userClick.onUserClick(position,2)
+                if (actionAccess) {
+                    userClick.onUserClick(position, 2)
+                }
             }
 
             tvViewDetail.setOnClickListener {

@@ -10,6 +10,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAffiliateWithdrawalRequestBinding
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.SharedPreference
 
 class AffiliateWithdrawalRequestAdapter(
     var context: Context,
@@ -19,7 +20,20 @@ class AffiliateWithdrawalRequestAdapter(
     inner class ViewHolder(val binding: ItemAffiliateWithdrawalRequestBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) = with(binding) {
+
             val withdrawalRequestData = requestList[position]
+            var actionAccess: Boolean = true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("affiliate_withdraw_request_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+            }
 
             tvRequestByValue.text = withdrawalRequestData?.affiliateDetails?.fullName + " | " + withdrawalRequestData?.affiliateDetails?.addressDetails?.countryDetails?.name
             tvReasonValue.text = withdrawalRequestData?.rejectReason
@@ -38,8 +52,8 @@ class AffiliateWithdrawalRequestAdapter(
                     tvStatusValue.isVisible = false
                     tvStatusValue.text =  context.getString(R.string.pending)
                     tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
-                    btnApprove.isVisible = true
-                    btnReject.isVisible = true
+                    btnApprove.isVisible = actionAccess
+                    btnReject.isVisible = actionAccess
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
                 }

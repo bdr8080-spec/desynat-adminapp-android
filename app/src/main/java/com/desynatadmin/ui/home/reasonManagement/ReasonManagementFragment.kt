@@ -14,7 +14,7 @@ import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.R
 import com.desynatadmin.adapter.ReasonAdapter
 import com.desynatadmin.base.BaseFragment
@@ -25,6 +25,7 @@ import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -73,7 +74,19 @@ class ReasonManagementFragment : BaseFragment() {
         binding?.apply {
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Reason Management"
+            var actionAccess : Boolean = true
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("reason_management", true)
+                    }
 
+                actionAccess = module?.canAction == 1
+
+                ivAdd.isVisible = actionAccess
+            }
 
             reasonList.clear()
             reasonAdapter = ReasonAdapter(requireActivity(),reasonList,object : ReasonAdapter.ReasonClick{
@@ -168,7 +181,11 @@ class ReasonManagementFragment : BaseFragment() {
         binding?.apply {
 
             toolbar.tvToolbar.setOnClickListener{
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             tvExchange.setOnClickListener {

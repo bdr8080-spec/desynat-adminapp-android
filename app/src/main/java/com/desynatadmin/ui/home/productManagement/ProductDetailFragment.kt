@@ -28,6 +28,7 @@ import com.desynatadmin.ui.home.productManagement.response.GetProductDetailRespo
 import com.desynatadmin.ui.home.productManagement.response.ProductArrangeResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
@@ -53,8 +54,7 @@ class ProductDetailFragment : BaseFragment() {
     private var selectedSizePos = 0
     private var selectedSizeList = ArrayList<ProductArrangeResponse.Product.ProductVariation>()
     private var selectedColorList = ArrayList<ProductArrangeResponse.Product>()
-
-
+    private var actionAccess: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,6 +72,19 @@ class ProductDetailFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("product_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+                tvSwitch.isClickable = actionAccess
+            }
+
             toolbar.tvToolbar.text = "Product Details"
             val itemJson = arguments?.getString("productData")
             if (!itemJson.isNullOrEmpty()) {
@@ -126,7 +139,9 @@ class ProductDetailFragment : BaseFragment() {
             }
 
             tvSwitch.setOnClickListener {
-                updateProductStatus()
+                if (actionAccess) {
+                    updateProductStatus()
+                }
             }
 
             tvSizeGuide.setOnClickListener {

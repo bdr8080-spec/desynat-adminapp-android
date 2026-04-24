@@ -20,9 +20,11 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddTaxDialogBinding
 import com.desynatadmin.databinding.FragmentAffiliateCommissionBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -74,9 +76,15 @@ class AffiliateCommissionFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
         }
     }
 

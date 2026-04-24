@@ -12,6 +12,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemLiveRequestBinding
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.SharedPreference
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -24,6 +25,17 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(position: Int) = with(binding){
             val liveRequestData = liveRequestList[position]
+            var actionAccess: Boolean=true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("live_request_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+            }
 
                 tvName.text = liveRequestData?.sellerDetails?.firstName+" "+ liveRequestData?.sellerDetails?.lastName
                 tvReasonValue.text = liveRequestData?.rejectReason
@@ -36,9 +48,9 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
                     0->{
                         tvStatusValue.text = context.getString(R.string.pending)
                         tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
-                        btnAccept.isVisible = true
-                        btnReject.isVisible = true
-                        viewStatus.isVisible = true
+                        btnAccept.isVisible = actionAccess
+                        btnReject.isVisible = actionAccess
+                        viewStatus.isVisible = actionAccess
                         tvReason.isVisible = false
                         tvReasonValue.isVisible = false
                         tvPaymentMode.isVisible = false

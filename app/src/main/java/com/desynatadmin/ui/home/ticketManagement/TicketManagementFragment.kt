@@ -25,7 +25,7 @@ import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
-import com.desynatadmin.utils.openCustomDatePicker
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.utils.openCustomizeDatePicker
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -169,7 +169,11 @@ class TicketManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             ivFilter.setOnClickListener {

@@ -18,12 +18,14 @@ import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DealsDetailFragment : BaseFragment() {
+    private var actionAccess: Boolean=true
     private var binding: FragmentDealsDetailBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
@@ -58,6 +60,19 @@ class DealsDetailFragment : BaseFragment() {
             dealData = Gson().fromJson(itemJson, GetActiveDealResponse.Data.Data::class.java)
         }
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("deal_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                btnEdit.isVisible = actionAccess
+                btnDelete.isVisible = actionAccess
+                tvSwitch.isClickable = actionAccess
+            }
             toolbar.tvToolbar.text = "Details"
 
             if (dealType==2){
@@ -69,8 +84,8 @@ class DealsDetailFragment : BaseFragment() {
             else{
                 llRevenue.isVisible = false
                 relStatus.isVisible = true
-                btnEdit.isVisible = true
-                btnDelete.isVisible = true
+                btnEdit.isVisible = actionAccess
+                btnDelete.isVisible = actionAccess
             }
             enrolledAdapter = EnrolledAdapter(requireActivity(),enrolledList,object :EnrolledAdapter.ClickOnItem{
                 override fun onClickItem(position: Int) {
@@ -103,7 +118,9 @@ class DealsDetailFragment : BaseFragment() {
             }
 
             tvSwitch.setOnClickListener {
-                updateDealStatus()
+                if (actionAccess) {
+                    updateDealStatus()
+                }
             }
 
             ivDeal.setOnClickListener {

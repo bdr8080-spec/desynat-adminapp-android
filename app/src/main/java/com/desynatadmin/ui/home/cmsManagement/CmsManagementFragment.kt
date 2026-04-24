@@ -31,6 +31,8 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import com.desynatadmin.ui.home.SubAdminHomeActivity
+import com.desynatadmin.utils.SharedPreference
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -65,6 +67,17 @@ class CmsManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val actionAccess = subAdminInfo?.permissionDetails
+                    ?.any {
+                        it.moduleDetails.name.equals("cms_management", ignoreCase = true)&&it.canAction==1
+                    } == true
+
+                ivEnglish.isVisible = actionAccess
+                ivArabic.isVisible = actionAccess
+            }
             toolbar.tvToolbar.text = "CMS"
             getTermsAndCondition()
 
@@ -79,7 +92,11 @@ class CmsManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             tvSelect.setOnClickListener {

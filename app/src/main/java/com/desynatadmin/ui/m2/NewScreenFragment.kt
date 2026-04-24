@@ -103,7 +103,7 @@ class NewScreenFragment : BaseFragment() {
                 list=it.data.data
                 binding?.noSeller?.isVisible = false
                 binding?.newRecycler?.isVisible = true
-                binding?.newRecycler?.adapter = NewAdapter(list, object : NewAdapter.OnClick{
+                binding?.newRecycler?.adapter = NewAdapter(requireActivity(),list, object : NewAdapter.OnClick{
                     override fun onCLick(position: Int) {
                         startActivity(Intent(requireContext(), NewDetailActivity::class.java)
                             .putExtra("id", list.get(position).id)

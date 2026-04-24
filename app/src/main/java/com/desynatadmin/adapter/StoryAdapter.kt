@@ -11,6 +11,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemStoryBinding
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.SharedPreference
 
 class StoryAdapter(
     val context: Context,
@@ -25,7 +26,22 @@ class StoryAdapter(
     inner class ViewHolder(private val binding: ItemStoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private var actionAccess: Boolean = true
+
         fun bind(position: Int) = with(binding) {
+
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("story_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                ivDelete.isVisible = actionAccess
+                clAddReel.isClickable = actionAccess
+            }
 
             ivStory.setImageDrawable(null)
             ivStory.setImageResource(R.drawable.ic_placeholder)
@@ -36,6 +52,7 @@ class StoryAdapter(
                 clReel.isVisible = false
 
                 clAddReel.setOnClickListener {
+                    if (!actionAccess) return@setOnClickListener
                     click.onClick(0, 1)
                 }
                 return

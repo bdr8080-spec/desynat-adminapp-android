@@ -1,7 +1,6 @@
 package com.desynatadmin.ui.home.supportChatManagement
 
-import android.content.Intent
-import android.net.Uri
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -73,7 +72,11 @@ class SupportChatFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             ivFilter.setOnClickListener {

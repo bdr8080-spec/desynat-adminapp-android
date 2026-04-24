@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -17,6 +18,7 @@ import com.desynatadmin.databinding.FragmentSubAdminDetailBinding
 import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
@@ -31,6 +33,7 @@ class SubAdminDetailFragment : BaseFragment() {
     private var accessModuleList = ArrayList<GetSubAdminDetailResponse.Data.PermissionDetail>()
     private var id: String=""
     private var subAdminData: GetSubAdminDetailResponse.Data?=null
+    var actionAccess: Boolean=true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +54,21 @@ class SubAdminDetailFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         id = arguments?.getString("id").toString()
         binding?.apply {
+
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("sub_admin_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+                btnEdit.isVisible = actionAccess
+                btnDelete.isVisible = actionAccess
+                tvSwitch.isClickable = actionAccess
+            }
 
             accessModuleAdapter = AccessModuleAdapter(requireActivity(),accessModuleList,object :AccessModuleAdapter.OnClick{
                 override fun ClickOnItem(position: Int, type: String) {
@@ -94,7 +112,9 @@ class SubAdminDetailFragment : BaseFragment() {
             }
 
             tvSwitch.setOnClickListener {
-                updateSubAdminStatus()
+                if (actionAccess) {
+                    updateSubAdminStatus()
+                }
             }
 
             btnEdit.setOnClickListener {

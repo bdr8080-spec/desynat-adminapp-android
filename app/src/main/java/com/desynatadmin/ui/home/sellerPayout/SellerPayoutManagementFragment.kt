@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.SellerPayoutAdapter
@@ -137,9 +138,15 @@ class SellerPayoutManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
 
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             ivFilter.setOnClickListener {
                 filterDialog()

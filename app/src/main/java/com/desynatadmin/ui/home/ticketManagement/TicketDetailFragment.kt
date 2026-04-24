@@ -21,6 +21,7 @@ import com.desynatadmin.databinding.UpdateTicketStatusDialogBinding
 import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
@@ -55,7 +56,18 @@ class TicketDetailFragment : BaseFragment() {
             setData()
         }
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("ticket_management", true)
+                    }
 
+                val actionAccess = module?.canAction == 1
+                tvStatusDropDown.isVisible = actionAccess
+                btnUpdateStatus.isVisible = actionAccess
+            }
 
         }
     }

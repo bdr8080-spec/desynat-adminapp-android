@@ -26,6 +26,7 @@ import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 
 @AndroidEntryPoint
 class BannerPerDayPriceFragment : BaseFragment() {
@@ -113,7 +114,11 @@ class BannerPerDayPriceFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener{
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             tvTop.setOnClickListener {

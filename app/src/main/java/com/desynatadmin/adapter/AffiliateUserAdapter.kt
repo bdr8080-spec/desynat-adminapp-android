@@ -11,6 +11,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAffiliateUserBinding
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAffiliateUserResponse.Data.Data>, var affiliateUserClickk:AffiliateUserClick) : RecyclerView.Adapter<AffiliateUserAdapter.ViewHolder>() {
@@ -19,14 +20,29 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAf
     inner class ViewHolder(val binding: ItemAffiliateUserBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
+            var actionAccess : Boolean = true
             val userData = userList[position]
+
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("affiliate_user_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                btnAccept.isVisible = actionAccess
+                btnReject.isVisible = actionAccess
+                ivSwitch.isClickable = actionAccess
+            }
 
                 when(userType){
                     "1" ->{
-                        btnAccept.isVisible = true
-                        btnReject.isVisible = true
-                        clEarning.isVisible = false
-                        clRejected.isVisible = false
+                        btnAccept.isVisible = actionAccess
+                        btnReject.isVisible = actionAccess
+                        clEarning.isVisible = actionAccess
+                        clRejected.isVisible = actionAccess
                     }
                     "2" ->{
                         btnAccept.isVisible = false

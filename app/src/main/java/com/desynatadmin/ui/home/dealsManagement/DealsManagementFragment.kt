@@ -17,6 +17,8 @@ import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.google.gson.Gson
+import com.desynatadmin.ui.home.SubAdminHomeActivity
+import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
@@ -58,6 +60,16 @@ class DealsManagementFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val actionAccess = subAdminInfo?.permissionDetails
+                    ?.any {
+                        it.moduleDetails.name.equals("deal_management", ignoreCase = true)&&it.canAction==1
+                    } == true
+
+                ivAddDeals.isVisible = actionAccess
+            }
             toolbar.tvToolbar.text = "Deals Management"
 
             dealsList.clear()
@@ -115,7 +127,11 @@ class DealsManagementFragment : BaseFragment() {
         binding?.apply {
 
             toolbar.tvToolbar.setOnClickListener{
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             tvActive.setOnClickListener {

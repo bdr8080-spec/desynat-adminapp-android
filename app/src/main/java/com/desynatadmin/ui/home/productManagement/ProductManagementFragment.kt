@@ -25,6 +25,8 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentProductManagementBinding
 import com.desynatadmin.databinding.ProductFilterBinding
+import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
@@ -97,6 +99,12 @@ class ProductManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+            if (SharedPreference.get(requireActivity()).getUser()?.type=="2"){
+                ivBack.isVisible = true
+            }
+            else{
+                ivBack.isVisible = false
+            }
             ProgressDialogUtils.getInstance().hideProgress()
             if (SharedPreference.get(requireActivity()).getCountryList()!=null){
                 countryList.clear()
@@ -174,6 +182,15 @@ class ProductManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
+
+            ivBack.setOnClickListener {
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
+            }
+
             ivFilter.setOnClickListener {
                 productFilterDialog()
             }

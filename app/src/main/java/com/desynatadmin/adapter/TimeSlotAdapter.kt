@@ -3,17 +3,34 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemTimeSlotBinding
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.SharedPreference
 
 class TimeSlotAdapter(var context:Context, var timeSLotList: ArrayList<GetTimeSlotResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<TimeSlotAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemTimeSlotBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val timeSLotData = timeSLotList[position]
+            var actionAccess: Boolean=true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("live_request_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                ivDelete.isVisible = actionAccess
+                ivEdit.isVisible = actionAccess
+                ivSwitch.isClickable = actionAccess
+            }
+
             tvTime.text = "${CommonMethod.customizeChangeDateFormatKuwait(timeSLotData?.from.toString(),"hh:mm a", outputFormat = "hh:mm a")} - ${CommonMethod.customizeChangeDateFormatKuwait(timeSLotData?.to.toString(),"hh:mm a", outputFormat = "hh:mm a")}"
 
           //  tvTime.text = "${timeSLotData?.from} TO ${timeSLotData?.to}"
@@ -34,7 +51,9 @@ class TimeSlotAdapter(var context:Context, var timeSLotList: ArrayList<GetTimeSl
             }
 
             ivSwitch.setOnClickListener {
-                onClick.click(position,3)
+                if (actionAccess) {
+                    onClick.click(position, 3)
+                }
             }
         }
         }

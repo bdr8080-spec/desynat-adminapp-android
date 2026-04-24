@@ -25,7 +25,8 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoy
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.openCustomDatePicker
-import com.desynatadmin.utils.openDatePicker
+import com.desynatadmin.ui.home.SubAdminHomeActivity
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,6 +78,18 @@ class DeliveryBoyManagementFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
 
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("delivery_boy_management", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+
+                ivAdd.isVisible = actionAccess
+            }
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Delivery Boy Management"
             deliveryBoyList.clear()
@@ -161,7 +174,11 @@ class DeliveryBoyManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener{
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             ivAdd.setOnClickListener {

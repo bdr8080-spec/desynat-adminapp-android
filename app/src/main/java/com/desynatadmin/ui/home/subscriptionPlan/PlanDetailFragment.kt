@@ -16,6 +16,7 @@ import com.desynatadmin.databinding.FragmentPlanDetailBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,7 @@ class PlanDetailFragment : BaseFragment() {
     private var isObserver = true
     private var subscriptionData: GetAllPlanResponse.Data?=null
     private var background: Int?=R.drawable.plus
+    var actionAccess: Boolean=true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +56,19 @@ class PlanDetailFragment : BaseFragment() {
         }
         binding?.apply {
             toolbar.tvToolbar.text = "Plan Details"
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("plan_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                btnDelete.isVisible = actionAccess
+                btnEdit.isVisible = actionAccess
+                tvSwitch.isClickable = actionAccess
+            }
         }
     }
 
@@ -89,7 +104,9 @@ class PlanDetailFragment : BaseFragment() {
             }
 
             tvSwitch.setOnClickListener {
-                updatePlanStatus()
+                if (actionAccess) {
+                    updatePlanStatus()
+                }
             }
         }
     }

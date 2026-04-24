@@ -16,6 +16,8 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentPlanListBinding
+import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
@@ -54,6 +56,23 @@ class PlanListFragment : BaseFragment() {
     override fun initView() {
 
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("plan_management", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+                ivAddPlan.isVisible = actionAccess
+            }
+            if (SharedPreference.get(requireActivity()).getUser()?.type=="2"){
+                ivBack.isVisible = true
+            }
+            else{
+                ivBack.isVisible = false
+            }
             subscriptionAdapter = SubscriptionAdapter(requireActivity(),subscriptionList,object: SubscriptionAdapter.SubscriptionClick{
                 override fun onSubscriptionClick(position: Int,backgrounRes:Int) {
                     val bundle = Bundle().apply {
@@ -85,6 +104,14 @@ class PlanListFragment : BaseFragment() {
         binding?.apply {
             ivAddPlan.setOnClickListener {
                 findNavController().navigate(R.id.action_planList_to_addPlanFragment)
+            }
+
+            ivBack.setOnClickListener {
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
             }
 
             etCountry.setOnClickListener {

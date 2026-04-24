@@ -14,6 +14,8 @@ import com.desynatadmin.adapter.EventAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentEventBinding
+import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
@@ -52,7 +54,12 @@ class EventFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-
+            if (SharedPreference.get(requireActivity()).getUser()?.type=="2"){
+                ivBack.isVisible = true
+            }
+            else{
+                ivBack.isVisible = false
+            }
             eventList.clear()
             eventAdapter = EventAdapter(requireActivity(),eventList,object : EventAdapter.OnCLick{
                 override fun onClick(position: Int) {
@@ -83,6 +90,14 @@ class EventFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
+            ivBack.setOnClickListener {
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
+            }
+
             etCountry.setOnClickListener {
                 CommonMethod.showCountryPicker(
                     requireContext(),

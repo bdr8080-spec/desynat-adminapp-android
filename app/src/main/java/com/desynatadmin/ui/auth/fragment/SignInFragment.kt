@@ -12,8 +12,10 @@ import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.AuthViewModel
+import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentSignInBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -28,7 +30,9 @@ import kotlin.text.get
 class SignInFragment : BaseFragment() {
     private var binding: FragmentSignInBinding?=null
     private val viewModel: AuthViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     var isObserver = false
+    var isSubAdminObserver = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -101,18 +105,49 @@ class SignInFragment : BaseFragment() {
 
         viewModel.loginResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
-                ProgressDialogUtils.getInstance().hideProgress()
+
                 response?.let {
                     showToast(response.message)
                     SharedPreference.get(requireActivity()).accessToken = response.data.accessToken
                     SharedPreference.get(requireActivity()).saveUser(response.data)
-                    requireActivity().startActivity(
-                        Intent(requireActivity(),
-                            HomeActivity::class.java)
-                    )
-                    requireActivity().finish()
+                    if (response.data.type=="2"){
+                        requireActivity().startActivity(
+                            Intent(requireActivity(),
+                                SubAdminHomeActivity::class.java)
+                        )
+                        requireActivity().finish()
+                    }
+                    else{
+                        ProgressDialogUtils.getInstance().hideProgress()
+                        requireActivity().startActivity(
+                            Intent(requireActivity(),
+                                HomeActivity::class.java)
+                        )
+                        requireActivity().finish()
+                    }
+
                 }
                 isObserver = false
+            }
+        }
+
+        homeViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            if (isSubAdminObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                isSubAdminObserver = false
+            }
+        }
+
+        homeViewModel.getSubAdminDetailResult.observe(viewLifecycleOwner) { response ->
+            if (isSubAdminObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                SharedPreference.get(requireActivity()).saveSubAdmin(response.data)
+                requireActivity().startActivity(
+                    Intent(requireActivity(),
+                        SubAdminHomeActivity::class.java)
+                )
+                requireActivity().finish()
+                isSubAdminObserver = false
             }
         }
     }
@@ -131,6 +166,14 @@ class SignInFragment : BaseFragment() {
             return false
         }
         return true
+    }
+
+    private fun getSubAdminDetail(id: String){
+        val map = HashMap<String,Any>()
+        map["id"] = id
+        homeViewModel.getSubAdminDetail(map)
+        isSubAdminObserver = true
+
     }
 
 }

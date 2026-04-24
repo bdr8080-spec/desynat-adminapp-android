@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -19,6 +20,7 @@ import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,8 @@ class GiftCardDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     var giftData: GetAllGiftCardResponse.Data.Data?=null
+    var actionAccess : Boolean = true
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,6 +71,20 @@ class GiftCardDetailFragment : BaseFragment() {
         }
         binding?.apply {
             toolbar.tvToolbar.text = "Gift Card Detail"
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("gift_card_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+                btnDelete.isVisible = actionAccess
+                btnEdit.isVisible = actionAccess
+                tvSwitch.isClickable = actionAccess
+            }
         }
     }
 
@@ -102,7 +120,10 @@ class GiftCardDetailFragment : BaseFragment() {
             }
 
             tvSwitch.setOnClickListener {
-                updateGiftCardStatus()
+                if (actionAccess){
+                    updateGiftCardStatus()
+                }
+
             }
 
         }

@@ -28,7 +28,7 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
-import com.google.gson.Gson
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -83,6 +83,18 @@ class SubAdminManagementFragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
 
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("sub_admin_management", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+
+                ivAddSubAdmin.isVisible = actionAccess
+            }
             subAdminList.clear()
             subAdminAdapter = SubAdminAdapter(requireActivity(),subAdminList,object : SubAdminAdapter.SubAdminClick{
                 override fun onSubAdminClick(position: Int,type:Int) {
@@ -150,9 +162,15 @@ class SubAdminManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             tvAll.setOnClickListener {
                 allSubAdmin()

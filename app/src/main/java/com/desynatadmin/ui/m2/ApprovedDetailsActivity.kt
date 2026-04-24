@@ -134,20 +134,20 @@ class ApprovedDetailsActivity : BaseActivity() {
             else{
                 binding.ivToggle.setImageResource(R.drawable.toggle_off)
             }
-            Glide.with(this).load(it.data.profile_pic).transform(CircleCrop()).into(binding.ivProfileImage)
-            Glide.with(this).load(it.data.store_info.store_image).into(binding.imPuma)
-            binding.tvName.text = it.data.first_name
-            binding.tvEmail.text = it.data.email
-            binding.txt.text = it.data.store_info.bio
-            binding.tvLocation.text = it.data.store_info.country_info.name
-            binding.tvCall.text  = it.data.country_code + "-" + it.data.mobile
-            binding.tvAddress.text  = "${it.data.store_info.store_name}\n${it.data.store_info.store_address}"
+            Glide.with(this).load(it?.data?.profile_pic).transform(CircleCrop()).into(binding.ivProfileImage)
+            Glide.with(this).load(it?.data?.store_info?.store_image).into(binding.imPuma)
+            binding.tvName.text = it?.data?.first_name
+            binding.tvEmail.text = it?.data?.email
+            binding.txt.text = it?.data?.store_info?.bio
+            binding.tvLocation.text = it?.data?.store_info?.country_info?.name
+            binding.tvCall.text  = it?.data?.country_code + "-" + it?.data?.mobile
+            binding.tvAddress.text  = "${it?.data?.store_info?.store_name}\n${it?.data?.store_info?.store_address}"
            // binding.tvProPlan.text  = it.data.subcription_plan ?: ""
-            Glide.with(this).load(it.data.owner_document.get(0).document_path).into(binding.doc1)
-            Glide.with(this).load(it.data.owner_document.get(1).document_path).into(binding.doc2)
-            Glide.with(this).load(it.data.store_document.get(0).document_path).into(binding.doc3)
-            Glide.with(this).load(it.data.store_document.get(1).document_path).into(binding.doc4)
-            binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
+            Glide.with(this).load(it?.data?.owner_document?.getOrNull(0)?.document_path).into(binding.doc1)
+            Glide.with(this).load(it?.data?.owner_document?.getOrNull(1)?.document_path).into(binding.doc2)
+            Glide.with(this).load(it?.data?.store_document?.getOrNull(0)?.document_path).into(binding.doc3)
+            Glide.with(this).load(it?.data?.store_document?.getOrNull(1)?.document_path).into(binding.doc4)
+            binding.tvAccountType.text = when(it.data?.seller_bank_details?.account_type){
                 "0" -> "Personal Account"
                 else -> "Business Account"
             }
@@ -173,11 +173,11 @@ class ApprovedDetailsActivity : BaseActivity() {
 
 
             }
-            binding.tvIban.text = it.data.seller_bank_details.iban
-            binding.tvswiftbic.text = it.data.seller_bank_details.swift
-            binding.tvBankName.text = it.data.seller_bank_details.bank_name
-            binding.tvAccountHolderName.text = it.data.seller_bank_details.account_holder_name
-            Glide.with(this).load(it.data.seller_bank_details.upload_proof).into(binding.imAccountProof)
+            binding.tvIban.text = it?.data?.seller_bank_details?.iban
+            binding.tvswiftbic.text = it?.data?.seller_bank_details?.swift
+            binding.tvBankName.text = it?.data?.seller_bank_details?.bank_name
+            binding.tvAccountHolderName.text = it.data?.seller_bank_details?.account_holder_name
+            Glide.with(this).load(it?.data?.seller_bank_details?.upload_proof).into(binding.imAccountProof)
         }
     }
 

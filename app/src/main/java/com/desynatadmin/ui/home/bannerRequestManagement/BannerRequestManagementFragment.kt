@@ -20,7 +20,7 @@ import com.desynatadmin.adapter.BannerRequestAdapter
 import com.desynatadmin.adapter.BrandAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.AddPerDayPriceDialogBinding
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.databinding.FragmentBannerRequestManagementBinding
 import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
@@ -182,9 +182,15 @@ class BannerRequestManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             tvNew.setOnClickListener {
                 type = 0

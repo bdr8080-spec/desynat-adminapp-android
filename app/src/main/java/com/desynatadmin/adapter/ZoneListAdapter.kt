@@ -1,13 +1,16 @@
 package com.desynatadmin.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ZoneListItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
+import com.desynatadmin.utils.SharedPreference
 
-class ZoneListAdapter(val list : ArrayList<ZoneListResponse.Data.Data>, val click : OnClick): RecyclerView.Adapter<ZoneListAdapter.ViewHolder>() {
+class ZoneListAdapter(var context: Context,val list : ArrayList<ZoneListResponse.Data.Data>, val click : OnClick): RecyclerView.Adapter<ZoneListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ZoneListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -26,6 +29,20 @@ class ZoneListAdapter(val list : ArrayList<ZoneListResponse.Data.Data>, val clic
     override fun onBindViewHolder(holder: ZoneListAdapter.ViewHolder, position: Int) {
 
         holder.binding.apply {
+            var actionAccess: Boolean=true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("country_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                imDelete.isVisible = actionAccess
+                imEdit.isVisible = actionAccess
+                toggle.isClickable = actionAccess
+            }
             tvZoneName.text = list[position].name_english
             tvViewZone.setOnClickListener {
                 click.onClick(position)
@@ -41,7 +58,10 @@ class ZoneListAdapter(val list : ArrayList<ZoneListResponse.Data.Data>, val clic
                 click.deleteClick(position)
             }
             toggle.setOnClickListener {
-                click.updateStatus(position)
+                if (actionAccess){
+                    click.updateStatus(position)
+                }
+
             }
             imEdit.setOnClickListener {
                 click.editClick(position)

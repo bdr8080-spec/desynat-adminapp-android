@@ -30,6 +30,7 @@ import com.desynatadmin.databinding.RadioCustomCountryPickerBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.AddTimeSlotRequest
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
@@ -90,6 +91,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     var filterFromTimestamp = 0L
     var filterToTimestamp = 0L
     var filterCountryId:String?=null
+    var actionAccess: Boolean=true
 
     private val calendar = Calendar.getInstance()
     private lateinit var calendarAdapter: CalendarAdapter
@@ -120,6 +122,19 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         countryList.clear()
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
+
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("live_request_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                btnAddTimeSlot.isVisible = actionAccess
+            }
+
             ProgressDialogUtils.getInstance().hideProgress()
                 for (i in 0 until countryList.size) {
                     if (countryList[i].name == "Kuwait") {
@@ -291,7 +306,11 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             ivFilter.setOnClickListener {

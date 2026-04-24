@@ -10,13 +10,25 @@ import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemCategoryBinding
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
+import com.desynatadmin.utils.SharedPreference
 
 class CategoryAdapter(var context:Context, private var categoryList: ArrayList<GetCategoryResponse.Data>, var categoryClick:CategoryClick) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
+            var actionAccess = true
             val categoryData = categoryList[position]
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("category_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+            }
 
                 val params = root.layoutParams
                 params.height = itemHeight
@@ -67,11 +79,16 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
                 }
 
                 tvSwitch.setOnClickListener {
-                    categoryClick.onCategoryClick(position,1)
+                    if (actionAccess){
+                        categoryClick.onCategoryClick(position,1)
+                    }
+
                 }
 
                 tvSwitch1.setOnClickListener {
-                    categoryClick.onCategoryClick(position,1)
+                    if (actionAccess) {
+                        categoryClick.onCategoryClick(position, 1)
+                    }
                 }
 
             root.setOnClickListener {

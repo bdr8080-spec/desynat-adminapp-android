@@ -19,7 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
-import com.desynatadmin.adapter.DeliveryBoyAdapter
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.adapter.PromoCodeAdapter
 import com.desynatadmin.adapter.UserCountryPickerAdapter
 import com.desynatadmin.base.BaseFragment
@@ -85,6 +85,21 @@ class PromoCodeManagementFragment : BaseFragment() {
         countryList.clear()
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
+
+            var actionAccess : Boolean = true
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("promo_code_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+                ivAdd.isVisible = actionAccess
+            }
+
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Promocode Management"
             promoCodeList.clear()
@@ -132,9 +147,15 @@ class PromoCodeManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             ivAdd.setOnClickListener {
                 findNavController().navigate(R.id.action_promoCodeFragment_to_addPromoCodeFragment)

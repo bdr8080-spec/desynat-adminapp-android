@@ -22,6 +22,8 @@ data class LoginResponse(
         val createdAt: String,
         @SerializedName("device_type")
         val deviceType: String,
+        @SerializedName("type")
+        val type: String,
         @SerializedName("email")
         val email: String,
         @SerializedName("email_verified_at")

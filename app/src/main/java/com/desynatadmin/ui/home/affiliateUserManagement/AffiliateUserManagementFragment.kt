@@ -24,6 +24,7 @@ import com.desynatadmin.databinding.FragmentAffiliateUserManagementBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
@@ -200,9 +201,15 @@ class AffiliateUserManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             ivFilter.setOnClickListener {
                 userFilterDialog()

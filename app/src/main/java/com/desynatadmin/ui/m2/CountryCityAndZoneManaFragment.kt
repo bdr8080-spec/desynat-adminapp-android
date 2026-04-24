@@ -136,6 +136,18 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         }
 
         binding?.apply {
+
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("country_management", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+                floatingAction.isVisible = actionAccess
+            }
             if (key == "2") {
                 binding?.recyclerView?.visibility = View.GONE
                 binding?.tvCountry?.visibility = View.GONE
@@ -150,7 +162,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                 binding?.zoneListRecyclerView?.visibility = View.GONE
             }
             cityAdapter =
-                CityListAdapter(serviceCityList ?: arrayListOf(), object : CityListAdapter.OnClick {
+                CityListAdapter(requireActivity(),serviceCityList ?: arrayListOf(), object : CityListAdapter.OnClick {
                     override fun onViewCLick(position: Int) {
                         recyclerView.visibility = View.GONE
                         tvCountry.visibility = View.GONE
@@ -361,7 +373,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                 binding?.noData?.isVisible = false
                 binding?.zoneListRecyclerView?.isVisible = true
                 binding?.zoneListRecyclerView?.adapter =
-                    ZoneListAdapter(
+                    ZoneListAdapter(requireActivity(),
                         it.data.data ?: arrayListOf(),
                         object : ZoneListAdapter.OnClick {
                             override fun onClick(position: Int) {

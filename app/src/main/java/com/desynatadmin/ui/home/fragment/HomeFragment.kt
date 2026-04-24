@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.home.fragment
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -19,6 +20,8 @@ import com.desynatadmin.databinding.ChangeLanguageDialogBinding
 import com.desynatadmin.databinding.FragmentHomeBinding
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -34,10 +37,13 @@ class HomeFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var isCountryObserver = true
+    private var isSubAdminObserver = true
     private var isNotificationObserver = true
     private var isProfileObserver = true
     var user : LoginResponse.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
+    private var userInfo: LoginResponse.Data?=null
+    private var subAdminInfo: GetSubAdminDetailResponse.Data?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +61,27 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
+        userInfo = SharedPreference.get(requireActivity()).getUser()
+        if (userInfo?.type=="2"){
+            getSubAdminDetail(userInfo?.id.toString())
+            subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+            val hasDashboard = subAdminInfo?.permissionDetails
+                ?.any {
+                    it.moduleDetails.name.equals("dashboard", ignoreCase = true)
+                } == true
+            if (!hasDashboard){
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.openDrawer()
+                    is SubAdminHomeActivity -> activity.openDrawer()
+                    is SubAdminHomeActivity -> activity.hideBack(true)
+                }
+            }
+            else{
+                when (val activity = requireActivity()) {
+                    is SubAdminHomeActivity -> activity.hideBack(false)
+                }
+            }
+        }
         ProgressDialogUtils.getInstance().hideProgress()
         getNotificationCount()
         getProfile()
@@ -70,7 +97,10 @@ class HomeFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             ivProfileImage.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.openDrawer()
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.openDrawer()
+                    is SubAdminHomeActivity -> activity.openDrawer()
+                }
             }
 
             ivNotification.setOnClickListener {
@@ -107,6 +137,19 @@ private fun getProfile(){
                 ProgressDialogUtils.getInstance().hideProgress()
                 isObserver = false
         }
+        viewModel.getSubAdminDetailResult.observe(viewLifecycleOwner) { response ->
+            if (isSubAdminObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                SharedPreference.get(requireActivity()).saveSubAdmin(response.data)
+                when (val activity = requireActivity()) {
+                    is SubAdminHomeActivity -> {
+                        activity.setUpDrawerContent()
+                        activity.setDrawerContentAdapter()
+                    }
+                }
+                isSubAdminObserver = false
+            }
+        }
 
         viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -120,7 +163,10 @@ private fun getProfile(){
                 ProgressDialogUtils.getInstance().hideProgress()
                 user = response.data
                 SharedPreference.get(requireActivity()).saveUser(response.data)
-                (requireActivity() as? HomeActivity)?.setDrawerData(SharedPreference.get(requireActivity()).getUser())
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.setDrawerData(SharedPreference.get(requireActivity()).getUser())
+                    is SubAdminHomeActivity -> activity.setDrawerData(SharedPreference.get(requireActivity()).getUser())
+                }
                 setData()
                 isProfileObserver = false
             }
@@ -230,6 +276,14 @@ private fun getProfile(){
             tvName.text = getString(R.string.hi, user?.fullName)
             Glide.with(requireActivity()).load(user?.profilePic).placeholder(R.drawable.ic_user).into(ivProfileImage)
         }
+    }
+
+    private fun getSubAdminDetail(id: String){
+        val map = HashMap<String,Any>()
+        map["id"] = id
+        viewModel.getSubAdminDetail(map)
+        isSubAdminObserver = true
+
     }
 
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -23,6 +24,7 @@ import com.desynatadmin.databinding.FragmentUserDetailBinding
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -34,6 +36,7 @@ class UserDetailFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     var userData: GetUserResponse.Data.Data?=null
+    var actionAccess: Boolean=true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +62,18 @@ class UserDetailFragment : BaseFragment() {
             updateStatus()
         }
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("user_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                tvAddMoney.isVisible = actionAccess
+                ivSwitch.isClickable = actionAccess
+            }
             toolbar.tvToolbar.text = "User Detail"
         }
     }
@@ -74,7 +89,9 @@ class UserDetailFragment : BaseFragment() {
             }
 
             ivSwitch.setOnClickListener {
-                updateUserStatus()
+                if (actionAccess){
+                    updateUserStatus()
+                }
             }
         }
     }

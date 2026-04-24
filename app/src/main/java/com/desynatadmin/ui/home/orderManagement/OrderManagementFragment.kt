@@ -16,7 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
-import com.desynatadmin.adapter.AffiliateCommissionAdapter
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.adapter.AssignDriverAdapter
 import com.desynatadmin.adapter.OrderAdapter
 import com.desynatadmin.base.BaseFragment
@@ -243,9 +243,15 @@ class OrderManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             ivNextArrow.setOnClickListener {
                 if (!isObserver && currentPage < lastPage&&totalItem!=0) {

@@ -17,9 +17,11 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentBrandManagementBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -62,6 +64,20 @@ class BrandManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+              val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+               val viewAccess = subAdminInfo?.permissionDetails
+                    ?.any {
+                        it.moduleDetails.name.equals("brand_management", ignoreCase = true)&&it.canView==1
+                    } == true
+                val actionAccess = subAdminInfo?.permissionDetails
+                    ?.any {
+                        it.moduleDetails.name.equals("brand_management", ignoreCase = true)&&it.canAction==1
+                    } == true
+
+                ivAddBrand.isVisible = actionAccess
+            }
             ProgressDialogUtils.getInstance().hideProgress()
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Brand Management"
@@ -158,9 +174,13 @@ class BrandManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+           toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
 
             ivAddBrand.setOnClickListener {
                 findNavController().navigate(R.id.action_brandFragment_to_addBrandFragment)

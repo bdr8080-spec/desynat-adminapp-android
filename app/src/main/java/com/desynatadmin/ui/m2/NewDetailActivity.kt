@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
@@ -35,6 +36,21 @@ class NewDetailActivity : BaseActivity() {
     }
 
     override fun initView() {
+        binding?.apply {
+            var actionAccess: Boolean=true
+            val userInfo = SharedPreference.get(this@NewDetailActivity).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(this@NewDetailActivity).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("seller_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                btnAccept.isVisible = actionAccess
+                btnReject.isVisible = actionAccess
+            }
+        }
         viewModel.hitSellerDetail(
             SharedPreference.get(this).accessToken,
             intent.getStringExtra("id") ?: ""

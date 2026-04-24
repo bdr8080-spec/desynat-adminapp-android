@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.StoryAdapter
@@ -25,6 +25,7 @@ import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.text.compareTo
 import kotlin.text.toFloat
@@ -128,9 +129,15 @@ class StoryManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
 
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
         }
     }

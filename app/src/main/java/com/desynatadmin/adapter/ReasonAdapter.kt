@@ -3,6 +3,7 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -11,6 +12,7 @@ import com.desynatadmin.databinding.ItemReasonBinding
 import com.desynatadmin.databinding.ItemUserBinding
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResponse.Data.Data>, var reasonClick:ReasonClick) : RecyclerView.Adapter<ReasonAdapter.ViewHolder>() {
@@ -18,7 +20,21 @@ class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResp
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val reasonData = reasonList[position]
+            var actionAccess : Boolean = true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("reason_management", true)
+                    }
 
+                actionAccess = module?.canAction == 1
+
+                ivEdit.isVisible = actionAccess
+                ivDelete.isVisible = actionAccess
+                ivSwitch.isClickable = actionAccess
+            }
                 tvReason.text = reasonData.reasonEnglish
                 if(reasonData.status==1){
                     ivSwitch.setImageResource(R.drawable.switch_on)
@@ -32,7 +48,9 @@ class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResp
                 }
 
                 ivSwitch.setOnClickListener {
-                    reasonClick.onReasonClick(position,2)
+                    if (actionAccess) {
+                        reasonClick.onReasonClick(position, 2)
+                    }
                 }
 
                 ivDelete.setOnClickListener {

@@ -10,6 +10,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemBannerRequestBinding
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.SharedPreference
 
 class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: ArrayList<GetBannerRequestResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<BannerRequestAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBannerRequestBinding) :
@@ -17,6 +18,22 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
 
         fun bind(position: Int) = with(binding){
             val bannerRequestData = bannerList[position]
+
+            var actionAccess : Boolean = true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("banner_request_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+                btnAccept.isVisible = actionAccess
+                btnReject.isVisible = actionAccess
+            }
+
                 tvName.text = bannerRequestData.sellerDetails?.firstName+" "+bannerRequestData.sellerDetails?.lastName
                 tvCountry.text = bannerRequestData.sellerDetails?.countryDetails?.name
                 tvRequestId.text = "#${bannerRequestData?.orderId}"

@@ -21,6 +21,7 @@ import com.desynatadmin.databinding.ActivityHomeBinding
 import com.desynatadmin.databinding.DrawerLayoutBinding
 import com.desynatadmin.ui.auth.AuthActivity
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
 import com.desynatadmin.ui.m2.CountryCityZoneManaActivity
 import com.desynatadmin.ui.m2.SellerManagementActivity
 import com.desynatadmin.utils.CommonMethod
@@ -41,6 +42,8 @@ class HomeActivity : BaseActivity() {
     private lateinit var drawerBinding: DrawerLayoutBinding
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = false
+    private var userInfo: LoginResponse.Data?=null
+    private var subAdminInfo: GetSubAdminDetailResponse.Data?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +131,9 @@ class HomeActivity : BaseActivity() {
             )
             setUpDrawerContent()
         }
+
+
+
     }
 
     override fun initControl() {
@@ -336,7 +342,6 @@ override fun onBackPressed() {
                 controller.navigate(R.id.withdrawalRequest)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
-
 
             rlTicketManagement.setOnClickListener {
                 controller.navigate(R.id.ticketManagement)

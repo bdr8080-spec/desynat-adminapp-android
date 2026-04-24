@@ -17,7 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.FullScreenBannerAdapter
-import com.desynatadmin.adapter.FullScreenBannerAdapter.BannerClick
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.adapter.PromotionalBannerAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
@@ -72,6 +72,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
     private var selectedBannerType1: String? = null
     private var type = 1
     private var countryList = ArrayList<GetCountryResponse.Data>()
+    var actionAccess: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,6 +95,19 @@ class FullScreenBannerManagementFragment : BaseFragment() {
             ProgressDialogUtils.getInstance().hideProgress()
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Banner Management"
+
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("full_screen_banner_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                ivAddBanner.isVisible = actionAccess
+
+            }
 
             bannerList.clear()
             bannerAdapter = FullScreenBannerAdapter(requireActivity(), bannerList, object :
@@ -211,9 +225,15 @@ class FullScreenBannerManagementFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             tvFullScreen.setOnClickListener {
                 currentPage = 1

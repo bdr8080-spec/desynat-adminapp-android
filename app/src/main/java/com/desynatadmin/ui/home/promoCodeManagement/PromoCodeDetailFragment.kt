@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
@@ -29,6 +30,7 @@ class PromoCodeDetailFragment : BaseFragment() {
     private var isObserver = true
     var promoCodeData: GetPromoCodeResponse.Data.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
+    var actionAccess : Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +71,21 @@ class PromoCodeDetailFragment : BaseFragment() {
         }
         binding?.apply {
             toolbar.tvToolbar.text = "Detail View"
+
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("promo_code_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+                btnDelete.isVisible = actionAccess
+                btnEdit.isVisible = actionAccess
+                tvSwitch.isClickable = actionAccess
+            }
         }
     }
 
@@ -79,7 +96,9 @@ class PromoCodeDetailFragment : BaseFragment() {
             }
 
             tvSwitch.setOnClickListener {
-                updatePromoCodeStatus()
+                if (actionAccess) {
+                    updatePromoCodeStatus()
+                }
             }
 
             btnDelete.setOnClickListener {

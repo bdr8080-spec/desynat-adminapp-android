@@ -23,6 +23,7 @@ import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliate
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -35,6 +36,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
     private var isObserver = true
     private var userType = "1"
     private var userData :GetNewAffiliateUserResponse.Data.Data?=null
+    var actionAccess: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,7 +63,19 @@ class AffiliateUserDetailFragment : BaseFragment() {
             setStatusData()
         }
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("affiliate_user_management", true)
+                    }
 
+                actionAccess = module?.canAction == 1
+                btnAccept.isVisible = actionAccess
+                btnReject.isVisible = actionAccess
+                ivSwitch.isClickable = actionAccess
+            }
         }
     }
 
@@ -72,7 +86,9 @@ class AffiliateUserDetailFragment : BaseFragment() {
             }
 
             ivSwitch.setOnClickListener {
-                updateAffiliateUserStatus()
+                if (actionAccess){
+                    updateAffiliateUserStatus()
+                }
             }
 
             btnAccept.setOnClickListener {

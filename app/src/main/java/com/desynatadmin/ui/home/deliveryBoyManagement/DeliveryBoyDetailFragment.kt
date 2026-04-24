@@ -18,6 +18,7 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.CommonMethod.loadDocument
 import com.desynatadmin.utils.CommonMethod.openPdfInBrowser
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +53,18 @@ class DeliveryBoyDetailFragment : BaseFragment() {
             setData()
         }
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("delivery_boy_management", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+                btnEdit.isVisible = actionAccess
+                btnDelete.isVisible = actionAccess
+            }
             toolbar.tvToolbar.text = "Driver Details"
         }
     }

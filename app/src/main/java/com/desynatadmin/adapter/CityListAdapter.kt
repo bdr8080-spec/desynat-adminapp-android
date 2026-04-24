@@ -1,15 +1,18 @@
 package com.desynatadmin.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.CityListItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
+import com.desynatadmin.utils.SharedPreference
 
-class CityListAdapter(
-    val list: ArrayList<ServiceCityListResponse.Data.Data>,
-    private val onItemClick: OnClick
+class CityListAdapter(var context: Context,
+                      val list: ArrayList<ServiceCityListResponse.Data.Data>,
+                      private val onItemClick: OnClick
 ) : RecyclerView.Adapter<CityListAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: CityListItemBinding) :
@@ -27,6 +30,19 @@ class CityListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             tvCountryName.text = list[position].name
+            var actionAccess: Boolean=true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("country_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                imDelete.isVisible = actionAccess
+                toggle.isClickable = actionAccess
+            }
             tvViewZone.setOnClickListener {
                 onItemClick.onViewCLick(position)
             }
@@ -34,7 +50,9 @@ class CityListAdapter(
                 onItemClick.onDeleteClick(position)
             }
             toggle.setOnClickListener {
-                onItemClick.onStatusClick(position)
+                if (actionAccess) {
+                    onItemClick.onStatusClick(position)
+                }
             }
 
             if(list[position].status == 0){

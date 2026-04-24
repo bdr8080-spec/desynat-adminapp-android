@@ -3,17 +3,32 @@ package com.desynatadmin.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.desynatadmin.databinding.ItemBannerPriceBinding
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.SharedPreference
 
 class BannerPerDayPriceAdapter(var context:Context, var bannerList: ArrayList<GetBannerPricePerDayResponse.Data>, var countryMap: Map<Int, GetCountryResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<BannerPerDayPriceAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBannerPriceBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val bannerData = bannerList[position]
+            var actionAccess : Boolean = true
+            val userInfo = SharedPreference.get(context).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(context).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("banner_per_day_price_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+
+                ivEdit.isVisible = actionAccess
+
+            }
             val countryData = countryMap[bannerData.countryId]
                 tvCountry.text = "${countryData?.name}"
                 tvPrice.text = "${bannerData.perDayPrice} KD"

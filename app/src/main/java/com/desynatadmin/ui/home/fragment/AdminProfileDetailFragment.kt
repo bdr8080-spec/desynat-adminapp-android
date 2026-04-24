@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -15,6 +16,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAdminProfileDetailBinding
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -81,6 +83,21 @@ class AdminProfileDetailFragment : BaseFragment() {
             CommonMethod.removeSpace(etFullName)
             CommonMethod.removeAllTextSpaces(etEmail)
 
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("account_setting", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+
+                btnSaveChanges.isVisible = actionAccess
+                btnChangePassword.isVisible = actionAccess
+                tvChangeImage.isVisible = actionAccess
+            }
+
             imagePicker = ImagePicker(
                 requireActivity(),
                 cameraLauncher,
@@ -110,9 +127,15 @@ class AdminProfileDetailFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             tvCountryPicker.setOnClickListener {
                 CommonMethod.showCountryPicker(
@@ -177,16 +200,19 @@ class AdminProfileDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     SharedPreference.get(requireActivity()).saveUser(response.data)
-                    (requireActivity() as? HomeActivity)?.setDrawerData(
-                        SharedPreference.get(
-                            requireActivity()
-                        ).getUser()
-                    )
+                    when (val activity = requireActivity()) {
+                        is HomeActivity -> activity.setDrawerData(SharedPreference.get(requireActivity()).getUser())
+                        is SubAdminHomeActivity -> activity.setDrawerData(SharedPreference.get(requireActivity()).getUser())
+                    }
                     CommonMethod.showSuccessDialog(
                         requireContext(),
                         "Profile updated successfully!"
                     ) {
-                        (requireActivity() as? HomeActivity)?.onBackPressed()
+                         when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
                     }
                 }
                 isObserver = false

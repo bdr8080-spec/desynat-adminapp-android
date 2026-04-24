@@ -27,7 +27,7 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
-import com.desynatadmin.utils.openCustomDatePicker
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.utils.openCustomizeDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -83,6 +83,19 @@ class NotificationManagementFragment :  BaseFragment() {
 
             toolbar.tvToolbar.text = "Notifications"
 
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("notification_management", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+
+                tvSendNewNotification.isVisible = actionAccess
+            }
+
             countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
 
@@ -135,9 +148,15 @@ class NotificationManagementFragment :  BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.ivBack.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
-            }
+
+    toolbar.ivBack.setOnClickListener {
+    when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
+}
+
 
             ivFilter.setOnClickListener {
                 filterDialog()

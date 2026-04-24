@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -72,6 +73,20 @@ class FullScreenBannerDetailFragment : BaseFragment() {
         }
         binding?.apply {
             toolbar.tvToolbar.text = "Detail"
+
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("full_screen_banner_management", true)
+                    }
+
+                val actionAccess = module?.canAction == 1
+                btnEdit.isVisible = actionAccess
+                btnDelete.isVisible = actionAccess
+
+            }
         }
     }
 

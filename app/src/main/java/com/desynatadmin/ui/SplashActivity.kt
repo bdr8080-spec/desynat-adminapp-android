@@ -12,6 +12,7 @@ import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.databinding.ActivitySplashBinding
 import com.desynatadmin.ui.auth.AuthActivity
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 
@@ -36,8 +37,15 @@ class SplashActivity : BaseActivity() {
         Constants.language = SharedPreference.get(this).language
         Handler(Looper.getMainLooper()).postDelayed({
             if (SharedPreference.get(this).accessToken.isNotEmpty()) {
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
+                if (SharedPreference.get(this).getUser()?.type=="2"){
+                    startActivity(Intent(this, SubAdminHomeActivity::class.java))
+                    finish()
+                }
+                else{
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                }
+
             }
             else{
                 startActivity(Intent(this, AuthActivity::class.java))

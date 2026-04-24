@@ -20,6 +20,7 @@ import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCatego
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,6 +68,16 @@ class SubCategoryFragment : BaseFragment() {
             categoryData = Gson().fromJson(itemJson, GetCategoryResponse.Data::class.java)
         }
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val actionAccess = subAdminInfo?.permissionDetails
+                    ?.any {
+                        it.moduleDetails.name.equals("category_management", ignoreCase = true)&&it.canAction==1
+                    } == true
+
+                ivAddSubCategory.isVisible = actionAccess
+            }
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = "Sub-Category"
 

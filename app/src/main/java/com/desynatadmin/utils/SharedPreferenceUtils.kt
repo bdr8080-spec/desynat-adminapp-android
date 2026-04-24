@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.desynatadmin.R
 import com.desynatadmin.ui.auth.LoginResponse
+import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -111,6 +112,20 @@ class SharedPreference(context: Context) {
         val json = preference["userData", ""] ?: return null
         return try {
             Gson().fromJson(json, LoginResponse.Data::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun saveSubAdmin(user: GetSubAdminDetailResponse.Data) {
+        val json = Gson().toJson(user)
+        preference.set("subAdminData", json)
+    }
+
+    fun getSubAdmin(): GetSubAdminDetailResponse.Data? {
+        val json = preference["subAdminData", ""] ?: return null
+        return try {
+            Gson().fromJson(json, GetSubAdminDetailResponse.Data::class.java)
         } catch (e: Exception) {
             null
         }

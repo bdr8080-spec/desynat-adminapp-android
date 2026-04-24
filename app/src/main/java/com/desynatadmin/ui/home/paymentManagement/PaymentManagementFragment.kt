@@ -25,6 +25,8 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentPaymentManagementBinding
 import com.desynatadmin.databinding.PaymentFilterDialogBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
+import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.paymentManagement.response.GetBannerPaymentResponse
 import com.desynatadmin.ui.home.paymentManagement.response.GetGiftCardPaymentResponse
 import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
@@ -134,6 +136,14 @@ class PaymentManagementFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
+
+            if (SharedPreference.get(requireActivity()).getUser()?.type=="2"){
+                ivBack.isVisible = true
+            }
+            else{
+                ivBack.isVisible = false
+            }
+
             orderPaymentAdapter = OrderPaymentAdapter(requireActivity(), orderPaymentList, object :
                 OrderPaymentAdapter.PaymentClick {
                 override fun onPaymentClick(position: Int, type: Int) {
@@ -293,6 +303,14 @@ class PaymentManagementFragment : BaseFragment() {
 
             ivFilter.setOnClickListener {
                 paymentFilterDialog()
+            }
+
+            ivBack.setOnClickListener {
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
             }
 
             ivNextArrow.setOnClickListener {

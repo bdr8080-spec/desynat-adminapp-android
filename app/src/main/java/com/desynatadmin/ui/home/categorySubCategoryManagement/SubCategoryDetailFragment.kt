@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -16,6 +17,7 @@ import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,7 @@ class SubCategoryDetailFragment : BaseFragment() {
         private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var subCategorydata: GetSubCategoryResponse.Data.Data?=null
+    var actionAccess : Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +54,19 @@ class SubCategoryDetailFragment : BaseFragment() {
             updateStatus()
         }
         binding?.apply {
+            val userInfo = SharedPreference.get(requireActivity()).getUser()
+            if (userInfo?.type=="2"){
+                val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
+                val module = subAdminInfo?.permissionDetails
+                    ?.firstOrNull {
+                        it.moduleDetails.name.equals("category_management", true)
+                    }
+
+                actionAccess = module?.canAction == 1
+                btnDelete.isVisible = actionAccess
+                btnEdit.isVisible = actionAccess
+                tvSwitch.isClickable = actionAccess
+            }
             toolbar.tvToolbar.text = "Sub-Category Detail"
         }
     }
@@ -74,7 +90,9 @@ class SubCategoryDetailFragment : BaseFragment() {
             }
 
             tvSwitch.setOnClickListener {
-                updateSubCategoryStatus()
+                if (actionAccess) {
+                    updateSubCategoryStatus()
+                }
             }
 
         }

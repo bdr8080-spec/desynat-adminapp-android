@@ -21,7 +21,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAffiliateWithdrawalRequestBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
-import com.desynatadmin.network.ApiServices
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.payoutRetrofit.PayoutRetrofit
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
@@ -107,7 +107,11 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                (requireActivity() as? HomeActivity)?.onBackPressed()
+                 when (val activity = requireActivity()) {
+        is HomeActivity -> activity.onBackPressed()
+        is SubAdminHomeActivity -> activity.onBackPressed()
+        else -> activity.onBackPressed()
+    }
             }
 
             ivNextArrow.setOnClickListener {
