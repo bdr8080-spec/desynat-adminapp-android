@@ -200,7 +200,8 @@ class SubAdminDetailFragment : BaseFragment() {
             }
             else{
                 tvSwitch.text = "Inactive"
-                tvSwitch.setTextColor(Color.parseColor("#666666"))
+                tvSwitch.setTextColor(Color.parseColor("#D53B36"))
+             //   tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 
             }

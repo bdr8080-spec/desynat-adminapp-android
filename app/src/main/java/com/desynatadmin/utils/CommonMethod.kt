@@ -403,9 +403,9 @@ object CommonMethod {
 
 
     fun customizeChangeDateFormat(inputDate: String,inputFormat:String="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",outputFormat:String="dd MMM,yyyy"): String {
-        val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.ENGLISH).apply {
+        val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.getDefault()).apply {
             timeZone = TimeZone.getTimeZone("UTC")}
-        val targetFormat = SimpleDateFormat(outputFormat, Locale.ENGLISH).apply {
+        val targetFormat = SimpleDateFormat(outputFormat, Locale.getDefault()).apply {
             timeZone = TimeZone.getDefault()
         }
         val date: Date
@@ -419,9 +419,9 @@ object CommonMethod {
     }
 
     fun customizeChangeDateFormatKuwait(inputDate: String,inputFormat:String="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",outputFormat:String="dd MMM,yyyy"): String {
-        val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.ENGLISH).apply {
+        val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.getDefault()).apply {
             timeZone = TimeZone.getTimeZone("Asia/Kuwait")}
-        val targetFormat = SimpleDateFormat(outputFormat, Locale.ENGLISH).apply {
+        val targetFormat = SimpleDateFormat(outputFormat, Locale.getDefault()).apply {
             timeZone = TimeZone.getDefault()
         }
         val date: Date
@@ -431,6 +431,29 @@ object CommonMethod {
         } catch (e: ParseException) {
             e.printStackTrace()
             return ""
+        }
+    }
+
+    fun customizeChangeDateFormatKuwaitFromUtc(
+        inputDate: String,
+        inputFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
+        outputFormat: String = "dd MMM, yyyy hh:mm a"
+    ): String {
+
+        val originalFormat = SimpleDateFormat(inputFormat, Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("UTC")
+        }
+
+        val targetFormat = SimpleDateFormat(outputFormat, Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Kuwait")
+        }
+
+        return try {
+            val date = originalFormat.parse(inputDate)
+            targetFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
         }
     }
 

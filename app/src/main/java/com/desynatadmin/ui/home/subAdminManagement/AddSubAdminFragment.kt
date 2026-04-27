@@ -399,10 +399,14 @@ class AddSubAdminFragment : BaseFragment() {
                 showToast("Please Enter Password")
                 return false
             }
-            if (pass.length<6) {
+         /*   if (pass.length<6) {
                 showToast("Password must be 6 digits long")
                 return false
-            }
+            }*/
+             else if (!CommonMethod.isValidPassword(pass)) {
+           showToast("Password must be at least 8 characters long, include 1 uppercase, 1 lowercase, and 1 special character")
+           return false
+       }
 
             val cPass = etConfirmPassword.text.toString()
             if (cPass.isEmpty()) {
