@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
@@ -24,6 +25,9 @@ import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 @AndroidEntryPoint
@@ -93,9 +97,9 @@ class AdminProfileDetailFragment : BaseFragment() {
 
                 val actionAccess = module?.canAction == 1
 
-                btnSaveChanges.isVisible = actionAccess
-                btnChangePassword.isVisible = actionAccess
-                tvChangeImage.isVisible = actionAccess
+//                btnSaveChanges.isVisible = actionAccess
+//                btnChangePassword.isVisible = actionAccess
+//                tvChangeImage.isVisible = actionAccess
             }
 
             imagePicker = ImagePicker(
@@ -104,9 +108,19 @@ class AdminProfileDetailFragment : BaseFragment() {
                 galleryLauncher,
                 permissionLauncher
             ) { uri ->
-                uri?.let {
-                    ivProfileImage.setImageURI(it)
-                    profileImageFile = CommonMethod.uriToFile(requireActivity(), it)
+
+                uri?.let { selectedUri ->
+
+                    ivProfileImage.setImageURI(selectedUri)
+
+                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+
+                        val file = CommonMethod.uriToFile(requireActivity(), selectedUri)
+
+                        withContext(Dispatchers.Main) {
+                            profileImageFile = file
+                        }
+                    }
                 }
             }
 

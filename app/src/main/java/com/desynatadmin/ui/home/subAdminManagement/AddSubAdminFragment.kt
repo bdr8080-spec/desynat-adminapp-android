@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
@@ -30,6 +31,9 @@ import com.desynatadmin.utils.togglePasswordVisibility
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import kotlin.getValue
 
@@ -91,7 +95,6 @@ class AddSubAdminFragment : BaseFragment() {
             val itemJson = arguments?.getString("subAdminData")
             if (!itemJson.isNullOrEmpty()) {
                 subAdminData = Gson().fromJson(itemJson, GetSubAdminDetailResponse.Data::class.java)
-                toolbar.tvToolbar.text = "Edit Brand"
                 toolbar.tvToolbar.text = "Edit"
                 tvAdd.text = "Save Changes"
                 ivProfileImage.isVisible = true
@@ -101,7 +104,7 @@ class AddSubAdminFragment : BaseFragment() {
 
             }
             else{
-                toolbar.tvToolbar.text = "Add New Staff"
+                toolbar.tvToolbar.text = "Add Sub Admin"
                 tvAdd.text = "Add"
                 ivProfileImage.isVisible = false
                 tvChangeImage.isVisible = false
@@ -122,15 +125,22 @@ class AddSubAdminFragment : BaseFragment() {
                 galleryLauncher,
                 permissionLauncher
             ) { uri ->
-                uri?.let {
-                    profileImage = CommonMethod.uriToFile(requireActivity(), it)
-                    if (subAdminData!=null){
-                        ivProfileImage.setImageURI(it)
-                    }
-                    else{
-                        ivProfile.setImageURI(it)
+                uri?.let { selectedUri ->
+
+                    if (subAdminData != null) {
+                        ivProfileImage.setImageURI(selectedUri)
+                    } else {
+                        ivProfile.setImageURI(selectedUri)
                     }
 
+                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+
+                        val file = CommonMethod.uriToFile(requireActivity(), selectedUri)
+
+                        withContext(Dispatchers.Main) {
+                            profileImage = file
+                        }
+                    }
                 }
             }
 
@@ -147,27 +157,35 @@ class AddSubAdminFragment : BaseFragment() {
                             "module" -> {
                                 item.isSelected = !item.isSelected
 
-                                if (!item.isSelected) {
+                                if (item.isSelected) {
+                                    item.canView = 1
+                                    item.canAction = 0
+                                } else {
                                     item.canView = 0
                                     item.canAction = 0
                                 }
                             }
 
                             "view" -> {
-                                item.isSelected = true
-                                item.canView = if (item.canView == 1) 0 else 1
-
-                                if (item.canView == 1) {
-                                    item.canAction = 0
+                                if (item.isSelected) {
+                                    if (item.canView == 1) {
+                                        item.isSelected = false
+                                        item.canView = 0
+                                        item.canAction = 0
+                                    } else {
+                                        item.canView = 1
+                                        item.canAction = 0
+                                    }
                                 }
                             }
 
                             "action" -> {
-                                item.isSelected = true
-                                item.canAction = if (item.canAction == 1) 0 else 1
+                                if (item.isSelected) {
+                                    item.canAction = if (item.canAction == 1) 0 else 1
 
-                                if (item.canAction == 1) {
-                                    item.canView = 0
+                                    if (item.canAction == 1) {
+                                        item.canView = 1
+                                    }
                                 }
                             }
                         }

@@ -1718,6 +1718,15 @@ val accountSettingResult: LiveData<LoginResponse>
         }
     }
 
+    val getHomeSubAdminDetailResult: LiveData<GetSubAdminDetailResponse>
+        get() = repository.getHomeSubAdminDetailLiveData
+
+    fun getHomeSubAdminDetail(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getHomeSubAdminDetail(map)
+        }
+    }
+
     val updateSubAdminStatusResult: LiveData<UpdateSubAdminStatusResponse>
         get() = repository.updateSubAdminStatusLiveData
 

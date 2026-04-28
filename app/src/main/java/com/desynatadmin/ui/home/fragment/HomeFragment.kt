@@ -3,6 +3,7 @@ package com.desynatadmin.ui.home.fragment
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -35,11 +36,11 @@ import kotlin.text.get
 class HomeFragment : BaseFragment() {
     private var binding: FragmentHomeBinding?=null
     private val viewModel: HomeViewModel by viewModels()
-    private var isObserver = true
-    private var isCountryObserver = true
-    private var isSubAdminObserver = true
-    private var isNotificationObserver = true
-    private var isProfileObserver = true
+    private var isObserver = false
+    private var isCountryObserver = false
+    private var isSubAdminObserver = false
+    private var isNotificationObserver = false
+    private var isProfileObserver = false
     var user : LoginResponse.Data?=null
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var userInfo: LoginResponse.Data?=null
@@ -61,6 +62,18 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
+
+        ProgressDialogUtils.getInstance().hideProgress()
+        getNotificationCount()
+        getProfile()
+        if(SharedPreference.get(requireActivity()).getCountryList() == null) {
+            getCountryApi()
+        }
+        else{
+            countryList.clear()
+            SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
+        }
+
         userInfo = SharedPreference.get(requireActivity()).getUser()
         if (userInfo?.type=="2"){
             getSubAdminDetail(userInfo?.id.toString())
@@ -81,16 +94,6 @@ class HomeFragment : BaseFragment() {
                     is SubAdminHomeActivity -> activity.hideBack(false)
                 }
             }
-        }
-        ProgressDialogUtils.getInstance().hideProgress()
-        getNotificationCount()
-        getProfile()
-        if(SharedPreference.get(requireActivity()).getCountryList() == null) {
-            getCountryApi()
-        }
-        else{
-            countryList.clear()
-            SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         }
     }
 
@@ -138,7 +141,9 @@ private fun getProfile(){
                 isObserver = false
         }
         viewModel.getSubAdminDetailResult.observe(viewLifecycleOwner) { response ->
-            if (isSubAdminObserver) {
+            Log.e("api", "observe: ${isSubAdminObserver}" )
+
+                Log.e("api", "observe: ${response.data}" )
                 ProgressDialogUtils.getInstance().hideProgress()
                 SharedPreference.get(requireActivity()).saveSubAdmin(response.data)
                 when (val activity = requireActivity()) {
@@ -147,8 +152,7 @@ private fun getProfile(){
                         activity.setDrawerContentAdapter()
                     }
                 }
-                isSubAdminObserver = false
-            }
+
         }
 
         viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->

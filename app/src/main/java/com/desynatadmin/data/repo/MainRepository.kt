@@ -2426,6 +2426,18 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val getHomeSubAdminDetailLiveData = SingleLiveEvent<GetSubAdminDetailResponse>()
+    suspend fun getHomeSubAdminDetail(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getSubAdminDetail(map)
+            },
+            responseLiveData = getHomeSubAdminDetailLiveData
+        )
+    }
+
     val updateSubAdminLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun updateSubAdmin(
         request: AddSubAdminRequest

@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.desynatadmin.utils.mediaPicker.StoryMediaPicker.PendingAction
 import java.io.File
 
 class ImagePicker(
@@ -46,8 +47,15 @@ class ImagePicker(
         }
     }
 
+//    private fun openCamera() {
+//        cameraImageUri = createImageUri()
+//        cameraLauncher.launch(cameraImageUri!!)
+//    }
+
     private fun openCamera() {
-        cameraImageUri = createImageUri()
+
+        cameraImageUri = createUri("IMG", "jpg")
+
         cameraLauncher.launch(cameraImageUri!!)
     }
 
@@ -61,6 +69,15 @@ class ImagePicker(
             context,
             "${context.packageName}.provider",
             imageFile
+        )
+    }
+
+    private fun createUri(prefix: String, ext: String): Uri {
+        val file = File(context.cacheDir, "${prefix}_${System.currentTimeMillis()}.$ext")
+        return FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.provider",
+            file
         )
     }
 

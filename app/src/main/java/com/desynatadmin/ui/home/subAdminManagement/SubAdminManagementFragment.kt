@@ -83,6 +83,8 @@ class SubAdminManagementFragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
 
+            toolbar.tvToolbar.text = "Sub Admin"
+
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){
                 val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()

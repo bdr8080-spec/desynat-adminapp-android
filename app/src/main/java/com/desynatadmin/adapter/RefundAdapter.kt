@@ -1,6 +1,7 @@
 package com.desynatadmin.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -23,6 +24,14 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<GetRefundOrde
             tvCancelledOn.text = CommonMethod.customizeChangeDateFormatKuwaitFromUtc(refundData?.updatedAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(refundData?.order?.totalAmount?.toDoubleOrNull()?:0.0)} KD"
 
+            if (refundData?.status=="2"){
+                tvStatusValue.text = "Completed"
+                tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
+            }
+            else{
+                tvStatusValue.text = "Pending"
+                tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
+            }
 
             tvViewMore.setOnClickListener {
                 if (tvViewMore.text == "Less View"){

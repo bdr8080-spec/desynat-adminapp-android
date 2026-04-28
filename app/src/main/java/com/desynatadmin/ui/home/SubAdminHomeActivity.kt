@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.adapter.BottomNavAdapter
@@ -65,6 +66,34 @@ class SubAdminHomeActivity : BaseActivity() {
     }
 
     override fun initView() {
+
+        binding?.apply {
+            //  drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
+            drawerBinding = SubAdminDrawerLayoutBinding.bind(
+                binding!!.navigationView.findViewById(R.id.drawerRoot)
+            )
+
+        }
+
+        setDrawerAdapter()
+
+        userInfo = SharedPreference.get(this).getUser()
+        if (userInfo?.type=="2"){
+            getSubAdminDetail(userInfo?.id.toString())
+            subAdminInfo = SharedPreference.get(this).getSubAdmin()
+            val hasDashboard = subAdminInfo?.permissionDetails
+                ?.any {
+                    it.moduleDetails.name.equals("dashboard", ignoreCase = true)
+                } == true
+            if (!hasDashboard){
+                openDrawer()
+                hideBack(true)
+            }
+            else{
+                hideBack(false)
+            }
+        }
+
         CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -127,13 +156,7 @@ class SubAdminHomeActivity : BaseActivity() {
             }
         }
 
-        binding?.apply {
-          //  drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
-            drawerBinding = SubAdminDrawerLayoutBinding.bind(
-                binding!!.navigationView.findViewById(R.id.drawerRoot)
-            )
 
-        }
     }
 
     private fun setDrawerAdapter() {
@@ -290,6 +313,18 @@ class SubAdminHomeActivity : BaseActivity() {
                 }
             }
 
+        viewModel.getHomeSubAdminDetailResult.observe(this) { response ->
+            Log.e("api", "observe: ${response.data}" )
+
+            Log.e("api", "observe: ${response.data}" )
+            ProgressDialogUtils.getInstance().hideProgress()
+            SharedPreference.get(this).saveSubAdmin(response.data)
+            setUpDrawerContent()
+            setDrawerContentAdapter()
+
+
+        }
+
             viewModel.logoutResult.observe(this) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
@@ -382,6 +417,7 @@ class SubAdminHomeActivity : BaseActivity() {
     }
 
      fun setUpDrawerContent(){
+         Log.e("api", "observe: setUpDrawerContent" )
         drawerBinding.apply {
 
             ivProfileImage.setOnClickListener {
@@ -428,6 +464,7 @@ class SubAdminHomeActivity : BaseActivity() {
 
     fun setDrawerContentAdapter(){
         setDrawerAdapter()
+        Log.e("api", "observe: setDrawerAdapter" )
 
         userInfo = SharedPreference.get(this).getUser()
         if (userInfo?.type=="2"){
@@ -435,7 +472,28 @@ class SubAdminHomeActivity : BaseActivity() {
             subAdminDrawerList.clear()
             subAdminInfo?.permissionDetails?.let { subAdminDrawerList.addAll(it) }
             subAdminDrawerAdapter?.notifyDataSetChanged()
+
+            val module = subAdminInfo?.permissionDetails
+                ?.firstOrNull {
+                    it.moduleDetails.name.equals("account_setting", true)
+                }
+
+            val actionAccess = module?.canAction == 1
+        //    drawerBinding?.ivEdit?.isVisible = actionAccess
+
+//            drawerBinding?.ivProfileImage?.setOnClickListener {
+//                controller.navigate(R.id.adminProfile)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+
         }
+    }
+
+    private fun getSubAdminDetail(id: String){
+        val map = HashMap<String,Any>()
+        map["id"] = id
+        viewModel.getHomeSubAdminDetail(map)
+
     }
 
 }
