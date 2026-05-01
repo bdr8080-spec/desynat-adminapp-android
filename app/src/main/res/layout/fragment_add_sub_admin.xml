@@ -330,77 +330,83 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etCountry" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPassword">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etPassword"
+                    android:layout_width="0dp"
                     style="@style/edit_text"
-                    android:layout_width="match_parent"
-                    android:hint="Enter password"
+                    android:hint="@string/enter_password"
                     android:inputType="textPassword"
                     android:background="@null"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_toLeftOf="@+id/ivPasswordVisible"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ivPasswordVisible"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivPasswordVisible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:paddingVertical="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:src="@drawable/ic_eye"
-                    app:tint="@color/hint_color" />
+                    app:tint="@color/hint_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvConfirmPassword"
                 style="@style/edit_text_title"
+                android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Confirm Password"
+                android:text="@string/confirm_password"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/relPassword"/>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvConfirmPassword">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etConfirmPassword"
+                    android:layout_width="0dp"
                     style="@style/edit_text"
-                    android:layout_width="match_parent"
-                    android:hint="Enter password"
+                    android:hint="@string/enter_confirm_password"
                     android:inputType="textPassword"
                     android:background="@null"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_toLeftOf="@+id/ivConfirmPasswordVisible"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ivConfirmPasswordVisible"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivConfirmPasswordVisible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:paddingVertical="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:src="@drawable/ic_eye"
-                    app:tint="@color/hint_color" />
+                    app:tint="@color/hint_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvAccessModule"

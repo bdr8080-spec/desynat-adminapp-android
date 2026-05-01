@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentChangePasswordBinding
@@ -41,7 +42,7 @@ class ChangePasswordFragment : BaseFragment() {
 
             from = arguments?.getString("from","").toString()
 
-            toolbar.tvToolbar.text = "Change Password"
+            toolbar.tvToolbar.text = getString(R.string.change_password)
             CommonMethod.removeAllTextSpaces(etPassword)
             CommonMethod.removeAllTextSpaces(etConfirmPassword)
             CommonMethod.removeAllTextSpaces(etOldPassword)
@@ -104,19 +105,19 @@ class ChangePasswordFragment : BaseFragment() {
         val confirmPassword = binding?.etConfirmPassword?.text.toString().trim()
 
         if (oldPassword.isEmpty()) {
-            showToast("Please enter old password")
+            showToast(getString(R.string.please_enter_old_password))
             return false
         }
         else if (password.isEmpty()) {
-            showToast("Please enter new password")
+            showToast(getString(R.string.please_enter_new_password))
             return false
         }
         else if (confirmPassword.isEmpty() ) {
-            showToast("Please enter confirm password")
+            showToast(getString(R.string.please_re_enter_confirm_password))
             return false
         }
         else if (password!=confirmPassword) {
-            showToast("New password and confirm password didn't match")
+            showToast(getString(R.string.new_password_and_confirm_password_didn_t_match))
             return false
         }
         return true
