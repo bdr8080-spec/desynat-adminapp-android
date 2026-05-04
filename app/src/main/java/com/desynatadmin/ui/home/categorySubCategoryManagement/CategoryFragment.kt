@@ -51,7 +51,7 @@ class CategoryFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "Category"
+            toolbar.tvToolbar.text = getString(R.string.category)
 
            swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(requireActivity(), R.color.brown)
@@ -136,10 +136,10 @@ class CategoryFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 categoryList[selectedPos] = response.data
                 if (response.data.status==1){
-                    showToast("Category Activated Successfully")
+                    showToast(getString(R.string.category_activated_successfully))
                 }
                 else{
-                    showToast("Category Deactivated Successfully")
+                    showToast(getString(R.string.category_deactivated_successfully))
 
                 }
                 categoryAdapter?.notifyItemChanged(selectedPos)

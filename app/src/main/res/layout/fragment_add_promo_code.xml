@@ -28,7 +28,7 @@
                 android:id="@+id/tvCountry"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Select Country"
+                android:text="@string/select_country"
                 android:textSize="@dimen/_13sdp" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -36,7 +36,7 @@
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select country"
+                android:hint="@string/select_country"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -48,13 +48,13 @@
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Promocode Name (English)"/>
+                    android:text="@string/promocode_name_english"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etEnglishPromoCode"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter promocode name"
+                android:hint="@string/enter_promocode_name"
                 android:inputType="text"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back" />
@@ -63,13 +63,13 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Promocode Name (Arabic)"/>
+                android:text="@string/promocode_name_arabic"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etArabicPromoCode"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter promocode name"
+                android:hint="@string/enter_promocode_name"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="text"
                 android:background="@drawable/edit_back" />
@@ -78,13 +78,13 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Description (English)"/>
+                android:text="@string/description_english"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etEnglishDescription"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter description"
+                android:hint="@string/enter_description"
                 android:inputType="text"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back" />
@@ -93,13 +93,13 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Description (Arabic)"/>
+                android:text="@string/description_arabic"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etArabicDescription"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter description"
+                android:hint="@string/enter_description"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="text"
                 android:background="@drawable/edit_back" />
@@ -108,7 +108,7 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Applicable for"/>
+                android:text="@string/applicable_for"/>
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -120,7 +120,7 @@
                     android:id="@+id/rbFirst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="First Order"
+                    android:text="@string/first_order"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
@@ -134,7 +134,7 @@
                     android:id="@+id/rbEvery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Every Order"
+                    android:text="@string/every_order"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
@@ -151,13 +151,13 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Discount %"/>
+                android:text="@string/discount_percentage"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etDiscount"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter discount"
+                android:hint="@string/enter_discount"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="numberDecimal"
                 android:maxLength="5"
@@ -167,13 +167,13 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Minimum Order Value"/>
+                android:text="@string/minimum_order_value"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etMinimumOrderValue"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter minimum order value"
+                android:hint="@string/enter_minimum_order_value"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="numberDecimal"
                 android:background="@drawable/edit_back" />
@@ -182,13 +182,13 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Up to Discount"/>
+                android:text="@string/up_to_discount"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etUpToDiscount"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter Up to Discount"
+                android:hint="@string/enter_up_to_discount"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="numberDecimal"
                 android:maxLength="7"
@@ -203,8 +203,7 @@
                     style="@style/edit_text_title"
                     android:layout_width="0dp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Start Date"
-                    android:textSize="@dimen/_13sdp"
+                    android:text="@string/start_date"
                     android:layout_marginEnd="@dimen/_7sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tvEndDate"
@@ -214,8 +213,7 @@
                     android:id="@+id/tvEndDate"
                     style="@style/edit_text_title"
                     android:layout_width="0dp"
-                    android:text="End Date"
-                    android:textSize="@dimen/_13sdp"
+                    android:text="@string/end_date"
                     android:layout_marginStart="@dimen/_8sdp"
                     app:layout_constraintStart_toEndOf="@+id/tvStartDate"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -232,7 +230,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="From   //  //"
+                    android:hint="@string/from_date_hint"
                     android:paddingVertical="@dimen/_9sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     app:layout_constraintEnd_toStartOf="@+id/etEndDate"
@@ -250,7 +248,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="To   //  //"
+                    android:hint="@string/to_date_hint"
                     android:paddingVertical="@dimen/_9sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/etStartDate"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -265,7 +263,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 style="@style/button"
-                android:text="Submit" />
+                android:text="@string/submit" />
 
         </LinearLayout>
 

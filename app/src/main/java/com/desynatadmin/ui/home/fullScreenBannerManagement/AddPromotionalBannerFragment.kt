@@ -105,13 +105,13 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
                 if (!itemJson.isNullOrEmpty()) {
                     bannerData = Gson().fromJson(itemJson, GetPromotionalBannerResponse.Data.Data::class.java)
-                    toolbar.tvToolbar.text = "Edit Promotional Banner"
-                    btnSubmit.text = "Update"
+                    toolbar.tvToolbar.text = getString(R.string.edit_promotional_banner)
+                    btnSubmit.text = getString(R.string.update)
                     setData()
 
                 }
                 else{
-                    toolbar.tvToolbar.text = "Add Promotional Banner"
+                    toolbar.tvToolbar.text = getString(R.string.add_promotional_banner)
                 }
 
                 imagePicker = ImagePicker(
@@ -144,7 +144,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                 etPosition.setOnClickListener {
                     showTypeDropdown(it) { value ->
                         when(value) {
-                            "Category" -> {
+                            getString(R.string.category) -> {
                                 bannerPosition = "3"
                                 getCategory()
                                 tvCategory.isVisible = true
@@ -152,7 +152,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
                             }
 
-                            "Home Top" -> {
+                            getString(R.string.home_top) -> {
                                 bannerPosition = "1"
                                 selectedCategory = null
                                 selectedSubCategory = null
@@ -162,7 +162,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                                 etSubCategory.isVisible = false
                             }
 
-                            "Home Bottom" -> {
+                            getString(R.string.home_bottom) -> {
                                 bannerPosition = "2"
                                 selectedCategory = null
                                 selectedSubCategory = null
@@ -272,7 +272,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
             viewModel.addPromotionalBannerResult.observe(viewLifecycleOwner) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
-                    CommonMethod.showSuccessDialog(requireContext(), "Banner added successfully!"){
+                    CommonMethod.showSuccessDialog(requireContext(), getString(R.string.banner_added_successfully)){
                         findNavController().popBackStack()
                     }
                     isObserver = false
@@ -349,16 +349,16 @@ class AddPromotionalBannerFragment : BaseFragment() {
                 bannerPosition = bannerData?.bannerPosition.toString()
                     when(bannerData?.bannerPosition) {
                         "1" ->  {
-                            etPosition.setText("Home Top")
+                            etPosition.setText(getString(R.string.home_top))
 
                         }
-                        "2" -> etPosition.setText("Home Bottom")
+                        "2" -> etPosition.setText(getString(R.string.home_bottom))
                         "3" -> {
                             selectedCategory = bannerData?.categoryDetails
                             selectedSubCategory = bannerData?.subcategoryDetails
                             getCategory()
                             getSubCategory()
-                            etPosition.setText("Category")
+                            etPosition.setText(getString(R.string.category))
                                 tvCategory.isVisible = true
                                 rgCategory.isVisible = true
                                 etSubCategory.isVisible = true
@@ -443,7 +443,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
             Log.e("image", "validation: ${image}")
             binding?.apply {
                 if(image==null&&bannerData==null){
-                    showToast("Please upload banner image")
+                    showToast(getString(R.string.please_upload_banner_image))
                     return false
                 }
               /*  else if(etCountry.text.toString().isBlank()) {
@@ -451,21 +451,21 @@ class AddPromotionalBannerFragment : BaseFragment() {
                     return false
                 }*/
                 else if(etPosition.text.toString().trim().isEmpty()) {
-                    showToast("Please select position")
+                    showToast(getString(R.string.please_select_position))
                     return false
                 }
                 else if(etStartDate.text.toString().trim().isEmpty()) {
-                    showToast("Please select start date")
+                    showToast(getString(R.string.please_select_start_date))
                     return false
                 }
 
                 else if(etEndDate.text.toString().trim().isEmpty()) {
-                    showToast("Please select end date")
+                    showToast(getString(R.string.please_select_end_date))
                     return false
                 }
 
                 else if(!isEndDateValid()) {
-                    showToast("From Date should be smaller then to date")
+                    showToast(getString(R.string.from_date_should_be_smaller_then_to_date))
                     return false
                 }
 
@@ -487,9 +487,9 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
         private fun showTypeDropdown(view: View, onSelect: (String) -> Unit) {
             val popup = PopupMenu(requireContext(), view)
-                popup.menu.add("Home Top")
-                popup.menu.add("Home Bottom")
-                popup.menu.add("Category")
+                popup.menu.add(getString(R.string.home_top))
+                popup.menu.add(getString(R.string.home_bottom))
+                popup.menu.add(getString(R.string.category))
 
             popup.setOnMenuItemClickListener {
                 onSelect(it.title.toString())

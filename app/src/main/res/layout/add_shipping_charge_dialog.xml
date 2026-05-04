@@ -15,7 +15,7 @@
     android:background="@drawable/bottomsheet_bg"
     android:backgroundTint="#FFF7EA"
     android:fontFamily="@font/poppins_medium"
-    android:text="Add Delivery Charge"
+    android:text="@string/add_delivery_charge"
     android:textColor="@color/black"
     android:drawableEnd="@drawable/close_icon"
     android:textSize="@dimen/_13sdp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Range"
+        android:text="@string/range"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"/>
 
@@ -72,7 +72,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_centerVertical="true"
-            android:hint="From"
+            android:hint="@string/from"
             android:inputType="numberDecimal"
             android:paddingVertical="@dimen/_8sdp"/>
 
@@ -83,7 +83,7 @@
             android:layout_weight="1"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_10sdp"
-            android:hint="To"
+            android:hint="@string/to"
             android:inputType="numberDecimal"
             android:paddingVertical="@dimen/_8sdp" />
 
@@ -95,7 +95,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Delivery Price"
+        android:text="@string/delivery_price"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"/>
 
@@ -107,7 +107,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:padding="@dimen/_8sdp"
-        android:hint="Enter amount"
+        android:hint="@string/enter_amount"
         android:maxLength="10"
         android:inputType="numberDecimal"/>
 
@@ -118,7 +118,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:text="Add"
+        android:text="@string/add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

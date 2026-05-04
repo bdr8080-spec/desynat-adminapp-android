@@ -86,7 +86,7 @@ class SendNewNotificationFragment : BaseFragment(){
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "Send New"
+            toolbar.tvToolbar.text = getString(R.string.send_new)
 
             CommonMethod.applyArabicOnlyFilter(etArabicTitle)
             CommonMethod.applyArabicOnlyFilter(etArabicDescription)
@@ -121,7 +121,7 @@ class SendNewNotificationFragment : BaseFragment(){
                         receiverType = 6
                         tvSendType.isVisible = true
                         isAllSelected = true
-                        tvSendType.text = "All"
+                        tvSendType.text = getString(R.string.all)
                         tvSendType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox,0,0,0)
                         if (userList.isEmpty()){
                             getAllUser()
@@ -410,7 +410,7 @@ class SendNewNotificationFragment : BaseFragment(){
 
                 }
                 2->{
-                    tvToolbar.text = "Select Customer"
+                    tvToolbar.text = getString(R.string.select_customer)
                     assignUserAdapter = AssignUserAdapter(requireActivity(), tempUserList, object :
                         AssignUserAdapter.OnUserClick {
                         override fun onClick(position: Int) {
@@ -421,7 +421,7 @@ class SendNewNotificationFragment : BaseFragment(){
                     rvUser.adapter = assignUserAdapter
                 }
                 3->{
-                    tvToolbar.text = "Select Seller"
+                    tvToolbar.text = getString(R.string.select_seller)
                     assignSellerAdapter = AssignSellerAdapter(requireActivity(), tempSellerList, object :
                         AssignSellerAdapter.OnUserClick {
                         override fun onClick(position: Int) {
@@ -433,7 +433,7 @@ class SendNewNotificationFragment : BaseFragment(){
 
                 }
                 4->{
-                    tvToolbar.text = "Select Affiliate"
+                    tvToolbar.text = getString(R.string.select_affiliate)
                     assignAffiliateUserAdapter = AssignAffiliateUserAdapter(requireActivity(), tempAffiliateUserList, object :
                         AssignAffiliateUserAdapter.OnUserClick {
                         override fun onClick(position: Int) {
@@ -445,7 +445,7 @@ class SendNewNotificationFragment : BaseFragment(){
 
             }
                 5->{
-                    tvToolbar.text = "Select Driver"
+                    tvToolbar.text = getString(R.string.select_driver)
                     assignDriverAdapter = AssignDeliveryBoyAdapter(requireActivity(), tempDriverList, object :
                         AssignDeliveryBoyAdapter.OnClick {
                         override fun onClick(position: Int) {
@@ -510,7 +510,7 @@ class SendNewNotificationFragment : BaseFragment(){
                 }
 
                 if (selectedReceiverList.isEmpty()) {
-                    requireContext().showToast("Please select at least one user")
+                    requireContext().showToast(getString(R.string.please_select_at_least_one_user))
                     return@setOnClickListener
                 }
 
@@ -534,11 +534,11 @@ class SendNewNotificationFragment : BaseFragment(){
         }
 
          if (selectedNames.isEmpty()&&receiverType!=6) {
-             binding?.tvSendType?.text =  "Select"
+             binding?.tvSendType?.text = getString(R.string.select)
              binding?.tvSendType?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_unselected,0,0,0)
         }
          else if(receiverType==6){
-             binding?.tvSendType?.text = "All"
+             binding?.tvSendType?.text = getString(R.string.all)
              binding?.tvSendType?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox,0,0,0)
          }
          else if (
@@ -547,7 +547,7 @@ class SendNewNotificationFragment : BaseFragment(){
              (receiverType == 4 && selectedNames.size == affiliateUserList.size) ||
              (receiverType == 5 && selectedNames.size == driverList.size)
          ) {
-             binding?.tvSendType?.text = "All"
+             binding?.tvSendType?.text = getString(R.string.all)
              binding?.tvSendType?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox,0,0,0)
         } else {
              binding?.tvSendType?.text =selectedNames.joinToString(", ")
@@ -587,32 +587,32 @@ class SendNewNotificationFragment : BaseFragment(){
         binding?.apply {
 
             if (etEnglishTitle.text.toString().trim().isEmpty()) {
-                showToast("Please enter title in English")
+                showToast(getString(R.string.please_enter_title_in_english))
                 return false
             }
 
             if (etArabicTitle.text.toString().trim().isEmpty()) {
-                showToast("Please enter title in Arabic")
+                showToast(getString(R.string.please_enter_title_in_arabic))
                 return false
             }
 
             if (etEnglishDescription.text.toString().trim().isEmpty()) {
-                showToast("Please enter description in English")
+                showToast(getString(R.string.please_enter_description_in_english))
                 return false
             }
 
             if (etArabicDescription.text.toString().trim().isEmpty()) {
-                showToast("Please enter description in Arabic")
+                showToast(getString(R.string.please_enter_description_in_arabic))
                 return false
             }
 
             if (radioSendTo.checkedRadioButtonId == -1) {
-                showToast("Please select receiver type")
+                showToast(getString(R.string.please_select_receiver_type))
                 return false
             }
 
             if (selectedReceiverList.isEmpty()&&receiverType!=6) {
-                showToast("Please select at least one receiver")
+                showToast(getString(R.string.please_select_at_least_one_receiver))
                 return false
             }
         }

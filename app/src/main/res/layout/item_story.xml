@@ -17,13 +17,29 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_reel"
+            android:src="@drawable/ic_add_brand"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUploadNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:singleLine="true"
+            android:text="@string/upload_new"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivAdd"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,7 +94,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
         android:singleLine="true"
-        android:text="Posted On"
+        android:text="@string/posted_on"
         android:ellipsize="end"
         android:textColor="@color/black"
         android:textSize="@dimen/_9sdp"
@@ -90,7 +106,7 @@
         android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Active"
+        android:text="@string/active"
         android:textColor="#68CA44"
         android:textSize="@dimen/_9sdp"
         android:layout_marginEnd="@dimen/_6sdp"
@@ -109,7 +125,7 @@
         android:ellipsize="end"
         android:textColor="#99000000"
         android:textSize="@dimen/_9sdp"
-        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginHorizontal="@dimen/_6sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

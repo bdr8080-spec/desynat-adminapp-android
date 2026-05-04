@@ -72,7 +72,7 @@ class FullScreenBannerDetailFragment : BaseFragment() {
             setData()
         }
         binding?.apply {
-            toolbar.tvToolbar.text = "Detail"
+            toolbar.tvToolbar.text = getString(R.string.detail)
 
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){
@@ -134,18 +134,20 @@ class FullScreenBannerDetailFragment : BaseFragment() {
             tvCountry.text =  countryList.firstOrNull { it.id.toString() == bannerData?.countryId.toString() }?.name
             tvStartDate.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             tvEndDate.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-            tvTypeValue.text = if (bannerData?.type=="2") "Web Banner" else "App Banner"
+            tvTypeValue.text = if (bannerData?.type=="2") getString(R.string.web_banner) else getString(
+                R.string.app_banner
+            )
             when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
                 "Upcoming"->{
-                    tvStatus.text = "Upcoming"
+                    tvStatus.text = getString(R.string.upcoming)
                     tvStatus.setTextColor(Color.parseColor("#1A900D"))
                 }
                 "Active" ->{
-                    tvStatus.text = "Active"
+                    tvStatus.text = getString(R.string.active)
                     tvStatus.setTextColor(Color.parseColor("#1A900D"))
                 }
                 "Expired"->{
-                    tvStatus.text = "Expired"
+                    tvStatus.text = getString(R.string.expired)
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                 }
             }
@@ -165,7 +167,8 @@ class FullScreenBannerDetailFragment : BaseFragment() {
         viewModel.deleteFullScreenBannerResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Banner deleted successfully"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.banner_deleted_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -182,10 +185,10 @@ class FullScreenBannerDetailFragment : BaseFragment() {
         val today = LocalDate.now()
 
         return when {
-            today.isBefore(start) -> "Upcoming"
+            today.isBefore(start) -> getString(R.string.upcoming)
             (today.isEqual(start) || today.isAfter(start)) &&
-                    (today.isEqual(end) || today.isBefore(end)) -> "Active"
-            else -> "Expired"
+                    (today.isEqual(end) || today.isBefore(end)) -> getString(R.string.active)
+            else -> getString(R.string.expired)
         }
     }
 

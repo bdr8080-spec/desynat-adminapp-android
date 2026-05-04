@@ -59,12 +59,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:visibility="gone"
                     android:id="@+id/tvChangeImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/change_img_txt"
+                    android:background="@drawable/change_img_txt"
+                    android:text="@string/change_image"
+                    android:textColor="#9E7853"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
                     app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"/>
@@ -74,11 +81,10 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFullNameEnglish"
                 style="@style/edit_text_title"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:text="Full Name"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/full_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clImage" />
 
@@ -86,7 +92,7 @@
                 android:id="@+id/tvNameEnglish"
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
-                android:text="In English"
+                android:text="@string/in_english"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back"
-                android:hint="Enter full name"
+                android:hint="@string/enter_full_name"
                 android:inputType="textCapSentences"
                 android:textSize="@dimen/_10sdp"
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
@@ -110,10 +116,9 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFullNameArabic"
                 style="@style/edit_text_title"
-                android:layout_width="0dp"
-                android:text="Full Name"
+                android:layout_width="wrap_content"
+                android:text="@string/full_name"
                 android:layout_marginTop="@dimen/_15sdp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFullNameEnglish"/>
 
@@ -121,7 +126,7 @@
                 android:id="@+id/tvNameArabic"
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
-                android:text="In Arabic"
+                android:text="@string/in_arabic"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -133,7 +138,7 @@
                 style="@style/edit_text"
                 android:layout_width="0dp"
                 android:background="@drawable/edit_back"
-                android:hint="Enter full name"
+                android:hint="@string/enter_full_name"
                 android:inputType="text"
                 android:textSize="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -145,7 +150,7 @@
                 android:id="@+id/tvEmail"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Email Id"
+                android:text="@string/email_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFullNameArabic" />
@@ -156,7 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back"
-                android:hint="Enter email id"
+                android:hint="@string/enter_email_id"
                 android:inputType="textEmailAddress"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
@@ -164,7 +169,7 @@
                 android:id="@+id/tvMobile"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Mobile Number"
+                android:text="@string/mobile_number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etEmailID" />
@@ -222,7 +227,7 @@
                     style="@style/edit_text"
                     android:layout_width="0dp"
                     android:background="@null"
-                    android:hint="Enter mobile number"
+                    android:hint="@string/enter_mobile_number"
                     android:inputType="number"
                     android:maxLength="15"
                     android:paddingHorizontal="@dimen/_8sdp"
@@ -303,7 +308,7 @@
                 android:id="@+id/tvCountry"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Select Country"
+                android:text="@string/select_country"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clMobile"/>
 
@@ -312,7 +317,7 @@
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Country"
+                android:hint="@string/select_country"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -326,7 +331,7 @@
                 android:id="@+id/tvPassword"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Password"
+                android:text="@string/password"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etCountry" />
 
@@ -413,7 +418,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Access Module"
+                android:text="@string/access_module"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
@@ -438,7 +443,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/button_stroke"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textColor="@color/brown"
                 android:textSize="@dimen/_12sdp"
                 android:paddingVertical="@dimen/_8sdp"
@@ -457,7 +462,7 @@
                 android:background="@drawable/btn_background"
                 android:gravity="center"
                 android:layout_marginStart="@dimen/_7sdp"
-                android:text="Add"
+                android:text="@string/add"
                 android:fontFamily="@font/poppins_medium"
                 android:paddingVertical="@dimen/_8sdp"
                 android:textColor="@color/white"

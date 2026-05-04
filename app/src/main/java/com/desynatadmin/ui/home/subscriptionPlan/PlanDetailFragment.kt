@@ -55,7 +55,7 @@ class PlanDetailFragment : BaseFragment() {
             getSubscriptionPlan()
         }
         binding?.apply {
-            toolbar.tvToolbar.text = "Plan Details"
+            toolbar.tvToolbar.text = getString(R.string.plan_details)
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){
                 val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
@@ -81,7 +81,7 @@ class PlanDetailFragment : BaseFragment() {
             btnDelete.setOnClickListener {
                 CommonMethod.deleteAlertDialog(
                     requireActivity(),
-                    "Are you sure you want to delete the plan?"
+                    getString(R.string.are_you_sure_you_want_to_delete_the_plan)
                 ) { action ->
                     when (action) {
                         CommonMethod.DialogAction.DELETE -> {
@@ -124,7 +124,8 @@ class PlanDetailFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.mainProgressBar?.isVisible = false
-                CommonMethod.showSuccessDialog(requireContext(), "Plan deleted successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.plan_deleted_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -149,10 +150,10 @@ class PlanDetailFragment : BaseFragment() {
                 subscriptionData = response.data
                 if (response.data.status==1){
 //                    CommonMethod.showSuccessDialog(requireContext(), "Plan active successfully")
-                   showToast("Plan active successfully")
+                   showToast(getString(R.string.plan_active_successfully))
                 }
                 else{
-                    showToast("Plan inactive successfully")
+                    showToast(getString(R.string.plan_inactive_successfully))
                 }
                 updateStatus()
 
@@ -182,12 +183,12 @@ class PlanDetailFragment : BaseFragment() {
     private fun updateStatus(){
         binding?.apply {
             if(subscriptionData?.status==1){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 
@@ -209,13 +210,25 @@ class PlanDetailFragment : BaseFragment() {
             }
             when(subscriptionData?.durationType){
                 1->{
-                    tvValidTime.text = "for ${subscriptionData?.duration} Month"
+                    tvValidTime.text = "${getString(R.string.for_text)} ${subscriptionData?.duration} ${
+                        getString(
+                            R.string.month
+                        )
+                    }"
                 }
                 2->{
-                    tvValidTime.text = "for ${subscriptionData?.duration} Year"
+                    tvValidTime.text = "${getString(R.string.for_text)} ${subscriptionData?.duration} ${
+                        getString(
+                            R.string.year
+                        )
+                    }"
                 }
                 else ->{
-                    tvValidTime.text = "for ${subscriptionData?.duration} Month"
+                    tvValidTime.text = "${getString(R.string.for_text)} ${subscriptionData?.duration} ${
+                        getString(
+                            R.string.month
+                        )
+                    }"
                 }
             }
 
@@ -224,7 +237,7 @@ class PlanDetailFragment : BaseFragment() {
             setVisibilityIfZero(llHighlights, subscriptionData?.noOfHighlights)
             setVisibilityIfZero(llEmployees, subscriptionData?.noOfEmployee)
             if (subscriptionData?.productType==1){
-                tvProduct.text = "Unlimited"
+                tvProduct.text = getString(R.string.unlimited)
             }
             else{
                 tvProduct.text = subscriptionData?.noOfProducts.toString()
@@ -232,15 +245,15 @@ class PlanDetailFragment : BaseFragment() {
 
             tvReel.text = subscriptionData?.noOfVideos.toString()
             tvHighlights.text = subscriptionData?.noOfHighlights.toString()
-            tvStories.text = if(subscriptionData?.stories==1)"Open" else "Close"
-            tvEmployee.text = subscriptionData?.noOfEmployee.toString()+" Store Employees"
+            tvStories.text = if(subscriptionData?.stories==1)getString(R.string.open) else getString(R.string.close)
+            tvEmployee.text = subscriptionData?.noOfEmployee.toString()+" ${getString(R.string.store_employees)}"
 
             val commissionValue = subscriptionData?.commissionPercentage?.toString()?.toDoubleOrNull()
             if (commissionValue != null && commissionValue != 0.0) {
                 tvCommission.text =  "${CommonMethod.formatDoubleValue(subscriptionData?.commissionPercentage)}%"
             }
             else{
-                tvCommission.text = "No"
+                tvCommission.text = getString(R.string.no)
             }
 
             val freeMonth = subscriptionData?.noOfFreeMonths
@@ -253,12 +266,12 @@ class PlanDetailFragment : BaseFragment() {
             }
 
             if(subscriptionData?.status==1){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 

@@ -128,13 +128,13 @@ class AddDeliveryBoyFragment : BaseFragment() {
             binding?.apply {
                 if (!itemJson.isNullOrEmpty()) {
                     deliveryBoyData = Gson().fromJson(itemJson, GetAllDeliveryBoyResponse.Data.Data::class.java)
-                    toolbar.tvToolbar.text = "Update Driver Detail"
-                    btnAdd.text = "Update"
+                    toolbar.tvToolbar.text = getString(R.string.update_driver_detail)
+                    btnAdd.text = getString(R.string.update)
                     setData()
                 }
                 else{
-                    toolbar.tvToolbar.text = "Add New Driver"
-                    btnAdd.text = "Add"
+                    toolbar.tvToolbar.text = getString(R.string.add_new_driver)
+                    btnAdd.text = getString(R.string.add)
                 }
 
                 etArabicFullName.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
@@ -319,7 +319,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    CommonMethod.showSuccessDialog(requireContext(), "Delivery boy added successfully!"){
+                    CommonMethod.showSuccessDialog(requireContext(),
+                        getString(R.string.delivery_boy_added_successfully)){
                         findNavController().popBackStack()
                     }
                 }
@@ -634,122 +635,122 @@ class AddDeliveryBoyFragment : BaseFragment() {
         binding?.apply {
 
             if (profileImage == null) {
-                showToast("Please Upload Profile Image")
+                showToast(getString(R.string.please_upload_profile_image))
                 return false
             }
             if (etEnglishFullName.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in English")
+                showToast(getString(R.string.please_enter_full_name_in_english))
                 return false
             }
 
             if (etArabicFullName.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in Arabic")
+                showToast(getString(R.string.please_enter_full_name_in_arabic))
                 return false
             }
 
             val mobile = etMobileNumber.text.toString().trim()
             if (mobile.isEmpty()) {
-                showToast("Please Enter Mobile Number")
+                showToast(getString(R.string.enter_mobile_number))
                 return false
             }
             if (mobile.length < 7 ) {
-                showToast("Mobile Number in Between 7-15 digits ")
+                showToast(getString(R.string.mobile_number_in_between_7_15_digits))
                 return false
             }
             val email = etEmail.text.toString().trim()
             if (email.isEmpty()) {
-                showToast("Please Enter Email Address")
+                showToast(getString(R.string.enter_email_address))
                 return false
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.error = "Please Enter Valid Email Address"
+                showToast(getString(R.string.please_enter_valid_email_address))
                 return false
             }
             if (etAddressLine1.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Address Line 1")
+                showToast(getString(R.string.please_enter_address_line_1))
                 return false
             }
 
             if (etAddressLine2.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Address Line 2")
+                showToast(getString(R.string.please_enter_address_line_2))
                 return false
             }
 
             if (etCity.text.toString().trim().isEmpty()) {
-                showToast("Please Enter City/District")
+                showToast(getString(R.string.please_enter_city_district))
                 return false
             }
 
             if (etState.text.toString().trim().isEmpty()) {
-                showToast("Please Enter State")
+                showToast(getString(R.string.please_enter_state))
                 return false
             }
 
             val pass = etPassword.text.toString()
             if (pass.isEmpty()) {
-                showToast("Please Enter Password")
+                showToast(getString(R.string.please_enter_password))
                 return false
             }
             if (pass.length<6) {
-                showToast("Password must be 6 digits long")
+                showToast(getString(R.string.password_must_be_6_digits_long))
                 return false
             }
 
             val cPass = etConfirmPassword.text.toString()
             if (cPass.isEmpty()) {
-                showToast("Please Enter Confirm Password")
+                showToast(getString(R.string.please_enter_confirm_password))
                 return false
             }
 
             if (pass != cPass) {
-                showToast("Password does not match")
+                showToast(getString(R.string.password_does_not_match))
                 return false
             }
 
             if (etZone.text.toString().trim().isEmpty()) {
-                showToast("Please Select Zone")
+                showToast(getString(R.string.please_select_zone))
                 return false
             }
 
             if (etVehicleName.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Vehicle Name")
+                showToast(getString(R.string.please_enter_vehicle_name))
                 return false
             }
 
             if (etVehichleRegistrationNumber.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Registration Number")
+                showToast(getString(R.string.please_enter_registration_number))
                 return false
             }
 
             if (vehicleImage1 == null) {
-                showToast("Please Upload Vehicle Front Image")
+                showToast(getString(R.string.please_upload_vehicle_front_image))
                 return false
             }
             if (vehicleImage2 == null) {
-                showToast("Please Upload Vehicle Back Image")
+                showToast(getString(R.string.please_upload_vehicle_back_image))
                 return false
             }
 
             if (identityProof1 == null) {
-                showToast("Please Upload Identity Front Image")
+                showToast(getString(R.string.please_upload_identity_front_image))
                 return false
             }
             if (identityProof2 == null) {
-                showToast("Please Upload Identity Back Image")
+                showToast(getString(R.string.please_upload_identity_back_image))
                 return false
             }
 
             if (drivingLicense1 == null) {
-                showToast("Please Upload Driving License Front Image")
+                showToast(getString(R.string.please_upload_driving_license_front_image))
                 return false
             }
             if (drivingLicense2 == null) {
-                showToast("Please Upload Driving License Back Image")
+                showToast(getString(R.string.please_upload_driving_license_back_image))
                 return false
             }
 
             if (vehicleInsurance == null) {
-                showToast("Please Upload Vehicle Insurance Document")
+                showToast(getString(R.string.please_upload_vehicle_insurance_document))
                 return false
             }
            /* if (pollutionPaper == null) {

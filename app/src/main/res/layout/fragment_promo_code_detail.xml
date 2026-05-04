@@ -94,7 +94,7 @@
             android:fontFamily="@font/poppins_medium"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Promocode Description"
+            android:text="@string/promocode_description"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"/>
 
@@ -128,7 +128,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Country"
+                android:text="@string/country"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_11sdp"
                 android:layout_marginTop="@dimen/_6sdp"
@@ -154,7 +154,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Applicable for"
+                android:text="@string/applicable_for"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_11sdp"
                 android:layout_marginTop="@dimen/_6sdp"
@@ -167,7 +167,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Every Order"
+                android:text="@string/every_order"
                android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
                 android:gravity="end"
@@ -180,7 +180,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Start date"
+                android:text="@string/start_date"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_11sdp"
                 android:layout_marginTop="@dimen/_6sdp"
@@ -206,7 +206,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="End Date"
+                android:text="@string/end_date"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_11sdp"
                 android:layout_marginTop="@dimen/_6sdp"
@@ -244,7 +244,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_30sdp"
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="@color/red"
         android:layout_marginTop="@dimen/_20sdp" />
 
@@ -258,6 +258,6 @@
         android:layout_marginEnd="@dimen/_15sdp"
         style="@style/button"
         android:background="@drawable/btn_background"
-        android:text="Edit" />
+        android:text="@string/edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

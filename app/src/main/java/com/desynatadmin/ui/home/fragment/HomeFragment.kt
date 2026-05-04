@@ -22,11 +22,14 @@ import com.desynatadmin.databinding.FragmentHomeBinding
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.SubAdminHomeActivity
+import com.desynatadmin.ui.home.fragment.response.GetDashboardResponse
 import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import me.leolin.shortcutbadger.ShortcutBadger
@@ -37,6 +40,7 @@ class HomeFragment : BaseFragment() {
     private var binding: FragmentHomeBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = false
+    private var isDashboardObserver = false
     private var isCountryObserver = false
     private var isSubAdminObserver = false
     private var isNotificationObserver = false
@@ -45,6 +49,14 @@ class HomeFragment : BaseFragment() {
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var userInfo: LoginResponse.Data?=null
     private var subAdminInfo: GetSubAdminDetailResponse.Data?=null
+    private var dashboardData: GetDashboardResponse.Data?=null
+
+    var fromDate = ""
+    var toDate = ""
+    var fromTimestamp=0L
+    var toTimestamp=0L
+    var filter = "1"
+    var countryId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +78,7 @@ class HomeFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         getNotificationCount()
         getProfile()
+        getDashBoardData()
         if(SharedPreference.get(requireActivity()).getCountryList() == null) {
             getCountryApi()
         }
@@ -99,10 +112,67 @@ class HomeFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
+
+            etFrom.setOnClickListener {
+                openCustomDatePicker(requireActivity()){date,timestamp->
+                    etFrom.setText(date)
+                    fromTimestamp=timestamp
+                }
+
+            }
+            etTo.setOnClickListener {
+                if (etFrom.text?.isNotEmpty() == true){
+                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
+                    etTo.setText(date)
+                    toTimestamp=timestamp
+                    getDashBoardData()
+                }
+                    }
+                else{
+                    showToast(getString(R.string.please_select_start_date_first))
+                }
+
+            }
+
+            radioGroup.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rbToday ->{
+                        filter = "1"
+                        getDashBoardData()
+                    }
+
+                    R.id.rbWeek ->{
+                        filter = "2"
+                        getDashBoardData()
+                    }
+
+                    R.id.rbMonth ->{
+                        filter = "3"
+                        getDashBoardData()
+                    }
+
+                    R.id.rbYear ->{
+                        filter = "4"
+                        getDashBoardData()
+                    }
+
+                }
+
+            }
+
+
             ivProfileImage.setOnClickListener {
                 when (val activity = requireActivity()) {
                     is HomeActivity -> activity.openDrawer()
                     is SubAdminHomeActivity -> activity.openDrawer()
+                }
+            }
+
+            etCountry.setOnClickListener {
+                CommonMethod.showCountryPicker(requireActivity(),etCountry,countryList, isDialCode = false){selectedCountry ->
+                    etCountry.setText(selectedCountry.name)
+                    countryId = selectedCountry.id.toString()
+                    getDashBoardData()
                 }
             }
 
@@ -111,7 +181,7 @@ class HomeFragment : BaseFragment() {
             }
 
             ivLanguage.setOnClickListener {
-             //   changeLanguageDialog()
+                changeLanguageDialog()
             }
         }
     }
@@ -138,7 +208,9 @@ private fun getProfile(){
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
                 ProgressDialogUtils.getInstance().hideProgress()
+            binding?.mainProgressBar?.isVisible = false
                 isObserver = false
+            isDashboardObserver = false
         }
         viewModel.getSubAdminDetailResult.observe(viewLifecycleOwner) { response ->
             Log.e("api", "observe: ${isSubAdminObserver}" )
@@ -153,6 +225,17 @@ private fun getProfile(){
                     }
                 }
 
+        }
+
+        viewModel.getHomeDashBoardResult.observe(viewLifecycleOwner) { response ->
+            if (isDashboardObserver) {
+                Log.e("api", "observe: ${isDashboardObserver}")
+                binding?.mainProgressBar?.isVisible = false
+                ProgressDialogUtils.getInstance().hideProgress()
+                dashboardData = response.data
+                setDashboardData()
+                isDashboardObserver = false
+            }
         }
 
         viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
@@ -222,7 +305,7 @@ private fun getProfile(){
                 cbArabic.isChecked = true
             }
 
-            tvToolbar.setOnClickListener {
+            closeIv.setOnClickListener {
                 dialog.dismiss()
             }
 
@@ -261,6 +344,12 @@ private fun getProfile(){
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
+                    CommonMethod.setLocale(requireActivity(), Constants.language)
+
+                    val intent = Intent(requireActivity(), if (requireActivity() is SubAdminHomeActivity)SubAdminHomeActivity::class.java else HomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    requireActivity().finish()
                     dialog.dismiss()
                 }
             }
@@ -277,7 +366,7 @@ private fun getProfile(){
 
     private fun setData(){
         binding?.apply {
-            tvName.text = getString(R.string.hi, user?.fullName)
+            tvName.text = "${getString(R.string.hi)} ${user?.fullName}"
             Glide.with(requireActivity()).load(user?.profilePic).placeholder(R.drawable.ic_user).into(ivProfileImage)
         }
     }
@@ -288,6 +377,65 @@ private fun getProfile(){
         viewModel.getSubAdminDetail(map)
         isSubAdminObserver = true
 
+    }
+
+    private fun setDashboardData(){
+        binding?.apply {
+            tvTotalRevenue.text = "${CommonMethod.formatAmount(dashboardData?.totalRevenue.toString())} KD"
+            tvByOrderPrice.text = "${CommonMethod.formatAmount(dashboardData?.totalOrderRevenue.toString())} KD"
+            tvBySubscriptionPrice.text = "${CommonMethod.formatAmount(dashboardData?.totalSubscriptionPlanRevenue.toString())} KD"
+            tvByAffiliateOrderPrice.text = "${CommonMethod.formatAmount(dashboardData?.totalAffiliateOrdersRevenue.toString())} KD"
+            tvByBannerPrice.text = "${CommonMethod.formatAmount(dashboardData?.totalBannerRevenue.toString())} KD"
+
+            tvSellerInActiveUser.text = dashboardData?.totalInactiveSellers.toString()
+            tvSellerActiveUser.text = dashboardData?.totalActiveSellers.toString()
+            tvTotalSeller.text = "${getString(R.string.total_seller_registered)} (${dashboardData?.totalSellers?:0})"
+
+            tvAffiliatedInActiveUser.text = dashboardData?.totalInactiveAffiliateUsers.toString()
+            tvAffiliatedActive.text = dashboardData?.totalActiveAffiliateUsers.toString()
+            tvTotalSeller.text = "${getString(R.string.total_affiliated_registered)} (${dashboardData?.totalAffiliateUsers?:0})"
+
+            tvInActiveUser.text = dashboardData?.totalInactiveUsers.toString()
+            tvActiveUser.text = dashboardData?.totalActiveUsers.toString()
+            tvTotalUser.text = "${getString(R.string.total_users_registered)} (${dashboardData?.totalUsers?:0})"
+
+            tvDriveInActiveUser.text = dashboardData?.totalInactiveDeliveryBoy.toString()
+            tvDriveInActive.text = dashboardData?.totalActiveDeliveryBoy.toString()
+            tvTotalSeller.text = "${getString(R.string.total_drivers_registered)} (${dashboardData?.totalDeliveryBoy?:0})"
+
+
+            tvCancelledOrder.text = dashboardData?.totalCancelledOrders.toString()
+            tvCompletedOrder.text = dashboardData?.totalCompletedOrders.toString()
+            tvOngoingOrder.text = dashboardData?.totalOngoingOrders.toString()
+            tvNewOrder.text = dashboardData?.totalCancelledOrders.toString()
+            tvOrder.text = "${getString(R.string.total_orders)} (${dashboardData?.totalOrders?:0})"
+
+            tvWebsiteUser.text = dashboardData?.totalWebsiteVisitorUsers.toString()
+            tvAppUser.text = dashboardData?.totalAppVisitorUsers.toString()
+            tvTotalOnlineUser.text = "${getString(R.string.total_online_users)} (${dashboardData?.totalOnlineUsers?:0})"
+
+            tvTotalTickets.text = "${getString(R.string.total_tickets)} (${dashboardData?.totalTickets?:0})"
+            tvResolvedTicket.text = dashboardData?.totalResolvedTickets.toString()
+            tvUnResolvedTicket.text = dashboardData?.totalUnresolvedTickets.toString()
+            tvNewTicketCount.text = dashboardData?.totalTickets.toString()
+        }
+    }
+
+    private fun getDashBoardData(){
+        val map = HashMap<String, Any>()
+        if (fromDate!=""&&toDate!=""){
+            map["from_date"] = CommonMethod.formatDate(binding?.etFrom?.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+            map["to_date"] = CommonMethod.formatDate(binding?.etTo?.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+        }
+        if (filter!=""){
+            map["filter"] = filter
+        }
+        if (countryId!="") {
+            map["country_id"] = countryId
+        }
+        viewModel.getHomeDashBoard(map)
+        isDashboardObserver = true
+        binding?.mainProgressBar?.isVisible = true
     }
 
 }

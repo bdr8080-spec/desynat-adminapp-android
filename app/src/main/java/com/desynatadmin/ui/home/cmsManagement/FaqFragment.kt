@@ -56,7 +56,7 @@ class FaqFragment : BaseFragment() {
     override fun initView() {
         binding?.apply {
             userType = arguments?.getInt("userType")?:1
-            toolbar.tvToolbar.text = "FAQ's"
+            toolbar.tvToolbar.text = getString(R.string.faq_s)
 
             faqAdapter = FaqAdapter(requireActivity(),faqList,object : FaqAdapter.ClickOnItem{
                 override fun onClickItem(position: Int,type:Int) {
@@ -116,7 +116,8 @@ class FaqFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 faqDialog?.dismiss()
-                CommonMethod.showSuccessDialog(requireActivity(),"FAQ added successfully!")
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.faq_added_successfully))
                 faqList.add(response.data)
                 faqAdapter?.notifyDataSetChanged()
                 checkData()
@@ -128,7 +129,8 @@ class FaqFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 faqDialog?.dismiss()
-                CommonMethod.showSuccessDialog(requireActivity(),"FAQ updated successfully!")
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.faq_updated_successfully))
                 faqList[selectedPos] = response.data
                 faqAdapter?.notifyDataSetChanged()
                 checkData()
@@ -140,7 +142,8 @@ class FaqFragment : BaseFragment() {
         viewModel.deleteFaqResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireActivity(),"FAQ deleted Successfully")
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.faq_deleted_successfully))
                 faqList.removeAt(selectedPos)
                 faqAdapter?.notifyItemRemoved(selectedPos)
                 faqAdapter?.notifyItemRangeChanged(selectedPos,faqList.size)
@@ -179,8 +182,8 @@ class FaqFragment : BaseFragment() {
             CommonMethod.applyArabicOnlyFilter(etArabicAnswer)
             if (isEdit){
                 val faqData = faqList[selectedPos]
-                tvToolbar.text = "Edit FAQ"
-                btnAdd.text = "Edit"
+                tvToolbar.text = getString(R.string.edit_faq)
+                btnAdd.text = getString(R.string.edit)
                 etEnglishQuestion.setText(faqData.questionEnglish)
                 etArabicQuestion.setText(faqData.questionArabic)
                 etEnglishAnswer.setText(faqData.answerEnglish)
@@ -188,8 +191,8 @@ class FaqFragment : BaseFragment() {
 
             }
             else{
-                tvToolbar.text = "Add FAQ"
-                btnAdd.text = "Add"
+                tvToolbar.text = getString(R.string.add_faq)
+                btnAdd.text = getString(R.string.add)
             }
 
             tvToolbar.setOnClickListener {
@@ -198,16 +201,16 @@ class FaqFragment : BaseFragment() {
 
             btnAdd.setOnClickListener {
                 if (etEnglishAnswer.text?.trim().toString().isEmpty()){
-                    showToast("Please enter question in english")
+                    showToast(getString(R.string.please_enter_question_in_english))
                 }
                 else if (etArabicQuestion.text?.trim().toString().isEmpty()){
-                    showToast("Please enter question in arabic")
+                    showToast(getString(R.string.please_enter_question_in_arabic))
                 }
                 else if (etEnglishAnswer.text?.trim().toString().isEmpty()){
-                    showToast("Please enter answer in english")
+                    showToast(getString(R.string.please_enter_answer_in_english))
                 }
                 else if (etArabicAnswer.text?.trim().toString().isEmpty()){
-                    showToast("Please enter answer in arabic")
+                    showToast(getString(R.string.please_enter_answer_in_arabic))
                 }
               else{
                     val map = HashMap<String,Any>()

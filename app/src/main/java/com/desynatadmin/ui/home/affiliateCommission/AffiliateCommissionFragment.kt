@@ -57,7 +57,7 @@ class AffiliateCommissionFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "Affiliate Commission Percentage"
+            toolbar.tvToolbar.text = getString(R.string.affiliate_commission_percentage)
 
             affiliateCommissionList.clear()
             affiliateCommissionAdapter = AffiliateCommissionAdapter(requireActivity(),affiliateCommissionList,object : AffiliateCommissionAdapter.ClickOnItem{
@@ -112,7 +112,8 @@ class AffiliateCommissionFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 updateCommissionDialog?.dismiss()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate Commission Updated Successfully")
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.affiliate_commission_updated_successfully))
                 affiliateCommissionList[selectedPos].affiliateCommissionInfo = response.data
                 affiliateCommissionAdapter?.notifyDataSetChanged()
                 selectedPos = -1
@@ -159,10 +160,10 @@ class AffiliateCommissionFragment : BaseFragment() {
 
         dialogBinding.apply {
 
-            tvToolbar.text = "Affiliate Commission Percentage"
-            tvTitle.text = "Commission"
-            tvTitle.hint = "Enter commission"
-            btnSubmit.text = "Save"
+            tvToolbar.text = getString(R.string.affiliate_commission_percentage)
+            tvTitle.text = getString(R.string.commission)
+            tvTitle.hint = getString(R.string.enter_commission)
+            btnSubmit.text = getString(R.string.save)
             etAmount.setText(CommonMethod.formatPrice(affiliateCommissionList[selectedPos]?.affiliateCommissionInfo?.commission?.toDouble()?:0.0))
             var isEditing = false
             var previousValue = ""
@@ -215,12 +216,12 @@ class AffiliateCommissionFragment : BaseFragment() {
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
         val value = et.text.toString().trim()
         if (value.isEmpty()) {
-            showToast("Please enter $fieldName")
+            showToast("${getString(R.string.please_enter)} $fieldName")
             return true
         }
         val num = value.toDoubleOrNull() ?: 0.0
         if (num <= 0) {
-            showToast("$fieldName should be greater than 0")
+            showToast("$fieldName ${getString(R.string.should_be_greater_than_zero)}")
             return true
         }
         return false

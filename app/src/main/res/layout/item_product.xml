@@ -25,7 +25,7 @@
         android:id="@+id/tvBrand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:fontFamily="@font/poppins_medium"
         android:text="Levis"
         android:singleLine="true"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:numStars="5"
         android:stepSize="0.5"
-        android:rating="2.5"
+        android:rating="0"
         android:progressTint="#FFA41B"
         android:secondaryProgressTint="#FFA41B"
         android:progressBackgroundTint="#C7C7C7"
@@ -64,15 +64,16 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvRating"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_light"
-        android:text="(123K)"
+        android:text="(0)"
         android:layout_marginStart="@dimen/_1sdp"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
         app:layout_constraintStart_toEndOf="@+id/ratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ratingBar" />
 
     <androidx.appcompat.widget.AppCompatTextView

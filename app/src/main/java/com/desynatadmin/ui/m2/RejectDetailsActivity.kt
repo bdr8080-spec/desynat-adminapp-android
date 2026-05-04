@@ -64,8 +64,8 @@ class RejectDetailsActivity : BaseActivity() {
             Glide.with(this).load(it?.data?.store_document?.getOrNull(1)?.document_path).into(binding.doc4)
             binding.tvPhone.text = it?.data?.store_info?.country_code + "-" + it?.data?.store_info?.store_phone
             binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
-                "0" -> "Personal Account"
-                else -> "Business Account"
+                "0" -> getString(R.string.personal_account)
+                else -> getString(R.string.business_account)
             }
             binding.tvIban.text = it?.data?.seller_bank_details?.iban
             binding.tvswiftbic.text = it?.data?.seller_bank_details?.swift

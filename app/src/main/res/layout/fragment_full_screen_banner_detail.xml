@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:singleLine="true"
-                    android:text="Banner"
+                    android:text="@string/banner"
                     android:ellipsize="end"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
@@ -56,7 +56,7 @@
                     android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Active"
+                    android:text="@string/active"
                     android:textColor="#1A900D"
                     android:textSize="@dimen/_11sdp"
                     android:fontFamily="@font/poppins_semi_bold"
@@ -77,7 +77,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Country"
+                    android:text="@string/country"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_11sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Start date"
+                    android:text="@string/start_date"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_11sdp"
                     android:layout_marginTop="@dimen/_6sdp"
@@ -128,7 +128,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="End Date"
+                    android:text="@string/end_date"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_11sdp"
                     android:layout_marginTop="@dimen/_6sdp"
@@ -154,7 +154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Type"
+                    android:text="@string/type"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_11sdp"
                     android:layout_marginTop="@dimen/_6sdp"
@@ -192,7 +192,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_30sdp"
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="@color/red"
         android:layout_marginTop="@dimen/_20sdp" />
 
@@ -206,7 +206,7 @@
         android:layout_marginEnd="@dimen/_15sdp"
         style="@style/button"
         android:background="@drawable/btn_background"
-        android:text="Edit" />
+        android:text="@string/edit" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

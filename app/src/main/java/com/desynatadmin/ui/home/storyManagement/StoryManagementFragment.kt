@@ -65,7 +65,7 @@ class StoryManagementFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "Story Management"
+            toolbar.tvToolbar.text = getString(R.string.story_management)
             currentPage = 1
 
             storyAdapter = StoryAdapter(requireActivity(),storyList,object :StoryAdapter.OnClick{
@@ -199,7 +199,8 @@ class StoryManagementFragment : BaseFragment() {
         viewModel.deleteStoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Story deleted successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.story_deleted_successfully)){
                    /* storyList.removeAt(selectedPos)
                     storyAdapter?.notifyItemRemoved(selectedPos + 1)
                     storyAdapter?.notifyItemRangeChanged(selectedPos + 1, storyList.size)

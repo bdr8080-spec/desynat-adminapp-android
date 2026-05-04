@@ -31,12 +31,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="Notification Title"/>
+                    android:text="@string/notification_title"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="In English"
+                    android:text="@string/in_english"
                     android:layout_alignParentEnd="true"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"/>
@@ -47,7 +47,7 @@
                 android:id="@+id/etEnglishTitle"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter notification title"
+                android:hint="@string/enter_notification_title"
                 android:inputType="textCapSentences"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
@@ -62,12 +62,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="Notification Title"/>
+                    android:text="@string/notification_title"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="In Arabic"
+                    android:text="@string/in_arabic"
                     android:layout_alignParentEnd="true"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"/>
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 style="@style/edit_text"
-                android:hint="Enter notification title"
+                android:hint="@string/enter_notification_title"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="text"
                 android:singleLine="true"
@@ -94,12 +94,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="Notification Description"/>
+                    android:text="@string/notification_description"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="In English"
+                    android:text="@string/in_english"
                     android:layout_alignParentEnd="true"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"/>
@@ -110,7 +110,7 @@
                 android:id="@+id/etEnglishDescription"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter notification description"
+                android:hint="@string/enter_notification_description"
                 android:inputType="textMultiLine"
                 android:maxLines="5"
                 android:minLines="3"
@@ -128,12 +128,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="Notification Description"/>
+                    android:text="@string/notification_description"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="In Arabic"
+                    android:text="@string/in_arabic"
                     android:layout_alignParentEnd="true"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"/>
@@ -145,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 style="@style/edit_text"
-                android:hint="Enter notification description"
+                android:hint="@string/enter_notification_description"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="textMultiLine"
                 android:maxLines="5"
@@ -158,7 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Send To"/>
+                android:text="@string/send_to"/>
 
             <RadioGroup
                 android:id="@+id/radioSendTo"
@@ -171,7 +171,7 @@
                     android:id="@+id/rbAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All"
+                    android:text="@string/all"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
@@ -186,7 +186,7 @@
                     android:id="@+id/rbCustomer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Customer"
+                    android:text="@string/customer"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
@@ -201,7 +201,7 @@
                     android:id="@+id/rbSeller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Seller"
+                    android:text="@string/seller"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
@@ -215,7 +215,7 @@
                     android:id="@+id/rbDriver"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Driver"
+                    android:text="@string/driver"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:layout_marginHorizontal="@dimen/_4sdp"
@@ -230,7 +230,7 @@
                     android:id="@+id/rbAffiliate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Affiliate"
+                    android:text="@string/affiliate"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_radio_icon"
@@ -247,7 +247,7 @@
                 android:id="@+id/tvSendType"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Select"
+                android:hint="@string/select"
                 android:drawableStart="@drawable/ic_checkbox_unselected"
                 android:drawablePadding="@dimen/_8sdp"
                 android:drawableEnd="@drawable/ic_drop_down"
@@ -262,7 +262,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
-                android:text="Send"/>
+                android:text="@string/send"/>
 
         </LinearLayout>
 

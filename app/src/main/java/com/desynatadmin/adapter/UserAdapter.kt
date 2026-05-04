@@ -38,7 +38,7 @@ class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.D
                 tvWalletBalance.text = "${CommonMethod.formatAmount(userData.walletInfo.amount)} KD"
             }
             tvLocation.text = userData.countryInfo.name
-            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
+            tvJoinedOn.text = "${context.getString(R.string.joined_on)} ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
             tvEmail.text = userData.email
             tvCall.text = userData.countryCode+"-"+userData.mobile
             /*   tvCompletedOrder.text = userData.fullName

@@ -89,7 +89,8 @@ class ChangePasswordFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    CommonMethod.showSuccessDialog(requireActivity(),"Password changed successfully!"){
+                    CommonMethod.showSuccessDialog(requireActivity(),
+                        getString(R.string.password_changed_successfully)){
                         findNavController().popBackStack()
                     }
                 }

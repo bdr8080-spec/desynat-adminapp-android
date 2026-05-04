@@ -9,6 +9,7 @@ import coil.load
 import com.desynatadmin.databinding.ItemProductBinding
 import com.desynatadmin.R
 import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 
 class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProductListResponse.Data.Data>, var productClick:ProductClick) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
@@ -33,8 +34,12 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProdu
 
                 ivSwitch.isClickable = actionAccess
             }
-                tvBrand.text = if(productData?.brand?.nameEnglish.toString()=="Other") productData?.otherEn.toString() else productData?.brand?.nameEnglish.toString()
-                tvName.text = productData.productNameEn
+                tvBrand.text = if(productData?.brand?.nameEnglish.toString()=="Other") {
+                    if (Constants.language=="ar") productData?.otherAr.toString() else productData?.otherEn.toString()
+                } else {
+                    if (Constants.language=="ar") productData?.brand?.nameArabic.toString() else productData?.brand?.nameEnglish.toString()
+                }
+                tvName.text =  if (Constants.language=="ar") productData.productNameAr else productData.productNameEn
 
                 ivProduct.load(productData?.productVariants?.get(0)?.variantImage?.get(0)) {
                     crossfade(true)

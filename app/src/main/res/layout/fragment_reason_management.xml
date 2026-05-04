@@ -44,7 +44,7 @@
                         android:paddingVertical="@dimen/_8sdp"
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="center"
-                        android:text="Exchange"
+                        android:text="@string/exchange"
                         android:background="@drawable/selected_left_border"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp" />
@@ -62,7 +62,7 @@
                         android:paddingVertical="@dimen/_8sdp"
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="center"
-                        android:text="Return"
+                        android:text="@string/return_text"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp" />
 
@@ -79,7 +79,7 @@
                         android:paddingVertical="@dimen/_8sdp"
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="center"
-                        android:text="Cancel"
+                        android:text="@string/cancel"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp" />
 
@@ -96,7 +96,7 @@
                     android:padding="@dimen/_10sdp"
                     android:singleLine="true"
                     android:drawableStart="@drawable/ic_search"
-                    android:hint="Search"
+                    android:hint="@string/search"
                     android:textColorHint="#5B6163"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
@@ -187,7 +187,7 @@
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_13sdp"
-        android:text="No Reason Added"
+        android:text="@string/no_reason_added"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -38,7 +38,7 @@
                     android:padding="@dimen/_10sdp"
                     android:singleLine="true"
                     android:drawableStart="@drawable/ic_search"
-                    android:hint="Search"
+                    android:hint="@string/search"
                     android:textColorHint="#5B6163"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
@@ -131,7 +131,7 @@
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_13sdp"
-        android:text="No data found"
+        android:text="@string/no_data_found"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

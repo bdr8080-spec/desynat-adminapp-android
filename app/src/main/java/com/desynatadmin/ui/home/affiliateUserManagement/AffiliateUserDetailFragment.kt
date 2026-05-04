@@ -137,7 +137,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
         viewModel.acceptAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Approved Successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),getString(R.string.affiliate_user_approved_successfully)){
                     userType = "2"
                     setStatusData()
                 }
@@ -148,7 +148,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
         viewModel.rejectAffiliateUserResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Rejected Successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),getString(R.string.affiliate_user_rejected_successfully)){
                     userType = "3"
                     userData?.rejectReason = response.data.rejectReason
                     userData?.rejectType = response.data.rejectType
@@ -191,8 +191,8 @@ class AffiliateUserDetailFragment : BaseFragment() {
                     relStatus.isVisible = false
                     clEarning.isVisible = false
                     clRejected.isVisible = true
-                    tvRejectionReason.text = if (userData?.adminVerify=="3") "Complete"
-                    else if (userData?.adminVerify=="4") "Document Reject" else ""
+                    tvRejectionReason.text = if (userData?.adminVerify=="3") getString(R.string.complete)
+                    else if (userData?.adminVerify=="4") getString(R.string.document_reject) else ""
                     tvRejectionDescription.text = userData?.rejectReason
                 }
             }
@@ -203,12 +203,12 @@ class AffiliateUserDetailFragment : BaseFragment() {
         binding?.apply {
             if(userData?.status=="1"){
                 ivSwitch.setImageResource(R.drawable.switch_on)
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
             }
             else{
                 ivSwitch.setImageResource(R.drawable.switch_off)
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
             }
 
@@ -219,7 +219,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
         binding?.apply {
             tvName.text = userData?.fullName
             tvLocation.text = userData?.countryDetails?.name
-            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData?.createdAt.toString())}"
+            tvJoinedOn.text = "${getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(userData?.createdAt.toString())}"
             tvEmail.text = userData?.email
             tvCall.text = userData?.countryCode+"-"+userData?.mobile
             Glide.with(requireActivity()).load(userData?.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(
@@ -289,10 +289,10 @@ class AffiliateUserDetailFragment : BaseFragment() {
 
             btnAccept.setOnClickListener {
                 if(rejectionType=="") {
-                    showToast("Please select reason type")
+                    showToast(getString(R.string.please_select_reason_type))
                 }
                 else if(etReason.text?.trim().toString().isEmpty()) {
-                    showToast("Please enter reason")
+                    showToast(getString(R.string.please_enter_reason))
                 }
                 else{
                     rejectAffiliateUser(etReason.text?.trim().toString(),rejectionType)

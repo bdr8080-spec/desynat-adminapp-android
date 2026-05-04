@@ -15,7 +15,7 @@
     android:background="@drawable/bottomsheet_bg"
     android:backgroundTint="#FFF7EA"
     android:fontFamily="@font/poppins_medium"
-    android:text="Add New Reason"
+    android:text="@string/add_new_reason"
     android:textColor="@color/black"
     android:drawableEnd="@drawable/close_icon"
     android:textSize="@dimen/_13sdp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Reason (English)"
+        android:text="@string/reason_english"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"/>
 
@@ -39,7 +39,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:padding="@dimen/_10sdp"
-        android:hint="Enter Reason" />
+        android:hint="@string/enter_reason" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Reason (Arabic)"
+        android:text="@string/reason_arabic"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"/>
 
@@ -59,7 +59,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:padding="@dimen/_10sdp"
-        android:hint="Enter Reason"/>
+        android:hint="@string/enter_reason"/>
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -69,7 +69,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:text="Submit"
+        android:text="@string/submit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

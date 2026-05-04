@@ -17,6 +17,7 @@ import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardRespon
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -70,7 +71,7 @@ class PromoCodeDetailFragment : BaseFragment() {
             updateStatus()
         }
         binding?.apply {
-            toolbar.tvToolbar.text = "Detail View"
+            toolbar.tvToolbar.text = getString(R.string.detail_view)
 
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){
@@ -134,12 +135,12 @@ class PromoCodeDetailFragment : BaseFragment() {
     private fun updateStatus(){
         binding?.apply {
             if(promoCodeData?.status==1){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 
@@ -151,23 +152,23 @@ class PromoCodeDetailFragment : BaseFragment() {
     private fun setData(){
 
         binding?.apply {
-            tvFeature.text = "Flat ${promoCodeData?.discountPercent}% off on minimum order ${promoCodeData?.minOrderValue} KD"
-            tvPromoCodeName.text = promoCodeData?.nameEnglish
-         //   tvDescription.text = promoCodeData?.descriptionEnglish
-            tvTerms.text = promoCodeData?.descriptionEnglish
+            tvFeature.text = "${getString(R.string.flat)} ${promoCodeData?.discountPercent}% ${getString(R.string.off_on_minimum_order)} ${promoCodeData?.minOrderValue} KD"
+            tvPromoCodeName.text = if(Constants.language=="ar") promoCodeData?.nameArabic else promoCodeData?.nameEnglish
+            tvTerms.text = if(Constants.language=="ar") promoCodeData?.descriptionArabic else promoCodeData?.descriptionEnglish
             tvCountry.text =  countryList.firstOrNull { it.id.toString() == promoCodeData?.countryId.toString() }?.name
-          //  tvCountry.text = promoCodeData?.countryInfo?.name
-            tvApplicable.text = if(promoCodeData?.applicableFor==1) "First Order" else "Every Order"
+            tvApplicable.text = if(promoCodeData?.applicableFor==1) getString(R.string.first_order) else getString(
+                R.string.every_order
+            )
             tvStartDate.text = CommonMethod.formatDate(promoCodeData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             tvEndDate.text = CommonMethod.formatDate(promoCodeData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
 
             if(promoCodeData?.status==1){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 

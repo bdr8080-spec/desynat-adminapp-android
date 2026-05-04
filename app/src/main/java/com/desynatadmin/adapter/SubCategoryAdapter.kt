@@ -7,6 +7,7 @@ import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemSubCategoryBinding
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.utils.Constants
 
 class SubCategoryAdapter(var context:Context, private var subCategoryList: ArrayList<GetSubCategoryResponse.Data.Data>, var subCategoryClick:SubCategoryClick) : RecyclerView.Adapter<SubCategoryAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSubCategoryBinding) :
@@ -14,7 +15,7 @@ class SubCategoryAdapter(var context:Context, private var subCategoryList: Array
         fun bind(position: Int) = with(binding){
             val subCategoryData = subCategoryList[position]
 
-                tvBrandName.text = subCategoryData.nameEnglish
+                tvBrandName.text = if (Constants.language=="ar") subCategoryData.nameArabic else subCategoryData.nameEnglish
                 ivSubCategory.load(subCategoryData.image) {
                     crossfade(true)
                     placeholder(R.drawable.ic_placeholder)

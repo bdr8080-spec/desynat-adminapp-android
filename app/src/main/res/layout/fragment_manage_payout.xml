@@ -48,7 +48,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_15sdp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="Total payout pending"
+                            android:text="@string/total_payout_pending"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13sdp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -84,15 +84,20 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/btnAddPayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:src="@drawable/btn_add_payout"
+                    android:background="@drawable/btn_add_payout"
                     android:layout_marginBottom="@dimen/_10sdp"
+                    android:text="@string/add_payout"
+                    android:gravity="center"
+                    android:textColor="#6E4527"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/pendingPayoutCard" />
@@ -103,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_15sdp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="History"
+                    android:text="@string/history"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +127,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_20sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/rvSellerPayout"/>
+                    app:layout_constraintTop_toBottomOf="@+id/rvPayoutHistory"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:visibility="gone"
@@ -130,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="No data found"
+                    android:text="@string/no_data_found"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/black"

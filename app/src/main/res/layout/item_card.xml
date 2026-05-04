@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semi_bold"
-        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
         android:text="Puma"
         android:singleLine="true"
         android:ellipsize="end"

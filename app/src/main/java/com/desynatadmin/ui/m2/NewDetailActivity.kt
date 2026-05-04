@@ -111,7 +111,7 @@ class NewDetailActivity : BaseActivity() {
                 )
             }
             else{
-                showToast("Please enter reason")
+                showToast(getString(R.string.please_enter_reason))
             }
 
         }
@@ -128,13 +128,13 @@ class NewDetailActivity : BaseActivity() {
     override fun observer() {
 
         viewModel.getAcceptSeller.observe(this){
-            showToast("Seller accept successfully")
+            showToast(getString(R.string.seller_accept_successfully))
             finish()
         }
 
 
         viewModel.getRejectSeller.observe(this){
-            showToast("Seller reject successfully")
+            showToast(getString(R.string.seller_reject_successfully))
             deleteBottomDialog?.dismiss()
             finish()
         }
@@ -150,14 +150,14 @@ class NewDetailActivity : BaseActivity() {
             binding.tvMail.text = it.data.store_info.store_mail_id
             binding.tvBio.text = it.data.store_info.bio
             binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
-                "0" -> "Personal Account"
-                else -> "Business Account"
+                "0" -> getString(R.string.personal_account)
+                else -> getString(R.string.business_account)
             }
             binding.tvIban.text = it.data.seller_bank_details.iban
             binding.tvswiftbic.text = it.data.seller_bank_details.swift
             binding.tvBankName.text = it.data.seller_bank_details.bank_name
             binding.tvAccountHolderName.text = it.data.seller_bank_details.account_holder_name
-            binding.tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(it.data.updated_at)}"
+            binding.tvJoinedOn.text = "${getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(it.data.updated_at)}"
 
             Glide.with(this).load(it.data.store_info.store_image).transform(CircleCrop()).into(binding.ivStoreImage)
             Glide.with(this).load(it.data.profile_pic).transform(CircleCrop()).into(binding.ivProfileImage)

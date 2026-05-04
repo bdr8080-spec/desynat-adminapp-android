@@ -19,6 +19,7 @@ import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -70,7 +71,7 @@ class GiftCardDetailFragment : BaseFragment() {
             updateStatus()
         }
         binding?.apply {
-            toolbar.tvToolbar.text = "Gift Card Detail"
+            toolbar.tvToolbar.text = getString(R.string.gift_card_detail)
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){
                 val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
@@ -97,7 +98,7 @@ class GiftCardDetailFragment : BaseFragment() {
             btnDelete.setOnClickListener {
                 CommonMethod.deleteAlertDialog(
                     requireActivity(),
-                    "Are you sure you want to delete the gift card category?"
+                    getString(R.string.are_you_sure_you_want_to_delete_the_gift_card_category)
                 ) { action ->
                     when (action) {
                         CommonMethod.DialogAction.DELETE -> {
@@ -144,10 +145,10 @@ class GiftCardDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 giftData = response.data
                 if (response.data.status==1){
-                    showToast("Gift Card Category Activated Successfully")
+                    showToast(getString(R.string.gift_card_category_activated_successfully))
                 }
                 else{
-                    showToast("Gift Card Category Deactivated Successfully")
+                    showToast(getString(R.string.gift_card_category_deactivated_successfully))
 
                 }
                 updateStatus()
@@ -159,7 +160,8 @@ class GiftCardDetailFragment : BaseFragment() {
         viewModel.deleteGiftCardResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Gift card Category Deleted Successfully"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.gift_card_category_deleted_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -186,12 +188,12 @@ class GiftCardDetailFragment : BaseFragment() {
     private fun updateStatus(){
         binding?.apply {
             if(giftData?.status==1){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 
@@ -204,18 +206,8 @@ class GiftCardDetailFragment : BaseFragment() {
 
         binding?.apply {
 
-            tvGiftCardName.text = giftData?.nameEnglish
-            if(giftData?.status==1){
-                tvSwitch.text = "Active"
-                tvSwitch.setTextColor(Color.parseColor("#1A900D"))
-                tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
-            }
-            else{
-                tvSwitch.text = "Inactive"
-                tvSwitch.setTextColor(Color.parseColor("#666666"))
-                tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
-
-            }
+            tvGiftCardName.text =  if (Constants.language=="ar") giftData?.nameArabic else giftData?.nameEnglish
+            updateStatus()
 
             ivGiftCard.load(giftData?.image) {
                 crossfade(true)

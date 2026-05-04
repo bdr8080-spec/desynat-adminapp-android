@@ -43,13 +43,13 @@
                         style="@style/edit_text_title"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:text="Brand Name"/>
+                        android:text="@string/brand_name"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/edit_text_title"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:text="In English"
+                        android:text="@string/in_english"
                         android:layout_alignParentEnd="true"
                         android:textColor="#80000000"
                         android:textSize="@dimen/_10sdp"/>
@@ -60,7 +60,7 @@
                     android:id="@+id/etEnglishBrandName"
                     android:layout_width="match_parent"
                     style="@style/edit_text"
-                    android:hint="Enter Brand Name"
+                    android:hint="@string/enter_brand_name"
                     android:inputType="text"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/edit_back" />
@@ -73,13 +73,13 @@
                         style="@style/edit_text_title"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:text="Brand Name"/>
+                        android:text="@string/brand_name"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/edit_text_title"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:text="In Arabic"
+                        android:text="@string/in_arabic"
                         android:layout_alignParentEnd="true"
                         android:textColor="#80000000"
                         android:textSize="@dimen/_10sdp"/>
@@ -90,7 +90,7 @@
                     android:id="@+id/etArabicBrandName"
                     android:layout_width="match_parent"
                     style="@style/edit_text"
-                    android:hint="Enter Brand Name"
+                    android:hint="@string/enter_brand_name"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:inputType="text"
                     android:background="@drawable/edit_back" />
@@ -107,8 +107,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
         style="@style/button"
-        android:text="Submit" />
+        android:text="@string/submit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

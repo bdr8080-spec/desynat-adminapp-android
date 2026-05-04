@@ -55,7 +55,7 @@ class ApprovedScreenFragment : BaseFragment() {
         binding?.apply {
 
             approvedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            approvedAdapter = ApprovedAdapter(filterList, object : ApprovedAdapter.OnCLick {
+            approvedAdapter = ApprovedAdapter(requireActivity(),filterList, object : ApprovedAdapter.OnCLick {
                 override fun onClick(position: Int) {
                     startActivity(
                         Intent(requireContext(), ApprovedDetailsActivity::class.java)

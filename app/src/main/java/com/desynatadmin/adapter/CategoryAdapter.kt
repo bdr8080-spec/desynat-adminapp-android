@@ -56,24 +56,24 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
                 relCategory1.backgroundTintList = ColorStateList.valueOf(Color.parseColor(categoryData.colorCode))
 
                 if(categoryData.status==1){
-                    tvSwitch.text = "Active"
+                    tvSwitch.text = context.getString(R.string.active)
                     tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                     tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
                 }
                 else{
-                    tvSwitch.text = "Inactive"
+                    tvSwitch.text = context.getString(R.string.inactive)
                     tvSwitch.setTextColor(Color.parseColor("#666666"))
                     tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 
                 }
 
                 if(categoryData.status==1){
-                    tvSwitch1.text = "Active"
+                    tvSwitch1.text = context.getString(R.string.active)
                     tvSwitch1.setTextColor(Color.parseColor("#1A900D"))
                     tvSwitch1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
                 }
                 else{
-                    tvSwitch1.text = "Inactive"
+                    tvSwitch1.text = context.getString(R.string.inactive)
                     tvSwitch1.setTextColor(Color.parseColor("#666666"))
                     tvSwitch1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
                 }

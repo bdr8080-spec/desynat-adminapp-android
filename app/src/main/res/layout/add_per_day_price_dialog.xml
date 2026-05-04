@@ -6,20 +6,39 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvToolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/_15sdp"
-    android:paddingHorizontal="@dimen/_15sdp"
-    android:background="@drawable/bottomsheet_bg"
-    android:backgroundTint="#FFF7EA"
-    android:fontFamily="@font/poppins_medium"
-    android:text="Per day price"
-    android:textColor="@color/black"
-    android:drawableEnd="@drawable/close_icon"
-    android:textSize="@dimen/_13sdp"
-    app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFF7EA"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bottomsheet_bg"
+        android:id="@+id/tvTitle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/per_day_price"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:id="@+id/title"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/close_icon"
+            android:id="@+id/closeIv"
+            android:padding="@dimen/_15sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -27,7 +46,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Price"
+        android:text="@string/price"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"/>
 
@@ -37,8 +56,9 @@
         android:drawablePadding="10dp"
         android:ellipsize="end"
         android:padding="@dimen/_8sdp"
+        android:layout_marginTop="5dp"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:hint="Enter amount"
+        android:hint="@string/enter_amount"
         android:maxLength="10"
         android:inputType="numberDecimal"/>
 
@@ -49,7 +69,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:text="Save"
+        android:text="@string/save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

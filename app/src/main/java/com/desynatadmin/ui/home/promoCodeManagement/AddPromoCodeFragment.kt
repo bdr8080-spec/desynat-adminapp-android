@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.desynatadmin.R
 import com.desynatadmin.adapter.UserCountryPickerAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
@@ -69,12 +70,12 @@ class AddPromoCodeFragment : BaseFragment() {
 
             if (!itemJson.isNullOrEmpty()) {
                 promoCodeData = Gson().fromJson(itemJson, GetPromoCodeResponse.Data.Data::class.java)
-                toolbar.tvToolbar.text = "Edit Promocode"
-                btnSubmit.text = "Save Changes"
+                toolbar.tvToolbar.text = getString(R.string.edit_promocode)
+                btnSubmit.text = getString(R.string.save_changes)
                 setData()
 
             } else {
-                toolbar.tvToolbar.text = "Add Promocode"
+                toolbar.tvToolbar.text = getString(R.string.add_promocode)
 
             }
 
@@ -299,62 +300,62 @@ class AddPromoCodeFragment : BaseFragment() {
     private fun validation(): Boolean {
         binding?.apply {
             if (etCountry.text.toString().isBlank()) {
-                showToast("Please select country")
+                showToast(getString(R.string.please_select_country))
                 return false
             }
 
             if (etEnglishPromoCode.text.toString().trim().isEmpty()) {
-                showToast("Please enter promocode name in English")
+                showToast(getString(R.string.please_enter_promo_code_name_in_english))
                 return false
             }
 
             if (etArabicPromoCode.text.toString().trim().isEmpty()) {
-                showToast("Please enter promocode name in Arabic")
+                showToast(getString(R.string.please_enter_promocode_name_in_arabic))
                 return false
             }
 
             if (etEnglishDescription.text.toString().trim().isEmpty()) {
-                showToast("Please enter description in English")
+                showToast(getString(R.string.please_enter_description_in_english))
                 return false
             }
 
             if (etArabicDescription.text.toString().trim().isEmpty()) {
-                showToast("Please enter description in Arabic")
+                showToast(getString(R.string.please_enter_description_in_arabic))
                 return false
             }
 
             if (radioGroup.checkedRadioButtonId == -1) {
-                showToast("Please select applicable order type")
+                showToast(getString(R.string.please_select_applicable_order_type))
                 return false
             }
 
             if (etDiscount.text.toString().trim().isEmpty()) {
-                showToast("Please enter discount%")
+                showToast(getString(R.string.please_enter_discount))
                 return false
             }
 
             if (etMinimumOrderValue.text.toString().trim().isEmpty()) {
-                showToast("Please enter minimum order value")
+                showToast(getString(R.string.please_enter_minimum_order_value))
                 return false
             }
 
             if (etUpToDiscount.text.toString().trim().isEmpty()) {
-                showToast("Please enter up to discount value")
+                showToast(getString(R.string.please_enter_up_to_discount_value))
                 return false
             }
 
             if (etStartDate.text.toString().trim().isEmpty()) {
-                showToast("Please select start date")
+                showToast(getString(R.string.please_select_start_date))
                 return false
             }
 
             if (etEndDate.text.toString().trim().isEmpty()) {
-                showToast("Please select end date")
+                showToast(getString(R.string.please_select_end_date))
                 return false
             }
 
             if (!isEndDateValid()) {
-                showToast("End date must be after start date")
+                showToast(getString(R.string.end_date_must_be_after_start_date))
                 return false
             }
         }
@@ -400,7 +401,5 @@ class AddPromoCodeFragment : BaseFragment() {
             }
         )
     }
-
-
 
 }

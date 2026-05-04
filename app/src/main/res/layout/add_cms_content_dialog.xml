@@ -16,7 +16,7 @@
         android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="@dimen/_15sdp"
         android:paddingVertical="@dimen/_15sdp"
-        android:text="Terms &amp; Condition"
+        android:text="@string/terms_and_conditions"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,13 +32,13 @@
             android:id="@+id/tvTitleEnglish"
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
-            android:text="Terms &amp; Condition"/>
+            android:text="@string/terms_and_conditions"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:visibility="gone"
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
-            android:text="In English"
+            android:text="@string/in_english"
             android:layout_alignParentEnd="true"
             android:textColor="#80000000"
             android:textSize="@dimen/_10sdp"/>
@@ -52,7 +52,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/edit_back"
-        android:hint="Enter Terms &amp; Condition"
+        android:hint="@string/enter_terms_and_condition"
         android:inputType="textMultiLine"
         android:textSize="@dimen/_11sdp"
         android:minLines="1"
@@ -69,13 +69,13 @@
             android:id="@+id/tvTitleArabic"
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
-            android:text="Terms &amp; Condition"/>
+            android:text="@string/terms_and_conditions"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:visibility="gone"
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
-            android:text="In Arabic"
+            android:text="@string/in_arabic"
             android:layout_alignParentEnd="true"
             android:textColor="#80000000"
             android:textSize="@dimen/_10sdp"/>
@@ -89,7 +89,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/edit_back"
-        android:hint="Enter Terms &amp; Condition"
+        android:hint="@string/enter_terms_and_condition"
         android:inputType="textMultiLine"
         android:textSize="@dimen/_11sdp"
         android:minLines="1"
@@ -102,7 +102,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:text="Save Changes"
+        android:text="@string/save_changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

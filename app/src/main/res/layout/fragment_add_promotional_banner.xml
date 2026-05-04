@@ -60,14 +60,14 @@
                 android:id="@+id/tvPosition"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Position" />
+                android:text="@string/position" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etPosition"
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Position"
+                android:hint="@string/select_position"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -80,7 +80,7 @@
                 android:id="@+id/tvCategory"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Select Category" />
+                android:text="@string/select_category" />
 
             <RadioGroup
                 android:visibility="gone"
@@ -96,7 +96,7 @@
                     android:id="@+id/rbMen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Men"
+                    android:text="@string/men"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
@@ -112,7 +112,7 @@
                     android:id="@+id/rbWomen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Women"
+                    android:text="@string/women"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Kids"
+                    android:text="@string/kids"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_home_radio_icon"
@@ -147,7 +147,7 @@
                 android:id="@+id/tvSubCategory"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Select Sub-Category" />
+                android:text="@string/sub_category" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:visibility="gone"
@@ -155,7 +155,7 @@
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Sub-Category"
+                android:hint="@string/select_sub_category"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -172,7 +172,7 @@
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:text="Duration"
+                    android:text="@string/duration"
                     android:layout_marginEnd="@dimen/_7sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -188,7 +188,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="From   //  //"
+                    android:hint="@string/from_date_hint"
                     android:paddingVertical="@dimen/_9sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     app:layout_constraintEnd_toStartOf="@+id/etEndDate"
@@ -206,7 +206,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="To   //  //"
+                    android:hint="@string/to_date_hint"
                     android:paddingVertical="@dimen/_9sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/etStartDate"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -230,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semi_bold"
-                    android:text="Total days"
+                    android:text="@string/total_days"
                     android:textColor="@color/brown"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -256,7 +256,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 style="@style/button"
-                android:text="Submit"/>
+                android:text="@string/submit"/>
 
         </LinearLayout>
 

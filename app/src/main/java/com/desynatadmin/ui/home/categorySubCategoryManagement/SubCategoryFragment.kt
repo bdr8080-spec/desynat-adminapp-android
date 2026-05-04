@@ -79,7 +79,7 @@ class SubCategoryFragment : BaseFragment() {
                 ivAddSubCategory.isVisible = actionAccess
             }
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Sub-Category"
+            toolbar.tvToolbar.text = getString(R.string.sub_category)
 
             swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(requireActivity(), R.color.brown)

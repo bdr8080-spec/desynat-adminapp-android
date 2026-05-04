@@ -12,6 +12,7 @@ import com.desynatadmin.databinding.ItemReasonBinding
 import com.desynatadmin.databinding.ItemUserBinding
 import com.desynatadmin.ui.home.reasonManagement.response.GetReasonResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
@@ -35,7 +36,7 @@ class ReasonAdapter(var context:Context, var reasonList: ArrayList<GetReasonResp
                 ivDelete.isVisible = actionAccess
                 ivSwitch.isClickable = actionAccess
             }
-                tvReason.text = reasonData.reasonEnglish
+                tvReason.text = if (Constants.language=="ar") reasonData.reasonArabic else reasonData.reasonEnglish
                 if(reasonData.status==1){
                     ivSwitch.setImageResource(R.drawable.switch_on)
                 }

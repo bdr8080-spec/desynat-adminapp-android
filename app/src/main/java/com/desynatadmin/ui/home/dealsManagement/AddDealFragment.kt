@@ -106,13 +106,13 @@ class AddDealFragment : BaseFragment() {
 
             if (!itemJson.isNullOrEmpty()) {
                 dealData = Gson().fromJson(itemJson, GetDealDetailResponse.Data::class.java)
-                toolbar.tvToolbar.text = "Edit"
-                btnSubmit.text = "Save Changes"
+                toolbar.tvToolbar.text = getString(R.string.edit)
+                btnSubmit.text = getString(R.string.save_changes)
                 setData()
 
             } else {
-                toolbar.tvToolbar.text = "Add Deal"
-                btnSubmit.text = "Submit"
+                toolbar.tvToolbar.text = getString(R.string.add_deal)
+                btnSubmit.text = getString(R.string.submit)
             }
 
             val percentageWatcher = object : TextWatcher {
@@ -315,7 +315,8 @@ class AddDealFragment : BaseFragment() {
         viewModel.addDealResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Deal added successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.deal_added_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -525,22 +526,22 @@ class AddDealFragment : BaseFragment() {
         binding?.apply {
 
             if (image == null&&dealData==null) {
-                showToast("Please upload image")
+                showToast(getString(R.string.please_upload_image))
                 return false
             }
 
             if (etEnglishFullName.text.toString().trim().isEmpty()) {
-                showToast("Please enter full name in English")
+                showToast(getString(R.string.please_enter_full_name_in_english))
                 return false
             }
 
             if (etArabicFullName.text.toString().trim().isEmpty()) {
-                showToast("Please enter full name in Arabic")
+                showToast(getString(R.string.please_enter_full_name_in_arabic))
                 return false
             }
 
             if (rgCategory.checkedRadioButtonId == -1) {
-                showToast("Please select category")
+                showToast(getString(R.string.please_select_category))
                 return false
             }
 //            if (etSubCategory.text.toString().trim().isEmpty()) {
@@ -548,33 +549,33 @@ class AddDealFragment : BaseFragment() {
 //                return false
 //            }
             if (selectedSubCategoryList.isEmpty()) {
-                showToast("Please select at least one sub-category")
+                showToast(getString(R.string.please_select_at_least_one_sub_category))
                 return false
             }
 
             if (etDiscount.text.toString().trim().isEmpty()) {
-                showToast("Please enter discount percentage")
+                showToast(getString(R.string.please_enter_discount_percentage))
                 return false
             }
 
             val discount = etDiscount.text.toString().toDoubleOrNull()
             if (discount == null || discount <= 0 || discount > 100) {
-                showToast("Please enter a valid discount (1–100)")
+                showToast(getString(R.string.please_enter_a_valid_discount_1_100))
                 return false
             }
 
             if (etFromDate.text.toString().trim().isEmpty()) {
-                showToast("Please select start date")
+                showToast(getString(R.string.please_select_start_date))
                 return false
             }
 
             if (etToDate.text.toString().trim().isEmpty()) {
-                showToast("Please select end date")
+                showToast(getString(R.string.please_select_end_date))
                 return false
             }
 
             if (!isEndDateValid(etFromDate.text.toString(), etToDate.text.toString())) {
-                showToast("End date must be after start date")
+                showToast(getString(R.string.end_date_must_be_after_start_date))
                 return false
             }
         }

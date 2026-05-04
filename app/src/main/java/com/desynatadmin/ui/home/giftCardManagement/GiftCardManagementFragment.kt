@@ -69,7 +69,7 @@ class GiftCardManagementFragment : BaseFragment() {
         binding?.apply {
             ProgressDialogUtils.getInstance().hideProgress()
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Gift Card Category"
+            toolbar.tvToolbar.text = getString(R.string.gift_card_category)
             giftCardList.clear()
             giftCardAdapter = GiftCardAdapter(requireActivity(),giftCardList,object :GiftCardAdapter.GiftCardClick{
                 override fun onGiftCardClick(position: Int) {

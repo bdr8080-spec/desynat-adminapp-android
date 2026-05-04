@@ -28,14 +28,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSendNewNotification"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:scaleType="fitXY"
+                    android:text="@string/send_new_notification"
+                    android:textColor="#6E4527"
+                    android:gravity="center"
+                    android:textSize="@dimen/_12sdp"
+                    android:fontFamily="@font/poppins_medium"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:src="@drawable/ic_send_notification"/>
+                    android:background="@drawable/ic_send_notification"/>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clSearch"
@@ -53,7 +59,7 @@
                         android:drawableStart="@drawable/ic_search"
                         android:drawablePadding="10dp"
                         android:ellipsize="end"
-                        android:hint="Search"
+                        android:hint="@string/search"
                         android:paddingStart="12dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -155,7 +161,7 @@
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_13sdp"
-        android:text="No notification found"
+        android:text="@string/no_notification_found"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

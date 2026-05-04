@@ -69,11 +69,11 @@ class HomeActivity : BaseActivity() {
         val navGraph = controller.navInflater.inflate(R.navigation.home_navigation_graph)
         controller.graph = navGraph
         bottonNavItemList.clear()
-        bottonNavItemList.add(BottomNavItem("Home",R.drawable.ic_home,R.drawable.ic_selected_home))
-        bottonNavItemList.add(BottomNavItem("Products",R.drawable.ic_product,R.drawable.ic_product_selected))
-        bottonNavItemList.add(BottomNavItem("Streaming",R.drawable.ic_streaming,R.drawable.ic_streaming))
-        bottonNavItemList.add(BottomNavItem("Plans",R.drawable.ic_plan,R.drawable.ic_plan_selected))
-        bottonNavItemList.add(BottomNavItem("Payments",R.drawable.ic_payment,R.drawable.ic_payment_selected))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.home),R.drawable.ic_home,R.drawable.ic_selected_home))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.products),R.drawable.ic_product,R.drawable.ic_product_selected))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.streaming),R.drawable.ic_streaming,R.drawable.ic_streaming))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.plans),R.drawable.ic_plan,R.drawable.ic_plan_selected))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.payments),R.drawable.ic_payment,R.drawable.ic_payment_selected))
 
         setBottomAdapter()
 
@@ -358,10 +358,10 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
-//            rlPayoutManagement.setOnClickListener {
-//                controller.navigate(R.id.sellerPayout)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+/*            rlPayoutManagement.setOnClickListener {
+                controller.navigate(R.id.sellerPayout)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }*/
 
             rlRefundManagement.setOnClickListener {
                 controller.navigate(R.id.refundManagement)

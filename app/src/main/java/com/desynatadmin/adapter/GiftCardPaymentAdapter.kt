@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemPaymentBinding
 import com.desynatadmin.ui.home.paymentManagement.response.GetGiftCardPaymentResponse
 import com.desynatadmin.utils.CommonMethod
@@ -15,7 +16,7 @@ class GiftCardPaymentAdapter(var context:Context, private var paymentList: Array
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val paymentData = paymentList[position]
-            tvUser.text = "Purchased By"
+            tvUser.text = context.getString(R.string.purchased_by)
             tvUserName.text = paymentData?.userDetails?.fullName
             tvCountry.isVisible = true
             tvCountryValue.isVisible = true
@@ -24,8 +25,8 @@ class GiftCardPaymentAdapter(var context:Context, private var paymentList: Array
             tvTransactionId.text = "#${paymentData?.transactionId?:"28673"}"
             tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(paymentData?.amount?.toDoubleOrNull()?:0.0)} KD"
-            tvPaymentMode.text =  if (paymentData?.paymentMethod=="1") "Card"
-            else if (paymentData?.paymentMethod=="1") "Wallet" else "COD"
+            tvPaymentMode.text =  if (paymentData?.paymentMethod=="1") context.getString(R.string.card)
+            else if (paymentData?.paymentMethod=="1") context.getString(R.string.wallet) else context.getString(R.string.cod)
             root.setOnClickListener {
                 paymentClick.onPaymentClick(position,0)
 

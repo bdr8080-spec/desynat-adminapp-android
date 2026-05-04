@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentLiveEventBinding
@@ -119,9 +120,9 @@ class LiveEventFragment : BaseFragment() {
                 engine?.muteAllRemoteAudioStreams(isMuted)
 
                 if (isMuted) {
-                    binding?.tvMute?.text = "Unmute"
+                    binding?.tvMute?.text = getString(R.string.unmute)
                 } else {
-                    binding?.tvMute?.text = "Mute"
+                    binding?.tvMute?.text = getString(R.string.mute)
                 }
             }
         }
@@ -263,7 +264,7 @@ class LiveEventFragment : BaseFragment() {
             tvLive.isVisible = !isShow
             tvAudienceCount.isVisible = !isShow
             relMute.isVisible = !isShow
-            tvNoDataFound.text = "No event found"
+            tvNoDataFound.text = getString(R.string.no_event_found)
             if (isShow) stopUserCount()
         }
     }
@@ -275,7 +276,7 @@ class LiveEventFragment : BaseFragment() {
             tvLive.isVisible = !isShow
             tvAudienceCount.isVisible = !isShow
             relMute.isVisible = !isShow
-            tvNoDataFound.text = "Waiting for host to join..."
+            tvNoDataFound.text = getString(R.string.waiting_for_host_to_join)
             if (isShow) stopUserCount()
         }
     }
@@ -374,11 +375,11 @@ class LiveEventFragment : BaseFragment() {
         binding?.apply {
             if ((audienceTotal ?: 0) > 0) {
              //   tvAudienceCount.isVisible = true
-                tvAudienceCount.text = "Viewers : $audienceTotal"
+                tvAudienceCount.text = "${getString(R.string.viewers)} : $audienceTotal"
             } else {
                 //   tvAudienceCount.isVisible = false
               //  tvAudienceCount.isVisible = true
-                tvAudienceCount.text = "Viewers : 0"
+                tvAudienceCount.text = "${getString(R.string.viewers)} : 0"
             }
         }
     }

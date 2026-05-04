@@ -9,6 +9,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemCardBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.giftCardManagement.response.GetAllGiftCardResponse
+import com.desynatadmin.utils.Constants
 
 class GiftCardAdapter(var context:Context, var giftCardList: ArrayList<GetAllGiftCardResponse.Data.Data>, var giftCardClick:GiftCardClick) : RecyclerView.Adapter<GiftCardAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCardBinding) :
@@ -16,7 +17,7 @@ class GiftCardAdapter(var context:Context, var giftCardList: ArrayList<GetAllGif
         fun bind(position: Int) = with(binding){
             val giftData = giftCardList[position]
 
-                tvGiftCardName.text = giftData.nameEnglish
+                tvGiftCardName.text = if (Constants.language=="ar") giftData?.nameArabic else giftData?.nameEnglish
                 ivGift.load(giftData.image) {
                     crossfade(true)
                     placeholder(R.drawable.ic_placeholder)

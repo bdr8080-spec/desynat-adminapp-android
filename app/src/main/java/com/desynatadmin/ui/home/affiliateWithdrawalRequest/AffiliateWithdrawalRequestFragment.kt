@@ -70,7 +70,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "Affiliate Withdrawal Requests"
+            toolbar.tvToolbar.text = getString(R.string.affiliate_withdrawal_requests)
 
             swipeRefreshLayout.setOnRefreshListener {
                 isFromSwipe = true
@@ -167,7 +167,8 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                 affiliateWithdrawalRequestAdapter?.notifyItemRemoved(selectedPos)
                 affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(selectedPos, withdrawalList.size)
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),"Withdrawal Request Approved Successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.withdrawal_request_approved_successfully)){
 
                 }
                 selectedPos = -1
@@ -182,7 +183,8 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                 affiliateWithdrawalRequestAdapter?.notifyItemRemoved(selectedPos)
                 affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(selectedPos, withdrawalList.size)
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),"Withdrawal Request Rejected Successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.withdrawal_request_rejected_successfully)){
 
                 }
                 selectedPos = -1
@@ -294,7 +296,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
             rbComplete.isVisible = false
             rbReject.isVisible = false
-            etReason.hint = "Enter Here"
+            etReason.hint = getString(R.string.enter_here)
 
             closeBtn.setOnClickListener {
                 dialog.dismiss()
@@ -302,7 +304,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
             btnAccept.setOnClickListener {
                 if (etReason.text?.trim().toString().isEmpty()) {
-                    showToast("Please enter reason")
+                    showToast(getString(R.string.please_enter_reason))
                 } else {
                     rejectWithdrawalRequest(etReason.text?.trim().toString())
                     dialog.dismiss()

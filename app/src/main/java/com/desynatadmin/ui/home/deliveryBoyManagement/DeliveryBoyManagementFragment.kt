@@ -91,7 +91,7 @@ class DeliveryBoyManagementFragment : BaseFragment() {
                 ivAdd.isVisible = actionAccess
             }
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Delivery Boy Management"
+            toolbar.tvToolbar.text = getString(R.string.delivery_boy_management)
             deliveryBoyList.clear()
             deliveryBoyAdapter = DeliveryBoyAdapter(requireActivity(),deliveryBoyList,object : DeliveryBoyAdapter.DeliveryBoyClick{
                 override fun onDeliveryBoyClick(position: Int,type:Int) {
@@ -110,7 +110,7 @@ class DeliveryBoyManagementFragment : BaseFragment() {
                         3->{
                             CommonMethod.deleteAlertDialog(
                                 requireActivity(),
-                                "Are you sure you want to delete the delivery boy account?"
+                                getString(R.string.are_you_sure_you_want_to_delete_the_delivery_boy_account)
                             ) { action ->
                                 when (action) {
                                     CommonMethod.DialogAction.DELETE -> {

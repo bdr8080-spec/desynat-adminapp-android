@@ -181,7 +181,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="Vehicle Name"/>
+            android:text="@string/vehicle_name"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etVehicleName"
@@ -201,14 +201,14 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Vehicle Registration Number"/>
+            android:text="@string/vehicle_registration_number"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etVehichleRegistrationNumber"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Enter Vehicle Registration Number"
+            android:hint="@string/enter_vehicle_registration_number"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:editable="false"
@@ -221,7 +221,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Vehicle Images" />
+            android:text="@string/vehicle_images" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -264,7 +264,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Identity proof"/>
+            android:text="@string/identity_proof"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -307,7 +307,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Driving license"/>
+            android:text="@string/driving_license"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -350,7 +350,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Vehicle insurance"/>
+            android:text="@string/vehicle_insurance"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -381,7 +381,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Pollution paper"/>
+            android:text="@string/pollution_paper"/>
 
         <LinearLayout
             android:id="@+id/llPollutionPaper"
@@ -413,7 +413,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Registration certificate"/>
+            android:text="@string/registration_certificate"/>
 
         <LinearLayout
             android:id="@+id/llRegistration"
@@ -468,7 +468,7 @@
             style="@style/button"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textColor="@color/brown"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -479,7 +479,7 @@
             android:layout_marginEnd="@dimen/_15sdp"
             style="@style/button"
             android:background="@drawable/btn_background"
-            android:text="Edit" />
+            android:text="@string/edit" />
 
         </LinearLayout>
 

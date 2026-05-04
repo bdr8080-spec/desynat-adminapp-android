@@ -91,7 +91,7 @@ class BannerRequestManagementFragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
 
         binding?.apply {
-            toolbar.tvToolbar.text = "Banner requests"
+            toolbar.tvToolbar.text = getString(R.string.banner_requests)
 
             CommonMethod.removeSpace(etSearch)
 
@@ -286,7 +286,9 @@ class BannerRequestManagementFragment : BaseFragment() {
                 }
 
                 if (selectedType!=null){
-                    CommonMethod.showSuccessDialog(requireActivity(),if (selectedType=="accept") "Banner request accepted successfully" else "Banner request rejected successfully"){
+                    CommonMethod.showSuccessDialog(requireActivity(),if (selectedType=="accept") getString(
+                        R.string.banner_request_accepted_successfully
+                    ) else getString(R.string.banner_request_rejected_successfully)){
                         selectedType = null
                     }
                 }
@@ -502,7 +504,7 @@ class BannerRequestManagementFragment : BaseFragment() {
 
             btnSubmit.setOnClickListener {
                 if(etReason.text?.trim().toString().isEmpty()) {
-                    showToast("Please enter reason")
+                    showToast(getString(R.string.please_enter_reason))
                 }
                 else{
                     rejectRequest(etReason.text?.trim().toString())

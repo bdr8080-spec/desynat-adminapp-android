@@ -23,7 +23,6 @@ import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentContactUsBinding
 import com.desynatadmin.ui.home.cmsManagement.response.GetContactResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
-import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -64,7 +63,7 @@ class ContactUsFragment : BaseFragment() {
             countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
 
-            toolbar.tvToolbar.text = "Contact Us"
+            toolbar.tvToolbar.text = getString(R.string.contact_us)
         }
     }
 
@@ -141,23 +140,23 @@ class ContactUsFragment : BaseFragment() {
         dialogBinding.apply {
             when (from){
                 "email"->{
-                    tvTitle.text = "Support Email Address"
-                    tvToolbar.text = "Edit Support Email Address"
+                    tvTitle.text = getString(R.string.support_email_address)
+                    tvToolbar.text = getString(R.string.edit_support_email_address)
                     clMobile.isVisible = false
                     etEmail.isVisible = true
                     etEmail.setText(binding?.tvSupportEmailAddress?.text?.trim().toString())
                 }
                 "phone"->{
-                    tvTitle.text = "Support Contact Number"
-                    tvToolbar.text = "Edit Support Contact Number"
+                    tvTitle.text = getString(R.string.support_contact_number)
+                    tvToolbar.text = getString(R.string.edit_support_contact_number)
                     clMobile.isVisible = true
                     etEmail.isVisible = false
                     tvCountryPicker.setText(getCountryCode(binding?.tvSupportMobileNumber?.text?.trim().toString()))
                     etMobileNumber.setText(getNationalNumber(binding?.tvSupportMobileNumber?.text?.trim().toString()))
                 }
                 "whatsapp"->{
-                    tvTitle.text = "Support Whatsapp Number"
-                    tvToolbar.text = "Edit Support Whatsapp Number"
+                    tvTitle.text = getString(R.string.support_whatsapp_number)
+                    tvToolbar.text = getString(R.string.edit_support_whatsapp_number)
                     clMobile.isVisible = true
                     etEmail.isVisible = false
                     tvCountryPicker.setText(getCountryCode(binding?.tvSupportWhatsAppMobileNumber?.text?.trim().toString()))
@@ -189,10 +188,10 @@ class ContactUsFragment : BaseFragment() {
                       "email" -> {
                           val email = etEmail.text.toString().trim()
                           if (email.isEmpty()) {
-                              showToast("Please Enter Email Address")
+                              showToast(getString(R.string.please_enter_email_address))
                           }
                           else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                              etEmail.error = "Please Enter Valid Email Address"
+                              etEmail.error = getString(R.string.please_enter_valid_email_address)
                           }
                           else {
                               map["email"] = email
@@ -208,10 +207,10 @@ class ContactUsFragment : BaseFragment() {
                       "phone" -> {
                           val mobile = etMobileNumber.text.toString().trim()
                           if (mobile.isEmpty()) {
-                              showToast("Please Enter Mobile Number")
+                              showToast(getString(R.string.please_enter_mobile_number))
                           }
                           else if (mobile.length < 7 ) {
-                              showToast("Mobile Number in Between 7-15 digits ")
+                              showToast(getString(R.string.mobile_number_in_between_7_15_digits))
                           }
                           else{
                               map["email"] = contactData?.email.toString()
@@ -223,10 +222,10 @@ class ContactUsFragment : BaseFragment() {
                       "whatsapp" -> {
                           val mobile = etMobileNumber.text.toString().trim()
                           if (mobile.isEmpty()) {
-                              showToast("Please Enter Mobile Number")
+                              showToast(getString(R.string.please_enter_mobile_number))
                           }
                           else if (mobile.length < 7 ) {
-                              showToast("Mobile Number in Between 7-15 digits ")
+                              showToast(getString(R.string.mobile_number_in_between_7_15_digits))
                           }
                           else {
                               map["email"] = contactData?.email.toString()

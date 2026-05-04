@@ -1,5 +1,6 @@
 package com.desynatadmin.ui.home.shippingAndTaxManagement
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
@@ -74,6 +75,7 @@ class ShippingChargesFragment : BaseFragment() {
         observe()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
@@ -82,7 +84,7 @@ class ShippingChargesFragment : BaseFragment() {
                 shippingTaxData = Gson().fromJson(itemJson, GetShippingTaxResponse.Data::class.java)
                 setTaxData()
             }
-            toolbar.tvToolbar.text = "Delivery Charges & Other Taxs"
+            toolbar.tvToolbar.text = getString(R.string.delivery_charges_other_taxs)
 
 
             shippingList.clear()
@@ -169,7 +171,7 @@ class ShippingChargesFragment : BaseFragment() {
         viewModel.deleteShippingChargeResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast("Delivery Charge delete Successfully ")
+                showToast(getString(R.string.delivery_charge_delete_successfully))
                 shippingList.removeAt(selectedPos)
                 shippingChargeAdapter?.notifyItemRemoved(selectedPos)
                 shippingChargeAdapter?.notifyItemRangeChanged(selectedPos,shippingList.size)
@@ -195,7 +197,7 @@ class ShippingChargesFragment : BaseFragment() {
             if (isObserver) {
                 addDefaultShippingDialog?.dismiss()
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast("Delivery Charge Updated Successfully")
+                showToast(getString(R.string.delivery_charge_updated_successfully))
                 defaultShippingChargeData?.shippingFee = response.data.shippingFee
                 setData()
                 isObserver = false
@@ -215,7 +217,7 @@ class ShippingChargesFragment : BaseFragment() {
             if (isObserver) {
                 addShippingDialog?.dismiss()
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast("Delivery Charge Updated Successfully")
+                showToast(getString(R.string.delivery_charge_updated_successfully))
                 shippingList[selectedPos] = response.data
                 shippingChargeAdapter?.notifyItemChanged(selectedPos)
                 selectedPos = -1
@@ -494,7 +496,7 @@ private fun getDefaultShippingFee() {
             }
 
             btnSubmit.setOnClickListener {
-              if(isInvalid(etAmount, "Delivery Price")) {
+              if(isInvalid(etAmount, getString(R.string.delivery_price))) {
                     return@setOnClickListener
                 }
                 else{
@@ -532,8 +534,8 @@ private fun getDefaultShippingFee() {
                 etFrom.setText(CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeFrom?.toDouble()))
                 etTo.setText(CommonMethod.formatDoubleValue(shippingList[selectedPos]?.rangeTo?.toDouble()))
                 etAmount.setText(CommonMethod.formatDoubleValue(shippingList[selectedPos]?.shippingFee?.toDouble()))
-                tvToolbar.text = "Edit"
-                btnSubmit.text = "Save Changes"
+                tvToolbar.text = getString(R.string.edit)
+                btnSubmit.text = getString(R.string.save_changes)
             }
 
             etAmount.addTextChangedListener(object : TextWatcher {
@@ -597,7 +599,7 @@ private fun getDefaultShippingFee() {
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
         val value = et.text.toString().trim()
         if (value.isEmpty()) {
-            showToast("Please enter $fieldName")
+            showToast("${getString(R.string.please_enter)} $fieldName")
             return true
         }
 //        val num = value.toDoubleOrNull() ?: 0.0

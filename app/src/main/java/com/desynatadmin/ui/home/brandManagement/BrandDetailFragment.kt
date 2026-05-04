@@ -17,6 +17,7 @@ import com.desynatadmin.databinding.FragmentAddBrandBinding
 import com.desynatadmin.databinding.FragmentBrandDetailBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -68,7 +69,7 @@ class BrandDetailFragment : BaseFragment() {
                 btnEdit.isVisible = actionAccess
             }
 
-            toolbar.tvToolbar.text = "Brand Management Detail"
+            toolbar.tvToolbar.text = getString(R.string.brand_management_detail)
         }
     }
 
@@ -81,7 +82,7 @@ class BrandDetailFragment : BaseFragment() {
             btnDelete.setOnClickListener {
                 CommonMethod.deleteAlertDialog(
                     requireActivity(),
-                    "Are you sure you want to delete the brand?"
+                    getString(R.string.are_you_sure_you_want_to_delete_the_brand)
                 ) { action ->
                     when (action) {
                         CommonMethod.DialogAction.DELETE -> {
@@ -133,10 +134,10 @@ class BrandDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 brandData = response.data
                 if (response.data.status==1){
-                    showToast("Brand Activated Successfully")
+                    showToast(getString(R.string.brand_activated_successfully))
                 }
                 else{
-                    showToast("Brand Deactivated Successfully")
+                    showToast(getString(R.string.brand_deactivated_successfully))
 
                 }
                 updateStatus()
@@ -148,7 +149,8 @@ class BrandDetailFragment : BaseFragment() {
         viewModel.deleteBrandResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Brand delete successfully"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.brand_delete_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -175,12 +177,12 @@ class BrandDetailFragment : BaseFragment() {
     private fun updateStatus(){
         binding?.apply {
             if(brandData?.status==1){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 
@@ -193,14 +195,14 @@ class BrandDetailFragment : BaseFragment() {
 
         binding?.apply {
 
-            tvBrandName.text = brandData?.nameEnglish
+            tvBrandName.text =if (Constants.language=="ar") brandData?.nameArabic else brandData?.nameEnglish
             if(brandData?.status==1){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 

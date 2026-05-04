@@ -20,9 +20,9 @@ class DealsAdapter(var context:Context, var dealsList: ArrayList<GetActiveDealRe
                 tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData.from, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData.to, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
             val count = dealData.sellerEnrolled?.sellerCount ?: 0
             tvTotalEnrolled.text = if (count == 1) {
-                "$count Seller"
+                "$count ${context.getString(R.string.seller)}"
             } else {
-                "$count Sellers"
+                "$count ${context.getString(R.string.sellers)}"
             }
                 tvDiscountValue.text = dealData.discount+"%"
                 ivDeal.load(dealData.image) {

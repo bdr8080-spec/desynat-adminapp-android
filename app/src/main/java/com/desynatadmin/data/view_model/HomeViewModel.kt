@@ -60,6 +60,7 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliv
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
+import com.desynatadmin.ui.home.fragment.response.GetDashboardResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerRequest
@@ -1787,6 +1788,16 @@ val accountSettingResult: LiveData<LoginResponse>
     fun getRefundOrder(map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getRefundOrder(map)
+        }
+    }
+
+
+    val getHomeDashBoardResult: LiveData<GetDashboardResponse>
+        get() = repository.getHomeDashBoardLiveData
+
+    fun getHomeDashBoard(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getHomeDashBoard(map)
         }
     }
 

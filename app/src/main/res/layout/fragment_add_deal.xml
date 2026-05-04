@@ -43,13 +43,13 @@
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Full Name"/>
+                    android:text="@string/full_name"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="In English"
+                    android:text="@string/in_english"
                     android:layout_alignParentEnd="true"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"/>
@@ -60,7 +60,7 @@
                 android:id="@+id/etEnglishFullName"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter Full Name"
+                android:hint="@string/enter_full_name"
                 android:inputType="text"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back" />
@@ -73,12 +73,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="Full Name"/>
+                    android:text="@string/full_name"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="In Arabic"
+                    android:text="@string/in_arabic"
                     android:layout_alignParentEnd="true"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"/>
@@ -89,7 +89,7 @@
                 android:id="@+id/etArabicFullName"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter Full Name"
+                android:hint="@string/enter_full_name"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="text"
                 android:background="@drawable/edit_back" />
@@ -98,7 +98,7 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Select Category"
+                android:text="@string/select_category"
                 android:textSize="@dimen/_12sdp"/>
 
             <RadioGroup
@@ -114,7 +114,7 @@
                     android:id="@+id/rbMen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Men"
+                    android:text="@string/men"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
@@ -130,7 +130,7 @@
                     android:id="@+id/rbWomen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Women"
+                    android:text="@string/women"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Kids"
+                    android:text="@string/kids"
                     android:textColor="@color/black"
                     android:paddingVertical="@dimen/_12sdp"
                     android:button="@drawable/selector_home_radio_icon"
@@ -163,14 +163,14 @@
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Sub-Category"/>
+                android:text="@string/sub_category"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etSubCategory"
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Sub-Category"
+                android:hint="@string/select_sub_category"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -186,12 +186,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="Discount"/>
+                    android:text="@string/discount"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
-                    android:text="In Percentage"
+                    android:text="@string/in_percentage"
                     android:layout_alignParentEnd="true"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"/>
@@ -202,7 +202,7 @@
                 android:id="@+id/etDiscount"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter discount"
+                android:hint="@string/enter_discount"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="numberDecimal"
                 android:maxLength="4"
@@ -211,14 +211,14 @@
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
-                android:text="Date"
+                android:text="@string/date"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etFromDate"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="From // //"
+                android:hint="@string/from_date_hint"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:editable="false"
                 android:focusable="false"
@@ -230,7 +230,7 @@
                 android:id="@+id/etToDate"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="To // //"
+                android:hint="@string/to_date_hint"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:editable="false"
                 android:focusable="false"
@@ -244,7 +244,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 style="@style/button"
-                android:text="Submit" />
+                android:text="@string/submit" />
 
         </LinearLayout>
 

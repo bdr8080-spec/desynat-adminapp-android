@@ -245,5 +245,6 @@ object Constants {
     const val GET_ADMIN_PANEL_MODULES = "/api/admin/get_admin_panel_modules"
     const val GET_REFUND_ORDER = "/api/admin/get_refund_orders"
     const val SEND_SUB_ADMIN_CREDENTIAL = "/api/admin/send_subadmin_credentials"
+    const val HOME_DASHBOARD_DATA = "/api/admin/dashboard_data"
 
 }

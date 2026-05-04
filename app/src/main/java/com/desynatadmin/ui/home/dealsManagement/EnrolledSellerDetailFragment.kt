@@ -80,7 +80,7 @@ class EnrolledSellerDetailFragment : BaseFragment() {
             setData()
         }
         binding?.apply {
-            toolbar.tvToolbar.text = "Details"
+            toolbar.tvToolbar.text = getString(R.string.details)
 
             if (dealType==2){
                 llRevenue.isVisible = true
@@ -180,9 +180,9 @@ class EnrolledSellerDetailFragment : BaseFragment() {
             tvCountry.text =  sellerDealRecord?.sellerDetails?.countryDetails?.name
             val count = sellerDealRecord?.productCount ?: 0
             tvTotalProductAdded.text = if (count == 1) {
-                "$count Product"
+                "$count ${getString(R.string.product)}"
             } else {
-                "$count Products"
+                "$count ${getString(R.string.products)}"
             }
         }
     }
@@ -267,7 +267,7 @@ class EnrolledSellerDetailFragment : BaseFragment() {
                     dialog.dismiss()
                 }
                 else{
-                    showToast("Please select brand")
+                    showToast(getString(R.string.please_select_brand))
                 }
 
             }

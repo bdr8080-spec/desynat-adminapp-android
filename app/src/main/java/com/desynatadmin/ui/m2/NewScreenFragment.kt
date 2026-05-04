@@ -85,12 +85,12 @@ class NewScreenFragment : BaseFragment() {
     override fun observe() {
 
         viewModel.getAcceptSeller.observe(viewLifecycleOwner){
-            showToast("Seller Accepted")
+            showToast(getString(R.string.seller_accepted))
             pageNo= 1
             apiHit()
         }
         viewModel.getRejectSeller.observe(viewLifecycleOwner){
-            showToast("Seller Rejected")
+            showToast(getString(R.string.seller_rejected))
             pageNo = 1
             apiHit()
             deleteBottomDialog?.dismiss()
@@ -166,7 +166,7 @@ class NewScreenFragment : BaseFragment() {
                 )
             }
             else{
-                showToast("Please enter reason")
+                showToast(getString(R.string.please_enter_reason))
             }
 
         }

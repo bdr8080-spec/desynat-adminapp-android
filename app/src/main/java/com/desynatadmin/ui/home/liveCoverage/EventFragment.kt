@@ -116,6 +116,7 @@ class EventFragment : BaseFragment() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                binding?.mainProgressBar?.isVisible = false
                 isObserver = false
             }
         }
@@ -133,6 +134,7 @@ class EventFragment : BaseFragment() {
         viewModel.getLiveStreamingRoomResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                binding?.mainProgressBar?.isVisible = false
                 eventList.clear()
                 eventList.addAll(response.data)
                 eventAdapter?.notifyDataSetChanged()
@@ -152,7 +154,7 @@ class EventFragment : BaseFragment() {
         val map = HashMap<String, Any>()
         map["country_id"] = selectedCountryId?.id.toString()
         viewModel.getLiveStreamingRoom(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity(),false)
+        binding?.mainProgressBar?.isVisible = true
         isObserver = true
     }
 

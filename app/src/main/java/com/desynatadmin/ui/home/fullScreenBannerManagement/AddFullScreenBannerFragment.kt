@@ -87,13 +87,13 @@ class AddFullScreenBannerFragment : BaseFragment() {
             CommonMethod.removeSpace(etTitle)
             if (!itemJson.isNullOrEmpty()) {
                 bannerData = Gson().fromJson(itemJson, GetFullScreenBannerResponse.Data.Data::class.java)
-                toolbar.tvToolbar.text = "Edit Full Screen Banner"
-                btnSubmit.text = "Update"
+                toolbar.tvToolbar.text = getString(R.string.edit_full_screen_banner)
+                btnSubmit.text = getString(R.string.update)
                 setData()
 
             }
             else{
-                toolbar.tvToolbar.text = "Add Full Screen Banner"
+                toolbar.tvToolbar.text = getString(R.string.add_full_screen_banner)
             }
 
             imagePicker = ImagePicker(
@@ -188,7 +188,8 @@ class AddFullScreenBannerFragment : BaseFragment() {
         viewModel.addFullScreenBannerResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Banner added successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.banner_added_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -220,7 +221,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
         binding?.apply {
 
             etTitle.setText(bannerData?.title)
-            etFor.setText(if(bannerData?.type=="2")"Web" else "Mobile")
+            etFor.setText(if(bannerData?.type=="2") getString(R.string.web) else getString(R.string.mobile))
             if (image==null) {
                 imageUrl = bannerData?.image.toString()
             }
@@ -276,7 +277,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
         Log.e("image", "validation: ${image}")
         binding?.apply {
             if (image==null&&bannerData==null){
-                showToast("Please upload banner image")
+                showToast(getString(R.string.please_upload_banner_image))
                 return false
             }
 //            else if (image != null) {
@@ -298,29 +299,29 @@ class AddFullScreenBannerFragment : BaseFragment() {
 
 
             else if (binding?.etTitle?.text?.toString()?.isBlank() == true ) {
-                showToast("Please enter title")
+                showToast(getString(R.string.please_enter_title))
                 return false
             }
             else if (etCountry.text.toString().isBlank()) {
-                showToast("Please select country")
+                showToast(getString(R.string.please_select_country))
                 return false
             }
             else if (etFor.text.toString().trim().isEmpty()) {
-                showToast("Please select type")
+                showToast(getString(R.string.please_select_type))
                 return false
             }
             else if (etStartDate.text.toString().trim().isEmpty()) {
-                showToast("Please select start date")
+                showToast(getString(R.string.please_select_start_date))
                 return false
             }
 
             else if (etEndDate.text.toString().trim().isEmpty()) {
-                showToast("Please select end date")
+                showToast(getString(R.string.please_select_end_date))
                 return false
             }
 
             else if (!isEndDateValid()) {
-                showToast("From Date should be smaller then to date")
+                showToast(getString(R.string.from_date_should_be_smaller_then_to_date))
                 return false
             }
 

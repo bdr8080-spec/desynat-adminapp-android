@@ -1,5 +1,6 @@
 package com.desynatadmin.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.desynatadmin.databinding.ApprovedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class ApprovedAdapter(var list : ArrayList<ApprovedSellerResponse.Data.Data>, val click : OnCLick) :
+class ApprovedAdapter(var context: Context,var list : ArrayList<ApprovedSellerResponse.Data.Data>, val click : OnCLick) :
     RecyclerView.Adapter<ApprovedAdapter.ViewHolder>() {
     class ViewHolder(val binding: ApprovedItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -34,7 +35,7 @@ class ApprovedAdapter(var list : ArrayList<ApprovedSellerResponse.Data.Data>, va
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic).transform(CircleCrop()).placeholder(R.drawable.ic_user).into(ivProfileImage)
             tvEmail.text = item.email
-            tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(item?.updated_at.toString())}"
+            tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(item?.updated_at.toString())}"
 
             root.setOnClickListener {
                 click.onClick(position)

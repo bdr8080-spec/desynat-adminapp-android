@@ -77,7 +77,7 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
                         tvReasonValue.isVisible = true
                         tvPaymentMode.isVisible = true
                         tvPaymentModeValue.isVisible = true
-                        tvPaymentMode.text = "Rejected On"
+                        tvPaymentMode.text = context.getString(R.string.rejected_on)
                         tvPaymentModeValue.text = CommonMethod.customizeChangeDateFormat(liveRequestData?.createdAt.toString(),  outputFormat= "dd/MM/yyyy | hh:mm a")
                     }
                 }
@@ -134,9 +134,9 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
         val currentDateTime = LocalDateTime.now()
 
         return if (currentDateTime.isAfter(slotEndDateTime)) {
-            "Completed"
+            context.getString(R.string.completed)
         } else {
-            "Confirmed"
+            context.getString(R.string.confirmed)
         }
     }
 }

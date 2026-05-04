@@ -16,8 +16,9 @@
         android:background="@drawable/bottomsheet_bg"
         android:backgroundTint="#FFF7EA"
         android:fontFamily="@font/poppins_medium"
-        android:text="Size Guide"
+        android:text="@string/size_guide"
         android:textColor="@color/black"
+        android:drawablePadding="@dimen/_10sdp"
         android:drawableEnd="@drawable/close_icon"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintTop_toTopOf="parent"/>

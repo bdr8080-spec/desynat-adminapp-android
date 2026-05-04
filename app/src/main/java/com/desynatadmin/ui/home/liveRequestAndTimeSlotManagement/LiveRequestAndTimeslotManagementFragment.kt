@@ -570,7 +570,8 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         viewModel.acceptLiveRequestResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireActivity(),"Request accepted successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.request_accepted_successfully)){
                     getLiveRequest()
                 }
                 isObserver = false
@@ -580,7 +581,8 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         viewModel.rejectLiveRequestResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireActivity(),"Request rejected successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.request_rejected_successfully)){
                     getLiveRequest()
                 }
                 isObserver = false
@@ -818,28 +820,28 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     ): Boolean {
 
         if (fromHour.isBlank()) {
-            showToast("Please select From hour")
+            showToast(getString(R.string.please_select_from_hour))
             return false
         }
         if (fromMin.isBlank()) {
-            showToast("Please select From minutes")
+            showToast(getString(R.string.please_select_from_minutes))
             return false
         }
         if (fromType.isBlank()) {
-            showToast("Please select From AM/PM")
+            showToast(getString(R.string.please_select_from_am_pm))
             return false
         }
 
         if (toHour.isBlank()) {
-            showToast("Please select To hour")
+            showToast(getString(R.string.please_select_to_hour))
             return false
         }
         if (toMin.isBlank()) {
-            showToast("Please select To minutes")
+            showToast(getString(R.string.please_select_to_minutes))
             return false
         }
         if (toType.isBlank()) {
-            showToast("Please select To AM/PM")
+            showToast(getString(R.string.please_select_to_am_pm))
             return false
         }
 
@@ -847,7 +849,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         val toTime = convertToMinutes(toHour, toMin, toType)
 
         if (fromTime >= toTime) {
-            showToast("From time must be earlier than To time")
+            showToast(getString(R.string.from_time_must_be_earlier_than_to_time))
             return false
         }
 
@@ -1251,7 +1253,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
             btnAccept.setOnClickListener {
                if(etReason.text?.trim().toString().isEmpty()) {
-                    showToast("Please enter reason")
+                    showToast(getString(R.string.please_enter_reason))
                 }
                 else{
                     rejectLiveRequest(etReason.text?.trim().toString())

@@ -70,12 +70,12 @@ class AddGiftCardFragment : BaseFragment() {
                 CommonMethod.removeSpace(etEnglishCardName)
                 if (!itemJson.isNullOrEmpty()) {
                     giftData = Gson().fromJson(itemJson, GetAllGiftCardResponse.Data.Data::class.java)
-                    toolbar.tvToolbar.text = "Edit Gift Card Category"
-                    btnSubmit.text = "Update"
+                    toolbar.tvToolbar.text = getString(R.string.edit_gift_card_category)
+                    btnSubmit.text = getString(R.string.update)
                     setData()
 
                 } else {
-                    toolbar.tvToolbar.text = "Add New Gift Card Category"
+                    toolbar.tvToolbar.text = getString(R.string.add_new_gift_card_category)
 
                 }
 
@@ -119,15 +119,15 @@ class AddGiftCardFragment : BaseFragment() {
 
         private fun validation(): Boolean {
             if (image==null&&giftData==null){
-                showToast("Please upload image")
+                showToast(getString(R.string.please_upload_image))
                 return false
             }
             else if (binding?.etEnglishCardName?.text?.toString()?.isBlank() == true ) {
-                showToast("Please enter gift card category name in english")
+                showToast(getString(R.string.please_enter_gift_card_category_name_in_english))
                 return false
             }
             else if (binding?.etArabicCardName?.text?.toString()?.isBlank() == true ) {
-                showToast("Please enter gift card category name in arabic")
+                showToast(getString(R.string.please_enter_gift_card_category_name_in_arabic))
                 return false
             }
             return true
@@ -156,7 +156,8 @@ class AddGiftCardFragment : BaseFragment() {
             viewModel.addGiftCardResult.observe(viewLifecycleOwner) { response ->
                 if (isObserver) {
                     ProgressDialogUtils.getInstance().hideProgress()
-                    CommonMethod.showSuccessDialog(requireContext(), "Gift card category added successfully!"){
+                    CommonMethod.showSuccessDialog(requireContext(),
+                        getString(R.string.gift_card_category_added_successfully)){
                         findNavController().popBackStack()
                     }
                     isObserver = false
@@ -170,7 +171,8 @@ class AddGiftCardFragment : BaseFragment() {
                         ?.savedStateHandle
                         ?.set("updatedGiftCard", Gson().toJson(response.data))
 
-                    CommonMethod.showSuccessDialog(requireContext(), "Gift card category updated successfully!"){
+                    CommonMethod.showSuccessDialog(requireContext(),
+                        getString(R.string.gift_card_category_updated_successfully)){
                         findNavController().popBackStack()
                     }
                     isObserver = false

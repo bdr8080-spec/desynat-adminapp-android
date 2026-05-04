@@ -86,7 +86,7 @@ class BannerRequestDetailFragment : BaseFragment() {
                     btnReject.isVisible = true
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
-                    tvStatus.text = "New"
+                    tvStatus.text = getString(R.string.new_text)
                     tvStatus.setTextColor(Color.parseColor("#68CA44"))
                 }
                 "1"->{
@@ -95,10 +95,10 @@ class BannerRequestDetailFragment : BaseFragment() {
                     tvReason.isVisible = false
                     tvReasonValue.isVisible = false
                     if (bannerData?.paymentStatus=="0"){
-                        tvStatus.text = "Upcoming"
+                        tvStatus.text = getString(R.string.upcoming)
                     }
                     else{
-                        tvStatus.text = "Active"
+                        tvStatus.text = getString(R.string.active)
                     }
 
                     tvStatus.setTextColor(Color.parseColor("#68CA44"))
@@ -108,7 +108,7 @@ class BannerRequestDetailFragment : BaseFragment() {
                     btnReject.isVisible = false
                     tvReason.isVisible = true
                     tvReasonValue.isVisible = true
-                    tvStatus.text = "Rejected"
+                    tvStatus.text =  getString(R.string.rejected)
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                 }
             }
@@ -126,13 +126,13 @@ class BannerRequestDetailFragment : BaseFragment() {
             tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             when(bannerData?.bannerPosition){
                 "1" ->{
-                    tvBannerPositionValue.text = "Home Top"
+                    tvBannerPositionValue.text = getString(R.string.home_top)
                 }
                 "2"->{
-                    tvBannerPositionValue.text = "Home Bottom"
+                    tvBannerPositionValue.text = getString(R.string.home_bottom)
                 }
                 "3"->{
-                    tvBannerPositionValue.text = "Sub-Category"
+                    tvBannerPositionValue.text =  getString(R.string.sub_category)
                     if (bannerData?.categoryDetails!=null){
                         tvSubCategoryNameValue.isVisible = true
                         tvSubCategoryName.isVisible = true
@@ -147,7 +147,7 @@ class BannerRequestDetailFragment : BaseFragment() {
 
             when(bannerData?.adminVerify){
                 "0"->{
-                    tvStatus.text = "New"
+                    tvStatus.text =  getString(R.string.new_text)
                     tvStatus.setTextColor(Color.parseColor("#68CA44"))
                     btnReject.isVisible = true
                     btnAccept.isVisible = true
@@ -162,21 +162,21 @@ class BannerRequestDetailFragment : BaseFragment() {
                     if (bannerData?.paymentStatus=="1"){
                         tvTransactionId.isVisible = true
                         tvTransactionIdValue.isVisible = true
-                        tvStatus.text = "Active"
-                        tvAmountPaidStatus.text = "Yes"
+                        tvStatus.text =  getString(R.string.active)
+                        tvAmountPaidStatus.text = getString(R.string.yes)
                         tvAmountPaidStatus.setTextColor(Color.parseColor("#68CA44"))
                         tvTransactionIdValue.text = bannerData?.transactionId
                     }
                     else{
-                        tvStatus.text = "Upcoming"
-                        tvAmountPaidStatus.text = "No"
+                        tvStatus.text =  getString(R.string.upcoming)
+                        tvAmountPaidStatus.text = getString(R.string.no)
                         tvAmountPaidStatus.setTextColor(Color.parseColor("#D53B36"))
                     }
                 }
                 "2"->{
                     btnReject.isVisible = false
                     btnAccept.isVisible = false
-                    tvStatus.text = "Rejected"
+                    tvStatus.text =  getString(R.string.rejected)
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                     tvReason.isVisible = true
                     tvReasonValue.isVisible = true
@@ -266,7 +266,7 @@ class BannerRequestDetailFragment : BaseFragment() {
             if (isObserver) {
                 CommonMethod.showSuccessDialog(
                     requireActivity(),
-                    "Banner request accepted successfully"
+                    getString(R.string.banner_request_accepted_successfully)
                 ) {
                    bannerData?.adminVerify = "1"
                     setData()
@@ -276,7 +276,7 @@ class BannerRequestDetailFragment : BaseFragment() {
 
         viewModel.rejectBannerRequestResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
-                CommonMethod.showSuccessDialog(requireActivity(),"Banner request rejected successfully"){
+                CommonMethod.showSuccessDialog(requireActivity(),getString(R.string.banner_request_rejected_successfully)){
                     bannerData?.adminVerify = "2"
                     bannerData?.cancelledReason = response.data.cancelledReason
                     setData()
@@ -290,10 +290,10 @@ class BannerRequestDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 bannerData = response.data
                 if (bannerData?.status==1){
-                    showToast("Banner Unblock Successfully")
+                    showToast(getString(R.string.banner_unblock_successfully))
                 }
                 else{
-                    showToast("Banner Block Successfully")
+                    showToast(getString(R.string.banner_block_successfully))
                 }
                 updateStatus()
                 isObserver = false
@@ -329,7 +329,7 @@ class BannerRequestDetailFragment : BaseFragment() {
 
             btnSubmit.setOnClickListener {
                 if(etReason.text?.trim().toString().isEmpty()) {
-                    showToast("Please enter reason")
+                    showToast(getString(R.string.please_enter_reason))
                 }
                 else{
                     rejectRequest(etReason.text?.trim().toString())

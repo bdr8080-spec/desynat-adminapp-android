@@ -71,13 +71,13 @@ class AddBrandFragment : BaseFragment() {
             CommonMethod.removeSpace(etEnglishBrandName)
             if (!itemJson.isNullOrEmpty()) {
                 brandData = Gson().fromJson(itemJson, GetBrandResponse.Data.Data::class.java)
-                toolbar.tvToolbar.text = "Edit Brand"
-                btnSubmit.text = "Update"
+                toolbar.tvToolbar.text = getString(R.string.edit_brand)
+                btnSubmit.text = getString(R.string.update)
                 setData()
 
             }
             else{
-                toolbar.tvToolbar.text = "Add New Brand"
+                toolbar.tvToolbar.text = getString(R.string.add_new_brand)
 
             }
 
@@ -121,15 +121,15 @@ class AddBrandFragment : BaseFragment() {
 
     private fun validation(): Boolean {
         if (image==null&&brandData==null){
-            showToast("Please upload brand image")
+            showToast(getString(R.string.please_upload_brand_image))
             return false
         }
         else if (binding?.etEnglishBrandName?.text?.toString()?.isBlank() == true ) {
-            showToast("Please enter brand name in english")
+            showToast(getString(R.string.please_enter_brand_name_in_english))
             return false
         }
         else if (binding?.etArabicBrandName?.text?.toString()?.isBlank() == true ) {
-            showToast("Please enter brand name in arabic")
+            showToast(getString(R.string.please_enter_brand_name_in_arabic))
             return false
         }
         return true
@@ -158,7 +158,8 @@ class AddBrandFragment : BaseFragment() {
         viewModel.addBrandResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Brand added successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.brand_added_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -168,7 +169,8 @@ class AddBrandFragment : BaseFragment() {
         viewModel.updateBrandResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Brand updated successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.brand_updated_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false

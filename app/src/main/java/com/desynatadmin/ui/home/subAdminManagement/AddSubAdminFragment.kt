@@ -95,8 +95,8 @@ class AddSubAdminFragment : BaseFragment() {
             val itemJson = arguments?.getString("subAdminData")
             if (!itemJson.isNullOrEmpty()) {
                 subAdminData = Gson().fromJson(itemJson, GetSubAdminDetailResponse.Data::class.java)
-                toolbar.tvToolbar.text = "Edit"
-                tvAdd.text = "Save Changes"
+                toolbar.tvToolbar.text = getString(R.string.edit)
+                tvAdd.text = getString(R.string.save_changes)
                 ivProfileImage.isVisible = true
                 tvChangeImage.isVisible = true
                 ivProfile.isVisible = false
@@ -104,8 +104,8 @@ class AddSubAdminFragment : BaseFragment() {
 
             }
             else{
-                toolbar.tvToolbar.text = "Add Sub Admin"
-                tvAdd.text = "Add"
+                toolbar.tvToolbar.text = getString(R.string.add_sub_admin)
+                tvAdd.text = getString(R.string.add)
                 ivProfileImage.isVisible = false
                 tvChangeImage.isVisible = false
                 ivProfile.isVisible = true
@@ -376,45 +376,45 @@ class AddSubAdminFragment : BaseFragment() {
         binding?.apply {
 
             if (profileImage == null&&profileImageUrl==null) {
-                showToast("Please Upload Profile Image")
+                showToast(getString(R.string.please_upload_profile_image))
                 return false
             }
             if (etFullNameEnglish.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in English")
+                showToast(getString(R.string.please_enter_full_name_in_english))
                 return false
             }
 
             if (etFullNameArabic.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in Arabic")
+                showToast(getString(R.string.please_enter_full_name_in_arabic))
                 return false
             }
 
             val email = etEmailID.text.toString().trim()
             if (email.isEmpty()) {
-                showToast("Please Enter Email Address")
+                showToast(getString(R.string.please_enter_email_address))
                 return false
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                showToast("Please Enter Valid Email Address")
+                showToast(getString(R.string.please_enter_valid_email_address))
                 return false
             }
             val mobile = etMobile.text.toString().trim()
             if (mobile.isEmpty()) {
-                showToast("Please Enter Mobile Number")
+                showToast(getString(R.string.please_enter_mobile_number))
                 return false
             }
             if (mobile.length < 7 ) {
-                showToast("Mobile Number in Between 7-15 digits ")
+                showToast(getString(R.string.mobile_number_in_between_7_15_digits))
                 return false
             }
             if (etCountry.text.toString().trim().isEmpty()) {
-                showToast("Please select country")
+                showToast(getString(R.string.please_select_country))
                 return false
             }
 
             val pass = etPassword.text.toString()
             if (pass.isEmpty()) {
-                showToast("Please Enter Password")
+                showToast(getString(R.string.please_enter_password))
                 return false
             }
          /*   if (pass.length<6) {
@@ -422,23 +422,23 @@ class AddSubAdminFragment : BaseFragment() {
                 return false
             }*/
              else if (!CommonMethod.isValidPassword(pass)) {
-           showToast("Password must be at least 8 characters long, include 1 uppercase, 1 lowercase, and 1 special character")
+           showToast(getString(R.string.password_must_be_at_least_8_characters_long_include_1_uppercase_1_lowercase_and_1_special_character))
            return false
        }
 
             val cPass = etConfirmPassword.text.toString()
             if (cPass.isEmpty()) {
-                showToast("Please Enter Confirm Password")
+                showToast(getString(R.string.please_enter_confirm_password))
                 return false
             }
 
             if (pass != cPass) {
-                showToast("Password does not match")
+                showToast(getString(R.string.password_does_not_match))
                 return false
             }
             val selectedModules = accessModuleList.filter { it.isSelected }
             if (selectedModules.isEmpty()) {
-                showToast("Please select at-least one module")
+                showToast(getString(R.string.please_select_at_least_one_module))
                 return false
             }
 

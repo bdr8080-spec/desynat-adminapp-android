@@ -61,6 +61,7 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.BlockUnblockDeliv
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetDeliveryBoyDetailResponse
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResponse
+import com.desynatadmin.ui.home.fragment.response.GetDashboardResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerRequest
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScreenBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotionalBannerRequest
@@ -2519,6 +2520,18 @@ class MainRepository @Inject constructor(
                 api.getRefundOrder(map)
             },
             responseLiveData = getRefundOrderLiveData
+        )
+    }
+
+    val getHomeDashBoardLiveData = SingleLiveEvent<GetDashboardResponse>()
+    suspend fun getHomeDashBoard(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getHomeDashBoard(map)
+            },
+            responseLiveData = getHomeDashBoardLiveData
         )
     }
 

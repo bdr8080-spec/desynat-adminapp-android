@@ -95,7 +95,7 @@ class OrderManagementFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "Orders"
+            toolbar.tvToolbar.text = getString(R.string.orders)
 
             orderList.clear()
             orderAdapter = OrderAdapter(requireActivity(),orderList,object : OrderAdapter.OnClick{
@@ -383,7 +383,8 @@ class OrderManagementFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 dialogDriver?.dismiss()
-                CommonMethod.showSuccessDialog(requireActivity(),"Driver assigned successfully"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.driver_assigned_successfully)){
                     getActiveOrder()
                 }
                 isObserver = false

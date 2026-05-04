@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
@@ -818,6 +819,20 @@ object CommonMethod {
         } else {
             Html.fromHtml(cleanHtml)
         }
+    }
+
+    fun setLocale(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = Configuration()
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+
+        context.resources.updateConfiguration(
+            config,
+            context.resources.displayMetrics
+        )
     }
 
 }

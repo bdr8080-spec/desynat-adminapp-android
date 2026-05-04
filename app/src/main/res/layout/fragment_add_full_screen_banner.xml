@@ -39,13 +39,13 @@
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Title"/>
+                android:text="@string/title"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etTitle"
                 android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:hint="Enter Title"
+                android:hint="@string/enter_title"
                 android:inputType="text"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back" />
@@ -54,14 +54,14 @@
                 android:id="@+id/tvCountry"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Select Country" />
+                android:text="@string/select_country" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etCountry"
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Country"
+                android:hint="@string/select_country"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -73,14 +73,14 @@
                 android:id="@+id/tvFor"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Type" />
+                android:text="@string/type" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etFor"
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Type"
+                android:hint="@string/select_type"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -97,7 +97,7 @@
                     style="@style/edit_text_title"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:text="Duration"
+                    android:text="@string/duration"
                     android:layout_marginEnd="@dimen/_7sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -113,7 +113,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="From   //  //"
+                    android:hint="@string/from_date_hint"
                     android:paddingVertical="@dimen/_9sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     app:layout_constraintEnd_toStartOf="@+id/etEndDate"
@@ -131,7 +131,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="To   //  //"
+                    android:hint="@string/to_date_hint"
                     android:paddingVertical="@dimen/_9sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/etStartDate"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +147,7 @@
                 android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 style="@style/button"
-                android:text="Submit"/>
+                android:text="@string/submit"/>
 
         </LinearLayout>
 

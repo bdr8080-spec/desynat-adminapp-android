@@ -65,7 +65,7 @@ class DeliveryBoyDetailFragment : BaseFragment() {
                 btnEdit.isVisible = actionAccess
                 btnDelete.isVisible = actionAccess
             }
-            toolbar.tvToolbar.text = "Driver Details"
+            toolbar.tvToolbar.text = getString(R.string.driver_details)
         }
     }
 
@@ -158,7 +158,7 @@ class DeliveryBoyDetailFragment : BaseFragment() {
             btnDelete.setOnClickListener {
                 CommonMethod.deleteAlertDialog(
                     requireActivity(),
-                    "Are you sure you want to delete the delivery boy account?"
+                    getString(R.string.are_you_sure_you_want_to_delete_the_delivery_boy_account)
                 ) { action ->
                     when (action) {
                         CommonMethod.DialogAction.DELETE -> {

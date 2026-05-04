@@ -73,13 +73,13 @@ class AddSubCategoryFragment : BaseFragment() {
             CommonMethod.removeSpace(etEnglishSubCategoryName)
             if (!itemJson.isNullOrEmpty()) {
                 subCategoryData = Gson().fromJson(itemJson, GetSubCategoryResponse.Data.Data::class.java)
-                toolbar.tvToolbar.text = "Edit Sub-Category"
-                btnSubmit.text = "Update"
+                toolbar.tvToolbar.text = getString(R.string.edit_sub_category)
+                btnSubmit.text = getString(R.string.update)
                 setData()
 
             }
             else{
-                toolbar.tvToolbar.text = "Add Sub-Category"
+                toolbar.tvToolbar.text = getString(R.string.add_sub_category)
 
             }
 
@@ -144,7 +144,8 @@ class AddSubCategoryFragment : BaseFragment() {
         viewModel.addSubCategoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Sub-Category added successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.sub_category_added_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -154,7 +155,8 @@ class AddSubCategoryFragment : BaseFragment() {
         viewModel.updateSubCategoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Sub-Category updated successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.sub_category_updated_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -207,15 +209,15 @@ class AddSubCategoryFragment : BaseFragment() {
 
     private fun validation(): Boolean {
         if (image==null&&subCategoryData==null){
-            showToast("Please upload sub-category image")
+            showToast(getString(R.string.please_upload_sub_category_image))
             return false
         }
         else if (binding?.etEnglishSubCategoryName?.text?.toString()?.isBlank() == true ) {
-            showToast("Please enter sub-category name in english")
+            showToast(getString(R.string.please_enter_sub_category_name_in_english))
             return false
         }
         else if (binding?.etArabicSubCategoryName?.text?.toString()?.isBlank() == true ) {
-            showToast("Please enter sub-category name in arabic")
+            showToast(getString(R.string.please_enter_sub_category_name_in_arabic))
             return false
         }
         return true

@@ -42,9 +42,9 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<G
 
             tvSentName.text =
                 if (total > 1) {
-                    "Sent To- $name + ${total - 1}"
+                    "${context.getString(R.string.send_to)}- $name + ${total - 1}"
                 } else {
-                    "Sent To- $name"
+                    "${context.getString(R.string.send_to)}- $name"
                 }
 
             if (notificationData?.receiverDetails?.get(0)?.status?:0==1){

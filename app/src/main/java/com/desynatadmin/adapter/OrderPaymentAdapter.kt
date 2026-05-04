@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemPaymentBinding
 import com.desynatadmin.ui.home.paymentManagement.response.GetOrderPaymentResponse
 import com.desynatadmin.utils.CommonMethod
@@ -17,8 +18,8 @@ class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayLis
             val paymentData = paymentList[position]
             tvViewMore.isVisible = true
             tvViewMore.setOnClickListener {
-                if (tvViewMore.text == "View More"){
-                    tvViewMore.text = "View Less"
+                if (tvViewMore.text == context.getString(R.string.view_more)){
+                    tvViewMore.text = context.getString(R.string.view_less)
                     view2.isVisible = true
                     tvDiscount.isVisible = true
                     tvDiscountValue.isVisible = true
@@ -37,7 +38,7 @@ class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayLis
                     }
                 }
                 else{
-                    tvViewMore.text = "View More"
+                    tvViewMore.text = context.getString(R.string.view_more)
                     view2.isVisible = false
 
                     tvDiscount.isVisible = false
@@ -61,8 +62,8 @@ class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayLis
             tvTransactionId.text = "#${paymentData?.order?.transactionId?:"28673"}"
             tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.order?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(paymentData?.order?.totalAmount?.toDoubleOrNull()?:0.0)} KD"
-            tvPaymentMode.text =  if (paymentData?.order?.paymentMethod=="1") "Card"
-            else if (paymentData?.order?.paymentMethod=="1") "Wallet" else "COD"
+            tvPaymentMode.text =  if (paymentData?.order?.paymentMethod=="1") context.getString(R.string.card)
+            else if (paymentData?.order?.paymentMethod=="1") context.getString(R.string.wallet) else context.getString(R.string.cod)
 
             root.setOnClickListener {
                 paymentClick.onPaymentClick(position,0)

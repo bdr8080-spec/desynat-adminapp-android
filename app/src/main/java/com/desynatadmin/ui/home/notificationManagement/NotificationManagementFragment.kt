@@ -81,7 +81,7 @@ class NotificationManagementFragment :  BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
 
-            toolbar.tvToolbar.text = "Notifications"
+            toolbar.tvToolbar.text = getString(R.string.notifications)
 
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){

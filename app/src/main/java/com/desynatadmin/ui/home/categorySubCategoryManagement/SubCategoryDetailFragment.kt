@@ -16,6 +16,7 @@ import com.desynatadmin.databinding.FragmentSubCategoryDetailBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -67,7 +68,7 @@ class SubCategoryDetailFragment : BaseFragment() {
                 btnEdit.isVisible = actionAccess
                 tvSwitch.isClickable = actionAccess
             }
-            toolbar.tvToolbar.text = "Sub-Category Detail"
+            toolbar.tvToolbar.text = getString(R.string.sub_category_detail)
         }
     }
 
@@ -113,10 +114,10 @@ class SubCategoryDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 subCategorydata = response.data
                 if (response.data.status==1){
-                    showToast("Sub-Category Activated Successfully")
+                    showToast(getString(R.string.sub_category_activated_successfully))
                 }
                 else{
-                    showToast("Sub-Category Deactivated Successfully")
+                    showToast(getString(R.string.sub_category_deactivated_successfully))
 
                 }
                 updateStatus()
@@ -128,7 +129,8 @@ class SubCategoryDetailFragment : BaseFragment() {
         viewModel.deleteSubCategoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Sub-Category delete successfully"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.sub_category_delete_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -157,11 +159,11 @@ class SubCategoryDetailFragment : BaseFragment() {
         binding?.apply {
 
             if (subCategorydata?.status == 1) {
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             } else {
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 
@@ -174,7 +176,7 @@ class SubCategoryDetailFragment : BaseFragment() {
 
         binding?.apply {
 
-            tvSubcategoryName.text = subCategorydata?.nameEnglish
+            tvSubcategoryName.text = if (Constants.language=="ar") subCategorydata?.nameArabic else  subCategorydata?.nameEnglish
             ivSubCategory.load(subCategorydata?.image) {
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)

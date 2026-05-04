@@ -62,7 +62,7 @@ class BannerPerDayPriceFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
 
         binding?.apply {
-            toolbar.tvToolbar.text = "Banner per day price"
+            toolbar.tvToolbar.text = getString(R.string.banner_per_day_price)
 
 
             bannerPerDayPriceList.clear()
@@ -184,9 +184,9 @@ class BannerPerDayPriceFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 when (type){
-                    1-> showToast("Top Banner Price Update successfully")
-                    2-> showToast("Bottom Banner Price Update successfully")
-                    3-> showToast("Sub-Category Banner Price Update successfully")
+                    1-> showToast(getString(R.string.top_banner_price_update_successfully))
+                    2-> showToast(getString(R.string.bottom_banner_price_update_successfully))
+                    3-> showToast(getString(R.string.sub_category_banner_price_update_successfully))
                 }
 
                 bannerPerDayPriceList[selectedPos] = response.data
@@ -260,12 +260,12 @@ class BannerPerDayPriceFragment : BaseFragment() {
                 }
             })
 
-            tvToolbar.setOnClickListener {
+            closeIv.setOnClickListener {
                 dialog.dismiss()
             }
 
             btnSubmit.setOnClickListener {
-                if(isInvalid(etAmount, "Amount")) {
+                if(isInvalid(etAmount, getString(R.string.amount))) {
                     return@setOnClickListener
                 }
                 else{
@@ -282,12 +282,12 @@ class BannerPerDayPriceFragment : BaseFragment() {
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
         val value = et.text.toString().trim()
         if (value.isEmpty()) {
-            showToast("Please enter $fieldName")
+            showToast("${getString(R.string.please_enter)} $fieldName")
             return true
         }
         val num = value.toIntOrNull() ?: 0
         if (num <= 0) {
-            showToast("$fieldName should be greater than 0")
+            showToast("$fieldName ${getString(R.string.should_be_greater_than_zero)}")
             return true
         }
         return false

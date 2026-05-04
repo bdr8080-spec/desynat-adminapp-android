@@ -83,7 +83,7 @@ class RefundManagementFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "Refund Management"
+            toolbar.tvToolbar.text = getString(R.string.refund_management)
 
             refundAdapter = RefundAdapter(requireActivity(),refundList,object : RefundAdapter.OnClick{
                 override fun OnItemClick(position: Int) {

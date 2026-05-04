@@ -16,7 +16,7 @@
         android:paddingHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:paddingVertical="@dimen/_15sdp"
-        android:text="Seller Management"
+        android:text="@string/seller_management"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
@@ -43,7 +43,7 @@
                 android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
-                android:hint="Search"
+                android:hint="@string/search"
                 android:paddingStart="@dimen/_15sdp"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -72,7 +72,7 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/button_stroke"
-                android:text="Export"
+                android:text="@string/export"
                 android:textColor="@color/brown"
                 app:layout_constraintTop_toBottomOf="@id/etSearch"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,17 +94,17 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New" />
+                    android:text="@string/new_text" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Approved" />
+                    android:text="@string/approved" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rejected" />
+                    android:text="@string/rejected" />
 
             </com.google.android.material.tabs.TabLayout>
 

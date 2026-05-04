@@ -220,7 +220,7 @@ class AdminProfileDetailFragment : BaseFragment() {
                     }
                     CommonMethod.showSuccessDialog(
                         requireContext(),
-                        "Profile updated successfully!"
+                        getString(R.string.profile_updated_successfully)
                     ) {
                          when (val activity = requireActivity()) {
         is HomeActivity -> activity.onBackPressed()
@@ -258,26 +258,26 @@ class AdminProfileDetailFragment : BaseFragment() {
 
         binding?.apply {
             if (etFullName.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name")
+                showToast(getString(R.string.please_enter_full_name))
                 return false
             }
 
             val mobile = etMobileNumber.text.toString().trim()
             if (mobile.isEmpty()) {
-                showToast("Please Enter Mobile Number")
+                showToast(getString(R.string.please_enter_mobile_number))
                 return false
             }
             if (mobile.length < 7) {
-                showToast("Mobile Number in Between 7-15 digits ")
+                showToast(getString(R.string.mobile_number_in_between_7_15_digits))
                 return false
             }
             val email = etEmail.text.toString().trim()
             if (email.isEmpty()) {
-                showToast("Please Enter Email Address")
+                showToast(getString(R.string.enter_email_address))
                 return false
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.error = "Please Enter Valid Email Address"
+                showToast(getString(R.string.please_enter_valid_email_address))
                 return false
             }
         }

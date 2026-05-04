@@ -116,8 +116,9 @@
         android:drawablePadding="@dimen/_4sdp"
         android:fontFamily="@font/poppins_regular"
         android:text="alisha.khan@gmail.com"
+        android:maxLines="2"
         android:textColor="#000000"
-        android:textSize="@dimen/_9sdp"
+        android:textSize="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="@id/tvCall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvCall"
@@ -138,7 +139,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="Completed Orders"
+        android:text="@string/completed_orders"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         android:layout_marginTop="@dimen/_6sdp"
@@ -151,7 +152,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="Total Earnings"
+        android:text="@string/total_earnings"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintStart_toEndOf="@id/tvCompletedOrderLabel"
@@ -184,7 +185,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvCancelledOrderLabel"
         app:layout_constraintEnd_toEndOf="@id/tvCancelledOrderLabel" />
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_back"
@@ -198,7 +199,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_wallet"
-            android:layout_centerVertical="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/_5sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -206,11 +209,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text="Wallet Balance"
+            android:text="@string/wallet_balance"
             android:textColor="@color/black"
             android:textSize="@dimen/_9sdp"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_toRightOf="@+id/ivWallet"/>
+            app:layout_constraintStart_toEndOf="@+id/ivWallet"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvWalletBalance"
@@ -220,24 +224,26 @@
             android:text="0 KD"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
-            android:layout_below="@+id/tvWallet"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_toRightOf="@+id/ivWallet"/>
+            app:layout_constraintStart_toEndOf="@+id/ivWallet"
+            app:layout_constraintTop_toBottomOf="@+id/tvWallet"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvViewDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text="View Details"
+            android:text="@string/view_details"
             android:drawableEnd="@drawable/ic_arrow"
             android:drawablePadding="@dimen/_5sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
             android:paddingVertical="@dimen/_5sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

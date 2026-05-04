@@ -80,7 +80,7 @@ class BrandManagementFragment : BaseFragment() {
             }
             ProgressDialogUtils.getInstance().hideProgress()
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Brand Management"
+            toolbar.tvToolbar.text = getString(R.string.brand_management)
 
             brandList.clear()
             brandAdapter = BrandAdapter(requireActivity(),brandList,object :BrandAdapter.BrandClick{

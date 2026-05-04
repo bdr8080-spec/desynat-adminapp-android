@@ -36,7 +36,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvJoinedOn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
         android:text="Joined on 21/02/2025"
@@ -128,7 +128,7 @@
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
         android:paddingVertical="@dimen/_8sdp"
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="#714829"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toStartOf="@id/btnEdit"
@@ -144,12 +144,12 @@
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
         android:paddingVertical="@dimen/_8sdp"
-        android:text="Edit"
+        android:text="@string/edit"
         android:textColor="#FAFAFA"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="@id/btnDelete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnDelete"
-        app:layout_constraintTop_toTopOf="@id/btnReject" />
+        app:layout_constraintTop_toTopOf="@id/btnDelete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

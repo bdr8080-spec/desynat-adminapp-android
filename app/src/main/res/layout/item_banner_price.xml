@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
-        android:text="Per day Price"
+        android:text="@string/per_day_price"
         android:textColor="#80000000"
         android:layout_marginEnd="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="@+id/tvPrice"

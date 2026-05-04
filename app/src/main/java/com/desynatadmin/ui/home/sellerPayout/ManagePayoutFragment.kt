@@ -63,7 +63,7 @@ class ManagePayoutFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
 
         binding?.apply {
-            toolbar.tvToolbar.text = "Seller Payout"
+            toolbar.tvToolbar.text = getString(R.string.seller_payout)
 
             sellerPayoutHistoryAdapter = SellerPayoutHistoryAdapter(requireActivity(),payoutHistoryList,object :
                 SellerPayoutHistoryAdapter.OnClick{
@@ -287,7 +287,7 @@ class ManagePayoutFragment : BaseFragment() {
                     return@setOnClickListener
                 }
                 else if(etTransactionId.text?.trim().toString().isEmpty()) {
-                    showToast("Please enter transaction id")
+                    showToast(getString(R.string.please_enter_transaction_id))
                     return@setOnClickListener
                 }
                 else{
@@ -304,12 +304,12 @@ class ManagePayoutFragment : BaseFragment() {
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
         val value = et.text.toString().trim()
         if (value.isEmpty()) {
-            showToast("Please enter $fieldName")
+            showToast("${getString(R.string.please_enter)} $fieldName")
             return true
         }
         val num = value.toIntOrNull() ?: 0
         if (num <= 0) {
-            showToast("$fieldName should be greater than 0")
+            showToast("$fieldName ${getString(R.string.should_be_greater_than_zero)}")
             return true
         }
         return false

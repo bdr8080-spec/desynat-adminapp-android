@@ -32,6 +32,9 @@ class AuthActivity : BaseActivity() {
     }
 
     override fun initView() {
+
+        val from = intent.getStringExtra("from")
+
         CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
 
       /*  val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -43,13 +46,16 @@ class AuthActivity : BaseActivity() {
 
         val navGraph = controller.navInflater.inflate(R.navigation.auth_navigation_graph)
 
-
         navGraph.setStartDestination(
-            if (Constants.isLogout) R.id.signInFragment
-            else R.id.language
+            when {
+                from == "language" -> R.id.signInFragment
+                Constants.isLogout -> R.id.signInFragment
+                else -> R.id.language
+            }
         )
 
         controller.graph = navGraph
+
     }
 
     override fun initControl() {

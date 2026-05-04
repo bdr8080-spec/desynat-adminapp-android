@@ -49,7 +49,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_50sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="No data found"
+        android:text="@string/no_data_found"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
         android:visibility="gone"

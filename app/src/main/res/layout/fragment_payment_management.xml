@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="Payments"
+        android:text="@string/payments"
         android:textSize="@dimen/_13sdp"
         android:textColor="@color/white"
         android:background="#C19E73"
@@ -74,7 +74,7 @@
             android:paddingVertical="@dimen/_8sdp"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Orders"
+            android:text="@string/orders"
             android:background="@drawable/selected_left_border"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
@@ -92,7 +92,7 @@
             android:paddingVertical="@dimen/_8sdp"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Plan"
+            android:text="@string/plan"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp" />
 
@@ -109,7 +109,7 @@
             android:paddingVertical="@dimen/_8sdp"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Gift Card"
+            android:text="@string/gift_card"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp" />
 
@@ -126,7 +126,7 @@
             android:paddingVertical="@dimen/_8sdp"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Banner"
+            android:text="@string/banner"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp" />
 
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="Total Revenue"
+                    android:text="@string/total_revenue"
                     android:textSize="@dimen/_13sdp"
                     android:textColor="@color/white"/>
 
@@ -201,7 +201,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Orders Commission"
+                        android:text="@string/orders_commission"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
@@ -242,7 +242,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Special Orders"
+                        android:text="@string/special_orders"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
@@ -267,7 +267,7 @@
                     android:id="@+id/tvChooseMonth"
                     style="@style/edit_text_title"
                     android:layout_width="0dp"
-                    android:text="Choose Month"
+                    android:text="@string/choose_month"
                     android:textSize="@dimen/_12sdp"
                     android:fontFamily="@font/poppins_medium"
                     app:layout_constraintStart_toStartOf="parent"
@@ -278,7 +278,7 @@
                     android:id="@+id/tvChooseYear"
                     style="@style/edit_text_title"
                     android:layout_width="0dp"
-                    android:text="Choose Year"
+                    android:text="@string/choose_year"
                     android:textSize="@dimen/_12sdp"
                     android:fontFamily="@font/poppins_medium"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -296,7 +296,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="Select Month"
+                    android:hint="@string/select_month"
                     android:paddingVertical="@dimen/_7sdp"
                     app:layout_constraintEnd_toStartOf="@+id/etYear"
                     app:layout_constraintStart_toStartOf="parent"
@@ -313,7 +313,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="Select Year"
+                    android:hint="@string/select_year"
                     android:paddingVertical="@dimen/_7sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/etMonth"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -327,7 +327,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     style="@style/button"
-                    android:text="Reset"
+                    android:text="@string/reset"
                     android:layout_marginTop="@dimen/_10sdp" />
 
 
@@ -347,7 +347,7 @@
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="10dp"
                     android:ellipsize="end"
-                    android:hint="Search"
+                    android:hint="@string/search"
                     android:paddingStart="12dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -377,7 +377,7 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:background="@drawable/button_stroke"
-                android:text="Export"
+                android:text="@string/export"
                 android:textColor="@color/brown"
                 app:layout_constraintTop_toBottomOf="@id/etSearch"
                 app:layout_constraintStart_toStartOf="parent"
@@ -437,7 +437,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:textSize="@dimen/_13sdp"
                 android:paddingVertical="@dimen/_50sdp"
-                android:text="No payment found"/>
+                android:text="@string/no_payment_found"/>
 
             <View
                 android:layout_width="match_parent"

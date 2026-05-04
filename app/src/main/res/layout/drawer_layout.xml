@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semi_bold"
-                android:text="Profile"
+                android:text="@string/profile"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintBottom_toBottomOf="@id/ivBack"
@@ -122,7 +122,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoCategory"
                         android:layout_toEndOf="@id/ivCategory"
-                        android:text="Category &amp; Sub- Category Management" />
+                        android:text="@string/category_and_sub_category_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoCategory"
@@ -149,7 +149,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoBarnd"
                         android:layout_toEndOf="@id/ivBarnd"
-                        android:text="Brand management" />
+                        android:text="@string/brand_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoBarnd"
@@ -177,7 +177,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoSeller"
                         android:layout_toEndOf="@id/ivSeller"
-                        android:text="Seller Management" />
+                        android:text="@string/seller_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoSeller"
@@ -204,7 +204,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoCountry"
                         android:layout_toEndOf="@id/ivCountry"
-                        android:text="Country , City &amp; Zone Management" />
+                        android:text="@string/country_city_and_zone_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoCountry"
@@ -231,7 +231,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoUser"
                         android:layout_toEndOf="@id/ivUser"
-                        android:text="User Management" />
+                        android:text="@string/user_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoUser"
@@ -258,7 +258,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoDeliveryBoy"
                         android:layout_toEndOf="@id/ivDeliveryBoy"
-                        android:text="Delivery Boy Management" />
+                        android:text="@string/delivery_boy_management" />
 
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -286,7 +286,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoReason"
                         android:layout_toEndOf="@id/ivReason"
-                        android:text="Reason Management" />
+                        android:text="@string/reason_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoReason"
@@ -311,9 +311,9 @@
                         android:id="@+id/tvGiftCard"
                         style="@style/drawer_text"
                         android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_toLeftOf="@+id/ivGoGiftCard"
+                        android:layout_toStartOf="@+id/ivGoGiftCard"
                         android:layout_toEndOf="@id/ivGiftCard"
-                        android:text="Gift Card Category Management" />
+                        android:text="@string/gift_card_category_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoGiftCard"
@@ -340,7 +340,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoShipping"
                         android:layout_toEndOf="@id/ivShipping"
-                        android:text="Delivery Charge &amp; Tax Management" />
+                        android:text="@string/delivery_charge_and_tax_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoShipping"
@@ -367,7 +367,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoPromoCode"
                         android:layout_toEndOf="@id/ivPromoCode"
-                        android:text="Promocode Management" />
+                        android:text="@string/promocode_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoPromoCode"
@@ -394,7 +394,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoBannerPrice"
                         android:layout_toEndOf="@id/ivBannerPrice"
-                        android:text="Banner per day price" />
+                        android:text="@string/banner_per_day_price" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoBannerPrice"
@@ -421,7 +421,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoOrderManagement"
                         android:layout_toEndOf="@id/ivOrderManagement"
-                        android:text="Order Management" />
+                        android:text="@string/order_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoOrderManagement"
@@ -448,7 +448,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoBannerRequest"
                         android:layout_toEndOf="@id/ivBannerRequest"
-                        android:text="Banner requests Management" />
+                        android:text="@string/banner_requests_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoBannerRequest"
@@ -475,7 +475,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoFullScreenBanner"
                         android:layout_toEndOf="@id/ivFullScreenBanner"
-                        android:text="Banner Management" />
+                        android:text="@string/banner_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoFullScreenBanner"
@@ -502,7 +502,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoCommission"
                         android:layout_toEndOf="@id/ivCommission"
-                        android:text="Affiliate Commission percentage" />
+                        android:text="@string/affiliate_commission_percentage" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoCommission"
@@ -529,7 +529,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoLive"
                         android:layout_toEndOf="@id/ivLive"
-                        android:text="Live Request  &amp; Timeslot Management" />
+                        android:text="@string/live_request_and_timeslot_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoLive"
@@ -556,7 +556,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoStory"
                         android:layout_toEndOf="@id/ivStory"
-                        android:text="Story Management" />
+                        android:text="@string/story_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoStory"
@@ -583,7 +583,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoDeals"
                         android:layout_toEndOf="@id/ivDeals"
-                        android:text="Deals Management" />
+                        android:text="@string/deals_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoDeals"
@@ -610,7 +610,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoAffiliate"
                         android:layout_toEndOf="@id/ivAffiliate"
-                        android:text="Affiliate User Management" />
+                        android:text="@string/affiliate_user_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoAffiliate"
@@ -637,7 +637,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoSubAdmin"
                         android:layout_toEndOf="@id/ivSubAdmin"
-                        android:text="Sub Admin" />
+                        android:text="@string/sub_admin" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoSubAdmin"
@@ -664,7 +664,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoRefund"
                         android:layout_toEndOf="@id/ivRefund"
-                        android:text="Refund Management" />
+                        android:text="@string/refund_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoRefund"
@@ -691,7 +691,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoWithdrawal"
                         android:layout_toEndOf="@id/ivWithdrawal"
-                        android:text="Affiliate withdrawal requests" />
+                        android:text="@string/affiliate_withdrawal_requests" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoWithdrawal"
@@ -718,7 +718,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoNotification"
                         android:layout_toEndOf="@id/ivNotification"
-                        android:text="Notification Management" />
+                        android:text="@string/notification_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoNotification"
@@ -745,7 +745,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoTicket"
                         android:layout_toEndOf="@id/ivTicket"
-                        android:text="Ticket Management" />
+                        android:text="@string/ticket_management" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoTicket"
@@ -772,7 +772,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoPayout"
                         android:layout_toEndOf="@id/ivPayout"
-                        android:text="Seller Payouts" />
+                        android:text="@string/seller_payouts" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoPayout"
@@ -799,7 +799,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoCms"
                         android:layout_toEndOf="@id/ivCms"
-                        android:text="CMS" />
+                        android:text="@string/cms" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoCms"
@@ -826,7 +826,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoSupportChat"
                         android:layout_toEndOf="@id/ivSupportChat"
-                        android:text="Support Chat" />
+                        android:text="@string/support_chat" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoSupportChat"
@@ -851,7 +851,7 @@
                         android:drawablePadding="@dimen/_5sdp"
                         android:fontFamily="@font/poppins_medium"
                         android:paddingVertical="@dimen/_10sdp"
-                        android:text="Logout"
+                        android:text="@string/logout"
                         android:textColor="@color/brown" />
 
                 </RelativeLayout>

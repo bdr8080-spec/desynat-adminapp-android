@@ -115,11 +115,11 @@ class ApprovedDetailsActivity : BaseActivity() {
 
         viewModel.getUpdateSellerStatus.observe(this){
             if(it.data.is_block == 0){
-                showToast("Seller UnBlock Successfully")
+                showToast(getString(R.string.seller_unblock_successfully))
                 binding.ivToggle.setImageResource(R.drawable.toggle_ic)
             }
             else{
-                showToast("Seller Block Successfully")
+                showToast(getString(R.string.seller_block_successfully))
                 binding.ivToggle.setImageResource(R.drawable.toggle_off)
             }
         }
@@ -148,25 +148,29 @@ class ApprovedDetailsActivity : BaseActivity() {
             Glide.with(this).load(it?.data?.store_document?.getOrNull(0)?.document_path).into(binding.doc3)
             Glide.with(this).load(it?.data?.store_document?.getOrNull(1)?.document_path).into(binding.doc4)
             binding.tvAccountType.text = when(it.data?.seller_bank_details?.account_type){
-                "0" -> "Personal Account"
-                else -> "Business Account"
+                "0" -> getString(R.string.personal_account)
+                else -> getString(R.string.business_account)
             }
             binding.cl1.isVisible = true
             binding.clOrder.isVisible = true
             if(it?.data?.subcription_plan.isNullOrEmpty()){
-                binding.tvPurchasePlan.text = "No Active Plans"
+                binding.tvPurchasePlan.text = getString(R.string.no_active_plans)
                 binding.purchasePlanLayout.isVisible = false
             }
             else{
-                binding.tvPurchasePlan.text = "Purchased Plan"
+                binding.tvPurchasePlan.text = getString(R.string.purchased_plan)
                 binding.purchasePlanLayout.isVisible = true
-                binding.tvStatus.text = if(it.data?.subcription_plan?.get(0)?.plan_info?.status == 0) " Active" else "Expire"
+                binding.tvStatus.text = if(it.data?.subcription_plan?.get(0)?.plan_info?.status == 0) getString(R.string.active) else getString(R.string.expired)
                 binding.tvProPlanLabel.text = it.data?.subcription_plan?.get(0)?.plan_info?.plan_name_english ?: ""
                 if(it.data?.subcription_plan?.get(0)?.plan_info?.duration_type == 1){
-                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + "Months"
+                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + getString(
+                        R.string.months
+                    )
                 }
                 else{
-                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + "Years"
+                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + getString(
+                        R.string.years
+                    )
                 }
                 binding.tvPurchasedOn.text = formatUtcDateToLocal( it.data?.subcription_plan?.get(0)?.plan_info?.created_at ?: "")
                 binding.tvTotalAmount.text = "${it.data?.subcription_plan?.get(0)?.plan_info?.price?.roundToInt()} KD"

@@ -85,7 +85,7 @@ class ProductDetailFragment : BaseFragment() {
                 tvSwitch.isClickable = actionAccess
             }
 
-            toolbar.tvToolbar.text = "Product Details"
+            toolbar.tvToolbar.text = getString(R.string.product_details)
             val itemJson = arguments?.getString("productData")
             if (!itemJson.isNullOrEmpty()) {
                 productData = Gson().fromJson(itemJson, GetAllProductListResponse.Data.Data::class.java)
@@ -247,21 +247,21 @@ class ProductDetailFragment : BaseFragment() {
                 tvDescription.text = productDetailData?.descriptionEn
 
                 if (productDetailData?.productReturn == "1") {
-                    tvReturnTime.text = "${productDetailData?.returnDays} days"
+                    tvReturnTime.text = "${productDetailData?.returnDays} ${getString(R.string.days)}"
                 }
                 if (productDetailData?.productReturn == "1") {
-                    tvExchangeTime.text = "${productDetailData?.exchangableDays} days"
+                    tvExchangeTime.text = "${productDetailData?.exchangableDays} ${getString(R.string.days)}"
                 }
                 tvRatingAndReviewStatus.text =
-                    if (productDetailData?.reviewRating == "1") "Yes" else "No"
+                    if (productDetailData?.reviewRating == "1") getString(R.string.yes) else getString(R.string.no)
                 tvAffiliatedProduct.text =
-                    if (productDetailData?.affiliatedProduct == "1") "Yes" else "No"
+                    if (productDetailData?.affiliatedProduct == "1") getString(R.string.yes) else getString(R.string.no)
                 tvCustomizedStatus.text =
-                    if (productDetailData?.customizedProduct == "1") "Yes" else "No"
+                    if (productDetailData?.customizedProduct == "1") getString(R.string.yes) else getString(R.string.no)
                 tvReadyToShipStatus.text =
-                    if (productDetailData?.readyToShip == "1") "Yes" else "No"
+                    if (productDetailData?.readyToShip == "1") getString(R.string.yes) else getString(R.string.no)
                 tvCashOnDeliveryStatus.text =
-                    if (productDetailData?.cashOnDelivery == "1") "Yes" else "No"
+                    if (productDetailData?.cashOnDelivery == "1") getString(R.string.yes) else getString(R.string.no)
 
                 tvMinCartQuantity.text = productDetailData?.minCardQuantity
                 tvMaxCartQuantity.text = productDetailData?.maxCardQuantity
@@ -309,12 +309,12 @@ class ProductDetailFragment : BaseFragment() {
     private fun updateStatus(){
         binding?.apply {
                 if(productData?.productActiveStatus==1){
-                    tvSwitch.text = "Active"
+                    tvSwitch.text = getString(R.string.active)
                     tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                     tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.switch_on,0 )
                 }
                 else{
-                    tvSwitch.text = "Inactive"
+                    tvSwitch.text = getString(R.string.inactive)
                     tvSwitch.setTextColor(Color.parseColor("#875C3A"))
                     tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.switch_off,0)
                 }

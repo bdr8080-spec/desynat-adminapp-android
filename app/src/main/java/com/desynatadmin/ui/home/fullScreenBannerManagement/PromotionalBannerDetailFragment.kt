@@ -104,13 +104,13 @@ class PromotionalBannerDetailFragment : BaseFragment() {
             Glide.with(requireActivity()).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)
             when(bannerData?.bannerPosition){
                 "1" ->{
-                    tvBannerPositionValue.text = "Home Top"
+                    tvBannerPositionValue.text = getString(R.string.home_top)
                 }
                 "2"->{
-                    tvBannerPositionValue.text = "Home Bottom"
+                    tvBannerPositionValue.text = getString(R.string.home_bottom)
                 }
                 "3"->{
-                    tvBannerPositionValue.text = "Category"
+                    tvBannerPositionValue.text = getString(R.string.category)
                     if (bannerData?.categoryDetails!=null){
                         tvCategoryNameValue.isVisible = true
                         tvCategoryName.isVisible = true
@@ -204,7 +204,7 @@ class PromotionalBannerDetailFragment : BaseFragment() {
         viewModel.deletePromotionalBannerResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Banner deleted successfully"){
+                CommonMethod.showSuccessDialog(requireContext(), getString(R.string.banner_deleted_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false

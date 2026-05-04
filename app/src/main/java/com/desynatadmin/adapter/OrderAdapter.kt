@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemOrderBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.utils.CommonMethod
@@ -28,7 +29,11 @@ class OrderAdapter(var context:Context, var orderList: ArrayList<GetActiveOrderR
 
                 tvOrderOnValue.text = CommonMethod.customizeChangeDateFormat(orderData.createdAt, outputFormat = "dd/MM/yyyy 'at' hh:mm a")
                 tvTotalAmount.text = "${CommonMethod.formatPrice(orderData?.amount?:0.0)} KD"
-                tvOrderTypeValue.text =  if (orderData?.order?.orderType=="1") "Normal Order" else "Custom Order"
+                tvOrderTypeValue.text =  if (orderData?.order?.orderType=="1") context.getString(
+                    R.string.normal_orders
+                ) else context.getString(
+                    R.string.custom_order
+                )
 
                 when(orderType) {
                     1,2 -> {

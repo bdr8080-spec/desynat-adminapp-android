@@ -62,9 +62,9 @@ class AddPlanFragment : BaseFragment() {
         binding?.apply {
         if (!itemJson.isNullOrEmpty()) {
             subscriptionData = Gson().fromJson(itemJson, GetAllPlanResponse.Data::class.java)
-            toolbar.tvToolbar.text = "Update Plan"
-            btnAdd.text = "Update"
-            tvPrice.text = "Old Price"
+            toolbar.tvToolbar.text = getString(R.string.update_plan)
+            btnAdd.text = getString(R.string.update)
+            tvPrice.text = getString(R.string.old_price)
             tvNewPrice.isVisible = true
             etNewPrice.isVisible = true
             tvNewDuration.isVisible = true
@@ -72,8 +72,8 @@ class AddPlanFragment : BaseFragment() {
             setData()
         }
         else{
-            toolbar.tvToolbar.text = "Create New Plan"
-            btnAdd.text = "Add"
+            toolbar.tvToolbar.text = getString(R.string.create_new_plan)
+            btnAdd.text = getString(R.string.add)
         }
 
             etArabicPlanName.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
@@ -151,14 +151,14 @@ class AddPlanFragment : BaseFragment() {
             }
 
             etMonth.setOnClickListener {
-                val options = arrayOf("Month", "Year")
+                val options = arrayOf(getString(R.string.month), getString(R.string.year))
 
                 val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                builder.setTitle("Select Duration Type")
+                builder.setTitle(getString(R.string.select_duration_type))
                 builder.setItems(options) { dialog, which ->
                     when(options[which]){
-                        "Month" -> durationType="1"
-                        "Year" -> durationType="2"
+                        getString(R.string.month) -> durationType="1"
+                        getString(R.string.year) -> durationType="2"
                     }
 
                     etMonth.setText(options[which])
@@ -168,14 +168,14 @@ class AddPlanFragment : BaseFragment() {
             }
 
             etNewMonth.setOnClickListener {
-                val options = arrayOf("Month", "Year")
+                val options = arrayOf(getString(R.string.month), getString(R.string.year))
 
                 val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                builder.setTitle("Select Duration Type")
+                builder.setTitle(getString(R.string.select_duration_type))
                 builder.setItems(options) { dialog, which ->
                     when(options[which]){
-                        "Month" -> newDurationType="1"
-                        "Year" -> newDurationType="2"
+                        getString(R.string.month) -> newDurationType="1"
+                        getString(R.string.year) -> newDurationType="2"
                     }
 
                     etNewMonth.setText(options[which])
@@ -311,14 +311,14 @@ class AddPlanFragment : BaseFragment() {
             durationType = subscriptionData?.durationType.toString()
             etCountry.setText(countryList.find { it.id == subscriptionData?.countryId}?.name.toString())
             when (subscriptionData?.durationType?.toString()) {
-                "1" -> etMonth.setText("Month")
-                "2" -> etMonth.setText("Year")
+                "1" -> etMonth.setText(getString(R.string.month))
+                "2" -> etMonth.setText(getString(R.string.year))
                 else -> etMonth.setText("")
             }
 
             when (subscriptionData?.newDurationType?.toString()) {
-                "1" -> etNewMonth.setText("Month")
-                "2" -> etNewMonth.setText("Year")
+                "1" -> etNewMonth.setText(getString(R.string.month))
+                "2" -> etNewMonth.setText(getString(R.string.year))
                 else -> etNewMonth.setText("")
             }
 
@@ -350,58 +350,58 @@ class AddPlanFragment : BaseFragment() {
         binding?.apply {
             when {
                 etCountry.text.isNullOrBlank() -> {
-                    showToast("Please select a country")
+                    showToast(getString(R.string.please_select_a_country))
                     return false
                 }
                 etEnglishPlanName.text.isNullOrBlank() -> {
-                    showToast("Please enter plan name in English")
+                    showToast(getString(R.string.please_enter_plan_name_in_english))
                     return false
                 }
                 etArabicPlanName.text.isNullOrBlank() -> {
-                    showToast("Please enter plan name in Arabic")
+                    showToast(getString(R.string.please_enter_plan_name_in_arabic))
                     return false
                 }
                 etDuration.text.isNullOrBlank() -> {
-                    showToast("Please enter duration")
+                    showToast(getString(R.string.please_enter_duration))
                     return false
                 }
-                isInvalid(etDuration, "Duration")-> return false
+                isInvalid(etDuration, getString(R.string.duration))-> return false
                 etMonth.text.isNullOrBlank() -> {
-                    showToast("Please select duration type (Month/Year)")
+                    showToast(getString(R.string.please_select_duration_type_month_year))
                     return false
                 }
                 etNoOfVideo.text.isNullOrBlank() -> {
-                    showToast("Please enter number of videos")
+                    showToast(getString(R.string.please_enter_number_of_videos))
                     return false
                 }
-                isInvalid(etNoOfVideo, "No. of Videos")-> return false
+                isInvalid(etNoOfVideo, getString(R.string.no_of_videos))-> return false
 
                 !rbUnlimited.isChecked && !rbDefined.isChecked -> {
-                    showToast("Please select product type option (Yes/No)")
+                    showToast(getString(R.string.please_select_product_type_option_yes_no))
                     return false
                 }
                 rbDefined.isChecked && etNoOfProducts.text.isNullOrBlank() -> {
-                    showToast("Please enter number of products")
+                    showToast(getString(R.string.please_enter_number_of_products))
                     return false
                 }
 
               //  isInvalid(etNoOfProducts, "No. of Products")-> return false
                 etNoOfHighlight.text.isNullOrBlank() -> {
-                    showToast("Please enter number of highlights")
+                    showToast(getString(R.string.please_enter_number_of_highlights))
                     return false
                 }
-                isInvalid(etNoOfHighlight, "No. of Highlights")-> return false
+                isInvalid(etNoOfHighlight, getString(R.string.no_of_highlights))-> return false
                 etNoOfEmployee.text.isNullOrBlank() -> {
-                    showToast("Please enter number of employees")
+                    showToast(getString(R.string.please_enter_number_of_employees))
                     return false
                 }
-                isInvalid(etNoOfEmployee, "No. of Employee")-> return false
+                isInvalid(etNoOfEmployee, getString(R.string.no_of_employee))-> return false
                 !rbOpen.isChecked && !rbClose.isChecked -> {
-                    showToast("Please select story option (Open/Close)")
+                    showToast(getString(R.string.please_select_story_option_open_close))
                     return false
                 }
                 etPrice.text.isNullOrBlank() -> {
-                    showToast("Please enter price")
+                    showToast(getString(R.string.please_enter_price))
                     return false
                 }
              /*   etPrice.text.isNullOrBlank()&&subscriptionData!=null -> {
@@ -414,24 +414,24 @@ class AddPlanFragment : BaseFragment() {
                 }*/
               //  isInvalid(etPrice, "Price")-> return false
                 !rbYes.isChecked && !rbNo.isChecked -> {
-                    showToast("Please select commission option (Yes/No)")
+                    showToast(getString(R.string.please_select_commission_option_yes_no))
                     return false
                 }
                 rbYes.isChecked && etCommission.text.isNullOrBlank() -> {
-                    showToast("Please enter commission percentage")
+                    showToast(getString(R.string.please_enter_commission_percentage))
                     return false
                 }
                 rbYes.isChecked && etCommission.text.toString().toDoubleOrNull()?.let { it < 0 || it > 100 } == true -> {
-                    showToast("Commission should be between 0 and 100")
+                    showToast(getString(R.string.commission_should_be_between_0_and_100))
                     return false
                 }
 
                 !rbYesFreeMonth.isChecked && !rbNoFreeMonth.isChecked -> {
-                    showToast("Please select free month option (Yes/No)")
+                    showToast(getString(R.string.please_select_free_month_option_yes_no))
                     return false
                 }
                 rbYesFreeMonth.isChecked && etNoOfFreeMonth.text.isNullOrBlank() -> {
-                    showToast("Please enter number of free month")
+                    showToast(getString(R.string.please_enter_number_of_free_month))
                     return false
                 }
             }
@@ -448,12 +448,12 @@ class AddPlanFragment : BaseFragment() {
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
         val value = et.text.toString().trim()
         if (value.isEmpty()) {
-            showToast("Please enter $fieldName")
+            showToast("${getString(R.string.please_enter)} $fieldName")
             return true
         }
         val num = value.toIntOrNull() ?: 0
         if (num <= 0) {
-            showToast("$fieldName should be greater than 0")
+            showToast("$fieldName ${getString(R.string.should_be_greater_than_zero)}")
             return true
         }
         return false

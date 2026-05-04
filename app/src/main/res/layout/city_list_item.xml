@@ -30,7 +30,7 @@
         android:fontFamily="@font/poppins_medium"
         android:gravity="center_vertical"
         android:padding="4dp"
-        android:text="View Zone"
+        android:text="@string/view_zone"
         app:layout_constraintStart_toEndOf="@+id/tvCountryName"
         android:textColor="@color/white"
         android:textSize="10sp"

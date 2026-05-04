@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semi_bold"
-                android:text="Profile"
+                android:text="@string/profile"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintBottom_toBottomOf="@id/ivBack"
@@ -130,7 +130,7 @@
                        android:drawablePadding="@dimen/_5sdp"
                        android:fontFamily="@font/poppins_medium"
                        android:paddingVertical="@dimen/_10sdp"
-                       android:text="Logout"
+                       android:text="@string/logout"
                        android:textColor="@color/brown" />
 
                </RelativeLayout>

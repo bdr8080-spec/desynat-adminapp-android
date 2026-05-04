@@ -70,7 +70,7 @@ class DealsManagementFragment : BaseFragment() {
 
                 ivAddDeals.isVisible = actionAccess
             }
-            toolbar.tvToolbar.text = "Deals Management"
+            toolbar.tvToolbar.text = getString(R.string.deals_management)
 
             dealsList.clear()
             dealsAdapter = DealsAdapter(requireActivity(),dealsList,object :DealsAdapter.DealsClick{

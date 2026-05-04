@@ -8,6 +8,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemBrandBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.utils.Constants
 
 class BrandAdapter(var context:Context, var brandList: ArrayList<GetBrandResponse.Data.Data>, var brandClick:BrandClick) : RecyclerView.Adapter<BrandAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBrandBinding) :
@@ -15,7 +16,7 @@ class BrandAdapter(var context:Context, var brandList: ArrayList<GetBrandRespons
         fun bind(position: Int) = with(binding){
             val brandData = brandList[position]
 
-                tvBrandName.text = brandData.nameEnglish
+                tvBrandName.text = if (Constants.language=="ar") brandData?.nameArabic else brandData?.nameEnglish
                 ivBrand.load(brandData.image) {
                     crossfade(true)
                     placeholder(R.drawable.ic_placeholder)

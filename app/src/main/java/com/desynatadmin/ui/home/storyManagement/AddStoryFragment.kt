@@ -112,7 +112,7 @@ class AddStoryFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "Add Story"
+            toolbar.tvToolbar.text = getString(R.string.add_story)
 
             galleryAdapter = GalleryAdapter(requireActivity(),mutableListOf()) { media ->
                 when (media) {
@@ -212,7 +212,8 @@ class AddStoryFragment : BaseFragment() {
         viewModel.addStoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Story added successfully!") {
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.story_added_successfully)) {
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -247,7 +248,7 @@ class AddStoryFragment : BaseFragment() {
     private fun uploadCompressedVideo(file: File?) {
         file?.exists()?.let {
             if (!it) {
-                showToast("Video not found")
+                showToast(getString(R.string.video_not_found))
                 return
             }
         }

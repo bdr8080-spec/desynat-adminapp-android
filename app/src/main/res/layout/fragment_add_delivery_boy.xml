@@ -43,12 +43,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
-                android:text="Full Name"/>
+                android:text="@string/full_name"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
-                android:text="In English"
+                android:text="@string/in_english"
                 android:layout_alignParentEnd="true"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_10sdp"/>
@@ -59,7 +59,7 @@
             android:id="@+id/etEnglishFullName"
             android:layout_width="match_parent"
             style="@style/edit_text"
-            android:hint="Enter Full Name"
+            android:hint="@string/enter_full_name"
             android:inputType="textCapSentences"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
             android:layout_marginTop="@dimen/_5sdp"
@@ -75,12 +75,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
-                android:text="Full Name"/>
+                android:text="@string/full_name"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
                 android:layout_width="wrap_content"
-                android:text="In Arabic"
+                android:text="@string/in_arabic"
                 android:layout_alignParentEnd="true"
                 android:textColor="#80000000"
                 android:textSize="@dimen/_10sdp"/>
@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Enter Full Name"
+            android:hint="@string/enter_full_name"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:singleLine="true"
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Mobile Number"/>
+            android:text="@string/mobile_number"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clMobile"
@@ -132,7 +132,7 @@
                 android:id="@+id/etMobileNumber"
                 android:layout_width="0dp"
                 style="@style/edit_text"
-                android:hint="Enter Mobile Number"
+                android:hint="@string/enter_mobile_number"
                 android:inputType="number"
                 android:background="@null"
                 android:maxLength="15"
@@ -150,14 +150,14 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Email Address"/>
+            android:text="@string/email_address"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Enter Email Address"
+            android:hint="@string/enter_email_address"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="textEmailAddress"
             android:background="@drawable/edit_back" />
@@ -167,9 +167,9 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Address Line 1"/>
+            android:text="@string/address_line_1"/>
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relAddressLine1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,12 +179,15 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/etAddressLine1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 style="@style/edit_text"
-                android:hint="Enter Address Line 1"
+                android:hint="@string/enter_address_line_1"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:background="@null"
-                android:layout_toLeftOf="@+id/ivCurrentLoc"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ivCurrentLoc"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivCurrentLoc"
@@ -193,16 +196,18 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:src="@drawable/ic_current_loc"
-                android:layout_alignParentEnd="true"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Address Line 2"/>
+            android:text="@string/address_line_2"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etAddressLine2"
@@ -210,7 +215,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
             android:singleLine="true"
-            android:hint="Enter Address Line 2"
+            android:hint="@string/enter_address_line_2"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:background="@drawable/edit_back" />
@@ -228,7 +233,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
-                android:text="City/District"/>
+                android:text="@string/city_district"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
@@ -236,7 +241,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="State"/>
+                android:text="@string/state"/>
 
         </LinearLayout>
 
@@ -252,7 +257,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 style="@style/edit_text"
-                android:hint="Enter City/District"
+                android:hint="@string/enter_city_district"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
                 android:inputType="number"
@@ -263,7 +268,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 style="@style/edit_text"
-                android:hint="Enter State"
+                android:hint="@string/enter_state"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:inputType="number"
@@ -357,14 +362,14 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Select Zone"/>
+            android:text="@string/select_zone"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etZone"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Select Zone"
+            android:hint="@string/select_zone"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:editable="false"
@@ -384,7 +389,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Vehicle Information"
+            android:text="@string/vehicle_information"
             android:textSize="@dimen/_13sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -392,14 +397,14 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Vehicle Name"/>
+            android:text="@string/vehicle_name"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etVehicleName"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Enter Vehicle Name"
+            android:hint="@string/enter_vehicle_name"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:background="@drawable/edit_back" />
@@ -409,14 +414,14 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Vehicle Registration Number"/>
+            android:text="@string/vehicle_registration_number"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etVehichleRegistrationNumber"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Enter Vehicle Registration Number"
+            android:hint="@string/enter_vehicle_registration_number"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:background="@drawable/edit_back" />
@@ -426,7 +431,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Upload vehicle Image"
+            android:text="@string/upload_vehicle_image"
             android:textSize="@dimen/_13sdp"/>
 
         <LinearLayout
@@ -470,7 +475,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Upload Identity proof"
+            android:text="@string/upload_identity_proof"
             android:textSize="@dimen/_13sdp"/>
 
         <LinearLayout
@@ -514,7 +519,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Upload driving license"
+            android:text="@string/upload_driving_license"
             android:textSize="@dimen/_13sdp"/>
 
         <LinearLayout
@@ -558,7 +563,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Upload vehicle insurance"
+            android:text="@string/upload_vehicle_insurance"
             android:textSize="@dimen/_13sdp"/>
 
 
@@ -590,7 +595,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Upload pollution paper (optional)"
+            android:text="@string/upload_pollution_paper_optional"
             android:textSize="@dimen/_13sdp"/>
 
         <LinearLayout
@@ -621,7 +626,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Upload registration certificate (optional)"
+            android:text="@string/upload_registration_certificate_optional"
             android:textSize="@dimen/_13sdp"/>
 
         <LinearLayout
@@ -666,7 +671,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Add"/>
+            android:text="@string/add"/>
 
     </LinearLayout>
 

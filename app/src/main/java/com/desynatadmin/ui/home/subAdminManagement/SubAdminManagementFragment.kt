@@ -83,7 +83,7 @@ class SubAdminManagementFragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
 
-            toolbar.tvToolbar.text = "Sub Admin"
+            toolbar.tvToolbar.text = getString(R.string.sub_admin)
 
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){
@@ -644,9 +644,9 @@ class SubAdminManagementFragment : BaseFragment() {
     }
 
     private fun setCount(data: GetSubAdminResponse.Data){
-        binding?.tvAll?.text = "All(${data.totalCount})"
-        binding?.tvActive?.text = "Active(${data.totalActiveCount})"
-        binding?.tvInactive?.text = "Inactive(${data.totalInactiveCount})"
+        binding?.tvAll?.text = "${getString(R.string.all)}(${data.totalCount})"
+        binding?.tvActive?.text = "${getString(R.string.active)}(${data.totalActiveCount})"
+        binding?.tvInactive?.text = "${getString(R.string.inactive)}(${data.totalInactiveCount})"
     }
 
     private fun shareSubAdminCredential(){

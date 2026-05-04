@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemRefundBinding
 import com.desynatadmin.ui.home.refundManagement.response.GetRefundOrderResponse
 import com.desynatadmin.utils.CommonMethod
@@ -25,17 +26,17 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<GetRefundOrde
             tvTotalAmount.text = "${CommonMethod.formatPrice(refundData?.order?.totalAmount?.toDoubleOrNull()?:0.0)} KD"
 
             if (refundData?.status=="2"){
-                tvStatusValue.text = "Completed"
+                tvStatusValue.text = context.getString(R.string.completed)
                 tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
             }
             else{
-                tvStatusValue.text = "Pending"
+                tvStatusValue.text = context.getString(R.string.pending)
                 tvStatusValue.setTextColor(Color.parseColor("#FFA41B"))
             }
 
             tvViewMore.setOnClickListener {
-                if (tvViewMore.text == "Less View"){
-                    tvViewMore.text = "More Info"
+                if (tvViewMore.text == context.getString(R.string.less_view)){
+                    tvViewMore.text = context.getString(R.string.more_info)
                     tvCountry.isVisible = false
                     tvCountryName.isVisible = false
                     tvSellerName.isVisible = false
@@ -45,7 +46,7 @@ class RefundAdapter(var context:Context, var refundList: ArrayList<GetRefundOrde
                     tvReasonValue.isVisible = false
                 }
                 else{
-                    tvViewMore.text = "Less View"
+                    tvViewMore.text = context.getString(R.string.less_view)
                     tvCountry.isVisible = true
                     tvCountryName.isVisible = true
                     tvSellerName.isVisible = true

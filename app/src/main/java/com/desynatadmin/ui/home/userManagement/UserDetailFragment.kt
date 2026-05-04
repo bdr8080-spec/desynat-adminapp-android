@@ -74,7 +74,7 @@ class UserDetailFragment : BaseFragment() {
                 tvAddMoney.isVisible = actionAccess
                 ivSwitch.isClickable = actionAccess
             }
-            toolbar.tvToolbar.text = "User Detail"
+            toolbar.tvToolbar.text = getString(R.string.user_detail)
         }
     }
 
@@ -170,7 +170,7 @@ class UserDetailFragment : BaseFragment() {
             }
             tvName.text = userData?.fullName
             tvLocation.text = userData?.countryInfo?.name
-            tvJoinedOn.text = "Joined at ${userData?.createdAt?.let { formatUtcDateToDdMmYyyy(it) }}"
+            tvJoinedOn.text = "${getString(R.string.joined_on)} ${userData?.createdAt?.let { formatUtcDateToDdMmYyyy(it) }}"
             tvEmail.text = userData?.email
             tvCall.text = userData?.countryCode+"-"+userData?.mobile
           /*  tvCompletedOrder.text = userData?.fullName
@@ -230,7 +230,7 @@ class UserDetailFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener {
-               if(isInvalid(etAmount, "Amount")) {
+               if(isInvalid(etAmount, getString(R.string.amount))) {
                     return@setOnClickListener
                 }
                 else{
@@ -248,12 +248,12 @@ class UserDetailFragment : BaseFragment() {
     fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
         val value = et.text.toString().trim()
         if (value.isEmpty()) {
-            showToast("Please enter $fieldName")
+            showToast("${getString(R.string.please_enter)} $fieldName")
             return true
         }
         val num = value.toIntOrNull() ?: 0
         if (num <= 0) {
-            showToast("$fieldName should be greater than 0")
+            showToast("$fieldName ${getString(R.string.should_be_greater_than_zero)}")
             return true
         }
         return false

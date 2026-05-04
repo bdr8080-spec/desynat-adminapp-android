@@ -11,7 +11,7 @@
         android:id="@+id/noSeller"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No New Request Found"
+        android:text="@string/no_new_request_found"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

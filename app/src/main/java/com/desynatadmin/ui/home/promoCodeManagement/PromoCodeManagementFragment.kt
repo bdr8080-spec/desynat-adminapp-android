@@ -101,7 +101,7 @@ class PromoCodeManagementFragment : BaseFragment() {
             }
 
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Promocode Management"
+            toolbar.tvToolbar.text = getString(R.string.promocode_management)
             promoCodeList.clear()
             promoCodeAdapter = PromoCodeAdapter(requireActivity(),promoCodeList,object : PromoCodeAdapter.PromoCodeClick{
                 override fun onPromoCodeClick(position: Int) {

@@ -73,7 +73,7 @@ class ReasonManagementFragment : BaseFragment() {
 
         binding?.apply {
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Reason Management"
+            toolbar.tvToolbar.text = getString(R.string.reason_management)
             var actionAccess : Boolean = true
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){
@@ -264,7 +264,8 @@ class ReasonManagementFragment : BaseFragment() {
 
         viewModel.addReasonResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
-                CommonMethod.showSuccessDialog(requireActivity(),"Reason added successfully"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.reason_added_successfully)){
                     getAllReason(loading = false)
                 }
                 isObserver = false
@@ -470,7 +471,7 @@ class ReasonManagementFragment : BaseFragment() {
             if(isEdit){
                 etEnglishReason.setText(reasonList[selectedPos].reasonEnglish)
                 etArabicReason.setText(reasonList[selectedPos].reasonArabic)
-                btnSubmit.text = "Update"
+                btnSubmit.text = getString(R.string.update)
             }
 
             tvToolbar.setOnClickListener {
@@ -479,10 +480,10 @@ class ReasonManagementFragment : BaseFragment() {
 
             btnSubmit.setOnClickListener {
                 if(etEnglishReason.text?.isEmpty() == true){
-                    showToast("Please enter reason in english")
+                    showToast(getString(R.string.please_enter_reason_in_english))
                 }
                 else if(etArabicReason.text?.isEmpty() == true){
-                    showToast("Please enter reason in arabic")
+                    showToast(getString(R.string.please_enter_reason_in_arabic))
                 }
                 else{
                     if(isEdit){

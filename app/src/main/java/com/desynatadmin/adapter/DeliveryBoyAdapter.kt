@@ -38,7 +38,7 @@ class DeliveryBoyAdapter(var context:Context, var deliveryBoyList: ArrayList<Get
                 ivSwitch.isClickable = actionAccess
             }
                 tvName.text = deliveryBoyData.fullNameEnglish
-                tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(deliveryBoyData.createdAt)}"
+                tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(deliveryBoyData.createdAt)}"
                 tvEmail.text = deliveryBoyData.email
                 tvCall.text = deliveryBoyData.countryCode+"-"+deliveryBoyData.mobile
                 Glide.with(ivProfileImage).load(deliveryBoyData.profilePic).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)

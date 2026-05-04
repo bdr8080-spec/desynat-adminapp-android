@@ -96,7 +96,7 @@ class SubAdminDetailFragment : BaseFragment() {
             btnDelete.setOnClickListener {
                 CommonMethod.deleteAlertDialog(
                     requireActivity(),
-                    "Are you sure you want to delete the sub-admin?"
+                    getString(R.string.are_you_sure_you_want_to_delete_the_sub_admin)
                 ) { action ->
                     when (action) {
                         CommonMethod.DialogAction.DELETE -> {
@@ -194,12 +194,12 @@ class SubAdminDetailFragment : BaseFragment() {
     fun updateStatus() {
         binding?.apply {
             if(subAdminData?.status=="1"){
-                tvSwitch.text = "Active"
+                tvSwitch.text = getString(R.string.active)
                 tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
             }
             else{
-                tvSwitch.text = "Inactive"
+                tvSwitch.text = getString(R.string.inactive)
                 tvSwitch.setTextColor(Color.parseColor("#D53B36"))
              //   tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)

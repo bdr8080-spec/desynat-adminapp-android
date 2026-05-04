@@ -63,7 +63,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvJoinedOn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:fontFamily="@font/poppins_regular"
@@ -71,7 +71,6 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_9sdp"
         app:layout_constraintBottom_toBottomOf="@id/viewDivider"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/viewDivider"
         app:layout_constraintTop_toTopOf="@id/viewDivider" />
 
@@ -140,7 +139,7 @@
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
         android:paddingVertical="@dimen/_8sdp"
-        android:text="Reject"
+        android:text="@string/reject"
         android:textColor="#714829"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toStartOf="@id/btnAccept"
@@ -156,7 +155,7 @@
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
         android:paddingVertical="@dimen/_8sdp"
-        android:text="Accept"
+        android:text="@string/accept"
         android:textColor="#FAFAFA"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintBottom_toBottomOf="@id/btnReject"

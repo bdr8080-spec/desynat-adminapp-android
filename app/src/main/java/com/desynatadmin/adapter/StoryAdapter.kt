@@ -86,11 +86,11 @@ class StoryAdapter(
 
             when (story.status) {
                 1 -> {
-                    tvStatus.text = "Active"
+                    tvStatus.text = context.getString(R.string.active)
                     tvStatus.setTextColor(Color.parseColor("#68CA44"))
                 }
                 else -> {
-                    tvStatus.text = "Expired"
+                    tvStatus.text = context.getString(R.string.expired)
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                 }
             }

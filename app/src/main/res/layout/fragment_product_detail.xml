@@ -40,7 +40,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewPager"/>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,16 +50,19 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvBrandName"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
                     android:text=""
                    android:maxLines="2"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/tvSwitch"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvSwitch"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSwitch"
@@ -68,15 +71,16 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_15sdp"
                     android:paddingVertical="@dimen/_10sdp"
-                    android:text="Active"
+                    android:text="@string/active"
                     android:textColor="#1A900D"
                     android:fontFamily="@font/poppins_regular"
                     android:drawablePadding="@dimen/_5sdp"
                     android:drawableEnd="@drawable/switch_on"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvBrand"
@@ -102,8 +106,9 @@
                 android:text="Levis Men Cotton Shirt"
                 android:textColor="@color/brown"
                 android:textSize="@dimen/_11sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tvBrand"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvBrand" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -115,8 +120,9 @@
                 android:text="Abayas (women)"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tvBrand"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvName" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
@@ -207,25 +213,26 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:text="inclusive of all taxes"
+                android:text="@string/inclusive_of_all_taxes"
                 android:textColor="#16B364"
                 android:textSize="@dimen/_11sdp"
-                app:layout_constraintStart_toStartOf="@+id/tvBrand"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDiscountedPrice" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvAdded"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_15sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:singleLine="true"
-                android:text="Added on"
+                android:text="@string/added_on"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                app:layout_constraintStart_toStartOf="@+id/tvBrand"
+                android:layout_marginStart="@dimen/_15sdp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvInclusiveTax" />
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvAddedOn"
@@ -243,14 +250,16 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvMoreColor"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="More Color"
+                android:text="@string/more_color"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@+id/tvBrand"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAdded" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -270,14 +279,16 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSize"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Available Size"
+                android:text="@string/available_size"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@+id/tvBrand"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvColor" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -302,7 +313,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Size Guide"
+                android:text="@string/size_guide"
                 android:textColor="#714829"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -324,7 +335,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Bust"
+                    android:text="@string/bust"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -347,7 +358,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Waist"
+                    android:text="@string/waist"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
@@ -371,7 +382,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Hip"
+                    android:text="@string/hip"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
@@ -395,7 +406,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Shoulder"
+                    android:text="@string/shoulder"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
@@ -419,7 +430,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Sleeve length "
+                    android:text="@string/sleeve_length"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
@@ -443,7 +454,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Length"
+                    android:text="@string/length"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
@@ -479,7 +490,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Total Stocks"
+                    android:text="@string/total_stocks"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -502,7 +513,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="SKU"
+                    android:text="@string/sku"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
@@ -527,7 +538,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="SKU Threshold value"
+                    android:text="@string/sku_threshold_value"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
@@ -564,7 +575,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Description"
+                    android:text="@string/description"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -588,7 +599,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Specification"
+                    android:text="@string/specification"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_10sdp"
@@ -624,7 +635,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Min. cart quantity "
+                android:text="@string/min_cart_quantity"
                 android:textColor="#CC000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -647,7 +658,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Max. cart quantity"
+                android:text="@string/max_cart_quantity"
                 android:layout_marginTop="@dimen/_3sdp"
                 android:textColor="#CC000000"
                 android:textSize="@dimen/_10sdp"
@@ -683,7 +694,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Return allowed ?"
+                    android:text="@string/return_allowed"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -706,7 +717,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Exchange allowed ?"
+                    android:text="@string/exchange_allowed"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_10sdp"
@@ -718,7 +729,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="No"
+                    android:text="@string/no"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -730,7 +741,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Review &amp; ratings allowed ? "
+                    android:text="@string/review_and_ratings_allowed"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_10sdp"
@@ -742,7 +753,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Yes"
+                    android:text="@string/yes"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -754,7 +765,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Is it an Affiliated Product?"
+                    android:text="@string/is_it_an_affiliated_product"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_10sdp"
@@ -766,7 +777,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="No"
+                    android:text="@string/no"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -778,7 +789,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Is this a Customized product?"
+                    android:text="@string/is_this_a_customized_product"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_10sdp"
@@ -790,7 +801,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="No"
+                    android:text="@string/no"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -802,7 +813,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Ready to ship?"
+                    android:text="@string/ready_to_ship"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_10sdp"
@@ -814,7 +825,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Yes"
+                    android:text="@string/yes"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -826,7 +837,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Cash on delivery allowed?"
+                    android:text="@string/cash_on_delivery_allowed"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_10sdp"
@@ -838,7 +849,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Yes"
+                    android:text="@string/yes"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -859,14 +870,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSellerDetail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Seller Detail"
+                android:text="@string/seller_detail"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivProfileImage"
@@ -916,6 +928,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                 app:layout_constraintTop_toBottomOf="@id/tvStoreName" />
 

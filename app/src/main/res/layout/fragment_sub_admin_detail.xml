@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/_15sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Detail"
+        android:text="@string/detail"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
         android:textAlignment="center"
@@ -40,11 +40,10 @@
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/_10sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Share Credential"
+        android:text="@string/share_credential"
         android:drawableEnd="@drawable/share_credential"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
-        android:textAlignment="center"
         android:paddingEnd="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:drawablePadding="@dimen/_2sdp"
@@ -171,6 +170,7 @@
             android:text="+948225555"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintEnd_toStartOf="@+id/tvPasswordValue"
             app:layout_constraintStart_toStartOf="@+id/tvName"
             app:layout_constraintTop_toBottomOf="@id/tvPost" />
@@ -186,7 +186,7 @@
             android:paddingBottom="@dimen/_5sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:paddingStart="@dimen/_5sdp"
-            android:text="Active"
+            android:text="@string/active"
             android:textColor="#1A900D"
             android:textSize="@dimen/_9sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -204,7 +204,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:text="Country"
+            android:text="@string/country"
             android:textColor="#80000000"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintStart_toStartOf="parent"
@@ -240,7 +240,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Access Module"
+        android:text="@string/access_module"
         android:singleLine="true"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp" />
@@ -275,7 +275,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_30sdp"
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="@color/red"
         android:layout_marginTop="@dimen/_20sdp" />
 
@@ -289,6 +289,6 @@
         android:layout_marginEnd="@dimen/_15sdp"
         style="@style/button"
         android:background="@drawable/btn_background"
-        android:text="Edit" />
+        android:text="@string/edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

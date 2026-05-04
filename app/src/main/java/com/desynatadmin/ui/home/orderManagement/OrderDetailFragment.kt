@@ -104,7 +104,7 @@ class OrderDetailFragment : BaseFragment() {
             when(type){
                 2->{
                     if(orderDetailData?.returnReason!=null){
-                        tvStatus.text ="Return"
+                        tvStatus.text = getString(R.string.return_text)
                         btnAssignDriver.isVisible = false
                         tvCancelReason.isVisible = true
                         tvCancellationReason.isVisible = true
@@ -120,8 +120,8 @@ class OrderDetailFragment : BaseFragment() {
                         ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                         ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                         ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
-                        tvPicked.text = "Picked"
-                        tvDeliveredText.text = "Return"
+                        tvPicked.text = getString(R.string.picked)
+                        tvDeliveredText.text = getString(R.string.return_text)
                         if (orderDetailData?.returnReason!=null){
                             tvCancellationReason.text = orderDetailData?.returnReason
                         }
@@ -135,7 +135,7 @@ class OrderDetailFragment : BaseFragment() {
 
                     }
                     else if(orderDetailData?.exchangeReason!=null){
-                        tvStatus.text ="Exchange"
+                        tvStatus.text = getString(R.string.exchange)
                         btnAssignDriver.isVisible = false
                         tvCancelReason.isVisible = true
                         tvCancellationReason.isVisible = true
@@ -154,12 +154,12 @@ class OrderDetailFragment : BaseFragment() {
                         ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                         ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                         ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
-                        tvPicked.text = "Picked"
-                        tvDeliveredText.text = "Exchange"
+                        tvPicked.text = getString(R.string.picked)
+                        tvDeliveredText.text = getString(R.string.exchange)
                     }
                 }
                 3->{
-                    tvStatus.text ="Delivered"
+                    tvStatus.text = getString(R.string.delivered)
                     btnAssignDriver.isVisible = false
                     tvCancelReason.isVisible = false
                     tvCancellationReason.isVisible = false
@@ -203,7 +203,7 @@ class OrderDetailFragment : BaseFragment() {
                     }
                 }
                 4->{
-                    tvStatus.text ="Cancelled"
+                    tvStatus.text =getString(R.string.cancelled)
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))
                     tvCancelReason.isVisible = true
                     tvCancellationReason.isVisible = true
@@ -217,7 +217,7 @@ class OrderDetailFragment : BaseFragment() {
                     clBilling.isVisible = false
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivDelivered.setImageResource(R.drawable.ic_cancelled)
-                    tvDeliveredText.text = "Cancelled"
+                    tvDeliveredText.text = getString(R.string.cancelled)
                     tvDeliveredText.setTextColor(Color.parseColor("#D72E04"))
                     ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                         crossfade(true)
@@ -247,7 +247,7 @@ class OrderDetailFragment : BaseFragment() {
                 else ->{
                     when(orderDetailData?.deliveryStatus){
                         "1"->{
-                            tvStatus.text ="Active"
+                            tvStatus.text =getString(R.string.active)
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
                             llComplete.isVisible = false
@@ -276,7 +276,7 @@ class OrderDetailFragment : BaseFragment() {
                         }
 
                         "2"->{
-                            tvStatus.text ="Active"
+                            tvStatus.text =getString(R.string.active)
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
                             llComplete.isVisible = false
@@ -303,7 +303,7 @@ class OrderDetailFragment : BaseFragment() {
                         }
 
                         "2.1"->{
-                            tvStatus.text ="Active"
+                            tvStatus.text =getString(R.string.active)
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
                             llComplete.isVisible = false
@@ -330,7 +330,7 @@ class OrderDetailFragment : BaseFragment() {
                         }
 
                         "6"->{
-                            tvStatus.text ="Active"
+                            tvStatus.text = getString(R.string.active)
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
                             llComplete.isVisible = false
@@ -348,7 +348,7 @@ class OrderDetailFragment : BaseFragment() {
                         }
 
                         "4"->{
-                            tvStatus.text ="Cancelled"
+                            tvStatus.text = getString(R.string.cancelled)
                             tvStatus.setTextColor(Color.parseColor("#EB2525"))
                             tvCancelReason.isVisible = true
                             tvCancellationReason.isVisible = true
@@ -361,7 +361,7 @@ class OrderDetailFragment : BaseFragment() {
                             clOrderStatus.isVisible = false
                             clBilling.isVisible = false
                             ivDelivered.setImageResource(R.drawable.ic_cancelled)
-                            tvDeliveredText.text = "Cancelled"
+                            tvDeliveredText.text = getString(R.string.cancelled)
                             tvDeliveredText.setTextColor(Color.parseColor("#D72E04"))
                             ivDriver.load(orderDetailData?.driverDetails?.profilePic){
                                 crossfade(true)
@@ -387,7 +387,7 @@ class OrderDetailFragment : BaseFragment() {
                             }
                         }
                         "8"->{
-                            tvStatus.text ="Not Delivered"
+                            tvStatus.text = getString(R.string.not_delivered)
                             tvStatus.setTextColor(Color.parseColor("#EB2525"))
                             tvCancelReason.isVisible = true
                             tvCancellationReason.isVisible = true
@@ -405,11 +405,11 @@ class OrderDetailFragment : BaseFragment() {
                         "3"->{
 
                             if (orderDetailData?.rEApprove=="1"){
-                                tvStatus.text ="Delivered"
+                                tvStatus.text =getString(R.string.delivered)
                                 btnAssignDriver.isVisible = true
                             }
                             else if(orderDetailData?.returnType=="1"){
-                                tvStatus.text ="Return Req"
+                                tvStatus.text = getString(R.string.return_req)
                                 btnAssignDriver.isVisible = false
                                 tvCancelReason.isVisible = false
                                 tvCancellationReason.isVisible = false
@@ -427,7 +427,7 @@ class OrderDetailFragment : BaseFragment() {
                             }
 
                             else if(orderDetailData?.returnType=="2"){
-                                tvStatus.text ="Exchange"
+                                tvStatus.text =getString(R.string.exchange)
                                 btnAssignDriver.isVisible = false
                                 tvCancelReason.isVisible = false
                                 tvCancellationReason.isVisible = false
@@ -442,10 +442,10 @@ class OrderDetailFragment : BaseFragment() {
                                 ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                                 ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                                 ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
-                                tvPicked.text = "Picked"
-                                tvDeliveredText.text = "Exchange"
+                                tvPicked.text = getString(R.string.picked)
+                                tvDeliveredText.text = getString(R.string.exchange)
                             }
-                            tvStatus.text ="Delivered"
+                            tvStatus.text =getString(R.string.delivered)
                             btnAssignDriver.isVisible = false
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
@@ -486,7 +486,7 @@ class OrderDetailFragment : BaseFragment() {
                             }
                         }
                         "7"->{
-                            tvStatus.text ="On the way"
+                            tvStatus.text =getString(R.string.on_the_way)
                             btnAssignDriver.isVisible = false
                             clDriver.isVisible = true
                             ivDriver.load(orderDetailData?.driverDetails?.profilePic){
@@ -500,11 +500,11 @@ class OrderDetailFragment : BaseFragment() {
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
 
-                            tvPicked.text = "Picked"
+                            tvPicked.text = getString(R.string.picked)
                         }
 
                         "9"->{
-                            tvStatus.text ="Exchange"
+                            tvStatus.text =getString(R.string.exchange)
                             btnAssignDriver.isVisible = false
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
@@ -519,12 +519,12 @@ class OrderDetailFragment : BaseFragment() {
                             ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
-                            tvPicked.text = "Picked"
-                            tvDeliveredText.text = "Exchange"
+                            tvPicked.text = getString(R.string.picked)
+                            tvDeliveredText.text = getString(R.string.exchange)
                         }
 
                         "5"->{
-                            tvStatus.text ="Return"
+                            tvStatus.text =getString(R.string.return_text)
                             btnAssignDriver.isVisible = false
                             tvCancelReason.isVisible = false
                             tvCancellationReason.isVisible = false
@@ -548,7 +548,7 @@ class OrderDetailFragment : BaseFragment() {
 
             tvOrderIdValue.text = "#${orderDetailData?.id}"
             tvDateTime.text = CommonMethod.customizeChangeDateFormat(orderDetailData?.createdAt.toString(), outputFormat = "dd/MM/yy 'at' hh:mm a")
-            tvOrderTypeValue.text =  if (orderDetailData?.order?.orderType=="1") "Normal Order" else "Custom Order"
+            tvOrderTypeValue.text =  if (orderDetailData?.order?.orderType=="1") getString(R.string.normal_orders) else getString(R.string.custom_order)
             tvCustomerName.text = orderDetailData?.order?.deliveryDetails?.name
             tvSellerName.text = orderDetailData?.productDetails?.sellerDetails?.firstName+" "+orderDetailData?.productDetails?.sellerDetails?.lastName
             tvCountryValue.text = orderDetailData?.order?.deliveryDetails?.countryName
@@ -575,12 +575,12 @@ class OrderDetailFragment : BaseFragment() {
                 "2"->{
                     tvPaymentMethod.isVisible = true
                     tvPaymentMethodValue.isVisible = true
-                    tvPaymentMethodValue.text = "Wallet"
+                    tvPaymentMethodValue.text = getString(R.string.wallet)
                 }
                 "3"->{
                     tvPaymentMethod.isVisible = true
                     tvPaymentMethodValue.isVisible = true
-                    tvPaymentMethodValue.text = "COD"
+                    tvPaymentMethodValue.text = getString(R.string.cod)
                 }
             }
         }
@@ -639,7 +639,7 @@ class OrderDetailFragment : BaseFragment() {
             if (isAssignObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 dialogDriver?.dismiss()
-                CommonMethod.showSuccessDialog(requireActivity(),"Driver assigned successfully"){
+                CommonMethod.showSuccessDialog(requireActivity(),getString(R.string.driver_assigned_successfully)){
                     getOrderDetail(orderDetailData?.id.toString())
                 }
                 isAssignObserver = false

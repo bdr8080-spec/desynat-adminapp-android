@@ -106,12 +106,12 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
         if (SingleTonDataPass.isEdit == true) {
             binding?.etZonaNameEn?.setText(SingleTonDataPass.enName)
             binding?.etZonaNameAr?.setText(SingleTonDataPass.arName)
-            binding?.tvToolbar?.text = "Edit Zone"
+            binding?.tvToolbar?.text = getString(R.string.edit_zone)
         } else if (SingleTonDataPass.isView == true) {
             binding?.etSearch?.visibility = View.INVISIBLE
             binding?.btnReset?.visibility = View.INVISIBLE
             binding?.clLayout?.visibility = View.INVISIBLE
-            binding?.tvToolbar?.text = "View"
+            binding?.tvToolbar?.text = getString(R.string.view)
         }
         binding?.rvLocation?.adapter = locationSearchAdapter
     }
@@ -150,7 +150,7 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
                     )
                 }
             } else {
-                requireContext().showToast("Draw a polygon first")
+                requireContext().showToast(getString(R.string.draw_a_polygon_first))
             }
         }
 
@@ -181,12 +181,12 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
         }
 
         viewModel.getUpdateZone.observe(viewLifecycleOwner) {
-            showToast("Updated successfully")
+            showToast(getString(R.string.updated_successfully))
             navController.popBackStack()
         }
 
         viewModel.getAddZoneData.observe(viewLifecycleOwner) {
-            showToast("Zone added successfully")
+            showToast(getString(R.string.zone_added_successfully))
             navController.popBackStack()
         }
 

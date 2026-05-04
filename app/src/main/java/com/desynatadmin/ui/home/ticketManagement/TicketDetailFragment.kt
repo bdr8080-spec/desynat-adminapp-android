@@ -131,10 +131,10 @@ class TicketDetailFragment : BaseFragment() {
             tvTitleValue.text = ticketData?.title
 
             when(ticketData?.senderType){
-                1-> tvSubmittedBy.text = "Customer"
-                2-> tvSubmittedBy.text = "Seller"
-                3-> tvSubmittedBy.text = "Affiliate"
-                4-> tvSubmittedBy.text = "Driver"
+                1-> tvSubmittedBy.text = getString(R.string.customer)
+                2-> tvSubmittedBy.text = getString(R.string.seller)
+                3-> tvSubmittedBy.text = getString(R.string.affiliate)
+                4-> tvSubmittedBy.text = getString(R.string.driver)
             }
             tvRequestByName.text = ticketData?.senderDetails?.fullName
             tvTicketIdValue.text = ticketData?.ticketId
@@ -158,7 +158,7 @@ class TicketDetailFragment : BaseFragment() {
                     btnUpdateStatus.isVisible = true
                     tvStatusDropDown.isVisible = true
                     tvStatus.isVisible = true
-                    tvStatusValue.text = "In Progress"
+                    tvStatusValue.text = getString(R.string.in_progress)
                     tvStatusValue.setTextColor(Color.parseColor("#D72E04"))
 
                 }
@@ -166,7 +166,7 @@ class TicketDetailFragment : BaseFragment() {
                     btnUpdateStatus.isVisible = true
                     tvStatusDropDown.isVisible = true
                     tvStatus.isVisible = true
-                    tvStatusValue.text = "Resolved"
+                    tvStatusValue.text = getString(R.string.resolved)
                     tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                 }
             }

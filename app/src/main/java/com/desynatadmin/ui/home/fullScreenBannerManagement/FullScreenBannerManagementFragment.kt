@@ -534,12 +534,12 @@ class FullScreenBannerManagementFragment : BaseFragment() {
         dialogBinding.apply {
 
             if (type==2){
-                tvType.text = "Banner Position"
+                tvType.text = getString(R.string.banner_position)
                 etCountry.isVisible = false
                 tvCountry.isVisible = false
-                rbBoth.text = "Home Top"
-                rbApp.text = "Bottom"
-                rbWeb.text = "Category"
+                rbBoth.text = getString(R.string.home_top)
+                rbApp.text = getString(R.string.bottom)
+                rbWeb.text = getString(R.string.category)
 
                 when (selectedBannerType1) {
                     "top" -> rbBoth.isChecked = true
@@ -555,10 +555,10 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                 }
             }
             else{
-                tvType.text = "Type"
-                rbBoth.text = "Both"
-                rbApp.text = "App Banner"
-                rbWeb.text = "Web Banner"
+                tvType.text = getString(R.string.type)
+                rbBoth.text = getString(R.string.both)
+                rbApp.text = getString(R.string.app_banner)
+                rbWeb.text = getString(R.string.web_banner)
                 when (selectedBannerType) {
                     "both" -> rbBoth.isChecked = true
                     "app" -> rbApp.isChecked = true

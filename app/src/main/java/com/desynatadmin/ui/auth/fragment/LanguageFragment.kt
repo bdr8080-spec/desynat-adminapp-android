@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.auth.fragment
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.databinding.FragmentLanguageBinding
+import com.desynatadmin.ui.auth.AuthActivity
+import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -80,7 +84,13 @@ class LanguageFragment : BaseFragment() {
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
-                    findNavController().navigate(R.id.action_language_to_signinFragment)
+                    CommonMethod.setLocale(requireActivity(), Constants.language)
+                    val intent = Intent(requireActivity(), AuthActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.putExtra("from","language")
+                    startActivity(intent)
+                    requireActivity().finish()
+                 //   findNavController().navigate(R.id.action_language_to_signinFragment)
                 }
             }
 

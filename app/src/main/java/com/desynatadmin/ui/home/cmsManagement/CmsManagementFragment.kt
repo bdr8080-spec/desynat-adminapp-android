@@ -78,7 +78,7 @@ class CmsManagementFragment : BaseFragment() {
                 ivEnglish.isVisible = actionAccess
                 ivArabic.isVisible = actionAccess
             }
-            toolbar.tvToolbar.text = "CMS"
+            toolbar.tvToolbar.text = getString(R.string.cms)
             getTermsAndCondition()
 
             when(userType){
@@ -402,7 +402,7 @@ class CmsManagementFragment : BaseFragment() {
         dialogBinding?.apply {
 
             CommonMethod.applyArabicOnlyFilter(etArabicDescription)
-            CommonMethod.applyEnglishOnlyFilter(etEnglishDescription)
+          //  CommonMethod.applyEnglishOnlyFilter(etEnglishDescription)
          //   CommonMethod.removeSpace(etEnglishDescription)
 
             if (isArabic){
@@ -420,41 +420,41 @@ class CmsManagementFragment : BaseFragment() {
 
             when (optionType) {
                 1 -> {
-                    tvToolbar.text = "Terms & Conditions"
-                    tvTitleEnglish.text = "Terms & Conditions"
-                    tvTitleArabic.text = "Terms & Conditions"
+                    tvToolbar.text = getString(R.string.terms_and_conditions)
+                    tvTitleEnglish.text =  getString(R.string.terms_and_conditions)
+                    tvTitleArabic.text =  getString(R.string.terms_and_conditions)
                     etEnglishDescription.setText(CommonMethod.setHtmlText(termsAndConditionResponse?.contentEnglish.toString()))
                     etArabicDescription.setText(CommonMethod.setHtmlText(termsAndConditionResponse?.contentArabic.toString()))
                 }
 
                 2 -> {
-                    tvToolbar.text = "About Us"
-                    tvTitleEnglish.text = "About Us"
-                    tvTitleArabic.text = "About Us"
+                    tvToolbar.text =  getString(R.string.about_us)
+                    tvTitleEnglish.text = getString(R.string.about_us)
+                    tvTitleArabic.text = getString(R.string.about_us)
                     etEnglishDescription.setText(CommonMethod.setHtmlText(aboutUsResponse?.contentEnglish.toString()))
                     etArabicDescription.setText(CommonMethod.setHtmlText(aboutUsResponse?.contentArabic.toString()))
                 }
 
                 3 -> {
-                    tvToolbar.text = "Cancellation Policy"
-                    tvTitleEnglish.text = "Cancellation Policy"
-                    tvTitleArabic.text = "Cancellation Policy"
+                    tvToolbar.text = getString(R.string.cancellation_policy)
+                    tvTitleEnglish.text = getString(R.string.cancellation_policy)
+                    tvTitleArabic.text = getString(R.string.cancellation_policy)
                     etEnglishDescription.setText(CommonMethod.setHtmlText(cancellationPolicyResponse?.contentEnglish.toString()))
                     etArabicDescription.setText(CommonMethod.setHtmlText(cancellationPolicyResponse?.contentArabic.toString()))
                 }
 
                 4 -> {
-                    tvToolbar.text = "Return Policy"
-                    tvTitleEnglish.text = "Return Policy"
-                    tvTitleArabic.text = "Return Policy"
+                    tvToolbar.text = getString(R.string.return_policy)
+                    tvTitleEnglish.text = getString(R.string.return_policy)
+                    tvTitleArabic.text = getString(R.string.return_policy)
                     etEnglishDescription.setText(CommonMethod.setHtmlText(returnPolicyResponse?.contentEnglish.toString()))
                     etArabicDescription.setText(CommonMethod.setHtmlText(returnPolicyResponse?.contentArabic.toString()))
                 }
 
                 5 -> {
-                    tvToolbar.text = "Exchange Policy"
-                    tvTitleEnglish.text = "Exchange Policy"
-                    tvTitleArabic.text = "Exchange Policy"
+                    tvToolbar.text = getString(R.string.exchange_policy)
+                    tvTitleEnglish.text = getString(R.string.exchange_policy)
+                    tvTitleArabic.text = getString(R.string.exchange_policy)
                     etEnglishDescription.setText(CommonMethod.setHtmlText(exchangePolicyResponse?.contentEnglish.toString()))
                     etArabicDescription.setText(CommonMethod.setHtmlText(exchangePolicyResponse?.contentArabic.toString()))
                 }
@@ -466,9 +466,9 @@ class CmsManagementFragment : BaseFragment() {
 
             btnSave.setOnClickListener {
                 if (etEnglishDescription.text?.trim().toString().isEmpty() && !isArabic) {
-                    showToast("Please enter content")
+                    showToast(getString(R.string.please_enter_content))
                 } else if (etArabicDescription.text?.trim().toString().isEmpty() && isArabic) {
-                    showToast("Please enter content")
+                    showToast(getString(R.string.please_enter_content))
                 } else {
                     when(optionType){
                         1->{
@@ -615,7 +615,7 @@ class CmsManagementFragment : BaseFragment() {
         binding?.apply {
             when (optionType) {
                 1 -> {
-                    tvSelect.text = "Terms & Conditions"
+                    tvSelect.text = getString(R.string.terms_and_conditions)
 
                     tvEnglishTerms.text =
                         CommonMethod.setHtmlText(termsAndConditionResponse?.contentEnglish.toString())
@@ -624,7 +624,7 @@ class CmsManagementFragment : BaseFragment() {
                 }
 
                 2 -> {
-                    tvSelect.text = "About Us"
+                    tvSelect.text = getString(R.string.about_us)
                     tvEnglishTerms.text =
                         CommonMethod.setHtmlText(aboutUsResponse?.contentEnglish.toString())
                     tvArabicTerms.text =
@@ -632,7 +632,7 @@ class CmsManagementFragment : BaseFragment() {
                 }
 
                 3 -> {
-                    tvSelect.text = "Cancellation Policy"
+                    tvSelect.text = getString(R.string.cancellation_policy)
                     tvEnglishTerms.text =
                         CommonMethod.setHtmlText(cancellationPolicyResponse?.contentEnglish.toString())
                     tvArabicTerms.text =
@@ -640,7 +640,7 @@ class CmsManagementFragment : BaseFragment() {
                 }
 
                 4 -> {
-                    tvSelect.text = "Return Policy"
+                    tvSelect.text = getString(R.string.return_policy)
                     tvEnglishTerms.text =
                         CommonMethod.setHtmlText(returnPolicyResponse?.contentEnglish.toString())
                     tvArabicTerms.text =
@@ -648,7 +648,7 @@ class CmsManagementFragment : BaseFragment() {
                 }
 
                 5 -> {
-                    tvSelect.text = "Exchange Policy"
+                    tvSelect.text = getString(R.string.exchange_policy)
                     tvEnglishTerms.text =
                         CommonMethod.setHtmlText(exchangePolicyResponse?.contentEnglish.toString())
                     tvArabicTerms.text =

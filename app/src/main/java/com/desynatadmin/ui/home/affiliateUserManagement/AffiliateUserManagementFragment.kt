@@ -84,7 +84,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Affiliate User Management"
+            toolbar.tvToolbar.text = getString(R.string.affiliate_user_management)
 
             userList.clear()
             affiliateUserAdapter = AffiliateUserAdapter(requireActivity(),userList,object : AffiliateUserAdapter.AffiliateUserClick{
@@ -297,7 +297,8 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 affiliateUserAdapter?.notifyItemRemoved(selectedPos)
                 affiliateUserAdapter?.notifyItemRangeChanged(selectedPos, userList.size)
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Approved Successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.affiliate_user_approved_successfully)){
 
                 }
                 selectedPos = -1
@@ -312,7 +313,8 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 affiliateUserAdapter?.notifyItemRemoved(selectedPos)
                 affiliateUserAdapter?.notifyItemRangeChanged(selectedPos, userList.size)
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),"Affiliate User Rejected Successfully!"){
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.affiliate_user_rejected_successfully)){
 
                 }
                 selectedPos = -1
@@ -593,9 +595,9 @@ class AffiliateUserManagementFragment : BaseFragment() {
     private fun checkData(){
         binding?.tvNoDataFound?.isVisible = userList.isEmpty()
         if (lastQuery!=null){
-            binding?.tvNoDataFound?.text = "No result found"
+            binding?.tvNoDataFound?.text = getString(R.string.no_result_found)
         }else{
-            binding?.tvNoDataFound?.text = "No data found"
+            binding?.tvNoDataFound?.text = getString(R.string.no_data_found)
         }
 
       /*  if (userList.isNotEmpty()){
@@ -750,23 +752,23 @@ class AffiliateUserManagementFragment : BaseFragment() {
             }
 
             rbComplete.setOnClickListener {
-                rejectionType = "complete"
+                rejectionType = getString(R.string.complete)
                 rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
                 rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
             }
 
             rbReject.setOnClickListener {
-                rejectionType = "document"
+                rejectionType = getString(R.string.document)
                 rbComplete.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_unselected,0,0,0)
                 rbReject.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
             }
 
             btnAccept.setOnClickListener {
                 if(rejectionType=="") {
-                    showToast("Please select reason type")
+                    showToast(getString(R.string.please_select_reason_type))
                 }
                 else if(etReason.text?.trim().toString().isEmpty()) {
-                    showToast("Please enter reason")
+                    showToast(getString(R.string.please_enter_reason))
                 }
                 else{
                     rejectAffiliateUser(etReason.text?.trim().toString(),rejectionType)

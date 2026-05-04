@@ -64,7 +64,7 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAf
 
                 tvName.text = userData.fullName
                 tvLocation.text = userData.countryDetails?.name
-                tvJoinedOn.text = "Joined at ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
+                tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
                 tvEmail.text = userData.email
                 tvCall.text = userData.countryCode+"-"+userData.mobile
                 Glide.with(ivProfileImage).load(userData.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)

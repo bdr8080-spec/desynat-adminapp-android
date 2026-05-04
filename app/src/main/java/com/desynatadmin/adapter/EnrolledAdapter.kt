@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemEnrolledSellerBinding
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
 
@@ -16,10 +17,11 @@ class EnrolledAdapter(var context:Context, var enrolledList: ArrayList<GetDealDe
             tvCountry.text =  enrolledData?.sellerDetails?.countryDetails?.name
             val count = enrolledData.productCount ?: 0
             tvTotalProductAdded.text = if (count == 1) {
-                "$count Product"
+                "$count ${context.getString(R.string.product)}"
             } else {
-                "$count Products"
+                "$count ${context.getString(R.string.products)}"
             }
+            tvTotalSoldAdded.text = "0 ${context.getString(R.string.products)}"
             root.setOnClickListener {
                 clickOnItem.onClickItem(position)
             }

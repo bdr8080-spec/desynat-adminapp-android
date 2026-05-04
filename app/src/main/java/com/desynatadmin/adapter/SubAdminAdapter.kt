@@ -20,7 +20,7 @@ class SubAdminAdapter(var context:Context, var adminList: ArrayList<GetSubAdminR
             tvName.text = adminData.fullName
 
             tvLocation.text = adminData.countryInfo.name
-            tvJoinedOn.text = "Added on ${formatUtcDateToDdMmYyyy(adminData.createdAt)}"
+            tvJoinedOn.text = "${context.getString(R.string.added_on)} ${formatUtcDateToDdMmYyyy(adminData.createdAt)}"
             tvEmail.text = adminData.email
             tvCall.text = adminData.countryCode+"-"+adminData.mobile
             Glide.with(context).load(adminData.profilePic).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)

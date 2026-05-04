@@ -73,7 +73,7 @@ class DealsDetailFragment : BaseFragment() {
                 btnDelete.isVisible = actionAccess
                 tvSwitch.isClickable = actionAccess
             }
-            toolbar.tvToolbar.text = "Details"
+            toolbar.tvToolbar.text = getString(R.string.details)
 
             if (dealType==2){
                 relStatus.isVisible = false
@@ -150,10 +150,10 @@ class DealsDetailFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 dealData?.status = response.data.status
                 if (response.data.status==1){
-                    showToast("Deal Activated Successfully")
+                    showToast(getString(R.string.deal_activated_successfully))
                 }
                 else{
-                    showToast("Deal Deactivated Successfully")
+                    showToast(getString(R.string.deal_deactivated_successfully))
 
                 }
                 updateStatus()
@@ -165,7 +165,8 @@ class DealsDetailFragment : BaseFragment() {
         viewModel.deleteDealResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Deal delete successfully"){
+                CommonMethod.showSuccessDialog(requireContext(),
+                    getString(R.string.deal_delete_successfully)){
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -185,12 +186,12 @@ class DealsDetailFragment : BaseFragment() {
     private fun updateStatus() {
         binding?.apply {
                 if(dealData?.status==1){
-                    tvSwitch.text = "Active"
+                    tvSwitch.text = getString(R.string.active)
                     tvSwitch.setTextColor(Color.parseColor("#1A900D"))
                     tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_on, 0)
                 }
                 else{
-                    tvSwitch.text = "Inactive"
+                    tvSwitch.text = getString(R.string.inactive)
                     tvSwitch.setTextColor(Color.parseColor("#666666"))
                     tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.switch_off, 0)
 

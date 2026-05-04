@@ -54,7 +54,7 @@ class NewAdapter(var context: Context,var list: List<NewSellerResponse.Data.Data
                 .transform(CircleCrop()).placeholder(R.drawable.ic_user)
                 .into(ivProfileImage)
             tvEmail.text = item.email
-            tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"
+            tvJoinedOn.text = "${context.getString(R.string.joined_on)} ${formatUtcDateToDdMmYyyy(item.store_info.updated_at)}"
             root.setOnClickListener {
                     click.onCLick(position)
                 }
