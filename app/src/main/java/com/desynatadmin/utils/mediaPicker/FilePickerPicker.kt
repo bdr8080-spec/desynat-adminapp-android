@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.desynatadmin.R
 import java.io.File
 
 class FilePickerPicker(
@@ -27,9 +28,10 @@ class FilePickerPicker(
         if (alertDialog?.isShowing == true) {
             return
         }
-        val options =  arrayOf("Camera", "Gallery", "PDF File")
+        val options =  arrayOf(context.getString(R.string.camera),
+            context.getString(R.string.gallery), context.getString(R.string.pdf_file))
         alertDialog = AlertDialog.Builder(context)
-            .setTitle("Select Document Source")
+            .setTitle(context.getString(R.string.select_document_source))
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> checkCameraPermissionAndOpen()

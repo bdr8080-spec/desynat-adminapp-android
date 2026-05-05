@@ -82,7 +82,7 @@ class AdminProfileDetailFragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "Profile Details"
+            toolbar.tvToolbar.text = getString(R.string.profile_details)
 
             CommonMethod.removeSpace(etFullName)
             CommonMethod.removeAllTextSpaces(etEmail)

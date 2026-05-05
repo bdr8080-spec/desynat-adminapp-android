@@ -16,13 +16,12 @@
         android:background="@drawable/card_stroke_background"
         android:backgroundTint="@color/white">
 
-
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etCountry"
             style="@style/edit_text"
             android:paddingVertical="@dimen/_9sdp"
             android:drawablePadding="@dimen/_5sdp"
-            android:hint="Select Country"
+            android:hint="@string/select_country"
             android:editable="false"
             android:clickable="true"
             android:focusable="false"

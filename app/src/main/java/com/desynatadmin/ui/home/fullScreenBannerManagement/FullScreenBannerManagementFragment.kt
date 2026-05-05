@@ -28,6 +28,7 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScree
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
@@ -94,7 +95,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
         binding?.apply {
             ProgressDialogUtils.getInstance().hideProgress()
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "Banner Management"
+            toolbar.tvToolbar.text = getString(R.string.banner_management)
 
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){

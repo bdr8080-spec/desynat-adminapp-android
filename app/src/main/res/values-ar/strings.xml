@@ -2,7 +2,9 @@
 <resources>
     <!-- language -->
     <string name="arabic">العربية</string>
-    <string name="english">English</string>
+    <string name="english_lang">English</string>
+    <string name="english">الإنجليزية</string>
+
     <string name="please_select_language">يرجى اختيار اللغة</string>
     <string name="select_language">اختر اللغة</string>
     <string name="choose_the_language_and_continue_to_get_the_experience_the_app_in_your_preferred_language">اختر اللغة وتابع لاستخدام التطبيق بلغتك المفضلة.</string>
@@ -833,4 +835,39 @@
     <string name="total_users_registered">إجمالي المستخدمين المسجلين</string>
     <string name="from_date_hint">من  //  //</string>
     <string name="to_date_hint">إلى  //  //</string>
+    <string name="please_select_start_date_first">يرجى تحديد تاريخ البدء أولاً</string>
+    <string name="order_delivered">تم توصيل الطلب</string>
+    <string name="top">الأعلى</string>
+    <string name="question">سؤال</string>
+    <string name="enter_question">أدخل السؤال</string>
+    <string name="answer">إجابة</string>
+    <string name="enter_answer">أدخل الإجابة</string>
+    <string name="brand">العلامة التجارية</string>
+    <string name="filter_by_date">تصفية حسب التاريخ</string>
+    <string name="add_new_city">إضافة مدينة جديدة</string>
+    <string name="select_city">اختر المدينة</string>
+    <string name="all_cities_are_already_added">تمت إضافة جميع المدن بالفعل</string>
+
+    <string name="please_select_city">يرجى اختيار المدينة</string>
+    <string name="zone_deleted_successfully">تم حذف المنطقة بنجاح!</string>
+    <string name="city_unblock_successfully">تم إلغاء حظر المدينة بنجاح</string>
+    <string name="city_block_successfully">تم حظر المدينة بنجاح</string>
+    <string name="city_deleted_successfully">تم حذف المدينة بنجاح!</string>
+    <string name="city_added_successfully">تمت إضافة المدينة بنجاح</string>
+    <string name="delivery_charge_added_successfully">تمت إضافة رسوم التوصيل بنجاح</string>
+    <string name="please_enter_range">يرجى إدخال النطاق</string>
+    <string name="permission_required_to_access_images_and_videos">مطلوب إذن للوصول إلى الصور ومقاطع الفيديو</string>
+    <string name="video_compression_cancelled">تم إلغاء ضغط الفيديو</string>
+    <string name="video_compression_failed">فشل ضغط الفيديو</string>
+    <string name="thumbnail_not_found">لم يتم العثور على الصورة المصغرة</string>
+    <string name="file_not_found">لم يتم العثور على الملف</string>
+    <string name="please_enter_message">يرجى إدخال الرسالة</string>
+    <string name="select_document_source">اختر مصدر المستند</string>
+    <string name="camera">الكاميرا</string>
+    <string name="gallery">المعرض</string>
+    <string name="pdf_file">ملف PDF</string>
+    <string name="select_image_source">اختر مصدر الصورة</string>
+    <string name="camera_photo">صورة من الكاميرا</string>
+    <string name="record_video">تسجيل فيديو</string>
+    <string name="profile_details">تفاصيل الحساب</string>
 </resources>

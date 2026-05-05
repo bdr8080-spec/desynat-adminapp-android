@@ -64,6 +64,15 @@ class HomeActivity : BaseActivity() {
 
         CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
 
+
+        binding?.apply {
+            drawerBinding = DrawerLayoutBinding.bind(
+                binding!!.navigationView.findViewById(R.id.drawerRoot)
+            )
+            setUpDrawerContent()
+        }
+
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         controller = navHostFragment.navController
         val navGraph = controller.navInflater.inflate(R.navigation.home_navigation_graph)
@@ -123,16 +132,6 @@ class HomeActivity : BaseActivity() {
                 }
             }
         }
-
-        binding?.apply {
-          //  drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
-            drawerBinding = DrawerLayoutBinding.bind(
-                binding!!.navigationView.findViewById(R.id.drawerRoot)
-            )
-            setUpDrawerContent()
-        }
-
-
 
     }
 
@@ -213,10 +212,10 @@ override fun onBackPressed() {
     }
 }
     fun setDrawerData(user: LoginResponse.Data?) {
-        drawerBinding.tvName.text = user?.fullName
-        drawerBinding.tvEmail.text = user?.email
+        drawerBinding?.tvName?.text = user?.fullName
+        drawerBinding?.tvEmail?.text = user?.email
 
-        Glide.with(this).load(user?.profilePic).placeholder(R.drawable.ic_user).into(drawerBinding.ivProfileImage)
+        drawerBinding?.ivProfileImage?.let { Glide.with(this).load(user?.profilePic).placeholder(R.drawable.ic_user).into(it) }
 
     }
 

@@ -1,5 +1,6 @@
 package com.desynatadmin.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.desynatadmin.databinding.RejectedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class RejectedAdapter(var list : List<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
+class RejectedAdapter(var context: Context, var list : List<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: RejectedItemBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
@@ -26,7 +27,7 @@ class RejectedAdapter(var list : List<RejectedListResponse.Data.Data>, val click
                 .transform(CircleCrop()).placeholder(R.drawable.ic_user)
                 .into(ivProfileImage)
             RejectionDescription.text = item.reject_reason
-            tvJoinedOn.text = "Joined on ${formatUtcDateToDdMmYyyy(item?.updated_at.toString())}"
+            tvJoinedOn.text = "${context.getString(R.string.joined_on)} ${formatUtcDateToDdMmYyyy(item?.created_at.toString())}"
 
         }
         }

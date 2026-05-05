@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/_15sdp"
@@ -15,7 +16,7 @@
         android:background="@drawable/bottomsheet_bg"
         android:backgroundTint="#FFF7EA"
         android:fontFamily="@font/poppins_medium"
-        android:text="Filter"
+        android:text="@string/filter"
         android:textColor="@color/black"
         android:drawableEnd="@drawable/close_icon"
         android:textSize="@dimen/_13sdp"
@@ -25,14 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/tvToolbar">
+        app:layout_constraintTop_toBottomOf="@+id/tvToolbar"
+        tools:layout_editor_absoluteX="25dp">
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvType"
             style="@style/edit_text_title"
             android:layout_marginTop="16sp"
-            android:text="Type"
+            android:text="@string/type"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,49 +51,49 @@
                 android:id="@+id/rbBoth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Both"
                 android:layout_weight="1"
-                android:textColor="@color/black"
-                android:paddingVertical="@dimen/_6sdp"
                 android:button="@drawable/selector_radio_icon"
-                android:paddingStart="@dimen/_5sdp"
                 android:checked="false"
-                app:buttonTint="@null"
                 android:drawableTint="@null"
                 android:fontFamily="@font/poppins_medium"
-                android:textSize="@dimen/_11sdp"/>
+                android:paddingVertical="@dimen/_6sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:text="@string/both"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                app:buttonTint="@null" />
 
             <RadioButton
                 android:id="@+id/rbApp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="App Banner"
                 android:layout_weight="1"
-                android:textColor="@color/black"
-                android:paddingVertical="@dimen/_6sdp"
                 android:button="@drawable/selector_radio_icon"
-                android:paddingStart="@dimen/_5sdp"
                 android:checked="false"
-                app:buttonTint="@null"
                 android:drawableTint="@null"
                 android:fontFamily="@font/poppins_medium"
-                android:textSize="@dimen/_11sdp"/>
+                android:paddingVertical="@dimen/_6sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:text="@string/app_banner"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                app:buttonTint="@null" />
 
             <RadioButton
                 android:id="@+id/rbWeb"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Web Banner"
-                android:textColor="@color/black"
-                android:paddingVertical="@dimen/_6sdp"
                 android:button="@drawable/selector_radio_icon"
-                android:paddingStart="@dimen/_5sdp"
                 android:checked="false"
-                app:buttonTint="@null"
                 android:drawableTint="@null"
                 android:fontFamily="@font/poppins_medium"
-                android:textSize="@dimen/_11sdp" />
+                android:paddingVertical="@dimen/_6sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:text="@string/web_banner"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                app:buttonTint="@null" />
 
         </RadioGroup>
 
@@ -99,7 +101,7 @@
             android:id="@+id/tvCountry"
             style="@style/edit_text_title"
             android:layout_marginTop="16sp"
-            android:text="Choose Country"
+            android:text="@string/choose_country"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rgType" />
@@ -114,27 +116,27 @@
             android:drawablePadding="@dimen/_5sdp"
             android:editable="false"
             android:focusable="false"
-            android:hint="Select Country"
+            android:hint="@string/select_country"
             android:paddingVertical="@dimen/_9sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCountry" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCountry"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:layout_constraintTop_toBottomOf="@+id/etCountry"
             android:background="@drawable/btn_stroke_background"
             android:elevation="3dp"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:id="@+id/rvCountry"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@+id/etCountry" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvChooseDate"
             style="@style/edit_text_title"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Choose date"
+            android:text="@string/choose_date"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etCountry" />
@@ -179,15 +181,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
-            android:background="@drawable/button_stroke"
-            android:text="Clear"
-            android:textColor="@color/brown"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="@dimen/_12sdp"
-            android:paddingVertical="@dimen/_8sdp"
-            android:gravity="center"
             android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/button_stroke"
             android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="@string/clear"
+            android:textColor="@color/brown"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvApply"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -197,12 +199,12 @@
             android:id="@+id/tvApply"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_background"
-            android:gravity="center"
             android:layout_marginStart="@dimen/_7sdp"
-            android:text="Apply"
+            android:background="@drawable/btn_background"
             android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
             android:paddingVertical="@dimen/_8sdp"
+            android:text="@string/apply"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"

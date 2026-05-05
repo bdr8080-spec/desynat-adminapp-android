@@ -40,7 +40,7 @@
                 android:id="@+id/tvCountry"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Select Country" />
+                android:text="@string/select_country" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:visibility="gone"
@@ -48,7 +48,7 @@
                 style="@style/edit_text"
                 android:paddingVertical="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
-                android:hint="Select Country"
+                android:hint="@string/select_country"
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
@@ -72,6 +72,7 @@
                 android:clickable="true"
                 android:focusable="false"
                 android:layout_marginTop="5dp"
+                android:textAlignment="viewStart"
                 android:layout_centerVertical="true"
                 android:drawableEnd="@drawable/ic_drop_down"/>
 
@@ -191,6 +192,7 @@
                     android:hint="@string/from_date_hint"
                     android:paddingVertical="@dimen/_9sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toStartOf="@+id/etEndDate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvStartDate" />
@@ -207,6 +209,7 @@
                     android:editable="false"
                     android:focusable="false"
                     android:hint="@string/to_date_hint"
+                    android:textAlignment="viewStart"
                     android:paddingVertical="@dimen/_9sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/etStartDate"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -254,7 +257,7 @@
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
                 style="@style/button"
                 android:text="@string/submit"/>
 

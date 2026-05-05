@@ -76,6 +76,7 @@ class HomeFragment : BaseFragment() {
     override fun initView() {
 
         ProgressDialogUtils.getInstance().hideProgress()
+        binding?.mainProgressBar?.isVisible = false
         getNotificationCount()
         getProfile()
         getDashBoardData()
@@ -182,6 +183,11 @@ class HomeFragment : BaseFragment() {
 
             ivLanguage.setOnClickListener {
                 changeLanguageDialog()
+            }
+
+            btnExport.setOnClickListener {
+                val csv = CommonMethod.objectToCsv(dashboardData.toString())
+                CommonMethod.saveCsvFile(requireContext(), "dashboard_${System.currentTimeMillis()}", csv)
             }
         }
     }
@@ -435,7 +441,7 @@ private fun getProfile(){
         }
         viewModel.getHomeDashBoard(map)
         isDashboardObserver = true
-        binding?.mainProgressBar?.isVisible = true
+      //  binding?.mainProgressBar?.isVisible = true
     }
 
 }

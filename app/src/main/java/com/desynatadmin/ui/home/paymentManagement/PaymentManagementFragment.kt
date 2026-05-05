@@ -282,7 +282,24 @@ class PaymentManagementFragment : BaseFragment() {
             }
 
             btnExport.setOnClickListener {
-
+                when(type) {
+                    1 -> {
+                        val csv = CommonMethod.listToCsv(orderPaymentList)
+                        CommonMethod.saveCsvFile(requireContext(), "order_payment_${System.currentTimeMillis()}", csv)
+                    }
+                    2 -> {
+                        val csv = CommonMethod.listToCsv(planPaymentList)
+                        CommonMethod.saveCsvFile(requireContext(), "plan_payment_${System.currentTimeMillis()}", csv)
+                    }
+                    3 -> {
+                        val csv = CommonMethod.listToCsv(giftCardPaymentList)
+                        CommonMethod.saveCsvFile(requireContext(), "gift_payment_${System.currentTimeMillis()}", csv)
+                    }
+                    4 -> {
+                        val csv = CommonMethod.listToCsv(bannerPaymentList)
+                        CommonMethod.saveCsvFile(requireContext(), "banner_payment_${System.currentTimeMillis()}", csv)
+                    }
+                }
             }
 
             tvOrders.setOnClickListener {
@@ -456,7 +473,6 @@ class PaymentManagementFragment : BaseFragment() {
                 if (isFromSwipe){
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
-
                 totalRevenue = response.data.totalRevenue
                 currentPage = response.data.orders.currentPage
                 totalItem = response.data.orders.total

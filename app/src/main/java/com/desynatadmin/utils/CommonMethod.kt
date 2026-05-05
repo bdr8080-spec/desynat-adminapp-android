@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.DownloadManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -14,6 +15,7 @@ import android.os.Build
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.Html
 import android.text.InputFilter
@@ -33,6 +35,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -52,6 +55,7 @@ import com.desynatadmin.databinding.ImagePreviewListDialogBinding
 import com.desynatadmin.databinding.SuccessDialogLayoutBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.google.android.material.tabs.TabLayoutMediator
+import org.json.JSONArray
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -833,6 +837,89 @@ object CommonMethod {
             config,
             context.resources.displayMetrics
         )
+    }
+
+    fun objectToCsv(obj: Any?): String {
+        if (obj == null) return ""
+
+        val fields = obj::class.java.declaredFields
+        val csv = StringBuilder()
+
+        // Header
+        csv.append(fields.joinToString(",") { it.name }).append("\n")
+
+        // Row
+        val row = fields.joinToString(",") {
+            it.isAccessible = true
+            "\"${it.get(obj)?.toString() ?: ""}\""
+        }
+
+        csv.append(row).append("\n")
+
+        return csv.toString()
+    }
+
+    fun saveCsvFile(context: Context, fileName: String, csvData: String) {
+        val resolver = context.contentResolver
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "$fileName.csv")
+            put(MediaStore.MediaColumns.MIME_TYPE, "text/csv")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+        }
+
+        val uri = resolver.insert(
+            MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+            contentValues
+        )
+
+        if (uri != null) {
+            resolver.openOutputStream(uri)?.use { outputStream ->
+                outputStream.write(csvData.toByteArray())
+                outputStream.flush()
+            }
+
+            Toast.makeText(context, "Downloaded", Toast.LENGTH_SHORT).show()
+
+            openCsvFile(context, uri)
+        } else {
+            Toast.makeText(context, "Failed to save file", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun <T> listToCsv(list: List<T>): String {
+        if (list.isEmpty()) return ""
+
+        val fields = list[0]!!::class.java.declaredFields
+
+        val csv = StringBuilder()
+
+        // Header
+        csv.append(fields.joinToString(",") { it.name }).append("\n")
+
+        // Rows
+        list.forEach { item ->
+            val row = fields.joinToString(",") { field ->
+                field.isAccessible = true
+                "\"${field.get(item)?.toString() ?: ""}\""
+            }
+            csv.append(row).append("\n")
+        }
+
+        return csv.toString()
+    }
+
+    fun openCsvFile(context: Context, uri: Uri) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(uri, "text/csv")
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(context, "No app found to open CSV", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

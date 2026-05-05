@@ -19,7 +19,7 @@ class AccessModuleAdapter(var context:Context, var moduleList: ArrayList<GetSubA
         fun bind(position: Int) = with(binding){
             var moduleData = moduleList[position]
             tvModule.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
-            tvModule.text = moduleData?.moduleDetails?.name
+            tvModule.text = moduleData?.moduleDetails?.displayName
             rbView.setCompoundDrawablesWithIntrinsicBounds(
                 if (moduleData.canView==1) R.drawable.ic_radio_selected
                 else R.drawable.ic_radio_unselected,

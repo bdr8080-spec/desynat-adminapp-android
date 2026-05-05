@@ -58,6 +58,7 @@
                    android:maxLines="2"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     android:layout_centerVertical="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -93,6 +94,7 @@
                 android:text="Levis"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/relStatus" />
@@ -106,6 +108,7 @@
                 android:text="Levis Men Cotton Shirt"
                 android:textColor="@color/brown"
                 android:textSize="@dimen/_11sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,6 +123,7 @@
                 android:text="Abayas (women)"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,6 +149,7 @@
                 android:layout_marginStart="@dimen/_1sdp"
                 android:fontFamily="@font/poppins_light"
                 android:text="(0)"
+                android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
@@ -159,6 +164,7 @@
                 android:text="239 KD"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="@+id/tvBrand"
                 app:layout_constraintTop_toBottomOf="@id/ratingBar" />
 
@@ -171,6 +177,7 @@
                 android:text="250 KD"
                 android:textColor="#99000000"
                 android:textSize="@dimen/_11sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDiscountedPrice"
                 app:layout_constraintStart_toEndOf="@+id/tvDiscountedPrice"
                 app:layout_constraintTop_toTopOf="@+id/tvDiscountedPrice" />
@@ -204,6 +211,7 @@
                 android:text="20% off"
                 android:textColor="#E70000"
                 android:textSize="@dimen/_11sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@id/tvPrice" />
@@ -216,6 +224,7 @@
                 android:text="@string/inclusive_of_all_taxes"
                 android:textColor="#16B364"
                 android:textSize="@dimen/_11sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -256,6 +265,7 @@
                 android:text="@string/more_color"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -285,6 +295,7 @@
                 android:text="@string/available_size"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -316,6 +327,7 @@
                 android:text="@string/size_guide"
                 android:textColor="#714829"
                 android:textSize="@dimen/_10sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvSize" />
 
@@ -590,6 +602,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_2sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDes" />
@@ -900,6 +913,7 @@
                 android:text="Atfi Aslam"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                 app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
@@ -913,6 +927,7 @@
                 android:text="Alasa Collections"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                 app:layout_constraintTop_toBottomOf="@id/tvSellerName" />
@@ -927,6 +942,7 @@
                 android:text="Kuwait"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginStart="@dimen/_9sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProfileImage"

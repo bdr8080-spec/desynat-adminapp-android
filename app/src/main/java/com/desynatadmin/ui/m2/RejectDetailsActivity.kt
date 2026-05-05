@@ -10,6 +10,7 @@ import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityRejectDetailsBinding
 import com.desynatadmin.utils.SharedPreference
+import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,12 +57,12 @@ class RejectDetailsActivity : BaseActivity() {
             binding.tvStoreName.text = it?.data?.store_info?.store_name
             binding.tvMail.text = it?.data?.store_info?.store_mail_id
             binding.tvBio.text = it?.data?.store_info?.bio
-            Glide.with(this).load(it?.data?.store_info?.store_image).transform(CircleCrop()).into(binding.ivStoreImage)
+            Glide.with(this).load(it?.data?.store_info?.store_image).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivStoreImage)
             Glide.with(this).load(it?.data?.profile_pic).circleCrop().into(binding.ivProfileImage)
-            Glide.with(this).load(it?.data?.owner_document?.getOrNull(0)?.document_path).into(binding.doc1)
-            Glide.with(this).load(it?.data?.owner_document?.getOrNull(1)?.document_path).into(binding.doc2)
-            Glide.with(this).load(it?.data?.store_document?.getOrNull(0)?.document_path).into(binding.doc3)
-            Glide.with(this).load(it?.data?.store_document?.getOrNull(1)?.document_path).into(binding.doc4)
+            Glide.with(this).load(it?.data?.owner_document?.getOrNull(0)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc1)
+            Glide.with(this).load(it?.data?.owner_document?.getOrNull(1)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc2)
+            Glide.with(this).load(it?.data?.store_document?.getOrNull(0)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc3)
+            Glide.with(this).load(it?.data?.store_document?.getOrNull(1)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc4)
             binding.tvPhone.text = it?.data?.store_info?.country_code + "-" + it?.data?.store_info?.store_phone
             binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
                 "0" -> getString(R.string.personal_account)
@@ -71,7 +72,8 @@ class RejectDetailsActivity : BaseActivity() {
             binding.tvswiftbic.text = it?.data?.seller_bank_details?.swift
             binding.tvBankName.text = it?.data?.seller_bank_details?.bank_name
             binding.tvAccountHolderName.text = it?.data?.seller_bank_details?.account_holder_name
-            Glide.with(this).load(it?.data?.seller_bank_details?.upload_proof).into(binding.imAccountProof)
+            Glide.with(this).load(it?.data?.seller_bank_details?.upload_proof).placeholder(R.drawable.ic_placeholder).into(binding.imAccountProof)
+            binding.tvJoinedOn.text = "${getString(R.string.joined_on)} ${formatUtcDateToDdMmYyyy(it?.data?.created_at.toString())}"
 
         }
 

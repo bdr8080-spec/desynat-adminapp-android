@@ -7,21 +7,38 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/_30sdp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btnClose"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FFF9ED"
+        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/bottomsheet_bg"
-        android:backgroundTint="#FFF7EA"
-        android:drawableEnd="@drawable/close_icon"
-        android:padding="@dimen/_15sdp"
-        android:text="Add New City"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_13sdp"
-        android:fontFamily="@font/poppins_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/tvTitle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/add_new_city"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:id="@+id/title"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/close_icon"
+            android:id="@+id/btnClose"
+            android:padding="@dimen/_15sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCountry"
@@ -30,7 +47,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Select City"
+        android:text="@string/select_city"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +64,7 @@
         android:drawableEnd="@drawable/down_ic"
         android:gravity="center_vertical"
         android:paddingHorizontal="14dp"
-        android:text="Select city"
+        android:text="@string/select_city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCountry" />
@@ -72,7 +89,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="All cities are already added"
+        android:text="@string/all_cities_are_already_added"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         android:textAlignment="center"
@@ -90,7 +107,7 @@
         android:background="@drawable/btn1_background"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textColor="#FAFAFA"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"

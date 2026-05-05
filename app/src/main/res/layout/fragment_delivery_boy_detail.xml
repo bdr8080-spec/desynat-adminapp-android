@@ -41,10 +41,15 @@
             android:background="@drawable/card_stroke_background"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:src="@drawable/ic_db_full_name"
+               android:drawableStart="@drawable/ic_db_full_name"
+                android:drawablePadding="@dimen/_12sdp"
+                android:textColor="#FF6E4527"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_11sdp"
+                android:text="@string/full_name"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"/>
 
@@ -55,8 +60,9 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_39sdp"
+                android:layout_marginStart="@dimen/_35sdp"
                 android:text="Anwer Sheikh"/>
 
             <View
@@ -65,10 +71,16 @@
                 android:background="#33714829"
                 android:layout_marginVertical="@dimen/_5sdp"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_db_phone"
+                android:drawableStart="@drawable/ic_db_phone"
+                android:drawablePadding="@dimen/_12sdp"
+                android:textColor="#FF6E4527"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_11sdp"
+                android:text="@string/phone_number"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -78,8 +90,9 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_39sdp"
+                android:layout_marginStart="@dimen/_35sdp"
                 android:text="+48448151222"/>
 
             <View
@@ -88,10 +101,16 @@
                 android:background="#33714829"
                 android:layout_marginVertical="@dimen/_5sdp"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_db_email"
+                android:drawableStart="@drawable/ic_db_email"
+                android:drawablePadding="@dimen/_12sdp"
+                android:textColor="#FF6E4527"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_11sdp"
+                android:text="@string/email_id"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -101,6 +120,8 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_39sdp"
                 android:text="AnwerSheikh@gmail.com"/>
 
@@ -110,11 +131,18 @@
                 android:background="#33714829"
                 android:layout_marginVertical="@dimen/_5sdp"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:src="@drawable/ic_db_address"/>
+                android:drawableStart="@drawable/ic_db_address"
+                android:drawablePadding="@dimen/_12sdp"
+                android:textColor="#FF6E4527"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_11sdp"
+                android:text="@string/address"
+                android:textAlignment="viewStart"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvAddress"
@@ -123,7 +151,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
-                android:layout_marginStart="@dimen/_39sdp"
+                android:layout_marginStart="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:text="C-94, Sector 63, Kuwait"/>
 
@@ -133,11 +161,17 @@
                 android:background="#33714829"
                 android:layout_marginVertical="@dimen/_5sdp"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:src="@drawable/ic_db_zone"/>
+                android:drawableStart="@drawable/ic_db_address"
+                android:drawablePadding="@dimen/_12sdp"
+                android:textColor="#FF6E4527"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_11sdp"
+                android:text="@string/zone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvZone"
@@ -146,6 +180,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_39sdp"
                 android:text="Zone - 02"/>
@@ -156,11 +191,17 @@
                 android:background="#33714829"
                 android:layout_marginVertical="@dimen/_5sdp"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:src="@drawable/ic_db_order_delivered"/>
+                android:drawableStart="@drawable/ic_db_order_delivered"
+                android:drawablePadding="@dimen/_12sdp"
+                android:textColor="#FF6E4527"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_11sdp"
+                android:text="@string/order_delivered"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvOrderDelivered"
@@ -169,6 +210,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginStart="@dimen/_39sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:text="0"
@@ -188,12 +230,13 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Enter Vehicle Name"
+            android:hint="@string/enter_vehicle_name"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:editable="false"
             android:clickable="false"
             android:focusable="false"
+            android:textAlignment="viewStart"
             android:background="@drawable/button_stroke" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -214,6 +257,7 @@
             android:editable="false"
             android:clickable="false"
             android:focusable="false"
+            android:textAlignment="viewStart"
             android:background="@drawable/button_stroke" />
 
         <androidx.appcompat.widget.AppCompatTextView

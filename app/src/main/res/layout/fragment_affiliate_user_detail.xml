@@ -71,6 +71,7 @@
                     android:text="Alisha Khan"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                     app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
@@ -85,6 +86,7 @@
                     android:text="Kuwait"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_9sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
                     app:layout_constraintStart_toStartOf="@id/tvName"
                     app:layout_constraintTop_toBottomOf="@id/tvName" />
@@ -108,6 +110,7 @@
                     android:text="Joined on 21/02/2025"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_9sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintBottom_toBottomOf="@id/viewDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/viewDivider"
@@ -135,6 +138,7 @@
                     android:text="+965- 28392018391"
                     android:textColor="#000000"
                     android:textSize="@dimen/_9sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toStartOf="@id/tvEmail"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view1" />
@@ -149,6 +153,7 @@
                     android:text="alisha.khan@gmail.com"
                     android:textColor="#000000"
                     android:textSize="@dimen/_9sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintBottom_toBottomOf="@id/tvCall"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvCall"
@@ -178,9 +183,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Total Orders"
+                        android:text="@string/total_orders"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
+                        android:textAlignment="viewStart"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/tvTotalEarningsLabel" />
@@ -190,9 +196,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Total Earnings"
+                        android:text="@string/total_earnings"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
+                        android:textAlignment="viewStart"
                         app:layout_constraintStart_toEndOf="@id/tvTotalOrdersLabel"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tvTotalOrdersLabel" />
@@ -206,6 +213,7 @@
                         android:text="0"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
+                        android:textAlignment="viewStart"
                         app:layout_constraintStart_toStartOf="@id/tvTotalOrdersLabel"
                         app:layout_constraintTop_toBottomOf="@id/tvTotalOrdersLabel"
                         app:layout_constraintEnd_toStartOf="@id/tvTotalEarningsValue"  />
@@ -217,6 +225,7 @@
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/poppins_regular"
                         android:text="0 KD"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
                         app:layout_constraintStart_toEndOf="@id/tvTotalOrdersValue"
@@ -238,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Reason for Rejection"
+                        android:text="@string/reason_for_rejection"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -290,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="@dimen/_15sdp"
                     android:paddingVertical="@dimen/_10sdp"
-                    android:text="Active"
+                    android:text="@string/active"
                     android:textColor="#1A900D"
                     android:fontFamily="@font/poppins_medium"
                     android:layout_centerVertical="true"/>
@@ -341,6 +350,7 @@
                 android:textSize="@dimen/_11sdp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivLoc"
                 app:layout_constraintTop_toBottomOf="@id/tvAddressLabel" />
@@ -355,6 +365,7 @@
                 android:text="@string/documents"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAddress" />
@@ -434,6 +445,7 @@
                     android:text="@string/bank_details"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -448,6 +460,7 @@
                     android:text="@string/account_type"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvBankDetailsLabel" />
@@ -462,6 +475,7 @@
                     android:text="@string/personal"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAccountTypeLabe" />
@@ -475,6 +489,7 @@
                     android:text="@string/iban"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAccountType" />
@@ -488,6 +503,7 @@
                     android:text="KW2837289202937393937"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvIbanLabe" />
@@ -501,6 +517,7 @@
                     android:text="@string/swift_bic"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvIban" />
@@ -514,6 +531,7 @@
                     android:text="76687698696546367"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvswiftbicLabe" />
@@ -527,6 +545,7 @@
                     android:text="@string/bank_name"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvswiftbic" />
@@ -540,6 +559,7 @@
                     android:text="SBI bank"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvBankNameLabe" />
@@ -553,6 +573,7 @@
                     android:text="@string/account_holder_name"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvBankName" />
@@ -566,6 +587,7 @@
                     android:text="Rohan "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAccountHolderNameLabe" />
@@ -579,6 +601,7 @@
                     android:text="@string/account_number"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAccountHolderName" />
@@ -592,6 +615,7 @@
                     android:text="Rohan "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAccountNumberLabel" />
@@ -606,6 +630,7 @@
                     android:text="@string/proof_of_account"
                     android:textColor="#99000000"
                     android:textSize="@dimen/_11sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAccountNumber" />

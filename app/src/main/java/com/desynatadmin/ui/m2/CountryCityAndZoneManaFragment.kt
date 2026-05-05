@@ -316,7 +316,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
                         sheetBinding.submitBtn.setOnClickListener {
                             if (cityId.isNullOrEmpty()) {
-                                showToast("Please select city")
+                                showToast(getString(R.string.please_select_city))
                             } else {
                                 val map = HashMap<String, Any>()
                                 map["city_id"] = cityId
@@ -423,7 +423,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
 
         viewModel.getUpdateZoneStatus.observe(viewLifecycleOwner) {
-            showToast("Updated successfully")
+            showToast(getString(R.string.updated_successfully))
             hitZoneList()
         }
 
@@ -470,7 +470,8 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         }
 
         viewModel.getDeleteZone.observe(viewLifecycleOwner) {
-            CommonMethod.showSuccessDialog(requireContext(), "Zone Deleted successfully!")
+            CommonMethod.showSuccessDialog(requireContext(),
+                getString(R.string.zone_deleted_successfully))
             hitZoneList()
         }
 
@@ -506,16 +507,17 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
         viewModel.getChangeCityStatus.observe(viewLifecycleOwner) { response ->
             ProgressDialogUtils.getInstance().hideProgress()
             if (response?.data?.status == 0) {
-                showToast("City Unblock successfully")
+                showToast(getString(R.string.city_unblock_successfully))
             } else {
-                showToast("City block successfully")
+                showToast(getString(R.string.city_block_successfully))
             }
             hitServiceApi()
         }
 
         viewModel.getDeleteCity.observe(viewLifecycleOwner) { response ->
             ProgressDialogUtils.getInstance().hideProgress()
-            CommonMethod.showSuccessDialog(requireContext(), "City Deleted successfully!")
+            CommonMethod.showSuccessDialog(requireContext(),
+                getString(R.string.city_deleted_successfully))
             hitServiceApi()
             viewModel.hitCity(
                 SharedPreference.get(requireContext()).accessToken,
@@ -525,7 +527,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
         viewModel.getAddServiceCity.observe(viewLifecycleOwner) { response ->
             ProgressDialogUtils.getInstance().hideProgress()
-            showToast("City Added successfully")
+            showToast(getString(R.string.city_added_successfully))
             hitServiceApi()
             viewModel.hitCity(
                 SharedPreference.get(requireContext()).accessToken,

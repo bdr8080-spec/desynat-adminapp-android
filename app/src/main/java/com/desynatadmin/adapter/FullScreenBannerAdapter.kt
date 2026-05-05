@@ -27,18 +27,18 @@ class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<Get
                 tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 Glide.with(context).load(bannerData?.image).placeholder(R.drawable.ic_placeholder).into(ivBanner)
-                tvTypeValue.text = if (bannerData?.type=="2") "Web Banner" else "App Banner"
+                tvTypeValue.text = if (bannerData?.type=="2") context.getString(R.string.web_banner) else context.getString(R.string.app_banner)
                 when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
                     "Upcoming"->{
-                        tvStatusValue.text = "Upcoming"
+                        tvStatusValue.text = context.getString(R.string.upcoming)
                         tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
                     }
                     "Active" ->{
-                        tvStatusValue.text = "Active"
+                        tvStatusValue.text = context.getString(R.string.active)
                         tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
                     }
                     "Expired"->{
-                        tvStatusValue.text = "Expired"
+                        tvStatusValue.text = context.getString(R.string.expired)
                         tvStatusValue.setTextColor(Color.parseColor("#D53B36"))
                     }
                 }

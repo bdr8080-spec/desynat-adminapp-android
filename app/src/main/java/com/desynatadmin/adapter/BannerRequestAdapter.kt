@@ -42,15 +42,15 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
                 tvTotalAmountValue.text = "${CommonMethod.formatAmount(bannerRequestData?.price?:"")} KD"
                 when(bannerRequestData?.bannerPosition) {
                     "1" -> {
-                        tvBannerPositionValue.text = "Home Top"
+                        tvBannerPositionValue.text = context.getString(R.string.home_top)
                     }
 
                     "2" -> {
-                        tvBannerPositionValue.text = "Home Bottom"
+                        tvBannerPositionValue.text = context.getString(R.string.home_bottom)
                     }
 
                     "3" -> {
-                        tvBannerPositionValue.text = "Sub-Category"
+                        tvBannerPositionValue.text = context.getString(R.string.sub_category)
                     }
                 }
 
@@ -108,8 +108,8 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
                         tvPaymentStatus.isVisible = false
                         tvPaymentStatusValue.isVisible = false
                         //   tvDuration.text = "Bank Acc no."
-                        tvTotalAmount.text = "Total Amount"
-                        tvPaymentStatus.text = "Requested Amount"
+                        tvTotalAmount.text = context.getString(R.string.total_amount)
+                        tvPaymentStatus.text = context.getString(R.string.requested_amount)
                         tvDurationValue.text = bannerRequestData?.sellerDetails?.bankInformation
 
                         tvReasonValue.text = bannerRequestData?.cancelledReason

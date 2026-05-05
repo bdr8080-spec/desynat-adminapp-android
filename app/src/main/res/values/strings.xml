@@ -8,6 +8,7 @@
 
     //language
     <string name="arabic">Arabic</string>
+    <string name="english_lang">English</string>
     <string name="english">English</string>
     <string name="please_select_language">Please select language</string>
     <string name="select_language">Select language</string>
@@ -839,5 +840,38 @@
     <string name="from_date_hint">From  //  //</string>
     <string name="to_date_hint">To  //  //</string>
     <string name="please_select_start_date_first">Please select start date first</string>
+    <string name="order_delivered">Order Delivered</string>
+    <string name="top">Top</string>
+    <string name="question">Question</string>
+    <string name="enter_question">Enter Question</string>
+    <string name="answer">Answer</string>
+    <string name="enter_answer">Enter Answer</string>
+    <string name="brand">Brand</string>
+    <string name="filter_by_date">Filter by Date</string>
+    <string name="add_new_city">Add New City</string>
+    <string name="select_city">Select City</string>
+    <string name="all_cities_are_already_added">All cities are already added</string>
+    <string name="please_select_city">Please select city</string>
+    <string name="zone_deleted_successfully">Zone Deleted successfully!</string>
+    <string name="city_unblock_successfully">City Unblock successfully</string>
+    <string name="city_block_successfully">City block successfully</string>
+    <string name="city_deleted_successfully">City Deleted successfully!</string>
+    <string name="city_added_successfully">City Added successfully</string>
+    <string name="delivery_charge_added_successfully">"Delivery Charge Added Successfully "</string>
+    <string name="please_enter_range">"Please Enter Range "</string>
+    <string name="permission_required_to_access_images_and_videos">Permission required to access images and videos</string>
+    <string name="video_compression_cancelled">Video compression cancelled</string>
+    <string name="video_compression_failed">Video compression failed</string>
+    <string name="thumbnail_not_found">Thumbnail not found</string>
+    <string name="file_not_found">File not found</string>
+    <string name="please_enter_message">Please enter message</string>
+    <string name="select_document_source">Select Document Source</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="pdf_file">PDF File</string>
+    <string name="select_image_source">Select Image Source</string>
+    <string name="camera_photo">Camera Photo</string>
+    <string name="record_video">Record Video</string>
+    <string name="profile_details">Profile Details</string>
 
 </resources>

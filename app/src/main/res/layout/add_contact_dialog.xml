@@ -16,7 +16,7 @@
         android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="@dimen/_15sdp"
         android:paddingVertical="@dimen/_15sdp"
-        android:text="Edit Support Contact Number"
+        android:text="@string/edit_support_contact_number"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +28,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Support Contact Number"
+        android:text="@string/support_contact_number"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp" />
 
@@ -68,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:background="@null"
-                android:hint="Enter Mobile Number"
+                android:hint="@string/enter_mobile_number"
                 android:inputType="number"
                 android:maxLength="15"
                 android:paddingHorizontal="0dp"
@@ -86,7 +86,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/edit_back"
-            android:hint="Enter Email Address"
+            android:hint="@string/enter_email_address"
             android:inputType="textEmailAddress"
             android:visibility="gone" />
 
@@ -99,7 +99,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:text="Save Changes"
+        android:text="@string/save_changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

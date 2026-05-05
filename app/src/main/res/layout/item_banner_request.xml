@@ -307,7 +307,7 @@
         android:id="@+id/tvReasonValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:fontFamily="@font/poppins_regular"
         android:text="ReLorem ipsum dolor sit amet, consectetur adipisici  elit...ason"
         android:textColor="#D53B36"

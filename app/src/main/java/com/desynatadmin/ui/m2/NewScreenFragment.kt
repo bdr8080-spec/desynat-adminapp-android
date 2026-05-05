@@ -15,6 +15,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentNewScreenBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -80,6 +81,7 @@ class NewScreenFragment : BaseFragment() {
                 apiHit()
             }
         }
+
     }
 
     override fun observe() {
@@ -192,6 +194,11 @@ class NewScreenFragment : BaseFragment() {
             binding?.newRecycler?.isVisible = true
         }
         (binding?.newRecycler?.adapter as NewAdapter).notifyDataSetChanged()
+    }
+
+    fun exportData(){
+        val csv = CommonMethod.listToCsv(list)
+        CommonMethod.saveCsvFile(requireContext(), "new_seller_${System.currentTimeMillis()}", csv)
     }
 
 }

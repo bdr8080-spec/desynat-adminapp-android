@@ -30,6 +30,7 @@
         android:text="Alisha Khan"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toStartOf="@+id/ivSwitch"
         app:layout_constraintStart_toEndOf="@id/ivProfileImage"
         app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
@@ -54,6 +55,7 @@
         android:text="Kuwait"
         android:textColor="@color/black"
         android:textSize="@dimen/_9sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
         app:layout_constraintStart_toStartOf="@id/tvName"
         app:layout_constraintTop_toBottomOf="@id/tvName" />
@@ -77,6 +79,7 @@
         android:text="Joined on 21/02/2025"
         android:textColor="@color/black"
         android:textSize="@dimen/_9sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="@id/viewDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/viewDivider"
@@ -104,6 +107,7 @@
         android:text="+965- 28392018391"
         android:textColor="#000000"
         android:textSize="@dimen/_9sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toStartOf="@id/tvEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view1" />
@@ -119,6 +123,7 @@
         android:maxLines="2"
         android:textColor="#000000"
         android:textSize="@dimen/_8sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="@id/tvCall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvCall"
@@ -143,6 +148,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         android:layout_marginTop="@dimen/_6sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view2"
         app:layout_constraintEnd_toStartOf="@id/tvCancelledOrderLabel" />
@@ -155,6 +161,7 @@
         android:text="@string/total_earnings"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toEndOf="@id/tvCompletedOrderLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvCompletedOrderLabel" />
@@ -168,6 +175,7 @@
         android:text="0"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="@id/tvCompletedOrderLabel"
         app:layout_constraintTop_toBottomOf="@id/tvCompletedOrderLabel"
         app:layout_constraintEnd_toStartOf="@id/tvCancelledOrder"  />
@@ -181,6 +189,7 @@
         android:text="0"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toEndOf="@id/tvCompletedOrder"
         app:layout_constraintTop_toBottomOf="@id/tvCancelledOrderLabel"
         app:layout_constraintEnd_toEndOf="@id/tvCancelledOrderLabel" />
@@ -212,6 +221,7 @@
             android:text="@string/wallet_balance"
             android:textColor="@color/black"
             android:textSize="@dimen/_9sdp"
+            android:textAlignment="viewStart"
             android:layout_marginStart="@dimen/_10sdp"
             app:layout_constraintStart_toEndOf="@+id/ivWallet"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -225,6 +235,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
             android:layout_marginStart="@dimen/_10sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintStart_toEndOf="@+id/ivWallet"
             app:layout_constraintTop_toBottomOf="@+id/tvWallet"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -240,6 +251,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
             android:paddingVertical="@dimen/_5sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

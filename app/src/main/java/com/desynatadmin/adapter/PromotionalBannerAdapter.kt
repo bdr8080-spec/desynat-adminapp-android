@@ -31,24 +31,24 @@ class PromotionalBannerAdapter(var context:Context, var bannerList: ArrayList<Ge
                 tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 Glide.with(context).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)
-            tvType.text = "Banner Position"
+            tvType.text = context.getString(R.string.banner_position)
                 tvTypeValue.text = when(bannerData?.bannerPosition){
-                    "1"-> "Home Top"
-                    "2"-> "Home Bottom"
-                    "3"-> "Category"
-                    else -> "Home Top"
+                    "1"-> context.getString(R.string.home_top)
+                    "2"-> context.getString(R.string.home_bottom)
+                    "3"-> context.getString(R.string.category)
+                    else -> context.getString(R.string.home_top)
                 }
                 when(getBannerStatus(bannerData?.startDate.toString(),bannerData?.endDate.toString())){
                     "Upcoming"->{
-                        tvStatusValue.text = "Upcoming"
+                        tvStatusValue.text = context.getString(R.string.upcoming)
                         tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
                     }
                     "Active" ->{
-                        tvStatusValue.text = "Active"
+                        tvStatusValue.text = context.getString(R.string.active)
                         tvStatusValue.setTextColor(Color.parseColor("#1A900D"))
                     }
                     "Expired"->{
-                        tvStatusValue.text = "Expired"
+                        tvStatusValue.text = context.getString(R.string.expired)
                         tvStatusValue.setTextColor(Color.parseColor("#D53B36"))
                     }
                 }

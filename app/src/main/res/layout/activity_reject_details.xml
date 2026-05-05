@@ -66,13 +66,14 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="Alisha Khan"
             android:textColor="@color/black"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProfileImage"
             app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLocation"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/location_ic"
             android:drawablePadding="5dp"
@@ -80,6 +81,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="Kuwait"
             android:textColor="@color/black"
             android:textSize="10sp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
             app:layout_constraintStart_toStartOf="@id/tvName"
             app:layout_constraintTop_toBottomOf="@id/tvName" />
@@ -103,6 +105,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="Joined on 21/02/2025"
             android:textColor="@color/black"
             android:textSize="10sp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@id/viewDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/viewDivider"
@@ -131,6 +134,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="+965- 28392018391"
             android:textColor="#000000"
             android:textSize="10sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toStartOf="@id/tvEmail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view1" />
@@ -146,6 +150,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="alisha.khan@gmail.com"
             android:textColor="#000000"
             android:textSize="10sp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@id/tvCall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvCall"
@@ -171,6 +176,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/reason_for_rejection"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view2"
@@ -184,6 +190,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="fjkjfk ddf jfkja dkfkmdkfmk dmfkmdkmfk kmdfkmksdmfka kdmfkmakmsfk kmdkfmakm kmdkam"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/RejectionHeading"
@@ -200,6 +207,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
         android:text="@string/store_information"
         android:textColor="#000000"
         android:textSize="16sp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cl1" />
@@ -216,153 +224,163 @@ tools:context=".ui.m2.RejectDetailsActivity">
         app:layout_constraintTop_toBottomOf="@id/tvStoreInformation"
         app:shapeAppearanceOverlay="@style/circle_image" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/et_bg"
-        android:backgroundTint="#14ADADAD"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivStoreImage">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvStoreNameLabel"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/store_name"
-            android:textColor="#99000000"
-            android:textSize="14sp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/et_bg"
+            android:backgroundTint="#14ADADAD"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/ivStoreImage">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStoreNameLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/store_name"
+                android:textColor="#99000000"
+                android:textSize="14sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStoreName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Puma Store"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStoreNameLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAddressLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/address"
+                android:textColor="#99000000"
+                android:textSize="14sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStoreName" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Puma Store\n C 19, 2nd Floor, Sector 63, Moon Road, Kuwait"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAddressLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPhoneLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/phone_number"
+                android:textColor="#99000000"
+                android:textSize="14sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAddress" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="+91- 7620386210"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPhoneLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMailLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/mail_id"
+                android:textColor="#99000000"
+                android:textSize="14sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPhone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="sharma@gmail.com"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMailLabel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBioLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/bio"
+                android:textColor="#99000000"
+                android:textSize="14sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMail" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor elit."
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBioLabel" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvStoreName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Puma Store"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStoreNameLabel" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvAddressLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/address"
-            android:textColor="#99000000"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStoreName" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Puma Store\n C 19, 2nd Floor, Sector 63, Moon Road, Kuwait"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAddressLabel" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPhoneLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/phone_number"
-            android:textColor="#99000000"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAddress" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="+91- 7620386210"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPhoneLabel" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvMailLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/mail_id"
-            android:textColor="#99000000"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPhone" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvMail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="sharma@gmail.com"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMailLabel" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvBioLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/bio"
-            android:textColor="#99000000"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMail" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvBio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor elit."
-            android:textColor="#000000"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvBioLabel" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvOwnerDoc"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
@@ -370,6 +388,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
         android:text="@string/owner_s_documents"
         android:textColor="#000000"
         android:textSize="16sp"
+            android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cl2" />
@@ -436,6 +455,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
         android:text="@string/store_s_documents"
         android:textColor="#000000"
         android:textSize="16sp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDocument" />
@@ -515,6 +535,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/bank_details"
             android:textColor="#000000"
             android:textSize="16sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -528,6 +549,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/account_type"
             android:textColor="#99000000"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvBankDetailsLabel" />
@@ -541,6 +563,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/personal"
             android:textColor="#000000"
             android:textSize="12sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAccountTypeLabe" />
@@ -554,6 +577,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/iban"
             android:textColor="#99000000"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAccountType" />
@@ -580,6 +604,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/swift_bic"
             android:textColor="#99000000"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvIban" />
@@ -593,6 +618,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="76687698696546367"
             android:textColor="#000000"
             android:textSize="12sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvswiftbicLabe" />
@@ -606,6 +632,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/bank_name"
             android:textColor="#99000000"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvswiftbic" />
@@ -619,6 +646,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="SBI bank"
             android:textColor="#000000"
             android:textSize="12sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvBankNameLabe" />
@@ -632,6 +660,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/account_holder_name"
             android:textColor="#99000000"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvBankName" />
@@ -645,6 +674,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="Rohan "
             android:textColor="#000000"
             android:textSize="12sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAccountHolderNameLabe" />
@@ -658,6 +688,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="@string/proof_of_account"
             android:textColor="#99000000"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAccountHolderName" />
@@ -694,6 +725,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:textColor="#000000"
             android:visibility="gone"
             android:textSize="14sp"
+            android:textAlignment="viewStart"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -707,6 +739,7 @@ tools:context=".ui.m2.RejectDetailsActivity">
             android:text="NA"
             android:textColor="#000000"
             android:textSize="12sp"
+            android:textAlignment="viewStart"
             app:layout_constraintTop_toBottomOf="@id/tvPurchasedPlanLabel"
             app:layout_constraintStart_toStartOf="parent" />
 

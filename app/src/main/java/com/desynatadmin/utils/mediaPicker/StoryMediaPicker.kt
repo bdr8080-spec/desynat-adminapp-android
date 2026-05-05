@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.desynatadmin.R
 import java.io.File
 
 class StoryMediaPicker(
@@ -33,9 +34,10 @@ class StoryMediaPicker(
     private var pendingAction = PendingAction.NONE
 
     fun showCameraStoryPicker() {
-        val options = arrayOf("Camera Photo", "Record Video")
+        val options = arrayOf(context.getString(R.string.camera_photo),
+            context.getString(R.string.record_video))
         AlertDialog.Builder(context)
-            .setTitle("Add Story")
+            .setTitle(context.getString(R.string.add_story))
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> openCameraImage()

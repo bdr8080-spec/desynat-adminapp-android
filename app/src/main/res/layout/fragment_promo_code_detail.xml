@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
@@ -40,8 +40,11 @@
                 android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/tvSwitch"/>
+                android:textAlignment="viewStart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvSwitch"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSwitch"
@@ -54,10 +57,11 @@
                 android:fontFamily="@font/poppins_regular"
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableEnd="@drawable/switch_on"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFeature"
@@ -68,6 +72,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:text="Flat 20% off On minimum order 299 KD"
             android:textColor="#B2000000"
+            android:textAlignment="viewStart"
             android:textSize="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -95,6 +100,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:text="@string/promocode_description"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"/>
 
@@ -106,6 +112,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:text="Lorem ipsum dolor sit amet consectetur. Amet enim quis augue ullamcorper elit massa mi nisl. Sed enim ut sed maecenas pretium ."
             android:textColor="#B2000000"
+            android:textAlignment="viewStart"
             android:textSize="@dimen/_10sdp"/>
 
         <View
@@ -144,7 +151,7 @@
                 android:text="Kuwait"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                android:gravity="end"
+                android:textAlignment="viewEnd"
                 app:layout_constraintStart_toEndOf="@id/tvCountryTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvCountryTitle" />
@@ -170,7 +177,7 @@
                 android:text="@string/every_order"
                android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                android:gravity="end"
+                android:textAlignment="viewEnd"
                 app:layout_constraintStart_toEndOf="@id/tvApplicableFor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvApplicableFor" />
@@ -196,7 +203,7 @@
                 android:text="21/09/2025 "
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                android:gravity="end"
+                android:textAlignment="viewEnd"
                 app:layout_constraintStart_toEndOf="@id/tvStartDateTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvStartDateTitle" />
@@ -222,7 +229,7 @@
                 android:text="21/12/2025 "
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                android:gravity="end"
+                android:textAlignment="viewEnd"
                 app:layout_constraintStart_toEndOf="@id/tvEndDateTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvEndDateTitle" />

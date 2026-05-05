@@ -54,6 +54,7 @@
                     android:ellipsize="end"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tvSwitch"/>
@@ -69,6 +70,7 @@
                     android:ellipsize="end"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvPrice"
                     app:layout_constraintEnd_toStartOf="@+id/tvSwitch"

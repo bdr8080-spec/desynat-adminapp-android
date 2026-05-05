@@ -22,6 +22,7 @@ import com.desynatadmin.databinding.AddCityBottomsheetBinding
 import com.desynatadmin.databinding.FilterDialogBinding
 import com.desynatadmin.databinding.FragmentRejectedScreenBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openDatePicker
 import com.desynatadmin.utils.showToast
@@ -77,6 +78,15 @@ class SellerManagementActivity : AppCompatActivity() {
 
         binding.filter.setOnClickListener {
             filterBottomSheet()
+        }
+
+        binding?.btnExport?.setOnClickListener {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+            when (currentFragment) {
+                is NewScreenFragment -> currentFragment.exportData()
+                is ApprovedScreenFragment -> currentFragment.exportData()
+                is RejectedScreenFragment -> currentFragment.exportData()
+            }
         }
 
         binding.etSearch.addTextChangedListener(object :TextWatcher{

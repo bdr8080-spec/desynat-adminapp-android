@@ -86,7 +86,7 @@ class UserManagementFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
             CommonMethod.removeSpace(etSearch)
-            toolbar.tvToolbar.text = "User Management"
+            toolbar.tvToolbar.text = getString(R.string.user_management)
 
             userList.clear()
             userAdapter = UserAdapter(requireActivity(),userList,object : UserAdapter.UserClick{
@@ -178,6 +178,12 @@ class UserManagementFragment : BaseFragment() {
                     getAllUser(false)
                     binding?.progressBar?.isVisible = true
                 }
+            }
+
+            btnExport.setOnClickListener {
+                val csv = CommonMethod.listToCsv(userList)
+                CommonMethod.saveCsvFile(requireContext(), "user_${System.currentTimeMillis()}", csv)
+
             }
         }
     }

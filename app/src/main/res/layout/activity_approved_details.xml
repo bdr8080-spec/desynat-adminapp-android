@@ -58,30 +58,31 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
+        <TextView
             android:id="@+id/btnSellerInfo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/btn_seller_selected"
+            android:background="@drawable/selected_left_border"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/seller_info"
             android:textColor="@android:color/white"
             android:textStyle="bold"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnOtherInfo"
             />
 
-        <Button
+        <TextView
             android:id="@+id/btnOtherInfo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/btn_other_unselected"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/other_info"
             android:textColor="@android:color/black"
             android:textStyle="bold"
+            android:gravity="center"
             app:layout_constraintStart_toEndOf="@id/btnSellerInfo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -108,6 +109,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:layout_width="match_parent"
             android:layout_height="165dp"
             android:scaleType="centerCrop"
+            android:src="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +123,6 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:background="@drawable/et_bg"
             android:paddingHorizontal="10dp"
             android:paddingTop="10dp"
-            android:backgroundTint="#14ADADAD"
             android:paddingBottom="@dimen/_15sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +133,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/ic_user"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/circle_image" />
@@ -141,10 +143,11 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/poppins_medium"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                 app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
@@ -160,12 +163,13 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
 
             <TextView
                 android:id="@+id/txt"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="14dp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivProfileImage" />
@@ -179,9 +183,11 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text=""
+                android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -191,9 +197,11 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text=""
+                android:textAlignment="viewStart"
                 android:textColor="#000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvLocation" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -205,8 +213,11 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:text=""
                 android:textColor="#000000"
                 android:textSize="@dimen/_10sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCall" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -222,9 +233,9 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 style="@style/edit_text_title"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="@dimen/_15sdp"
-
-                android:text="Total Orders(14)"
+                android:text="@string/total_orders"
                 android:textSize="@dimen/_13sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -430,6 +441,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/highlights"
+            android:textAlignment="viewStart"
             android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_14sdp"
             android:textColor="@color/black"
@@ -455,6 +467,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/reel"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintTop_toBottomOf="@id/highlightsRecyclerView" />
@@ -463,10 +476,9 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:id="@+id/reelRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvReel"

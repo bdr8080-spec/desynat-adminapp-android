@@ -156,7 +156,8 @@ class RefundManagementFragment : BaseFragment() {
             }
 
             btnExport.setOnClickListener {
-
+                val csv = CommonMethod.listToCsv(refundList)
+                CommonMethod.saveCsvFile(requireContext(), "refund_${System.currentTimeMillis()}", csv)
             }
 
             ivNextArrow.setOnClickListener {

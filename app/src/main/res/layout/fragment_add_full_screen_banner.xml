@@ -48,6 +48,7 @@
                 android:hint="@string/enter_title"
                 android:inputType="text"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:textAlignment="viewStart"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -66,6 +67,7 @@
                 android:clickable="true"
                 android:focusable="false"
                 android:layout_marginTop="5dp"
+                android:textAlignment="viewStart"
                 android:layout_centerVertical="true"
                 android:drawableEnd="@drawable/ic_drop_down"/>
 
@@ -84,6 +86,7 @@
                 android:editable="false"
                 android:clickable="true"
                 android:focusable="false"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="5dp"
                 android:layout_centerVertical="true"
                 android:drawableEnd="@drawable/ic_drop_down"/>
@@ -114,6 +117,7 @@
                     android:editable="false"
                     android:focusable="false"
                     android:hint="@string/from_date_hint"
+                    android:textAlignment="viewStart"
                     android:paddingVertical="@dimen/_9sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     app:layout_constraintEnd_toStartOf="@+id/etEndDate"
@@ -132,6 +136,7 @@
                     android:editable="false"
                     android:focusable="false"
                     android:hint="@string/to_date_hint"
+                    android:textAlignment="viewStart"
                     android:paddingVertical="@dimen/_9sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/etStartDate"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -140,12 +145,11 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
                 style="@style/button"
                 android:text="@string/submit"/>
 

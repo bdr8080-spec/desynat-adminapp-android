@@ -210,6 +210,11 @@ class AffiliateUserManagementFragment : BaseFragment() {
     }
 }
 
+            btnExport.setOnClickListener {
+                val csv = CommonMethod.listToCsv(userList)
+                CommonMethod.saveCsvFile(requireContext(), "affiliate_user_${System.currentTimeMillis()}", csv)
+            }
+
 
             ivFilter.setOnClickListener {
                 userFilterDialog()

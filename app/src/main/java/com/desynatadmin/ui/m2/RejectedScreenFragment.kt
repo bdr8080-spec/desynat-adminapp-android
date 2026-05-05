@@ -14,6 +14,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentRejectedScreenBinding
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,7 +53,7 @@ class RejectedScreenFragment : BaseFragment() {
         binding?.apply {
 
             rejectedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            rejectedAdapter =  RejectedAdapter(list, object : RejectedAdapter.OnClick {
+            rejectedAdapter =  RejectedAdapter(requireActivity(),list, object : RejectedAdapter.OnClick {
                 override fun onClick(position: Int) {
                     startActivity(
                         Intent(requireContext(), RejectDetailsActivity::class.java)
@@ -164,5 +165,9 @@ class RejectedScreenFragment : BaseFragment() {
         (binding?.rejectedRecyclerView?.adapter as RejectedAdapter).notifyDataSetChanged()
     }
 
+    fun exportData(){
+        val csv = CommonMethod.listToCsv(list)
+        CommonMethod.saveCsvFile(requireContext(), "rejected_seller_${System.currentTimeMillis()}", csv)
+    }
 
 }

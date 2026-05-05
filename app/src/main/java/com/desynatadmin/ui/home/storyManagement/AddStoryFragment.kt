@@ -236,7 +236,7 @@ class AddStoryFragment : BaseFragment() {
         val file = CommonMethod.uriToFileForStory(requireActivity(), uri)
 
         if (file == null || !file.exists()) {
-            showToast("File not found")
+            showToast(getString(R.string.file_not_found))
             return
         }
 
@@ -432,7 +432,7 @@ class AddStoryFragment : BaseFragment() {
             if (imageGranted || videoGranted || storageGranted) {
                 loadGalleryMedia()
             } else {
-                showToast("Permission required to access images and videos")
+                showToast(getString(R.string.permission_required_to_access_images_and_videos))
             }
         }
 
@@ -511,14 +511,14 @@ class AddStoryFragment : BaseFragment() {
                 override fun onTranscodeCanceled() {
                     requireActivity().runOnUiThread {
                         ProgressDialogUtils.getInstance().hideProgress()
-                        showToast("Video compression cancelled")
+                        showToast(getString(R.string.video_compression_cancelled))
                     }
                 }
 
                 override fun onTranscodeFailed(exception: Throwable) {
                     requireActivity().runOnUiThread {
                         ProgressDialogUtils.getInstance().hideProgress()
-                        showToast("Video compression failed")
+                        showToast(getString(R.string.video_compression_failed))
                     }
                     exception.printStackTrace()
                 }
@@ -529,7 +529,7 @@ class AddStoryFragment : BaseFragment() {
     private fun uploadThumbnailApi(file: File?) {
         file?.exists()?.let {
             if (!it) {
-                showToast("Thumbnail not found")
+                showToast(getString(R.string.thumbnail_not_found))
                 return
             }
         }

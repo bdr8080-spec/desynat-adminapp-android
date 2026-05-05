@@ -45,6 +45,7 @@
         android:layout_marginTop="6dp"
         android:background="@drawable/dropdwn_bg"
         android:drawableEnd="@drawable/down_ic"
+        android:drawablePadding="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:paddingHorizontal="14dp"
         android:textSize="@dimen/_11sdp"

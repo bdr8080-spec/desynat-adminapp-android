@@ -15,6 +15,7 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentApprovedScreenBinding
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -198,6 +199,11 @@ class ApprovedScreenFragment : BaseFragment() {
         }
 
         approvedAdapter?.notifyDataSetChanged()
+    }
+
+    fun exportData(){
+        val csv = CommonMethod.listToCsv(list)
+        CommonMethod.saveCsvFile(requireContext(), "approved_seller_${System.currentTimeMillis()}", csv)
     }
 
 }

@@ -35,7 +35,7 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select All"
+            android:text="@string/select_all"
             android:layout_marginStart="@dimen/_8sdp"
             android:fontFamily="@font/poppins_medium"
             android:textColor="#1C1C1C"
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_10sdp"
             style="@style/button"
-            android:text="Done"
+            android:text="@string/done"
             android:padding="@dimen/_8sdp"/>
 
     </LinearLayout>

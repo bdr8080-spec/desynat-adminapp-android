@@ -159,13 +159,13 @@ class NewDetailActivity : BaseActivity() {
             binding.tvAccountHolderName.text = it.data.seller_bank_details.account_holder_name
             binding.tvJoinedOn.text = "${getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(it.data.updated_at)}"
 
-            Glide.with(this).load(it.data.store_info.store_image).transform(CircleCrop()).into(binding.ivStoreImage)
+            Glide.with(this).load(it.data.store_info.store_image).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivStoreImage)
             Glide.with(this).load(it.data.profile_pic).transform(CircleCrop()).into(binding.ivProfileImage)
-            Glide.with(this).load(it.data.owner_document.get(0).document_path).into(binding.doc1)
-            Glide.with(this).load(it.data.owner_document.get(1).document_path).into(binding.doc2)
-            Glide.with(this).load(it.data.store_document.get(0).document_path).into(binding.doc3)
-            Glide.with(this).load(it.data.store_document.get(1).document_path).into(binding.doc4)
-            Glide.with(this).load(it.data.seller_bank_details.upload_proof).into(binding.imAccountProof)
+            Glide.with(this).load(it.data.owner_document.get(0).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc1)
+            Glide.with(this).load(it.data.owner_document.get(1).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc2)
+            Glide.with(this).load(it.data.store_document.get(0).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc3)
+            Glide.with(this).load(it.data.store_document.get(1).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc4)
+            Glide.with(this).load(it.data.seller_bank_details.upload_proof).placeholder(R.drawable.ic_placeholder).into(binding.imAccountProof)
         }
     }
 }

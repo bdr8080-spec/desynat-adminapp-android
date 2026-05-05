@@ -177,7 +177,7 @@ class ChatMessageFragment : BaseFragment() {
                 val hasImages = uploadImageList.isNotEmpty()
 
                 if (!hasText && !hasImages) {
-                    showToast("Please enter message")
+                    showToast(getString(R.string.please_enter_message))
                     return@setOnClickListener
                 }
 

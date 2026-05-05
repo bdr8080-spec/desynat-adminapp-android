@@ -39,7 +39,7 @@
                 android:paddingVertical="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
-                android:text="Top"
+                android:text="@string/top"
                 android:background="@drawable/selected_left_border"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp" />
@@ -57,7 +57,7 @@
                 android:paddingVertical="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
-                android:text="Bottom"
+                android:text="@string/bottom"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp" />
 
@@ -74,7 +74,7 @@
                 android:paddingVertical="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
-                android:text="Sub-category"
+                android:text="@string/sub_category"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp" />
 

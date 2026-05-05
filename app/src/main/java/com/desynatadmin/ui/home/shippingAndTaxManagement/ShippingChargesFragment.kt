@@ -255,7 +255,7 @@ class ShippingChargesFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 if (add) {
                     addShippingDialog?.dismiss()
-                    showToast("Delivery Charge Added Successfully ")
+                    showToast(getString(R.string.delivery_charge_added_successfully))
                     add = false
                 }
                 binding?.progressBar?.isVisible = false
@@ -573,12 +573,12 @@ private fun getDefaultShippingFee() {
 
             btnSubmit.setOnClickListener {
                 if(etFrom.text?.isEmpty() == true){
-                    showToast("Please Enter Range ")
+                    showToast(getString(R.string.please_enter_range))
                 }
                 else if(etTo.text?.isEmpty() == true){
-                    showToast("Please Enter Range ")
+                    showToast(getString(R.string.please_enter_range))
                 }
-               else if(isInvalid(etAmount, "Delivery Price")) {
+               else if(isInvalid(etAmount, getString(R.string.delivery_price))) {
                     return@setOnClickListener
                 }
                 else{

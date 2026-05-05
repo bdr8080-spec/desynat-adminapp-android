@@ -38,7 +38,7 @@
                 android:id="@+id/cbEnglish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/english"
+                android:text="@string/english_lang"
                 android:textColor="@color/black"
                 android:paddingVertical="@dimen/_12sdp"
                 android:button="@drawable/selector_radio_icon"
@@ -47,6 +47,7 @@
                 android:checked="false"
                 app:buttonTint="@null"
                 android:drawableTint="@null"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/poppins_medium"
                 android:textSize="@dimen/_12sdp"/>
 
@@ -72,6 +73,7 @@
             android:checked="false"
             app:buttonTint="@null"
             android:drawableTint="@null"
+            android:textAlignment="viewStart"
             android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_12sdp"/>
 
