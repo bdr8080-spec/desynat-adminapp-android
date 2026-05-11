@@ -30,6 +30,7 @@ import com.desynatadmin.databinding.FragmentShippingChargesBinding
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetDefaultShippingChargeResponse
 import com.desynatadmin.ui.home.shippingAndTaxManagement.response.GetShippingTaxResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -116,7 +117,7 @@ class ShippingChargesFragment : BaseFragment() {
 
     private fun setTaxData() {
         binding?.apply {
-            tvCountry.text = "${shippingTaxData?.flag}  ${shippingTaxData?.name}"
+            tvCountry.text = "${shippingTaxData?.flag}  ${if (Constants.language=="ar") shippingTaxData?.nameAr else shippingTaxData?.name}"
             tvTax.text = "${CommonMethod.formatDoubleValue(shippingTaxData?.taxInfo?.tax?.toDouble())}%"
         }
     }

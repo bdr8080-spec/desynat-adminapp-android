@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -92,6 +93,7 @@ class AddSubCategoryFragment : BaseFragment() {
                 uri?.let {
                     image = CommonMethod.uriToFile(requireActivity(), it)
                     ivSubCategory.setImageURI(it)
+                    clPlaceholder.isVisible = false
                 }
             }
         }
@@ -155,10 +157,18 @@ class AddSubCategoryFragment : BaseFragment() {
         viewModel.updateSubCategoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+
+                subCategoryData?.nameEnglish = response.data.nameEnglish
+                subCategoryData?.nameArabic = response.data.nameArabic
+                subCategoryData?.image = response.data.image
+                findNavController().previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("updatedSubCategoryData", Gson().toJson(subCategoryData))
                 CommonMethod.showSuccessDialog(requireContext(),
                     getString(R.string.sub_category_updated_successfully)){
                     findNavController().popBackStack()
                 }
+
                 isObserver = false
             }
         }
@@ -177,6 +187,7 @@ class AddSubCategoryFragment : BaseFragment() {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
+            clPlaceholder.isVisible = false
         }
 
     }

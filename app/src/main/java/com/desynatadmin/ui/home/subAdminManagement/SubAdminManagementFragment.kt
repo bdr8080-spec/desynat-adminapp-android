@@ -29,6 +29,7 @@ import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.ui.home.SubAdminHomeActivity
+import com.desynatadmin.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -564,7 +565,7 @@ class SubAdminManagementFragment : BaseFragment() {
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.text = selectedCountry.name
+                    etCountry.text = if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name
                     selectedCountryId = selectedCountry.id.toString()
                 }
             }

@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.databinding.NewItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.NewSellerResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import kotlin.math.cos
@@ -48,7 +49,7 @@ class NewAdapter(var context: Context,var list: List<NewSellerResponse.Data.Data
                 view2.isVisible = actionAccess
             }
             tvName.text = item.first_name
-            tvLocation.text = item.store_info.country_info?.name
+            tvLocation.text = if (Constants.language=="ar")item.store_info.country_info?.name_ar else item.store_info.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic)
                 .transform(CircleCrop()).placeholder(R.drawable.ic_user)

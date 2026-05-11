@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -19,6 +20,7 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddFullScree
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
@@ -105,6 +107,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
                 uri?.let {
                     image = CommonMethod.uriToFile(requireActivity(), it)
                     ivBanner.setImageURI(it)
+                    clPlaceholder.isVisible = false
                 }
             }
         }
@@ -124,7 +127,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
 
                     etCountry.setOnClickListener {
                         CommonMethod.showAllCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
-                            etCountry.setText(selectedCountry.name)
+                            etCountry.setText(if (Constants.language=="ar") selectedCountry?.nameAr else selectedCountry.name)
                             selectedCountryCode = selectedCountry.id.toString()
                         }
                     }
@@ -230,11 +233,12 @@ class AddFullScreenBannerFragment : BaseFragment() {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
+            clPlaceholder.isVisible = false
             selectedCountryCode = bannerData?.countryId.toString()
             startDate = bannerData?.startDate.toString()
             endDate = bannerData?.endDate.toString()
             if(selectedCountryCode!=null){
-                etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
+                etCountry.setText(if (Constants.language=="ar") countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.nameAr else countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
             }
             if (startDate!=null){
                 etStartDate.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")

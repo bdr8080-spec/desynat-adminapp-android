@@ -17,6 +17,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentSubAdminDetailBinding
 import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
@@ -180,7 +181,7 @@ class SubAdminDetailFragment : BaseFragment() {
         binding?.apply {
             tvName.text = subAdminData?.fullName
 
-            tvCountryValue.text = subAdminData?.countryInfo?.name
+            tvCountryValue.text = if (Constants.language=="ar") subAdminData?.countryInfo?.nameAr else subAdminData?.countryInfo?.name
             tvPost.text = subAdminData?.profilePic
             tvPasswordValue.text = subAdminData?.unhashedPassword
             tvEmail.text = subAdminData?.email

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemCheckboxBrandBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.utils.Constants
 
 class FilterBrandAdapter(var context:Context, var brandList: ArrayList<GetBrandResponse.Data.Data>, var onClick: OnClick) : RecyclerView.Adapter<FilterBrandAdapter.ViewHolder>() {
     var selectedPos = -1
@@ -31,7 +32,7 @@ class FilterBrandAdapter(var context:Context, var brandList: ArrayList<GetBrandR
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
 
-            tvBrand.text = brandList[position].nameEnglish
+            tvBrand.text = if (Constants.language=="ar") brandList[position].nameArabic else brandList[position].nameEnglish
 
             if (brandList[position].isSelected){
                 selectedPos = position

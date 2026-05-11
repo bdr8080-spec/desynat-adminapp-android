@@ -21,6 +21,7 @@ import com.desynatadmin.ui.home.promoCodeManagement.response.AddPromoCodeRequest
 import com.desynatadmin.ui.home.promoCodeManagement.response.GetPromoCodeResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
@@ -170,7 +171,7 @@ class AddPromoCodeFragment : BaseFragment() {
 
             etCountry.setOnClickListener {
                 CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
-                    etCountry.setText(selectedCountry.name)
+                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                 }
             }
@@ -286,7 +287,7 @@ class AddPromoCodeFragment : BaseFragment() {
                 rbEvery.isChecked = true
             }
             if(selectedCountryCode!=null){
-                etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
+                etCountry.setText(if (Constants.language=="ar") countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.nameAr else countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
             }
             if (startDate!=null){
                 etStartDate.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")

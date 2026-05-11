@@ -126,6 +126,8 @@ data class GetProductDetailResponse(
             val image: String,
             @SerializedName("name")
             val name: String,
+            @SerializedName("name_ar")
+            val nameAr: String,
             @SerializedName("status")
             val status: Int,
             @SerializedName("updated_at")
@@ -221,6 +223,8 @@ data class GetProductDetailResponse(
                 val id: Int,
                 @SerializedName("name")
                 val name: String,
+                @SerializedName("name_ar")
+                val nameAr: String,
                 @SerializedName("updated_at")
                 val updatedAt: String
             )
@@ -394,6 +398,8 @@ data class GetProductDetailResponse(
                 val isoCode: String,
                 @SerializedName("name")
                 val name: String,
+                @SerializedName("name_ar")
+                val nameAr: String,
                 @SerializedName("updated_at")
                 val updatedAt: String
             )

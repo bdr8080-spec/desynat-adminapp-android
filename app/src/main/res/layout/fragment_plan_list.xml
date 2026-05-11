@@ -63,6 +63,7 @@
                 android:clickable="true"
                 android:focusable="false"
                 android:layout_marginTop="5dp"
+                android:textAlignment="viewStart"
                 android:layout_centerVertical="true"
                 android:drawableEnd="@drawable/ic_drop_down"/>
 

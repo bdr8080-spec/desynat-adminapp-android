@@ -24,16 +24,68 @@
                 android:orientation="vertical"
                 android:layout_marginHorizontal="@dimen/_15sdp">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholder"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_120sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivSubCategory"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivSubCategory"
+                    app:layout_constraintStart_toStartOf="@+id/ivSubCategory"
+                    app:layout_constraintEnd_toEndOf="@+id/ivSubCategory">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholder"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholder"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholder"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/upload_image"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholder"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/ivSubCategory"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_upload_image"
                     android:background="@drawable/ic_dash"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_gravity="center_horizontal"
-                    app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"/>
+                    app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

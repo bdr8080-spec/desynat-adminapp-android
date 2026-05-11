@@ -23,6 +23,7 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.AddPromotion
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.mediaPicker.ImagePicker
@@ -123,6 +124,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                     uri?.let {
                         image = CommonMethod.uriToFile(requireActivity(), it)
                         ivBanner.setImageURI(it)
+                        clPlaceholder.isVisible = false
                     }
                 }
             }
@@ -136,7 +138,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
 
                 etCountry.setOnClickListener {
                     CommonMethod.showAllCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
-                        etCountry.setText(selectedCountry.name)
+                        etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
                         selectedCountryCode = selectedCountry.id.toString()
                     }
                 }
@@ -397,6 +399,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                     placeholder(R.drawable.ic_placeholder)
                     error(R.drawable.ic_placeholder)
                 }
+                clPlaceholder.isVisible = false
                 startDate = bannerData?.startDate.toString()
                 endDate = bannerData?.endDate.toString()
                 if (startDate!=null){

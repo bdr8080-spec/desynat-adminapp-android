@@ -25,6 +25,7 @@ import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.brandManagement.response.ServiceCityListResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.SingleTonDataPass
@@ -436,7 +437,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                 response?.data?.size?.let {
                     for (i in 0 until it){
                         if (response.data[i].name=="Kuwait"){
-                            binding?.tvDropdown?.text = response?.data?.get(i)?.name
+                            binding?.tvDropdown?.text = if (Constants.language=="ar") response?.data?.get(i)?.nameAr else response?.data?.get(i)?.name
                             countryId = response?.data?.get(i)?.id.toString()
                         }
                     }
@@ -448,7 +449,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                             cuountyVisible = false
                             binding?.countryRecycler?.isVisible = false
                             countryId = response?.data?.get(position)?.id.toString()
-                            binding?.tvDropdown?.text = response?.data?.get(position)?.name
+                            binding?.tvDropdown?.text =  if (Constants.language=="ar") response?.data?.get(position)?.nameAr else response?.data?.get(position)?.name
                             viewModel.hitCity(
                                 SharedPreference.get(requireContext()).accessToken,
                                 countryId
@@ -557,7 +558,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
 
                 for (i in 0 until countryList.size){
                     if (countryList[i].name=="Kuwait"){
-                        binding?.tvDropdown?.text = countryList?.get(i)?.name
+                        binding?.tvDropdown?.text = if (Constants.language=="ar") countryList?.get(i)?.nameAr else countryList?.get(i)?.name
                         countryId = countryList?.get(i)?.id.toString()
                     }
                 }
@@ -569,7 +570,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                         cuountyVisible = false
                         binding?.countryRecycler?.isVisible = false
                         countryId = countryList?.get(position)?.id.toString()
-                        binding?.tvDropdown?.text = countryList?.get(position)?.name
+                        binding?.tvDropdown?.text = if (Constants.language=="ar") countryList?.get(position)?.nameAr else countryList?.get(position)?.name
                         viewModel.hitCity(
                             SharedPreference.get(requireContext()).accessToken,
                             countryId

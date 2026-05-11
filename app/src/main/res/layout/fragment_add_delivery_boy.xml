@@ -23,6 +23,52 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:orientation="vertical">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPlaceholder"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"
+            app:layout_constraintStart_toStartOf="@+id/ivProfileImage"
+            app:layout_constraintEnd_toEndOf="@+id/ivProfileImage">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPlaceholder"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:clipToOutline="true"
+                android:src="@drawable/add_delivery_boy_placeholder"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tvPlaceholder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPlaceholder"
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:textColor="#875C3A"
+                android:text="@string/upload_image"
+                android:textAlignment="center"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivPlaceholder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivProfileImage"
             android:layout_width="@dimen/_100sdp"
@@ -32,7 +78,12 @@
             android:scaleType="centerCrop"
             android:clipToOutline="true"
             android:background="@drawable/brown_dash_rectangle"
-            android:src="@drawable/ic_upload_image"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -64,7 +115,8 @@
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:background="@drawable/edit_back" />
+            android:background="@drawable/edit_back"
+            android:textAlignment="viewStart"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -97,6 +149,7 @@
             android:inputType="text"
             android:singleLine="true"
             android:maxLength="40"
+            android:textAlignment="viewStart"
             android:background="@drawable/edit_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -136,6 +189,7 @@
                 android:inputType="number"
                 android:background="@null"
                 android:maxLength="15"
+                android:textAlignment="viewStart"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:paddingHorizontal="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -160,6 +214,7 @@
             android:hint="@string/enter_email_address"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="textEmailAddress"
+            android:textAlignment="viewStart"
             android:background="@drawable/edit_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -181,6 +236,7 @@
                 android:id="@+id/etAddressLine1"
                 android:layout_width="0dp"
                 style="@style/edit_text"
+                android:textAlignment="viewStart"
                 android:hint="@string/enter_address_line_1"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:background="@null"
@@ -218,6 +274,7 @@
             android:hint="@string/enter_address_line_2"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
+            android:textAlignment="viewStart"
             android:background="@drawable/edit_back" />
 
         <LinearLayout
@@ -261,6 +318,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
                 android:inputType="number"
+                android:textAlignment="viewStart"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -272,6 +330,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:inputType="number"
+                android:textAlignment="viewStart"
                 android:background="@drawable/edit_back" />
 
         </LinearLayout>
@@ -297,6 +356,7 @@
                 android:hint="@string/enter_password"
                 android:inputType="textPassword"
                 android:background="@null"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -338,6 +398,7 @@
             android:hint="@string/enter_confirm_password"
             android:inputType="textPassword"
             android:background="@null"
+            android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -375,6 +436,7 @@
             android:editable="false"
             android:focusable="false"
             android:clickable="true"
+            android:textAlignment="viewStart"
             android:drawableEnd="@drawable/ic_drop_down"
             android:background="@drawable/edit_back" />
 
@@ -407,6 +469,7 @@
             android:hint="@string/enter_vehicle_name"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
+            android:textAlignment="viewStart"
             android:background="@drawable/edit_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -424,6 +487,7 @@
             android:hint="@string/enter_vehicle_registration_number"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
+            android:textAlignment="viewStart"
             android:background="@drawable/edit_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -442,31 +506,129 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivVehicle1"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-                android:scaleType="centerCrop"
-                android:clipToOutline="true"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_front_img"/>
+                android:layout_weight="1">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivVehicle2"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderVehicle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivVehicle1"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivVehicle1"
+                    app:layout_constraintStart_toStartOf="@+id/ivVehicle1"
+                    app:layout_constraintEnd_toEndOf="@+id/ivVehicle1">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderVehicle1"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderVehicle1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderVehicle1"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/front"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderVehicle1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivVehicle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-                android:scaleType="centerCrop"
-                android:clipToOutline="true"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_back_img"/>
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderVehicle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivVehicle2"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivVehicle2"
+                    app:layout_constraintStart_toStartOf="@+id/ivVehicle2"
+                    app:layout_constraintEnd_toEndOf="@+id/ivVehicle2">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderVehicle2"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderVehicle2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderVehicle2"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/back"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderVehicle2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivVehicle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
@@ -486,31 +648,129 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivIdentity1"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-                android:scaleType="centerCrop"
-                android:clipToOutline="true"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_front_img"/>
+                android:layout_weight="1">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivIdentity2"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderIdentity1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivIdentity1"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivIdentity1"
+                    app:layout_constraintStart_toStartOf="@+id/ivIdentity1"
+                    app:layout_constraintEnd_toEndOf="@+id/ivIdentity1">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderIdentity1"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderIdentity1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderIdentity1"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/front"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderIdentity1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivIdentity1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-                android:scaleType="centerCrop"
-                android:clipToOutline="true"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_back_img"/>
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderIdentity2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivIdentity2"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivIdentity2"
+                    app:layout_constraintStart_toStartOf="@+id/ivIdentity2"
+                    app:layout_constraintEnd_toEndOf="@+id/ivIdentity2">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderIdentity2"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderIdentity2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderIdentity2"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/back"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderIdentity2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivIdentity2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
@@ -530,31 +790,129 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivDriving1"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-                android:scaleType="centerCrop"
-                android:clipToOutline="true"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_front_img"/>
+                android:layout_weight="1">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivDriving2"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderDriving1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivDriving1"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivDriving1"
+                    app:layout_constraintStart_toStartOf="@+id/ivDriving1"
+                    app:layout_constraintEnd_toEndOf="@+id/ivDriving1">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderDriving1"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderDriving1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderDriving1"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/front"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderDriving1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivDriving1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-                android:scaleType="centerCrop"
-                android:clipToOutline="true"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_back_img"/>
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderDriving2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivDriving2"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivDriving2"
+                    app:layout_constraintStart_toStartOf="@+id/ivDriving2"
+                    app:layout_constraintEnd_toEndOf="@+id/ivDriving2">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderDriving2"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderDriving2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderDriving2"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/back"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderDriving2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivDriving2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
@@ -575,18 +933,66 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivVehicleInsurance"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_90sdp"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
-            app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-            android:scaleType="centerCrop"
-            android:clipToOutline="true"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:background="@drawable/brown_dash_rectangle"
-            android:src="@drawable/ic_front_img"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderVehicleInsuranc"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivVehicleInsurance"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivVehicleInsurance"
+                    app:layout_constraintStart_toStartOf="@+id/ivVehicleInsurance"
+                    app:layout_constraintEnd_toEndOf="@+id/ivVehicleInsurance">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderVehicleInsuranc"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderVehicleInsuranc"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderVehicleInsuranc"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/front"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderVehicleInsuranc"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivVehicleInsurance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
@@ -606,18 +1012,67 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivPollutionPaper"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
-                android:scaleType="centerCrop"
-                android:clipToOutline="true"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_front_img"/>
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPlaceholderPollutionPaper"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_constraintTop_toTopOf="@+id/ivPollutionPaper"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivPollutionPaper"
+                    app:layout_constraintStart_toStartOf="@+id/ivPollutionPaper"
+                    app:layout_constraintEnd_toEndOf="@+id/ivPollutionPaper">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPlaceholderPollutionPaper"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/add_delivery_boy_placeholder"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderPollutionPaper"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceholderPollutionPaper"
+                        style="@style/edit_text_title"
+                        android:layout_width="wrap_content"
+                        android:textColor="#875C3A"
+                        android:text="@string/front"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderPollutionPaper"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivPollutionPaper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:background="@drawable/brown_dash_rectangle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </LinearLayout>
 
@@ -637,18 +1092,112 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_weight="1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clPlaceholderRegistration1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                app:layout_constraintTop_toTopOf="@+id/ivRegistration1"
+                app:layout_constraintBottom_toBottomOf="@+id/ivRegistration1"
+                app:layout_constraintStart_toStartOf="@+id/ivRegistration1"
+                app:layout_constraintEnd_toEndOf="@+id/ivRegistration1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivPlaceholderRegistration1"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:src="@drawable/add_delivery_boy_placeholder"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderRegistration1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPlaceholderRegistration1"
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:textColor="#875C3A"
+                    android:text="@string/front"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderRegistration1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivRegistration1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
                 app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_front_img"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_weight="1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clPlaceholderRegistration2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                app:layout_constraintTop_toTopOf="@+id/ivRegistration2"
+                app:layout_constraintBottom_toBottomOf="@+id/ivRegistration2"
+                app:layout_constraintStart_toStartOf="@+id/ivRegistration2"
+                app:layout_constraintEnd_toEndOf="@+id/ivRegistration2">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivPlaceholderRegistration2"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:src="@drawable/add_delivery_boy_placeholder"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/tvPlaceholderRegistration2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPlaceholderRegistration2"
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:textColor="#875C3A"
+                    android:text="@string/back"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivPlaceholderRegistration2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivRegistration2"
@@ -661,7 +1210,12 @@
                 android:clipToOutline="true"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:background="@drawable/brown_dash_rectangle"
-                android:src="@drawable/ic_back_img"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

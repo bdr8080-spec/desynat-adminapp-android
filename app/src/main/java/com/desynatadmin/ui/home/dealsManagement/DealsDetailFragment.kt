@@ -17,6 +17,7 @@ import com.desynatadmin.databinding.FragmentDealsDetailBinding
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -207,9 +208,9 @@ class DealsDetailFragment : BaseFragment() {
             dealDetailData?.sellerDealrecords?.let { enrolledList.addAll(it) }
             enrolledAdapter?.notifyDataSetChanged()
             checkData()
-            tvDealName.text = dealDetailData?.nameEnglish
-            tvCategoryValue.text = dealDetailData?.categoryDetails?.name
-            tvSubCategoryValue.text = dealDetailData?.subCategoryDetails?.joinToString(", ") { it.nameEnglish }
+            tvDealName.text = if (Constants.language=="ar") dealDetailData?.nameArabic else dealDetailData?.nameEnglish
+            tvCategoryValue.text =  if (Constants.language=="ar") dealDetailData?.categoryDetails?.nameAr else dealDetailData?.categoryDetails?.name
+            tvSubCategoryValue.text = dealDetailData?.subCategoryDetails?.joinToString(", ") { if (Constants.language=="ar") it.nameArabic else it.nameEnglish }
             tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealDetailData?.from.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealDetailData?.to.toString(), inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
             tvDiscountValue.text = dealDetailData?.discount+"%"
             Glide.with(requireActivity()).load(dealDetailData?.image).placeholder(R.drawable.ic_placeholder).into(ivDeal)

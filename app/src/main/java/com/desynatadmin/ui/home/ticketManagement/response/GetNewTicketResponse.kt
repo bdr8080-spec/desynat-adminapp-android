@@ -128,6 +128,8 @@ data class GetNewTicketResponse(
                 val id: Int,
                 @SerializedName("name")
                 val name: String,
+                @SerializedName("name_arabic")
+                val nameArabic: String,
                 @SerializedName("status")
                 val status: Int,
                 @SerializedName("updated_at")

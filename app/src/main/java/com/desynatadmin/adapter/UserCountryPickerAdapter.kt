@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemCountryBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.Constants
 
 class UserCountryPickerAdapter(var context:Context, var countryList: ArrayList<GetCountryResponse.Data>, var onClick:ClickOnItem) : RecyclerView.Adapter<UserCountryPickerAdapter.ViewHolder>() {
 
@@ -16,7 +17,7 @@ class UserCountryPickerAdapter(var context:Context, var countryList: ArrayList<G
     inner class ViewHolder(val binding: ItemCountryBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
-                tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name}"
+                tvCountry.text = "${countryList[position].flag1}  ${if (Constants.language=="ar") countryList[position].nameAr else countryList[position].name}"
                 ivFlag.isVisible = false
                 //  ivFlag.load(countryList[position].flag)
 

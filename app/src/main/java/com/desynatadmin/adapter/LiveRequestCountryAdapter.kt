@@ -10,6 +10,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.CityListItemBinding
 import com.desynatadmin.databinding.CountryRecylerBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.Constants
 
 class LiveRequestCountryAdapter(var context: Context,var list:ArrayList<GetCountryResponse.Data>,var selectedCountry:GetCountryResponse.Data?, var onClick:OnClick): RecyclerView.Adapter<LiveRequestCountryAdapter.ViewHolder>() {
 
@@ -27,7 +28,7 @@ class LiveRequestCountryAdapter(var context: Context,var list:ArrayList<GetCount
                     name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.ic_radio_unselected,0)
 
                 }
-                name.text="${list[position].flag}  ${list[position].name}"
+                name.text="${list[position].flag}  ${if (Constants.language=="ar") list[position].nameAr else list[position].name}"
                 root.setOnClickListener {
                     selectedCountry = list[position]
                     notifyDataSetChanged()

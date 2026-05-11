@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.databinding.RejectedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class RejectedAdapter(var context: Context, var list : List<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
@@ -20,7 +21,7 @@ class RejectedAdapter(var context: Context, var list : List<RejectedListResponse
             }
             val item = list[position]
             tvName.text = item.first_name
-            tvLocation.text = item?.store_info?.country_info?.name
+            tvLocation.text = if (Constants.language=="ar")item.store_info.country_info?.name_ar else item?.store_info?.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             tvEmail.text = item.email
             Glide.with(ivProfileImage).load(item.profile_pic)

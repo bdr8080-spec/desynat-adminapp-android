@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.desynatadmin.databinding.ItemCountryBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.Constants
 
 class AllCountryPickerAdapter(var context:Context, var countryList: ArrayList<GetCountryResponse.Data>, var isDialCode:Boolean=false, var onClick:ClickOnItem) : RecyclerView.Adapter<AllCountryPickerAdapter.ViewHolder>() {
 
@@ -18,10 +19,10 @@ class AllCountryPickerAdapter(var context:Context, var countryList: ArrayList<Ge
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
                 if (isDialCode){
-                    tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name} (${countryList[position].dialCode})"
+                    tvCountry.text = "${countryList[position].flag1}  ${if (Constants.language=="ar") countryList[position].nameAr else countryList[position].name} (${countryList[position].dialCode})"
                 }
                 else{
-                    tvCountry.text = "${countryList[position].flag1}  ${countryList[position].name}"
+                    tvCountry.text = "${countryList[position].flag1}  ${if (Constants.language=="ar") countryList[position].nameAr else countryList[position].name}"
                 }
                 ivFlag.isVisible = false
                 // ivFlag.load(countryList[position].flag1)

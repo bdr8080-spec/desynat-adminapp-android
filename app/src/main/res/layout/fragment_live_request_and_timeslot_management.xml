@@ -288,13 +288,13 @@
                             android:paddingHorizontal="@dimen/_5sdp"
                             android:paddingTop="@dimen/_5sdp">
 
-                            <TextView style="@style/WeekDayText" android:text="S"/>
-                            <TextView style="@style/WeekDayText" android:text="M"/>
-                            <TextView style="@style/WeekDayText" android:text="T"/>
-                            <TextView style="@style/WeekDayText" android:text="W"/>
-                            <TextView style="@style/WeekDayText" android:text="T"/>
-                            <TextView style="@style/WeekDayText" android:text="F"/>
-                            <TextView style="@style/WeekDayText" android:text="S"/>
+                            <TextView style="@style/WeekDayText" android:text="@string/s"/>
+                            <TextView style="@style/WeekDayText" android:text="@string/m"/>
+                            <TextView style="@style/WeekDayText" android:text="@string/t"/>
+                            <TextView style="@style/WeekDayText" android:text="@string/w"/>
+                            <TextView style="@style/WeekDayText" android:text="@string/t"/>
+                            <TextView style="@style/WeekDayText" android:text="@string/f"/>
+                            <TextView style="@style/WeekDayText" android:text="@string/s"/>
 
                         </LinearLayout>
 

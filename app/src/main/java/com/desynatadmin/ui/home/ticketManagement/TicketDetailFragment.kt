@@ -20,6 +20,7 @@ import com.desynatadmin.databinding.FragmentTicketDetailBinding
 import com.desynatadmin.databinding.UpdateTicketStatusDialogBinding
 import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
@@ -128,7 +129,6 @@ class TicketDetailFragment : BaseFragment() {
         binding?.apply {
             tvTitleValue.text = ticketData?.title
             tvDescriptionValue.text = ticketData?.description
-            tvTitleValue.text = ticketData?.title
 
             when(ticketData?.senderType){
                 1-> tvSubmittedBy.text = getString(R.string.customer)
@@ -138,8 +138,8 @@ class TicketDetailFragment : BaseFragment() {
             }
             tvRequestByName.text = ticketData?.senderDetails?.fullName
             tvTicketIdValue.text = ticketData?.ticketId
-            tvTicketTypeValue.text = ticketData?.ticketTypeDetails?.name
-            tvRaisedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvTicketTypeValue.text =  if (Constants.language=="ar") ticketData?.ticketTypeDetails?.nameArabic else  ticketData?.ticketTypeDetails?.name
+            tvRaisedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${getString(R.string.at)}' hh:mm a")
 
             if (ticketData?.file!=null){
                 ivAttachment.isVisible = true

@@ -213,7 +213,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateBrandResult: LiveData<CommonResponse>
+    val updateBrandResult: LiveData<UpdateBrandStatusResponse>
         get() = repository.editBrandLiveData
 
     fun updateBrand(map:HashMap<String,RequestBody>) {
@@ -267,7 +267,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateSubCategoryResult: LiveData<CommonResponse>
+    val updateSubCategoryResult: LiveData<UpdateSubCategoryResponse>
         get() = repository.updateSubCategoryLiveData
 
     fun updateSubCategory(map:HashMap<String,RequestBody>) {

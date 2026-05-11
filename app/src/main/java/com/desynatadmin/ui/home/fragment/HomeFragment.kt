@@ -171,7 +171,7 @@ class HomeFragment : BaseFragment() {
 
             etCountry.setOnClickListener {
                 CommonMethod.showCountryPicker(requireActivity(),etCountry,countryList, isDialCode = false){selectedCountry ->
-                    etCountry.setText(selectedCountry.name)
+                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
                     countryId = selectedCountry.id.toString()
                     getDashBoardData()
                 }

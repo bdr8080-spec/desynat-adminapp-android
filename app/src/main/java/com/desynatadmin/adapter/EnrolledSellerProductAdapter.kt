@@ -11,6 +11,7 @@ import com.desynatadmin.databinding.ItemDealProductBinding
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealProductResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 
 class EnrolledSellerProductAdapter(var context:Context, var dealType:Int,var enrolledProductList: ArrayList<GetDealProductResponse.Data.SellerDealrecord.Product>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<EnrolledSellerProductAdapter.ViewHolder>() {
 
@@ -36,9 +37,9 @@ class EnrolledSellerProductAdapter(var context:Context, var dealType:Int,var enr
                 ivSwitch.setImageResource(R.drawable.switch_off)
             }
 
-            tvCategory.text = "${category?.name} (${subCategoryList.firstOrNull { it.id == productData?.productDetails?.subcategoryId }})"
-            tvProductName.text =  productData?.productDetails?.productNameEn
-            tvBrand.text =  productData?.productDetails?.brand?.nameEnglish
+            tvCategory.text = "${if (Constants.language=="ar") category?.nameAr else category?.name} (${if (Constants.language=="ar") subCategoryList.firstOrNull { it.id == productData?.productDetails?.subcategoryId }?.nameArabic else subCategoryList.firstOrNull { it.id == productData?.productDetails?.subcategoryId }?.nameEnglish})"
+            tvProductName.text =  if (Constants.language=="ar") productData?.productDetails?.productNameAr else productData?.productDetails?.productNameAr
+            tvBrand.text =  if (Constants.language=="ar") productData?.productDetails?.brand?.nameArabic else productData?.productDetails?.brand?.nameEnglish
             Glide.with(context).load(productData?.productDetails?.productVariants?.get(0)?.variantImage?.get(0)).placeholder(
                 R.drawable.ic_placeholder).into(ivStore)
             tvPrice.text = "${CommonMethod.formatPrice(productData?.productDetails?.productVariants?.get(0)?.actualPrice?:0.0)} KD"

@@ -9,6 +9,7 @@ import com.desynatadmin.R
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityRejectDetailsBinding
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +50,7 @@ class RejectDetailsActivity : BaseActivity() {
     override fun observer() {
         viewmodel.getSellerDetailData.observe(this){
             binding.tvName.text = it?.data?.first_name
-            binding.tvLocation.text = it?.data?.store_info?.country_info?.name
+            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar else it?.data?.store_info?.country_info?.name
             binding.tvCall.text = it?.data?.country_code + "-" + it?.data?.mobile
             binding.tvEmail.text = it.data.email
             binding.tvAddress.text = it?.data?.store_info?.store_address

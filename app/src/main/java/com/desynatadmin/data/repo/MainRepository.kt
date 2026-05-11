@@ -315,7 +315,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val editBrandLiveData = SingleLiveEvent<CommonResponse>()
+    val editBrandLiveData = SingleLiveEvent<UpdateBrandStatusResponse>()
     suspend fun editBrand(
         map: HashMap<String, RequestBody>
     ) {
@@ -339,7 +339,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val updateSubCategoryLiveData = SingleLiveEvent<CommonResponse>()
+    val updateSubCategoryLiveData = SingleLiveEvent<UpdateSubCategoryResponse>()
     suspend fun editSubCategory(
         map: HashMap<String, RequestBody>
     ) {

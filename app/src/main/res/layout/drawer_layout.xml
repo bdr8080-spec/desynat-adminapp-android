@@ -402,33 +402,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlOrderManagement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:paddingVertical="@dimen/_10sdp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivOrderManagement"
-                        style="@style/drawer_image"
-                        android:src="@drawable/ic_order_management" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvOrderManagement"
-                        style="@style/drawer_text"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_toStartOf="@+id/ivGoOrderManagement"
-                        android:layout_toEndOf="@id/ivOrderManagement"
-                        android:text="@string/order_management" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivGoOrderManagement"
-                        style="@style/drawer_arrow" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
                     android:id="@+id/rlBannerRequest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -454,6 +427,7 @@
                         style="@style/drawer_arrow" />
 
                 </RelativeLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/rlFullScreenBanner"
@@ -483,6 +457,60 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlOrderManagement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivOrderManagement"
+                        style="@style/drawer_image"
+                        android:src="@drawable/ic_order_management" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOrderManagement"
+                        style="@style/drawer_text"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_toStartOf="@+id/ivGoOrderManagement"
+                        android:layout_toEndOf="@id/ivOrderManagement"
+                        android:text="@string/order_management" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivGoOrderManagement"
+                        style="@style/drawer_arrow" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlAffiliateManagement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_6sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAffiliate"
+                        style="@style/drawer_image"
+                        android:src="@drawable/ic_user_management" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAffiliate"
+                        style="@style/drawer_text"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_toStartOf="@+id/ivGoAffiliate"
+                        android:layout_toEndOf="@id/ivAffiliate"
+                        android:text="@string/affiliate_user_management" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivGoAffiliate"
+                        style="@style/drawer_arrow" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/rlAffilateCommissionManagement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -505,6 +533,33 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoCommission"
+                        style="@style/drawer_arrow" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlAffiliateWithdrawal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_6sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivWithdrawal"
+                        style="@style/drawer_image"
+                        android:src="@drawable/ic_story_management" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWithdrawal"
+                        style="@style/drawer_text"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_toStartOf="@+id/ivGoWithdrawal"
+                        android:layout_toEndOf="@id/ivWithdrawal"
+                        android:text="@string/affiliate_withdrawal_requests" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivGoWithdrawal"
                         style="@style/drawer_arrow" />
 
                 </RelativeLayout>
@@ -590,32 +645,6 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rlAffiliateManagement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:paddingVertical="@dimen/_6sdp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivAffiliate"
-                        style="@style/drawer_image"
-                        android:src="@drawable/ic_user_management" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvAffiliate"
-                        style="@style/drawer_text"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_toStartOf="@+id/ivGoAffiliate"
-                        android:layout_toEndOf="@id/ivAffiliate"
-                        android:text="@string/affiliate_user_management" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivGoAffiliate"
-                        style="@style/drawer_arrow" />
-
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/relSubAdmin"
@@ -667,33 +696,6 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoRefund"
-                        style="@style/drawer_arrow" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlAffiliateWithdrawal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:paddingVertical="@dimen/_6sdp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivWithdrawal"
-                        style="@style/drawer_image"
-                        android:src="@drawable/ic_story_management" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvWithdrawal"
-                        style="@style/drawer_text"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_toStartOf="@+id/ivGoWithdrawal"
-                        android:layout_toEndOf="@id/ivWithdrawal"
-                        android:text="@string/affiliate_withdrawal_requests" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivGoWithdrawal"
                         style="@style/drawer_arrow" />
 
                 </RelativeLayout>

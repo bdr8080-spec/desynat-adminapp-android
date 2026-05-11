@@ -47,11 +47,11 @@ data class GetSubCategoryResponse(
             @SerializedName("id")
             val id: String,
             @SerializedName("image")
-            val image: String,
+            var image: String,
             @SerializedName("name_arabic")
-            val nameArabic: String,
+            var nameArabic: String,
             @SerializedName("name_english")
-            val nameEnglish: String,
+            var nameEnglish: String,
             @SerializedName("status")
             val status: Int,
             @SerializedName("updated_at")

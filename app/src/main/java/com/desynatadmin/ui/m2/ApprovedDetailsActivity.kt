@@ -22,6 +22,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityApprovedDetailsBinding
 import com.desynatadmin.databinding.ImagePreviewDialogBinding
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
@@ -139,7 +140,7 @@ class ApprovedDetailsActivity : BaseActivity() {
             binding.tvName.text = it?.data?.first_name
             binding.tvEmail.text = it?.data?.email
             binding.txt.text = it?.data?.store_info?.bio
-            binding.tvLocation.text = it?.data?.store_info?.country_info?.name
+            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar else it?.data?.store_info?.country_info?.name
             binding.tvCall.text  = it?.data?.country_code + "-" + it?.data?.mobile
             binding.tvAddress.text  = "${it?.data?.store_info?.store_name}\n${it?.data?.store_info?.store_address}"
            // binding.tvProPlan.text  = it.data.subcription_plan ?: ""
@@ -161,7 +162,7 @@ class ApprovedDetailsActivity : BaseActivity() {
                 binding.tvPurchasePlan.text = getString(R.string.purchased_plan)
                 binding.purchasePlanLayout.isVisible = true
                 binding.tvStatus.text = if(it.data?.subcription_plan?.get(0)?.plan_info?.status == 0) getString(R.string.active) else getString(R.string.expired)
-                binding.tvProPlanLabel.text = it.data?.subcription_plan?.get(0)?.plan_info?.plan_name_english ?: ""
+                binding.tvProPlanLabel.text =if (Constants.language=="ar") it.data?.subcription_plan?.get(0)?.plan_info?.plan_name_arabic  else it.data?.subcription_plan?.get(0)?.plan_info?.plan_name_english ?: ""
                 if(it.data?.subcription_plan?.get(0)?.plan_info?.duration_type == 1){
                     binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + getString(
                         R.string.months

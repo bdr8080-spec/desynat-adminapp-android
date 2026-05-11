@@ -22,6 +22,7 @@ import com.desynatadmin.databinding.RejectReasonLayoutBinding
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
@@ -218,7 +219,7 @@ class AffiliateUserDetailFragment : BaseFragment() {
     private fun setData(){
         binding?.apply {
             tvName.text = userData?.fullName
-            tvLocation.text = userData?.countryDetails?.name
+            tvLocation.text = if (Constants.language=="ar") userData?.countryDetails?.nameAr else userData?.countryDetails?.name
             tvJoinedOn.text = "${getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(userData?.createdAt.toString())}"
             tvEmail.text = userData?.email
             tvCall.text = userData?.countryCode+"-"+userData?.mobile

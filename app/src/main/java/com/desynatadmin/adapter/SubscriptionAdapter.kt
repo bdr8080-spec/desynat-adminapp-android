@@ -13,6 +13,7 @@ import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 
 class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<GetAllPlanResponse.Data>, var subscriptionClick:SubscriptionClick) : RecyclerView.Adapter<SubscriptionAdapter.ViewHolder>() {
 
@@ -30,7 +31,7 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
         fun bind(position: Int) = with(binding) {
             val subscriptionData = subscriptionList[position]
 
-            tvPackage.text = subscriptionData.planNameEnglish
+            tvPackage.text = if (Constants.language=="ar") subscriptionData?.planNameArabic else subscriptionData?.planNameEnglish
             if (subscriptionData?.discountedPrice != null && subscriptionData?.discountedPrice != 0.0) {
                 tvPrice.text =
                     "KD ${CommonMethod.formatDoubleValue(subscriptionData?.discountedPrice)}"

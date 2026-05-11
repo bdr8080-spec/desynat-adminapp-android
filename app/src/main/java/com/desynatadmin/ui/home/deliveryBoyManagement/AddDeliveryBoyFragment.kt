@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -370,6 +371,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                 error(R.drawable.ic_upload_image)
             }
 
+            clPlaceholder.isVisible = false
+
             drivingLicense1 = deliveryBoyData?.drivingLicense?.getOrNull(0)?.documentPath
             drivingLicense2 = deliveryBoyData?.drivingLicense?.getOrNull(1)?.documentPath
 
@@ -385,21 +388,55 @@ class AddDeliveryBoyFragment : BaseFragment() {
             pollutionPaper = deliveryBoyData?.pollutionPaper?.getOrNull(0)?.documentPath
             vehicleInsurance = deliveryBoyData?.vehicleInsurance?.getOrNull(0)?.documentPath
 
-            loadDocument(ivDriving1, deliveryBoyData?.drivingLicense?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
-            loadDocument(ivDriving2, deliveryBoyData?.drivingLicense?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
 
-            loadDocument(ivVehicle1, deliveryBoyData?.vehicleImage?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
-            loadDocument(ivVehicle2, deliveryBoyData?.vehicleImage?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
 
-            loadDocument(ivIdentity1, deliveryBoyData?.identityProof?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
-            loadDocument(ivIdentity2, deliveryBoyData?.identityProof?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
+            if (deliveryBoyData?.drivingLicense?.getOrNull(0)?.documentPath!=null){
+                loadDocument(ivDriving1, deliveryBoyData?.drivingLicense?.getOrNull(0)?.documentPath)
+                clPlaceholderDriving1.isVisible = false
+            }
+            if (deliveryBoyData?.drivingLicense?.getOrNull(1)?.documentPath!=null){
+                loadDocument(ivDriving2, deliveryBoyData?.drivingLicense?.getOrNull(1)?.documentPath)
 
-            loadDocument(ivRegistration1, deliveryBoyData?.registrationCertificate?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
-            loadDocument(ivRegistration2, deliveryBoyData?.registrationCertificate?.getOrNull(1)?.documentPath, R.drawable.ic_back_img)
+                clPlaceholderDriving2.isVisible = false
+            }
 
-            loadDocument(ivPollutionPaper, deliveryBoyData?.pollutionPaper?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
-            loadDocument(ivVehicleInsurance, deliveryBoyData?.vehicleInsurance?.getOrNull(0)?.documentPath, R.drawable.ic_front_img)
+            if (deliveryBoyData?.registrationCertificate?.getOrNull(0)?.documentPath!=null){
+                clPlaceholderRegistration1.isVisible = false
+                loadDocument(ivRegistration1, deliveryBoyData?.registrationCertificate?.getOrNull(0)?.documentPath)
+            }
+            if (deliveryBoyData?.registrationCertificate?.getOrNull(1)?.documentPath!=null){
+                clPlaceholderRegistration2.isVisible = false
+                loadDocument(ivRegistration2, deliveryBoyData?.registrationCertificate?.getOrNull(1)?.documentPath)
 
+            }
+
+            if (deliveryBoyData?.vehicleImage?.getOrNull(0)?.documentPath!=null){
+                loadDocument(ivVehicle1, deliveryBoyData?.vehicleImage?.getOrNull(0)?.documentPath)
+                clPlaceholderVehicle1.isVisible = false
+            }
+            if (deliveryBoyData?.vehicleImage?.getOrNull(1)?.documentPath!=null){
+                loadDocument(ivVehicle2, deliveryBoyData?.vehicleImage?.getOrNull(1)?.documentPath)
+                clPlaceholderVehicle2.isVisible = false
+            }
+
+            if (deliveryBoyData?.identityProof?.getOrNull(0)?.documentPath!=null){
+                loadDocument(ivIdentity1, deliveryBoyData?.identityProof?.getOrNull(0)?.documentPath)
+                clPlaceholderIdentity1.isVisible = false
+            }
+            if (deliveryBoyData?.identityProof?.getOrNull(1)?.documentPath!=null){
+                loadDocument(ivIdentity2, deliveryBoyData?.identityProof?.getOrNull(1)?.documentPath)
+                clPlaceholderIdentity2.isVisible = false
+            }
+
+            if (deliveryBoyData?.pollutionPaper?.getOrNull(0)?.documentPath!=null){
+                loadDocument(ivPollutionPaper, deliveryBoyData?.pollutionPaper?.getOrNull(0)?.documentPath)
+                clPlaceholderPollutionPaper.isVisible = false
+            }
+
+            if (deliveryBoyData?.vehicleInsurance?.getOrNull(1)?.documentPath!=null){
+                loadDocument(ivVehicleInsurance, deliveryBoyData?.vehicleInsurance?.getOrNull(0)?.documentPath)
+                clPlaceholderVehicleInsuranc.isVisible = false
+            }
         }
     }
 
@@ -499,6 +536,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
         binding?.apply {
             when (imageType) {
                 1 -> {
+                    clPlaceholder.isVisible = false
+
                     profileImage = url
                     ivProfileImage.load(url) {
                         crossfade(true)
@@ -507,6 +546,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 2 -> {
+                    clPlaceholderVehicle1.isVisible = false
+
                     vehicleImage1 = url
                     if(url.contains(".pdf")){
                         ivVehicle1.setImageResource(R.drawable.pdf)
@@ -519,6 +560,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 3 -> {
+                    clPlaceholderVehicle2.isVisible = false
+
                     vehicleImage2 = url
                     if(url.contains(".pdf")){
                         ivVehicle2.setImageResource(R.drawable.pdf)
@@ -531,6 +574,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 4 -> {
+                    clPlaceholderIdentity1.isVisible = false
+
                     identityProof1 = url
                     if(url.contains(".pdf")){
                         ivIdentity1.setImageResource(R.drawable.pdf)
@@ -543,6 +588,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 5 -> {
+                    clPlaceholderIdentity2.isVisible = false
+
                     identityProof2 = url
                     if(url.contains(".pdf")){
                         ivIdentity2.setImageResource(R.drawable.pdf)
@@ -555,6 +602,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 6 -> {
+                    clPlaceholderDriving1.isVisible = false
+
                     drivingLicense1 = url
                     if(url.contains(".pdf")){
                         ivDriving1.setImageResource(R.drawable.pdf)
@@ -567,6 +616,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 7 -> {
+                    clPlaceholderDriving2.isVisible = false
+
                     drivingLicense2 = url
                     if(url.contains(".pdf")){
                         ivDriving2.setImageResource(R.drawable.pdf)
@@ -579,6 +630,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 8 -> {
+                    clPlaceholderVehicle1.isVisible = false
+
                     vehicleInsurance = url
                     if(url.contains(".pdf")){
                         ivVehicleInsurance.setImageResource(R.drawable.pdf)
@@ -591,6 +644,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 9 -> {
+                    clPlaceholderVehicle2.isVisible = false
+
                     pollutionPaper = url
                     if(url.contains(".pdf")){
                         ivPollutionPaper.setImageResource(R.drawable.pdf)
@@ -603,6 +658,8 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 10 -> {
+                    clPlaceholderRegistration1.isVisible = false
+
                     registrationCertificate1 = url
                     if(url.contains(".pdf")){
                         ivRegistration1.setImageResource(R.drawable.pdf)
@@ -615,6 +672,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
                     }
                 }
                 11 -> {
+                    clPlaceholderRegistration2.isVisible = false
                     registrationCertificate2 = url
                     if(url.contains(".pdf")){
                         ivRegistration2.setImageResource(R.drawable.pdf)
@@ -625,6 +683,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
                         placeholder(R.drawable.ic_placeholder)
                         error(R.drawable.ic_placeholder)
                     }
+
                 }
             }
         }

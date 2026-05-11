@@ -547,7 +547,7 @@ class OrderDetailFragment : BaseFragment() {
             }
 
             tvOrderIdValue.text = "#${orderDetailData?.id}"
-            tvDateTime.text = CommonMethod.customizeChangeDateFormat(orderDetailData?.createdAt.toString(), outputFormat = "dd/MM/yy 'at' hh:mm a")
+            tvDateTime.text = CommonMethod.customizeChangeDateFormat(orderDetailData?.createdAt.toString(), outputFormat = "dd/MM/yy '${getString(R.string.at)}' hh:mm a")
             tvOrderTypeValue.text =  if (orderDetailData?.order?.orderType=="1") getString(R.string.normal_orders) else getString(R.string.custom_order)
             tvCustomerName.text = orderDetailData?.order?.deliveryDetails?.name
             tvSellerName.text = orderDetailData?.productDetails?.sellerDetails?.firstName+" "+orderDetailData?.productDetails?.sellerDetails?.lastName

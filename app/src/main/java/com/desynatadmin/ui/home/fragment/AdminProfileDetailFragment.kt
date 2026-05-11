@@ -79,6 +79,7 @@ class AdminProfileDetailFragment : BaseFragment() {
     override fun initView() {
         profileInfo = SharedPreference.get(requireActivity()).getUser()
         setData()
+        countryList.clear()
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
@@ -133,7 +134,7 @@ class AdminProfileDetailFragment : BaseFragment() {
             etEmail.setText(profileInfo?.email)
             etFullName.setText(profileInfo?.fullName)
             etMobileNumber.setText(profileInfo?.mobile)
-            tvCountryPicker.setText(profileInfo?.countryCode)
+            tvCountryPicker.text = profileInfo?.countryCode
             Glide.with(requireActivity()).load(profileInfo?.profilePic)
                 .placeholder(R.drawable.ic_user).into(ivProfileImage)
         }

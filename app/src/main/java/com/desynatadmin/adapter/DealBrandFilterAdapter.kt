@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemBrandFilterBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.utils.Constants
 
 class DealBrandFilterAdapter(var context: Context, var list:ArrayList<GetBrandResponse.Data.Data>, var onClick:OnClick): RecyclerView.Adapter<DealBrandFilterAdapter.ViewHolder>() {
 
@@ -16,7 +17,7 @@ class DealBrandFilterAdapter(var context: Context, var list:ArrayList<GetBrandRe
     inner class ViewHolder(val binding: ItemBrandFilterBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
-                tvCountry.text = list[position].nameEnglish
+                tvCountry.text = if (Constants.language=="ar") list[position].nameArabic else list[position].nameEnglish
                 root.setOnClickListener {
                     onClick.onClick(position)
                 }

@@ -20,6 +20,7 @@
         android:text="@string/request_by"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
+        android:textAlignment="viewStart"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvStatusValue"
@@ -35,6 +36,7 @@
         android:maxLength="30"
         android:ellipsize="end"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="@id/tvRequestBy"
         app:layout_constraintTop_toBottomOf="@id/tvRequestBy" />
 
@@ -60,6 +62,7 @@
         android:textColor="#80000000"
         android:textSize="@dimen/_11sdp"
         android:layout_marginEnd="@dimen/_10sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toStartOf="@+id/tvStatusValue"
         app:layout_constraintStart_toEndOf="@+id/viewName"
         app:layout_constraintTop_toTopOf="@id/tvName"
@@ -75,6 +78,7 @@
         android:text="@string/status"
         android:textColor="#80000000"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -87,6 +91,7 @@
         android:text="@string/active"
         android:textColor="#68CA44"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="@+id/tvStatus"
         app:layout_constraintTop_toBottomOf="@+id/tvStatus"/>
 

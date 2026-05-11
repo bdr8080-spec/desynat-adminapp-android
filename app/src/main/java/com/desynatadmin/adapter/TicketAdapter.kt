@@ -11,6 +11,7 @@ import com.desynatadmin.databinding.ItemTicketBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.ticketManagement.response.GetNewTicketResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 
 class TicketAdapter(var context:Context, private var ticketList: ArrayList<GetNewTicketResponse.Data.Data>, var ticketClick: TicketClick) : RecyclerView.Adapter<TicketAdapter.ViewHolder>() {
 
@@ -38,7 +39,7 @@ class TicketAdapter(var context:Context, private var ticketList: ArrayList<GetNe
             }
 
             tvTicketIdValue.text = ticketData?.ticketId
-            tvTicketTypeValue.text = ticketData?.ticketTypeDetails?.name
+            tvTicketTypeValue.text = if (Constants.language=="ar") ticketData?.ticketTypeDetails?.nameArabic else ticketData?.ticketTypeDetails?.name
             tvRaisedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd MMM yy, hh:mm a")
 
             when(ticketData?.status){

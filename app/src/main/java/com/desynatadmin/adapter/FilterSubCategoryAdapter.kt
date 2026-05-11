@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemCheckboxBrandBinding
 import com.desynatadmin.R
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.utils.Constants
 
 class FilterSubCategoryAdapter(var context:Context, var subCategoryList: ArrayList<GetSubCategoryResponse.Data.Data>, var onClick: OnClick) : RecyclerView.Adapter<FilterSubCategoryAdapter.ViewHolder>() {
     var selectedPos = -1
@@ -31,7 +32,7 @@ class FilterSubCategoryAdapter(var context:Context, var subCategoryList: ArrayLi
     override fun onBindViewHolder(holder: FilterSubCategoryAdapter.ViewHolder, position: Int) {
         holder.binding.apply {
 
-            tvBrand.text = subCategoryList[position].nameEnglish
+            tvBrand.text =  if (Constants.language=="ar") subCategoryList[position].nameArabic else subCategoryList[position].nameEnglish
 
             if (subCategoryList[position].isSelected){
                 selectedPos = position

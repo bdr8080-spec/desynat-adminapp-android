@@ -63,7 +63,7 @@
                 android:textAlignment="viewStart"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_35sdp"
-                android:text="Anwer Sheikh"/>
+                android:text="Anwer Sheikh" />
 
             <View
                 android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemCheckboxBrandBinding
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
 import com.desynatadmin.R
+import com.desynatadmin.utils.Constants
 
 class FilterCategoryAdapter(var context:Context, var categoryList: ArrayList<GetCategoryResponse.Data>, var onClick: OnClick) : RecyclerView.Adapter<FilterCategoryAdapter.ViewHolder>() {
 
@@ -31,7 +32,7 @@ class FilterCategoryAdapter(var context:Context, var categoryList: ArrayList<Get
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
 
-            tvBrand.text = categoryList[position].name
+            tvBrand.text = if (Constants.language=="ar") categoryList[position].nameAr else categoryList[position].name
 
             if (selectedPos==position){
                 ivImage.setImageResource(R.drawable.ic_radio_selected)

@@ -53,7 +53,43 @@
                 android:textSize="@dimen/_13sdp"
                 android:textAlignment="center"/>
 
-            <com.chaos.view.PinView
+            <LinearLayout
+                android:id="@+id/layoutOtp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layoutDirection="rtl"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/etOtp6"
+                    style="@style/OtpEditTextStyle" />
+
+                <EditText
+                    android:id="@+id/etOtp5"
+                    style="@style/OtpEditTextStyle" />
+
+                <EditText
+                    android:id="@+id/etOtp4"
+                    style="@style/OtpEditTextStyle" />
+
+                <EditText
+                    android:id="@+id/etOtp3"
+                    style="@style/OtpEditTextStyle" />
+
+                <EditText
+                    android:id="@+id/etOtp2"
+                    style="@style/OtpEditTextStyle" />
+
+                <EditText
+                    android:id="@+id/etOtp1"
+                    style="@style/OtpEditTextStyle" />
+
+            </LinearLayout>
+
+          <!--  <com.chaos.view.PinView
                 android:id="@+id/pinView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +111,7 @@
                 android:focusableInTouchMode="true"
                 android:cursorVisible="true"
                 android:clickable="true"
-                android:enabled="true" />
+                android:enabled="true" />-->
 
             <RelativeLayout
                 android:layout_width="wrap_content"

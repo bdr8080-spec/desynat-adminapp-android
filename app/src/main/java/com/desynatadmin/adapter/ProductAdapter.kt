@@ -40,6 +40,7 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProdu
                     if (Constants.language=="ar") productData?.brand?.nameArabic.toString() else productData?.brand?.nameEnglish.toString()
                 }
                 tvName.text =  if (Constants.language=="ar") productData.productNameAr else productData.productNameEn
+                tvCountry.text =  if (Constants.language=="ar") productData.sellerDetails?.countryDetails?.nameAr else productData.sellerDetails?.countryDetails?.name
 
                 ivProduct.load(productData?.productVariants?.get(0)?.variantImage?.get(0)) {
                     crossfade(true)
@@ -69,7 +70,11 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProdu
 
                 val variant = productData?.productVariants?.getOrNull(0)
                 val discountValue = variant?.discountValue ?: 0
-                val discountType = if (variant?.discountType == "1")"% off" else " KD off"
+                val discountType = if (variant?.discountType == "1")"% ${context.getString(R.string.off)}" else " KD ${
+                    context.getString(
+                        R.string.off
+                    )
+                }"
                 tvOffer.text = "$discountValue$discountType"
 
                 rvColor.apply {

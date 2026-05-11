@@ -12,6 +12,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemFullScreenBannerBinding
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -23,7 +24,7 @@ class FullScreenBannerAdapter(var context:Context, var bannerList: ArrayList<Get
         fun bind(position: Int) = with(binding){
             val bannerData = bannerList[position]
             tvTitleName.text = bannerData?.title
-                tvCountryName.text = bannerData?.countryInfo?.name
+                tvCountryName.text = if (Constants.language=="ar") bannerData?.countryInfo?.nameAr else bannerData?.countryInfo?.name
                 tvStartDateValue.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 tvEndDateValue.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 Glide.with(context).load(bannerData?.image).placeholder(R.drawable.ic_placeholder).into(ivBanner)

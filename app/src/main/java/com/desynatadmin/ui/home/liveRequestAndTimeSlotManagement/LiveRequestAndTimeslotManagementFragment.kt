@@ -25,6 +25,7 @@ import com.desynatadmin.adapter.TimeSlotAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.AddTimeSlotDialogBinding
+import com.desynatadmin.databinding.DialogMonthYearPickerBinding
 import com.desynatadmin.databinding.FragmentLiveRequestAndTimeslotManagementBinding
 import com.desynatadmin.databinding.RadioCustomCountryPickerBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
@@ -36,6 +37,7 @@ import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiv
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetTimeSlotResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.customCalendar.CalendarAdapter
@@ -97,10 +99,16 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     private lateinit var calendarAdapter: CalendarAdapter
     private val daysList = mutableListOf<CalendarDay>()
 
-    private val months = listOf(
+    private val monthsEnglish = listOf(
         "January", "February", "March", "April",
         "May", "June", "July", "August",
         "September", "October", "November", "December"
+    )
+
+    private val monthsArabic = listOf(
+        "يناير", "فبراير", "مارس", "أبريل",
+        "مايو", "يونيو", "يوليو", "أغسطس",
+        "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
     )
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -140,7 +148,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                     if (countryList[i].name == "Kuwait") {
                         selectedCountryId = countryList[i]
                         selectedCountryIdSlotTime = countryList[i]
-                        etCountry.setText(countryList[i].name)
+                        etCountry.setText(if (Constants.language=="ar") countryList[i].nameAr else countryList[i].name)
                     }
                 }
 
@@ -151,9 +159,9 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
                 val format = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
 
-                tvCalendarDate.text = format.format(selectedCal.time)
+                tvCalendarDate.text = CommonMethod.customizeChangeDateFormat(format.format(selectedCal.time),"EEE, MMM dd","EEE, MMM dd")
                 val format1 = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-                tvSelectedDateToSlot.text = formatDateWithToday(selectedCal)
+                tvSelectedDateToSlot.text = CommonMethod.customizeChangeDateFormat(formatDateWithToday(selectedCal),"dd MMMM yyyy","dd MMMM yyyy")
             }
 
             rvCalendar.layoutManager = GridLayoutManager(requireContext(), 7)
@@ -163,9 +171,9 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             loadCalendar()
 
             val todayFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
-            binding?.tvCalendarDate?.text = todayFormat.format(Calendar.getInstance().time)
+            binding?.tvCalendarDate?.text =  CommonMethod.customizeChangeDateFormat(todayFormat.format(Calendar.getInstance().time),"EEE, MMM dd","EEE, MMM dd")
             val todayFormat1 = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-            binding?.tvSelectedDateToSlot?.text = "Today, "+todayFormat1.format(Calendar.getInstance().time)
+            binding?.tvSelectedDateToSlot?.text = "${getString(R.string.today)}, "+CommonMethod.customizeChangeDateFormat(todayFormat1.format(Calendar.getInstance().time),"dd MMMM yyyy","dd MMMM yyyy")
 
             val current =  SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             timeSlotDate = current.format(Calendar.getInstance().time)
@@ -209,7 +217,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             if (type==1){
                 type = 1
                 liveRequestType = 0
-                binding?.etCountry?.setText(selectedCountryIdSlotTime?.name)
+                binding?.etCountry?.setText(if (Constants.language=="ar") selectedCountryIdSlotTime?.nameAr else selectedCountryIdSlotTime?.name)
                 getTimeSlot()
                 clSearch.isVisible = false
                 llLiveRequest.isVisible = false
@@ -225,7 +233,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             }
             else{
                 type = 2
-                binding?.etCountry?.setText(selectedCountryId?.name)
+                binding?.etCountry?.setText(if (Constants.language=="ar") selectedCountryId?.nameAr else selectedCountryId?.name)
                 clSearch.isVisible = true
                 llLiveRequest.isVisible = true
                 btnAddTimeSlot.isVisible = false
@@ -336,7 +344,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                 type = 1
                 liveRequestType = 0
                 getTimeSlot()
-                binding?.etCountry?.setText(selectedCountryIdSlotTime?.name)
+                binding?.etCountry?.setText(if (Constants.language=="ar") selectedCountryIdSlotTime?.nameAr else selectedCountryIdSlotTime?.name)
                 clSearch.isVisible = false
                 llLiveRequest.isVisible = false
                 llTimeSlot.isVisible = true
@@ -351,7 +359,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                 type = 2
                 liveRequestType = 0
                 getLiveRequest()
-                binding?.etCountry?.setText(selectedCountryId?.name)
+                binding?.etCountry?.setText(if (Constants.language=="ar") selectedCountryId?.nameAr else selectedCountryId?.name)
                 clSearch.isVisible = true
                 llLiveRequest.isVisible = true
                 llTimeSlot.isVisible = false
@@ -431,8 +439,12 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                 setupCalendarAdapter()
             }
 
-            tvMonthYear.setOnClickListener {
+          /*  tvMonthYear.setOnClickListener {
                 openMonthPopup(tvMonthYear)
+            }*/
+
+            tvMonthYear.setOnClickListener {
+                openMonthYearPicker()
             }
 
         }
@@ -731,11 +743,23 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
                 etFromHour.setText(from.hour)
                 etFromMin.setText(from.minute)
-                etFromType.setText(from.type)
+                if (from.type=="AM"){
+                    etFromType.setText(getString(R.string.am))
+                }
+                else{
+                    etFromType.setText(getString(R.string.pm))
+                }
+
+                if (to.type=="AM"){
+                    etToType.setText(getString(R.string.am))
+                }
+                else{
+                    etToType.setText(getString(R.string.pm))
+                }
 
                 etToHour.setText(to.hour)
                 etToMin.setText(to.minute)
-                etToType.setText(to.type)
+               // etToType.setText(to.type)
             }
 
             tvToolbar.setOnClickListener {
@@ -782,15 +806,28 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             btnSubmit.setOnClickListener {
                 val fromHour = etFromHour.text.toString()
                 val fromMin = etFromMin.text.toString()
-                val fromType = etFromType.text.toString()
+                var fromType = etFromType.text.toString()
 
                 val toHour = etToHour.text.toString()
                 val toMin = etToMin.text.toString()
-                val toType = etToType.text.toString()
+                var toType = etToType.text.toString()
 
 
                 if (!isTimeValid(fromHour, fromMin, fromType, toHour, toMin, toType)) {
                     return@setOnClickListener
+                }
+                fromType = if (etFromType.text.toString()==getString(R.string.am)){
+                        "AM"
+                    }
+                else{
+                    "PM"
+                }
+
+                toType = if (etToType.text.toString()==getString(R.string.am)){
+                        "AM"
+                    }
+                else{
+                    "PM"
                 }
 
                 val fromTime = mergeTime(fromHour, fromMin, fromType)
@@ -857,11 +894,17 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     }
 
     private fun convertToMinutes(hour: String, min: String, type: String): Int {
+
         var h = hour.toInt()
         val m = min.toInt()
 
-        if (type == "PM" && h != 12) h += 12
-        if (type == "AM" && h == 12) h = 0
+        if ((type == "PM" || type == "م") && h != 12) {
+            h += 12
+        }
+
+        if ((type == "AM" || type == "ص") && h == 12) {
+            h = 0
+        }
 
         return h * 60 + m
     }
@@ -885,7 +928,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
     private fun updateMonthTitle() {
         val monthYearFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
-        binding?.tvMonthYear?.text = monthYearFormat.format(calendar.time)
+        binding?.tvMonthYear?.text = CommonMethod.customizeChangeDateFormat(monthYearFormat.format(calendar.time),"MMMM yyyy","MMMM yyyy")
     }
 
     private fun loadCalendar() {
@@ -957,10 +1000,10 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
             selectedCalendar?.set(Calendar.DAY_OF_MONTH, selectedDay.day)
 
             val format = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
-            binding?.tvCalendarDate?.text = format.format(selectedCalendar?.time)
+            binding?.tvCalendarDate?.text = CommonMethod.customizeChangeDateFormat(format.format(selectedCalendar?.time),"EEE, MMM dd","EEE, MMM dd")
             val format1 = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
 
-            binding?.tvSelectedDateToSlot?.text = format1.format(selectedCalendar?.time)
+            binding?.tvSelectedDateToSlot?.text = CommonMethod.customizeChangeDateFormat(format1.format(selectedCalendar?.time),"dd MMMM yyyy","dd MMMM yyyy")
 
             timeSlotDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 .format(selectedCalendar?.time)
@@ -970,32 +1013,6 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         binding?.rvCalendar?.adapter = calendarAdapter
     }
 
-    private fun openMonthYearPicker() {
-
-        val constraints = CalendarConstraints.Builder()
-            .setOpenAt(calendar.timeInMillis)
-            .build()
-
-        val picker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select Month & Year")
-            .setTheme(R.style.MaterialCalendarTheme)
-            .setCalendarConstraints(constraints)
-            .build()
-
-        picker.show(parentFragmentManager, "MONTH_YEAR_PICKER")
-
-        picker.addOnPositiveButtonClickListener { selectedMillis ->
-
-            val selectedCalendar = Calendar.getInstance()
-            selectedCalendar.timeInMillis = selectedMillis
-
-            calendar.set(Calendar.MONTH, selectedCalendar.get(Calendar.MONTH))
-            calendar.set(Calendar.YEAR, selectedCalendar.get(Calendar.YEAR))
-
-            setupCalendarAdapter()
-            loadCalendar()
-        }
-    }
 
     private fun formatDateWithToday(calendar: Calendar): String {
         val today = Calendar.getInstance()
@@ -1012,7 +1029,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         val suffix = getDaySuffix(day)
 
         return if (isToday) {
-            "Today, $day$suffix $monthYear"
+            "${getString(R.string.today)}, $day$suffix $monthYear"
         } else {
             "$day$suffix $monthYear"
         }
@@ -1031,10 +1048,65 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         }
     }
 
+    private fun openMonthYearPicker() {
+        val months =
+            if (Constants.language == "ar")
+                monthsArabic
+            else
+                monthsEnglish
+        val dialog = Dialog(requireContext(), R.style.CustomDialog)
+
+        val dialogBinding = DialogMonthYearPickerBinding.inflate(layoutInflater)
+
+        dialog.setContentView(dialogBinding.root)
+
+        dialog.window?.apply {
+            setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
+            setBackgroundDrawableResource(android.R.color.transparent)
+            attributes.gravity = Gravity.BOTTOM
+        }
+        dialog.setCancelable(true)
+
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH)
+
+        dialogBinding.tvToolbar.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogBinding.monthPicker.apply {
+            minValue = 0
+            maxValue = months.size - 1
+            displayedValues = months.toTypedArray()
+            value = currentMonth
+        }
+
+        dialogBinding.yearPicker.apply {
+            minValue = 2020
+            maxValue = 2060
+            value = currentYear
+        }
+
+        dialogBinding.btnApply.setOnClickListener {
+            calendar.set(Calendar.MONTH, dialogBinding.monthPicker.value)
+            calendar.set(Calendar.YEAR, dialogBinding.yearPicker.value)
+
+            loadCalendar()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+
     private fun openMonthPopup(anchor: View) {
         val popup = PopupMenu(requireContext(), anchor)
 
-        months.forEachIndexed { index, month ->
+        monthsEnglish.forEachIndexed { index, month ->
             popup.menu.add(0, index, index, month)
         }
 
@@ -1081,8 +1153,8 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
     private fun showTypeDropdown(view: View, onSelect: (String) -> Unit) {
         val popup = PopupMenu(requireContext(), view)
-        popup.menu.add("AM")
-        popup.menu.add("PM")
+        popup.menu.add(getString(R.string.am))
+        popup.menu.add(getString(R.string.pm))
         popup.setOnMenuItemClickListener {
             onSelect(it.title.toString())
             true
@@ -1110,7 +1182,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
         dialogBinding.apply {
             if(filterCountryId!=null){
-                etCountry.text = countryList.firstOrNull { it.id.toString() == filterCountryId }?.name
+                etCountry.text = if (Constants.language=="ar") countryList.firstOrNull { it.id.toString() == filterCountryId }?.nameAr else countryList.firstOrNull { it.id.toString() == filterCountryId }?.name
             }
             if (filterStartDate!=null){
                 etFrom.text= CommonMethod.formatDate(filterStartDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
@@ -1153,7 +1225,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.text = selectedCountry.name
+                    etCountry.text =if (Constants.language=="ar") selectedCountry.nameAr else   selectedCountry.name
                     selectedFilterCountryId = selectedCountry.id.toString()
                 }
             }
@@ -1199,7 +1271,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
         popupWindow.elevation = 20f
         popupWindow.showAsDropDown(anchor)
 
-        customBinding.etCountry.setText(selectedCountryId?.name)
+        customBinding.etCountry.setText(if (Constants.language=="ar") selectedCountryId?.nameAr else selectedCountryId?.name)
         customBinding.etCountry.setOnClickListener{
             popupWindow.dismiss()
         }
@@ -1209,12 +1281,12 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
 
                 if (type==1){
                     selectedCountryIdSlotTime = countryList[position]
-                    binding?.etCountry?.setText(selectedCountryIdSlotTime?.name)
+                    binding?.etCountry?.setText(if (Constants.language=="ar") selectedCountryIdSlotTime?.nameAr else selectedCountryIdSlotTime?.name)
                     getTimeSlot()
                 }
                 else{
                     selectedCountryId = countryList[position]
-                    binding?.etCountry?.setText(selectedCountryId?.name)
+                    binding?.etCountry?.setText(if (Constants.language=="ar") selectedCountryId?.nameAr else selectedCountryId?.name)
                     getLiveRequest()
                 }
                 popupWindow.dismiss()

@@ -52,6 +52,7 @@
         android:maxLength="5"
         android:inputType="numberDecimal"
         android:background="@null"
+        android:textAlignment="viewStart"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/view"

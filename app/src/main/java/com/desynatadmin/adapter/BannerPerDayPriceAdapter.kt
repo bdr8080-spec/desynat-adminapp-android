@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemBannerPriceBinding
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 
 class BannerPerDayPriceAdapter(var context:Context, var bannerList: ArrayList<GetBannerPricePerDayResponse.Data>, var countryMap: Map<Int, GetCountryResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<BannerPerDayPriceAdapter.ViewHolder>() {
@@ -30,7 +31,7 @@ class BannerPerDayPriceAdapter(var context:Context, var bannerList: ArrayList<Ge
 
             }
             val countryData = countryMap[bannerData.countryId]
-                tvCountry.text = "${countryData?.name}"
+                tvCountry.text = "${if (Constants.language=="ar") countryData?.nameAr else countryData?.name}"
                 tvPrice.text = "${bannerData.perDayPrice} KD"
                 ivFlag.text = "${countryData?.flag}"
 

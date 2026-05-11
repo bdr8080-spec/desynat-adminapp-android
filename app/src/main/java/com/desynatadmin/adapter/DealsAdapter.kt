@@ -9,6 +9,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemDealsBinding
 import com.desynatadmin.ui.home.dealsManagement.response.GetActiveDealResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 
 class DealsAdapter(var context:Context, var dealsList: ArrayList<GetActiveDealResponse.Data.Data>, var dealsClick:DealsClick) : RecyclerView.Adapter<DealsAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemDealsBinding) :
@@ -16,7 +17,7 @@ class DealsAdapter(var context:Context, var dealsList: ArrayList<GetActiveDealRe
         fun bind(position: Int) = with(binding){
             val dealData = dealsList[position]
 
-                tvDealNameValue.text = dealData.nameEnglish
+                tvDealNameValue.text = if (Constants.language=="ar") dealData.nameArabic else dealData.nameEnglish
                 tvDurationValue.text = "${CommonMethod.customizeChangeDateFormat(dealData.from, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}  - ${CommonMethod.customizeChangeDateFormat(dealData.to, inputFormat = "yyyy-MM-dd", outputFormat = "dd/MM/yyyy")}"
             val count = dealData.sellerEnrolled?.sellerCount ?: 0
             tvTotalEnrolled.text = if (count == 1) {

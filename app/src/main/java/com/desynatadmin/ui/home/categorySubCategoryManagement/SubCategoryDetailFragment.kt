@@ -15,6 +15,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentSubCategoryDetailBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
+import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -54,6 +55,18 @@ class SubCategoryDetailFragment : BaseFragment() {
             setData()
             updateStatus()
         }
+
+        findNavController().currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<String>("updatedSubCategoryData")
+            ?.observe(viewLifecycleOwner) { json ->
+                json?.let {
+                    subCategorydata = Gson().fromJson(json, GetSubCategoryResponse.Data.Data::class.java)
+                    setData()
+                    updateStatus()
+                }
+            }
+
         binding?.apply {
             val userInfo = SharedPreference.get(requireActivity()).getUser()
             if (userInfo?.type=="2"){

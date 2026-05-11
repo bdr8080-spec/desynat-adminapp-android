@@ -173,6 +173,8 @@ data class GetBannerRequestResponse(
                     val isoCode: String,
                     @SerializedName("name")
                     val name: String,
+                    @SerializedName("name_ar")
+                    val nameAr: String,
                     @SerializedName("updated_at")
                     val updatedAt: String
                 )

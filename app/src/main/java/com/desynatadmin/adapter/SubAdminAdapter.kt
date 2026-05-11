@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemSubAdminBinding
 import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
 class SubAdminAdapter(var context:Context, var adminList: ArrayList<GetSubAdminResponse.Data.List.Data>, var subAdminClick:SubAdminClick) : RecyclerView.Adapter<SubAdminAdapter.ViewHolder>() {
@@ -19,7 +20,7 @@ class SubAdminAdapter(var context:Context, var adminList: ArrayList<GetSubAdminR
 
             tvName.text = adminData.fullName
 
-            tvLocation.text = adminData.countryInfo.name
+            tvLocation.text = if (Constants.language=="ar")adminData.countryInfo.nameAr else adminData.countryInfo.name
             tvJoinedOn.text = "${context.getString(R.string.added_on)} ${formatUtcDateToDdMmYyyy(adminData.createdAt)}"
             tvEmail.text = adminData.email
             tvCall.text = adminData.countryCode+"-"+adminData.mobile

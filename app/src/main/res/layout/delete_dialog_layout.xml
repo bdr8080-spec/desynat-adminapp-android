@@ -28,7 +28,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:textAlignment="center"
             android:fontFamily="@font/poppins_medium"
-            android:text="Are You Sure? You want to delete?"
+            android:text="@string/are_you_sure_you_want_to_delete"
             android:textColor="#CC000000"
             android:layout_marginBottom="@dimen/_20sdp"
             android:textSize="@dimen/_12sdp" />

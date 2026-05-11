@@ -28,6 +28,7 @@ import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openCustomDatePicker
@@ -693,7 +694,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.text = selectedCountry.name
+                    etCountry.text = if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name
                     selectedCountryId = selectedCountry.id.toString()
                 }
             }

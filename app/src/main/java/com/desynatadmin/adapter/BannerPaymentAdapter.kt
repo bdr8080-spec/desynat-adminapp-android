@@ -23,7 +23,7 @@ class BannerPaymentAdapter(var context:Context, private var paymentList: ArrayLi
             tvUserName.text = paymentData?.sellerDetails?.firstName+" "+paymentData?.sellerDetails?.lastName
             tvOrderId.text = "#${paymentData?.id}"
             tvTransactionId.text = "#${paymentData?.transactionId?:"28673"}"
-            tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${context.getString(R.string.at)}' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(paymentData?.price?.toDoubleOrNull()?:0.0)} KD"
             tvPaymentMode.text =  if (paymentData?.paymentMethod=="3") context.getString(R.string.cod)
             else if (paymentData?.paymentMethod=="1") context.getString(R.string.wallet) else context.getString(R.string.card)

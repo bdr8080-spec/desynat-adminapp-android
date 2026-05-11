@@ -41,6 +41,7 @@
                 android:clickable="true"
                 android:focusable="false"
                 android:layout_marginTop="5dp"
+                android:textAlignment="viewStart"
                 android:layout_centerVertical="true"
                 android:drawableEnd="@drawable/ic_drop_down"/>
 
@@ -71,6 +72,7 @@
                 style="@style/edit_text"
                 android:hint="@string/enter_plan_name"
                 android:inputType="text"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edit_back" />
 
@@ -102,6 +104,7 @@
                 android:hint="@string/enter_plan_name"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="text"
+                android:textAlignment="viewStart"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -126,6 +129,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:inputType="number"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/edit_back" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -141,6 +145,7 @@
                     android:editable="false"
                     android:clickable="true"
                     android:focusable="false"
+                    android:textAlignment="viewStart"
                     android:drawablePadding="@dimen/_5sdp"
                     android:drawableEnd="@drawable/ic_drop_down"/>
 
@@ -261,7 +266,8 @@
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="@string/no_of_videos"/>
+                    android:text="@string/no_of_videos"
+                    android:textAlignment="viewStart"/>
 
             </LinearLayout>
 
@@ -282,6 +288,7 @@
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:inputType="number"
                     android:maxLength="6"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/edit_back" />
 
                 <View
@@ -299,6 +306,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:inputType="number"
                     android:maxLength="6"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/edit_back" />
 
             </LinearLayout>
@@ -343,6 +351,7 @@
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:inputType="number"
                     android:maxLength="6"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/edit_back" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -355,6 +364,7 @@
                     android:layout_marginStart="@dimen/_8sdp"
                     android:inputType="number"
                     android:maxLength="6"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/edit_back" />
 
             </LinearLayout>
@@ -416,6 +426,7 @@
                 android:hint="@string/enter_price"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:inputType="numberDecimal"
+                android:textAlignment="viewStart"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatTextView

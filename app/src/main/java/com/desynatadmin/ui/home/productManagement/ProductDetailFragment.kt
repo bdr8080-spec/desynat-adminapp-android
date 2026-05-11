@@ -27,6 +27,7 @@ import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResp
 import com.desynatadmin.ui.home.productManagement.response.GetProductDetailResponse
 import com.desynatadmin.ui.home.productManagement.response.ProductArrangeResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -222,12 +223,16 @@ class ProductDetailFragment : BaseFragment() {
                 productImageAdapter?.notifyDataSetChanged()
                 viewPager.setCurrentItem(0, false)
 
-                tvBrand.text = if (productDetailData?.brand?.nameEnglish.toString() == "Other") productDetailData?.otherEn.toString() else productDetailData?.brand?.nameEnglish.toString()
-                tvName.text = productDetailData?.productNameEn
-                tvBrandName.text = "${productDetailData?.productNameEn} (by ${productDetailData?.sellerDetails?.firstName.toString()} ${productDetailData?.sellerDetails?.lastName.toString()})"
+                tvBrand.text = if (productDetailData?.brand?.nameEnglish.toString() == "Other") {
+                    if (Constants.language=="ar")  productDetailData?.otherAr.toString() else productDetailData?.otherEn.toString()
+                } else {
+                    if (Constants.language=="ar")  productDetailData?.brand?.nameArabic.toString() else  productDetailData?.brand?.nameEnglish.toString()
+                }
+                tvName.text = if (Constants.language=="ar") productDetailData?.brand?.nameArabic else productDetailData?.brand?.nameEnglish
+                tvBrandName.text = "${if (Constants.language=="ar") productDetailData?.productNameAr else productDetailData?.productNameEn} (${getString(R.string.by)} ${productDetailData?.sellerDetails?.firstName.toString()} ${productDetailData?.sellerDetails?.lastName.toString()})"
 
                 tvStore.text =
-                    productDetailData?.store?.storeName + " (${productDetailData?.category?.name})"
+                    productDetailData?.store?.storeName + " (${if (Constants.language=="ar") productDetailData?.category?.nameAr else productDetailData?.category?.name})"
 
                 val rating = productDetailData?.averageRating?.product?.toFloatOrNull() ?: 0f
                 ratingBar.rating = rating
@@ -240,7 +245,11 @@ class ProductDetailFragment : BaseFragment() {
 
                 val variant = productInfo[selectedColorPos].productVariation?.get(selectedSizePos)
                 val discountValue = variant?.discountValue ?: 0
-                val discountType = if (variant?.discountType == "1") "% off" else " KD off"
+                val discountType = if (variant?.discountType == "1") "% ${getString(R.string.off)}" else " KD ${
+                    getString(
+                        R.string.off
+                    )
+                }"
                 tvOffer.text = "$discountValue$discountType"
 
                 tvAddedOn.text = "${CommonMethod.customizeChangeDateFormat(productDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy")}"
@@ -299,7 +308,7 @@ class ProductDetailFragment : BaseFragment() {
                 tvSellerName.text =
                     productDetailData?.sellerDetails?.firstName + " " + productDetailData?.sellerDetails?.lastName
                 tvStoreName.text = productDetailData?.store?.storeName
-                tvLocation.text = productDetailData?.store?.countryInfo?.name
+                tvLocation.text = if (Constants.language=="ar") productDetailData?.store?.countryInfo?.nameAr else productDetailData?.store?.countryInfo?.name
                 Glide.with(requireActivity()).load(productDetailData?.store?.storeImage)
                     .placeholder(R.drawable.ic_placeholder).into(ivProfileImage)
             }

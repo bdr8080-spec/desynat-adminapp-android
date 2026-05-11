@@ -12,6 +12,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemLiveRequestBinding
 import com.desynatadmin.ui.home.liveRequestAndTimeSlotManagement.response.GetLiveRequestResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -39,9 +40,9 @@ class LiveRequestAdapter(var context:Context, var liveRequestList: ArrayList<Get
 
                 tvName.text = liveRequestData?.sellerDetails?.firstName+" "+ liveRequestData?.sellerDetails?.lastName
                 tvReasonValue.text = liveRequestData?.rejectReason
-                tvCountry.text = liveRequestData?.sellerDetails?.storeInfo?.countryInfo?.name
+                tvCountry.text = if (Constants.language=="ar") liveRequestData?.sellerDetails?.storeInfo?.countryInfo?.nameAr else liveRequestData?.sellerDetails?.storeInfo?.countryInfo?.name
                 tvRequestId.text = "#${liveRequestData?.orderId}"
-                tvLiveRequestValue.text = "${CommonMethod.formatDate(liveRequestData?.timeslotDetails?.date.toString(),"yyyy-MM-dd","dd/MM/yyyy")} | ${liveRequestData?.timeslotDetails?.from}"
+                tvLiveRequestValue.text = "${CommonMethod.formatDate(liveRequestData?.timeslotDetails?.date.toString(),"yyyy-MM-dd","dd/MM/yyyy")} | ${CommonMethod.customizeChangeDateFormat(liveRequestData?.timeslotDetails?.from.toString(),"hh:mm a","hh:mm a")}"
                 tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(liveRequestData?.createdAt.toString(),  outputFormat= "dd/MM/yyyy | hh:mm a")
 
                 when(liveRequestData?.adminVerify){

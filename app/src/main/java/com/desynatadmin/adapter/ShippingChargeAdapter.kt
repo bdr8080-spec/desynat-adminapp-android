@@ -15,7 +15,11 @@ class ShippingChargeAdapter(var context:Context, var shippingChargeList: ArrayLi
         fun bind(position: Int) = with(binding){
             val shippingChargeData = shippingChargeList[position]
 
-                tvDistance.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.rangeFrom?.toDouble())}km - ${CommonMethod.formatDoubleValue(shippingChargeData?.rangeTo?.toDouble())}km"
+                tvDistance.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.rangeFrom?.toDouble())}${context.getString(R.string.km)} - ${CommonMethod.formatDoubleValue(shippingChargeData?.rangeTo?.toDouble())}${
+                    context.getString(
+                        R.string.km
+                    )
+                }"
 
 
                 tvPrice.text = "${CommonMethod.formatDoubleValue(shippingChargeData?.shippingFee?.toDouble())} KD"

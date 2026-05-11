@@ -873,5 +873,23 @@
     <string name="camera_photo">Camera Photo</string>
     <string name="record_video">Record Video</string>
     <string name="profile_details">Profile Details</string>
-
+    <string name="upload_image">Upload Image</string>
+    <string name="upload_banner">Upload Banner</string>
+    <string name="back">Back</string>
+    <string name="front">Front</string>
+    <string name="at">at</string>
+    <string name="are_you_sure_you_want_to_delete">Are You Sure? You want to delete?</string>
+    <string name="off">off</string>
+    <string name="by">by</string>
+    <string name="km">km</string>
+    <string name="select_month_year"><![CDATA[Select Month & Year]]></string>
+    <string name="s">S</string>
+    <string name="m">M</string>
+    <string name="t">T</string>
+    <string name="w">W</string>
+    <string name="f">F</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="hh">HH</string>
+    <string name="mm">MM</string>
 </resources>

@@ -9,6 +9,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemOrderProductBinding
 import com.desynatadmin.ui.home.orderManagement.response.GetActiveOrderResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 
 class OrderProductAdapter(var context:Context, var productList: ArrayList<GetActiveOrderResponse.Data.Data>) : RecyclerView.Adapter<OrderProductAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemOrderProductBinding) :
@@ -16,12 +17,12 @@ class OrderProductAdapter(var context:Context, var productList: ArrayList<GetAct
         fun bind(position: Int) = with(binding){
             val productData = productList[position]
                 tvCount.text = if((position+1)<10) "0${(position+1)}" else (position+1).toString()
-                tvProduct.text = productData?.productDetails?.productNameEn
+                tvProduct.text = if (Constants.language=="ar") productData?.productDetails?.productNameAr else productData?.productDetails?.productNameEn
                 tvPrice.text = "${CommonMethod.formatPrice(productData?.amount?:0.0)} KD"
-                tvFabric.text = productData?.productDetails?.brand?.nameEnglish
-                tvSizeValue.text = productData?.variationDetails?.size?.name
-                tvColorValue.text = productData?.variationDetails?.color?.name
-                tvCategoryValue.text = productData?.productDetails?.category?.name
+                tvFabric.text = if (Constants.language=="ar") productData?.productDetails?.brand?.nameArabic else productData?.productDetails?.brand?.nameEnglish
+                tvSizeValue.text = if (Constants.language=="ar") productData?.variationDetails?.size?.nameAr else productData?.variationDetails?.size?.name
+                tvColorValue.text = if (Constants.language=="ar") productData?.variationDetails?.color?.nameAr else productData?.variationDetails?.color?.name
+                tvCategoryValue.text = if (Constants.language=="ar") productData?.productDetails?.category?.nameAr else productData?.productDetails?.category?.name
                 tvQuantityValue.text = productData?.quantity?.toString()
 
                 ivProduct.load(productData?.variationDetails?.variantImage?.get(0)) {

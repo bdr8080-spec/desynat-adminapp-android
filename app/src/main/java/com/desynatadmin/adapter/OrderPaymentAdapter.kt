@@ -60,7 +60,7 @@ class OrderPaymentAdapter(var context:Context, private var paymentList: ArrayLis
             tvUserName.text = paymentData?.userDetails?.fullName
                 tvOrderId.text = "#${paymentData?.order?.id}"
             tvTransactionId.text = "#${paymentData?.order?.transactionId?:"28673"}"
-            tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.order?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvOrderedOn.text = CommonMethod.customizeChangeDateFormat(paymentData?.order?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${context.getString(R.string.at)}' hh:mm a")
             tvTotalAmount.text = "${CommonMethod.formatPrice(paymentData?.order?.totalAmount?.toDoubleOrNull()?:0.0)} KD"
             tvPaymentMode.text =  if (paymentData?.order?.paymentMethod=="1") context.getString(R.string.card)
             else if (paymentData?.order?.paymentMethod=="1") context.getString(R.string.wallet) else context.getString(R.string.cod)

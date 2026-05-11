@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -88,6 +89,7 @@ class AddGiftCardFragment : BaseFragment() {
                     uri?.let {
                         image = CommonMethod.uriToFile(requireActivity(), it)
                         ivGiftCard.setImageURI(it)
+                        clPlaceholder.isVisible = false
                     }
                 }
             }
@@ -193,6 +195,7 @@ class AddGiftCardFragment : BaseFragment() {
                     placeholder(R.drawable.ic_upload_brand)
                     error(R.drawable.ic_upload_brand)
                 }
+                clPlaceholder.isVisible = false
             }
 
         }

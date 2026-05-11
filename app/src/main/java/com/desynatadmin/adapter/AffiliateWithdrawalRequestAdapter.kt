@@ -43,7 +43,7 @@ class AffiliateWithdrawalRequestAdapter(
                 tvAvailableAmount.text = "${CommonMethod.formatDoubleValue(withdrawalRequestData?.totalEarning?.toDoubleOrNull()?:0.0)} KD"
             tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(
                 withdrawalRequestData?.createdAt.toString(),
-                outputFormat = "dd/MM/yyyy 'at' hh:mm a"
+                outputFormat = "dd/MM/yyyy '${context.getString(R.string.at)}' hh:mm a"
             )
 
             when (withdrawalRequestData?.adminVerify) {

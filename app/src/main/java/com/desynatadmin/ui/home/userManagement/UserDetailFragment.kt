@@ -23,6 +23,7 @@ import com.desynatadmin.databinding.AddAmountDialogBinding
 import com.desynatadmin.databinding.FragmentUserDetailBinding
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
@@ -169,7 +170,7 @@ class UserDetailFragment : BaseFragment() {
                 tvWalletBalance.text = "${CommonMethod.formatAmount(userData?.walletInfo?.amount.toString())} KD"
             }
             tvName.text = userData?.fullName
-            tvLocation.text = userData?.countryInfo?.name
+            tvLocation.text =if (Constants.language=="ar") userData?.countryInfo?.nameAr else  userData?.countryInfo?.name
             tvJoinedOn.text = "${getString(R.string.joined_on)} ${userData?.createdAt?.let { formatUtcDateToDdMmYyyy(it) }}"
             tvEmail.text = userData?.email
             tvCall.text = userData?.countryCode+"-"+userData?.mobile

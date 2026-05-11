@@ -45,6 +45,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
+        android:textAlignment="viewStart"
         android:text="Sed ut perspiciatis unde omnis iste natus  error sit voluptatem accusantium  doloremque laudantium, "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

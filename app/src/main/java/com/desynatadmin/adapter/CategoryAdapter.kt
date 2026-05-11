@@ -10,6 +10,7 @@ import coil.load
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemCategoryBinding
 import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetCategoryResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 
 class CategoryAdapter(var context:Context, private var categoryList: ArrayList<GetCategoryResponse.Data>, var categoryClick:CategoryClick) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -43,13 +44,13 @@ class CategoryAdapter(var context:Context, private var categoryList: ArrayList<G
                     clLeft.isVisible = true
                 }
 
-                tvCategoryName.text = categoryData.name
+                tvCategoryName.text = if (Constants.language=="ar") categoryData?.nameAr else categoryData.name
                 tvDescription.text = categoryData.description
                 ivCategory.load(categoryData.image)
 
                 relCategory.backgroundTintList = ColorStateList.valueOf(Color.parseColor(categoryData.colorCode))
 
-                tvCategoryName1.text = categoryData.name
+                tvCategoryName1.text = if (Constants.language=="ar") categoryData?.nameAr else categoryData.name
                 tvDescription1.text = categoryData.description
                 ivCategory1.load(categoryData.image)
 

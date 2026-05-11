@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -90,6 +91,7 @@ class AddBrandFragment : BaseFragment() {
                 uri?.let {
                     image = CommonMethod.uriToFile(requireActivity(), it)
                     ivBrand.setImageURI(it)
+                    clPlaceholder.isVisible = false
                 }
             }
         }
@@ -169,6 +171,12 @@ class AddBrandFragment : BaseFragment() {
         viewModel.updateBrandResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                brandData?.nameEnglish = response.data.nameEnglish
+                brandData?.nameArabic = response.data.nameArabic
+                brandData?.image = response.data.image
+                findNavController().previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("updatedBrandData", Gson().toJson(brandData))
                 CommonMethod.showSuccessDialog(requireContext(),
                     getString(R.string.brand_updated_successfully)){
                     findNavController().popBackStack()
@@ -186,6 +194,7 @@ class AddBrandFragment : BaseFragment() {
             etEnglishBrandName.setText(brandData?.nameEnglish)
             etArabicBrandName.setText(brandData?.nameArabic)
             imageUrl = brandData?.image.toString()
+            clPlaceholder.isVisible = false
             ivBrand.load(brandData?.image) {
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)

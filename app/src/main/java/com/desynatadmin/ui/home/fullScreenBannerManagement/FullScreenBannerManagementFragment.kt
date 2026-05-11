@@ -647,7 +647,7 @@ class FullScreenBannerManagementFragment : BaseFragment() {
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.text = selectedCountry.name
+                    etCountry.text =if (Constants.language=="ar") selectedCountry.nameAr else   selectedCountry.name
                     selectedCountryId = selectedCountry.id.toString()
                 }
             }

@@ -87,7 +87,9 @@ data class GetFullScreenBannerResponse(
                 @SerializedName("iso_code_number")
                 val isoCodeNumber: String,
                 @SerializedName("name")
-                val name: String
+                val name: String,
+                @SerializedName("name_ar")
+                val nameAr: String
             )
         }
 

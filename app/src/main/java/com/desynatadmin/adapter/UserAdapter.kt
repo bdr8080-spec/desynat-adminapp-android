@@ -11,6 +11,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemUserBinding
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
@@ -37,7 +38,7 @@ class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.D
             if (userData.walletInfo!=null){
                 tvWalletBalance.text = "${CommonMethod.formatAmount(userData.walletInfo.amount)} KD"
             }
-            tvLocation.text = userData.countryInfo.name
+            tvLocation.text = if (Constants.language=="ar") userData.countryInfo.nameAr else userData.countryInfo.name
             tvJoinedOn.text = "${context.getString(R.string.joined_on)} ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
             tvEmail.text = userData.email
             tvCall.text = userData.countryCode+"-"+userData.mobile

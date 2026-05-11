@@ -27,6 +27,7 @@ import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealDetailResponse
 import com.desynatadmin.ui.home.dealsManagement.response.GetDealProductResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
@@ -177,13 +178,14 @@ class EnrolledSellerDetailFragment : BaseFragment() {
     private fun setData(){
         binding?.apply {
             tvSellerName.text = sellerDealRecord?.sellerDetails?.firstName+" "+sellerDealRecord?.sellerDetails?.lastName
-            tvCountry.text =  sellerDealRecord?.sellerDetails?.countryDetails?.name
+            tvCountry.text =   if (Constants.language=="ar") sellerDealRecord?.sellerDetails?.countryDetails?.nameAr else sellerDealRecord?.sellerDetails?.countryDetails?.name
             val count = sellerDealRecord?.productCount ?: 0
             tvTotalProductAdded.text = if (count == 1) {
                 "$count ${getString(R.string.product)}"
             } else {
                 "$count ${getString(R.string.products)}"
             }
+            tvTotalSoldAdded.text = "$count ${getString(R.string.products)}"
         }
     }
 

@@ -10,6 +10,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemBannerRequestBinding
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 
 class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: ArrayList<GetBannerRequestResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<BannerRequestAdapter.ViewHolder>() {
@@ -35,9 +36,9 @@ class BannerRequestAdapter(var context:Context, var type:Int,var bannerList: Arr
             }
 
                 tvName.text = bannerRequestData.sellerDetails?.firstName+" "+bannerRequestData.sellerDetails?.lastName
-                tvCountry.text = bannerRequestData.sellerDetails?.countryDetails?.name
+                tvCountry.text = if (Constants.language=="ar") bannerRequestData.sellerDetails?.countryDetails?.nameAr else bannerRequestData.sellerDetails?.countryDetails?.name
                 tvRequestId.text = "#${bannerRequestData?.orderId}"
-                tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerRequestData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+                tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerRequestData?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${context.getString(R.string.at)}' hh:mm a")
                 tvDurationValue.text = bannerRequestData.totalDays
                 tvTotalAmountValue.text = "${CommonMethod.formatAmount(bannerRequestData?.price?:"")} KD"
                 when(bannerRequestData?.bannerPosition) {

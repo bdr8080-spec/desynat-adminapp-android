@@ -15,6 +15,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentPlanDetailBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -201,7 +202,7 @@ class PlanDetailFragment : BaseFragment() {
 
         binding?.apply {
             background?.let { tvPackage.setBackgroundResource(it) }
-            tvPackage.text = subscriptionData?.planNameEnglish
+            tvPackage.text =if (Constants.language=="ar") subscriptionData?.planNameArabic else subscriptionData?.planNameEnglish
             if(subscriptionData?.discountedPrice!=null&&subscriptionData?.discountedPrice!=0.0){
                 tvPrice.text = "KD ${CommonMethod.formatDoubleValue(subscriptionData?.discountedPrice)}"
             }

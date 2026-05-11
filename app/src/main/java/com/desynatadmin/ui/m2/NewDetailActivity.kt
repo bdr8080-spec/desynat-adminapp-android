@@ -14,6 +14,7 @@ import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityNewDetailBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import com.desynatadmin.utils.showToast
@@ -142,7 +143,7 @@ class NewDetailActivity : BaseActivity() {
         viewModel.getSellerDetailData.observe(this){
             binding.tvName.text = it.data.first_name
             binding.tvStoreName.text = it.data.store_info.store_name
-            binding.tvLocation.text = it.data.store_info.country_info.name
+            binding.tvLocation.text = if (Constants.language=="ar") it.data.store_info.country_info.name_ar else it.data.store_info.country_info.name
             binding.tvCall.text = it.data.country_code + "-" + it.data.mobile
             binding.tvEmail.text = it.data.email
             binding.tvAddress.text = it.data.store_info.store_address

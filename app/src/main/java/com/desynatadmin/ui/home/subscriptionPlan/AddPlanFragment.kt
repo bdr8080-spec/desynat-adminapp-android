@@ -22,6 +22,7 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.AddPlanRequest
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -102,7 +103,7 @@ class AddPlanFragment : BaseFragment() {
 
             etCountry.setOnClickListener {
                 CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry, isDialCode = false){ selectedCountry ->
-                    etCountry.setText(selectedCountry.name)
+                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                 }
             }
@@ -309,7 +310,12 @@ class AddPlanFragment : BaseFragment() {
             rbOpen.isChecked = subscriptionData?.stories==1
             rbClose.isChecked = subscriptionData?.stories==0
             durationType = subscriptionData?.durationType.toString()
-            etCountry.setText(countryList.find { it.id == subscriptionData?.countryId}?.name.toString())
+            etCountry.setText(if (Constants.language=="ar") {
+                countryList.find { it.id == subscriptionData?.countryId}?.nameAr.toString()
+            }
+                    else{
+                        countryList.find { it.id == subscriptionData?.countryId}?.name.toString()
+            })
             when (subscriptionData?.durationType?.toString()) {
                 "1" -> etMonth.setText(getString(R.string.month))
                 "2" -> etMonth.setText(getString(R.string.year))

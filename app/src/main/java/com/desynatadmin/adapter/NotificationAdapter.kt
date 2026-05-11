@@ -16,8 +16,8 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<G
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val notificationData = notificationList[position]
-            tvTitle.text = if (Constants.language=="ar") notificationData?.titleArabic else notificationData?.titleEnglish
-            tvDescription.text = if (Constants.language=="ar") notificationData?.descriptionArabic else notificationData?.descriptionEnglish
+            tvTitle.text = if (Constants.language=="ar") notificationData?.titleArabic?:notificationData?.titleEnglish else notificationData?.titleEnglish
+            tvDescription.text = if (Constants.language=="ar") notificationData?.descriptionArabic?:notificationData?.descriptionEnglish else notificationData?.descriptionEnglish
             tvDate.text = CommonMethod.customizeChangeDateFormat(notificationData.createdAt, outputFormat = "dd/MM/yyyy")
 //            if (notificationData?.totalReceivers?:0 > 1 ) {
 //                tvSentName.text = "Sent To- ${notificationData?.receiverDetails?.get(0)?.fullName?:notificationData?.receiverDetails?.get(0)?.fullNameEnglish} + ${(notificationData?.totalReceivers ?: 0) - 1}"

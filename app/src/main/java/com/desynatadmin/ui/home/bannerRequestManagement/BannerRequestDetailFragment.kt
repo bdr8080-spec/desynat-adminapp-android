@@ -123,7 +123,7 @@ class BannerRequestDetailFragment : BaseFragment() {
             tvName.text = bannerData?.sellerDetails?.firstName+" "+bannerData?.sellerDetails?.lastName
             tvCountry.text = bannerData?.sellerDetails?.countryDetails?.name
             tvRequestId.text = "#${bannerData?.orderId}"
-            tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvRequestOnValue.text = CommonMethod.customizeChangeDateFormat(bannerData?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${getString(R.string.at)}' hh:mm a")
             when(bannerData?.bannerPosition){
                 "1" ->{
                     tvBannerPositionValue.text = getString(R.string.home_top)

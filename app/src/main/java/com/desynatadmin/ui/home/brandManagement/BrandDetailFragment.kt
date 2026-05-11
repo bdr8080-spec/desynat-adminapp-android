@@ -16,6 +16,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAddBrandBinding
 import com.desynatadmin.databinding.FragmentBrandDetailBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
+import com.desynatadmin.ui.home.categorySubCategoryManagement.response.GetSubCategoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -54,6 +55,17 @@ class BrandDetailFragment : BaseFragment() {
             setData()
             updateStatus()
         }
+
+        findNavController().currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<String>("updatedBrandData")
+            ?.observe(viewLifecycleOwner) { json ->
+                json?.let {
+                    brandData = Gson().fromJson(json, GetBrandResponse.Data.Data::class.java)
+                    setData()
+                    updateStatus()
+                }
+            }
         binding?.apply {
 
             val userInfo = SharedPreference.get(requireActivity()).getUser()

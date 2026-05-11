@@ -113,6 +113,7 @@ data class NewSellerResponse(
                     var id: Int,
                     var iso_code: String,
                     var name: String,
+                    var name_ar: String,
                     var updated_at: String
                 )
             }

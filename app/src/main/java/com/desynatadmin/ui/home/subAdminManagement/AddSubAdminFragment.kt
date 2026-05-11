@@ -23,6 +23,7 @@ import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailRes
 import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminPanelModuleResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.mediaPicker.ImagePicker
@@ -100,6 +101,7 @@ class AddSubAdminFragment : BaseFragment() {
                 ivProfileImage.isVisible = true
                 tvChangeImage.isVisible = true
                 ivProfile.isVisible = false
+                clPlaceholder.isVisible = false
                 setData()
 
             }
@@ -109,6 +111,7 @@ class AddSubAdminFragment : BaseFragment() {
                 ivProfileImage.isVisible = false
                 tvChangeImage.isVisible = false
                 ivProfile.isVisible = true
+                clPlaceholder.isVisible = true
 
             }
             CommonMethod.applyArabicOnlyFilter(etFullNameArabic)
@@ -131,6 +134,7 @@ class AddSubAdminFragment : BaseFragment() {
                         ivProfileImage.setImageURI(selectedUri)
                     } else {
                         ivProfile.setImageURI(selectedUri)
+                        clPlaceholder.isVisible = false
                     }
 
                     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
@@ -231,7 +235,7 @@ class AddSubAdminFragment : BaseFragment() {
 
             etCountry.setOnClickListener {
                 CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
-                    etCountry.setText(selectedCountry.name)
+                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                 }
             }
@@ -354,7 +358,7 @@ class AddSubAdminFragment : BaseFragment() {
         binding?.apply {
             profileImageUrl = subAdminData?.profilePic.toString()
             etEmailID.setText(subAdminData?.email)
-            etCountry.setText(subAdminData?.countryInfo?.name)
+            etCountry.setText(if (Constants.language=="ar") subAdminData?.countryInfo?.nameAr else subAdminData?.countryInfo?.name)
             selectedCountryCode = subAdminData?.countryInfo?.id.toString()
             etFullNameEnglish.setText(subAdminData?.fullName)
             etFullNameArabic.setText(subAdminData?.fullNameAr)

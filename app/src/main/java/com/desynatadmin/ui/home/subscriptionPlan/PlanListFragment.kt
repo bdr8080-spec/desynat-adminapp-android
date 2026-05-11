@@ -21,6 +21,7 @@ import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -121,7 +122,7 @@ class PlanListFragment : BaseFragment() {
                     countryList = countryList,
                     isDialCode = false
                 ) { selectedCountry ->
-                    etCountry.setText(selectedCountry.name)
+                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                     getSubscriptionPlan(true)
                 }
@@ -185,7 +186,7 @@ class PlanListFragment : BaseFragment() {
         if (!countryList.isNullOrEmpty()) {
             SharedPreference.get(requireActivity()).saveCountryList(countryList)
             selectedCountryCode = countryList[0].id.toString()
-            binding?.etCountry?.setText(countryList[0].name)
+            binding?.etCountry?.setText(if (Constants.language=="ar") countryList[0].nameAr else countryList[0].name)
             getSubscriptionPlan()
         }
     }

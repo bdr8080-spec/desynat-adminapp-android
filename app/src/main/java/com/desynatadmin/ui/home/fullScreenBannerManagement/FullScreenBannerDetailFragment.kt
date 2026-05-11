@@ -18,6 +18,7 @@ import com.desynatadmin.databinding.FragmentFullScreenBannerDetailBinding
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
@@ -131,7 +132,7 @@ class FullScreenBannerDetailFragment : BaseFragment() {
 
             tvTitle.text = bannerData?.title
 
-            tvCountry.text =  countryList.firstOrNull { it.id.toString() == bannerData?.countryId.toString() }?.name
+            tvCountry.text =  if (Constants.language=="ar") countryList.firstOrNull { it.id.toString() == bannerData?.countryId.toString() }?.nameAr else countryList.firstOrNull { it.id.toString() == bannerData?.countryId.toString() }?.name
             tvStartDate.text = CommonMethod.formatDate(bannerData?.startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             tvEndDate.text = CommonMethod.formatDate(bannerData?.endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
             tvTypeValue.text = if (bannerData?.type=="2") getString(R.string.web_banner) else getString(

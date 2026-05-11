@@ -8,6 +8,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemCheckboxBrandBinding
 import com.desynatadmin.ui.home.brandManagement.response.GetBrandResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.Constants
 
 class FilterCountryAdapter(var context:Context, var countryList: ArrayList<GetCountryResponse.Data>, var onClick: OnClick) : RecyclerView.Adapter<FilterCountryAdapter.ViewHolder>() {
     var selectedPos = -1
@@ -31,7 +32,7 @@ class FilterCountryAdapter(var context:Context, var countryList: ArrayList<GetCo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
 
-            tvBrand.text = countryList[position].name
+            tvBrand.text = if (Constants.language=="ar") countryList[position].nameAr else countryList[position].name
 
             if (countryList[position].isSelected){
                 selectedPos = position

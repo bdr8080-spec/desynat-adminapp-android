@@ -34,6 +34,8 @@ data class GetShippingTaxResponse(
         val isoCode: String,
         @SerializedName("name")
         val name: String,
+        @SerializedName("name_ar")
+        val nameAr: String,
         @SerializedName("shipping_info")
         val shippingInfo: List<ShippingInfo>,
         @SerializedName("tax_info")

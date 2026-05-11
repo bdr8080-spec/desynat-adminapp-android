@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.ItemAffiliateCommissionBinding
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 
 class AffiliateCommissionAdapter(var context:Context, var affiliateCommissionList: ArrayList<GetAffiliateCommissionResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<AffiliateCommissionAdapter.ViewHolder>() {
@@ -15,7 +16,7 @@ class AffiliateCommissionAdapter(var context:Context, var affiliateCommissionLis
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val affiliateCommissionData = affiliateCommissionList[position]
-                tvCountry.text = "${affiliateCommissionData?.flag}  ${affiliateCommissionData.name}"
+                tvCountry.text = "${affiliateCommissionData?.flag}  ${if (Constants.language=="ar") affiliateCommissionData.nameAr else affiliateCommissionData.name}"
                 tvCommissionValue.text = "${CommonMethod.formatDoubleValue(affiliateCommissionData?.affiliateCommissionInfo?.commission?.toDouble())}%"
 
             val userInfo = SharedPreference.get(context).getUser()

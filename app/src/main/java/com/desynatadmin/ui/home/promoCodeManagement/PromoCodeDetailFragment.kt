@@ -155,7 +155,7 @@ class PromoCodeDetailFragment : BaseFragment() {
             tvFeature.text = "${getString(R.string.flat)} ${promoCodeData?.discountPercent}% ${getString(R.string.off_on_minimum_order)} ${promoCodeData?.minOrderValue} KD"
             tvPromoCodeName.text = if(Constants.language=="ar") promoCodeData?.nameArabic else promoCodeData?.nameEnglish
             tvTerms.text = if(Constants.language=="ar") promoCodeData?.descriptionArabic else promoCodeData?.descriptionEnglish
-            tvCountry.text =  countryList.firstOrNull { it.id.toString() == promoCodeData?.countryId.toString() }?.name
+            tvCountry.text =  if (Constants.language=="ar") countryList.firstOrNull { it.id.toString() == promoCodeData?.countryId.toString() }?.nameAr else countryList.firstOrNull { it.id.toString() == promoCodeData?.countryId.toString() }?.name
             tvApplicable.text = if(promoCodeData?.applicableFor==1) getString(R.string.first_order) else getString(
                 R.string.every_order
             )

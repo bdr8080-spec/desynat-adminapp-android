@@ -11,6 +11,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAffiliateUserBinding
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
@@ -63,7 +64,7 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAf
 
 
                 tvName.text = userData.fullName
-                tvLocation.text = userData.countryDetails?.name
+                tvLocation.text = if (Constants.language=="ar") userData?.countryDetails?.nameAr else userData.countryDetails?.name
                 tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
                 tvEmail.text = userData.email
                 tvCall.text = userData.countryCode+"-"+userData.mobile

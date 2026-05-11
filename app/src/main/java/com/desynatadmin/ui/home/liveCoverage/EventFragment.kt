@@ -19,6 +19,7 @@ import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.liveCoverage.response.GetLiveStreamingRoomResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
@@ -104,7 +105,7 @@ class EventFragment : BaseFragment() {
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.setText(selectedCountry.name)
+                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
                     selectedCountryId = selectedCountry
                     getLiveStreaming()
                 }
@@ -163,7 +164,7 @@ class EventFragment : BaseFragment() {
             if (countryList[i].name == "Kuwait") {
                 selectedCountryId = countryList[i]
                 selectedCountryId = countryList[i]
-                binding?.etCountry?.setText(countryList[i].name)
+                binding?.etCountry?.setText(if (Constants.language=="ar") countryList[i].nameAr else countryList[i].name)
                 getLiveStreaming()
             }
         }

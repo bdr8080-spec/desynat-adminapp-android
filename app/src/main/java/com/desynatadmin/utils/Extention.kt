@@ -333,10 +333,12 @@ fun EditText.togglePasswordVisibility(passwordToggle: ImageView) {
 }
 
 fun openDatePicker(context: Context,onClick:(String,Long)->Unit){
+    val locale: Locale = Locale(if (Constants.language=="ar") "ar-u-nu-latn" else "en")
+    Locale.setDefault(locale)
     val calendar = Calendar.getInstance()
 
     val datePickerDialog = DatePickerDialog(
-        context,
+        context,R.style.DialogTheme,
         { _, year, month, dayOfMonth ->
             val selectedDate = "$dayOfMonth/${month + 1}/$year"
             val timestamp = calendar.timeInMillis
@@ -355,6 +357,8 @@ fun openCustomDatePicker(
     minDate: Long? = null,
     onClick: (String, Long) -> Unit
 ) {
+    val locale: Locale = Locale(if (Constants.language=="ar") "ar-u-nu-latn" else "en")
+    Locale.setDefault(locale)
     val today = Calendar.getInstance()
 
     val datePickerDialog = DatePickerDialog(
@@ -393,6 +397,8 @@ fun openCustomizeDatePicker(
     maxDate: Long? = null,
     onClick: (String, Long) -> Unit
 ) {
+    val locale: Locale = Locale(if (Constants.language=="ar") "ar-u-nu-latn" else "en")
+    Locale.setDefault(locale)
     val today = Calendar.getInstance()
 
     val datePickerDialog = DatePickerDialog(

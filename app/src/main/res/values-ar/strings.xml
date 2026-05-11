@@ -870,4 +870,25 @@
     <string name="camera_photo">صورة من الكاميرا</string>
     <string name="record_video">تسجيل فيديو</string>
     <string name="profile_details">تفاصيل الحساب</string>
+    <string name="upload_image">تحميل صورة</string>
+    <string name="upload_banner">تحميل البانر</string>
+    <string name="back">الخلف</string>
+    <string name="front">الأمام</string>
+    <string name="at">في</string>
+
+    <string name="select_month_year"><![CDATA[اختر الشهر والسنة]]></string>
+    <string name="s">ح</string>
+    <string name="m">ن</string>
+    <string name="t">ث</string>
+    <string name="w">ر</string>
+    <string name="f">ج</string>
+    <string name="are_you_sure_you_want_to_delete">هل أنت متأكد؟ هل تريد الحذف؟</string>
+    <string name="off">خصم</string>
+    <string name="by">بواسطة</string>
+    <string name="km">كم</string>
+    <string name="am">ص</string>
+    <string name="pm">م</string>
+    <string name="hh">ساعة</string>
+    <string name="mm">دقيقة</string>
+
 </resources>

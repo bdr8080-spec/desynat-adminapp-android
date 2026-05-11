@@ -10,6 +10,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.CityListItemBinding
 import com.desynatadmin.databinding.CountryRecylerBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.Constants
 
 class CountryAdapter(var list:ArrayList<GetCountryResponse.Data>,var context: Context,var onClick:(String,String)->Unit): RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CountryRecylerBinding) :
@@ -34,7 +35,7 @@ class CountryAdapter(var list:ArrayList<GetCountryResponse.Data>,var context: Co
                 name.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.ic_radio_unselected,0)
 
             }
-            name.text="${list[position].flag}  ${list[position].name}"
+            name.text="${list[position].flag}  ${if (Constants.language=="ar") list[position].nameAr else list[position].name}"
             root.setOnClickListener {
                 selectedIndex=position
                 notifyDataSetChanged()

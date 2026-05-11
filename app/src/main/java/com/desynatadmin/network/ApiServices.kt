@@ -222,7 +222,7 @@ interface ApiServices {
     @Multipart
     @POST(Constants.UPDATE_BRAND)
     suspend fun editBrand(
-        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+        @PartMap map : HashMap<String,RequestBody>): Response<UpdateBrandStatusResponse>
 
     @POST(Constants.UPDATE_BRAND_STATUS)
     suspend fun updateBrandStatus(
@@ -242,7 +242,7 @@ interface ApiServices {
     @Multipart
     @POST(Constants.UPDATE_SUB_CATEGORY)
     suspend fun editSubCategory(
-        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+        @PartMap map : HashMap<String,RequestBody>): Response<UpdateSubCategoryResponse>
 
     @POST(Constants.UPDATE_SUB_CATEGORY_STATUS)
     suspend fun updateSubCategoryStatus(
