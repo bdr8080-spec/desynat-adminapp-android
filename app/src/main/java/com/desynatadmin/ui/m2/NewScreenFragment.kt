@@ -184,7 +184,7 @@ class NewScreenFragment : BaseFragment() {
 
     fun filterData(s:String){
         var arr=list.filter { it.first_name.contains(s,true) }
-        (binding?.newRecycler?.adapter as NewAdapter).list=arr
+        (binding?.newRecycler?.adapter as? NewAdapter)?.list=arr
         if(arr.isNullOrEmpty()){
             binding?.noSeller?.isVisible = true
             binding?.newRecycler?.isVisible = false
@@ -193,7 +193,7 @@ class NewScreenFragment : BaseFragment() {
             binding?.noSeller?.isVisible = false
             binding?.newRecycler?.isVisible = true
         }
-        (binding?.newRecycler?.adapter as NewAdapter).notifyDataSetChanged()
+        (binding?.newRecycler?.adapter as? NewAdapter)?.notifyDataSetChanged()
     }
 
     fun exportData(){

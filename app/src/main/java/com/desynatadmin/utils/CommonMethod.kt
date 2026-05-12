@@ -408,9 +408,9 @@ object CommonMethod {
 
 
     fun customizeChangeDateFormat(inputDate: String,inputFormat:String="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",outputFormat:String="dd MMM,yyyy"): String {
-        val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.getDefault()).apply {
+        val originalFormat: SimpleDateFormat = SimpleDateFormat(inputFormat, Locale.ENGLISH).apply {
             timeZone = TimeZone.getTimeZone("UTC")}
-        val targetFormat = SimpleDateFormat(outputFormat, Locale.getDefault()).apply {
+        val targetFormat = SimpleDateFormat(outputFormat, Locale.ENGLISH).apply {
             timeZone = TimeZone.getDefault()
         }
         val date: Date

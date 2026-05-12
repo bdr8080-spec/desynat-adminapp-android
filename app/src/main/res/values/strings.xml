@@ -892,4 +892,12 @@
     <string name="pm">PM</string>
     <string name="hh">HH</string>
     <string name="mm">MM</string>
+    <string name="exchange_reason_updated_successfully">Exchange Reason Updated Successfully</string>
+    <string name="exchange_reason_blocked_successfully">Exchange Reason Blocked Successfully</string>
+    <string name="exchange_reason_unblocked_successfully">Exchange Reason Unblocked Successfully</string>
+    <string name="exchange_reason_deleted_successfully">Exchange Reason Deleted Successfully</string>
+    <string name="of">of</string>
+    <string name="a_z">A-Z</string>
+    <string name="hi_there">Hi there</string>
+    <string name="promotional_banner_updated_successfully">Promotional Banner Updated Successfully</string>
 </resources>

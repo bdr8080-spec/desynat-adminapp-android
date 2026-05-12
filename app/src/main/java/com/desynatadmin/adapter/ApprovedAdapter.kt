@@ -32,7 +32,7 @@ class ApprovedAdapter(var context: Context,var list : ArrayList<ApprovedSellerRe
         holder.binding.apply {
             val item = list[position]
             tvName.text = item.first_name
-            tvLocation.text = if (Constants.language=="ar")item.store_info.country_info?.name_ar else item?.store_info?.country_info?.name
+            tvLocation.text = if (Constants.language=="ar")item?.store_info?.country_info?.name_ar?:item?.store_info?.country_info?.name else item?.store_info?.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic).transform(CircleCrop()).placeholder(R.drawable.ic_user).into(ivProfileImage)
             tvEmail.text = item.email

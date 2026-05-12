@@ -3,6 +3,7 @@ package com.desynatadmin.ui.m2
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -23,6 +24,7 @@ import com.desynatadmin.databinding.FilterDialogBinding
 import com.desynatadmin.databinding.FragmentRejectedScreenBinding
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.openDatePicker
 import com.desynatadmin.utils.showToast
@@ -41,8 +43,14 @@ class SellerManagementActivity : AppCompatActivity() {
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        CommonMethod.setLocale(this, Constants.language)
         super.onCreate(savedInstanceState)
         binding = ActivitySellerManagementBinding.inflate(layoutInflater)
+        if (Constants.language == "ar") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
         setContentView(binding.root)
 
         back = findViewById(R.id.tvToolbar)

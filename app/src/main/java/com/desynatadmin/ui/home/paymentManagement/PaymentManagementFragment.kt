@@ -110,10 +110,16 @@ class PaymentManagementFragment : BaseFragment() {
     private var orderCommission=0.0
     private var specialCommission=0.0
 
-    private val months = listOf(
+    private val monthsEnglish = listOf(
         "January", "February", "March", "April",
         "May", "June", "July", "August",
         "September", "October", "November", "December"
+    )
+
+    private val monthsArabic = listOf(
+        "يناير", "فبراير", "مارس", "أبريل",
+        "مايو", "يونيو", "يوليو", "أغسطس",
+        "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
     )
 
     private var selectedMonthIndex: Int = -1
@@ -421,7 +427,7 @@ class PaymentManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
@@ -484,7 +490,7 @@ class PaymentManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
@@ -547,7 +553,7 @@ class PaymentManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
@@ -610,7 +616,7 @@ class PaymentManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
@@ -1237,6 +1243,11 @@ class PaymentManagementFragment : BaseFragment() {
     }
 
     private fun openMonthPopup(anchor: View, onMonthSelected: (Int, String) -> Unit) {
+        val months =
+            if (Constants.language == "ar")
+                monthsArabic
+            else
+                monthsEnglish
         val popup = PopupMenu(requireContext(), anchor)
 
         months.forEachIndexed { index, month ->
@@ -1330,8 +1341,8 @@ class PaymentManagementFragment : BaseFragment() {
         binding?.etMonth?.text = ""
         binding?.etYear?.text = ""
 
-        binding?.etMonth?.hint = "Select Month"
-        binding?.etYear?.hint = "Select Year"
+        binding?.etMonth?.hint = getString(R.string.select_month)
+        binding?.etYear?.hint =  getString(R.string.select_year)
 
         when (type) {
             1 -> {

@@ -39,6 +39,7 @@
                     android:singleLine="true"
                     android:drawableStart="@drawable/ic_search"
                     android:hint="@string/search"
+                    android:textAlignment="viewStart"
                     android:textColorHint="#5B6163"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />

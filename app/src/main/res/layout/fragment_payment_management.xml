@@ -348,6 +348,7 @@
                     android:drawablePadding="10dp"
                     android:ellipsize="end"
                     android:hint="@string/search"
+                    android:textAlignment="viewStart"
                     android:paddingStart="12dp"
                     android:singleLine="true"
                     android:textColor="@color/black"

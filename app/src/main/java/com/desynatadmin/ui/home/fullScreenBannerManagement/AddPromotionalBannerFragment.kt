@@ -295,7 +295,8 @@ class AddPromotionalBannerFragment : BaseFragment() {
                     findNavController().previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("updatedPromotionalBannerData", Gson().toJson(bannerData))
-                    CommonMethod.showSuccessDialog(requireContext(), response.message){
+                    CommonMethod.showSuccessDialog(requireContext(),
+                        getString(R.string.promotional_banner_updated_successfully)){
                         findNavController().popBackStack()
                     }
                     isObserver = false
@@ -313,7 +314,9 @@ class AddPromotionalBannerFragment : BaseFragment() {
                     if (bannerData==null){
                         getCategoryId("Men")
                     }
-
+                    else if (bannerData!=null&&bannerData?.bannerPosition!="3"){
+                        getCategoryId("Men")
+                    }
                     isObserver = false
                 }
             }
@@ -331,13 +334,13 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
 
     private fun showSubCategoryDropdown(view: AppCompatEditText) {
-        val list = subCategoryList.map { it.nameEnglish }
+        val list = subCategoryList.map { if (Constants.language=="ar") it?.nameArabic else it?.nameEnglish }
         val popup = androidx.appcompat.widget.ListPopupWindow(requireActivity())
         popup.anchorView = view
         popup.setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, list))
         popup.setOnItemClickListener { _, _, pos, _ ->
             selectedSubCategory = subCategoryList[pos]
-            view.setText(subCategoryList[pos].nameEnglish)
+            view.setText(if (Constants.language=="ar") subCategoryList[pos]?.nameArabic else subCategoryList[pos]?.nameEnglish )
             popup.dismiss()
         }
         popup.show()
@@ -365,7 +368,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
                                 rgCategory.isVisible = true
                                 etSubCategory.isVisible = true
                                 tvSubCategory.isVisible = true
-                                etSubCategory.setText(bannerData?.subcategoryDetails?.nameEnglish)
+                                etSubCategory.setText(if (Constants.language=="ar") bannerData?.subcategoryDetails?.nameArabic else bannerData?.subcategoryDetails?.nameEnglish)
                             when (bannerData?.categoryDetails?.name) {
                                 "Women" -> {
                                     rbWomen.isChecked = true

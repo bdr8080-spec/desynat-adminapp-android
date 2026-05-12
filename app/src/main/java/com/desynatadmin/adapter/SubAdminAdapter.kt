@@ -18,7 +18,7 @@ class SubAdminAdapter(var context:Context, var adminList: ArrayList<GetSubAdminR
         fun bind(position: Int) = with(binding){
             val adminData = adminList[position]
 
-            tvName.text = adminData.fullName
+            tvName.text = if (Constants.language=="ar") adminData?.fullNameAr else adminData?.fullName
 
             tvLocation.text = if (Constants.language=="ar")adminData.countryInfo.nameAr else adminData.countryInfo.name
             tvJoinedOn.text = "${context.getString(R.string.added_on)} ${formatUtcDateToDdMmYyyy(adminData.createdAt)}"

@@ -74,7 +74,8 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
-
+        user = SharedPreference.get(requireActivity()).getUser()
+        setData()
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.mainProgressBar?.isVisible = false
         getNotificationCount()

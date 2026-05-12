@@ -17,28 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/rvBottomNav"
+        app:layout_constraintBottom_toTopOf="@+id/viewBottom"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <RelativeLayout
-        android:id="@+id/viewBackground"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_bottom_line"
-        app:layout_constraintBottom_toTopOf="@+id/rvBottomNav"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvBottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="5"
-        tools:itemCount="5"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:orientation="vertical"
-        android:background="@color/white"
-        tools:listitem="@layout/item_bottom_nav"
-        app:layout_constraintBottom_toTopOf="@+id/viewBottom"/>
 
     <View
         android:visibility="gone"

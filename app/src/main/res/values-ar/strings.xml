@@ -890,5 +890,12 @@
     <string name="pm">م</string>
     <string name="hh">ساعة</string>
     <string name="mm">دقيقة</string>
-
+    <string name="exchange_reason_updated_successfully">تم تحديث سبب الاستبدال بنجاح</string>
+    <string name="exchange_reason_blocked_successfully">تم حظر سبب الاستبدال بنجاح</string>
+    <string name="exchange_reason_unblocked_successfully">تم إلغاء حظر سبب الاستبدال بنجاح</string>
+    <string name="exchange_reason_deleted_successfully">تم حذف سبب الاستبدال بنجاح</string>
+    <string name="of">من</string>
+    <string name="a_z">أ-ي</string>
+    <string name="hi_there">مرحباً</string>
+    <string name="promotional_banner_updated_successfully">تم تحديث البانر الترويجي بنجاح</string>
 </resources>

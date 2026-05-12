@@ -30,6 +30,8 @@ data class AddSubAdminRequest(
     data class Module(
         @SerializedName("name")
         val name: String,
+        @SerializedName("name_ar")
+        val nameAr: String,
         @SerializedName("can_action")
         var canAction: Int,
         @SerializedName("can_view")

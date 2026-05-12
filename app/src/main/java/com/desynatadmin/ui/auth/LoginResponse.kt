@@ -32,6 +32,8 @@ data class LoginResponse(
         val fcmToken: Any,
         @SerializedName("full_name")
         val fullName: String,
+        @SerializedName("full_name_ar")
+        val fullNameAr: String,
         @SerializedName("id")
         val id: String,
         @SerializedName("mobile")

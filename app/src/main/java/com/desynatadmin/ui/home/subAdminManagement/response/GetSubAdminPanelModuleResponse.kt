@@ -16,6 +16,8 @@ data class GetSubAdminPanelModuleResponse(
         val createdAt: String,
         @SerializedName("display_name")
         val displayName: String,
+        @SerializedName("display_name_ar")
+        val displayNameAr: String,
         @SerializedName("id")
         val id: Int,
         @SerializedName("name")

@@ -309,9 +309,9 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                                 tvDropdown.isVisible = false
                                 submitBtn.isVisible = false
                                 tvAlreadyAdded.isVisible = true
-                                if (message != "") {
+                              /*  if (message != "") {
                                     tvAlreadyAdded.text = message
-                                }
+                                }*/
                             }
                         }
 

@@ -63,7 +63,7 @@
                 android:textAlignment="viewStart"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_35sdp"
-                android:text="Anwer Sheikh" />
+                android:text="Anwer Sheikh"/>
 
             <View
                 android:layout_width="match_parent"
@@ -153,6 +153,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginStart="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:textAlignment="viewStart"
                 android:text="C-94, Sector 63, Kuwait"/>
 
             <View

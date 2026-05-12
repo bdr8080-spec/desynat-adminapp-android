@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.m2
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +14,7 @@ import com.desynatadmin.databinding.ActivityCountryCityZoneManaBinding
 import com.desynatadmin.databinding.ActivityHomeBinding
 import com.desynatadmin.databinding.AddCityBottomsheetBinding
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,9 +23,15 @@ class CountryCityZoneManaActivity : BaseActivity() {
     private var binding: ActivityCountryCityZoneManaBinding? =null
     private lateinit var controller: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
+        CommonMethod.setLocale(this, Constants.language)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityCountryCityZoneManaBinding.inflate(layoutInflater)
+        if (Constants.language == "ar") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
         setContentView(binding?.root)
         initView()
         initControl()

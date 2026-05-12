@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.auth
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -21,6 +22,11 @@ class AuthActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityAuthBinding.inflate(layoutInflater)
+        if (Constants.language == "ar") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
         setContentView(binding?.root)
 
         window.navigationBarColor = ContextCompat.getColor(this, R.color.black)

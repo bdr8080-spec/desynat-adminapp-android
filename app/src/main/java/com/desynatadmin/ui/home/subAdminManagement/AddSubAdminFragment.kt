@@ -312,6 +312,7 @@ class AddSubAdminFragment : BaseFragment() {
             accessModuleList.add(
                 AddSubAdminRequest.Module(
                     name = module.displayName,
+                    nameAr = module?.displayNameAr?:module?.displayName.toString(),
                     canView = matched?.canView ?: 0,
                     canAction = matched?.canAction ?: 0,
                     moduleId = module.id,

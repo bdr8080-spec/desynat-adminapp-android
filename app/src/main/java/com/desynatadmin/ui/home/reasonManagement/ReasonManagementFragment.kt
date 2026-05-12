@@ -275,7 +275,7 @@ class ReasonManagementFragment : BaseFragment() {
         viewModel.updateReasonResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                showToast(getString(R.string.exchange_reason_updated_successfully))
                 reasonList[selectedPos]=response.data
                 reasonAdapter?.notifyItemChanged(selectedPos)
                 selectedPos = -1
@@ -286,7 +286,13 @@ class ReasonManagementFragment : BaseFragment() {
         viewModel.updateReasonStatusResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                if (response.data.status==0){
+                    showToast(getString(R.string.exchange_reason_blocked_successfully))
+                }
+                else{
+                    showToast(getString(R.string.exchange_reason_unblocked_successfully))
+                }
+
                 reasonList[selectedPos].status = response.data.status
                 reasonAdapter?.notifyItemChanged(selectedPos)
                 selectedPos = -1
@@ -297,7 +303,8 @@ class ReasonManagementFragment : BaseFragment() {
         viewModel.deleteReasonResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                CommonMethod.showSuccessDialog(requireActivity(),
+                    getString(R.string.exchange_reason_deleted_successfully))
                 reasonList.removeAt(selectedPos)
                 reasonAdapter?.notifyItemRemoved(selectedPos)
                 reasonAdapter?.notifyItemRangeChanged(selectedPos, reasonList.size)
@@ -323,7 +330,7 @@ class ReasonManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)

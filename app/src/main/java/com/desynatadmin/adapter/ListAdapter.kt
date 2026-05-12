@@ -2,10 +2,12 @@ package com.desynatadmin.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.databinding.SimpleItemLayoutBinding
 import com.desynatadmin.ui.home.brandManagement.response.CityResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
+import com.desynatadmin.utils.Constants
 
 class ListAdapter(val list: List<out Any>, val click: OnCLick) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
@@ -31,7 +33,9 @@ class ListAdapter(val list: List<out Any>, val click: OnCLick) :
             val item = list[position]
 
             val displayName = when (item) {
-                is GetCountryResponse.Data -> item.name
+                is GetCountryResponse.Data ->{
+                    "${item.flag} ${if (Constants.language=="ar") item.nameAr else item.name}"
+                }
                 is CityResponse.Data -> item.name
                 else -> "Unknown"
             }

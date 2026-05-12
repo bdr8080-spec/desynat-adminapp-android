@@ -13,6 +13,7 @@ import com.desynatadmin.databinding.ItemUserBinding
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
@@ -37,7 +38,7 @@ class DeliveryBoyAdapter(var context:Context, var deliveryBoyList: ArrayList<Get
                 btnDelete.isVisible = actionAccess
                 ivSwitch.isClickable = actionAccess
             }
-                tvName.text = deliveryBoyData.fullNameEnglish
+                tvName.text = if(Constants.language=="ar")deliveryBoyData?.fullNameArabic?:deliveryBoyData?.fullNameEnglish else deliveryBoyData?.fullNameEnglish
                 tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(deliveryBoyData.createdAt)}"
                 tvEmail.text = deliveryBoyData.email
                 tvCall.text = deliveryBoyData.countryCode+"-"+deliveryBoyData.mobile

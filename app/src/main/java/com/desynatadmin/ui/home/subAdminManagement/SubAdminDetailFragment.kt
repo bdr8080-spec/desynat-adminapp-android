@@ -179,7 +179,7 @@ class SubAdminDetailFragment : BaseFragment() {
 
     private fun setData() {
         binding?.apply {
-            tvName.text = subAdminData?.fullName
+            tvName.text = if (Constants.language=="ar") subAdminData?.fullNameAr else subAdminData?.fullName
 
             tvCountryValue.text = if (Constants.language=="ar") subAdminData?.countryInfo?.nameAr else subAdminData?.countryInfo?.name
             tvPost.text = subAdminData?.profilePic

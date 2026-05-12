@@ -3,6 +3,7 @@ package com.desynatadmin.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -49,6 +50,11 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityHomeBinding.inflate(layoutInflater)
+        if (Constants.language == "ar") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
         setContentView(binding?.root)
 
         window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
@@ -69,6 +75,7 @@ class HomeActivity : BaseActivity() {
             drawerBinding = DrawerLayoutBinding.bind(
                 binding!!.navigationView.findViewById(R.id.drawerRoot)
             )
+            setDrawerData(SharedPreference.get(this@HomeActivity).getUser())
             setUpDrawerContent()
         }
 
@@ -212,6 +219,8 @@ override fun onBackPressed() {
     }
 }
     fun setDrawerData(user: LoginResponse.Data?) {
+        Log.e("api", "observe: $user" )
+
         drawerBinding?.tvName?.text = user?.fullName
         drawerBinding?.tvEmail?.text = user?.email
 
@@ -221,7 +230,6 @@ override fun onBackPressed() {
 
     private fun setUpDrawerContent(){
         drawerBinding.apply {
-
             ivProfileImage.setOnClickListener {
                 val user = SharedPreference.get(this@HomeActivity).getUser()
                 if (user?.profilePic!=null){

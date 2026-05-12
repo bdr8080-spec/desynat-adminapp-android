@@ -21,7 +21,7 @@ class RejectedAdapter(var context: Context, var list : List<RejectedListResponse
             }
             val item = list[position]
             tvName.text = item.first_name
-            tvLocation.text = if (Constants.language=="ar")item.store_info.country_info?.name_ar else item?.store_info?.country_info?.name
+            tvLocation.text = if (Constants.language=="ar")item?.store_info?.country_info?.name_ar?:item?.store_info?.country_info?.name else item?.store_info?.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             tvEmail.text = item.email
             Glide.with(ivProfileImage).load(item.profile_pic)

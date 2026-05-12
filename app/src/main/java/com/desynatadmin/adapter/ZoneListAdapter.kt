@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ZoneListItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.ZoneListResponse
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 
 class ZoneListAdapter(var context: Context,val list : ArrayList<ZoneListResponse.Data.Data>, val click : OnClick): RecyclerView.Adapter<ZoneListAdapter.ViewHolder>() {
@@ -43,7 +44,7 @@ class ZoneListAdapter(var context: Context,val list : ArrayList<ZoneListResponse
                 imEdit.isVisible = actionAccess
                 toggle.isClickable = actionAccess
             }
-            tvZoneName.text = list[position].name_english
+            tvZoneName.text = if (Constants.language=="ar") list[position].name_arabic else list[position].name_english
             tvViewZone.setOnClickListener {
                 click.onClick(position)
             }

@@ -253,7 +253,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
    private fun addBanner(){
         val request = AddFullScreenBannerRequest(
             countryId = selectedCountryCode.toString(),
-            type = if (binding?.etFor?.text?.trim().toString()=="Web") "2" else "1",
+            type = if (binding?.etFor?.text?.trim().toString()==getString(R.string.web)) "2" else "1",
             startDate = startDate.toString(),
             endDate = endDate.toString(),
             image = imageUrl,
@@ -272,7 +272,7 @@ class AddFullScreenBannerFragment : BaseFragment() {
     }
 
     fun uploadFile(){
-        viewModel.uploadWithResolution(image,if(binding?.etFor?.text?.trim().toString()=="Web") "2" else "1")
+        viewModel.uploadWithResolution(image,if(binding?.etFor?.text?.trim().toString()==getString(R.string.web)) "2" else "1")
         ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isImageObserver = true
     }
@@ -347,8 +347,8 @@ class AddFullScreenBannerFragment : BaseFragment() {
 
     private fun showTypeDropdown(view: View, onSelect: (String) -> Unit) {
         val popup = PopupMenu(requireContext(), view)
-        popup.menu.add("Mobile")
-        popup.menu.add("Web")
+        popup.menu.add(getString(R.string.mobile))
+        popup.menu.add(getString(R.string.web))
         popup.setOnMenuItemClickListener {
             onSelect(it.title.toString())
             true

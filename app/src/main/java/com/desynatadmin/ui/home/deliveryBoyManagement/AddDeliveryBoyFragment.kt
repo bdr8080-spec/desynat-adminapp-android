@@ -30,6 +30,7 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetKuwaitZoneResp
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.CommonMethod.loadDocument
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.mediaPicker.FilePickerPicker
 import com.desynatadmin.utils.mediaPicker.ImagePicker
 import com.desynatadmin.utils.ProgressDialogUtils
@@ -354,7 +355,7 @@ class AddDeliveryBoyFragment : BaseFragment() {
             etState.setText(deliveryBoyData?.state)
             etPassword.setText(deliveryBoyData?.unhashedPassword)
             etConfirmPassword.setText(deliveryBoyData?.unhashedPassword)
-            etZone.setText(deliveryBoyData?.zoneInfo?.nameEnglish)
+            etZone.setText(if (Constants.language=="ar") deliveryBoyData?.zoneInfo?.nameArabic else deliveryBoyData?.zoneInfo?.nameEnglish)
 
             etVehicleName.setText(deliveryBoyData?.vehicleName)
             etVehichleRegistrationNumber.setText(deliveryBoyData?.vehicleRegNo)

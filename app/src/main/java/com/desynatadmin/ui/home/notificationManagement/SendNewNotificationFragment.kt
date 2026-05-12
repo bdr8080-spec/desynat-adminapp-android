@@ -33,6 +33,7 @@ import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliver
 import com.desynatadmin.ui.home.notificationManagement.response.SendNotificationRequest
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.openCustomDatePicker
 import com.desynatadmin.utils.showToast
@@ -529,7 +530,7 @@ class SendNewNotificationFragment : BaseFragment(){
             2 -> userList.filter { it.isSelected }.map { it.fullName }
             3 -> sellerList.filter { it.isSelected }.map { it.first_name+" "+ it.last_name }
             4 -> affiliateUserList.filter { it.isSelected }.map { it.fullName}
-            5 -> driverList.filter { it.isSelected }.map { it.fullNameEnglish }
+            5 -> driverList.filter { it.isSelected }.map { if (Constants.language=="ar") it?.fullNameArabic?:it?.fullNameEnglish else it.fullNameEnglish }
             else -> emptyList()
         }
 

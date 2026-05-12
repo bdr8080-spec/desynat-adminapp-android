@@ -153,7 +153,7 @@ class RejectedScreenFragment : BaseFragment() {
 
     fun filterData(s:String){
         var arr=list.filter { it.first_name.contains(s,true) }
-        (binding?.rejectedRecyclerView?.adapter as RejectedAdapter).list=arr
+        (binding?.rejectedRecyclerView?.adapter as? RejectedAdapter)?.list=arr
         if(arr.isNullOrEmpty()){
             binding?.noSeller?.isVisible = true
             binding?.rejectedRecyclerView?.isVisible = false
@@ -162,7 +162,7 @@ class RejectedScreenFragment : BaseFragment() {
             binding?.noSeller?.isVisible = false
             binding?.rejectedRecyclerView?.isVisible = true
         }
-        (binding?.rejectedRecyclerView?.adapter as RejectedAdapter).notifyDataSetChanged()
+        (binding?.rejectedRecyclerView?.adapter as? RejectedAdapter)?.notifyDataSetChanged()
     }
 
     fun exportData(){

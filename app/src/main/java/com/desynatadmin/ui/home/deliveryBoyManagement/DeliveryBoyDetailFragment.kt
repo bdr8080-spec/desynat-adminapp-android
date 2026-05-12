@@ -17,6 +17,7 @@ import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoy
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.CommonMethod.loadDocument
 import com.desynatadmin.utils.CommonMethod.openPdfInBrowser
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -71,12 +72,12 @@ class DeliveryBoyDetailFragment : BaseFragment() {
 
     private fun setData() {
         binding?.apply {
-            tvFullName.text = deliveryBoyData?.fullNameEnglish
+            tvFullName.text = if (Constants.language=="ar") deliveryBoyData?.fullNameArabic else deliveryBoyData?.fullNameEnglish
             tvEmail.text = deliveryBoyData?.email
             tvMobile.text = deliveryBoyData?.countryCode+"-"+deliveryBoyData?.mobile
             tvAddress.text = "${deliveryBoyData?.addressLine1} ${deliveryBoyData?.addressLine2} ${deliveryBoyData?.city} ${deliveryBoyData?.state}"
           //  tvOrderDelivered.text = deliveryBoyData?.or
-            tvZone.text = deliveryBoyData?.zoneInfo?.nameEnglish
+            tvZone.text = if (Constants.language=="ar") deliveryBoyData?.zoneInfo?.nameArabic else deliveryBoyData?.zoneInfo?.nameEnglish
 
             etVehicleName.setText(deliveryBoyData?.vehicleName)
             etVehichleRegistrationNumber.setText(deliveryBoyData?.vehicleRegNo)

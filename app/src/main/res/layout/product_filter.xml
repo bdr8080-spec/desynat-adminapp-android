@@ -94,10 +94,11 @@
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/edit_text_title"
             android:layout_marginTop="2dp"
-            android:text="A-Z"
+            android:text="@string/a_z"
             android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/poppins_medium"
-            android:textColor="#80000000"/>
+            android:textColor="#80000000"
+            android:textAlignment="viewStart"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvBrand"

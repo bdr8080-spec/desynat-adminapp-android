@@ -140,7 +140,7 @@ class ApprovedDetailsActivity : BaseActivity() {
             binding.tvName.text = it?.data?.first_name
             binding.tvEmail.text = it?.data?.email
             binding.txt.text = it?.data?.store_info?.bio
-            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar else it?.data?.store_info?.country_info?.name
+            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar?:it?.data?.store_info?.country_info?.name else it?.data?.store_info?.country_info?.name
             binding.tvCall.text  = it?.data?.country_code + "-" + it?.data?.mobile
             binding.tvAddress.text  = "${it?.data?.store_info?.store_name}\n${it?.data?.store_info?.store_address}"
            // binding.tvProPlan.text  = it.data.subcription_plan ?: ""

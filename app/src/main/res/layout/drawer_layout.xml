@@ -4,7 +4,6 @@
     android:id="@+id/drawerRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr"
     android:orientation="vertical">
 
     <LinearLayout
@@ -64,6 +63,7 @@
                 android:text="Ahmed Farhan"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toStartOf="@+id/ivEdit"
                 app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                 app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
@@ -76,6 +76,7 @@
                 android:text="farhan713@gmail.com"
                 android:textColor="#CCFFFFFF"
                 android:textSize="@dimen/_11sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
                 app:layout_constraintEnd_toEndOf="@id/tvName"
                 app:layout_constraintStart_toStartOf="@id/tvName"
@@ -548,7 +549,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivWithdrawal"
                         style="@style/drawer_image"
-                        android:src="@drawable/ic_story_management" />
+                        android:src="@drawable/ic_affilate_withdrawal_request" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvWithdrawal"
@@ -711,7 +712,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivNotification"
                         style="@style/drawer_image"
-                        android:src="@drawable/ic_ticket_management" />
+                        android:src="@drawable/ic_notification" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvNotification"

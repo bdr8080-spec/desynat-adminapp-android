@@ -28,7 +28,10 @@ class NotificationAdapter(var context:Context, var notificationList: ArrayList<G
 
             val firstReceiver = notificationData?.receiverDetails?.firstOrNull()
 
-            val name = if (firstReceiver?.fullNameEnglish!=null&&firstReceiver?.fullNameEnglish!="null"){
+            val name =  if (firstReceiver?.fullNameArabic!=null&&firstReceiver?.fullNameArabic!="null"&& Constants.language=="ar"){
+                firstReceiver?.fullNameArabic
+            }
+               else if (firstReceiver?.fullNameEnglish!=null&&firstReceiver?.fullNameEnglish!="null"){
                 firstReceiver?.fullNameEnglish
             }
                 else if(firstReceiver?.fullName!=null&&firstReceiver?.fullName!="null"){

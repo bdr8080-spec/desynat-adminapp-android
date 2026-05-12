@@ -10,6 +10,7 @@ import com.desynatadmin.databinding.ItemSelectNotificationUserBinding
 import com.desynatadmin.ui.home.deliveryBoyManagement.response.GetAllDeliveryBoyResponse
 import com.desynatadmin.ui.home.notificationManagement.response.GetAssignDeliveryBoyResponse
 import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
+import com.desynatadmin.utils.Constants
 
 class AssignDeliveryBoyAdapter(var context:Context, private var driverList: ArrayList<GetAssignDeliveryBoyResponse.Data>, var onClick:OnClick) : RecyclerView.Adapter<AssignDeliveryBoyAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSelectNotificationUserBinding) :
@@ -17,7 +18,7 @@ class AssignDeliveryBoyAdapter(var context:Context, private var driverList: Arra
         fun bind(position: Int) = with(binding){
             val driverData = driverList[position]
 
-            tvUser.text = driverData.fullNameEnglish
+            tvUser.text = if (Constants.language=="ar") driverData?.fullNameArabic?:driverData?.fullNameEnglish else driverData?.fullNameEnglish
 
             if (driverData.isSelected){
                 ivRadio.setImageResource(R.drawable.ic_checkbox)

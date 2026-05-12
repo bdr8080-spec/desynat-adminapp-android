@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAccessModuleBinding
 import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
+import com.desynatadmin.utils.Constants
 
 class AccessModuleAdapter(var context:Context, var moduleList: ArrayList<GetSubAdminDetailResponse.Data.PermissionDetail>, var onClick:OnClick) : RecyclerView.Adapter<AccessModuleAdapter.ViewHolder>() {
 
@@ -19,7 +20,7 @@ class AccessModuleAdapter(var context:Context, var moduleList: ArrayList<GetSubA
         fun bind(position: Int) = with(binding){
             var moduleData = moduleList[position]
             tvModule.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_selected,0,0,0)
-            tvModule.text = moduleData?.moduleDetails?.displayName
+            tvModule.text = if (Constants.language=="ar") moduleData?.moduleDetails?.displayNameAr?:moduleData?.moduleDetails?.displayName else moduleData?.moduleDetails?.displayName
             rbView.setCompoundDrawablesWithIntrinsicBounds(
                 if (moduleData.canView==1) R.drawable.ic_radio_selected
                 else R.drawable.ic_radio_unselected,

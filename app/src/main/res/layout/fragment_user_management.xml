@@ -48,6 +48,7 @@
                 android:textColor="@color/black"
                 android:textColorHint="#5B6163"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

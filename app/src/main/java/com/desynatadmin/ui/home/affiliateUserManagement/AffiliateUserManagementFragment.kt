@@ -344,7 +344,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
@@ -405,7 +405,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
@@ -466,7 +466,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)

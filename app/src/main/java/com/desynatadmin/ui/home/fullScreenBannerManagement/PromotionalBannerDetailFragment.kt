@@ -25,6 +25,7 @@ import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScree
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
@@ -116,8 +117,8 @@ class PromotionalBannerDetailFragment : BaseFragment() {
                         tvCategoryName.isVisible = true
                         tvSubCategoryNameValue.isVisible = true
                         tvSubCategoryName.isVisible = true
-                        tvSubCategoryNameValue.text = bannerData?.subcategoryDetails?.nameEnglish
-                        tvCategoryNameValue.text = bannerData?.categoryDetails?.name
+                        tvSubCategoryNameValue.text = if (Constants.language=="ar") bannerData?.subcategoryDetails?.nameArabic else bannerData?.subcategoryDetails?.nameEnglish
+                        tvCategoryNameValue.text = if (Constants.language=="ar") bannerData?.categoryDetails?.nameAr else bannerData?.categoryDetails?.name
                     }
                     else{
                         tvCategoryNameValue.isVisible = false

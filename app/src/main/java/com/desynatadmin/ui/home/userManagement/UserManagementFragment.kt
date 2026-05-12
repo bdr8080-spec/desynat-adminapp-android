@@ -240,7 +240,7 @@ class UserManagementFragment : BaseFragment() {
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
 
-                binding?.tvCount?.text = "$currentStr of $lastStr"
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
                 if (currentPage<lastPage){
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
@@ -429,7 +429,7 @@ class UserManagementFragment : BaseFragment() {
 
         val popupWindow = PopupWindow(
             binding.root,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT,
             true
         )

@@ -3,6 +3,7 @@ package com.desynatadmin.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -54,6 +55,11 @@ class SubAdminHomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivitySubAdminHomeBinding.inflate(layoutInflater)
+        if (Constants.language == "ar") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
         setContentView(binding?.root)
 
         window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
@@ -79,6 +85,7 @@ class SubAdminHomeActivity : BaseActivity() {
 
         userInfo = SharedPreference.get(this).getUser()
         if (userInfo?.type=="2"){
+            setDrawerData(userInfo)
             getSubAdminDetail(userInfo?.id.toString())
             subAdminInfo = SharedPreference.get(this).getSubAdmin()
             val hasDashboard = subAdminInfo?.permissionDetails
@@ -92,70 +99,26 @@ class SubAdminHomeActivity : BaseActivity() {
             else{
                 hideBack(false)
             }
+            if (subAdminInfo?.permissionDetails?.size!=0){
+                subAdminDrawerList.clear()
+                subAdminInfo?.permissionDetails?.let { subAdminDrawerList.addAll(it) }
+                setDrawerAdapter()
+            }
+
         }
 
         CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+
         controller = navHostFragment.navController
+
         val navGraph = controller.navInflater.inflate(R.navigation.home_navigation_graph)
+
+        navGraph.setStartDestination(R.id.home)
+
         controller.graph = navGraph
-        bottonNavItemList.clear()
-        bottonNavItemList.add(BottomNavItem(getString(R.string.home),R.drawable.ic_home,R.drawable.ic_selected_home))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.products),R.drawable.ic_product,R.drawable.ic_product_selected))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.streaming),R.drawable.ic_streaming,R.drawable.ic_streaming))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.plans),R.drawable.ic_plan,R.drawable.ic_plan_selected))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.payments),R.drawable.ic_payment,R.drawable.ic_payment_selected))
-
-        setBottomAdapter()
-
-        val bottomNavDestinations = setOf(
-            R.id.home,
-            R.id.productManagement,
-            R.id.event,
-            R.id.planList,
-            R.id.paymentManagement,
-        )
-
-        controller.addOnDestinationChangedListener { _, destination, _ ->
-
-            if (destination.id in bottomNavDestinations) {
-                binding?.rvBottomNav?.isVisible = false
-                binding?.viewBackground?.isVisible = true
-            } else {
-                binding?.rvBottomNav?.isVisible = false
-                binding?.viewBackground?.isVisible = false
-            }
-
-            when (destination.id) {
-                R.id.home -> {
-                    bottomAdapter?.setSelectedItem(0)
-                    enableDrawer(true)
-                }
-                R.id.productManagement -> {
-                    bottomAdapter?.setSelectedItem(1)
-                    enableDrawer(false)
-                }
-                R.id.event -> {
-                    bottomAdapter?.setSelectedItem(2)
-                    enableDrawer(false)
-                }
-                R.id.planList -> {
-                    bottomAdapter?.setSelectedItem(3)
-                    enableDrawer(false)
-                }
-
-                R.id.paymentManagement -> {
-                    bottomAdapter?.setSelectedItem(4)
-                    enableDrawer(false)
-                }
-
-                else ->{
-                    enableDrawer(false)
-                }
-            }
-        }
-
 
     }
 
@@ -166,6 +129,7 @@ class SubAdminHomeActivity : BaseActivity() {
                 when(subAdminDrawerList[position].moduleDetails?.name){
                     "dashboard"->{
                         controller.navigate(R.id.home)
+                        enableDrawer(true)
                         binding?.drawerLayout?.closeDrawer(GravityCompat.START)
                     }
                     "brand_management"->{
@@ -314,9 +278,7 @@ class SubAdminHomeActivity : BaseActivity() {
             }
 
         viewModel.getHomeSubAdminDetailResult.observe(this) { response ->
-            Log.e("api", "observe: ${response.data}" )
-
-            Log.e("api", "observe: ${response.data}" )
+            Log.e("api", "observe: ${response.data}")
             ProgressDialogUtils.getInstance().hideProgress()
             SharedPreference.get(this).saveSubAdmin(response.data)
             setUpDrawerContent()
@@ -340,32 +302,6 @@ class SubAdminHomeActivity : BaseActivity() {
                 }
             }
         }
-    fun setBottomAdapter(){
-        bottomAdapter = BottomNavAdapter(this,bottonNavItemList, object :BottomNavAdapter.BottomNavItemClick{
-            override fun onBottomNavItemClick(position: Int) {
-                when(position) {
-                    0 -> {
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.home)
-                    }
-                    1 ->{
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.productManagement)
-                    }
-                    2 -> controller.navigate(R.id.event)
-                    3 -> {
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.planList)
-                    }
-                    4 -> {
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.paymentManagement)
-                    }
-                }
-            }
-        })
-        binding?.rvBottomNav?.adapter = bottomAdapter
-    }
 
     fun openDrawer(){
         isOpenDrawer = true
@@ -409,7 +345,7 @@ class SubAdminHomeActivity : BaseActivity() {
     }
 
     fun setDrawerData(user: LoginResponse.Data?) {
-        drawerBinding.tvName.text = user?.fullName
+        drawerBinding.tvName.text = if (Constants.language=="ar") user?.fullNameAr?:user?.fullName else user?.fullName
         drawerBinding.tvEmail.text = user?.email
 
         Glide.with(this).load(user?.profilePic).placeholder(R.drawable.ic_user).into(drawerBinding.ivProfileImage)
@@ -419,7 +355,6 @@ class SubAdminHomeActivity : BaseActivity() {
      fun setUpDrawerContent(){
          Log.e("api", "observe: setUpDrawerContent" )
         drawerBinding.apply {
-
             ivProfileImage.setOnClickListener {
                 if (subAdminInfo?.profilePic!=null){
                     CommonMethod.imagePreviewDialog(this@SubAdminHomeActivity,subAdminInfo?.profilePic.toString())

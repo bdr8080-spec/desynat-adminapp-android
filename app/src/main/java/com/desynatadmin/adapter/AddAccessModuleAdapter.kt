@@ -8,6 +8,7 @@ import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAccessModuleBinding
 import com.desynatadmin.ui.home.subAdminManagement.response.AddSubAdminRequest
 import com.desynatadmin.ui.home.subAdminManagement.response.GetSubAdminDetailResponse
+import com.desynatadmin.utils.Constants
 
 class AddAccessModuleAdapter(var context:Context, var moduleList: ArrayList<AddSubAdminRequest.Module>, var onClick:OnClick) : RecyclerView.Adapter<AddAccessModuleAdapter.ViewHolder>() {
 
@@ -20,7 +21,8 @@ class AddAccessModuleAdapter(var context:Context, var moduleList: ArrayList<AddS
         fun bind(position: Int) = with(binding) {
             val moduleData = moduleList[position]
 
-            tvModule.text = moduleData.name
+            tvModule.text = if (Constants.language=="ar") moduleData?.nameAr?:moduleData?.name else moduleData?.name
+
 
             tvModule.setCompoundDrawablesWithIntrinsicBounds(
                 if (moduleData.isSelected) R.drawable.ic_radio_selected
