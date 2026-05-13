@@ -112,7 +112,6 @@
                 android:hint="@string/enter_gift_card_category_name"
                 android:inputType="text"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:textAlignment="viewStart"
                 android:background="@drawable/edit_back" />
 
             <RelativeLayout

@@ -176,10 +176,16 @@ class FaqFragment : BaseFragment() {
         dialogBinding?.apply {
 //            CommonMethod.removeSpace(etEnglishQuestion)
 //            CommonMethod.removeSpace(etEnglishAnswer)
-            CommonMethod.applyEnglishOnlyFilter(etEnglishQuestion)
+           /* CommonMethod.applyEnglishOnlyFilter(etEnglishQuestion)
             CommonMethod.applyEnglishOnlyFilter(etEnglishAnswer)
             CommonMethod.applyArabicOnlyFilter(etArabicQuestion)
-            CommonMethod.applyArabicOnlyFilter(etArabicAnswer)
+            CommonMethod.applyArabicOnlyFilter(etArabicAnswer)*/
+
+            CommonMethod.removeSpace(etEnglishQuestion)
+            CommonMethod.removeSpace(etEnglishAnswer)
+
+            CommonMethod.removeSpace(etArabicQuestion)
+            CommonMethod.removeSpace(etArabicAnswer)
             if (isEdit){
                 val faqData = faqList[selectedPos]
                 tvToolbar.text = getString(R.string.edit_faq)

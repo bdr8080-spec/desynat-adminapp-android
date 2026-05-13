@@ -14,6 +14,7 @@ import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import kotlin.math.cos
+import kotlin.plus
 
 class NewAdapter(var context: Context,var list: List<NewSellerResponse.Data.Data>, val click: OnClick) :
     RecyclerView.Adapter<NewAdapter.ViewHolder>() {
@@ -48,7 +49,7 @@ class NewAdapter(var context: Context,var list: List<NewSellerResponse.Data.Data
                 btnReject.isVisible = actionAccess
                 view2.isVisible = actionAccess
             }
-            tvName.text = item.first_name
+            tvName.text = item?.first_name+" "+item?.last_name
             tvLocation.text = if (Constants.language=="ar")item?.store_info?.country_info?.name_ar?:item?.store_info?.country_info?.name else item?.store_info?.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic)

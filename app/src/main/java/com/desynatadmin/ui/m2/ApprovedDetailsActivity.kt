@@ -137,7 +137,7 @@ class ApprovedDetailsActivity : BaseActivity() {
             }
             Glide.with(this).load(it?.data?.profile_pic).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivProfileImage)
             Glide.with(this).load(it?.data?.store_info?.store_image).placeholder(R.drawable.ic_placeholder).into(binding.imPuma)
-            binding.tvName.text = it?.data?.first_name
+            binding.tvName.text = it?.data?.first_name+" "+it?.data?.last_name
             binding.tvEmail.text = it?.data?.email
             binding.txt.text = it?.data?.store_info?.bio
             binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar?:it?.data?.store_info?.country_info?.name else it?.data?.store_info?.country_info?.name

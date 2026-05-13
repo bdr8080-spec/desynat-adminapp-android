@@ -49,7 +49,7 @@ class RejectDetailsActivity : BaseActivity() {
 
     override fun observer() {
         viewmodel.getSellerDetailData.observe(this){
-            binding.tvName.text = it?.data?.first_name
+            binding.tvName.text = it?.data?.first_name+" "+it?.data?.last_name
             binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar?:it?.data?.store_info?.country_info?.name else it?.data?.store_info?.country_info?.name
             binding.tvCall.text = it?.data?.country_code + "-" + it?.data?.mobile
             binding.tvEmail.text = it.data.email

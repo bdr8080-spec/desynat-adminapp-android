@@ -11,6 +11,7 @@ import com.desynatadmin.databinding.RejectedItemBinding
 import com.desynatadmin.ui.home.brandManagement.response.RejectedListResponse
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
+import kotlin.plus
 
 class RejectedAdapter(var context: Context, var list : List<RejectedListResponse.Data.Data>, val click : OnClick) : RecyclerView.Adapter<RejectedAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: RejectedItemBinding) :
@@ -20,7 +21,7 @@ class RejectedAdapter(var context: Context, var list : List<RejectedListResponse
                 click.onClick(position)
             }
             val item = list[position]
-            tvName.text = item.first_name
+            tvName.text = item?.first_name+" "+item?.last_name
             tvLocation.text = if (Constants.language=="ar")item?.store_info?.country_info?.name_ar?:item?.store_info?.country_info?.name else item?.store_info?.country_info?.name
             tvCall.text = item.country_code + "-" + item.mobile
             tvEmail.text = item.email

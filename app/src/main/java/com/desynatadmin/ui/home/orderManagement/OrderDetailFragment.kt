@@ -116,7 +116,7 @@ class OrderDetailFragment : BaseFragment() {
                             placeholder(R.drawable.ic_placeholder)
                             error(R.drawable.ic_placeholder)
                         }
-                        tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                         ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                         ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                         ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
@@ -150,7 +150,7 @@ class OrderDetailFragment : BaseFragment() {
                             placeholder(R.drawable.ic_placeholder)
                             error(R.drawable.ic_placeholder)
                         }
-                        tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                        tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                         ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                         ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                         ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
@@ -172,7 +172,7 @@ class OrderDetailFragment : BaseFragment() {
                         error(R.drawable.ic_placeholder)
                     }
                     ivEdit.isVisible = false
-                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                     ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                     ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
                     ivDelivered.setImageResource(R.drawable.ic_delivered_tab_selected)
@@ -225,7 +225,7 @@ class OrderDetailFragment : BaseFragment() {
                         error(R.drawable.ic_placeholder)
                     }
 
-                    tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                    tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                     if (orderDetailData?.cancelReason!=null){
                         tvCancellationReason.text = orderDetailData?.cancelReason
                         return
@@ -264,7 +264,7 @@ class OrderDetailFragment : BaseFragment() {
                                     placeholder(R.drawable.ic_placeholder)
                                     error(R.drawable.ic_placeholder)
                                 }
-                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                                 tvDeliveredBy.isVisible = true
                                 tvDelivered.isVisible = true
 
@@ -293,7 +293,7 @@ class OrderDetailFragment : BaseFragment() {
                                     placeholder(R.drawable.ic_placeholder)
                                     error(R.drawable.ic_placeholder)
                                 }
-                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
 
                             }
                             else{
@@ -320,7 +320,7 @@ class OrderDetailFragment : BaseFragment() {
                                     placeholder(R.drawable.ic_placeholder)
                                     error(R.drawable.ic_placeholder)
                                 }
-                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
 
                             }
                             else{
@@ -344,7 +344,7 @@ class OrderDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_placeholder)
                                 error(R.drawable.ic_placeholder)
                             }
-                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                         }
 
                         "4"->{
@@ -368,7 +368,7 @@ class OrderDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_placeholder)
                                 error(R.drawable.ic_placeholder)
                             }
-                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                             if (orderDetailData?.cancelReason!=null){
                                 tvCancellationReason.text = orderDetailData?.cancelReason
                                 return
@@ -400,7 +400,7 @@ class OrderDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_placeholder)
                                 error(R.drawable.ic_placeholder)
                             }
-                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                         }
                         "3"->{
 
@@ -420,7 +420,7 @@ class OrderDetailFragment : BaseFragment() {
                                     placeholder(R.drawable.ic_placeholder)
                                     error(R.drawable.ic_placeholder)
                                 }
-                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                                 ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                                 ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                                 ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
@@ -438,7 +438,7 @@ class OrderDetailFragment : BaseFragment() {
                                     placeholder(R.drawable.ic_placeholder)
                                     error(R.drawable.ic_placeholder)
                                 }
-                                tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                                tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                                 ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                                 ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                                 ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
@@ -456,7 +456,7 @@ class OrderDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_placeholder)
                                 error(R.drawable.ic_placeholder)
                             }
-                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                             ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab_selected)
@@ -495,7 +495,7 @@ class OrderDetailFragment : BaseFragment() {
                                 error(R.drawable.ic_placeholder)
                             }
                             ivEdit.isVisible = false
-                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                             ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way_selected)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
@@ -515,7 +515,7 @@ class OrderDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_placeholder)
                                 error(R.drawable.ic_placeholder)
                             }
-                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                             ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
@@ -535,7 +535,7 @@ class OrderDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_placeholder)
                                 error(R.drawable.ic_placeholder)
                             }
-                            tvDriverName.text = orderDetailData?.driverDetails?.fullNameEnglish
+                            tvDriverName.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                             ivPicked.setImageResource(R.drawable.ic_order_picked_selected)
                             ivOnTheWay.setImageResource(R.drawable.ic_order_on_way)
                             ivDelivered.setImageResource(R.drawable.ic_delivered_tab)
@@ -559,7 +559,7 @@ class OrderDetailFragment : BaseFragment() {
             if (orderDetailData?.driverDetails!=null){
                 tvZoneValue.isVisible = true
                 tvZone.isVisible = true
-                tvDeliveredBy.text = orderDetailData?.driverDetails?.fullNameEnglish
+                tvDeliveredBy.text = if (Constants.language=="ar") orderDetailData?.driverDetails?.fullNameArabic else orderDetailData?.driverDetails?.fullNameEnglish
                 tvZoneValue.text = orderDetailData?.driverDetails?.zoneInfo?.nameEnglish
             }
             else{

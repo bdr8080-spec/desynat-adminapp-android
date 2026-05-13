@@ -228,13 +228,13 @@ class EnrolledSellerDetailFragment : BaseFragment() {
         dialogBinding?.apply {
 
             if (filterBrand!=null){
-                etBrand.setText(filterBrand?.nameEnglish)
+                etBrand.setText(if (Constants.language=="ar") filterBrand?.nameArabic else filterBrand?.nameEnglish)
             }
 
             dealBrandFilterAdapter=DealBrandFilterAdapter(requireActivity(),brandList,object :
                 DealBrandFilterAdapter.OnClick{
                 override fun onClick(position: Int) {
-                    etBrand.setText(brandList[position].nameEnglish)
+                    etBrand.setText(if (Constants.language=="ar") brandList[position].nameArabic else brandList[position].nameEnglish)
                     selectedBrand = brandList[position]
                     rvBrand.isVisible = false
                 }

@@ -247,6 +247,26 @@ object CommonMethod {
         editText.filters = arrayOf(filter)
     }
 
+    fun removeStartingSpace(editText: EditText) {
+
+        editText.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+
+                if (s.toString().startsWith(" ")) {
+
+                    editText.setText(s.toString().trimStart())
+
+                    editText.setSelection(editText.text.length)
+                }
+            }
+        })
+    }
+
     fun removeAllTextSpaces (editText: AppCompatEditText){
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {

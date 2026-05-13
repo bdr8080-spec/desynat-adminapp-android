@@ -89,12 +89,17 @@ class SendNewNotificationFragment : BaseFragment(){
         binding?.apply {
             toolbar.tvToolbar.text = getString(R.string.send_new)
 
-            CommonMethod.applyArabicOnlyFilter(etArabicTitle)
+        /*    CommonMethod.applyArabicOnlyFilter(etArabicTitle)
             CommonMethod.applyArabicOnlyFilter(etArabicDescription)
             CommonMethod.applyEnglishOnlyFilter(etEnglishTitle)
-            CommonMethod.applyEnglishOnlyFilter(etEnglishDescription)
+            CommonMethod.applyEnglishOnlyFilter(etEnglishDescription)*/
 //            CommonMethod.removeSpace(etEnglishTitle)
 //            CommonMethod.removeSpace(etArabicDescription)
+
+            CommonMethod.removeSpace(etArabicTitle)
+            CommonMethod.removeSpace(etArabicDescription)
+            CommonMethod.removeSpace(etEnglishTitle)
+            CommonMethod.removeSpace(etEnglishDescription)
         }
     }
 

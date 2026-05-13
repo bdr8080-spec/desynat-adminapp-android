@@ -797,7 +797,7 @@ class OrderManagementFragment : BaseFragment() {
                 AssignDriverAdapter.DriverClick{
                 override fun onDriverClick(position: Int) {
                     newSelectedDriver = assignDriverList[position]
-                    tvSelectedDriver.text = assignDriverList[position].fullNameEnglish
+                    tvSelectedDriver.text = if (Constants.language=="ar") assignDriverList[position].fullNameArabic else assignDriverList[position].fullNameEnglish
                 }
 
             })

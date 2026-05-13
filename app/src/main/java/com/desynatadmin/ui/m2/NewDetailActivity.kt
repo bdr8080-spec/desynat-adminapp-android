@@ -20,6 +20,7 @@ import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import com.desynatadmin.utils.showToast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.plus
 
 @AndroidEntryPoint
 class NewDetailActivity : BaseActivity() {
@@ -141,7 +142,7 @@ class NewDetailActivity : BaseActivity() {
         }
 
         viewModel.getSellerDetailData.observe(this){
-            binding.tvName.text = it.data.first_name
+            binding.tvName.text = it.data.first_name+" "+it?.data?.last_name
             binding.tvStoreName.text = it.data.store_info.store_name
             binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar?:it?.data?.store_info?.country_info?.name else it?.data?.store_info?.country_info?.name
             binding.tvCall.text = it.data.country_code + "-" + it.data.mobile

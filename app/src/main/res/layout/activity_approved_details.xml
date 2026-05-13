@@ -152,14 +152,29 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                 app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/rating"
+                android:numStars="5"
+                android:rating="0"
+                android:isIndicator="true"
+                android:progressTint="#FFA41B"
+                android:secondaryProgressTint="#FFA41B"
+                android:backgroundTint="#EAECF0"
+                style="@style/Widget.AppCompat.RatingBar.Small"
                 app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
                 app:layout_constraintStart_toStartOf="@id/tvName"
                 app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:text="(0)"
+                app:layout_constraintBottom_toBottomOf="@id/rating"
+                app:layout_constraintStart_toEndOf="@id/rating"
+                app:layout_constraintTop_toTopOf="@id/rating" />
 
             <TextView
                 android:id="@+id/txt"
@@ -538,6 +553,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:text="Puma Store\n C 19, 2nd Floor, Sector 63, Moon Road, Kuwait"
                 android:textColor="#000000"
                 android:textSize="14sp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAddressLabel" />
@@ -752,6 +768,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:text="KW2837289202937393937"
                 android:textColor="#000000"
                 android:textSize="12sp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvIbanLabe" />
@@ -778,6 +795,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:text="76687698696546367"
                 android:textColor="#000000"
                 android:textSize="12sp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvswiftbicLabe" />
@@ -830,6 +848,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:text="Rohan "
                 android:textColor="#000000"
                 android:textSize="12sp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAccountHolderNameLabe" />
@@ -891,6 +910,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:fontFamily="@font/poppins_regular"
                 android:text="Pro Plan"
                 android:textSize="@dimen/_10sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintEnd_toStartOf="@id/tvProPlan"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/purchasePlanLayout" />

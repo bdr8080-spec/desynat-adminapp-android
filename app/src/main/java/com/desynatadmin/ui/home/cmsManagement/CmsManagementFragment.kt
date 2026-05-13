@@ -401,9 +401,10 @@ class CmsManagementFragment : BaseFragment() {
 
         dialogBinding?.apply {
 
-            CommonMethod.applyArabicOnlyFilter(etArabicDescription)
+//            CommonMethod.applyArabicOnlyFilter(etArabicDescription)
           //  CommonMethod.applyEnglishOnlyFilter(etEnglishDescription)
-         //   CommonMethod.removeSpace(etEnglishDescription)
+            CommonMethod.removeStartingSpace(etArabicDescription)
+            CommonMethod.removeStartingSpace(etEnglishDescription)
 
             if (isArabic){
                 relEnglish.isVisible = false
