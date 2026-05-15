@@ -1,7 +1,6 @@
 package com.desynatadmin.ui.home.affiliateWithdrawalRequest
 
 import android.app.Dialog
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +13,6 @@ import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateWithdrawalRequestAdapter
 import com.desynatadmin.base.BaseFragment
@@ -46,11 +44,11 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     private var currentPage = 1
     private var lastPage = 1
     private var totalPage = 0
-    private var totalItem=0
-    private var pageLimit=10
+    private var totalItem = 0
+    private var pageLimit = 10
     private val itemsPerPage = 10
-    private var isFromSwipe=false
-    private var pagination=false
+    private var isFromSwipe = false
+    private var pagination = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,9 +84,10 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                         selectedPos = position
                         when (type) {
                             1 -> {
-                               // callPayoutApi()
+                                // callPayoutApi()
                                 acceptAffiliateUser()
                             }
+
                             2 -> {
                                 rejectReasonDialog()
                             }
@@ -107,15 +106,15 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
-                 when (val activity = requireActivity()) {
-        is HomeActivity -> activity.onBackPressed()
-        is SubAdminHomeActivity -> activity.onBackPressed()
-        else -> activity.onBackPressed()
-    }
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
             }
 
             ivNextArrow.setOnClickListener {
-                if (!isObserver && currentPage < lastPage&&totalItem!=0) {
+                if (!isObserver && currentPage < lastPage && totalItem != 0) {
                     currentPage += 1
                     getWithdrawalRequest(false)
                     binding?.progressBar?.isVisible = true
@@ -135,11 +134,11 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
             }
 
             tvApproved.setOnClickListener {
-               approvedRequest()
+                approvedRequest()
             }
 
             tvRejected.setOnClickListener {
-               rejectRequest()
+                rejectRequest()
             }
 
         }
@@ -150,7 +149,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
-                if (isFromSwipe){
+                if (isFromSwipe) {
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
 
@@ -165,10 +164,15 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 withdrawalList.removeAt(selectedPos)
                 affiliateWithdrawalRequestAdapter?.notifyItemRemoved(selectedPos)
-                affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(selectedPos, withdrawalList.size)
+                affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(
+                    selectedPos,
+                    withdrawalList.size
+                )
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),
-                    getString(R.string.withdrawal_request_approved_successfully)){
+                CommonMethod.showSuccessDialog(
+                    requireActivity(),
+                    getString(R.string.withdrawal_request_approved_successfully)
+                ) {
 
                 }
                 selectedPos = -1
@@ -181,10 +185,15 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 withdrawalList.removeAt(selectedPos)
                 affiliateWithdrawalRequestAdapter?.notifyItemRemoved(selectedPos)
-                affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(selectedPos, withdrawalList.size)
+                affiliateWithdrawalRequestAdapter?.notifyItemRangeChanged(
+                    selectedPos,
+                    withdrawalList.size
+                )
                 checkData()
-                CommonMethod.showSuccessDialog(requireActivity(),
-                    getString(R.string.withdrawal_request_rejected_successfully)){
+                CommonMethod.showSuccessDialog(
+                    requireActivity(),
+                    getString(R.string.withdrawal_request_rejected_successfully)
+                ) {
 
                 }
                 selectedPos = -1
@@ -202,7 +211,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
-                if (isFromSwipe){
+                if (isFromSwipe) {
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
 
@@ -216,23 +225,21 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
 
                 binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
-                if (currentPage<lastPage){
+                if (currentPage < lastPage) {
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
-                }
-                else{
+                } else {
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
                 }
 
-                if (currentPage>1){
+                if (currentPage > 1) {
                     binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
-                }
-                else{
+                } else {
                     binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
                 }
 
 
                 val oldSize = withdrawalList.size
-                if (!pagination){
+                if (!pagination) {
                     withdrawalList.clear()
                 }
                 updatePage()
@@ -241,15 +248,15 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
                 withdrawalList.addAll(newItems)
                 checkData()
 
-                if (pagination){
+                if (pagination) {
 
                     response.data.data?.size?.let {
-                        affiliateWithdrawalRequestAdapter?.notifyItemRangeInserted(oldSize,
+                        affiliateWithdrawalRequestAdapter?.notifyItemRangeInserted(
+                            oldSize,
                             it
                         )
                     }
-                }
-                else{
+                } else {
                     affiliateWithdrawalRequestAdapter?.notifyDataSetChanged()
                 }
                 pagination = false
@@ -262,7 +269,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     private fun updatePage() {
         val start = (currentPage - 1) * itemsPerPage
         val end = minOf(start + itemsPerPage, withdrawalList.size)
-        if (start>=0&&end>=0) {
+        if (start >= 0 && end >= 0) {
             if (start < end) {
                 val pageData = withdrawalList.subList(start, end)
                 affiliateWithdrawalRequestAdapter?.setData(ArrayList(pageData))
@@ -316,7 +323,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         dialog.show()
     }
 
-    private fun newRequest(){
+    private fun newRequest() {
         binding?.apply {
             type = "0"
             getWithdrawalRequest()
@@ -329,7 +336,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         }
     }
 
-    private fun approvedRequest(){
+    private fun approvedRequest() {
         binding?.apply {
             type = "1"
             getWithdrawalRequest()
@@ -342,7 +349,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         }
     }
 
-    private fun rejectRequest(){
+    private fun rejectRequest() {
         binding?.apply {
             type = "2"
             getWithdrawalRequest()
@@ -355,8 +362,8 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         }
     }
 
-    private fun getWithdrawalRequest(loading:Boolean=true){
-        val map = HashMap<String,Any>()
+    private fun getWithdrawalRequest(loading: Boolean = true) {
+        val map = HashMap<String, Any>()
         map["req_type"] = type //0-pending,1-approved,2-rejected
 //        map["from_date"] = currentPage
 //        map["to_date"] = currentPage
@@ -364,14 +371,14 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         map["page"] = currentPage
         map["limit"] = 10
         viewModel.getWithdrawalRequest(map)
-        if (loading){
+        if (loading) {
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
         isObserver = true
     }
 
-    private fun acceptAffiliateUser(){
-        val map = HashMap<String,Any>()
+    private fun acceptAffiliateUser() {
+        val map = HashMap<String, Any>()
         map["req_id"] = withdrawalList[selectedPos].id
         map["transaction_id"] = "TXN${withdrawalList[selectedPos].requestId}"
         map["payment_status"] = 1
@@ -381,7 +388,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     }
 
     private fun rejectWithdrawalRequest(reason: String) {
-        val map = HashMap<String,Any>()
+        val map = HashMap<String, Any>()
         map["req_id"] = withdrawalList[selectedPos].id
         map["reject_reason"] = reason
         viewModel.rejectWithdrawalRequest(map)
@@ -390,7 +397,7 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
     }
 
     private fun WithdrawalTransfer() {
-        val map = HashMap<String,Any>()
+        val map = HashMap<String, Any>()
         map["withdraw_request_id"] = withdrawalList[selectedPos].id
         viewModel.WithdrawalTransfer(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
@@ -401,10 +408,10 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         val request = PayoutRequest(
             CustomerName = withdrawalList[selectedPos].affiliateDetails?.fullName.toString(),
-            Amount = withdrawalList[selectedPos].amount.toDoubleOrNull()?:0.0,
+            Amount = withdrawalList[selectedPos].amount.toDoubleOrNull() ?: 0.0,
             CurrencyCode = "KWD",
             IBAN = withdrawalList[selectedPos].bankDetails?.iban.toString(),
-         //   BankCode = withdrawalList[selectedPos].bankDetails?.bankName.toString(),
+            //   BankCode = withdrawalList[selectedPos].bankDetails?.bankName.toString(),
             BankCode = "NBK",
             AccountNumber = withdrawalList[selectedPos].bankDetails?.accountNo.toString()
         )

@@ -463,7 +463,18 @@
             android:id="@+id/action_storyManagement_to_addStoryFragment"
             app:destination="@id/addStory" />
 
+ <action
+            android:id="@+id/action_storyManagement_to_viewStoryFragment"
+            app:destination="@id/viewStory" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/viewStory"
+        android:name="com.desynatadmin.ui.home.storyManagement.ViewStoryFragment"
+        android:label="View Story Fragment"
+        tools:layout="@layout/fragment_view_story"/>
+
 
     <fragment
         android:id="@+id/addStory"

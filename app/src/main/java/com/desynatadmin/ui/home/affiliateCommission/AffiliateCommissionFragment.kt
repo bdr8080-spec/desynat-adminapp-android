@@ -24,26 +24,24 @@ import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
-import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AffiliateCommissionFragment : BaseFragment() {
-    private var binding: FragmentAffiliateCommissionBinding?=null
+    private var binding: FragmentAffiliateCommissionBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var affiliateCommissionList = ArrayList<GetAffiliateCommissionResponse.Data>()
-    private var affiliateCommissionAdapter : AffiliateCommissionAdapter?=null
+    private var affiliateCommissionAdapter: AffiliateCommissionAdapter? = null
     private var selectedPos = -1
-
-    private var updateCommissionDialog: Dialog?=null
+    private var updateCommissionDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAffiliateCommissionBinding.inflate(layoutInflater,container,false)
+        binding = FragmentAffiliateCommissionBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -60,13 +58,16 @@ class AffiliateCommissionFragment : BaseFragment() {
             toolbar.tvToolbar.text = getString(R.string.affiliate_commission_percentage)
 
             affiliateCommissionList.clear()
-            affiliateCommissionAdapter = AffiliateCommissionAdapter(requireActivity(),affiliateCommissionList,object : AffiliateCommissionAdapter.ClickOnItem{
-                override fun onClickItem(position: Int) {
-                    selectedPos = position
-                    commissionDialog()
-                }
+            affiliateCommissionAdapter = AffiliateCommissionAdapter(
+                requireActivity(),
+                affiliateCommissionList,
+                object : AffiliateCommissionAdapter.ClickOnItem {
+                    override fun onClickItem(position: Int) {
+                        selectedPos = position
+                        commissionDialog()
+                    }
 
-            })
+                })
 
             rvAffiliateCommission.adapter = affiliateCommissionAdapter
         }
@@ -77,13 +78,13 @@ class AffiliateCommissionFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
 
-    toolbar.ivBack.setOnClickListener {
-    when (val activity = requireActivity()) {
-        is HomeActivity -> activity.onBackPressed()
-        is SubAdminHomeActivity -> activity.onBackPressed()
-        else -> activity.onBackPressed()
-    }
-}
+            toolbar.ivBack.setOnClickListener {
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
+            }
 
         }
     }
@@ -112,8 +113,10 @@ class AffiliateCommissionFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 updateCommissionDialog?.dismiss()
-                CommonMethod.showSuccessDialog(requireActivity(),
-                    getString(R.string.affiliate_commission_updated_successfully))
+                CommonMethod.showSuccessDialog(
+                    requireActivity(),
+                    getString(R.string.affiliate_commission_updated_successfully)
+                )
                 affiliateCommissionList[selectedPos].affiliateCommissionInfo = response.data
                 affiliateCommissionAdapter?.notifyDataSetChanged()
                 selectedPos = -1
@@ -122,22 +125,23 @@ class AffiliateCommissionFragment : BaseFragment() {
         }
     }
 
-    private fun getAffiliateCommission(){
+    private fun getAffiliateCommission() {
         viewModel.getAffiliatedCommission()
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
-    private fun updateCommission(commission:String) {
-        val map = HashMap<String,Any>()
-        map["country_id"] = affiliateCommissionList[selectedPos]?.affiliateCommissionInfo?.countryId.toString()
+    private fun updateCommission(commission: String) {
+        val map = HashMap<String, Any>()
+        map["country_id"] =
+            affiliateCommissionList[selectedPos]?.affiliateCommissionInfo?.countryId.toString()
         map["commission"] = commission
         viewModel.updateAffiliateCommission(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
-    private fun checkData(){
+    private fun checkData() {
         binding?.tvNoDataFound?.isVisible = affiliateCommissionList.isEmpty()
     }
 
@@ -164,12 +168,22 @@ class AffiliateCommissionFragment : BaseFragment() {
             tvTitle.text = getString(R.string.commission)
             tvTitle.hint = getString(R.string.enter_commission)
             btnSubmit.text = getString(R.string.save)
-            etAmount.setText(CommonMethod.formatPrice(affiliateCommissionList[selectedPos]?.affiliateCommissionInfo?.commission?.toDouble()?:0.0))
+            etAmount.setText(
+                CommonMethod.formatPrice(
+                    affiliateCommissionList[selectedPos]?.affiliateCommissionInfo?.commission?.toDouble()
+                        ?: 0.0
+                )
+            )
             var isEditing = false
             var previousValue = ""
 
             etAmount.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                     previousValue = s.toString()
                 }
 
@@ -186,10 +200,13 @@ class AffiliateCommissionFragment : BaseFragment() {
 
                         if (num > 100) {
                             etAmount.setText(previousValue)
-                            etAmount.setSelection(previousValue.length.coerceAtMost(etAmount.text?.length ?: 0))
+                            etAmount.setSelection(
+                                previousValue.length.coerceAtMost(
+                                    etAmount.text?.length ?: 0
+                                )
+                            )
                         }
                     }
-
                     isEditing = false
                 }
             })
@@ -200,10 +217,9 @@ class AffiliateCommissionFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener {
-                if(isInvalid(etAmount, "Tax")) {
+                if (isInvalid(etAmount, "Tax")) {
                     return@setOnClickListener
-                }
-                else{
+                } else {
                     updateCommission(etAmount.text.toString())
                 }
             }
@@ -226,7 +242,5 @@ class AffiliateCommissionFragment : BaseFragment() {
         }
         return false
     }
-
-
 
 }

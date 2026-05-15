@@ -26,10 +26,10 @@ import java.io.File
 
 @AndroidEntryPoint
 class AddSubCategoryFragment : BaseFragment() {
-    private var binding: FragmentAddSubCategoryBinding?=null
+    private var binding: FragmentAddSubCategoryBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var subCategoryData: GetSubCategoryResponse.Data.Data?=null
+    private var subCategoryData: GetSubCategoryResponse.Data.Data? = null
     private var categoryId = ""
     private var isImageObserver = true
 
@@ -50,11 +50,12 @@ class AddSubCategoryFragment : BaseFragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             imagePicker.onPermissionResult(granted)
         }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAddSubCategoryBinding.inflate(layoutInflater,container,false)
+        binding = FragmentAddSubCategoryBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -73,13 +74,13 @@ class AddSubCategoryFragment : BaseFragment() {
             CommonMethod.removeSpace(etArabicSubCategoryName)
             CommonMethod.removeSpace(etEnglishSubCategoryName)
             if (!itemJson.isNullOrEmpty()) {
-                subCategoryData = Gson().fromJson(itemJson, GetSubCategoryResponse.Data.Data::class.java)
+                subCategoryData =
+                    Gson().fromJson(itemJson, GetSubCategoryResponse.Data.Data::class.java)
                 toolbar.tvToolbar.text = getString(R.string.edit_sub_category)
                 btnSubmit.text = getString(R.string.update)
                 setData()
 
-            }
-            else{
+            } else {
                 toolbar.tvToolbar.text = getString(R.string.add_sub_category)
 
             }
@@ -110,11 +111,10 @@ class AddSubCategoryFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener {
-                if (validation()){
-                    if (image!=null){
+                if (validation()) {
+                    if (image != null) {
                         uploadFile()
-                    }
-                    else{
+                    } else {
                         addSubCategory()
                     }
 
@@ -146,8 +146,10 @@ class AddSubCategoryFragment : BaseFragment() {
         viewModel.addSubCategoryResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(),
-                    getString(R.string.sub_category_added_successfully)){
+                CommonMethod.showSuccessDialog(
+                    requireContext(),
+                    getString(R.string.sub_category_added_successfully)
+                ) {
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -164,8 +166,10 @@ class AddSubCategoryFragment : BaseFragment() {
                 findNavController().previousBackStackEntry
                     ?.savedStateHandle
                     ?.set("updatedSubCategoryData", Gson().toJson(subCategoryData))
-                CommonMethod.showSuccessDialog(requireContext(),
-                    getString(R.string.sub_category_updated_successfully)){
+                CommonMethod.showSuccessDialog(
+                    requireContext(),
+                    getString(R.string.sub_category_updated_successfully)
+                ) {
                     findNavController().popBackStack()
                 }
 
@@ -175,7 +179,7 @@ class AddSubCategoryFragment : BaseFragment() {
 
     }
 
-    private fun setData(){
+    private fun setData() {
 
         binding?.apply {
 
@@ -192,42 +196,41 @@ class AddSubCategoryFragment : BaseFragment() {
 
     }
 
-    fun addSubCategory(){
-        val map = HashMap<String,RequestBody>()
-        if (subCategoryData!=null){
+    fun addSubCategory() {
+        val map = HashMap<String, RequestBody>()
+        if (subCategoryData != null) {
             map["subcategory_id"] = subCategoryData?.id.toString().toPlainRequestBody()
         }
         map["category_id"] = categoryId.toPlainRequestBody()
-        map["name_arabic"] = binding?.etArabicSubCategoryName?.text?.trim().toString().toPlainRequestBody()
-        map["name_english"] = binding?.etEnglishSubCategoryName?.text?.trim().toString().toPlainRequestBody()
+        map["name_arabic"] =
+            binding?.etArabicSubCategoryName?.text?.trim().toString().toPlainRequestBody()
+        map["name_english"] =
+            binding?.etEnglishSubCategoryName?.text?.trim().toString().toPlainRequestBody()
         map["image"] = imageUrl.toPlainRequestBody()
 
-        if (subCategoryData!=null){
+        if (subCategoryData != null) {
             viewModel.updateSubCategory(map)
-        }
-        else{
+        } else {
             viewModel.addSubCategory(map)
         }
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
-    fun uploadFile(){
+    fun uploadFile() {
         viewModel.uploadImage(image)
         ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isImageObserver = true
     }
 
     private fun validation(): Boolean {
-        if (image==null&&subCategoryData==null){
+        if (image == null && subCategoryData == null) {
             showToast(getString(R.string.please_upload_sub_category_image))
             return false
-        }
-        else if (binding?.etEnglishSubCategoryName?.text?.toString()?.isBlank() == true ) {
+        } else if (binding?.etEnglishSubCategoryName?.text?.toString()?.isBlank() == true) {
             showToast(getString(R.string.please_enter_sub_category_name_in_english))
             return false
-        }
-        else if (binding?.etArabicSubCategoryName?.text?.toString()?.isBlank() == true ) {
+        } else if (binding?.etArabicSubCategoryName?.text?.toString()?.isBlank() == true) {
             showToast(getString(R.string.please_enter_sub_category_name_in_arabic))
             return false
         }

@@ -1,6 +1,5 @@
 package com.desynatadmin.ui.home.affiliateCommission.response
 
-
 import com.google.gson.annotations.SerializedName
 
 data class GetAffiliateCommissionResponse(

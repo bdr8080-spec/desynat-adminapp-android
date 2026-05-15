@@ -39,39 +39,39 @@ import kotlin.getValue
 
 @AndroidEntryPoint
 class AddPromotionalBannerFragment : BaseFragment() {
-        private var binding: FragmentAddPromotionalBannerBinding?=null
-        private val viewModel: HomeViewModel by viewModels()
-        private var isObserver = true
-        private var isImageObserver = true
-        private var bannerData: GetPromotionalBannerResponse.Data.Data?=null
+    private var binding: FragmentAddPromotionalBannerBinding? = null
+    private val viewModel: HomeViewModel by viewModels()
+    private var isObserver = true
+    private var isImageObserver = true
+    private var bannerData: GetPromotionalBannerResponse.Data.Data? = null
 
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var selectedCountryCode: String? = null
 
-        var startDate:String?=null
-        var endDate:String?=null
-        var fromTimestamp=0L
-        var toTimestamp=0L
+    var startDate: String? = null
+    var endDate: String? = null
+    var fromTimestamp = 0L
+    var toTimestamp = 0L
     var days = 0
 
-        private lateinit var imagePicker: ImagePicker
-        private var image: File? = null
-        private var imageUrl = ""
+    private lateinit var imagePicker: ImagePicker
+    private var image: File? = null
+    private var imageUrl = ""
     private var bannerPosition = ""
-        private val cameraLauncher =
-            registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-                imagePicker.onCameraResult(success)
-            }
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            imagePicker.onCameraResult(success)
+        }
 
-        private val galleryLauncher =
-            registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-                imagePicker.onGalleryResult(uri)
-            }
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            imagePicker.onGalleryResult(uri)
+        }
 
-        private val permissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-                imagePicker.onPermissionResult(granted)
-            }
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            imagePicker.onPermissionResult(granted)
+        }
 
     private var isSubCategoryObserver = true
 
@@ -84,456 +84,470 @@ class AddPromotionalBannerFragment : BaseFragment() {
     private var originalCategoryName: String? = null
     private var originalSubCategory: GetSubCategoryResponse.Data.Data? = null
 
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            binding = FragmentAddPromotionalBannerBinding.inflate(layoutInflater,container,false)
-            return binding?.root
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentAddPromotionalBannerBinding.inflate(layoutInflater, container, false)
+        return binding?.root
+    }
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            initView()
-            initControl()
-            observe()
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initControl()
+        observe()
+    }
 
-        override fun initView() {
-            setCountry()
-            val itemJson = arguments?.getString("bannerData")
-            binding?.apply {
+    override fun initView() {
+        setCountry()
+        val itemJson = arguments?.getString("bannerData")
+        binding?.apply {
 
-                if (!itemJson.isNullOrEmpty()) {
-                    bannerData = Gson().fromJson(itemJson, GetPromotionalBannerResponse.Data.Data::class.java)
-                    toolbar.tvToolbar.text = getString(R.string.edit_promotional_banner)
-                    btnSubmit.text = getString(R.string.update)
-                    setData()
+            if (!itemJson.isNullOrEmpty()) {
+                bannerData =
+                    Gson().fromJson(itemJson, GetPromotionalBannerResponse.Data.Data::class.java)
+                toolbar.tvToolbar.text = getString(R.string.edit_promotional_banner)
+                btnSubmit.text = getString(R.string.update)
+                setData()
 
-                }
-                else{
-                    toolbar.tvToolbar.text = getString(R.string.add_promotional_banner)
-                }
+            } else {
+                toolbar.tvToolbar.text = getString(R.string.add_promotional_banner)
+            }
 
-                imagePicker = ImagePicker(
-                    requireActivity(),
-                    cameraLauncher,
-                    galleryLauncher,
-                    permissionLauncher
-                ) { uri ->
-                    uri?.let {
-                        image = CommonMethod.uriToFile(requireActivity(), it)
-                        ivBanner.setImageURI(it)
-                        clPlaceholder.isVisible = false
-                    }
+            imagePicker = ImagePicker(
+                requireActivity(),
+                cameraLauncher,
+                galleryLauncher,
+                permissionLauncher
+            ) { uri ->
+                uri?.let {
+                    image = CommonMethod.uriToFile(requireActivity(), it)
+                    ivBanner.setImageURI(it)
+                    clPlaceholder.isVisible = false
                 }
             }
         }
+    }
 
-        override fun initControl() {
-            binding?.apply {
-                toolbar.ivBack.setOnClickListener {
+    override fun initControl() {
+        binding?.apply {
+            toolbar.ivBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            etCountry.setOnClickListener {
+                CommonMethod.showAllCountryPicker(
+                    requireActivity(),
+                    countryList = countryList,
+                    anchor = etCountry
+                ) { selectedCountry ->
+                    etCountry.setText(if (Constants.language == "ar") selectedCountry.nameAr else selectedCountry.name)
+                    selectedCountryCode = selectedCountry.id.toString()
+                }
+            }
+
+            etPosition.setOnClickListener {
+                showTypeDropdown(it) { value ->
+                    when (value) {
+                        getString(R.string.category) -> {
+                            bannerPosition = "3"
+                            getCategory()
+                            tvCategory.isVisible = true
+                            rgCategory.isVisible = true
+
+                        }
+
+                        getString(R.string.home_top) -> {
+                            bannerPosition = "1"
+                            selectedCategory = null
+                            selectedSubCategory = null
+                            tvCategory.isVisible = false
+                            rgCategory.isVisible = false
+                            tvSubCategory.isVisible = false
+                            etSubCategory.isVisible = false
+                        }
+
+                        getString(R.string.home_bottom) -> {
+                            bannerPosition = "2"
+                            selectedCategory = null
+                            selectedSubCategory = null
+                            tvCategory.isVisible = false
+                            rgCategory.isVisible = false
+                            tvSubCategory.isVisible = false
+                            etSubCategory.isVisible = false
+                        }
+                    }
+                    etPosition.setText(value)
+                }
+            }
+
+            etSubCategory.setOnClickListener {
+                showSubCategoryDropdown(etSubCategory)
+            }
+
+            rgCategory.setOnCheckedChangeListener { group, checkedId ->
+                when (checkedId) {
+                    R.id.rbWomen -> {
+                        if (selectedCategory?.name != "Women") {
+                            getCategoryId("Women")
+                        }
+                    }
+
+                    R.id.rbMen -> {
+                        if (selectedCategory?.name != "Men") {
+                            getCategoryId("Men")
+                        }
+                    }
+
+                    R.id.rbKids -> {
+                        if (selectedCategory?.name != "Kids") {
+                            getCategoryId("Kids")
+                        }
+                    }
+                }
+            }
+
+            etStartDate.setOnClickListener {
+                openCustomDatePicker(
+                    requireActivity(),
+                    Calendar.getInstance().timeInMillis
+                ) { date, timestamp ->
+                    etStartDate.text = date
+                    fromTimestamp = timestamp
+                    startDate = CommonMethod.formatDate(date, "dd/MM/yyyy", "yyyy-MM-dd")
+                    binding?.clDays?.isVisible = false
+                    days = 0
+                }
+
+            }
+
+            etEndDate.setOnClickListener {
+                openCustomDatePicker(
+                    requireActivity(),
+                    minDate = if (fromTimestamp != 0L) fromTimestamp else Calendar.getInstance().timeInMillis
+                ) { date, timestamp ->
+                    etEndDate.text = date
+                    toTimestamp = timestamp
+                    endDate = CommonMethod.formatDate(date, "dd/MM/yyyy", "yyyy-MM-dd")
+                    calculateDays()
+                }
+            }
+
+            btnSubmit.setOnClickListener {
+                if (validation()) {
+                    if (image != null) {
+                        uploadFile()
+                    } else {
+                        addBanner()
+                    }
+
+                }
+            }
+
+            ivBanner.setOnClickListener {
+                imagePicker.openGallery()
+            }
+        }
+    }
+
+    override fun observe() {
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+
+                isObserver = false
+            }
+        }
+
+        /*  viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
+              if (isImageObserver) {
+                  ProgressDialogUtils.getInstance().hideProgress()
+                  response?.let {
+                      imageUrl = response.data.url
+                      addBanner()
+                  }
+                  isImageObserver = false
+              }
+          }*/
+        viewModel.uploadWithResolutionPromotionalApiResult.observe(viewLifecycleOwner) { response ->
+            if (isImageObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+                    imageUrl = response.data.url
+                    addBanner()
+                }
+                isImageObserver = false
+            }
+        }
+
+        viewModel.addPromotionalBannerResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                CommonMethod.showSuccessDialog(
+                    requireContext(),
+                    getString(R.string.banner_added_successfully)
+                ) {
                     findNavController().popBackStack()
                 }
-
-                etCountry.setOnClickListener {
-                    CommonMethod.showAllCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry){ selectedCountry ->
-                        etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
-                        selectedCountryCode = selectedCountry.id.toString()
-                    }
-                }
-
-                etPosition.setOnClickListener {
-                    showTypeDropdown(it) { value ->
-                        when(value) {
-                            getString(R.string.category) -> {
-                                bannerPosition = "3"
-                                getCategory()
-                                tvCategory.isVisible = true
-                                rgCategory.isVisible = true
-
-                            }
-
-                            getString(R.string.home_top) -> {
-                                bannerPosition = "1"
-                                selectedCategory = null
-                                selectedSubCategory = null
-                                tvCategory.isVisible = false
-                                rgCategory.isVisible = false
-                                tvSubCategory.isVisible = false
-                                etSubCategory.isVisible = false
-                            }
-
-                            getString(R.string.home_bottom) -> {
-                                bannerPosition = "2"
-                                selectedCategory = null
-                                selectedSubCategory = null
-                                tvCategory.isVisible = false
-                                rgCategory.isVisible = false
-                                tvSubCategory.isVisible = false
-                                etSubCategory.isVisible = false
-                            }
-                        }
-                        etPosition.setText(value)
-                    }
-                }
-
-                etSubCategory.setOnClickListener{
-                    showSubCategoryDropdown(etSubCategory)
-                }
-
-                rgCategory.setOnCheckedChangeListener { group, checkedId ->
-                    when (checkedId) {
-                        R.id.rbWomen -> {
-                            if (selectedCategory?.name!="Women") {
-                                getCategoryId("Women")
-                            }
-                        }
-                        R.id.rbMen -> {
-                            if (selectedCategory?.name!="Men") {
-                                getCategoryId("Men")
-                            }
-                        }
-                        R.id.rbKids -> {
-                            if (selectedCategory?.name!="Kids") {
-                                getCategoryId("Kids")
-                            }
-                        }
-                    }
-                }
-
-                etStartDate.setOnClickListener {
-                    openCustomDatePicker(requireActivity(),
-                        Calendar.getInstance().timeInMillis){ date, timestamp->
-                        etStartDate.text=date
-                        fromTimestamp=timestamp
-                        startDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
-                        binding?.clDays?.isVisible = false
-                        days = 0
-                    }
-
-                }
-
-                etEndDate.setOnClickListener {
-                    openCustomDatePicker(requireActivity(), minDate = if (fromTimestamp!=0L) fromTimestamp else Calendar.getInstance().timeInMillis){date,timestamp->
-                        etEndDate.text=date
-                        toTimestamp=timestamp
-                        endDate = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
-                        calculateDays()
-                    }
-                }
-
-                btnSubmit.setOnClickListener {
-                    if (validation()){
-                        if (image!=null){
-                            uploadFile()
-                        }
-                        else{
-                            addBanner()
-                        }
-
-                    }
-                }
-
-                ivBanner.setOnClickListener {
-                    imagePicker.openGallery()
-                }
+                isObserver = false
             }
         }
 
-        override fun observe() {
-            viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-                if (isObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
-
-                    isObserver = false
-                }
-            }
-
-          /*  viewModel.uploadImageResult.observe(viewLifecycleOwner) { response ->
-                if (isImageObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
-                    response?.let {
-                        imageUrl = response.data.url
-                        addBanner()
-                    }
-                    isImageObserver = false
-                }
-            }*/
-            viewModel.uploadWithResolutionPromotionalApiResult.observe(viewLifecycleOwner) { response ->
-                if (isImageObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
-                    response?.let {
-                        imageUrl = response.data.url
-                        addBanner()
-                    }
-                    isImageObserver = false
-                }
-            }
-
-            viewModel.addPromotionalBannerResult.observe(viewLifecycleOwner) { response ->
-                if (isObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
-                    CommonMethod.showSuccessDialog(requireContext(), getString(R.string.banner_added_successfully)){
-                        findNavController().popBackStack()
-                    }
-                    isObserver = false
-                }
-            }
-
-            viewModel.updatePromotionalBannerResult.observe(viewLifecycleOwner) { response ->
-                if (isObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
+        viewModel.updatePromotionalBannerResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
                 //    bannerData?.countryId = selectedCountryCode?.toIntOrNull()?:0
-                    bannerData?.uploadBanner = response.data.uploadBanner
-                    bannerData?.bannerPosition = response.data.bannerPosition
-                    bannerData?.startDate = response.data.startDate
-                    bannerData?.endDate = response.data.endDate
-                    bannerData?.totalDays = response.data.totalDays
-                    bannerData?.categoryDetails = selectedCategory?:null
-                    bannerData?.subcategoryDetails = selectedSubCategory?:null
-                    findNavController().previousBackStackEntry
-                        ?.savedStateHandle
-                        ?.set("updatedPromotionalBannerData", Gson().toJson(bannerData))
-                    CommonMethod.showSuccessDialog(requireContext(),
-                        getString(R.string.promotional_banner_updated_successfully)){
-                        findNavController().popBackStack()
-                    }
-                    isObserver = false
+                bannerData?.uploadBanner = response.data.uploadBanner
+                bannerData?.bannerPosition = response.data.bannerPosition
+                bannerData?.startDate = response.data.startDate
+                bannerData?.endDate = response.data.endDate
+                bannerData?.totalDays = response.data.totalDays
+                bannerData?.categoryDetails = selectedCategory ?: null
+                bannerData?.subcategoryDetails = selectedSubCategory ?: null
+                findNavController().previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("updatedPromotionalBannerData", Gson().toJson(bannerData))
+                CommonMethod.showSuccessDialog(
+                    requireContext(),
+                    getString(R.string.promotional_banner_updated_successfully)
+                ) {
+                    findNavController().popBackStack()
                 }
+                isObserver = false
             }
-
-            viewModel.getAllCategoryResult.observe(viewLifecycleOwner) { response ->
-                if (isObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
-                    categoryList.clear()
-                    categoryList.addAll(response.data)
-                    binding?.tvSubCategory?.isVisible = true
-                    binding?.etSubCategory?.isVisible = true
-
-                    if (bannerData==null){
-                        getCategoryId("Men")
-                    }
-                    else if (bannerData!=null&&bannerData?.bannerPosition!="3"){
-                        getCategoryId("Men")
-                    }
-                    isObserver = false
-                }
-            }
-
-            viewModel.getAllSubCategoryResult.observe(viewLifecycleOwner) { response ->
-                if (isSubCategoryObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
-
-                    subCategoryList.clear()
-                    response.data.data?.let { subCategoryList.addAll(it) }
-                    isSubCategoryObserver = false
-                }
-            }
-
         }
+
+        viewModel.getAllCategoryResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                categoryList.clear()
+                categoryList.addAll(response.data)
+                binding?.tvSubCategory?.isVisible = true
+                binding?.etSubCategory?.isVisible = true
+
+                if (bannerData == null) {
+                    getCategoryId("Men")
+                } else if (bannerData != null && bannerData?.bannerPosition != "3") {
+                    getCategoryId("Men")
+                }
+                isObserver = false
+            }
+        }
+
+        viewModel.getAllSubCategoryResult.observe(viewLifecycleOwner) { response ->
+            if (isSubCategoryObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+
+                subCategoryList.clear()
+                response.data.data?.let { subCategoryList.addAll(it) }
+                isSubCategoryObserver = false
+            }
+        }
+
+    }
 
     private fun showSubCategoryDropdown(view: AppCompatEditText) {
-        val list = subCategoryList.map { if (Constants.language=="ar") it?.nameArabic else it?.nameEnglish }
+        val list =
+            subCategoryList.map { if (Constants.language == "ar") it?.nameArabic else it?.nameEnglish }
         val popup = androidx.appcompat.widget.ListPopupWindow(requireActivity())
         popup.anchorView = view
         popup.setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, list))
         popup.setOnItemClickListener { _, _, pos, _ ->
             selectedSubCategory = subCategoryList[pos]
-            view.setText(if (Constants.language=="ar") subCategoryList[pos]?.nameArabic else subCategoryList[pos]?.nameEnglish )
+            view.setText(if (Constants.language == "ar") subCategoryList[pos]?.nameArabic else subCategoryList[pos]?.nameEnglish)
             popup.dismiss()
         }
         popup.show()
     }
 
-        private fun setData(){
+    private fun setData() {
 
-            binding?.apply {
-                clDays.isVisible = true
-                tvTotalDays.text = bannerData?.totalDays
-                bannerPosition = bannerData?.bannerPosition.toString()
-                    when(bannerData?.bannerPosition) {
-                        "1" ->  {
-                            etPosition.setText(getString(R.string.home_top))
+        binding?.apply {
+            clDays.isVisible = true
+            tvTotalDays.text = bannerData?.totalDays
+            bannerPosition = bannerData?.bannerPosition.toString()
+            when (bannerData?.bannerPosition) {
+                "1" -> {
+                    etPosition.setText(getString(R.string.home_top))
 
+                }
+
+                "2" -> etPosition.setText(getString(R.string.home_bottom))
+                "3" -> {
+                    selectedCategory = bannerData?.categoryDetails
+                    selectedSubCategory = bannerData?.subcategoryDetails
+                    getCategory()
+                    getSubCategory()
+                    etPosition.setText(getString(R.string.category))
+                    tvCategory.isVisible = true
+                    rgCategory.isVisible = true
+                    etSubCategory.isVisible = true
+                    tvSubCategory.isVisible = true
+                    etSubCategory.setText(if (Constants.language == "ar") bannerData?.subcategoryDetails?.nameArabic else bannerData?.subcategoryDetails?.nameEnglish)
+                    when (bannerData?.categoryDetails?.name) {
+                        "Women" -> {
+                            rbWomen.isChecked = true
+                            rbMen.isChecked = false
+                            rbKids.isChecked = false
                         }
-                        "2" -> etPosition.setText(getString(R.string.home_bottom))
-                        "3" -> {
-                            selectedCategory = bannerData?.categoryDetails
-                            selectedSubCategory = bannerData?.subcategoryDetails
-                            getCategory()
-                            getSubCategory()
-                            etPosition.setText(getString(R.string.category))
-                                tvCategory.isVisible = true
-                                rgCategory.isVisible = true
-                                etSubCategory.isVisible = true
-                                tvSubCategory.isVisible = true
-                                etSubCategory.setText(if (Constants.language=="ar") bannerData?.subcategoryDetails?.nameArabic else bannerData?.subcategoryDetails?.nameEnglish)
-                            when (bannerData?.categoryDetails?.name) {
-                                "Women" -> {
-                                    rbWomen.isChecked = true
-                                    rbMen.isChecked = false
-                                    rbKids.isChecked = false
-                                }
-                                "Men" -> {
-                                    rbWomen.isChecked = false
-                                    rbMen.isChecked = true
-                                    rbKids.isChecked = false
-                                }
-                                "Kids"-> {
-                                    rbWomen.isChecked = false
-                                    rbMen.isChecked = false
-                                    rbKids.isChecked = true
-                                }
-                            }
 
+                        "Men" -> {
+                            rbWomen.isChecked = false
+                            rbMen.isChecked = true
+                            rbKids.isChecked = false
+                        }
+
+                        "Kids" -> {
+                            rbWomen.isChecked = false
+                            rbMen.isChecked = false
+                            rbKids.isChecked = true
                         }
                     }
 
-                selectedCountryCode = bannerData?.countryId.toString()
-                if(selectedCountryCode!=null){
-                    etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
-                }
-                if (image==null) {
-                    imageUrl = bannerData?.uploadBanner.toString()
-                }
-                ivBanner.load(bannerData?.uploadBanner) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }
-                clPlaceholder.isVisible = false
-                startDate = bannerData?.startDate.toString()
-                endDate = bannerData?.endDate.toString()
-                if (startDate!=null){
-                    etStartDate.text=CommonMethod.formatDate(startDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
-                }
-                if (endDate!=null){
-                    etEndDate.text=CommonMethod.formatDate(endDate.toString(),"yyyy-MM-dd","dd/MM/yyyy")
                 }
             }
 
+            selectedCountryCode = bannerData?.countryId.toString()
+            if (selectedCountryCode != null) {
+                etCountry.setText(countryList.firstOrNull { it.id.toString() == selectedCountryCode }?.name)
+            }
+            if (image == null) {
+                imageUrl = bannerData?.uploadBanner.toString()
+            }
+            ivBanner.load(bannerData?.uploadBanner) {
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
+            clPlaceholder.isVisible = false
+            startDate = bannerData?.startDate.toString()
+            endDate = bannerData?.endDate.toString()
+            if (startDate != null) {
+                etStartDate.text =
+                    CommonMethod.formatDate(startDate.toString(), "yyyy-MM-dd", "dd/MM/yyyy")
+            }
+            if (endDate != null) {
+                etEndDate.text =
+                    CommonMethod.formatDate(endDate.toString(), "yyyy-MM-dd", "dd/MM/yyyy")
+            }
         }
 
-        private fun addBanner(){
-            val request = AddPromotionalBannerRequest(
-              //  countryId = selectedCountryCode.toString(),
-                bannerPosition = bannerPosition,
-                startDate = startDate.toString(),
-                endDate = endDate.toString(),
-                uploadBanner = imageUrl,
-                totalDays = days.toString(),
-                bannerId = if (bannerData != null) bannerData?.id.toString() else null,
-                category = if (bannerPosition=="3") selectedCategory?.id.toString() else null,
-                subcategory = if (bannerPosition=="3") selectedSubCategory?.id else null
-            )
-            if (bannerData!=null){
-                viewModel.updatePromotionalBanner(request)
-            }
-            else{
-                viewModel.addPromotionalBanner(request)
-            }
+    }
 
-            ProgressDialogUtils.getInstance().showProgress(requireActivity())
-            isObserver = true
+    private fun addBanner() {
+        val request = AddPromotionalBannerRequest(
+            //  countryId = selectedCountryCode.toString(),
+            bannerPosition = bannerPosition,
+            startDate = startDate.toString(),
+            endDate = endDate.toString(),
+            uploadBanner = imageUrl,
+            totalDays = days.toString(),
+            bannerId = if (bannerData != null) bannerData?.id.toString() else null,
+            category = if (bannerPosition == "3") selectedCategory?.id.toString() else null,
+            subcategory = if (bannerPosition == "3") selectedSubCategory?.id else null
+        )
+        if (bannerData != null) {
+            viewModel.updatePromotionalBanner(request)
+        } else {
+            viewModel.addPromotionalBanner(request)
         }
 
-        fun uploadFile(){
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+
+    fun uploadFile() {
 //            viewModel.uploadImage(image)
-            viewModel.uploadWithResolutionPromotionalApi(image)
-            ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
-            isImageObserver = true
-        }
+        viewModel.uploadWithResolutionPromotionalApi(image)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+        isImageObserver = true
+    }
 
-        private fun validation(): Boolean {
-            Log.e("image", "validation: ${image}")
-            binding?.apply {
-                if(image==null&&bannerData==null){
-                    showToast(getString(R.string.please_upload_banner_image))
-                    return false
-                }
-              /*  else if(etCountry.text.toString().isBlank()) {
-                    showToast("Please select country")
-                    return false
-                }*/
-                else if(etPosition.text.toString().trim().isEmpty()) {
-                    showToast(getString(R.string.please_select_position))
-                    return false
-                }
-                else if(etStartDate.text.toString().trim().isEmpty()) {
-                    showToast(getString(R.string.please_select_start_date))
-                    return false
-                }
-
-                else if(etEndDate.text.toString().trim().isEmpty()) {
-                    showToast(getString(R.string.please_select_end_date))
-                    return false
-                }
-
-                else if(!isEndDateValid()) {
-                    showToast(getString(R.string.from_date_should_be_smaller_then_to_date))
-                    return false
-                }
-
+    private fun validation(): Boolean {
+        Log.e("image", "validation: ${image}")
+        binding?.apply {
+            if (image == null && bannerData == null) {
+                showToast(getString(R.string.please_upload_banner_image))
+                return false
             }
-            return true
-        }
-
-
-        private fun isEndDateValid(): Boolean {
-            return try {
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val start = sdf.parse(binding?.etStartDate?.text.toString())
-                val end = sdf.parse(binding?.etEndDate?.text.toString())
-                end != null && start != null && end >= start
-            } catch (e: Exception) {
-                false
+            /*  else if(etCountry.text.toString().isBlank()) {
+                  showToast("Please select country")
+                  return false
+              }*/
+            else if (etPosition.text.toString().trim().isEmpty()) {
+                showToast(getString(R.string.please_select_position))
+                return false
+            } else if (etStartDate.text.toString().trim().isEmpty()) {
+                showToast(getString(R.string.please_select_start_date))
+                return false
+            } else if (etEndDate.text.toString().trim().isEmpty()) {
+                showToast(getString(R.string.please_select_end_date))
+                return false
+            } else if (!isEndDateValid()) {
+                showToast(getString(R.string.from_date_should_be_smaller_then_to_date))
+                return false
             }
+
         }
+        return true
+    }
 
-        private fun showTypeDropdown(view: View, onSelect: (String) -> Unit) {
-            val popup = PopupMenu(requireContext(), view)
-                popup.menu.add(getString(R.string.home_top))
-                popup.menu.add(getString(R.string.home_bottom))
-                popup.menu.add(getString(R.string.category))
 
-            popup.setOnMenuItemClickListener {
-                onSelect(it.title.toString())
-                true
-            }
-            popup.show()
+    private fun isEndDateValid(): Boolean {
+        return try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val start = sdf.parse(binding?.etStartDate?.text.toString())
+            val end = sdf.parse(binding?.etEndDate?.text.toString())
+            end != null && start != null && end >= start
+        } catch (e: Exception) {
+            false
         }
+    }
 
-    private fun getCategory(){
+    private fun showTypeDropdown(view: View, onSelect: (String) -> Unit) {
+        val popup = PopupMenu(requireContext(), view)
+        popup.menu.add(getString(R.string.home_top))
+        popup.menu.add(getString(R.string.home_bottom))
+        popup.menu.add(getString(R.string.category))
+
+        popup.setOnMenuItemClickListener {
+            onSelect(it.title.toString())
+            true
+        }
+        popup.show()
+    }
+
+    private fun getCategory() {
         viewModel.getAllCategory()
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
-    private fun getSubCategory(){
+    private fun getSubCategory() {
         viewModel.getAllSUbCategory(selectedCategory?.id.toString(), page = 1)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isSubCategoryObserver = true
     }
 
-    private fun getCategoryId(match:String){
-        if (categoryList.isNotEmpty()){
-            for(i in 0 until categoryList.size){
-                if (categoryList[i].name==match){
+    private fun getCategoryId(match: String) {
+        if (categoryList.isNotEmpty()) {
+            for (i in 0 until categoryList.size) {
+                if (categoryList[i].name == match) {
                     selectedCategory = categoryList[i]
                     getSubCategory()
-                    Log.e("category", "match: $match" )
-                    Log.e("category", "originalCategoryName: $originalCategoryName" )
+                    Log.e("category", "match: $match")
+                    Log.e("category", "originalCategoryName: $originalCategoryName")
 
                     if (match == originalCategoryName) {
                         selectedSubCategory = originalSubCategory
                         binding?.etSubCategory
                             ?.setText(originalSubCategory?.nameEnglish ?: "")
-                        Log.e("category", "set: ${originalSubCategory?.nameEnglish}" )
+                        Log.e("category", "set: ${originalSubCategory?.nameEnglish}")
                     } else {
                         clearAllField()
                         selectedSubCategory = null
-                        Log.e("category", "clear: $originalCategoryName" )
+                        Log.e("category", "clear: $originalCategoryName")
 
                     }
 
@@ -542,7 +556,7 @@ class AddPromotionalBannerFragment : BaseFragment() {
         }
     }
 
-    private fun clearAllField(){
+    private fun clearAllField() {
         binding?.apply {
             etSubCategory.setText("")
         }
@@ -552,10 +566,9 @@ class AddPromotionalBannerFragment : BaseFragment() {
         if (fromTimestamp > 0 && toTimestamp > 0 && toTimestamp >= fromTimestamp) {
             val diff = toTimestamp - fromTimestamp
             days = ((diff / (1000 * 60 * 60 * 24)) + 1).toInt()
-            if (days<10){
-                binding?.tvTotalDays?.text = "0"+days.toString()
-            }
-            else{
+            if (days < 10) {
+                binding?.tvTotalDays?.text = "0" + days.toString()
+            } else {
                 binding?.tvTotalDays?.text = days.toString()
             }
 
@@ -568,5 +581,5 @@ class AddPromotionalBannerFragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
     }
 
-    }
+}
 

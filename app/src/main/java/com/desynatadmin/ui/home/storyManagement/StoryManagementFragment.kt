@@ -26,6 +26,7 @@ import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.text.compareTo
 import kotlin.text.toFloat
@@ -75,6 +76,17 @@ class StoryManagementFragment : BaseFragment() {
                             findNavController().navigate(R.id.action_storyManagement_to_addStoryFragment)
                         }
                         2->{
+                          /*  val list = ArrayList<GetStoryResponse.Data.Data>()
+                            list.add(storyList[position])
+                                val bundle = Bundle().apply {
+                                    putString("from", "admin")
+                                    putString("storyData", Gson().toJson(list))
+                                }
+                                findNavController().navigate(
+                                    R.id.action_storyManagement_to_viewStoryFragment,
+                                    bundle
+                                )*/
+
                             imagePreviewDialog(storyList[position].file,"video")
                         }
                         3->{
@@ -82,6 +94,17 @@ class StoryManagementFragment : BaseFragment() {
                             deleteStory()
                         }
                         4->{
+                          /*  val list = ArrayList<GetStoryResponse.Data.Data>()
+                            list.add(storyList[position])
+                                val bundle = Bundle().apply {
+                                    putString("from", "admin")
+                                    putString("storyData", Gson().toJson(list))
+                                }
+                                findNavController().navigate(
+                                    R.id.action_storyManagement_to_viewStoryFragment,
+                                    bundle
+                                )*/
+
                             imagePreviewDialog(storyList[position].file,"image")
                         }
                     }

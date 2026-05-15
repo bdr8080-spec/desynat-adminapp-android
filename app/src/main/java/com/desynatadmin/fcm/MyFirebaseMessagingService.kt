@@ -49,8 +49,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             val obj = JSONObject(remoteMessage.data as Map<String, String>).toString()
             val notificationData = Gson().fromJson(obj, NotificationInfoModel::class.java)
-            // sendNotification(notificationData)
-            sendNotification(notificationData?.title_en?:notificationData?.title.toString(),notificationData?.body_en?:notificationData?.body.toString(),notificationData?.badge?:0,notificationData?.title_ar.toString(),notificationData?.body_ar.toString())
+            sendNotification(notificationData?.title_en?:notificationData?.title.toString(),notificationData?.body_en?:notificationData?.body.toString(),notificationData?.badge?:0,notificationData?.title_ar?:notificationData?.title.toString(),notificationData?.body_ar?:notificationData?.body.toString())
 //            if (Constants.currentScreen=="home"||Constants.currentScreen=="notification") {
 //                EventBus.getDefault().post(notificationData?.title.toString())
 //            }
@@ -80,10 +79,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         //   private fun sendNotification(notificationData: NotificationInfoModel) {
         var  badgeCount = badge
 
-
         SharedPreference.get(applicationContext).badgeCount = badgeCount
-
-        //   private fun sendNotification(notificationData: NotificationInfoModel) {
 
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("from", "push")

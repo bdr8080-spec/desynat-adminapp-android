@@ -1130,7 +1130,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     private fun showHourDropdown(view: View, onSelect: (String) -> Unit) {
         val popup = PopupMenu(requireContext(), view)
         (1..12).forEach {
-            popup.menu.add(String.format("%02d", it))
+            popup.menu.add(String.format(Locale.ENGLISH,"%02d", it))
         }
         popup.setOnMenuItemClickListener {
             onSelect(it.title.toString())
@@ -1142,7 +1142,7 @@ class LiveRequestAndTimeslotManagementFragment : BaseFragment() {
     private fun showMinuteDropdown(view: View, onSelect: (String) -> Unit) {
         val popup = PopupMenu(requireContext(), view)
         (0..59).forEach {
-            popup.menu.add(String.format("%02d", it))
+            popup.menu.add(String.format(Locale.ENGLISH,"%02d", it))
         }
         popup.setOnMenuItemClickListener {
             onSelect(it.title.toString())

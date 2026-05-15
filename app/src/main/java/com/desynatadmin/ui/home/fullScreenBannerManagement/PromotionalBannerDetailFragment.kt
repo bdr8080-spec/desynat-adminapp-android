@@ -1,15 +1,9 @@
 package com.desynatadmin.ui.home.fullScreenBannerManagement
 
-import android.app.Dialog
-import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,11 +11,7 @@ import com.bumptech.glide.Glide
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.FragmentBannerRequestDetailBinding
 import com.desynatadmin.databinding.FragmentPromotionalBannerDetailBinding
-import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
-import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
-import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetFullScreenBannerResponse
 import com.desynatadmin.ui.home.fullScreenBannerManagement.response.GetPromotionalBannerResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
@@ -35,18 +25,18 @@ import kotlin.getValue
 
 @AndroidEntryPoint
 class PromotionalBannerDetailFragment : BaseFragment() {
-    private var binding: FragmentPromotionalBannerDetailBinding?=null
+    private var binding: FragmentPromotionalBannerDetailBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    var bannerData: GetPromotionalBannerResponse.Data.Data?=null
+    var bannerData: GetPromotionalBannerResponse.Data.Data? = null
     private var countryList = ArrayList<GetCountryResponse.Data>()
-    var actionAccess: Boolean=true
+    var actionAccess: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPromotionalBannerDetailBinding.inflate(layoutInflater,container,false)
+        binding = FragmentPromotionalBannerDetailBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -62,7 +52,8 @@ class PromotionalBannerDetailFragment : BaseFragment() {
 
         val itemJson = arguments?.getString("bannerData")
         if (!itemJson.isNullOrEmpty()) {
-            bannerData = Gson().fromJson(itemJson, GetPromotionalBannerResponse.Data.Data::class.java)
+            bannerData =
+                Gson().fromJson(itemJson, GetPromotionalBannerResponse.Data.Data::class.java)
             setData()
         }
 
@@ -71,14 +62,15 @@ class PromotionalBannerDetailFragment : BaseFragment() {
             ?.getLiveData<String>("updatedPromotionalBannerData")
             ?.observe(viewLifecycleOwner) { json ->
                 json?.let {
-                    bannerData = Gson().fromJson(json, GetPromotionalBannerResponse.Data.Data::class.java)
+                    bannerData =
+                        Gson().fromJson(json, GetPromotionalBannerResponse.Data.Data::class.java)
                     setData()
                 }
             }
 
         binding?.apply {
             val userInfo = SharedPreference.get(requireActivity()).getUser()
-            if (userInfo?.type=="2"){
+            if (userInfo?.type == "2") {
                 val subAdminInfo = SharedPreference.get(requireActivity()).getSubAdmin()
                 val module = subAdminInfo?.permissionDetails
                     ?.firstOrNull {
@@ -102,25 +94,29 @@ class PromotionalBannerDetailFragment : BaseFragment() {
                 tvCountry.text = countryList.firstOrNull { it.id == bannerData?.countryId }?.name
 
             }*/
-            Glide.with(requireActivity()).load(bannerData?.uploadBanner).placeholder(R.drawable.ic_placeholder).into(ivBanner)
-            when(bannerData?.bannerPosition){
-                "1" ->{
+            Glide.with(requireActivity()).load(bannerData?.uploadBanner)
+                .placeholder(R.drawable.ic_placeholder).into(ivBanner)
+            when (bannerData?.bannerPosition) {
+                "1" -> {
                     tvBannerPositionValue.text = getString(R.string.home_top)
                 }
-                "2"->{
+
+                "2" -> {
                     tvBannerPositionValue.text = getString(R.string.home_bottom)
                 }
-                "3"->{
+
+                "3" -> {
                     tvBannerPositionValue.text = getString(R.string.category)
-                    if (bannerData?.categoryDetails!=null){
+                    if (bannerData?.categoryDetails != null) {
                         tvCategoryNameValue.isVisible = true
                         tvCategoryName.isVisible = true
                         tvSubCategoryNameValue.isVisible = true
                         tvSubCategoryName.isVisible = true
-                        tvSubCategoryNameValue.text = if (Constants.language=="ar") bannerData?.subcategoryDetails?.nameArabic else bannerData?.subcategoryDetails?.nameEnglish
-                        tvCategoryNameValue.text = if (Constants.language=="ar") bannerData?.categoryDetails?.nameAr else bannerData?.categoryDetails?.name
-                    }
-                    else{
+                        tvSubCategoryNameValue.text =
+                            if (Constants.language == "ar") bannerData?.subcategoryDetails?.nameArabic else bannerData?.subcategoryDetails?.nameEnglish
+                        tvCategoryNameValue.text =
+                            if (Constants.language == "ar") bannerData?.categoryDetails?.nameAr else bannerData?.categoryDetails?.name
+                    } else {
                         tvCategoryNameValue.isVisible = false
                         tvCategoryName.isVisible = false
                         tvSubCategoryNameValue.isVisible = false
@@ -130,8 +126,16 @@ class PromotionalBannerDetailFragment : BaseFragment() {
             }
 
             tvTotalDaysValue.text = bannerData?.totalDays
-            tvFromDate.text =  CommonMethod.customizeChangeDateFormat(bannerData?.startDate.toString(), inputFormat = "yyyy-MM-dd","dd/MM/yyyy")
-            tvToDate.text =  CommonMethod.customizeChangeDateFormat(bannerData?.endDate.toString(), inputFormat = "yyyy-MM-dd","dd/MM/yyyy")
+            tvFromDate.text = CommonMethod.customizeChangeDateFormat(
+                bannerData?.startDate.toString(),
+                inputFormat = "yyyy-MM-dd",
+                "dd/MM/yyyy"
+            )
+            tvToDate.text = CommonMethod.customizeChangeDateFormat(
+                bannerData?.endDate.toString(),
+                inputFormat = "yyyy-MM-dd",
+                "dd/MM/yyyy"
+            )
         }
     }
 
@@ -149,11 +153,17 @@ class PromotionalBannerDetailFragment : BaseFragment() {
                 val bundle = Bundle().apply {
                     putString("bannerData", Gson().toJson(bannerData))
                 }
-                findNavController().navigate(R.id.action_promotionalBannerDetail_to_addPromotionalBannerFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_promotionalBannerDetail_to_addPromotionalBannerFragment,
+                    bundle
+                )
             }
 
             ivBanner.setOnClickListener {
-                CommonMethod.imagePreviewDialog(requireActivity(),bannerData?.uploadBanner.toString()){
+                CommonMethod.imagePreviewDialog(
+                    requireActivity(),
+                    bannerData?.uploadBanner.toString()
+                ) {
 
                 }
             }
@@ -167,28 +177,27 @@ class PromotionalBannerDetailFragment : BaseFragment() {
         }
     }
 
-    private fun deletePromotionalBanner(){
-        val map = HashMap<String,Any>()
-        map["banner_id"]=bannerData?.id.toString()
+    private fun deletePromotionalBanner() {
+        val map = HashMap<String, Any>()
+        map["banner_id"] = bannerData?.id.toString()
         viewModel.deletePromotionalBanner(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
-    private fun updateStatus(){
+    private fun updateStatus() {
         binding?.apply {
-            if(bannerData?.status=="1"){
+            if (bannerData?.status == "1") {
                 ivSwitch.setImageResource(R.drawable.switch_on)
-            }
-            else{
+            } else {
                 ivSwitch.setImageResource(R.drawable.switch_off)
             }
         }
     }
 
-    private fun updateStatusApi(){
-        val map = HashMap<String,Any>()
-        map["banner_id"]=bannerData?.id.toString()
+    private fun updateStatusApi() {
+        val map = HashMap<String, Any>()
+        map["banner_id"] = bannerData?.id.toString()
         viewModel.updatePromotionalBannerStatus(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -205,7 +214,10 @@ class PromotionalBannerDetailFragment : BaseFragment() {
         viewModel.deletePromotionalBannerResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), getString(R.string.banner_deleted_successfully)){
+                CommonMethod.showSuccessDialog(
+                    requireContext(),
+                    getString(R.string.banner_deleted_successfully)
+                ) {
                     findNavController().popBackStack()
                 }
                 isObserver = false
