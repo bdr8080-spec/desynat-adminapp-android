@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.m2
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -10,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import coil.load
 import com.bumptech.glide.Glide
@@ -22,20 +24,26 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityApprovedDetailsBinding
 import com.desynatadmin.databinding.ImagePreviewDialogBinding
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
+import com.desynatadmin.ui.home.storyManagement.ViewStoryActivity
+import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
-import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 import com.desynatadmin.utils.formatUtcDateToLocal
 import com.desynatadmin.utils.showToast
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class ApprovedDetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityApprovedDetailsBinding
     private val viewModel : HomeViewModel by viewModels()
     private var sellerDetailData: SellerDetailResponse.Data?=null
+    var highlightList = ArrayList<GetStoryResponse.Data.Data>()
+    var reelList = ArrayList<GetStoryResponse.Data.Data>()
+    var storyList = ArrayList<GetStoryResponse.Data.Data>()
+    var highlightsAdapter : HighlightsAdapter?=null
+    var reelAdapter : ReelAdapter?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +79,7 @@ class ApprovedDetailsActivity : BaseActivity() {
             )
         }
 
-        binding.reelRecyclerView.adapter = ReelAdapter()
-        binding?.btnSellerInfo?.setOnClickListener {
+            binding?.btnSellerInfo?.setOnClickListener {
             binding?.btnSellerInfo?.setBackgroundResource(R.drawable.selected_left_border)
             binding?.btnSellerInfo?.setTextColor(Color.WHITE)
             binding?.btnOtherInfo?.background = null
@@ -89,23 +96,64 @@ class ApprovedDetailsActivity : BaseActivity() {
             binding?.sellerInfoLayout?.visibility = View.GONE
             binding?.otherInfoLayout?.visibility = View.VISIBLE
         }
-        binding?.highlightsRecyclerView?.adapter = HighlightsAdapter()
+        highlightsAdapter = HighlightsAdapter(this, highlightList,object : HighlightsAdapter.OnItemClick{
+            override fun clickOnItem(position: Int) {
+                            val bundle = Bundle().apply {
+                                putString("from", "highlight")
+                                putString("storyData", Gson().toJson(highlightList[position]))
+                            }
+                val intent = Intent(this@ApprovedDetailsActivity, ViewReelActivity::class.java)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+
+        })
+
+        binding?.highlightsRecyclerView?.adapter = highlightsAdapter
+
+
+        reelAdapter = ReelAdapter(this,reelList,object : ReelAdapter.OnItemClick{
+            override fun clickOnItem(position: Int) {
+                val bundle = Bundle().apply {
+                    putString("from", "reel")
+                    putString("storyData", Gson().toJson(reelList[position]))
+                }
+                val intent = Intent(this@ApprovedDetailsActivity, ViewReelActivity::class.java)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+
+        })
+        binding.reelRecyclerView.adapter = reelAdapter
 
         binding?.apply {
             doc1.setOnClickListener {
-                imagePreviewDialog(sellerDetailData?.owner_document?.get(0)?.document_path?:"")
+                imagePreviewDialog(sellerDetailData?.ownerDocument?.get(0)?.documentPath?:"")
             }
 
             doc2.setOnClickListener {
-                imagePreviewDialog(sellerDetailData?.owner_document?.get(1)?.document_path?:"")
+                imagePreviewDialog(sellerDetailData?.ownerDocument?.get(1)?.documentPath?:"")
             }
 
             doc3.setOnClickListener {
-                imagePreviewDialog(sellerDetailData?.store_document?.get(0)?.document_path?:"")
+                imagePreviewDialog(sellerDetailData?.storeDocument?.get(0)?.documentPath?:"")
             }
 
             doc4.setOnClickListener {
-                imagePreviewDialog(sellerDetailData?.store_document?.get(1)?.document_path?:"")
+                imagePreviewDialog(sellerDetailData?.storeDocument?.get(1)?.documentPath?:"")
+            }
+
+
+            ivProfileImage.setOnClickListener {
+                if (storyList.isNotEmpty()){
+                    val bundle = Bundle().apply {
+                        putString("from", "admin")
+                        putString("storyData", Gson().toJson(storyList))
+                    }
+                    val intent = Intent(this@ApprovedDetailsActivity, ViewStoryActivity::class.java)
+                    intent.putExtras(bundle)
+                    startActivity(intent)
+                }
             }
         }
 
@@ -129,60 +177,94 @@ class ApprovedDetailsActivity : BaseActivity() {
             ProgressDialogUtils.getInstance().hideProgress()
 
             sellerDetailData = it.data
-            if(it.data.is_block == 0){
+            if(it.data.isBlock == 0){
                 binding.ivToggle.setImageResource(R.drawable.toggle_ic)
             }
             else{
                 binding.ivToggle.setImageResource(R.drawable.toggle_off)
             }
-            Glide.with(this).load(it?.data?.profile_pic).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivProfileImage)
-            Glide.with(this).load(it?.data?.store_info?.store_image).placeholder(R.drawable.ic_placeholder).into(binding.imPuma)
-            binding.tvName.text = it?.data?.first_name+" "+it?.data?.last_name
+            Glide.with(this).load(it?.data?.profilePic).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivProfileImage)
+            Glide.with(this).load(it?.data?.storeInfo?.storeImage).placeholder(R.drawable.ic_placeholder).into(binding.imPuma)
+            binding.tvName.text = it?.data?.firstName+" "+it?.data?.lastName
             binding.tvEmail.text = it?.data?.email
-            binding.txt.text = it?.data?.store_info?.bio
-            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar?:it?.data?.store_info?.country_info?.name else it?.data?.store_info?.country_info?.name
-            binding.tvCall.text  = it?.data?.country_code + "-" + it?.data?.mobile
-            binding.tvAddress.text  = "${it?.data?.store_info?.store_name}\n${it?.data?.store_info?.store_address}"
+            binding.txt.text = it?.data?.storeInfo?.bio
+            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.storeInfo?.countryInfo?.nameAr?:it?.data?.storeInfo?.countryInfo?.name else it?.data?.storeInfo?.countryInfo?.name
+            binding.tvCall.text  = it?.data?.countryCode + "-" + it?.data?.mobile
+            binding.tvAddress.text  = "${it?.data?.storeInfo?.storeName}\n${it?.data?.storeInfo?.storeAddress}"
            // binding.tvProPlan.text  = it.data.subcription_plan ?: ""
-            Glide.with(this).load(it?.data?.owner_document?.getOrNull(0)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc1)
-            Glide.with(this).load(it?.data?.owner_document?.getOrNull(1)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc2)
-            Glide.with(this).load(it?.data?.store_document?.getOrNull(0)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc3)
-            Glide.with(this).load(it?.data?.store_document?.getOrNull(1)?.document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc4)
-            binding.tvAccountType.text = when(it.data?.seller_bank_details?.account_type){
+            Glide.with(this).load(it?.data?.ownerDocument?.getOrNull(0)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc1)
+            Glide.with(this).load(it?.data?.ownerDocument?.getOrNull(1)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc2)
+            Glide.with(this).load(it?.data?.storeDocument?.getOrNull(0)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc3)
+            Glide.with(this).load(it?.data?.storeDocument?.getOrNull(1)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc4)
+            binding.tvAccountType.text = when(it.data?.sellerBankDetails?.accountType){
                 "0" -> getString(R.string.personal_account)
                 else -> getString(R.string.business_account)
             }
             binding.cl1.isVisible = true
             binding.clOrder.isVisible = true
-            if(it?.data?.subcription_plan.isNullOrEmpty()){
+            if(it?.data?.subcriptionPlan.isNullOrEmpty()){
                 binding.tvPurchasePlan.text = getString(R.string.no_active_plans)
                 binding.purchasePlanLayout.isVisible = false
             }
             else{
                 binding.tvPurchasePlan.text = getString(R.string.purchased_plan)
                 binding.purchasePlanLayout.isVisible = true
-                binding.tvStatus.text = if(it.data?.subcription_plan?.get(0)?.plan_info?.status == 0) getString(R.string.active) else getString(R.string.expired)
-                binding.tvProPlanLabel.text =if (Constants.language=="ar") it.data?.subcription_plan?.get(0)?.plan_info?.plan_name_arabic  else it.data?.subcription_plan?.get(0)?.plan_info?.plan_name_english ?: ""
-                if(it.data?.subcription_plan?.get(0)?.plan_info?.duration_type == 1){
-                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + getString(
+                binding.tvStatus.text = if(it.data?.subcriptionPlan?.get(0)?.planInfo?.status == 0) getString(R.string.active) else getString(R.string.expired)
+                binding.tvProPlanLabel.text =if (Constants.language=="ar") it.data?.subcriptionPlan?.get(0)?.planInfo?.planNameArabic  else it.data?.subcriptionPlan?.get(0)?.planInfo?.planNameEnglish ?: ""
+                if(it.data?.subcriptionPlan?.get(0)?.planInfo?.durationType == 1){
+                    binding.tvProPlan.text = it.data?.subcriptionPlan?.get(0)?.planInfo?.duration + getString(
                         R.string.months
                     )
                 }
                 else{
-                    binding.tvProPlan.text = it.data?.subcription_plan?.get(0)?.plan_info?.duration + getString(
+                    binding.tvProPlan.text = it.data?.subcriptionPlan?.get(0)?.planInfo?.duration + getString(
                         R.string.years
                     )
                 }
-                binding.tvPurchasedOn.text = formatUtcDateToLocal( it.data?.subcription_plan?.get(0)?.plan_info?.created_at ?: "")
-                binding.tvTotalAmount.text = "${it.data?.subcription_plan?.get(0)?.plan_info?.price?.roundToInt()} KD"
-
+                binding.tvPurchasedOn.text = formatUtcDateToLocal( it.data?.subcriptionPlan?.get(0)?.planInfo?.createdAt ?: "")
+                binding.tvTotalAmount.text = "${it.data?.subcriptionPlan?.get(0)?.planInfo?.price?:0.0} KD"
 
             }
-            binding.tvIban.text = it?.data?.seller_bank_details?.iban
-            binding.tvswiftbic.text = it?.data?.seller_bank_details?.swift
-            binding.tvBankName.text = it?.data?.seller_bank_details?.bank_name
-            binding.tvAccountHolderName.text = it.data?.seller_bank_details?.account_holder_name
-            Glide.with(this).load(it?.data?.seller_bank_details?.upload_proof).placeholder(R.drawable.ic_placeholder).into(binding.imAccountProof)
+
+            storyList.clear()
+            it?.data?.stories?.let { c -> storyList.addAll(c) }
+
+            if (storyList.size!=0){
+                binding?.ivStoryHighlight?.isVisible = true
+            }
+            else{
+                binding?.ivStoryHighlight?.isInvisible = true
+            }
+
+            highlightList.clear()
+            it?.data?.highlights?.let { c -> highlightList.addAll(c) }
+            highlightsAdapter?.notifyDataSetChanged()
+
+            reelList.clear()
+            it?.data?.reels?.let { c -> reelList.addAll(c) }
+            reelAdapter?.notifyDataSetChanged()
+
+            binding?.tvNoHighlightsFound?.isVisible = highlightList.isEmpty()
+            binding?.tvNoReelFound?.isVisible = reelList.isEmpty()
+
+
+            binding?.rating?.rating = it?.data?.averageStoreRating?.toFloatOrNull()?:0f
+            binding?.tvRating?.text = "(${it?.data?.averageStoreRating?:0})"
+
+            binding.tvCompletedOrderValue.text =
+                (it?.data?.totalCompletedOrders ?: 0).toString()
+
+            binding.tvCancelledOrderValue.text =
+                (it?.data?.totalCancelledOrders ?: 0).toString()
+
+            binding.tvMyEarningValue.text =
+                (it?.data?.totalEarning ?: 0).toString()
+            binding.tvCommission.text = it?.data?.affilateCommission
+            binding.tvIban.text = it?.data?.sellerBankDetails?.iban
+            binding.tvswiftbic.text = it?.data?.sellerBankDetails?.swift
+            binding.tvBankName.text = it?.data?.sellerBankDetails?.bankName
+            binding.tvAccountHolderName.text = it.data?.sellerBankDetails?.accountHolderName
+            Glide.with(this).load(it?.data?.sellerBankDetails?.uploadProof).placeholder(R.drawable.ic_placeholder).into(binding.imAccountProof)
         }
     }
 

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:layout_marginEnd="20dp"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="220dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
         android:scaleType="centerCrop"
         android:src="@drawable/reel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,20 +25,18 @@
         app:layout_constraintEnd_toEndOf="@id/img"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
-        android:src="@drawable/delete_ic"
-        />
+        android:src="@drawable/delete_ic" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
         android:src="@drawable/play_ic"
         app:layout_constraintTop_toTopOf="@id/img"
         app:layout_constraintEnd_toEndOf="@id/img"
         app:layout_constraintBottom_toBottomOf="@id/img"
-        app:layout_constraintStart_toStartOf="@id/img"
-        />
+        app:layout_constraintStart_toStartOf="@id/img" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

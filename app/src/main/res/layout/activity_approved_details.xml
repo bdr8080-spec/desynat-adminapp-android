@@ -134,9 +134,23 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_height="@dimen/_40sdp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_user"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ivStoryHighlight"
+                app:layout_constraintTop_toTopOf="@+id/ivStoryHighlight"
+                app:layout_constraintBottom_toBottomOf="@+id/ivStoryHighlight"
+                app:layout_constraintEnd_toEndOf="@+id/ivStoryHighlight"
                 app:shapeAppearanceOverlay="@style/circle_image" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:visibility="invisible"
+                android:id="@+id/ivStoryHighlight"
+                android:layout_width="@dimen/_44sdp"
+                android:layout_height="@dimen/_44sdp"
+                app:strokeColor="@color/brown"
+                android:padding="@dimen/_3sdp"
+                app:shapeAppearanceOverlay="@style/circle_image"
+                app:strokeWidth="@dimen/_3sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvName"
@@ -149,8 +163,8 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:textSize="14sp"
                 android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivProfileImage"
-                app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
+                app:layout_constraintStart_toEndOf="@id/ivStoryHighlight"
+                app:layout_constraintTop_toTopOf="@id/ivStoryHighlight" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/rating"
@@ -163,7 +177,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:secondaryProgressTint="#FFA41B"
                 android:backgroundTint="#EAECF0"
                 style="@style/Widget.AppCompat.RatingBar.Small"
-                app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
+                app:layout_constraintBottom_toBottomOf="@id/ivStoryHighlight"
                 app:layout_constraintStart_toStartOf="@id/tvName"
                 app:layout_constraintTop_toBottomOf="@id/tvName" />
 
@@ -172,6 +186,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                android:text="(0)"
+                android:layout_marginStart="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="@id/rating"
                 app:layout_constraintStart_toEndOf="@id/rating"
                 app:layout_constraintTop_toTopOf="@id/rating" />
@@ -187,7 +202,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivProfileImage" />
+                app:layout_constraintTop_toBottomOf="@id/ivStoryHighlight" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvLocation"
@@ -267,7 +282,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 app:layout_constraintTop_toBottomOf="@+id/tvOrder">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvNew"
+                    android:id="@+id/tvCompleteOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
@@ -281,7 +296,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvNewOrder"
+                    android:id="@+id/tvCompletedOrderValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -289,8 +304,8 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18sdp"
-                    app:layout_constraintStart_toStartOf="@+id/tvNew"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNew" />
+                    app:layout_constraintStart_toStartOf="@+id/tvCompleteOrder"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCompleteOrder" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -298,7 +313,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/completed"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvNew" />
+                    app:layout_constraintTop_toTopOf="@+id/tvCompleteOrder" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -315,7 +330,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 app:layout_constraintTop_toTopOf="@+id/clNew">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvOngoing"
+                    android:id="@+id/tvCancelledOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
@@ -328,7 +343,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvOngoingOrder"
+                    android:id="@+id/tvCancelledOrderValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -336,8 +351,8 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18sdp"
-                    app:layout_constraintStart_toStartOf="@+id/tvOngoing"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOngoing" />
+                    app:layout_constraintStart_toStartOf="@+id/tvCancelledOrder"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCancelledOrder" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -345,7 +360,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/cancelled"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvOngoing" />
+                    app:layout_constraintTop_toTopOf="@+id/tvCancelledOrder" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -364,7 +379,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 app:layout_constraintTop_toBottomOf="@+id/clNew">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvCompleted"
+                    android:id="@+id/tvMyEarning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
@@ -377,7 +392,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvCompletedOrder"
+                    android:id="@+id/tvMyEarningValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -385,8 +400,8 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18sdp"
-                    app:layout_constraintStart_toStartOf="@+id/tvCompleted"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCompleted" />
+                    app:layout_constraintStart_toStartOf="@+id/tvMyEarning"
+                    app:layout_constraintTop_toBottomOf="@+id/tvMyEarning" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -394,7 +409,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/earning"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvCompleted" />
+                    app:layout_constraintTop_toTopOf="@+id/tvMyEarning" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -411,7 +426,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                 app:layout_constraintTop_toTopOf="@+id/clCompleted">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvCancelled"
+                    android:id="@+id/tvCommission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
@@ -424,7 +439,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvCancelledOrder"
+                    android:id="@+id/tvCommissionValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -432,8 +447,8 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18sdp"
-                    app:layout_constraintStart_toStartOf="@+id/tvCancelled"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCancelled" />
+                    app:layout_constraintStart_toStartOf="@+id/tvCommission"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCommission" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -441,7 +456,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/earning"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvCancelled" />
+                    app:layout_constraintTop_toTopOf="@+id/tvCommission" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -471,8 +486,24 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal"
+            tools:itemCount="2"
             tools:listitem="@layout/highlights_item"
             app:layout_constraintTop_toBottomOf="@id/tvHighlights" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
+            android:id="@+id/tvNoHighlightsFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_13sdp"
+            android:text="No highlights found"
+            android:paddingVertical="@dimen/_10sdp"
+           app:layout_constraintTop_toBottomOf="@+id/highlightsRecyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvReel"
@@ -485,7 +516,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintTop_toBottomOf="@id/highlightsRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@id/tvNoHighlightsFound" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reelRecyclerView"
@@ -501,10 +532,25 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             tools:itemCount="10"
             tools:listitem="@layout/reel_item" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
+            android:id="@+id/tvNoReelFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_13sdp"
+            android:text="No highlights found"
+            android:paddingVertical="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/reelRecyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            app:layout_constraintTop_toBottomOf="@+id/reelRecyclerView"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvNoReelFound"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

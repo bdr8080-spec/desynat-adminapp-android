@@ -76,17 +76,6 @@ class StoryManagementFragment : BaseFragment() {
                             findNavController().navigate(R.id.action_storyManagement_to_addStoryFragment)
                         }
                         2->{
-                          /*  val list = ArrayList<GetStoryResponse.Data.Data>()
-                            list.add(storyList[position])
-                                val bundle = Bundle().apply {
-                                    putString("from", "admin")
-                                    putString("storyData", Gson().toJson(list))
-                                }
-                                findNavController().navigate(
-                                    R.id.action_storyManagement_to_viewStoryFragment,
-                                    bundle
-                                )*/
-
                             imagePreviewDialog(storyList[position].file,"video")
                         }
                         3->{
@@ -94,17 +83,6 @@ class StoryManagementFragment : BaseFragment() {
                             deleteStory()
                         }
                         4->{
-                          /*  val list = ArrayList<GetStoryResponse.Data.Data>()
-                            list.add(storyList[position])
-                                val bundle = Bundle().apply {
-                                    putString("from", "admin")
-                                    putString("storyData", Gson().toJson(list))
-                                }
-                                findNavController().navigate(
-                                    R.id.action_storyManagement_to_viewStoryFragment,
-                                    bundle
-                                )*/
-
                             imagePreviewDialog(storyList[position].file,"image")
                         }
                     }

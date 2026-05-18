@@ -43,11 +43,11 @@ data class GetStoryResponse(
             @SerializedName("created_at")
             val createdAt: String,
             @SerializedName("file")
-            val `file`: String,
+            val file: String,
             @SerializedName("id")
             val id: Int,
             @SerializedName("seller_details")
-            val sellerDetails: SellerDetails,
+            val sellerDetails: SellerDetails?=null,
             @SerializedName("seller_id")
             val sellerId: Int,
             @SerializedName("status")
@@ -55,7 +55,11 @@ data class GetStoryResponse(
             @SerializedName("type")
             val type: Int,
             @SerializedName("updated_at")
-            val updatedAt: String
+            val updatedAt: String,
+            @SerializedName("title")
+            val title: String?=null,
+            @SerializedName("caption")
+            val caption: String?=null
         ) {
             data class SellerDetails(
                 @SerializedName("accept_terms")

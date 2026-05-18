@@ -142,32 +142,32 @@ class NewDetailActivity : BaseActivity() {
         }
 
         viewModel.getSellerDetailData.observe(this){
-            binding.tvName.text = it.data.first_name+" "+it?.data?.last_name
-            binding.tvStoreName.text = it.data.store_info.store_name
-            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.store_info?.country_info?.name_ar?:it?.data?.store_info?.country_info?.name else it?.data?.store_info?.country_info?.name
-            binding.tvCall.text = it.data.country_code + "-" + it.data.mobile
+            binding.tvName.text = it.data.firstName+" "+it?.data?.lastName
+            binding.tvStoreName.text = it.data.storeInfo.storeName
+            binding.tvLocation.text = if (Constants.language=="ar") it?.data?.storeInfo?.countryInfo?.nameAr?:it?.data?.storeInfo?.countryInfo?.name else it?.data?.storeInfo?.countryInfo?.name
+            binding.tvCall.text = it.data.countryCode + "-" + it.data.mobile
             binding.tvEmail.text = it.data.email
-            binding.tvAddress.text = it.data.store_info.store_address
-            binding.tvPhone.text = it.data.store_info.country_code + "-" + it.data.store_info.store_phone
-            binding.tvMail.text = it.data.store_info.store_mail_id
-            binding.tvBio.text = it.data.store_info.bio
-            binding.tvAccountType.text = when(it.data.seller_bank_details.account_type){
+            binding.tvAddress.text = it.data.storeInfo.storeAddress
+            binding.tvPhone.text = it.data.storeInfo.countryCode + "-" + it.data.storeInfo.storePhone
+            binding.tvMail.text = it.data.storeInfo.storeMailId
+            binding.tvBio.text = it.data.storeInfo.bio
+            binding.tvAccountType.text = when(it?.data?.sellerBankDetails?.accountType){
                 "0" -> getString(R.string.personal_account)
                 else -> getString(R.string.business_account)
             }
-            binding.tvIban.text = it.data.seller_bank_details.iban
-            binding.tvswiftbic.text = it.data.seller_bank_details.swift
-            binding.tvBankName.text = it.data.seller_bank_details.bank_name
-            binding.tvAccountHolderName.text = it.data.seller_bank_details.account_holder_name
-            binding.tvJoinedOn.text = "${getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(it.data.updated_at)}"
+            binding.tvIban.text = it?.data?.sellerBankDetails?.iban
+            binding.tvswiftbic.text = it?.data?.sellerBankDetails?.swift
+            binding.tvBankName.text = it?.data?.sellerBankDetails?.bankName
+            binding.tvAccountHolderName.text = it?.data?.sellerBankDetails?.accountHolderName
+            binding.tvJoinedOn.text = "${getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(it?.data?.updatedAt.toString())}"
 
-            Glide.with(this).load(it.data.store_info.store_image).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivStoreImage)
-            Glide.with(this).load(it.data.profile_pic).transform(CircleCrop()).into(binding.ivProfileImage)
-            Glide.with(this).load(it.data.owner_document.get(0).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc1)
-            Glide.with(this).load(it.data.owner_document.get(1).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc2)
-            Glide.with(this).load(it.data.store_document.get(0).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc3)
-            Glide.with(this).load(it.data.store_document.get(1).document_path).placeholder(R.drawable.ic_placeholder).into(binding.doc4)
-            Glide.with(this).load(it.data.seller_bank_details.upload_proof).placeholder(R.drawable.ic_placeholder).into(binding.imAccountProof)
+            Glide.with(this).load(it?.data?.storeInfo?.storeImage).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivStoreImage)
+            Glide.with(this).load(it?.data?.profilePic).transform(CircleCrop()).into(binding.ivProfileImage)
+            Glide.with(this).load(it?.data?.ownerDocument?.getOrNull(0)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc1)
+            Glide.with(this).load(it?.data?.ownerDocument?.getOrNull(1)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc2)
+            Glide.with(this).load(it?.data?.storeDocument?.getOrNull(0)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc3)
+            Glide.with(this).load(it?.data?.storeDocument?.getOrNull(1)?.documentPath).placeholder(R.drawable.ic_placeholder).into(binding.doc4)
+            Glide.with(this).load(it?.data?.sellerBankDetails?.uploadProof).placeholder(R.drawable.ic_placeholder).into(binding.imAccountProof)
         }
     }
 }

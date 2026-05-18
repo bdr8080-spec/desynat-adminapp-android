@@ -35,6 +35,8 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initView() {
+        SharedPreference.get(this).clearCountryList()
+        SharedPreference.get(this).clearUserCountryList()
         Constants.language = SharedPreference.get(this).language
         CommonMethod.setLocale(this, Constants.language )
         Handler(Looper.getMainLooper()).postDelayed({

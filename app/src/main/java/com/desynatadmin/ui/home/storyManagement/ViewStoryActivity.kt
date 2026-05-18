@@ -2,35 +2,26 @@ package com.desynatadmin.ui.home.storyManagement
 
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import androidx.activity.enableEdgeToEdge
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.desynatadmin.R
 import com.desynatadmin.adapter.StoryPagerAdapter
-import com.desynatadmin.base.BaseFragment
-import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.FragmentViewStoryBinding
+import com.desynatadmin.base.BaseActivity
+import com.desynatadmin.databinding.ActivityViewStoryBinding
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
-import com.desynatadmin.utils.ProgressDialogUtils
-import com.desynatadmin.utils.showToast
+import com.desynatadmin.utils.CommonMethod
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 import kotlin.toString
 
 @AndroidEntryPoint
-class ViewStoryFragment : BaseFragment() {
-    private var binding : FragmentViewStoryBinding?=null
-    private val viewModel: HomeViewModel by activityViewModels()
-    private var isObserver = false
+class ViewStoryActivity : BaseActivity() {
+    private var binding : ActivityViewStoryBinding?=null
     private val myStories = ArrayList<GetStoryResponse.Data.Data>()
 
     private val progressBars = ArrayList<ProgressBar>()
@@ -42,26 +33,23 @@ class ViewStoryFragment : BaseFragment() {
 
     private var isManualNavigation = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentViewStoryBinding.inflate(layoutInflater, container,false)
-        return binding?.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Inflate *after* onCreate is called
+        binding = ActivityViewStoryBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+        enableEdgeToEdge()
         initView()
         initControl()
-        observe()
+        observer()
     }
 
     override fun initView() {
+        CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
 
-
-        from = arguments?.getString("from").toString()
-        val json = arguments?.getString("storyData")
+        from = intent?.getStringExtra("from").toString()
+        val json = intent?.getStringExtra("storyData")
 
         if (!json.isNullOrEmpty()) {
 
@@ -73,17 +61,6 @@ class ViewStoryFragment : BaseFragment() {
             myStories.clear()
             myStories.addAll(storyList)
         }
-        if (from!="admin"){
-            sellerId = arguments?.getString("sellerId").toString()
-        }
-//        when(from){
-//            "admin"->getAdminStory()
-//            "reel"-> getSellerReel()
-//            "story"->getSellerStory()
-//            "highlights"->getSellerHighlights()
-//        }
-
-
 
         setData()
 
@@ -96,19 +73,17 @@ class ViewStoryFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
             ivCancel.setOnClickListener {
-                findNavController().popBackStack()
+               finish()
+            }
+
+            ivDelete.setOnClickListener {
+
             }
         }
     }
 
-    override fun observe() {
-        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            if (isObserver) {
-                ProgressDialogUtils.getInstance().hideProgress()
-                errorMessage?.let { showToast(it) }
-                isObserver = false
-            }
-        }
+    override fun observer() {
+
 
     }
 
@@ -120,14 +95,13 @@ class ViewStoryFragment : BaseFragment() {
     }
     private fun setupAdapter() {
 
-        storyPagerAdapter = StoryPagerAdapter(requireActivity(),
+        storyPagerAdapter = StoryPagerAdapter(this,
             myStories,
             object : StoryPagerAdapter.OnClick {
 
                 override fun clickOnItem(position: Int) {
 
                 }
-
 
                 override fun onNext(position: Int) {
                     isManualNavigation = true
@@ -140,7 +114,7 @@ class ViewStoryFragment : BaseFragment() {
                     if (next < myStories.size) {
                         binding?.viewPager?.currentItem = next
                     } else {
-                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                        finish()
                     }
                 }
 
@@ -229,8 +203,6 @@ class ViewStoryFragment : BaseFragment() {
 
             doOnEnd {
 
-                if (!isAdded) return@doOnEnd
-
                 if (isManualNavigation) {
                     isManualNavigation = false
                     return@doOnEnd
@@ -260,8 +232,6 @@ class ViewStoryFragment : BaseFragment() {
 
             doOnEnd {
 
-                if (!isAdded) return@doOnEnd
-
                 if (isManualNavigation) {
                     isManualNavigation = false
                     return@doOnEnd
@@ -281,7 +251,7 @@ class ViewStoryFragment : BaseFragment() {
         if (next < myStories.size) {
             binding?.viewPager?.currentItem = next
         } else {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            finish()
         }
     }
 
@@ -293,13 +263,13 @@ class ViewStoryFragment : BaseFragment() {
         repeat(count) {
 
             val progressBar = ProgressBar(
-                requireContext(),
+                this,
                 null,
                 android.R.attr.progressBarStyleHorizontal
             )
 
             progressBar.progressDrawable =
-                ContextCompat.getDrawable(requireContext(), R.drawable.story_progress)
+                ContextCompat.getDrawable(this, R.drawable.story_progress)
 
             progressBar.layoutParams = LinearLayout.LayoutParams(
                 0,
@@ -316,8 +286,8 @@ class ViewStoryFragment : BaseFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         stopProgress()
         binding = null
     }

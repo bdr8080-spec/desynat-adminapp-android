@@ -37,6 +37,9 @@ class ApprovedAdapter(var context: Context,var list : ArrayList<ApprovedSellerRe
             tvCall.text = item.country_code + "-" + item.mobile
             Glide.with(ivProfileImage).load(item.profile_pic).transform(CircleCrop()).placeholder(R.drawable.ic_user).into(ivProfileImage)
             tvEmail.text = item.email
+            tvTotalOrdersValue.text = "${(item?.total_cancelled_orders ?: 0) + (item?.total_completed_orders ?: 0)}"
+            tvTotalEarningsValue.text = item.total_earning
+            tvEmail.text = item.email
             tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(item?.updated_at.toString())}"
 
             root.setOnClickListener {
