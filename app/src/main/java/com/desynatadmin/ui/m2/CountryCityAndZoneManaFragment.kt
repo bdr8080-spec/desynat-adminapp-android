@@ -343,6 +343,7 @@ class CountryCityAndZoneManaFragment : BaseFragment() {
                     }
 
                     "2" -> {
+                        SingleTonDataPass.isView = false
                         SingleTonDataPass.isEdit = false
                         SingleTonDataPass.coordinate = emptyList()
                         navController.navigate(R.id.action_countryCityAndZoneManaFragment_to_addZoneFragment)

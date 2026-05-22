@@ -108,9 +108,9 @@ class AddZoneFragment : BaseFragment(), OnMapReadyCallback {
             binding?.etZonaNameAr?.setText(SingleTonDataPass.arName)
             binding?.tvToolbar?.text = getString(R.string.edit_zone)
         } else if (SingleTonDataPass.isView == true) {
-            binding?.etSearch?.visibility = View.INVISIBLE
-            binding?.btnReset?.visibility = View.INVISIBLE
-            binding?.clLayout?.visibility = View.INVISIBLE
+            binding?.etSearch?.visibility = View.GONE
+            binding?.btnReset?.visibility = View.GONE
+            binding?.nsLayout?.visibility = View.GONE
             binding?.tvToolbar?.text = getString(R.string.view)
         }
         binding?.rvLocation?.adapter = locationSearchAdapter

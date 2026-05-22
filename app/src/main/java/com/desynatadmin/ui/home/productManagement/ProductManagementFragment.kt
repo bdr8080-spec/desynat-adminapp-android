@@ -136,6 +136,7 @@ class ProductManagementFragment : BaseFragment() {
             })
             rvProduct.adapter = productAdapter
 
+            lastQuery = etSearch.text.toString().trim()
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,

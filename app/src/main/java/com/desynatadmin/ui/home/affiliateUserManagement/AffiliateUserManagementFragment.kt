@@ -124,6 +124,7 @@ class AffiliateUserManagementFragment : BaseFragment() {
 
             rvAffiliateUser.adapter = affiliateUserAdapter
 
+            lastQuery = etSearch.text.toString().trim()
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,

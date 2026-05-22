@@ -158,6 +158,7 @@ class BannerRequestManagementFragment : BaseFragment() {
                 getBannerRequest(false)
             }
 
+            lastQuery = etSearch.text.toString().trim()
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 

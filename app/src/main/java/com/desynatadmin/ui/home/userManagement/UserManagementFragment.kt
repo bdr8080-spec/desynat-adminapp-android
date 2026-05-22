@@ -102,16 +102,14 @@ class UserManagementFragment : BaseFragment() {
                         2->{
                             selectedPos = position
                             updateUserStatus()
-
                         }
                     }
-
                 }
-
             })
 
             rvUser.adapter = userAdapter
 
+            lastQuery = etSearch.text.toString().trim()
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -130,7 +128,6 @@ class UserManagementFragment : BaseFragment() {
                         if (!isObserver)
                             getAllUser(search =  query.ifEmpty { null }, loading = false)
                     }
-
                 }
             })
 
@@ -169,8 +166,6 @@ class UserManagementFragment : BaseFragment() {
                     getAllUser(false)
                     binding?.progressBar?.isVisible = true
                 }
-
-
             }
 
             ivBackArrow.setOnClickListener {

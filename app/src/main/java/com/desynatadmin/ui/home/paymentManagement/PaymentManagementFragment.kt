@@ -189,6 +189,7 @@ class PaymentManagementFragment : BaseFragment() {
                 })
             rvBanner.adapter = bannerPaymentAdapter
 
+            lastQuery = etSearch.text.toString().trim()
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
