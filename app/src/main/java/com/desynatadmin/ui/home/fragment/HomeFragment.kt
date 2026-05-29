@@ -400,7 +400,7 @@ private fun getProfile(){
 
             tvAffiliatedInActiveUser.text = dashboardData?.totalInactiveAffiliateUsers.toString()
             tvAffiliatedActive.text = dashboardData?.totalActiveAffiliateUsers.toString()
-            tvTotalSeller.text = "${getString(R.string.total_affiliated_registered)} (${dashboardData?.totalAffiliateUsers?:0})"
+            tvTotalAffiliated.text = "${getString(R.string.total_affiliated_registered)} (${dashboardData?.totalAffiliateUsers?:0})"
 
             tvInActiveUser.text = dashboardData?.totalInactiveUsers.toString()
             tvActiveUser.text = dashboardData?.totalActiveUsers.toString()
@@ -408,7 +408,7 @@ private fun getProfile(){
 
             tvDriveInActiveUser.text = dashboardData?.totalInactiveDeliveryBoy.toString()
             tvDriveInActive.text = dashboardData?.totalActiveDeliveryBoy.toString()
-            tvTotalSeller.text = "${getString(R.string.total_drivers_registered)} (${dashboardData?.totalDeliveryBoy?:0})"
+            tvTotalDriver.text = "${getString(R.string.total_drivers_registered)} (${dashboardData?.totalDeliveryBoy?:0})"
 
 
             tvCancelledOrder.text = dashboardData?.totalCancelledOrders.toString()
