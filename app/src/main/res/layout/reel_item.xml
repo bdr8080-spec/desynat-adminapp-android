@@ -19,6 +19,7 @@
         app:shapeAppearance="@style/ShapeAppearance.Material3.MediumComponent" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icDelete"
         android:layout_width="24dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="@id/img"

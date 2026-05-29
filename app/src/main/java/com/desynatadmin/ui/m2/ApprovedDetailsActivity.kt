@@ -26,6 +26,7 @@ import com.desynatadmin.databinding.ImagePreviewDialogBinding
 import com.desynatadmin.ui.home.brandManagement.response.SellerDetailResponse
 import com.desynatadmin.ui.home.storyManagement.ViewStoryActivity
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
+import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
@@ -44,6 +45,7 @@ class ApprovedDetailsActivity : BaseActivity() {
     var storyList = ArrayList<GetStoryResponse.Data.Data>()
     var highlightsAdapter : HighlightsAdapter?=null
     var reelAdapter : ReelAdapter?=null
+    var reelPos = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +58,16 @@ class ApprovedDetailsActivity : BaseActivity() {
         observer()
     }
 
+    override fun onResume() {
+        getSellerDetail()
+        super.onResume()
+    }
+
     override fun initView() {
+
+    }
+
+    fun getSellerDetail(){
         ProgressDialogUtils.getInstance().showProgress(this)
         viewModel.hitSellerDetail(
             SharedPreference.get(this).accessToken,
@@ -113,14 +124,23 @@ class ApprovedDetailsActivity : BaseActivity() {
 
 
         reelAdapter = ReelAdapter(this,reelList,object : ReelAdapter.OnItemClick{
-            override fun clickOnItem(position: Int) {
-                val bundle = Bundle().apply {
-                    putString("from", "reel")
-                    putString("storyData", Gson().toJson(reelList[position]))
+            override fun clickOnItem(position: Int,type:Int) {
+                when(type){
+                    0->{
+                        val bundle = Bundle().apply {
+                            putString("from", "reel")
+                            putString("storyData", Gson().toJson(reelList[position]))
+                        }
+                        val intent = Intent(this@ApprovedDetailsActivity, ViewReelActivity::class.java)
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+                    1->{
+                       reelPos = position
+                        deleteReel()
+                    }
                 }
-                val intent = Intent(this@ApprovedDetailsActivity, ViewReelActivity::class.java)
-                intent.putExtras(bundle)
-                startActivity(intent)
+
             }
 
         })
@@ -165,11 +185,11 @@ class ApprovedDetailsActivity : BaseActivity() {
         viewModel.getUpdateSellerStatus.observe(this){
             if(it.data.is_block == 0){
                 showToast(getString(R.string.seller_unblock_successfully))
-                binding.ivToggle.setImageResource(R.drawable.toggle_ic)
+                binding.ivToggle.setImageResource(R.drawable.switch_off)
             }
             else{
                 showToast(getString(R.string.seller_block_successfully))
-                binding.ivToggle.setImageResource(R.drawable.toggle_off)
+                binding.ivToggle.setImageResource(R.drawable.switch_on)
             }
         }
 
@@ -178,10 +198,10 @@ class ApprovedDetailsActivity : BaseActivity() {
 
             sellerDetailData = it.data
             if(it.data.isBlock == 0){
-                binding.ivToggle.setImageResource(R.drawable.toggle_ic)
+                binding.ivToggle.setImageResource(R.drawable.switch_off)
             }
             else{
-                binding.ivToggle.setImageResource(R.drawable.toggle_off)
+                binding.ivToggle.setImageResource(R.drawable.switch_on)
             }
             Glide.with(this).load(it?.data?.profilePic).placeholder(R.drawable.ic_user).transform(CircleCrop()).into(binding.ivProfileImage)
             Glide.with(this).load(it?.data?.storeInfo?.storeImage).placeholder(R.drawable.ic_placeholder).into(binding.imPuma)
@@ -266,6 +286,14 @@ class ApprovedDetailsActivity : BaseActivity() {
             binding.tvAccountHolderName.text = it.data?.sellerBankDetails?.accountHolderName
             Glide.with(this).load(it?.data?.sellerBankDetails?.uploadProof).placeholder(R.drawable.ic_placeholder).into(binding.imAccountProof)
         }
+
+        viewModel.deleteSellerReelData.observe(this){
+            reelList.removeAt(reelPos)
+            reelAdapter?.notifyDataSetChanged()
+            reelPos = -1
+            CommonMethod.showSuccessDialog(this,getString(R.string.reel_deleted_successfully))
+
+        }
     }
 
     private fun imagePreviewDialog(image:String) {
@@ -301,4 +329,7 @@ class ApprovedDetailsActivity : BaseActivity() {
         dialog?.show()
     }
 
+    fun deleteReel(){
+        viewModel.deleteSellerReel(reelList[reelPos].id.toString())
+    }
 }

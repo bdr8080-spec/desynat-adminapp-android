@@ -452,7 +452,41 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val deleteSellerReelData : LiveData<CommonResponse>
+        get() = repository.deleteSellerReel
 
+    fun deleteSellerReel(
+        id:String
+    ) {
+        viewModelScope.launch {
+            repository.
+            deleteSellerReel(id)
+        }
+    }
+
+    val deleteSellerHighlightData : LiveData<CommonResponse>
+        get() = repository.deleteSellerHighlight
+
+    fun deleteSellerHighlight(
+        id:String
+    ) {
+        viewModelScope.launch {
+            repository.
+            deleteSellerHighlight(id)
+        }
+    }
+
+    val deleteSellerStoryData : LiveData<CommonResponse>
+        get() = repository.deleteSellerStory
+
+    fun deleteSellerStory(
+        id:String
+    ) {
+        viewModelScope.launch {
+            repository.
+            deleteSellerStory(id)
+        }
+    }
 
     val getAcceptSeller : LiveData<AcceptSellerResponse>
         get() = repository.getAcceptSeller

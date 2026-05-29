@@ -194,6 +194,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun getCountryApi(){
+        binding?.mainProgressBar?.isVisible = true
         viewModel.getCountry()
     }
 private fun getNotificationCount(){
@@ -247,6 +248,7 @@ private fun getProfile(){
 
         viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
                 ProgressDialogUtils.getInstance().hideProgress()
+            binding?.mainProgressBar?.isVisible = false
                 countryList.clear()
                 countryList.addAll(response.data)
                 setCountry()

@@ -374,6 +374,21 @@ interface ApiServices {
         @Query("seller_id") seller_id: String,
     ): Response<SellerDetailResponse>
 
+    @POST(Constants.DELETE_SELLER_REEL)
+    suspend fun deleteSellerReel(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.DELETE_SELLER_HIGHLIGHT)
+    suspend fun deleteSellerHighlight(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.DELETE_SELLER_STORY)
+    suspend fun deleteSellerStory(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
     @POST(Constants.ACCEPT_SELLER)
     suspend fun hitAcceptSeller(
         @Header("Token") Token: String,

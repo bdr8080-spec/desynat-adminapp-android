@@ -900,4 +900,9 @@
     <string name="a_z">A-Z</string>
     <string name="hi_there">Hi there</string>
     <string name="promotional_banner_updated_successfully">Promotional Banner Updated Successfully</string>
+    <string name="reel_deleted_successfully">Reel deleted successfully!</string>
+    <string name="highlights_deleted_successfully">Highlights deleted successfully!</string>
+    <string name="no_highlights_found">No highlights found</string>
+    <string name="no_reel_found">No reel found</string>
+
 </resources>

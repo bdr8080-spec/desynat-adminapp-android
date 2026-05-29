@@ -674,6 +674,48 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val deleteSellerReel = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteSellerReel(
+        id: String,
+    ) {
+        val map = HashMap<String,Any>()
+        map["reel_id"] = id
+        handleApiCall(
+            api = {
+                api.deleteSellerReel(map)
+            },
+            responseLiveData = deleteSellerReel
+        )
+    }
+
+    val deleteSellerHighlight = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteSellerHighlight(
+        id: String,
+    ) {
+        val map = HashMap<String,Any>()
+        map["highlight_id"] = id
+        handleApiCall(
+            api = {
+                api.deleteSellerHighlight(map)
+            },
+            responseLiveData = deleteSellerHighlight
+        )
+    }
+
+    val deleteSellerStory = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteSellerStory(
+        id: String,
+    ) {
+        val map = HashMap<String,Any>()
+        map["story_id"] = id
+        handleApiCall(
+            api = {
+                api.deleteSellerStory(map)
+            },
+            responseLiveData = deleteSellerStory
+        )
+    }
+
     val getAcceptSeller = SingleLiveEvent<AcceptSellerResponse>()
     suspend fun hitAcceptSeller(
         token: String,

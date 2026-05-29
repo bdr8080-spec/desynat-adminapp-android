@@ -898,4 +898,8 @@
     <string name="a_z">أ-ي</string>
     <string name="hi_there">مرحباً</string>
     <string name="promotional_banner_updated_successfully">تم تحديث البانر الترويجي بنجاح</string>
+    <string name="reel_deleted_successfully">تم حذف الريل بنجاح!</string>
+    <string name="highlights_deleted_successfully">تم حذف التمييزات بنجاح!</string>
+    <string name="no_highlights_found">لم يتم العثور على أي قصص مميزة</string>
+    <string name="no_reel_found">لم يتم العثور على أي مقطع ريلز</string>
 </resources>

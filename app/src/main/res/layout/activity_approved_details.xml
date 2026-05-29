@@ -499,7 +499,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_13sdp"
-            android:text="No highlights found"
+            android:text="@string/no_highlights_found"
             android:paddingVertical="@dimen/_10sdp"
            app:layout_constraintTop_toBottomOf="@+id/highlightsRecyclerView"
             app:layout_constraintStart_toStartOf="parent"
@@ -541,7 +541,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_13sdp"
-            android:text="No highlights found"
+            android:text="@string/no_reel_found"
             android:paddingVertical="@dimen/_20sdp"
             app:layout_constraintTop_toBottomOf="@+id/reelRecyclerView"
             app:layout_constraintStart_toStartOf="parent"
@@ -549,7 +549,7 @@ tools:context=".ui.m2.ApprovedDetailsActivity">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_50sdp"
             app:layout_constraintTop_toBottomOf="@+id/tvNoReelFound"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

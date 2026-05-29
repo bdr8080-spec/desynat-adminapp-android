@@ -13,7 +13,7 @@ class ReelAdapter(val context: Context,val reelList: ArrayList<GetStoryResponse.
     RecyclerView.Adapter<ReelAdapter.ViewHolder>() {
 
     interface OnItemClick{
-        fun clickOnItem(position: Int)
+        fun clickOnItem(position: Int,type:Int)
     }
 
     inner class ViewHolder(val binding: ReelItemBinding) :
@@ -22,7 +22,11 @@ class ReelAdapter(val context: Context,val reelList: ArrayList<GetStoryResponse.
                 Glide.with(context).load(reelList[position].file).placeholder(R.drawable.ic_placeholder).into(img)
 
             root.setOnClickListener {
-                click.clickOnItem(position)
+                click.clickOnItem(position,0)
+            }
+
+            icDelete.setOnClickListener {
+                click.clickOnItem(position,1)
             }
         }
         }

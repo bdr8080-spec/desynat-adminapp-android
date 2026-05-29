@@ -5,24 +5,29 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.desynatadmin.R
 import com.desynatadmin.adapter.StoryPagerAdapter
 import com.desynatadmin.base.BaseActivity
+import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityViewStoryBinding
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.ProgressDialogUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 import kotlin.toString
 
 @AndroidEntryPoint
 class ViewStoryActivity : BaseActivity() {
     private var binding : ActivityViewStoryBinding?=null
     private val myStories = ArrayList<GetStoryResponse.Data.Data>()
+    private val viewModel : HomeViewModel by viewModels()
 
     private val progressBars = ArrayList<ProgressBar>()
     private var storyPagerAdapter: StoryPagerAdapter?=null
@@ -32,8 +37,7 @@ class ViewStoryActivity : BaseActivity() {
     private var progressAnimator: ValueAnimator? = null
 
     private var isManualNavigation = false
-
-
+    private var currentStoryPosition = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Inflate *after* onCreate is called
@@ -77,14 +81,44 @@ class ViewStoryActivity : BaseActivity() {
             }
 
             ivDelete.setOnClickListener {
+                val currentStory = myStories[currentStoryPosition]
 
+                deleteStory(currentStory.id.toString() ?: "")
             }
         }
     }
 
     override fun observer() {
+        viewModel.error.observe(this) { errorMessage ->
+                ProgressDialogUtils.getInstance().hideProgress()
+        }
+       /* viewModel.deleteSellerStoryData.observe(this){
+            ProgressDialogUtils.getInstance().hideProgress()
+            CommonMethod.showSuccessDialog(this,getString(R.string.story_deleted_successfully)){
+                finish()
+            }
 
+        }*/
 
+        viewModel.deleteSellerStoryData.observe(this) {
+
+            ProgressDialogUtils.getInstance().hideProgress()
+
+            myStories.removeAt(currentStoryPosition)
+
+            if (myStories.isEmpty()) {
+                finish()
+                return@observe
+            }
+
+            storyPagerAdapter?.notifyDataSetChanged()
+
+            if (currentStoryPosition >= myStories.size) {
+                currentStoryPosition = myStories.size - 1
+            }
+
+            binding?.viewPager?.setCurrentItem(currentStoryPosition, false)
+        }
     }
 
     private fun setData() {
@@ -164,7 +198,7 @@ class ViewStoryActivity : BaseActivity() {
 
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-
+                    currentStoryPosition = position
                     stopProgress()
 
                     progressBars.forEachIndexed { index, progressBar ->
@@ -291,4 +325,10 @@ class ViewStoryActivity : BaseActivity() {
         stopProgress()
         binding = null
     }
+
+    private fun deleteStory(id: String){
+        viewModel.deleteSellerStory(id)
+        ProgressDialogUtils.getInstance().showProgress(this)
+    }
+
 }

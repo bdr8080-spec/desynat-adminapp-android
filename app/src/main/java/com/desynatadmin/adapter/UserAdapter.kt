@@ -27,24 +27,24 @@ class UserAdapter(var context:Context, var userList: ArrayList<GetUserResponse.D
                 val subAdminInfo = SharedPreference.get(context).getSubAdmin()
                 val module = subAdminInfo?.permissionDetails
                     ?.firstOrNull {
-                        it.moduleDetails.name.equals("user_management", true)
+                        it.moduleDetails?.name.equals("user_management", true)
                     }
 
                 actionAccess = module?.canAction == 1
                 ivSwitch.isClickable = actionAccess
             }
 
-            tvName.text = userData.fullName
-            if (userData.walletInfo!=null){
-                tvWalletBalance.text = "${CommonMethod.formatAmount(userData.walletInfo.amount)} KD"
+            tvName.text = userData?.fullName
+            if (userData?.walletInfo!=null){
+                tvWalletBalance.text = "${CommonMethod.formatAmount(userData?.walletInfo?.amount.toString())} KD"
             }
-            tvLocation.text = if (Constants.language=="ar") userData.countryInfo.nameAr else userData.countryInfo.name
-            tvJoinedOn.text = "${context.getString(R.string.joined_on)} ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
-            tvEmail.text = userData.email
-            tvCall.text = userData.countryCode+"-"+userData.mobile
+            tvLocation.text = if (Constants.language=="ar") userData?.countryInfo?.nameAr else userData?.countryInfo?.name
+            tvJoinedOn.text = "${context.getString(R.string.joined_on)} ${formatUtcDateToDdMmYyyy(userData?.createdAt.toString())}"
+            tvEmail.text = userData?.email
+            tvCall.text = userData?.countryCode+"-"+userData?.mobile
             /*   tvCompletedOrder.text = userData.fullName
                tvCancelledOrder.text = userData.fullName*/
-            Glide.with(ivProfileImage).load(userData.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
+            Glide.with(ivProfileImage).load(userData?.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
             if(userData.status=="1"){
                 ivSwitch.setImageResource(R.drawable.switch_on)
             }

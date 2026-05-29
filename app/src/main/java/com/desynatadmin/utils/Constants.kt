@@ -56,6 +56,9 @@ object Constants {
     const val APPROVED_SELLER = "/api/admin/get_approved_sellers"
     const val REJECTED_SELLER = "/api/admin/get_rejected_sellers"
     const val SELLER_DETAIL = "/api/admin/get_seller_details"
+    const val DELETE_SELLER_REEL = "/api/admin/delete_seller_reel"
+    const val DELETE_SELLER_HIGHLIGHT = "/api/admin/delete_seller_highlight"
+    const val DELETE_SELLER_STORY = "/api/admin/delete_seller_story"
     const val ACCEPT_SELLER = "/api/admin/accept_seller"
     const val REJECT_SELLER = "/api/admin/reject_seller"
 

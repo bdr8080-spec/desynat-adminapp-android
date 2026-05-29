@@ -3,20 +3,24 @@ package com.desynatadmin.ui.m2
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.desynatadmin.base.BaseActivity
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.R
+import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.ActivityViewReelBinding
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 
 @AndroidEntryPoint
 class ViewReelActivity : BaseActivity() {
     private var binding : ActivityViewReelBinding?=null
+    private val viewModel : HomeViewModel by viewModels()
     private var reelData: GetStoryResponse.Data.Data?=null
     var from = ""
 
@@ -163,21 +167,52 @@ class ViewReelActivity : BaseActivity() {
             }
 
             ivDelete.setOnClickListener {
-                deleteReel(reelData?.id.toString())
+                if (from=="reel"){
+                    deleteReel(reelData?.id.toString())
+                }
+                else{
+                    deleteHighlight(reelData?.id.toString())
+                }
+
             }
 
         }
     }
 
     override fun observer() {
+        viewModel.error.observe(this) { errorMessage ->
+            ProgressDialogUtils.getInstance().hideProgress()
+        }
+        viewModel.deleteSellerReelData.observe(this){
+            ProgressDialogUtils.getInstance().hideProgress()
+            CommonMethod.showSuccessDialog(this,getString(R.string.reel_deleted_successfully)){
+                finish()
+            }
+
+        }
+
+        viewModel.deleteSellerHighlightData.observe(this){
+            ProgressDialogUtils.getInstance().hideProgress()
+            CommonMethod.showSuccessDialog(this,getString(R.string.highlights_deleted_successfully)){
+                finish()
+            }
+
+        }
 
 
     }
 
     private fun deleteReel(id: String){
-        val map = HashMap<String,Any>()
-        map["reel_id"] = id
-       // viewModel.deleteReel(map)
+        viewModel.deleteSellerReel(id)
+        ProgressDialogUtils.getInstance().showProgress(this)
+
     }
+
+    private fun deleteHighlight(id: String){
+        viewModel.deleteSellerHighlight(id)
+        ProgressDialogUtils.getInstance().showProgress(this)
+
+    }
+
 
 }
