@@ -187,7 +187,8 @@ class OrderManagementFragment : BaseFragment() {
                     tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
                     tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
                     tvCancelled.setTextColor(requireActivity().getColor(R.color.black))
-                    tvActive.setBackgroundResource(R.drawable.selected_left_border)
+                //    tvActive.setBackgroundResource(R.drawable.selected_left_border)
+                    tvActive.setBackgroundResource(R.drawable.selected_left_gradient)
                     tvReturnExchange.background = null
                     tvCompleted.background = null
                     tvCancelled.background = null
@@ -198,7 +199,8 @@ class OrderManagementFragment : BaseFragment() {
                     tvActive.setTextColor(requireActivity().getColor(R.color.black))
                     tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
                     tvCancelled.setTextColor(requireActivity().getColor(R.color.black))
-                    tvReturnExchange.setBackgroundResource(R.drawable.selected_mid_border)
+           //         tvReturnExchange.setBackgroundResource(R.drawable.selected_mid_border)
+                    tvReturnExchange.setBackgroundResource(R.drawable.selected_mid_gradient)
                     tvActive.background = null
                     tvCompleted.background = null
                     tvCancelled.background = null
@@ -210,7 +212,8 @@ class OrderManagementFragment : BaseFragment() {
                     tvActive.setTextColor(requireActivity().getColor(R.color.black))
                     tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
                     tvCancelled.setTextColor(requireActivity().getColor(R.color.black))
-                    tvCompleted.setBackgroundResource(R.drawable.selected_mid_border)
+              //      tvCompleted.setBackgroundResource(R.drawable.selected_mid_border)
+                    tvCompleted.setBackgroundResource(R.drawable.selected_mid_gradient)
                     tvActive.background = null
                     tvReturnExchange.background = null
                     tvCancelled.background = null
@@ -221,7 +224,8 @@ class OrderManagementFragment : BaseFragment() {
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
-                tvCancelled.setBackgroundResource(R.drawable.selected_right_border)
+             //   tvCancelled.setBackgroundResource(R.drawable.selected_right_border)
+                tvCancelled.setBackgroundResource(R.drawable.selected_right_gradient)
                 tvActive.background = null
                 tvCompleted.background = null
                 tvReturnExchange.background = null
@@ -312,7 +316,7 @@ class OrderManagementFragment : BaseFragment() {
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
                 tvCancelled.setTextColor(requireActivity().getColor(R.color.black))
-                tvActive.setBackgroundResource(R.drawable.selected_left_border)
+                tvActive.setBackgroundResource(R.drawable.selected_left_gradient)
                 tvReturnExchange.background = null
                 tvCompleted.background = null
                 tvCancelled.background = null
@@ -327,7 +331,7 @@ class OrderManagementFragment : BaseFragment() {
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
                 tvCancelled.setTextColor(requireActivity().getColor(R.color.black))
-                tvReturnExchange.setBackgroundResource(R.drawable.selected_mid_border)
+                tvReturnExchange.setBackgroundResource(R.drawable.selected_mid_gradient)
                 tvActive.background = null
                 tvCompleted.background = null
                 tvCancelled.background = null
@@ -342,7 +346,7 @@ class OrderManagementFragment : BaseFragment() {
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
                 tvCancelled.setTextColor(requireActivity().getColor(R.color.black))
-                tvCompleted.setBackgroundResource(R.drawable.selected_mid_border)
+                tvCompleted.setBackgroundResource(R.drawable.selected_mid_gradient)
                 tvActive.background = null
                 tvReturnExchange.background = null
                 tvCancelled.background = null
@@ -357,7 +361,7 @@ class OrderManagementFragment : BaseFragment() {
                 tvActive.setTextColor(requireActivity().getColor(R.color.black))
                 tvCompleted.setTextColor(requireActivity().getColor(R.color.black))
                 tvReturnExchange.setTextColor(requireActivity().getColor(R.color.black))
-                tvCancelled.setBackgroundResource(R.drawable.selected_right_border)
+                tvCancelled.setBackgroundResource(R.drawable.selected_right_gradient)
                 tvActive.background = null
                 tvCompleted.background = null
                 tvReturnExchange.background = null

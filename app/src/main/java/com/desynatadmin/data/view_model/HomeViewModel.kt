@@ -476,6 +476,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val seeStoryData : LiveData<CommonResponse>
+        get() = repository.seeStory
+
+    fun seeStory(
+        map: HashMap<String,Any>
+    ) {
+        viewModelScope.launch {
+            repository.
+            seeStory(map)
+        }
+    }
+
     val deleteSellerStoryData : LiveData<CommonResponse>
         get() = repository.deleteSellerStory
 

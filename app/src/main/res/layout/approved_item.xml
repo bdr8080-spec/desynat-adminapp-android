@@ -16,10 +16,24 @@
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:scaleType="centerCrop"
-        android:src="@drawable/dummy"
+        android:src="@drawable/ic_user"
+        app:layout_constraintStart_toStartOf="@+id/ivStoryHighlight"
+        app:layout_constraintTop_toTopOf="@+id/ivStoryHighlight"
+        app:layout_constraintBottom_toBottomOf="@+id/ivStoryHighlight"
+        app:layout_constraintEnd_toEndOf="@+id/ivStoryHighlight"
+        app:shapeAppearanceOverlay="@style/circle_image"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:visibility="invisible"
+        android:id="@+id/ivStoryHighlight"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        app:strokeColor="@color/brown"
+        android:padding="@dimen/_3sdp"
+        app:shapeAppearanceOverlay="@style/circle_image"
+        app:strokeWidth="@dimen/_3sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/circle_image" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvName"
@@ -32,8 +46,8 @@
         android:textSize="@dimen/_11sdp"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivProfileImage"
-        app:layout_constraintTop_toTopOf="@id/ivProfileImage" />
+        app:layout_constraintStart_toEndOf="@id/ivStoryHighlight"
+        app:layout_constraintTop_toTopOf="@id/ivStoryHighlight" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvLocation"
@@ -46,7 +60,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_9sdp"
         android:textAlignment="viewStart"
-        app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
+        app:layout_constraintBottom_toBottomOf="@id/ivStoryHighlight"
         app:layout_constraintStart_toStartOf="@id/tvName"
         app:layout_constraintTop_toBottomOf="@id/tvName" />
 
@@ -84,7 +98,7 @@
         android:background="#1A000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivProfileImage" />
+        app:layout_constraintTop_toBottomOf="@id/ivStoryHighlight" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCall"

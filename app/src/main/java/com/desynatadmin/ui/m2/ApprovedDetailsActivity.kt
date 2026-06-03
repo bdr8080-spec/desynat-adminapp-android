@@ -2,6 +2,7 @@ package com.desynatadmin.ui.m2
 
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -11,6 +12,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import coil.load
@@ -251,6 +253,17 @@ class ApprovedDetailsActivity : BaseActivity() {
 
             if (storyList.size!=0){
                 binding?.ivStoryHighlight?.isVisible = true
+                val allStoriesSeen = storyList?.all { it.isSeen == 1 } == true
+                binding?.ivStoryHighlight?.strokeColor = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this,
+                        if (allStoriesSeen) {
+                            R.color.light_brown   // All stories read
+                        } else {
+                            R.color.brown         // At least one unread story
+                        }
+                    )
+                )
             }
             else{
                 binding?.ivStoryHighlight?.isInvisible = true

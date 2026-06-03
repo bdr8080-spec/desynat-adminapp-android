@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.desynatadmin.databinding.ItemProductBinding
 import com.desynatadmin.R
 import com.desynatadmin.ui.home.productManagement.response.GetAllProductListResponse
@@ -42,11 +43,9 @@ class ProductAdapter(var context:Context, var productList: ArrayList<GetAllProdu
                 tvName.text =  if (Constants.language=="ar") productData.productNameAr else productData.productNameEn
                 tvCountry.text =  if (Constants.language=="ar") productData.sellerDetails?.countryDetails?.nameAr else productData.sellerDetails?.countryDetails?.name
 
-                ivProduct.load(productData?.productVariants?.get(0)?.variantImage?.get(0)) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }
+            Glide.with(context).load(productData?.productVariants?.get(0)?.variantImage?.get(0)).placeholder(R.drawable.ic_placeholder).into(ivProduct)
+
+
 
                 if(productData.productActiveStatus==1){
                     ivSwitch.setImageResource(R.drawable.switch_on)

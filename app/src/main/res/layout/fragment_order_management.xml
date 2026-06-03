@@ -29,7 +29,111 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <HorizontalScrollView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="ltr"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:background="@drawable/tab">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvActive"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginVertical="1dp"
+                        android:background="@drawable/selected_left_gradient"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"
+                        android:text="@string/active"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/viewActive"
+                        app:layout_constraintHorizontal_chainStyle="spread" />
+
+                    <View
+                        android:id="@+id/viewActive"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/line_gradient"
+                        android:ellipsize="end"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tvReturnExchange"
+                        app:layout_constraintStart_toEndOf="@id/tvActive"/>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvReturnExchange"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"
+                        android:text="@string/return_and_exchange"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        android:ellipsize="end"
+                        android:paddingVertical="@dimen/_2sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/viewActive"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/viewReturnExchange" />
+
+                    <View
+                        android:id="@+id/viewReturnExchange"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/line_gradient"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tvCompleted"
+                        app:layout_constraintStart_toEndOf="@id/tvReturnExchange"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCompleted"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"
+                        android:text="@string/completed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        android:ellipsize="end"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/viewReturnExchange"
+                        app:layout_constraintEnd_toStartOf="@id/viewCompleted" />
+
+                    <View
+                        android:id="@+id/viewCompleted"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/line_gradient"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tvCancelled"
+                        app:layout_constraintStart_toEndOf="@id/tvCompleted"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCancelled"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"
+                        android:text="@string/cancelled"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        android:ellipsize="end"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/viewCompleted"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--    <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
@@ -111,7 +215,7 @@
 
                     </LinearLayout>
 
-                </HorizontalScrollView>
+                </HorizontalScrollView>-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clSearch"

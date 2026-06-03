@@ -384,6 +384,11 @@ interface ApiServices {
         @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
+    @POST(Constants.SEE_STORY)
+    suspend fun seeStory(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
     @POST(Constants.DELETE_SELLER_STORY)
     suspend fun deleteSellerStory(
         @Body body: HashMap<String, Any>

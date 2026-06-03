@@ -1,5 +1,8 @@
 package com.desynatadmin.ui.home.brandManagement.response
 
+import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
+import com.google.gson.annotations.SerializedName
+
 data class ApprovedSellerResponse(
     var `data`: Data,
     var message: String,
@@ -50,6 +53,12 @@ data class ApprovedSellerResponse(
             var total_earning: String,
             var total_completed_orders: Int,
             var total_cancelled_orders: Int,
+            @SerializedName("stories")
+            val stories: ArrayList<GetStoryResponse.Data.Data>,
+            @SerializedName("reels")
+            val reels: List<GetStoryResponse.Data.Data>,
+            @SerializedName("highlights")
+            val highlights: List<GetStoryResponse.Data.Data>,
             var isSelected: Boolean = false
         ) {
             data class OwnerDocument(

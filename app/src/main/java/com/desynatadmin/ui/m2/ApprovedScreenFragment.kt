@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,8 +17,12 @@ import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentApprovedScreenBinding
 import com.desynatadmin.ui.home.brandManagement.response.ApprovedSellerResponse
+import com.desynatadmin.ui.home.storyManagement.ViewStoryActivity
+import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.SharedPreference
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -57,11 +63,28 @@ class ApprovedScreenFragment : BaseFragment() {
 
             approvedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             approvedAdapter = ApprovedAdapter(requireActivity(),filterList, object : ApprovedAdapter.OnCLick {
-                override fun onClick(position: Int) {
-                    startActivity(
-                        Intent(requireContext(), ApprovedDetailsActivity::class.java)
-                            .putExtra("id", filterList[position]?.id)
-                    )
+                override fun onClick(position: Int,type:Int) {
+                    when(type){
+                        1->{
+                            startActivity(
+                                Intent(requireContext(), ApprovedDetailsActivity::class.java)
+                                    .putExtra("id", filterList[position]?.id)
+                            )
+                        }
+                        2->{
+                            if (filterList[position].stories.isNotEmpty()){
+                                val bundle = Bundle().apply {
+                                    putString("from", "admin")
+                                    putString("storyData", Gson().toJson(filterList[position].stories))
+                                }
+                                clickedPosition = position
+                                val intent = Intent(requireContext(), ViewStoryActivity::class.java)
+                                intent.putExtras(bundle)
+                                storyLauncher.launch(intent)
+                            }
+                        }
+                    }
+
                 }
             })
 
@@ -148,8 +171,6 @@ class ApprovedScreenFragment : BaseFragment() {
 
                 approvedAdapter?.notifyDataSetChanged()
 
-                approvedAdapter?.notifyDataSetChanged()
-
             } else {
 
                 if (page == 1) {
@@ -206,4 +227,32 @@ class ApprovedScreenFragment : BaseFragment() {
         CommonMethod.saveCsvFile(requireContext(), "approved_seller_${System.currentTimeMillis()}", csv)
     }
 
+
+    private var clickedPosition = -1
+
+    private val storyLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+
+                val json = result.data?.getStringExtra("updatedStories")
+
+                if (!json.isNullOrEmpty() && clickedPosition != -1) {
+
+                    val type = object :
+                        TypeToken<ArrayList<GetStoryResponse.Data.Data>>() {}.type
+
+                    val updatedStories =
+                        Gson().fromJson<ArrayList<GetStoryResponse.Data.Data>>(
+                            json,
+                            type
+                        )
+
+                    filterList[clickedPosition].stories.clear()
+                    filterList[clickedPosition].stories.addAll(updatedStories)
+
+                    approvedAdapter?.notifyItemChanged(clickedPosition)
+                }
+            }
+        }
 }

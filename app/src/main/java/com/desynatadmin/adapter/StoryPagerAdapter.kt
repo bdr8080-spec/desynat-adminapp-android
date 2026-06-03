@@ -20,8 +20,8 @@ import com.desynatadmin.databinding.ItemViewStoryBinding
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 
 class StoryPagerAdapter(val context: Context,
-    private val stories: List<GetStoryResponse.Data.Data>,private val click:OnClick,private val onVideoReady: (position: Int, duration: Long) -> Unit
-    , private val onVideoFinished: (Int) -> Unit
+                        private val stories: ArrayList<GetStoryResponse.Data.Data>, private val click:OnClick, private val onVideoReady: (position: Int, duration: Long) -> Unit
+                        , private val onVideoFinished: (Int) -> Unit
 ) : RecyclerView.Adapter<StoryPagerAdapter.StoryViewHolder>() {
 
     private var pressStartTime = 0L
@@ -98,40 +98,6 @@ class StoryPagerAdapter(val context: Context,
 
                 holder.binding.videoStory.start()
             }
-
-
-            /*
-                        holder.binding.videoStory.setOnPreparedListener { mp ->
-
-                            val videoWidth = mp.videoWidth
-                            val videoHeight = mp.videoHeight
-
-                            val viewWidth = holder.binding.videoStory.width
-                            val viewHeight = holder.binding.videoStory.height
-
-                            val videoProportion = videoWidth.toFloat() / videoHeight.toFloat()
-                            val viewProportion = viewWidth.toFloat() / viewHeight.toFloat()
-
-                            val layoutParams = holder.binding.videoStory.layoutParams
-
-                            if (videoProportion > viewProportion) {
-                                layoutParams.width = viewWidth
-                                layoutParams.height = (viewWidth / videoProportion).toInt()
-                            } else {
-                                layoutParams.height = viewHeight
-                                layoutParams.width = (viewHeight * videoProportion).toInt()
-                            }
-
-                            holder.binding.videoStory.layoutParams = layoutParams
-
-                            mp.isLooping = false
-                            holder.binding.videoLoader.isVisible = false
-                            val duration = mp.duration.toLong()
-
-                            onVideoReady(position, duration)
-                            holder.binding.videoStory.start()
-                        }
-            */
 
             holder.binding.videoStory.setOnInfoListener { _, what, _ ->
 
@@ -291,5 +257,10 @@ class StoryPagerAdapter(val context: Context,
     override fun onViewRecycled(holder: StoryViewHolder) {
         super.onViewRecycled(holder)
         holder.binding.videoStory.stopPlayback()
+    }
+
+    fun removeStory(position: Int) {
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, itemCount)
     }
 }

@@ -1,8 +1,13 @@
 package com.desynatadmin.adapter
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -41,9 +46,32 @@ class ApprovedAdapter(var context: Context,var list : ArrayList<ApprovedSellerRe
             tvTotalEarningsValue.text = item.total_earning
             tvEmail.text = item.email
             tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(item?.updated_at.toString())}"
+            if (!item?.stories.isNullOrEmpty()) {
 
+                ivStoryHighlight?.isVisible = true
+
+                val allStoriesSeen = item?.stories?.all { it.isSeen == 1 } == true
+
+                ivStoryHighlight?.strokeColor = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        context,
+                        if (allStoriesSeen) {
+                            R.color.light_brown   // All stories read
+                        } else {
+                            R.color.brown         // At least one unread story
+                        }
+                    )
+                )
+
+            } else {
+                ivStoryHighlight?.isInvisible = true
+            }
+
+            ivProfileImage.setOnClickListener {
+                click.onClick(position,2)
+            }
             root.setOnClickListener {
-                click.onClick(position)
+                click.onClick(position,1)
             }
         }
     }
@@ -53,7 +81,7 @@ class ApprovedAdapter(var context: Context,var list : ArrayList<ApprovedSellerRe
     }
 
     interface OnCLick{
-        fun onClick(position: Int)
+        fun onClick(position: Int,type:Int)
     }
 
 }

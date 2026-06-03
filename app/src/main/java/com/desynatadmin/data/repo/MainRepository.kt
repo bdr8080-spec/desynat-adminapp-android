@@ -702,6 +702,18 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val seeStory = SingleLiveEvent<CommonResponse>()
+    suspend fun seeStory(map: HashMap<String, Any>,
+    ) {
+        handleApiCall(
+            api = {
+                api.seeStory(map)
+            },
+            responseLiveData = seeStory
+        )
+    }
+
+
     val deleteSellerStory = SingleLiveEvent<CommonResponse>()
     suspend fun deleteSellerStory(
         id: String,

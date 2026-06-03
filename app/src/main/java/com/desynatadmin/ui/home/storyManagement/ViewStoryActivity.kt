@@ -1,6 +1,7 @@
 package com.desynatadmin.ui.home.storyManagement
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -17,6 +18,7 @@ import com.desynatadmin.databinding.ActivityViewStoryBinding
 import com.desynatadmin.ui.home.storyManagement.response.GetStoryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
+import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,18 +68,23 @@ class ViewStoryActivity : BaseActivity() {
             myStories.addAll(storyList)
         }
 
-        setData()
-
         setupAdapter()
+        setData()
         setupPagerCallback()
 
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishWithResult()
+    }
+
     override fun initControl() {
         binding?.apply {
-            ivCancel.setOnClickListener {
-               finish()
+
+            binding?.ivCancel?.setOnClickListener {
+                finishWithResult()
             }
 
             ivDelete.setOnClickListener {
@@ -104,27 +111,84 @@ class ViewStoryActivity : BaseActivity() {
 
             ProgressDialogUtils.getInstance().hideProgress()
 
-            myStories.removeAt(currentStoryPosition)
+            stopProgress()
 
+            val deletedPosition = currentStoryPosition
+
+            // Remove story from list
+            myStories.removeAt(deletedPosition)
+
+            // No stories left
             if (myStories.isEmpty()) {
                 finish()
                 return@observe
             }
 
-            storyPagerAdapter?.notifyDataSetChanged()
+            // Update progress bars count
+            setupProgressBars(myStories.size)
 
+            // Fix current position if last item was deleted
             if (currentStoryPosition >= myStories.size) {
-                currentStoryPosition = myStories.size - 1
+                currentStoryPosition = myStories.lastIndex
             }
 
-            binding?.viewPager?.setCurrentItem(currentStoryPosition, false)
+            // Notify adapter properly
+            storyPagerAdapter?.removeStory(deletedPosition)
+
+            binding?.viewPager?.post {
+
+                binding?.viewPager?.setCurrentItem(
+                    currentStoryPosition,
+                    false
+                )
+
+                // Update progress state
+                progressBars.forEachIndexed { index, progressBar ->
+                    progressBar.progress =
+                        if (index < currentStoryPosition) 100 else 0
+                }
+
+                val currentUrl =
+                    myStories[currentStoryPosition].file.orEmpty()
+
+                val isVideo =
+                    currentUrl.endsWith(".mp4", true) ||
+                            currentUrl.endsWith(".mov", true)
+
+                val isGif =
+                    currentUrl.endsWith(".gif", true)
+
+                if (!isVideo && !isGif) {
+                    startProgress(currentStoryPosition)
+                }
+            }
         }
+
     }
 
     private fun setData() {
+
         if (myStories.isNotEmpty()) {
+
             setupProgressBars(myStories.size)
-            startProgress(0)
+
+            val startPosition = myStories.indexOfFirst { it.isSeen == 0 }
+                .takeIf { it != -1 } ?: 0
+
+            binding?.viewPager?.setCurrentItem(startPosition, false)
+
+            val story = myStories[startPosition]
+
+            if ((from == "story" || from == "admin") && story.isSeen == 0) {
+                seeStory(story.id.toString())
+                story.isSeen = 1
+            }
+
+            progressBars.forEachIndexed { index, progressBar ->
+                progressBar.progress = if (index < startPosition) 100 else 0
+            }
+
+            startProgress(startPosition)
         }
     }
     private fun setupAdapter() {
@@ -203,6 +267,13 @@ class ViewStoryActivity : BaseActivity() {
 
                     progressBars.forEachIndexed { index, progressBar ->
                         progressBar.progress = if (index < position) 100 else 0
+                    }
+
+                    val story = myStories[position]
+
+                    if (story.isSeen == 0) {
+                        seeStory(story.id.toString())
+                        story.isSeen = 1
                     }
 
                     startProgress(position)
@@ -303,7 +374,10 @@ class ViewStoryActivity : BaseActivity() {
             )
 
             progressBar.progressDrawable =
-                ContextCompat.getDrawable(this, R.drawable.story_progress)
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.story_progress
+                )
 
             progressBar.layoutParams = LinearLayout.LayoutParams(
                 0,
@@ -329,6 +403,21 @@ class ViewStoryActivity : BaseActivity() {
     private fun deleteStory(id: String){
         viewModel.deleteSellerStory(id)
         ProgressDialogUtils.getInstance().showProgress(this)
+    }
+
+    private fun seeStory(id: String){
+        val map = HashMap<String, Any>()
+        map["story_id"] = id
+        map["type"] = 3
+        map["user_id"] = SharedPreference.get(this).getUser()?.id.toString()
+        viewModel.seeStory(map)
+    }
+
+    private fun finishWithResult() {
+        val intent = Intent()
+        intent.putExtra("updatedStories", Gson().toJson(myStories))
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
 }

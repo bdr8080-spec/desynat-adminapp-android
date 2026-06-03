@@ -61,6 +61,7 @@ object Constants {
     const val DELETE_SELLER_STORY = "/api/admin/delete_seller_story"
     const val ACCEPT_SELLER = "/api/admin/accept_seller"
     const val REJECT_SELLER = "/api/admin/reject_seller"
+    const val SEE_STORY = "/api/see_story"
 
 
     const val GET_SUBSCRIPTION_PLAN = "/api/admin/get_plans"

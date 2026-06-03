@@ -46,6 +46,8 @@ data class GetStoryResponse(
             val file: String,
             @SerializedName("id")
             val id: Int,
+            @SerializedName("is_seen")
+            var isSeen: Int,
             @SerializedName("seller_details")
             val sellerDetails: SellerDetails?=null,
             @SerializedName("seller_id")
