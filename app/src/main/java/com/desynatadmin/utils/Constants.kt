@@ -96,7 +96,8 @@ object Constants {
     const val ADD_DELIVERY_BOY = "/api/admin/add_deliveryBoy"
     const val UPDATE_DELIVERY_BOY = "/api/admin/update_deliveryBoy"
     const val DELETE_DELIVERY_BOY = "/api/admin/delete_deliveryboy"
-    const val GET_USER_COUNTRY = "/api/admin/get_user_countries_list"
+  //  const val GET_USER_COUNTRY = "/api/admin/get_user_countries_list"
+    const val GET_USER_COUNTRY = "/api/admin/get_countries"
 
     const val GET_PROMO_CODE = "/api/admin/get_promocodes"
     const val ADD_PROMO_CODE = "/api/admin/add_promocode"

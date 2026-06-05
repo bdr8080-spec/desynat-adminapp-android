@@ -17,7 +17,7 @@ class UserCountryPickerAdapter(var context:Context, var countryList: ArrayList<G
     inner class ViewHolder(val binding: ItemCountryBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
-                tvCountry.text = "${countryList[position].flag1}  ${if (Constants.language=="ar") countryList[position].nameAr else countryList[position].name}"
+                tvCountry.text = "${countryList[position].flag}  ${if (Constants.language=="ar") countryList[position].nameAr else countryList[position].name}"
                 ivFlag.isVisible = false
                 //  ivFlag.load(countryList[position].flag)
 

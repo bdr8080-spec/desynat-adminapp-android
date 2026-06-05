@@ -355,11 +355,12 @@ private fun getProfile(){
                     SharedPreference.get(requireActivity()).language = Constants.language
                     CommonMethod.setLocale(requireActivity(), Constants.language)
 
-                    val intent = Intent(requireActivity(), if (requireActivity() is SubAdminHomeActivity)SubAdminHomeActivity::class.java else HomeActivity::class.java)
+                   /* val intent = Intent(requireActivity(), if (requireActivity() is SubAdminHomeActivity)SubAdminHomeActivity::class.java else HomeActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                    requireActivity().finish()
+                    requireActivity().finish()*/
                     dialog.dismiss()
+                    requireActivity().recreate()
                 }
             }
         }
