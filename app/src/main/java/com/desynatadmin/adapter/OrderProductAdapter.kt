@@ -20,7 +20,7 @@ class OrderProductAdapter(var context:Context, var productList: ArrayList<GetAct
                 tvProduct.text = if (Constants.language=="ar") productData?.productDetails?.productNameAr else productData?.productDetails?.productNameEn
                 tvPrice.text = "${CommonMethod.formatPrice(productData?.amount?:0.0)} KD"
                 tvFabric.text = if (Constants.language=="ar") productData?.productDetails?.brand?.nameArabic else productData?.productDetails?.brand?.nameEnglish
-                tvSizeValue.text = if (Constants.language=="ar") productData?.variationDetails?.size?.nameAr else productData?.variationDetails?.size?.name
+                tvSizeValue.text = if (Constants.language=="ar") productData?.variationDetails?.size?.name else productData?.variationDetails?.size?.name
                 tvColorValue.text = if (Constants.language=="ar") productData?.variationDetails?.color?.nameAr else productData?.variationDetails?.color?.name
                 tvCategoryValue.text = if (Constants.language=="ar") productData?.productDetails?.category?.nameAr else productData?.productDetails?.category?.name
                 tvQuantityValue.text = productData?.quantity?.toString()

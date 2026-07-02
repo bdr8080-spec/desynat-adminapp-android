@@ -233,6 +233,7 @@
         android:text="@string/reject"
         android:textColor="#714829"
         android:textSize="@dimen/_12sdp"
+        android:layoutDirection="ltr"
         app:layout_constraintEnd_toStartOf="@id/btnAccept"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewStatus" />
@@ -250,6 +251,7 @@
         android:text="@string/accept"
         android:textColor="#FAFAFA"
         android:textSize="@dimen/_12sdp"
+        android:layoutDirection="ltr"
         app:layout_constraintBottom_toBottomOf="@id/btnReject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnReject"

@@ -309,6 +309,7 @@
         android:textColor="#D53B36"
         android:textSize="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_25sdp"
+        android:layoutDirection="ltr"
         app:layout_constraintEnd_toStartOf="@id/btnEdit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
@@ -326,6 +327,7 @@
         android:text="@string/edit"
         android:textColor="#FAFAFA"
         android:textSize="@dimen/_12sdp"
+        android:layoutDirection="ltr"
         app:layout_constraintBottom_toBottomOf="@id/btnDelete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnDelete"

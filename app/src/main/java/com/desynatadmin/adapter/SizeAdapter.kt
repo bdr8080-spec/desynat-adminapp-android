@@ -19,7 +19,7 @@ class SizeAdapter(var context:Context, var productSizeList: ArrayList<ProductArr
         fun bind(position: Int) = with(binding){
                 val productSize = productSizeList[position]
 
-                tvSize.text = if (Constants.language=="ar") productSize?.size?.nameAr else productSize?.size?.name
+                tvSize.text = if (Constants.language=="ar") productSize?.size?.name else productSize?.size?.name
 
                 if (selectedPos==position){
                     tvSize.setTextColor(Color.parseColor("#000000"))
