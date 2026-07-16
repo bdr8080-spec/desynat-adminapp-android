@@ -4,29 +4,26 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.databinding.FragmentLanguageBinding
 import com.desynatadmin.ui.auth.AuthActivity
-import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.showToast
 
 class LanguageFragment : BaseFragment() {
-    private var binding: FragmentLanguageBinding?=null
+    private var binding: FragmentLanguageBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLanguageBinding.inflate(layoutInflater,container,false)
+        binding = FragmentLanguageBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -41,11 +38,10 @@ class LanguageFragment : BaseFragment() {
         requestPermissions()
         binding?.apply {
             Constants.language = SharedPreference.get(requireActivity()).language
-            if(Constants.language=="en"){
+            if (Constants.language == "en") {
                 cbEnglish.isChecked = true
                 cbArabic.isChecked = false
-            }
-            else if(Constants.language=="ar"){
+            } else if (Constants.language == "ar") {
                 cbEnglish.isChecked = false
                 cbArabic.isChecked = true
             }
@@ -58,8 +54,7 @@ class LanguageFragment : BaseFragment() {
                 if (isChecked) {
                     cbEnglish.isChecked = false
                     Constants.language = Constants.ARABIC
-                }
-                else {
+                } else {
                     if (!cbEnglish.isChecked) {
                         cbArabic.isChecked = true
                     }
@@ -70,8 +65,7 @@ class LanguageFragment : BaseFragment() {
                 if (isChecked) {
                     cbArabic.isChecked = false
                     Constants.language = Constants.ENGLISH
-                }
-                else {
+                } else {
                     if (!cbArabic.isChecked) {
                         cbEnglish.isChecked = true
                     }
@@ -79,18 +73,17 @@ class LanguageFragment : BaseFragment() {
             }
 
             btnContinue.setOnClickListener {
-                if (Constants.language==""){
+                if (Constants.language == "") {
                     showToast(getString(R.string.please_select_language))
-                }
-                else{
+                } else {
                     SharedPreference.get(requireActivity()).language = Constants.language
                     CommonMethod.setLocale(requireActivity(), Constants.language)
                     val intent = Intent(requireActivity(), AuthActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    intent.putExtra("from","language")
+                    intent.putExtra("from", "language")
                     startActivity(intent)
                     requireActivity().finish()
-                 //   findNavController().navigate(R.id.action_language_to_signinFragment)
+                    //   findNavController().navigate(R.id.action_language_to_signinFragment)
                 }
             }
 
@@ -98,6 +91,7 @@ class LanguageFragment : BaseFragment() {
     }
 
     override fun observe() {
+
     }
 
     private val requestAllPermissions =
@@ -108,7 +102,8 @@ class LanguageFragment : BaseFragment() {
                 true
             }
             val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
-            val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+            val coarseLocationGranted =
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
 
             if (notificationGranted && (fineLocationGranted || coarseLocationGranted)) {
 
