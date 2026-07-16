@@ -22,9 +22,15 @@ class HighlightsAdapter(
     inner class ViewHolder(val binding: HighlightsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) = with(binding) {
-            Glide.with(context).load(highlightList[position].file)
+            val item = highlightList[position]
+            val imageUrl = if (!item.highlights.isNullOrEmpty()) {
+                item.highlights[0].file
+            } else {
+                item.file
+            }
+            Glide.with(context).load(imageUrl)
                 .placeholder(R.drawable.ic_placeholder).into(ivProfileImage)
-            tvTitle.text = highlightList[position].title
+            tvTitle.text = item.title
             root.setOnClickListener {
                 click.clickOnItem(position)
             }
