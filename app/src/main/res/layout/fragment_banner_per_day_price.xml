@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/tab"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="4">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTop"
@@ -74,9 +74,26 @@
                 android:paddingVertical="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
+                android:singleLine="true"
                 android:text="@string/sub_category"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/line_gradient"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingVertical="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:text="Story"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp" />
+
 
         </LinearLayout>
 

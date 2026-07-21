@@ -276,6 +276,10 @@ override fun onBackPressed() {
                 controller.navigate(R.id.reason)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
+//            rlSellerStoryRequest.setOnClickListener {
+//                controller.navigate(R.id.bannerRequestManagement1Fragment)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
 
             rlCountryCityManagement.setOnClickListener {
                 startActivity(Intent(this@HomeActivity, CountryCityZoneManaActivity::class.java))

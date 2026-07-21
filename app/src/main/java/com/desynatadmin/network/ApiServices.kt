@@ -148,21 +148,21 @@ interface ApiServices {
         @Part file: MultipartBody.Part? = null
     ): Response<FileUploadResponse>
 
-  @Multipart
+    @Multipart
     @POST(Constants.UPLOAD_VIDEO_IMAGE)
     suspend fun uploadVideoImage(
         @Part file: MultipartBody.Part? = null
     ): Response<FileUploadResponse>
 
 
-  @Multipart
+    @Multipart
     @POST(Constants.UPLOAD_WITH_RESOLUTION)
     suspend fun uploadWithResolution(
         @Part file: MultipartBody.Part? = null,
         @Part("type") type: RequestBody? = null
     ): Response<FileUploadResponse>
 
-  @Multipart
+    @Multipart
     @POST(Constants.UPLOAD_WITH_RESOLUTION_PROMOTIONAL)
     suspend fun uploadWithResolutionPromotional(
         @Part file: MultipartBody.Part? = null,
@@ -204,74 +204,80 @@ interface ApiServices {
 
     @GET(Constants.SUB_CATEGORY)
     suspend fun getSubCategory(
-        @Query ("category_id") categoryId:String,
-        @Query("search") search : String?=null,
+        @Query("category_id") categoryId: String,
+        @Query("search") search: String? = null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
     ): Response<GetSubCategoryResponse>
 
     @GET(Constants.BRAND)
     suspend fun getBrand(
-        @QueryMap body: HashMap<String,Any>): Response<GetBrandResponse>
+        @QueryMap body: HashMap<String, Any>
+    ): Response<GetBrandResponse>
 
     @Multipart
     @POST(Constants.ADD_BRAND)
     suspend fun addBrand(
-        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+        @PartMap map: HashMap<String, RequestBody>
+    ): Response<CommonResponse>
 
     @Multipart
     @POST(Constants.UPDATE_BRAND)
     suspend fun editBrand(
-        @PartMap map : HashMap<String,RequestBody>): Response<UpdateBrandStatusResponse>
+        @PartMap map: HashMap<String, RequestBody>
+    ): Response<UpdateBrandStatusResponse>
 
     @POST(Constants.UPDATE_BRAND_STATUS)
     suspend fun updateBrandStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateBrandStatusResponse>
 
     @POST(Constants.DELETE_BRAND)
     suspend fun deleteBrand(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @Multipart
     @POST(Constants.ADD_SUB_CATEGORY)
     suspend fun addSubCategory(
-        @PartMap map : HashMap<String,RequestBody>): Response<CommonResponse>
+        @PartMap map: HashMap<String, RequestBody>
+    ): Response<CommonResponse>
 
     @Multipart
     @POST(Constants.UPDATE_SUB_CATEGORY)
     suspend fun editSubCategory(
-        @PartMap map : HashMap<String,RequestBody>): Response<UpdateSubCategoryResponse>
+        @PartMap map: HashMap<String, RequestBody>
+    ): Response<UpdateSubCategoryResponse>
 
     @POST(Constants.UPDATE_SUB_CATEGORY_STATUS)
     suspend fun updateSubCategoryStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateSubCategoryResponse>
 
     @POST(Constants.UPDATE_CATEGORY_STATUS)
     suspend fun updateCategoryStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateCategoryResponse>
 
     @POST(Constants.DELETE_SUB_CATEGORY)
     suspend fun deleteSubCategory(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_SUBSCRIPTION_PLAN)
     suspend fun getSubscriptionPlan(
-        @Query ("country_id") countryId:String?=null
-        ): Response<GetAllPlanResponse>
+        @Query("country_id") countryId: String? = null
+    ): Response<GetAllPlanResponse>
 
     @GET(Constants.GET_SUBSCRIPTION_PLAN_DETAILS)
     suspend fun getSubscriptionPlanDetail(
-        @Query ("plan_id") planId:String?=null
-        ): Response<UpdatePlanStatusResponse>
+        @Query("plan_id") planId: String? = null
+    ): Response<UpdatePlanStatusResponse>
 
     @POST(Constants.ADD_SUBSCRIPTION_PLAN)
     suspend fun addSubscriptionPlan(
-        @Body request: AddPlanRequest): Response<CommonResponse>
+        @Body request: AddPlanRequest
+    ): Response<CommonResponse>
 
     @POST(Constants.UPDATE_SUBSCRIPTION_PLAN)
     suspend fun updateSubscriptionPlan(
@@ -280,18 +286,19 @@ interface ApiServices {
 
     @POST(Constants.CHANGE_PLAN_STATUS)
     suspend fun updateSubscriptionPlanStatus(
-        @Body body: HashMap<String,Any>): Response<UpdatePlanStatusResponse>
+        @Body body: HashMap<String, Any>
+    ): Response<UpdatePlanStatusResponse>
 
     @POST(Constants.DELETE_SUBSCRIPTION_PLAN)
     suspend fun deleteSubscriptionPlan(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_CITY)
     suspend fun getCity(
         @Header("Token") Token: String,
         @Query("country_id") country_id: String,
-        ): Response<CityResponse>
+    ): Response<CityResponse>
 
     @POST(Constants.ADD_SERVICE_CITY)
     suspend fun hitAddServiceCity(
@@ -316,19 +323,19 @@ interface ApiServices {
     suspend fun hitChangeStatus(
         @Header("Token") Token: String,
         @Body body: HashMap<String, Any>
-    ) : Response<ChangeCityStatusResponse>
+    ): Response<ChangeCityStatusResponse>
 
     @POST(Constants.GET_DELETE_CITY_SERVICE)
     suspend fun hitDeleteServiceCity(
         @Header("Token") Token: String,
         @Body body: HashMap<String, Any>
-    ) : Response<CommonResponse>
+    ): Response<CommonResponse>
 
     @POST(Constants.ADD_ZONE)
     suspend fun hitAddZone(
         @Header("Token") Token: String,
         @Body body: AddZoneRequest
-    ) : Response<AddZoneResponse>
+    ): Response<AddZoneResponse>
 
     @GET(Constants.NEW_SELLER)
     suspend fun hitNewSelleList(
@@ -343,14 +350,14 @@ interface ApiServices {
 
     @GET(Constants.APPROVED_SELLER)
     suspend fun hitApprovedSeller(
-        @Header("Token") Token: String?=null,
-        @Query("country_id1") country_id: String?=null,
-        @Query("from_date1") from_date: String?=null,
-        @Query("to_date1") to_date: String?=null,
-        @Query("limit1") limit1: String?=null,
-        @Query("limit") limit: String?=null,
-        @Query("search1") search: String?=null,
-        @Query("page") page: String?=null,
+        @Header("Token") Token: String? = null,
+        @Query("country_id1") country_id: String? = null,
+        @Query("from_date1") from_date: String? = null,
+        @Query("to_date1") to_date: String? = null,
+        @Query("limit1") limit1: String? = null,
+        @Query("limit") limit: String? = null,
+        @Query("search1") search: String? = null,
+        @Query("page") page: String? = null,
     ): Response<ApprovedSellerResponse>
 
     @GET(Constants.APPROVED_SELLER)
@@ -433,24 +440,24 @@ interface ApiServices {
     @POST(Constants.UPDATE_ZONE)
     suspend fun hitUpdateZone(
         @Header("Token") Token: String,
-        @Body req : AddZoneRequest
+        @Body req: AddZoneRequest
     ): Response<UpdateZonResponse>
 
     @POST(Constants.UPDATE_ZONE_STATUS)
     suspend fun hitUpdateZoneStatus(
         @Header("Token") Token: String,
-        @Body map : HashMap<String, Any>
+        @Body map: HashMap<String, Any>
     ): Response<UpdateZoneStatusResponse>
 
 
     @GET("api/admin/get_new_sellers")
     suspend fun filter(
         @Header("Token") Token: String,
-        @Query("country_id")country_id:String,
-        @Query("from_date")from_date:String,
-        @Query("to_date")to_date:String,
+        @Query("country_id") country_id: String,
+        @Query("from_date") from_date: String,
+        @Query("to_date") to_date: String,
 
-    ): Response<UpdateZonResponse>
+        ): Response<UpdateZonResponse>
 
     @POST(Constants.DELETE_ZONE)
     suspend fun hitDeleteZone(
@@ -466,11 +473,11 @@ interface ApiServices {
 
     @GET(Constants.GET_USER)
     suspend fun getUser(
-        @Query("search") search : String?=null,
-        @Query("page") page: String?=null,
-        @Query("country_id") countryId : String?=null,
-        @Query("from_date") fromDate : String?=null,
-        @Query("to_date") toDate : String?=null,
+        @Query("search") search: String? = null,
+        @Query("page") page: String? = null,
+        @Query("country_id") countryId: String? = null,
+        @Query("from_date") fromDate: String? = null,
+        @Query("to_date") toDate: String? = null,
         @Query("limit") limit: Int? = 10,
 
         ): Response<GetUserResponse>
@@ -478,12 +485,12 @@ interface ApiServices {
     @GET(Constants.GET_USER)
     suspend fun getAssignUser(
 
-        ): Response<AssignUserResponse>
+    ): Response<AssignUserResponse>
 
     @GET(Constants.GET_USER_DETAIL)
     suspend fun getUserDetail(
-        @Query("user_id") userId : String,
-        ): Response<GetUserDetailResponse>
+        @Query("user_id") userId: String,
+    ): Response<GetUserDetailResponse>
 
     @POST(Constants.BLOCK_UNBLOCK_USER)
     suspend fun blockUnblockUser(
@@ -497,10 +504,11 @@ interface ApiServices {
 
     @GET(Constants.GET_REASON)
     suspend fun getReason(
-        @Query("type") type : Int=1,
-        @Query("search") search : String?=null,
+        @Query("type") type: Int = 1,
+        @Query("search") search: String? = null,
         @Query("page") page: Int,
-        @Query("limit") limit: Int? = 10, ): Response<GetReasonResponse>
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetReasonResponse>
 
     @POST(Constants.BLOCK_UNBLOCK_REASON)
     suspend fun blockUnblockReason(
@@ -523,25 +531,26 @@ interface ApiServices {
     ): Response<UpdateReasonResponse>
 
     @GET(Constants.GET_KUWAIT_ZONE)
-    suspend fun getKuwaitZone():Response<GetKuwaitZoneResponse>
+    suspend fun getKuwaitZone(): Response<GetKuwaitZoneResponse>
 
     @GET(Constants.GET_USER_COUNTRY)
-    suspend fun getUserCountry():Response<GetCountryResponse>
+    suspend fun getUserCountry(): Response<GetCountryResponse>
 
     @GET(Constants.GET_DELIVERY_BOY)
     suspend fun getDeliveryBoy(
-        @Query("search") search : String?=null,
-        @Query("page") page: String?=null,
-        @Query("from_date") fromDate : String?=null,
-        @Query("to_date") toDate : String?=null,
-        @Query("limit") limit: Int? = 10, ): Response<GetAllDeliveryBoyResponse>
+        @Query("search") search: String? = null,
+        @Query("page") page: String? = null,
+        @Query("from_date") fromDate: String? = null,
+        @Query("to_date") toDate: String? = null,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetAllDeliveryBoyResponse>
 
     @GET(Constants.GET_DELIVERY_BOY)
     suspend fun getAssignDeliveryBoy(): Response<GetAssignDeliveryBoyResponse>
 
     @POST(Constants.GET_DELIVERY_BOY_DETAIL)
     suspend fun getDeliveryBoyDetail(
-        @Query("user_id") userId : String,
+        @Query("user_id") userId: String,
     ): Response<GetDeliveryBoyDetailResponse>
 
     @POST(Constants.BLOCK_UNBLOCK_DELIVERY_BOY)
@@ -566,13 +575,13 @@ interface ApiServices {
 
     @GET(Constants.GET_PROMO_CODE)
     suspend fun getPromoCode(
-        @Query("search") search : String?=null,
-        @Query("from_date") fromDate : String?=null,
-        @Query("to_date") toDate : String?=null,
-        @Query("country_id") countryId : String?=null,
-      /*  @Query("page") page: Int,
-        @Query("limit") limit: Int? = 10, */
-        ): Response<GetPromoCodeResponse>
+        @Query("search") search: String? = null,
+        @Query("from_date") fromDate: String? = null,
+        @Query("to_date") toDate: String? = null,
+        @Query("country_id") countryId: String? = null,
+        /*  @Query("page") page: Int,
+          @Query("limit") limit: Int? = 10, */
+    ): Response<GetPromoCodeResponse>
 
     @POST(Constants.UPDATE_STATUS_PROMO_CODE)
     suspend fun updatePromoCodeStatus(
@@ -596,27 +605,29 @@ interface ApiServices {
 
     @GET(Constants.GIFT_CARD)
     suspend fun getGiftCard(
-        @Query("search") search : String?=null,
+        @Query("search") search: String? = null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
     ): Response<GetAllGiftCardResponse>
 
     @POST(Constants.ADD_GIFT_CARD)
     suspend fun addGiftCard(
-        @Body map : HashMap<String,Any>): Response<CommonResponse>
+        @Body map: HashMap<String, Any>
+    ): Response<CommonResponse>
 
     @POST(Constants.UPDATE_GIFT_CARD)
     suspend fun editGiftCard(
-        @Body map : HashMap<String,Any>): Response<UpdateGiftCardResponse>
+        @Body map: HashMap<String, Any>
+    ): Response<UpdateGiftCardResponse>
 
     @POST(Constants.UPDATE_GIFT_CARD_STATUS)
     suspend fun updateGiftCardStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateGiftCardResponse>
 
     @POST(Constants.DELETE_GIFT_CARD)
     suspend fun deleteGiftCard(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.SHIPPING_CHARGE)
@@ -626,129 +637,140 @@ interface ApiServices {
         @Query("limit") limit: Int? = 10,
     ): Response<GetShippingChargeResponse>
 
-  @GET(Constants.SHIPPING_TAX)
+    @GET(Constants.SHIPPING_TAX)
     suspend fun getShippingTax(
     ): Response<GetShippingTaxResponse>
 
-  @GET(Constants.BANNER_PER_DAY_PRICE)
+    @GET(Constants.BANNER_PER_DAY_PRICE)
     suspend fun getBannerPerDay(
-      @Query("type") type: Int,
-      ): Response<GetBannerPricePerDayResponse>
+        @Query("type") type: Int,
+    ): Response<GetBannerPricePerDayResponse>
+
+    @GET(Constants.SELLER_STORY_PRICE)
+    suspend fun getSellerStoryPrice(
+    ): Response<GetBannerPricePerDayResponse>
+
+
 
     @POST(Constants.UPDATE_BANNER_PER_DAY_PRICE)
     suspend fun updateBannerPerDayPrice(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
+    ): Response<UpdateBannerPriceResponse>
+
+    @POST(Constants.UPDATE_SELLER_STORY_PRICE)
+    suspend fun getUpdateSellerStoryPrice(
+        @Body body: HashMap<String, Any>
     ): Response<UpdateBannerPriceResponse>
 
     @POST(Constants.ADD_TAX)
     suspend fun addTax(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<AddTaxResponse>
 
     @POST(Constants.ADD_SHIPPING_CHARGE)
     suspend fun addShippingCharge(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateShippingChargeResponse>
 
     @POST(Constants.UPDATE_SHIPPING_CHARGE)
     suspend fun updateShippingCharge(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateShippingChargeResponse>
 
     @POST(Constants.UPDATE_SHIPPING_CHARGE_STATUS)
     suspend fun updateShippingChargeStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateShippingChargeResponse>
 
     @POST(Constants.DELETE_SHIPPING_CHARGE)
     suspend fun deleteShippingCharge(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.BANNER_REQUEST)
     suspend fun getBannerRequest(
         @Query("type") type: Int,
-        @Query("search") search : String?=null,
-        @Query("from_date") fromDate : String?=null,
-        @Query("to_date") toDate : String?=null,
-        @Query("country_name") countryId : String?=null,
-          @Query("page") page: Int,
-          @Query("limit") limit: Int? = 10,
+        @Query("search") search: String? = null,
+        @Query("from_date") fromDate: String? = null,
+        @Query("to_date") toDate: String? = null,
+        @Query("country_name") countryId: String? = null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
     ): Response<GetBannerRequestResponse>
 
     @POST(Constants.UPDATE_BANNER_STATUS)
     suspend fun updateBannerStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateBannerRequestStatusResponse>
 
-@POST(Constants.APPROVE_BANNER_REQUEST)
+    @POST(Constants.APPROVE_BANNER_REQUEST)
     suspend fun approveBannerRequest(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
 
     @POST(Constants.REJECT_BANNER_REQUEST)
     suspend fun rejectBannerRequest(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<RejectionResponse>
 
 
     @GET(Constants.GET_AFFILIATE_COMMISSION)
     suspend fun getAffiliatedCommission(): Response<GetAffiliateCommissionResponse>
 
-@POST(Constants.UPDATE_AFFILIATE_COMMISSION)
+    @POST(Constants.UPDATE_AFFILIATE_COMMISSION)
     suspend fun updateAffiliateCommission(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateAffiliateCommissionResponse>
 
     @GET(Constants.ACTIVE_ORDER_LIST)
     suspend fun getActiveOrderList(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetActiveOrderResponse>
 
     @GET(Constants.ORDER_DETAIL)
     suspend fun getOrderDetail(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetSingleOrderDetailResponse>
 
     @GET(Constants.COMPLETED_ORDER_LIST)
     suspend fun getCompletedOrderList(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetActiveOrderResponse>
 
     @GET(Constants.CANCELLED_ORDER_LIST)
     suspend fun getCancelledOrderList(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetActiveOrderResponse>
 
     @GET(Constants.RETURN_ORDER_LIST)
     suspend fun getReturnOrderList(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetActiveOrderResponse>
 
     @GET(Constants.GET_DRIVER_TO_ASSIGN)
     suspend fun getDriverToAssign(
         @Query("order_id") orderId: String
-        ): Response<GetAvailableDeliveryBoyResponse>
+    ): Response<GetAvailableDeliveryBoyResponse>
 
     @POST(Constants.ASSIGN_DRIVER)
     suspend fun assignDriver(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET("${Constants.INVOICE}/{order_id}")
-    suspend fun getInvoice( @Path("order_id") order_id: String): Response<CommonResponse>
+    suspend fun getInvoice(@Path("order_id") order_id: String): Response<CommonResponse>
 
     @GET(Constants.GET_ACTIVE_DEALS)
     suspend fun getActiveDeals(
-        @Query("search") search : String?=null,
+        @Query("search") search: String? = null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
     ): Response<GetActiveDealResponse>
 
     @GET(Constants.GET_EXPIRED_DEALS)
     suspend fun getExpiredDeals(
-        @Query("search") search : String?=null,
+        @Query("search") search: String? = null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
     ): Response<GetActiveDealResponse>
@@ -765,31 +787,31 @@ interface ApiServices {
 
     @POST(Constants.UPDATE_DEAL_STATUS)
     suspend fun updateDealStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateDealStatusResponse>
 
     @POST(Constants.DELETE_DEAL)
     suspend fun deleteDeal(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_DEAL_DETAIL)
     suspend fun getDealDetail(
-        @QueryMap body: HashMap<String,Any>
+        @QueryMap body: HashMap<String, Any>
     ): Response<GetDealDetailResponse>
 
     @GET(Constants.DEAL_PRODUCT_LIST)
     suspend fun getDealProduct(
-        @QueryMap body: HashMap<String,Any>
+        @QueryMap body: HashMap<String, Any>
     ): Response<GetDealProductResponse>
 
     @GET(Constants.GET_FULL_BANNER)
     suspend fun getFullScreenBanner(
-        @Query("search") search : String?=null,
-        @Query("country") country : String?=null,
-        @Query("type") type : String?=null,
-        @Query("from_date") fromDate : String?=null,
-        @Query("to_date") toDate : String?=null,
+        @Query("search") search: String? = null,
+        @Query("country") country: String? = null,
+        @Query("type") type: String? = null,
+        @Query("from_date") fromDate: String? = null,
+        @Query("to_date") toDate: String? = null,
         @Query("page") page: Int,
         @Query("limit") limit: Int? = 10,
     ): Response<GetFullScreenBannerResponse>
@@ -806,7 +828,7 @@ interface ApiServices {
 
     @POST(Constants.DELETE_FULL_BANNER)
     suspend fun deleteFullScreenBanner(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_ADMIN_STORY)
@@ -823,28 +845,28 @@ interface ApiServices {
 
     @POST(Constants.ADD_STORY)
     suspend fun addStory(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST(Constants.DELETE_STORY)
     suspend fun deleteStory(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
 
     @GET(Constants.GET_LIVE_REQUEST)
     suspend fun getLiveRequest(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetLiveRequestResponse>
 
     @POST(Constants.ACCEPT_LIVE_REQUEST)
     suspend fun acceptLiveRequest(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST(Constants.REJECT_LIVE_REQUEST)
     suspend fun rejectLiveRequest(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_TIME_SLOT)
@@ -865,33 +887,37 @@ interface ApiServices {
 
     @POST(Constants.DELETE_TIME_SLOT)
     suspend fun deleteTimeSlot(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST(Constants.UPDATE_TIME_SLOT_STATUS)
     suspend fun updateTimeSlotStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateTimeSlotResponse>
 
     @GET(Constants.GET_NEW_AFFILIATE_USER)
     suspend fun getNewAffiliateUser(
-        @QueryMap map: HashMap<String,Any>): Response<GetNewAffiliateUserResponse>
+        @QueryMap map: HashMap<String, Any>
+    ): Response<GetNewAffiliateUserResponse>
 
     @GET(Constants.GET_APPROVED_AFFILIATE_USER)
     suspend fun getApprovedAffiliateUser(
-        @QueryMap map: HashMap<String,Any>): Response<GetNewAffiliateUserResponse>
+        @QueryMap map: HashMap<String, Any>
+    ): Response<GetNewAffiliateUserResponse>
 
     @GET(Constants.GET_APPROVED_AFFILIATE_USER)
     suspend fun getAssignAffiliateUser(
-        @QueryMap map: HashMap<String,Any>): Response<GetAssignAffiliateUserResponse>
+        @QueryMap map: HashMap<String, Any>
+    ): Response<GetAssignAffiliateUserResponse>
 
     @GET(Constants.GET_REJECTED_AFFILIATE_USER)
     suspend fun getRejectedAffiliateUser(
-        @QueryMap map: HashMap<String,Any>): Response<GetNewAffiliateUserResponse>
+        @QueryMap map: HashMap<String, Any>
+    ): Response<GetNewAffiliateUserResponse>
 
     @GET(Constants.GET_AFFILIATE_USER_DETAIL)
     suspend fun getAffiliateUserDetail(
-        @Query("user_id") userId : String,
+        @Query("user_id") userId: String,
     ): Response<GetAffiliateUserDetailResponse>
 
     @POST(Constants.BLOCK_UNBLOCK_AFFILIATE_USER)
@@ -911,7 +937,7 @@ interface ApiServices {
 
     @GET(Constants.GET_PROMOTIONAL_BANNER)
     suspend fun getPromotionalBanner(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetPromotionalBannerResponse>
 
     @POST(Constants.ADD_PROMOTIONAL_BANNER)
@@ -923,19 +949,20 @@ interface ApiServices {
     suspend fun updatePromotionalBanner(
         @Body body: AddPromotionalBannerRequest
     ): Response<AddPromotionalBannerResponse>
+
     @POST(Constants.DELETE_PROMOTIONAL_BANNER)
     suspend fun deletePromotionalBanner(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST(Constants.UPDATE_PROMOTIONAL_BANNER_STATUS)
     suspend fun updatePromotionalBannerStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdatePromotionalBannerStatusResponse>
 
     @POST(Constants.UPDATE_DEFAULT_SHIPPING_FEE)
     suspend fun updateDefaultShippingFee(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateDefaultShippingChargeResponse>
 
     @GET(Constants.GET_DEFAULT_SHIPPING_FEE)
@@ -945,38 +972,38 @@ interface ApiServices {
 
     @GET(Constants.GET_ALL_PRODUCT)
     suspend fun getAllProduct(
-        @QueryMap(encoded = true) map: HashMap<String,Any>
+        @QueryMap(encoded = true) map: HashMap<String, Any>
     ): Response<GetAllProductListResponse>
 
     @GET(Constants.PRODUCT_DETAIL)
     suspend fun getProductDetail(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetProductDetailResponse>
 
     @POST(Constants.UPDATE_PRODUCT_STATUS)
     suspend fun updateProductStatus(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<UpdateProductStatusResponse>
 
     @GET(Constants.GET_WITHDRAWAL_REQUEST)
     suspend fun getWithdrawalRequest(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetWithdrawalRequestResponse>
 
     @POST(Constants.ACCEPT_WITHDRAWAL_REQUEST)
     suspend fun acceptWithdrawalRequest(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
 
     @POST(Constants.REJECT_WITHDRAWAL_REQUEST)
     suspend fun rejectWithdrawalRequest(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST(Constants.WITHDRAWAL_TRANSFER)
     suspend fun WithdrawalTransfer(
-        @Body body: HashMap<String,Any>
+        @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST
@@ -988,102 +1015,102 @@ interface ApiServices {
 
     @GET(Constants.GET_TERMS_AND_CONDITION)
     suspend fun getTermsAndCondition(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetTermsAndConditionResponse>
 
     @POST(Constants.CREATE_UPDATE_TERMS_AND_CONDITION)
     suspend fun createUpdateTermsAndCondition(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<GetTermsAndConditionResponse>
 
     @GET(Constants.GET_ABOUT_US)
     suspend fun getAboutUs(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetAboutUsResponse>
 
     @POST(Constants.CREATE_UPDATE_ABOUT_US)
     suspend fun createUpdateAboutUs(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<GetAboutUsResponse>
 
     @GET(Constants.GET_RETURN_POLICY)
     suspend fun getReturnPolicy(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetReturnPolicyResponse>
 
     @POST(Constants.CREATE_UPDATE_RETURN_POLICY)
     suspend fun createUpdateReturnPolicy(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<GetReturnPolicyResponse>
 
     @GET(Constants.GET_CANCELLATION_POLICY)
     suspend fun getCancellationPolicy(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetCancellationPolicyResponse>
 
     @POST(Constants.CREATE_UPDATE_CANCELLATION_POLICY)
     suspend fun createUpdateCancellationPolicy(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<GetCancellationPolicyResponse>
 
     @GET(Constants.GET_EXCHANGE_POLICY)
     suspend fun getExchangePolicy(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetExchangePolicyResponse>
 
     @POST(Constants.CREATE_UPDATE_EXCHANGE_POLICY)
     suspend fun createUpdateExchangePolicy(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<GetExchangePolicyResponse>
 
     @GET(Constants.GET_FAQ)
     suspend fun getFaq(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetFaqResponse>
 
     @POST(Constants.ADD_FAQ)
     suspend fun addFaq(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<UpdateFaqResponse>
 
     @POST(Constants.UPDATE_FAQ)
     suspend fun updateFaq(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<UpdateFaqResponse>
 
     @POST(Constants.DELETE_FAQ)
     suspend fun deleteFaq(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_CONTACT_US)
     suspend fun getContactUs(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetContactResponse>
 
     @POST(Constants.CREATE_UPDATE_CONTACT_US)
     suspend fun createUpdateContactUs(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_MY_NOTIFICATION_LIST)
     suspend fun getMyNotification(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST(Constants.READ_NOTIFICATION)
     suspend fun readNotification(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<CommonResponse>
 
-  @POST(Constants.MARK_ALL_READ_NOTIFICATION)
+    @POST(Constants.MARK_ALL_READ_NOTIFICATION)
     suspend fun allReadNotification(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_SEND_NOTIFICATION_LIST)
     suspend fun getSendNotification(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetSendNotificationListResponse>
 
 
@@ -1097,12 +1124,12 @@ interface ApiServices {
     ): Response<GetNotificationCountResponse>
 
     @GET(Constants.GET_LIVE_STREAMING_ROOM)
-    suspend fun getLiveStreamingRoom(@QueryMap map: HashMap<String,Any>): Response<GetLiveStreamingRoomResponse>
+    suspend fun getLiveStreamingRoom(@QueryMap map: HashMap<String, Any>): Response<GetLiveStreamingRoomResponse>
 
     @POST("https://desynat.com${Constants.GET_AGORA_TOKEN}")
     suspend fun getAgoraToken(
         @Header("Authorization") token: String,
-        @Body  map: HashMap<String, Any>
+        @Body map: HashMap<String, Any>
     ): Response<GetAgoraTokenResponse>
 
     @POST("https://translation.googleapis.com/language/translate/v2")
@@ -1114,45 +1141,45 @@ interface ApiServices {
 
     @GET(Constants.GET_NEW_TICKET)
     suspend fun getNewTicket(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetNewTicketResponse>
 
     @GET(Constants.GET_ONGOING_TICKET)
     suspend fun getOngoingTicket(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetNewTicketResponse>
 
     @GET(Constants.GET_RESOLVED_TICKET)
     suspend fun getResolvedTicket(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetNewTicketResponse>
 
     @POST(Constants.UPDATE_TICKET_STATUS)
     suspend fun updateTicketStatus(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<UpdateTicketStatusResponse>
 
     @GET(Constants.GET_ORDER_PAYMENT)
     suspend fun getOrderPayment(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetOrderPaymentResponse>
 
 
     @GET(Constants.GET_GIFT_PAYMENT)
     suspend fun getGiftCardPayment(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetGiftCardPaymentResponse>
 
 
     @GET(Constants.GET_PLAN_PAYMENT)
     suspend fun getPlanPayment(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetPlanPaymentResponse>
 
 
     @GET(Constants.GET_BANNER_PAYMENT)
     suspend fun getBannerPayment(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetBannerPaymentResponse>
 
 
@@ -1167,7 +1194,7 @@ interface ApiServices {
 
     @POST(Constants.UPDATE_PASSWORD)
     suspend fun updatePassword(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_PROFILE)
@@ -1176,7 +1203,7 @@ interface ApiServices {
 
     @POST(Constants.ACCOUNT_SETTING)
     suspend fun accountSetting(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<LoginResponse>
 
     @POST(Constants.ADD_SUB_ADMIN)
@@ -1191,37 +1218,37 @@ interface ApiServices {
 
     @POST(Constants.UPDATE_SUB_ADMIN_STATUS)
     suspend fun updateSubAdminStatus(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<UpdateSubAdminStatusResponse>
 
     @POST(Constants.DELETE_SUB_ADMIN)
     suspend fun deleteSubAdmin(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @POST(Constants.SEND_SUB_ADMIN_CREDENTIAL)
     suspend fun sendSubAdminCredential(
-        @Body map: HashMap<String,Any>
+        @Body map: HashMap<String, Any>
     ): Response<CommonResponse>
 
     @GET(Constants.GET_SUB_ADMIN)
     suspend fun getSubAdmin(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetSubAdminResponse>
 
     @GET(Constants.GET_ACTIVE_SUB_ADMIN)
     suspend fun getActiveSubAdmin(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetSubAdminResponse>
 
     @GET(Constants.GET_INACTIVE_SUB_ADMIN)
     suspend fun getInactiveSubAdmin(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetSubAdminResponse>
 
     @GET(Constants.SUB_ADMIN_DETAIL)
     suspend fun getSubAdminDetail(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetSubAdminDetailResponse>
 
     @GET(Constants.GET_ADMIN_PANEL_MODULES)
@@ -1230,12 +1257,12 @@ interface ApiServices {
 
     @GET(Constants.GET_REFUND_ORDER)
     suspend fun getRefundOrder(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetRefundOrderResponse>
 
     @GET(Constants.HOME_DASHBOARD_DATA)
     suspend fun getHomeDashBoard(
-        @QueryMap map: HashMap<String,Any>
+        @QueryMap map: HashMap<String, Any>
     ): Response<GetDashboardResponse>
 
 }

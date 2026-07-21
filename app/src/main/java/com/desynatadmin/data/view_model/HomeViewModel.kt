@@ -973,6 +973,11 @@ class HomeViewModel @Inject constructor(
             repository.getBannerPerDay(type)
         }
     }
+    fun getSellerStoryPrice() {
+        viewModelScope.launch {
+            repository.getSellerStoryPrice()
+        }
+    }
 
     val updateBannerPerDayResult: LiveData<UpdateBannerPriceResponse>
         get() = repository.updateBannerPerDayPriceLiveData
@@ -980,6 +985,11 @@ class HomeViewModel @Inject constructor(
     fun updateBannerPerDayPrice(map:HashMap<String,Any>) {
         viewModelScope.launch {
             repository.updateBannerPerDayPrice(map)
+        }
+    }
+    fun getUpdateSellerStoryPrice(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getUpdateSellerStoryPrice(map)
         }
     }
 

@@ -710,5 +710,10 @@
         android:name="com.desynatadmin.ui.home.subAdminManagement.AddSubAdminFragment"
         android:label="Add SubAdmin Fragment"
         tools:layout="@layout/fragment_add_sub_admin"/>
+    <fragment
+        android:id="@+id/bannerRequestManagement1Fragment"
+        android:name="com.desynatadmin.ui.home.bannerRequestManagement.BannerRequestManagement1Fragment"
+        android:label="fragment_banner_request_management1"
+        tools:layout="@layout/fragment_banner_request_management1" />
 
 </navigation>

@@ -1257,6 +1257,16 @@ class MainRepository @Inject constructor(
             responseLiveData = bannerPerDayPriceLiveData
         )
     }
+//    val bannerPerDayPriceLiveData = SingleLiveEvent<GetBannerPricePerDayResponse>()
+    suspend fun getSellerStoryPrice(
+    ) {
+        handleApiCall(
+            api = {
+                api.getSellerStoryPrice()
+            },
+            responseLiveData = bannerPerDayPriceLiveData
+        )
+    }
 
     val updateBannerPerDayPriceLiveData = SingleLiveEvent<UpdateBannerPriceResponse>()
     suspend fun updateBannerPerDayPrice(
@@ -1265,6 +1275,16 @@ class MainRepository @Inject constructor(
         handleApiCall(
             api = {
                 api.updateBannerPerDayPrice(map)
+            },
+            responseLiveData = updateBannerPerDayPriceLiveData
+        )
+    }
+    suspend fun getUpdateSellerStoryPrice(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getUpdateSellerStoryPrice(map)
             },
             responseLiveData = updateBannerPerDayPriceLiveData
         )

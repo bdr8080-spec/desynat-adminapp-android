@@ -30,13 +30,13 @@ import com.desynatadmin.ui.home.SubAdminHomeActivity
 
 @AndroidEntryPoint
 class BannerPerDayPriceFragment : BaseFragment() {
-    private var binding: FragmentBannerPerDayPriceBinding?=null
+    private var binding: FragmentBannerPerDayPriceBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var bannerPerDayPriceList = ArrayList<GetBannerPricePerDayResponse.Data>()
     private var countryList = ArrayList<GetCountryResponse.Data>()
-    private var countryMap: Map<Int, GetCountryResponse.Data>?=null
-    private var bannerPerDayPriceAdapter : BannerPerDayPriceAdapter?=null
+    private var countryMap: Map<Int, GetCountryResponse.Data>? = null
+    private var bannerPerDayPriceAdapter: BannerPerDayPriceAdapter? = null
     private var type = 1 //1-top,2-bottom,3-sub category
     private var selectedPos = -1
 
@@ -44,7 +44,7 @@ class BannerPerDayPriceFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBannerPerDayPriceBinding.inflate(layoutInflater,container,false)
+        binding = FragmentBannerPerDayPriceBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -67,18 +67,19 @@ class BannerPerDayPriceFragment : BaseFragment() {
 
             bannerPerDayPriceList.clear()
             bannerPerDayPriceAdapter =
-                BannerPerDayPriceAdapter(requireActivity(), bannerPerDayPriceList,
-                    countryMap!!,object : BannerPerDayPriceAdapter.OnClick {
-                    override fun onItemClick(position: Int) {
-                        selectedPos = position
-                        addPriceDialog()
-                    }
+                BannerPerDayPriceAdapter(
+                    requireActivity(), bannerPerDayPriceList,
+                    countryMap!!, object : BannerPerDayPriceAdapter.OnClick {
+                        override fun onItemClick(position: Int) {
+                            selectedPos = position
+                            addPriceDialog()
+                        }
 
-                })
+                    })
             rvBannerPerDayPrice.adapter = bannerPerDayPriceAdapter
 
-            when(type){
-                1->{
+            when (type) {
+                1 -> {
                     getBanner()
                     tvTop.setTextColor(requireActivity().getColor(R.color.white))
                     tvBottom.setTextColor(requireActivity().getColor(R.color.black))
@@ -87,7 +88,8 @@ class BannerPerDayPriceFragment : BaseFragment() {
                     tvBottom.background = null
                     tvSubCategory.background = null
                 }
-                2->{
+
+                2 -> {
                     getBanner()
                     tvBottom.setTextColor(requireActivity().getColor(R.color.white))
                     tvTop.setTextColor(requireActivity().getColor(R.color.black))
@@ -97,7 +99,7 @@ class BannerPerDayPriceFragment : BaseFragment() {
                     tvSubCategory.background = null
                 }
 
-                3->{
+                3 -> {
                     getBanner()
                     tvSubCategory.setTextColor(requireActivity().getColor(R.color.white))
                     tvTop.setTextColor(requireActivity().getColor(R.color.black))
@@ -113,12 +115,12 @@ class BannerPerDayPriceFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener{
-                 when (val activity = requireActivity()) {
-        is HomeActivity -> activity.onBackPressed()
-        is SubAdminHomeActivity -> activity.onBackPressed()
-        else -> activity.onBackPressed()
-    }
+            toolbar.tvToolbar.setOnClickListener {
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
             }
 
             tvTop.setOnClickListener {
@@ -128,8 +130,10 @@ class BannerPerDayPriceFragment : BaseFragment() {
                 tvBottom.setTextColor(requireActivity().getColor(R.color.black))
                 tvSubCategory.setTextColor(requireActivity().getColor(R.color.black))
                 tvTop.setBackgroundResource(R.drawable.selected_left_border)
+                tvCategory.setTextColor(requireActivity().getColor(R.color.black))
                 tvBottom.background = null
                 tvSubCategory.background = null
+                tvCategory.background = null
             }
 
             tvBottom.setOnClickListener {
@@ -139,8 +143,11 @@ class BannerPerDayPriceFragment : BaseFragment() {
                 tvTop.setTextColor(requireActivity().getColor(R.color.black))
                 tvSubCategory.setTextColor(requireActivity().getColor(R.color.black))
                 tvBottom.setBackgroundResource(R.drawable.selected_mid_border)
+                tvCategory.setTextColor(requireActivity().getColor(R.color.black))
                 tvTop.background = null
                 tvSubCategory.background = null
+                tvCategory.background = null
+
             }
 
             tvSubCategory.setOnClickListener {
@@ -149,9 +156,24 @@ class BannerPerDayPriceFragment : BaseFragment() {
                 tvSubCategory.setTextColor(requireActivity().getColor(R.color.white))
                 tvTop.setTextColor(requireActivity().getColor(R.color.black))
                 tvBottom.setTextColor(requireActivity().getColor(R.color.black))
-                tvSubCategory.setBackgroundResource(R.drawable.selected_right_border)
+                tvCategory.setTextColor(requireActivity().getColor(R.color.black))
+                tvSubCategory.setBackgroundResource(R.drawable.selected_mid_border)
                 tvTop.background = null
                 tvBottom.background = null
+                tvCategory.background = null
+            }
+            tvCategory.setOnClickListener {
+                type = 4
+                getStory()
+                tvCategory.setTextColor(requireActivity().getColor(R.color.white))
+                tvTop.setTextColor(requireActivity().getColor(R.color.black))
+                tvBottom.setTextColor(requireActivity().getColor(R.color.black))
+                tvSubCategory.setTextColor(requireActivity().getColor(R.color.black))
+                tvCategory.setBackgroundResource(R.drawable.selected_right_border)
+                tvTop.background = null
+                tvBottom.background = null
+                tvSubCategory.background = null
+
             }
 
         }
@@ -170,11 +192,11 @@ class BannerPerDayPriceFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
 
-                    bannerPerDayPriceList.clear()
+                bannerPerDayPriceList.clear()
                 bannerPerDayPriceList.addAll(response.data)
                 checkData()
 
-                    bannerPerDayPriceAdapter?.notifyDataSetChanged()
+                bannerPerDayPriceAdapter?.notifyDataSetChanged()
 
                 isObserver = false
             }
@@ -183,10 +205,11 @@ class BannerPerDayPriceFragment : BaseFragment() {
         viewModel.updateBannerPerDayResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                when (type){
-                    1-> showToast(getString(R.string.top_banner_price_update_successfully))
-                    2-> showToast(getString(R.string.bottom_banner_price_update_successfully))
-                    3-> showToast(getString(R.string.sub_category_banner_price_update_successfully))
+                when (type) {
+                    1 -> showToast(getString(R.string.top_banner_price_update_successfully))
+                    2 -> showToast(getString(R.string.bottom_banner_price_update_successfully))
+                    3 -> showToast(getString(R.string.sub_category_banner_price_update_successfully))
+                    4 -> showToast("Story Price Update Successfully")
                 }
 
                 bannerPerDayPriceList[selectedPos] = response.data
@@ -199,23 +222,36 @@ class BannerPerDayPriceFragment : BaseFragment() {
         }
     }
 
-    private fun checkData(){
+    private fun checkData() {
         binding?.tvNoDataFound?.isVisible = bannerPerDayPriceList.isEmpty()
     }
 
-    private fun getBanner(){
+    private fun getBanner() {
         viewModel.getBannerPerDay(type)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
+    private fun getStory() {
+        viewModel.getSellerStoryPrice()
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
 
-    private fun updatePrice(price:String) {
-        val map = HashMap<String,Any>()
-        map["country_id"] = bannerPerDayPriceList[selectedPos].countryId
-        map["type"] = type
-        map["per_day_price"] = price
-        viewModel.updateBannerPerDayPrice(map)
+
+    private fun updatePrice(price: String) {
+        val map = HashMap<String, Any>()
+
+        if (type==4){
+            map["country_id"] = bannerPerDayPriceList[selectedPos].countryId
+            map["per_day_price"] = price
+            viewModel.getUpdateSellerStoryPrice(map)
+        }else{
+            map["country_id"] = bannerPerDayPriceList[selectedPos].countryId
+            map["type"] = type
+            map["per_day_price"] = price
+            viewModel.updateBannerPerDayPrice(map)
+        }
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -242,7 +278,13 @@ class BannerPerDayPriceFragment : BaseFragment() {
             etAmount.setText(bannerPerDayPriceList[selectedPos].perDayPrice)
 
             etAmount.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
@@ -265,10 +307,9 @@ class BannerPerDayPriceFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener {
-                if(isInvalid(etAmount, getString(R.string.amount))) {
+                if (isInvalid(etAmount, getString(R.string.amount))) {
                     return@setOnClickListener
-                }
-                else{
+                } else {
                     updatePrice(etAmount.text?.trim().toString())
                     dialog.dismiss()
                 }

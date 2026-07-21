@@ -121,9 +121,12 @@ object Constants {
     const val SHIPPING_TAX = "/api/admin/countries_with_tax_shipping"
 
     const val BANNER_PER_DAY_PRICE = "/api/admin/get_banners"
+    const val SELLER_STORY_PRICE = "api/admin/get_seller_story_price"
+    const val UPDATE_SELLER_STORY_PRICE = "api/admin/add_update_seller_story_price"
     const val UPDATE_BANNER_PER_DAY_PRICE = "/api/admin/add_update_banner"
 
     const val BANNER_REQUEST = "/api/admin/get_banner_request"
+    const val SELLER_PROMOTIONAL = "/api/admin/get_seller_promotional_stories"
     const val UPDATE_BANNER_STATUS = "/api/admin/block_unblock_banner_req"
     const val APPROVE_BANNER_REQUEST = "/api/admin/approve_banner_request"
     const val REJECT_BANNER_REQUEST = "/api/admin/reject_banner_request"
