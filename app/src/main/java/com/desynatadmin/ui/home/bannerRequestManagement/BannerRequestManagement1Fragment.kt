@@ -20,7 +20,7 @@ import com.desynatadmin.R
 import com.desynatadmin.adapter.BannerRequestAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.FragmentBannerRequestManagement1Binding
+import com.desynatadmin.databinding.FragmentBannerRequestManagementBinding
 import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
@@ -42,7 +42,7 @@ import kotlin.getValue
 
 @AndroidEntryPoint
 class BannerRequestManagement1Fragment : BaseFragment() {
-    private var binding: FragmentBannerRequestManagement1Binding?=null
+    private var binding: FragmentBannerRequestManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var type = 0 //0-new,1-approved,2-rejected
@@ -76,7 +76,7 @@ class BannerRequestManagement1Fragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBannerRequestManagement1Binding.inflate(inflater, container, false)
+        binding = FragmentBannerRequestManagementBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
