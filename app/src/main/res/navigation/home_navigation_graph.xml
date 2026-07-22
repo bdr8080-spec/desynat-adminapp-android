@@ -711,9 +711,19 @@
         android:label="Add SubAdmin Fragment"
         tools:layout="@layout/fragment_add_sub_admin"/>
     <fragment
-        android:id="@+id/bannerRequestManagement1Fragment"
-        android:name="com.desynatadmin.ui.home.bannerRequestManagement.BannerRequestManagement1Fragment"
-        android:label="fragment_banner_request_management1"
-        tools:layout="@layout/fragment_banner_request_management1" />
+        android:id="@+id/sellerStoryRequestManagementFragment"
+        android:name="com.desynatadmin.ui.home.bannerRequestManagement.SellerStoryRequestManagementFragment"
+        android:label="fragment_seller_story_request_management"
+        tools:layout="@layout/fragment_seller_story_request_management" >
+        <action
+            android:id="@+id/action_sellerStoryRequestManagementFragment_to_sellerStoryDetailFragment"
+            app:destination="@id/sellerStoryDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerStoryDetailFragment"
+        android:name="com.desynatadmin.ui.home.bannerRequestManagement.SellerStoryDetailFragment"
+        android:label="fragment_seller_story_detail"
+        tools:layout="@layout/fragment_seller_story_detail" />
+
 
 </navigation>

@@ -17,6 +17,8 @@ import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawa
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetSellerStoryResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectStoryResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectionResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.UpdateBannerRequestStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
@@ -678,7 +680,7 @@ class MainRepository @Inject constructor(
     suspend fun deleteSellerReel(
         id: String,
     ) {
-        val map = HashMap<String,Any>()
+        val map = HashMap<String, Any>()
         map["reel_id"] = id
         handleApiCall(
             api = {
@@ -692,7 +694,7 @@ class MainRepository @Inject constructor(
     suspend fun deleteSellerHighlight(
         id: String,
     ) {
-        val map = HashMap<String,Any>()
+        val map = HashMap<String, Any>()
         map["highlight_id"] = id
         handleApiCall(
             api = {
@@ -703,7 +705,8 @@ class MainRepository @Inject constructor(
     }
 
     val seeStory = SingleLiveEvent<CommonResponse>()
-    suspend fun seeStory(map: HashMap<String, Any>,
+    suspend fun seeStory(
+        map: HashMap<String, Any>,
     ) {
         handleApiCall(
             api = {
@@ -718,7 +721,7 @@ class MainRepository @Inject constructor(
     suspend fun deleteSellerStory(
         id: String,
     ) {
-        val map = HashMap<String,Any>()
+        val map = HashMap<String, Any>()
         map["story_id"] = id
         handleApiCall(
             api = {
@@ -801,7 +804,7 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.hitZoneList(token, country_id, search,city_id)
+                api.hitZoneList(token, country_id, search, city_id)
             },
             responseLiveData = getZoneList
         )
@@ -1257,7 +1260,8 @@ class MainRepository @Inject constructor(
             responseLiveData = bannerPerDayPriceLiveData
         )
     }
-//    val bannerPerDayPriceLiveData = SingleLiveEvent<GetBannerPricePerDayResponse>()
+
+    //    val bannerPerDayPriceLiveData = SingleLiveEvent<GetBannerPricePerDayResponse>()
     suspend fun getSellerStoryPrice(
     ) {
         handleApiCall(
@@ -1279,6 +1283,7 @@ class MainRepository @Inject constructor(
             responseLiveData = updateBannerPerDayPriceLiveData
         )
     }
+
     suspend fun getUpdateSellerStoryPrice(
         map: HashMap<String, Any>
     ) {
@@ -1368,6 +1373,24 @@ class MainRepository @Inject constructor(
             responseLiveData = bannerRequestLiveData
         )
     }
+    val sellerStoryLiveData = SingleLiveEvent<GetSellerStoryResponse>()
+
+    suspend fun getSellerPromotionalStory(
+        type: Int,
+        search: String? = null,
+        fromDate: String? = null,
+        toDate: String? = null,
+        countryId: String? = null,
+        page: Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getSellerPromotionalStory(type, search, fromDate, toDate, countryId, page)
+            },
+            responseLiveData = sellerStoryLiveData
+        )
+    }
+
 
     val updateBannerStatusLiveData = SingleLiveEvent<UpdateBannerRequestStatusResponse>()
     suspend fun updateBannerStatus(
@@ -1390,6 +1413,28 @@ class MainRepository @Inject constructor(
                 api.approveBannerRequest(map)
             },
             responseLiveData = approveBannerRequestLiveData
+        )
+    }
+    suspend fun approveStoryRequest(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.approveStoryRequest(map)
+            },
+            responseLiveData = approveBannerRequestLiveData
+        )
+    }
+
+    val rejectStoryRequestLiveData = SingleLiveEvent<RejectStoryResponse>()
+    suspend fun rejectStoryRequest(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.rejectStoryRequest(map)
+            },
+            responseLiveData = rejectStoryRequestLiveData
         )
     }
 

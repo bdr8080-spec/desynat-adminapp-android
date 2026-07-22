@@ -129,6 +129,8 @@ object Constants {
     const val SELLER_PROMOTIONAL = "/api/admin/get_seller_promotional_stories"
     const val UPDATE_BANNER_STATUS = "/api/admin/block_unblock_banner_req"
     const val APPROVE_BANNER_REQUEST = "/api/admin/approve_banner_request"
+    const val APPROVE_STORY_REQUEST = "/api/admin/approve_story"
+    const val REJECT_STORY_REQUEST = "/api/admin/reject_story"
     const val REJECT_BANNER_REQUEST = "/api/admin/reject_banner_request"
     const val GET_AFFILIATE_COMMISSION = "/api/admin/countries_with_affiliate_commission"
     const val UPDATE_AFFILIATE_COMMISSION = "/api/admin/update_affiliate_commission"

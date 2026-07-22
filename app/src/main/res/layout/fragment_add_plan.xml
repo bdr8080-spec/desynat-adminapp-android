@@ -550,7 +550,6 @@
                     android:textSize="@dimen/_11sdp"/>
 
             </RadioGroup>
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:visibility="gone"
                 android:id="@+id/tvNoOfFreeMonth"
@@ -569,7 +568,48 @@
                 android:inputType="number"
                 android:maxLength="2"
                 android:background="@drawable/edit_back" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="@string/show_in_recommended_stores"/>
 
+            <RadioGroup
+                android:id="@+id/radioGroupRecommendedStores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbYesRecommendedStores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+                <RadioButton
+                    android:id="@+id/rbNoRecommendedStores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no"
+                    android:textColor="@color/black"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:button="@drawable/selector_radio_icon"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:buttonTint="@null"
+                    android:drawableTint="@null"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"/>
+
+            </RadioGroup>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btnAdd"
                 style="@style/button"

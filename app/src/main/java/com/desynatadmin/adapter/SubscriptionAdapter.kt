@@ -15,7 +15,11 @@ import com.desynatadmin.ui.home.subscriptionPlan.response.GetAllPlanResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 
-class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<GetAllPlanResponse.Data>, var subscriptionClick:SubscriptionClick) : RecyclerView.Adapter<SubscriptionAdapter.ViewHolder>() {
+class SubscriptionAdapter(
+    var context: Context,
+    var subscriptionList: ArrayList<GetAllPlanResponse.Data>,
+    var subscriptionClick: SubscriptionClick
+) : RecyclerView.Adapter<SubscriptionAdapter.ViewHolder>() {
 
     val backgrounds = listOf(
         R.drawable.pro,
@@ -26,12 +30,14 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
         R.drawable.color_5,
         R.drawable.color_7,
     )
+
     inner class ViewHolder(val binding: ItemPlanBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) = with(binding) {
             val subscriptionData = subscriptionList[position]
 
-            tvPackage.text = if (Constants.language=="ar") subscriptionData?.planNameArabic else subscriptionData?.planNameEnglish
+            tvPackage.text =
+                if (Constants.language == "ar") subscriptionData?.planNameArabic else subscriptionData?.planNameEnglish
             if (subscriptionData?.discountedPrice != null && subscriptionData?.discountedPrice != 0.0) {
                 tvPrice.text =
                     "KD ${CommonMethod.formatDoubleValue(subscriptionData?.discountedPrice)}"
@@ -40,27 +46,30 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
             }
             when (subscriptionData.durationType) {
                 1 -> {
-                    tvDuration.text = "${context.getString(R.string.for_text)} ${subscriptionData.duration} ${
-                        context.getString(
-                            R.string.month
-                        )
-                    }"
+                    tvDuration.text =
+                        "${context.getString(R.string.for_text)} ${subscriptionData.duration} ${
+                            context.getString(
+                                R.string.month
+                            )
+                        }"
                 }
 
                 2 -> {
-                    tvDuration.text = "${context.getString(R.string.for_text)} ${subscriptionData.duration} ${
-                        context.getString(
-                            R.string.year
-                        )
-                    }"
+                    tvDuration.text =
+                        "${context.getString(R.string.for_text)} ${subscriptionData.duration} ${
+                            context.getString(
+                                R.string.year
+                            )
+                        }"
                 }
 
                 else -> {
-                    tvDuration.text = "${context.getString(R.string.for_text)} ${subscriptionData.duration} ${
-                        context.getString(
-                            R.string.month
-                        )
-                    }"
+                    tvDuration.text =
+                        "${context.getString(R.string.for_text)} ${subscriptionData.duration} ${
+                            context.getString(
+                                R.string.month
+                            )
+                        }"
                 }
             }
             /*
@@ -81,29 +90,64 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
 
             subscriptionData.apply {
                 if (noOfProducts != 0)
-                    featureList.add(FeatureList("${context.getString(R.string.number_of_products)}: ", noOfProducts))
-                else  featureList.add(FeatureList("${context.getString(R.string.number_of_products)}: ", 0))
+                    featureList.add(
+                        FeatureList(
+                            "${context.getString(R.string.number_of_products)}: ",
+                            noOfProducts
+                        )
+                    )
+                else featureList.add(
+                    FeatureList(
+                        "${context.getString(R.string.number_of_products)}: ",
+                        0
+                    )
+                )
 
                 if (noOfVideos != 0)
-                    featureList.add(FeatureList("${context.getString(R.string.number_of_videos_reels)}: ", noOfVideos))
+                    featureList.add(
+                        FeatureList(
+                            "${context.getString(R.string.number_of_videos_reels)}: ",
+                            noOfVideos
+                        )
+                    )
 
                 if (noOfHighlights != 0)
-                    featureList.add(FeatureList("${context.getString(R.string.number_of_highlights)}: ", noOfHighlights))
+                    featureList.add(
+                        FeatureList(
+                            "${context.getString(R.string.number_of_highlights)}: ",
+                            noOfHighlights
+                        )
+                    )
 
                 featureList.add(FeatureList("${context.getString(R.string.stories)}: ", stories))
 
                 if (noOfEmployee != 0)
-                    featureList.add(FeatureList("$noOfEmployee ${context.getString(R.string.store_employees)}", 0))
+                    featureList.add(
+                        FeatureList(
+                            "$noOfEmployee ${context.getString(R.string.store_employees)}",
+                            0
+                        )
+                    )
 
                 // Handle commission formatting
                 val commissionValue = commissionPercentage?.toString()?.toDoubleOrNull()
                 if (commissionValue != null && commissionValue != 0.0) {
                     if (commissionValue % 1.0 == 0.0) {
                         val formattedCommission = commissionValue.toInt()
-                        featureList.add(FeatureList("${context.getString(R.string.commission)}: ", formattedCommission))
+                        featureList.add(
+                            FeatureList(
+                                "${context.getString(R.string.commission)}: ",
+                                formattedCommission
+                            )
+                        )
                     } else {
                         val formattedCommission = commissionValue.toString()
-                        featureList.add(FeatureList("${context.getString(R.string.commission)}: $formattedCommission %", 0))
+                        featureList.add(
+                            FeatureList(
+                                "${context.getString(R.string.commission)}: $formattedCommission %",
+                                0
+                            )
+                        )
 
                     }
 
@@ -111,8 +155,13 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
                     featureList.add(FeatureList("${context.getString(R.string.commission)}: ", 0))
                 }
 
-                if (noOfFreeMonths != null&&noOfFreeMonths != "null"&&noOfFreeMonths != "")
-                    featureList.add(FeatureList("${context.getString(R.string.number_of_free_month)}: ", noOfFreeMonths.toIntOrNull()))
+                if (noOfFreeMonths != null && noOfFreeMonths != "null" && noOfFreeMonths != "")
+                    featureList.add(
+                        FeatureList(
+                            "${context.getString(R.string.number_of_free_month)}: ",
+                            noOfFreeMonths.toIntOrNull()
+                        )
+                    )
 
             }
 
@@ -141,13 +190,15 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
         }
     }
 
-    interface SubscriptionClick{
-        fun onSubscriptionClick(position: Int, backgroundRes: Int)    }
+    interface SubscriptionClick {
+        fun onSubscriptionClick(position: Int, backgroundRes: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemPlanBinding.inflate(
-               LayoutInflater.from(parent.context), parent, false)
+                LayoutInflater.from(parent.context), parent, false
+            )
         )
     }
 
@@ -156,11 +207,11 @@ class SubscriptionAdapter(var context:Context, var subscriptionList: ArrayList<G
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       holder.bind(position)
+        holder.bind(position)
     }
 }
 
 data class FeatureList(
-    var feature:String,
-    var count:Int?=0
+    var feature: String,
+    var count: Int? = 0
 )

@@ -4,8 +4,8 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +17,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
-import com.desynatadmin.adapter.BannerRequestAdapter
+import com.desynatadmin.adapter.SellerRequestAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.FragmentBannerRequestManagementBinding
+import com.desynatadmin.databinding.FragmentSellerStoryRequestManagementBinding
 import com.desynatadmin.databinding.RejectBannerReasonDialogBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.SubAdminHomeActivity
-import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetSellerStoryResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
@@ -41,14 +41,14 @@ import kotlinx.coroutines.launch
 import kotlin.getValue
 
 @AndroidEntryPoint
-class BannerRequestManagement1Fragment : BaseFragment() {
-    private var binding: FragmentBannerRequestManagementBinding?=null
+class SellerStoryRequestManagementFragment : BaseFragment() {
+    private var binding: FragmentSellerStoryRequestManagementBinding?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var type = 0 //0-new,1-approved,2-rejected
 
-    private var bannerRequestAdapter: BannerRequestAdapter?=null
-    private var bannerRequestList = ArrayList<GetBannerRequestResponse.Data.Data>()
+    private var sellerRequestAdapter: SellerRequestAdapter?=null
+    private var bannerRequestList = ArrayList<GetSellerStoryResponse.Data.DataX>()
 
     private var search: Job? = null
     private var lastQuery: String? = null
@@ -76,7 +76,7 @@ class BannerRequestManagement1Fragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBannerRequestManagementBinding.inflate(inflater, container, false)
+        binding = FragmentSellerStoryRequestManagementBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -87,6 +87,8 @@ class BannerRequestManagement1Fragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("token", "token: ${SharedPreference.get(requireContext()).accessToken} ", )
+
         initView()
         initControl()
         observe()
@@ -98,29 +100,39 @@ class BannerRequestManagement1Fragment : BaseFragment() {
         SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
 
         binding?.apply {
-            toolbar.tvToolbar.text = getString(R.string.banner_requests)
+            toolbar.tvToolbar.text = getString(R.string.story_request)
 
             CommonMethod.removeSpace(etSearch)
 
             bannerRequestList.clear()
-            bannerRequestAdapter = BannerRequestAdapter(requireActivity(),type,bannerRequestList,object : BannerRequestAdapter.OnClick{
-                override fun onItemClick(position: Int,type:Int) {
-                    selectedPos = position
-                    when(type){
-                        1-> acceptRequest()
-                        2-> rejectReasonDialog()
-                        3->{
-                            val bundle = Bundle().apply {
-                                putString("bannerData", Gson().toJson(bannerRequestList[position]))
+            sellerRequestAdapter = SellerRequestAdapter(
+                requireActivity(),
+                type,
+                bannerRequestList,
+                object : SellerRequestAdapter.OnClick {
+                    override fun onItemClick(position: Int, type: Int) {
+                        selectedPos = position
+                        when (type) {
+                            1 -> acceptRequest()
+                            2 -> rejectReasonDialog()
+                            3 -> {
+                                val bundle = Bundle().apply {
+                                    putString(
+                                        "StoryData",
+                                        Gson().toJson(bannerRequestList[position])
+                                    )
+                                }
+                                findNavController().navigate(
+                                    R.id.action_sellerStoryRequestManagementFragment_to_sellerStoryDetailFragment,
+                                    bundle
+                                )
                             }
-                            findNavController().navigate(R.id.action_bannerRequest_to_bannerRequestDetailFragment,bundle)
                         }
                     }
-                }
 
-            })
+                })
 
-            rvBannerRequest.adapter = bannerRequestAdapter
+            rvBannerRequest.adapter = sellerRequestAdapter
 
             when(type){
                 0->{
@@ -279,13 +291,13 @@ class BannerRequestManagement1Fragment : BaseFragment() {
             }
         }
 
-        viewModel.rejectBannerRequestResult.observe(viewLifecycleOwner) { response ->
+        viewModel.rejectStoryRequestResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 getBannerRequest()
             }
         }
 
-        viewModel.bannerRequestResult.observe(viewLifecycleOwner) { response ->
+        viewModel.sellerStoryLiveResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
@@ -295,16 +307,16 @@ class BannerRequestManagement1Fragment : BaseFragment() {
 
                 if (selectedType!=null){
                     CommonMethod.showSuccessDialog(requireActivity(),if (selectedType=="accept") getString(
-                        R.string.banner_request_accepted_successfully
-                    ) else getString(R.string.banner_request_rejected_successfully)){
+                        R.string.story_request_accepted_successfully
+                    ) else getString(R.string.story_request_rejected_successfully)){
                         selectedType = null
                     }
                 }
 
-                currentPage = response.data.currentPage
-                totalItem = response.data.total
+                currentPage = response.data?.currentPage?:0
+                totalItem = response.data?.total?:0
 
-                lastPage = response.data.lastPage
+                lastPage = response.data?.lastPage?:0
 
                 val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
                 val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
@@ -331,21 +343,21 @@ class BannerRequestManagement1Fragment : BaseFragment() {
                     bannerRequestList.clear()
                 }
                 updatePage()
-                val newItems = response.data.data ?: emptyList()
+                val newItems = response.data?.data ?: emptyList()
 
                 bannerRequestList.addAll(newItems)
                 checkData()
 
                 if (pagination){
 
-                    response.data.data?.size?.let {
-                        bannerRequestAdapter?.notifyItemRangeInserted(oldSize,
+                    response.data?.data?.size?.let {
+                        sellerRequestAdapter?.notifyItemRangeInserted(oldSize,
                             it
                         )
                     }
                 }
                 else{
-                    bannerRequestAdapter?.setData(type,ArrayList(bannerRequestList))
+                    sellerRequestAdapter?.setData(type,ArrayList(bannerRequestList))
                 }
 
                 pagination = false
@@ -360,7 +372,7 @@ class BannerRequestManagement1Fragment : BaseFragment() {
     }
 
     private fun getBannerRequest(loading:Boolean=true,search:String?=null) {
-        viewModel.getBannerRequest(type,search = search, fromDate = startDate, toDate = endDate, countryId = countryList.firstOrNull { it.id.toString() == countryId }?.name,currentPage)
+        viewModel.getSellerPromotionalStory(type,search = search, fromDate = startDate, toDate = endDate, countryId = countryList.firstOrNull { it.id.toString() == countryId }?.name,currentPage)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
@@ -373,7 +385,7 @@ class BannerRequestManagement1Fragment : BaseFragment() {
         if (start>=0&&end>=0) {
             if (start < end) {
                 val pageData = bannerRequestList.subList(start, end)
-                bannerRequestAdapter?.setData(type,ArrayList(pageData))
+                sellerRequestAdapter?.setData(type,ArrayList(pageData))
             }
         }
 
@@ -382,8 +394,8 @@ class BannerRequestManagement1Fragment : BaseFragment() {
     private fun acceptRequest(){
         selectedType = "accept"
         val map = HashMap<String,Any>()
-        map["banner_id"] = bannerRequestList[selectedPos].id
-        viewModel.approveBannerRequest(map)
+        map["story_id"] = bannerRequestList[selectedPos].id?:0
+        viewModel.approveStoryRequest(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
@@ -391,9 +403,9 @@ class BannerRequestManagement1Fragment : BaseFragment() {
     private fun rejectRequest(reason:String){
         selectedType = "reject"
         val map = HashMap<String,Any>()
-        map["banner_id"] = bannerRequestList[selectedPos].id
+        map["story_id"] = bannerRequestList[selectedPos].id?:0
         map["reason"] = reason
-        viewModel.rejectBannerRequest(map)
+        viewModel.rejectStoryRequest(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }

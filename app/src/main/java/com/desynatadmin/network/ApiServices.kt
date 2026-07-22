@@ -13,6 +13,8 @@ import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutRespon
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.GetSellerStoryResponse
+import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectStoryResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.RejectionResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.UpdateBannerRequestStatusResponse
 import com.desynatadmin.ui.home.brandManagement.response.AcceptSellerResponse
@@ -698,6 +700,18 @@ interface ApiServices {
         @Query("limit") limit: Int? = 10,
     ): Response<GetBannerRequestResponse>
 
+    @POST(Constants.SELLER_PROMOTIONAL)
+    suspend fun getSellerPromotionalStory(
+        @Query("type") type: Int,
+        @Query("search") search: String? = null,
+        @Query("from_date") fromDate: String? = null,
+        @Query("to_date") toDate: String? = null,
+        @Query("country_id") countryId: String? = null,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int? = 10,
+    ): Response<GetSellerStoryResponse>
+
+
     @POST(Constants.UPDATE_BANNER_STATUS)
     suspend fun updateBannerStatus(
         @Body body: HashMap<String, Any>
@@ -707,6 +721,17 @@ interface ApiServices {
     suspend fun approveBannerRequest(
         @Body body: HashMap<String, Any>
     ): Response<CommonResponse>
+
+    @POST(Constants.APPROVE_STORY_REQUEST)
+    suspend fun approveStoryRequest(
+        @Body body: HashMap<String, Any>
+    ): Response<CommonResponse>
+
+    @POST(Constants.REJECT_STORY_REQUEST)
+    suspend fun rejectStoryRequest(
+        @Body body: HashMap<String, Any>
+    ): Response<RejectStoryResponse>
+
 
 
     @POST(Constants.REJECT_BANNER_REQUEST)

@@ -31,11 +31,11 @@ data class AddPlanRequest(
     @SerializedName("stories")
     val stories: String,
     @SerializedName("plan_id")
-    val plan_id: String?=null,
+    val plan_id: String? = null,
     @SerializedName("discounted_price")
-    val discounted_price: String?=null,
+    val discounted_price: String? = null,
     @SerializedName("new_duration")
-    val new_duration: String?=null,
+    val new_duration: String? = null,
     @SerializedName("new_duration_type")
     val new_duration_type: String? = null,
 
@@ -43,6 +43,8 @@ data class AddPlanRequest(
     val productType: String? = null,//0-defined,1-unlimited
     @SerializedName("is_free_months")
     val isFreeMonths: String? = null, //0-no,1-yes
+    @SerializedName("show_in_recommended_stores")
+    val showInRecommendedStores: String? = null, //0-no,1-yes
     @SerializedName("no_of_free_months")
     val noOfFreeMonths: String? = null //if is_free_month is 1
 )

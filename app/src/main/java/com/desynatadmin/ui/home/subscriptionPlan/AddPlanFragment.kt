@@ -2,6 +2,7 @@ package com.desynatadmin.ui.home.subscriptionPlan
 
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,20 +33,20 @@ import okhttp3.RequestBody
 
 @AndroidEntryPoint
 class AddPlanFragment : BaseFragment() {
-    private var binding: FragmentAddPlanBinding?=null
+    private var binding: FragmentAddPlanBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
-    private var subscriptionData: GetAllPlanResponse.Data?=null
+    private var subscriptionData: GetAllPlanResponse.Data? = null
     private var countryList = ArrayList<GetCountryResponse.Data>()
     private var selectedCountryCode: String? = null
-    var durationType: String =""
-    var newDurationType: String =""
-    var planId: String?=null
+    var durationType: String = ""
+    var newDurationType: String = ""
+    var planId: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAddPlanBinding.inflate(layoutInflater,container,false)
+        binding = FragmentAddPlanBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -60,36 +61,37 @@ class AddPlanFragment : BaseFragment() {
         setCountry()
 
         val itemJson = arguments?.getString("subscriptionData")
+        Log.e("TAG", "initView: $itemJson")
         binding?.apply {
-        if (!itemJson.isNullOrEmpty()) {
-            subscriptionData = Gson().fromJson(itemJson, GetAllPlanResponse.Data::class.java)
-            toolbar.tvToolbar.text = getString(R.string.update_plan)
-            btnAdd.text = getString(R.string.update)
-            tvPrice.text = getString(R.string.old_price)
-            tvNewPrice.isVisible = true
-            etNewPrice.isVisible = true
-            tvNewDuration.isVisible = true
-            llNewDuration.isVisible = true
-            setData()
-        }
-        else{
-            toolbar.tvToolbar.text = getString(R.string.create_new_plan)
-            btnAdd.text = getString(R.string.add)
-        }
+            if (!itemJson.isNullOrEmpty()) {
+                subscriptionData = Gson().fromJson(itemJson, GetAllPlanResponse.Data::class.java)
+                toolbar.tvToolbar.text = getString(R.string.update_plan)
+                btnAdd.text = getString(R.string.update)
+                tvPrice.text = getString(R.string.old_price)
+                tvNewPrice.isVisible = true
+                etNewPrice.isVisible = true
+                tvNewDuration.isVisible = true
+                llNewDuration.isVisible = true
+                setData()
+            } else {
+                toolbar.tvToolbar.text = getString(R.string.create_new_plan)
+                btnAdd.text = getString(R.string.add)
+            }
 
-            etArabicPlanName.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
-                val regex = Regex("[a-zA-Z]")
+            etArabicPlanName.filters =
+                arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
+                    val regex = Regex("[a-zA-Z]")
 
-                if (source != null && source.contains(regex)) {
-                    return@InputFilter ""
-                }
+                    if (source != null && source.contains(regex)) {
+                        return@InputFilter ""
+                    }
 
-                if (dstart == 0 && source.startsWith(" ")) {
-                    return@InputFilter ""
-                }
+                    if (dstart == 0 && source.startsWith(" ")) {
+                        return@InputFilter ""
+                    }
 
-                return@InputFilter null
-            })
+                    return@InputFilter null
+                })
             CommonMethod.removeSpace(etEnglishPlanName)
         }
 
@@ -102,8 +104,13 @@ class AddPlanFragment : BaseFragment() {
             }
 
             etCountry.setOnClickListener {
-                CommonMethod.showCountryPicker(requireActivity(), countryList = countryList, anchor = etCountry, isDialCode = false){ selectedCountry ->
-                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
+                CommonMethod.showCountryPicker(
+                    requireActivity(),
+                    countryList = countryList,
+                    anchor = etCountry,
+                    isDialCode = false
+                ) { selectedCountry ->
+                    etCountry.setText(if (Constants.language == "ar") selectedCountry.nameAr else selectedCountry.name)
                     selectedCountryCode = selectedCountry.id.toString()
                 }
             }
@@ -114,6 +121,7 @@ class AddPlanFragment : BaseFragment() {
                         tvCommission.visibility = View.VISIBLE
                         etCommission.visibility = View.VISIBLE
                     }
+
                     R.id.rbNo -> {
                         tvCommission.visibility = View.GONE
                         etCommission.visibility = View.GONE
@@ -127,7 +135,21 @@ class AddPlanFragment : BaseFragment() {
                         tvNoOfFreeMonth.visibility = View.VISIBLE
                         etNoOfFreeMonth.visibility = View.VISIBLE
                     }
+
                     R.id.rbNoFreeMonth -> {
+                        tvNoOfFreeMonth.visibility = View.GONE
+                        etNoOfFreeMonth.visibility = View.GONE
+                    }
+                }
+            }
+            radioGroupProductType.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rbYesRecommendedStores -> {
+                        tvNoOfFreeMonth.visibility = View.VISIBLE
+                        etNoOfFreeMonth.visibility = View.VISIBLE
+                    }
+
+                    R.id.rbNoRecommendedStores -> {
                         tvNoOfFreeMonth.visibility = View.GONE
                         etNoOfFreeMonth.visibility = View.GONE
                     }
@@ -142,6 +164,7 @@ class AddPlanFragment : BaseFragment() {
                         viewProduct.visibility = View.VISIBLE
                         viewTvProduct.visibility = View.VISIBLE
                     }
+
                     R.id.rbUnlimited -> {
                         tvNoOfProduct.visibility = View.GONE
                         etNoOfProducts.visibility = View.GONE
@@ -157,9 +180,9 @@ class AddPlanFragment : BaseFragment() {
                 val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 builder.setTitle(getString(R.string.select_duration_type))
                 builder.setItems(options) { dialog, which ->
-                    when(options[which]){
-                        getString(R.string.month) -> durationType="1"
-                        getString(R.string.year) -> durationType="2"
+                    when (options[which]) {
+                        getString(R.string.month) -> durationType = "1"
+                        getString(R.string.year) -> durationType = "2"
                     }
 
                     etMonth.setText(options[which])
@@ -174,9 +197,9 @@ class AddPlanFragment : BaseFragment() {
                 val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 builder.setTitle(getString(R.string.select_duration_type))
                 builder.setItems(options) { dialog, which ->
-                    when(options[which]){
-                        getString(R.string.month) -> newDurationType="1"
-                        getString(R.string.year) -> newDurationType="2"
+                    when (options[which]) {
+                        getString(R.string.month) -> newDurationType = "1"
+                        getString(R.string.year) -> newDurationType = "2"
                     }
 
                     etNewMonth.setText(options[which])
@@ -186,18 +209,16 @@ class AddPlanFragment : BaseFragment() {
             }
 
             btnAdd.setOnClickListener {
-                if (validation()){
+                if (validation()) {
                     addSubscription()
                 }
             }
         }
     }
 
-    fun addSubscription(){
+    fun addSubscription() {
         binding?.apply {
-
-
-            if (subscriptionData!=null){
+            if (subscriptionData != null) {
                 val request = AddPlanRequest(
                     commission = if (rbYes.isChecked) "1" else "0",
                     commission_percentage = etCommission.text?.trim().toString(),
@@ -206,7 +227,8 @@ class AddPlanFragment : BaseFragment() {
                     durationType = durationType,
                     noOfHighlights = etNoOfHighlight.text?.trim().toString(),
                     noOfEmployee = etNoOfEmployee.text?.trim().toString(),
-                    noOfProducts =  if (rbDefined.isChecked) etNoOfProducts.text?.trim().toString() else null,
+                    noOfProducts = if (rbDefined.isChecked) etNoOfProducts.text?.trim()
+                        .toString() else null,
                     noOfVideos = etNoOfVideo.text?.trim().toString(),
                     planNameArabic = etArabicPlanName.text?.trim().toString(),
                     planNameEnglish = etEnglishPlanName.text?.trim().toString(),
@@ -216,14 +238,14 @@ class AddPlanFragment : BaseFragment() {
                     discounted_price = etNewPrice.text?.trim().toString(),
                     new_duration = etNewDuration.text?.trim().toString(),
                     new_duration_type = newDurationType,
-
+                    showInRecommendedStores = if (rbYesRecommendedStores.isChecked) "1" else "0",
                     productType = if (rbUnlimited.isChecked) "1" else "0",
                     isFreeMonths = if (rbYesFreeMonth.isChecked) "1" else "0",
-                    noOfFreeMonths = if (rbYesFreeMonth.isChecked) etNoOfFreeMonth.text?.trim().toString() else null,
+                    noOfFreeMonths = if (rbYesFreeMonth.isChecked) etNoOfFreeMonth.text?.trim()
+                        .toString() else null,
                 )
-            viewModel.updateSubscriptionPlan(request)
-        }
-        else{
+                viewModel.updateSubscriptionPlan(request)
+            } else {
                 val request = AddPlanRequest(
                     commission = if (rbYes.isChecked) "1" else "0",
                     commission_percentage = etCommission.text?.trim().toString(),
@@ -232,7 +254,8 @@ class AddPlanFragment : BaseFragment() {
                     durationType = durationType,
                     noOfHighlights = etNoOfHighlight.text?.trim().toString(),
                     noOfEmployee = etNoOfEmployee.text?.trim().toString(),
-                    noOfProducts =  if (rbDefined.isChecked) etNoOfProducts.text?.trim().toString() else null,
+                    noOfProducts = if (rbDefined.isChecked) etNoOfProducts.text?.trim()
+                        .toString() else null,
                     noOfVideos = etNoOfVideo.text?.trim().toString(),
                     planNameArabic = etArabicPlanName.text?.trim().toString(),
                     planNameEnglish = etEnglishPlanName.text?.trim().toString(),
@@ -242,10 +265,12 @@ class AddPlanFragment : BaseFragment() {
 
                     productType = if (rbUnlimited.isChecked) "1" else "0",
                     isFreeMonths = if (rbYesFreeMonth.isChecked) "1" else "0",
-                    noOfFreeMonths = if (rbYesFreeMonth.isChecked) etNoOfFreeMonth.text?.trim().toString() else null,
+                    showInRecommendedStores = if (rbYesRecommendedStores.isChecked) "1" else "0",
+                    noOfFreeMonths = if (rbYesFreeMonth.isChecked) etNoOfFreeMonth.text?.trim()
+                        .toString() else null,
                 )
-            viewModel.addSubscriptionPlan(request)
-        }
+                viewModel.addSubscriptionPlan(request)
+            }
 
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
             isObserver = true
@@ -265,7 +290,7 @@ class AddPlanFragment : BaseFragment() {
         viewModel.addSubscriptionPlanResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Plan Added successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(), "Plan Added successfully!") {
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -275,7 +300,7 @@ class AddPlanFragment : BaseFragment() {
         viewModel.editSubscriptionPlanResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                CommonMethod.showSuccessDialog(requireContext(), "Plan updated successfully!"){
+                CommonMethod.showSuccessDialog(requireContext(), "Plan updated successfully!") {
                     findNavController().popBackStack()
                 }
                 isObserver = false
@@ -283,13 +308,13 @@ class AddPlanFragment : BaseFragment() {
         }
     }
 
-    private fun setData(){
+    private fun setData() {
         binding?.apply {
             planId = subscriptionData?.id.toString()
             etEnglishPlanName.setText(subscriptionData?.planNameEnglish)
             etArabicPlanName.setText(subscriptionData?.planNameArabic)
             etDuration.setText(subscriptionData?.duration.toString())
-            if (subscriptionData?.newDuration!=0) {
+            if (subscriptionData?.newDuration != 0) {
                 etNewDuration.setText(subscriptionData?.newDuration.toString())
             }
             etNoOfVideo.setText(subscriptionData?.noOfVideos.toString())
@@ -300,22 +325,24 @@ class AddPlanFragment : BaseFragment() {
             binding?.etPrice?.setText(CommonMethod.formatDoubleValue(subscriptionData?.price))
             binding?.etNewPrice?.setText(CommonMethod.formatDoubleValue(subscriptionData?.discountedPrice))
 
-            selectedCountryCode = countryList.find { it.id== subscriptionData?.countryId}?.id.toString()
-            rbYes.isChecked = subscriptionData?.commission==1
-            if(subscriptionData?.commission==1){
+            selectedCountryCode =
+                countryList.find { it.id == subscriptionData?.countryId }?.id.toString()
+            rbYes.isChecked = subscriptionData?.commission == 1
+            if (subscriptionData?.commission == 1) {
                 etCommission.isVisible = true
                 tvCommission.isVisible = true
             }
-            rbNo.isChecked = subscriptionData?.commission==0
-            rbOpen.isChecked = subscriptionData?.stories==1
-            rbClose.isChecked = subscriptionData?.stories==0
+            rbNo.isChecked = subscriptionData?.commission == 0
+            rbOpen.isChecked = subscriptionData?.stories == 1
+            rbClose.isChecked = subscriptionData?.stories == 0
             durationType = subscriptionData?.durationType.toString()
-            etCountry.setText(if (Constants.language=="ar") {
-                countryList.find { it.id == subscriptionData?.countryId}?.nameAr.toString()
-            }
-                    else{
-                        countryList.find { it.id == subscriptionData?.countryId}?.name.toString()
-            })
+            etCountry.setText(
+                if (Constants.language == "ar") {
+                    countryList.find { it.id == subscriptionData?.countryId }?.nameAr.toString()
+                } else {
+                    countryList.find { it.id == subscriptionData?.countryId }?.name.toString()
+                }
+            )
             when (subscriptionData?.durationType?.toString()) {
                 "1" -> etMonth.setText(getString(R.string.month))
                 "2" -> etMonth.setText(getString(R.string.year))
@@ -328,9 +355,9 @@ class AddPlanFragment : BaseFragment() {
                 else -> etNewMonth.setText("")
             }
 
-            rbUnlimited.isChecked = subscriptionData?.productType==1
-            rbDefined.isChecked = subscriptionData?.productType==0
-            if(subscriptionData?.productType==0){
+            rbUnlimited.isChecked = subscriptionData?.productType == 1
+            rbDefined.isChecked = subscriptionData?.productType == 0
+            if (subscriptionData?.productType == 0) {
                 etNoOfProducts.isVisible = true
                 tvNoOfProduct.isVisible = true
                 viewProduct.isVisible = true
@@ -339,9 +366,11 @@ class AddPlanFragment : BaseFragment() {
                 etNoOfProducts.setText(subscriptionData?.noOfProducts.toString())
 
             }
-            rbYesFreeMonth.isChecked = subscriptionData?.isFreeMonths==1
-            rbNoFreeMonth.isChecked = subscriptionData?.isFreeMonths==0
-            if(subscriptionData?.isFreeMonths==1){
+            rbYesFreeMonth.isChecked = subscriptionData?.isFreeMonths == 1
+            rbNoFreeMonth.isChecked = subscriptionData?.isFreeMonths == 0
+            rbNoRecommendedStores.isChecked = subscriptionData?.showInRecommendedStores == 0
+            rbYesRecommendedStores.isChecked = subscriptionData?.showInRecommendedStores == 0
+            if (subscriptionData?.isFreeMonths == 1) {
                 etNoOfFreeMonth.isVisible = true
                 tvNoOfFreeMonth.isVisible = true
 
@@ -359,75 +388,88 @@ class AddPlanFragment : BaseFragment() {
                     showToast(getString(R.string.please_select_a_country))
                     return false
                 }
+
                 etEnglishPlanName.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_plan_name_in_english))
                     return false
                 }
+
                 etArabicPlanName.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_plan_name_in_arabic))
                     return false
                 }
+
                 etDuration.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_duration))
                     return false
                 }
-                isInvalid(etDuration, getString(R.string.duration))-> return false
+
+                isInvalid(etDuration, getString(R.string.duration)) -> return false
                 etMonth.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_select_duration_type_month_year))
                     return false
                 }
+
                 etNoOfVideo.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_number_of_videos))
                     return false
                 }
-                isInvalid(etNoOfVideo, getString(R.string.no_of_videos))-> return false
+
+                isInvalid(etNoOfVideo, getString(R.string.no_of_videos)) -> return false
 
                 !rbUnlimited.isChecked && !rbDefined.isChecked -> {
                     showToast(getString(R.string.please_select_product_type_option_yes_no))
                     return false
                 }
+
                 rbDefined.isChecked && etNoOfProducts.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_number_of_products))
                     return false
                 }
 
-              //  isInvalid(etNoOfProducts, "No. of Products")-> return false
+                //  isInvalid(etNoOfProducts, "No. of Products")-> return false
                 etNoOfHighlight.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_number_of_highlights))
                     return false
                 }
-                isInvalid(etNoOfHighlight, getString(R.string.no_of_highlights))-> return false
+
+                isInvalid(etNoOfHighlight, getString(R.string.no_of_highlights)) -> return false
                 etNoOfEmployee.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_number_of_employees))
                     return false
                 }
-                isInvalid(etNoOfEmployee, getString(R.string.no_of_employee))-> return false
+
+                isInvalid(etNoOfEmployee, getString(R.string.no_of_employee)) -> return false
                 !rbOpen.isChecked && !rbClose.isChecked -> {
                     showToast(getString(R.string.please_select_story_option_open_close))
                     return false
                 }
+
                 etPrice.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_price))
                     return false
                 }
-             /*   etPrice.text.isNullOrBlank()&&subscriptionData!=null -> {
-                    showToast("Please enter old price")
-                    return false
-                }
-                etNewPrice.text.isNullOrBlank()&&subscriptionData!=null -> {
-                    showToast("Please enter new price")
-                    return false
-                }*/
-              //  isInvalid(etPrice, "Price")-> return false
+                /*   etPrice.text.isNullOrBlank()&&subscriptionData!=null -> {
+                       showToast("Please enter old price")
+                       return false
+                   }
+                   etNewPrice.text.isNullOrBlank()&&subscriptionData!=null -> {
+                       showToast("Please enter new price")
+                       return false
+                   }*/
+                //  isInvalid(etPrice, "Price")-> return false
                 !rbYes.isChecked && !rbNo.isChecked -> {
                     showToast(getString(R.string.please_select_commission_option_yes_no))
                     return false
                 }
+
                 rbYes.isChecked && etCommission.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_commission_percentage))
                     return false
                 }
-                rbYes.isChecked && etCommission.text.toString().toDoubleOrNull()?.let { it < 0 || it > 100 } == true -> {
+
+                rbYes.isChecked && etCommission.text.toString().toDoubleOrNull()
+                    ?.let { it < 0 || it > 100 } == true -> {
                     showToast(getString(R.string.commission_should_be_between_0_and_100))
                     return false
                 }
@@ -436,8 +478,13 @@ class AddPlanFragment : BaseFragment() {
                     showToast(getString(R.string.please_select_free_month_option_yes_no))
                     return false
                 }
+
                 rbYesFreeMonth.isChecked && etNoOfFreeMonth.text.isNullOrBlank() -> {
                     showToast(getString(R.string.please_enter_number_of_free_month))
+                    return false
+                }
+                !rbYesRecommendedStores.isChecked && !rbNoRecommendedStores.isChecked -> {
+                    showToast(getString(R.string.please_select_free_recommended_store_option_yes_no))
                     return false
                 }
             }
@@ -447,7 +494,8 @@ class AddPlanFragment : BaseFragment() {
 
 
     private fun setCountry() {
-           countryList = SharedPreference.get(requireActivity()).getCountryList() as ArrayList<GetCountryResponse.Data>
+        countryList = SharedPreference.get(requireActivity())
+            .getCountryList() as ArrayList<GetCountryResponse.Data>
 
     }
 

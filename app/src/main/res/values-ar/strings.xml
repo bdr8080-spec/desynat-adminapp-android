@@ -902,4 +902,12 @@
     <string name="highlights_deleted_successfully">تم حذف التمييزات بنجاح!</string>
     <string name="no_highlights_found">لم يتم العثور على أي قصص مميزة</string>
     <string name="no_reel_found">لم يتم العثور على أي مقطع ريلز</string>
+    <string name="story_request">طلب القصة</string>
+    <string name="story_request_accepted_successfully">تم قبول طلب القصة بنجاح</string>
+    <string name="story_request_rejected_successfully">تم رفض طلب القصة بنجاح</string>
+    <string name="seller_story_request_management">إدارة طلبات قصص البائعين</string>
+    <string name="reject_reason">سبب الرفض</string>
+    <string name="write_here">اكتب هنا</string>
+    <string name="show_in_recommended_stores">إظهار في المتاجر الموصى بها</string>
+    <string name="please_select_free_recommended_store_option_yes_no">يرجى اختيار خيار المتجر الموصى به المجاني (نعم/لا)</string>
 </resources>

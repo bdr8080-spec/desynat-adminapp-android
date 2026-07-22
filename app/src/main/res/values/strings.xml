@@ -904,5 +904,13 @@
     <string name="highlights_deleted_successfully">Highlights deleted successfully!</string>
     <string name="no_highlights_found">No highlights found</string>
     <string name="no_reel_found">No reel found</string>
+    <string name="story_request">Story Request</string>
+    <string name="story_request_accepted_successfully">Story request accepted successfully</string>
+    <string name="story_request_rejected_successfully">Story request rejected successfully</string>
+    <string name="seller_story_request_management">Seller Story Request Management</string>
+    <string name="reject_reason">Reject Reason</string>
+    <string name="write_here">Write Here</string>
+    <string name="show_in_recommended_stores">Show in Recommended Stores</string>
+    <string name="please_select_free_recommended_store_option_yes_no">Please select free recommended store option (Yes/No)</string>
 
 </resources>

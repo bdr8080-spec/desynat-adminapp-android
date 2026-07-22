@@ -35,16 +35,16 @@ import kotlin.collections.get
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
-    private var binding: ActivityHomeBinding? =null
+    private var binding: ActivityHomeBinding? = null
     private lateinit var controller: NavController
     var isOpenDrawer = false
     var bottonNavItemList = ArrayList<BottomNavItem>()
-    private var bottomAdapter : BottomNavAdapter? =null
+    private var bottomAdapter: BottomNavAdapter? = null
     private lateinit var drawerBinding: DrawerLayoutBinding
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = false
-    private var userInfo: LoginResponse.Data?=null
-    private var subAdminInfo: GetSubAdminDetailResponse.Data?=null
+    private var userInfo: LoginResponse.Data? = null
+    private var subAdminInfo: GetSubAdminDetailResponse.Data? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +68,7 @@ class HomeActivity : BaseActivity() {
 
     override fun initView() {
 
-        CommonMethod.detectGestureMode(binding?.root!!,binding?.viewBottom!!)
+        CommonMethod.detectGestureMode(binding?.root!!, binding?.viewBottom!!)
 
 
         binding?.apply {
@@ -80,16 +80,47 @@ class HomeActivity : BaseActivity() {
         }
 
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         controller = navHostFragment.navController
         val navGraph = controller.navInflater.inflate(R.navigation.home_navigation_graph)
         controller.graph = navGraph
         bottonNavItemList.clear()
-        bottonNavItemList.add(BottomNavItem(getString(R.string.home),R.drawable.ic_home,R.drawable.ic_selected_home))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.products),R.drawable.ic_product,R.drawable.ic_product_selected))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.streaming),R.drawable.ic_streaming,R.drawable.ic_streaming))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.plans),R.drawable.ic_plan,R.drawable.ic_plan_selected))
-        bottonNavItemList.add(BottomNavItem(getString(R.string.payments),R.drawable.ic_payment,R.drawable.ic_payment_selected))
+        bottonNavItemList.add(
+            BottomNavItem(
+                getString(R.string.home),
+                R.drawable.ic_home,
+                R.drawable.ic_selected_home
+            )
+        )
+        bottonNavItemList.add(
+            BottomNavItem(
+                getString(R.string.products),
+                R.drawable.ic_product,
+                R.drawable.ic_product_selected
+            )
+        )
+        bottonNavItemList.add(
+            BottomNavItem(
+                getString(R.string.streaming),
+                R.drawable.ic_streaming,
+                R.drawable.ic_streaming
+            )
+        )
+        bottonNavItemList.add(
+            BottomNavItem(
+                getString(R.string.plans),
+                R.drawable.ic_plan,
+                R.drawable.ic_plan_selected
+            )
+        )
+        bottonNavItemList.add(
+            BottomNavItem(
+                getString(R.string.payments),
+                R.drawable.ic_payment,
+                R.drawable.ic_payment_selected
+            )
+        )
 
         setBottomAdapter()
 
@@ -116,14 +147,17 @@ class HomeActivity : BaseActivity() {
                     bottomAdapter?.setSelectedItem(0)
                     enableDrawer(true)
                 }
+
                 R.id.productManagement -> {
                     bottomAdapter?.setSelectedItem(1)
                     enableDrawer(false)
                 }
+
                 R.id.event -> {
                     bottomAdapter?.setSelectedItem(2)
                     enableDrawer(false)
                 }
+
                 R.id.planList -> {
                     bottomAdapter?.setSelectedItem(3)
                     enableDrawer(false)
@@ -134,7 +168,7 @@ class HomeActivity : BaseActivity() {
                     enableDrawer(false)
                 }
 
-                else ->{
+                else -> {
                     enableDrawer(false)
                 }
             }
@@ -150,90 +184,100 @@ class HomeActivity : BaseActivity() {
     }
 
     override fun observer() {
-            viewModel.error.observe(this) { errorMessage ->
-                if (isObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
+        viewModel.error.observe(this) { errorMessage ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
 
-                    isObserver = false
-                }
-            }
-
-            viewModel.logoutResult.observe(this) { response ->
-                if (isObserver) {
-                    ProgressDialogUtils.getInstance().hideProgress()
-                    response?.let {
-                        ProgressDialogUtils.getInstance().hideProgress()
-
-                        Constants.isLogout = true
-                        startActivity(Intent(this, AuthActivity::class.java))
-                        SharedPreference.get(this).accessToken =""
-                        finishAffinity()
-                    }
-                    isObserver = false
-                }
+                isObserver = false
             }
         }
-    fun setBottomAdapter(){
-        bottomAdapter = BottomNavAdapter(this,bottonNavItemList, object :BottomNavAdapter.BottomNavItemClick{
-            override fun onBottomNavItemClick(position: Int) {
-                when(position) {
-                    0 -> {
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.home)
-                    }
-                    1 ->{
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.productManagement)
-                    }
-                    2 -> controller.navigate(R.id.event)
-                    3 -> {
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.planList)
-                    }
-                    4 -> {
-                        ProgressDialogUtils.getInstance().hideProgress()
-                        controller.navigate(R.id.paymentManagement)
+
+        viewModel.logoutResult.observe(this) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+                    ProgressDialogUtils.getInstance().hideProgress()
+
+                    Constants.isLogout = true
+                    startActivity(Intent(this, AuthActivity::class.java))
+                    SharedPreference.get(this).accessToken = ""
+                    finishAffinity()
+                }
+                isObserver = false
+            }
+        }
+    }
+
+    fun setBottomAdapter() {
+        bottomAdapter =
+            BottomNavAdapter(this, bottonNavItemList, object : BottomNavAdapter.BottomNavItemClick {
+                override fun onBottomNavItemClick(position: Int) {
+                    when (position) {
+                        0 -> {
+                            ProgressDialogUtils.getInstance().hideProgress()
+                            controller.navigate(R.id.home)
+                        }
+
+                        1 -> {
+                            ProgressDialogUtils.getInstance().hideProgress()
+                            controller.navigate(R.id.productManagement)
+                        }
+
+                        2 -> controller.navigate(R.id.event)
+                        3 -> {
+                            ProgressDialogUtils.getInstance().hideProgress()
+                            controller.navigate(R.id.planList)
+                        }
+
+                        4 -> {
+                            ProgressDialogUtils.getInstance().hideProgress()
+                            controller.navigate(R.id.paymentManagement)
+                        }
                     }
                 }
-            }
-        })
+            })
         binding?.rvBottomNav?.adapter = bottomAdapter
     }
 
-    fun openDrawer(){
+    fun openDrawer() {
         isOpenDrawer = true
         binding?.drawerLayout?.openDrawer(GravityCompat.START)
     }
 
-override fun onBackPressed() {
-    Log.e("ehdf", "onBackPressed: $isOpenDrawer   ${binding?.drawerLayout?.isDrawerOpen(GravityCompat.START)}")
-    if (isOpenDrawer == true&&binding?.drawerLayout?.isDrawerOpen(GravityCompat.START)==false){
-        binding?.drawerLayout?.openDrawer(GravityCompat.START,false)
-        super.onBackPressed()
+    override fun onBackPressed() {
+        Log.e(
+            "ehdf",
+            "onBackPressed: $isOpenDrawer   ${binding?.drawerLayout?.isDrawerOpen(GravityCompat.START)}"
+        )
+        if (isOpenDrawer == true && binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == false) {
+            binding?.drawerLayout?.openDrawer(GravityCompat.START, false)
+            super.onBackPressed()
+        } else if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
+            isOpenDrawer = false
+            binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
-    else if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
-        isOpenDrawer = false
-        binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-    } else {
-        super.onBackPressed()
-    }
-}
+
     fun setDrawerData(user: LoginResponse.Data?) {
-        Log.e("api", "observe: $user" )
+        Log.e("api", "observe: $user")
 
         drawerBinding?.tvName?.text = user?.fullName
         drawerBinding?.tvEmail?.text = user?.email
 
-        drawerBinding?.ivProfileImage?.let { Glide.with(this).load(user?.profilePic).placeholder(R.drawable.ic_user).into(it) }
+        drawerBinding?.ivProfileImage?.let {
+            Glide.with(this).load(user?.profilePic).placeholder(R.drawable.ic_user).into(it)
+        }
 
     }
 
-    private fun setUpDrawerContent(){
+    private fun setUpDrawerContent() {
         drawerBinding.apply {
             ivProfileImage.setOnClickListener {
                 val user = SharedPreference.get(this@HomeActivity).getUser()
-                if (user?.profilePic!=null){
-                    CommonMethod.imagePreviewDialog(this@HomeActivity,user?.profilePic.toString())
+                if (user?.profilePic != null) {
+                    CommonMethod.imagePreviewDialog(this@HomeActivity, user?.profilePic.toString())
                 }
             }
 
@@ -276,10 +320,10 @@ override fun onBackPressed() {
                 controller.navigate(R.id.reason)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
-//            rlSellerStoryRequest.setOnClickListener {
-//                controller.navigate(R.id.bannerRequestManagement1Fragment)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlSellerStoryRequest.setOnClickListener {
+                controller.navigate(R.id.sellerStoryRequestManagementFragment)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
 
             rlCountryCityManagement.setOnClickListener {
                 startActivity(Intent(this@HomeActivity, CountryCityZoneManaActivity::class.java))
@@ -369,10 +413,10 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
-/*            rlPayoutManagement.setOnClickListener {
-                controller.navigate(R.id.sellerPayout)
-                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-            }*/
+            /*            rlPayoutManagement.setOnClickListener {
+                            controller.navigate(R.id.sellerPayout)
+                            binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+                        }*/
 
             rlRefundManagement.setOnClickListener {
                 controller.navigate(R.id.refundManagement)
@@ -390,6 +434,7 @@ override fun onBackPressed() {
             }
         }
     }
+
     private fun enableDrawer(enable: Boolean) {
         if (enable) {
             binding?.drawerLayout?.setDrawerLockMode(androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -412,7 +457,7 @@ override fun onBackPressed() {
 }
 
 data class BottomNavItem(
-    var name : String,
+    var name: String,
     var image: Int,
     var selectedImage: Int,
 )
