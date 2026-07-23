@@ -62,7 +62,7 @@ class SellerStoryDetailFragment : BaseFragment() {
             setData()
         }
 
-        Log.e("TAG", "detalData:$bannerData ", )
+        Log.e("TAG", "detalData:$bannerData ")
         binding?.apply {
 
             val userInfo = SharedPreference.get(requireActivity()).getUser()
@@ -188,7 +188,7 @@ class SellerStoryDetailFragment : BaseFragment() {
                     tvStatus.setTextColor(Color.parseColor("#D53B36"))
                     tvReason.isVisible = true
                     tvReasonValue.isVisible = true
-                    Log.e("TAG", "setData: ${bannerData?.sellerDetails?.rejectReason}", )
+                    Log.e("TAG", "setData: ${bannerData?.sellerDetails?.rejectReason}")
                     tvReasonValue.text =
                         if (bannerData?.rejectReason.isNullOrBlank()) {
                             rejectReason

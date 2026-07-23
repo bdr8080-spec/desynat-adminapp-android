@@ -368,8 +368,8 @@ class AddPlanFragment : BaseFragment() {
             }
             rbYesFreeMonth.isChecked = subscriptionData?.isFreeMonths == 1
             rbNoFreeMonth.isChecked = subscriptionData?.isFreeMonths == 0
-            rbNoRecommendedStores.isChecked = subscriptionData?.showInRecommendedStores == 0
-            rbYesRecommendedStores.isChecked = subscriptionData?.showInRecommendedStores == 0
+            rbNoRecommendedStores.isChecked = subscriptionData?.isRecommendedStore == 0
+            rbYesRecommendedStores.isChecked = subscriptionData?.isRecommendedStore == 1
             if (subscriptionData?.isFreeMonths == 1) {
                 etNoOfFreeMonth.isVisible = true
                 tvNoOfFreeMonth.isVisible = true

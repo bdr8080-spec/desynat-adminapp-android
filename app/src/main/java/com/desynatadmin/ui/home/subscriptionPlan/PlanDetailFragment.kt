@@ -294,7 +294,6 @@ class PlanDetailFragment : BaseFragment() {
 
 
     private fun getSubscriptionPlan(){
-
             viewModel.getSubscriptionPlanDetail(subscriptionData?.id.toString())
         binding?.mainProgressBar?.isVisible = true
         isObserver = true
