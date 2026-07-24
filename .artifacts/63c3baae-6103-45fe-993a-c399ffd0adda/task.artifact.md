@@ -1,3 +1,0 @@
-- [x] Consolidate visibility logic in `setData()` in `SellerStoryDetailFragment.kt`
-- [x] Clean up redundant `adminVerify` check in `initView()` in `SellerStoryDetailFragment.kt`
-- [x] Verify build

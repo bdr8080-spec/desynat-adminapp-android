@@ -1,4 +1,0 @@
-- [x] Fix imports in `BannerRequestManagement1Fragment.kt`
-- [x] Update `onCreateView` in `BannerRequestManagement1Fragment.kt`
-- [x] Implement `onDestroyView` in `BannerRequestManagement1Fragment.kt`
-- [/] Verify build and sync

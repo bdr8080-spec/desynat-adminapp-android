@@ -1,4 +1,0 @@
-- [x] Add "Show in Recommended Stores" to `SubscriptionAdapter`
-- [x] Handle "Show in Recommended Stores" display in `FeaturePlanAdapter`
-- [x] Add "Recommended Store" to `PlanDetailFragment` layout
-- [x] Populate "Recommended Store" in `PlanDetailFragment.kt`

@@ -1,2 +1,0 @@
-- [x] Add missing import in `BannerRequestManagement1Fragment.kt`
-- [x] Verify build
