@@ -394,7 +394,7 @@
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_toStartOf="@+id/ivGoBannerPrice"
                         android:layout_toEndOf="@id/ivBannerPrice"
-                        android:text="@string/banner_per_day_price" />
+                        android:text="@string/banner_story_per_day_price" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivGoBannerPrice"
@@ -428,35 +428,6 @@
                         style="@style/drawer_arrow" />
 
                 </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/rlSellerStoryRequest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:paddingVertical="@dimen/_6sdp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivSellerStoryRequest"
-                        style="@style/drawer_image"
-                        android:src="@drawable/ic_banner_request_management" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvSellerStoryRequest"
-                        style="@style/drawer_text"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_toStartOf="@+id/ivSellerRequest"
-                        android:layout_toEndOf="@id/ivSellerStoryRequest"
-                        android:text="@string/seller_story_request_management" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivSellerRequest"
-                        style="@style/drawer_arrow" />
-
-                </RelativeLayout>
-
-
-
                 <RelativeLayout
                     android:id="@+id/rlFullScreenBanner"
                     android:layout_width="match_parent"
@@ -645,6 +616,33 @@
                         style="@style/drawer_arrow" />
 
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlSellerStoryRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_6sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSellerStoryRequest"
+                        style="@style/drawer_image"
+                        android:src="@drawable/ic_story_management" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSellerStoryRequest"
+                        style="@style/drawer_text"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_toStartOf="@+id/ivSellerRequest"
+                        android:layout_toEndOf="@id/ivSellerStoryRequest"
+                        android:text="@string/seller_story_request_management" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivSellerRequest"
+                        style="@style/drawer_arrow" />
+
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/rlDealsManagement"

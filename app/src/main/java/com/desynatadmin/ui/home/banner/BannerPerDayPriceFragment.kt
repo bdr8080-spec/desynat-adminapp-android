@@ -62,7 +62,8 @@ class BannerPerDayPriceFragment : BaseFragment() {
         ProgressDialogUtils.getInstance().hideProgress()
 
         binding?.apply {
-            toolbar.tvToolbar.text = getString(R.string.banner_per_day_price)
+//            toolbar.tvToolbar.text = getString(R.string.banner_per_day_price)
+            toolbar.tvToolbar.text = getString(R.string.banner_story_per_day_price)
 
 
             bannerPerDayPriceList.clear()

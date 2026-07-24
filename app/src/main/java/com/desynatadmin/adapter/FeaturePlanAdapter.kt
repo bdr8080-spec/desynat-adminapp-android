@@ -28,6 +28,11 @@ class FeaturePlanAdapter(var context:Context, var featureList: ArrayList<Feature
                         R.string.close
                     )
                 }
+                else if (featureList[position].feature=="${context.getString(R.string.show_in_recommended_stores)}: "){
+                    tvCount.text = if(featureList[position].count==1) context.getString(R.string.yes) else context.getString(
+                        R.string.no
+                    )
+                }
                 else{
                     if (featureList[position].count!=0) {
                         tvCount.text = featureList[position].count.toString()

@@ -257,6 +257,8 @@ class PlanDetailFragment : BaseFragment() {
                 tvCommission.text = getString(R.string.no)
             }
 
+            tvRecommendedStore.text = if (subscriptionData?.isRecommendedStore == 1) getString(R.string.yes) else getString(R.string.no)
+
             val freeMonth = subscriptionData?.noOfFreeMonths
             if (freeMonth != null && freeMonth != "null"&& freeMonth != "") {
                 llFreeMonth.isVisible = true

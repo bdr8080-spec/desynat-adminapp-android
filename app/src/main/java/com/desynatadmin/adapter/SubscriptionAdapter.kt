@@ -155,6 +155,13 @@ class SubscriptionAdapter(
                     featureList.add(FeatureList("${context.getString(R.string.commission)}: ", 0))
                 }
 
+                featureList.add(
+                    FeatureList(
+                        "${context.getString(R.string.show_in_recommended_stores)}: ",
+                        isRecommendedStore
+                    )
+                )
+
                 if (noOfFreeMonths != null && noOfFreeMonths != "null" && noOfFreeMonths != "")
                     featureList.add(
                         FeatureList(
@@ -164,6 +171,7 @@ class SubscriptionAdapter(
                     )
 
             }
+            
 
             rvFeature.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
