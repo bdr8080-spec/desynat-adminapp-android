@@ -181,6 +181,38 @@ object CommonMethod {
         return file
     }
 
+//    fun applyArabicOnlyFilter(editText: EditText) {
+//
+//        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+//
+//            for (i in start until end) {
+//                val char = source[i]
+//
+//                val isArabic = char in '\u0600'..'\u06FF'
+//                val isNumber = char.isDigit()
+//                val isSpace = char == ' '
+//                val isNewLine = char == '\n' || char == '\r'
+//                val isEmoji = Character.isSurrogate(char)
+//
+//                val isSymbol = char in listOf(
+//                    '@','#','%','&','*','!','?','.',',','-','_','(',')','/','+','='
+//                )
+//
+//                if (!isArabic && !isNumber && !isSpace && !isNewLine && !isEmoji && !isSymbol) {
+//                    return@InputFilter ""
+//                }
+//            }
+//
+//            if (dstart == 0 && source.startsWith(" ")) {
+//                return@InputFilter ""
+//            }
+//
+//            null
+//        }
+//
+//        editText.filters = arrayOf(filter)
+//    }
+
     fun applyArabicOnlyFilter(editText: EditText) {
 
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
@@ -189,20 +221,30 @@ object CommonMethod {
                 val char = source[i]
 
                 val isArabic = char in '\u0600'..'\u06FF'
+                val isEnglish = char.isLetter() && char.code < 128
                 val isNumber = char.isDigit()
                 val isSpace = char == ' '
                 val isNewLine = char == '\n' || char == '\r'
                 val isEmoji = Character.isSurrogate(char)
 
                 val isSymbol = char in listOf(
-                    '@','#','%','&','*','!','?','.',',','-','_','(',')','/','+','='
+                    '@', '#', '%', '&', '*', '!', '?', '.', ',', '-', '_',
+                    '(', ')', '/', '+', '=', ':', ';', '\'', '"'
                 )
 
-                if (!isArabic && !isNumber && !isSpace && !isNewLine && !isEmoji && !isSymbol) {
+                if (!isArabic &&
+                    !isEnglish &&
+                    !isNumber &&
+                    !isSpace &&
+                    !isNewLine &&
+                    !isEmoji &&
+                    !isSymbol
+                ) {
                     return@InputFilter ""
                 }
             }
 
+            // Prevent leading space
             if (dstart == 0 && source.startsWith(" ")) {
                 return@InputFilter ""
             }
