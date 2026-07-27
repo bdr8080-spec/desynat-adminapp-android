@@ -66,6 +66,7 @@
         android:src="@drawable/icon_notification"
         android:paddingVertical="@dimen/_15sdp"
         android:paddingStart="@dimen/_10sdp"
+        android:tint="@color/brown"
         android:paddingEnd="@dimen/_15sdp"
         app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
         app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"
