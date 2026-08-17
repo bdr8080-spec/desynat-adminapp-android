@@ -914,4 +914,5 @@
     <string name="please_select_free_recommended_store_option_yes_no">Please select free recommended store option (Yes/No)</string>
     <string name="banner_story_per_day_price">Banner &amp; Story Per Day Price</string>
     <string name="story">Story</string>
+    <string name="returned">Returned</string>
 </resources>

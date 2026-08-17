@@ -13,6 +13,7 @@ import com.desynatadmin.adapter.MyNotificationAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentMyNotificationBinding
+import com.desynatadmin.model.DataX
 import com.desynatadmin.utils.ProgressDialogUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -26,7 +27,7 @@ class MyNotificationFragment : BaseFragment() {
     private var isAllReadObserver = true
     private var isFromSwipe=false
 
-    private var myNotificationList = ArrayList<String>()
+    private var myNotificationList = ArrayList<DataX>()
     private var myNotificationAdapter: MyNotificationAdapter?=null
 
     override fun onCreateView(
@@ -50,7 +51,9 @@ class MyNotificationFragment : BaseFragment() {
             myNotificationAdapter = MyNotificationAdapter(requireActivity(), myNotificationList, object :
                 MyNotificationAdapter.ClickOnItem {
                 override fun onClickItem(position: Int) {
-
+                    if (myNotificationList[position].isRead == 0) {
+                        readNotification(myNotificationList[position].id.toString())
+                    }
                 }
             })
             rvMyNotification.adapter = myNotificationAdapter
@@ -105,10 +108,11 @@ class MyNotificationFragment : BaseFragment() {
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
 
-                    myNotificationList.clear()
+                myNotificationList.clear()
 
-
-              //  myNotificationList.addAll(response.data)
+                response.data?.data?.let {
+                    myNotificationList.addAll(it)
+                }
                 checkData()
                 myNotificationAdapter?.notifyDataSetChanged()
                 isFromSwipe = false
@@ -119,6 +123,7 @@ class MyNotificationFragment : BaseFragment() {
         viewModel.readNotificationResult.observe(viewLifecycleOwner) { response ->
             if (isReadObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                getMyNotification(false)
                 isReadObserver = false
             }
         }
@@ -126,6 +131,7 @@ class MyNotificationFragment : BaseFragment() {
         viewModel.allReadNotificationResult.observe(viewLifecycleOwner) { response ->
             if (isAllReadObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                getMyNotification()
                 isAllReadObserver = false
             }
         }
@@ -141,8 +147,8 @@ private fun getMyNotification(loading:Boolean=true){
     isObserver = true
 }
 
-    private fun readNotification(){
-        val idList = arrayListOf("1", "2")
+    private fun readNotification(id: String){
+        val idList = arrayListOf(id)
         val map = HashMap<String,Any>()
         map["notification_id"] = idList
         viewModel.readNotification(map)

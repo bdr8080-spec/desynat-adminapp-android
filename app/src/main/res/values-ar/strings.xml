@@ -912,4 +912,5 @@
     <string name="please_select_free_recommended_store_option_yes_no">يرجى اختيار خيار المتجر الموصى به المجاني (نعم/لا)</string>
     <string name="banner_story_per_day_price">سعر البانر والقصة لليوم الواحد</string>
     <string name="story">القصة</string>
+    <string name="returned">عاد</string>
 </resources>

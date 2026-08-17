@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.desynatadmin.model.GetAllNotification
 import com.desynatadmin.network.ApiServices
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
@@ -2271,7 +2272,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val getMyNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    val getMyNotificationLiveData = SingleLiveEvent<GetAllNotification>()
     suspend fun getMyNotification(
         map: HashMap<String, Any>
     ) {

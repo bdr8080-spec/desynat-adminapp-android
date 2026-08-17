@@ -860,7 +860,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/new_text"
+                    android:text="@string/returned"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_15sdp"

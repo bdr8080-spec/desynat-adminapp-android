@@ -390,6 +390,7 @@ private fun getProfile(){
     }
 
     private fun setDashboardData(){
+        Log.e("TAG", "setDashboardData: $dashboardData", )
         binding?.apply {
             tvTotalRevenue.text = "${CommonMethod.formatAmount(dashboardData?.totalRevenue.toString())} KD"
             tvByOrderPrice.text = "${CommonMethod.formatAmount(dashboardData?.totalOrderRevenue.toString())} KD"
@@ -417,7 +418,7 @@ private fun getProfile(){
             tvCancelledOrder.text = dashboardData?.totalCancelledOrders.toString()
             tvCompletedOrder.text = dashboardData?.totalCompletedOrders.toString()
             tvOngoingOrder.text = dashboardData?.totalOngoingOrders.toString()
-            tvNewOrder.text = dashboardData?.totalCancelledOrders.toString()
+            tvNewOrder.text = dashboardData?.totalReturnedOrders.toString()
             tvOrder.text = "${getString(R.string.total_orders)} (${dashboardData?.totalOrders?:0})"
 
             tvWebsiteUser.text = dashboardData?.totalWebsiteVisitorUsers.toString()
