@@ -10,22 +10,29 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemAffiliateUserBinding
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
-import com.desynatadmin.ui.home.userManagement.response.GetUserResponse
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.SharedPreference
 import com.desynatadmin.utils.formatUtcDateToDdMmYyyy
 
-class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAffiliateUserResponse.Data.Data>, var affiliateUserClickk:AffiliateUserClick) : RecyclerView.Adapter<AffiliateUserAdapter.ViewHolder>() {
+class AffiliateUserAdapter(
+    var context: Context,
+    var userList: ArrayList<GetNewAffiliateUserResponse.Data.Data>,
+    var affiliateUserClickk: AffiliateUserClick
+) : RecyclerView.Adapter<AffiliateUserAdapter.ViewHolder>() {
 
-   var userType = "1"
+    var userType = "1"
+
     inner class ViewHolder(val binding: ItemAffiliateUserBinding) :
-        RecyclerView.ViewHolder(binding.root){
-        fun bind(position: Int) = with(binding){
-            var actionAccess : Boolean = true
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(position: Int) = with(binding) {
+            val ctx = root.context
+
+            var actionAccess: Boolean = true
             val userData = userList[position]
 
-            val userInfo = SharedPreference.get(context).getUser()
-            if (userInfo?.type=="2"){
+            val userInfo = SharedPreference.get(ctx).getUser()
+
+            if (userInfo?.type == "2") {
                 val subAdminInfo = SharedPreference.get(context).getSubAdmin()
                 val module = subAdminInfo?.permissionDetails
                     ?.firstOrNull {
@@ -36,61 +43,66 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAf
                 btnAccept.isVisible = actionAccess
                 btnReject.isVisible = actionAccess
                 ivSwitch.isClickable = actionAccess
+
             }
 
-                when(userType){
-                    "1" ->{
-                        btnAccept.isVisible = actionAccess
-                        btnReject.isVisible = actionAccess
-                        clEarning.isVisible = actionAccess
-                        clRejected.isVisible = actionAccess
-                    }
-                    "2" ->{
-                        btnAccept.isVisible = false
-                        btnReject.isVisible = false
-                        clEarning.isVisible = true
-                        clRejected.isVisible = false
-                        tvTotalEarningsValue.text = "0 KD"
-                        tvTotalOrdersValue.text = "0"
-                    }
-                    "3" ->{
-                        btnAccept.isVisible = false
-                        btnReject.isVisible = false
-                        clEarning.isVisible = false
-                        clRejected.isVisible = true
-                        tvRejectionDescription.text = userData?.rejectReason
-                    }
+            when (userType) {
+                "1" -> {
+                    btnAccept.isVisible = actionAccess
+                    btnReject.isVisible = actionAccess
+                    clEarning.isVisible = actionAccess
+                    clRejected.isVisible = actionAccess
                 }
 
+                "2" -> {
+                    btnAccept.isVisible = false
+                    btnReject.isVisible = false
+                    clEarning.isVisible = true
+                    clRejected.isVisible = false
+                    tvTotalEarningsValue.text = "0 KD"
+                    tvTotalOrdersValue.text = "0"
+                }
 
-                tvName.text = userData.fullName
-                tvLocation.text = if (Constants.language=="ar") userData?.countryDetails?.nameAr else userData.countryDetails?.name
-                tvJoinedOn.text = "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
-                tvEmail.text = userData.email
-                tvCall.text = userData.countryCode+"-"+userData.mobile
-                Glide.with(ivProfileImage).load(userData.profileImage).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
-                if(userData.status=="1"){
-                    ivSwitch.setImageResource(R.drawable.switch_on)
+                "3" -> {
+                    btnAccept.isVisible = false
+                    btnReject.isVisible = false
+                    clEarning.isVisible = false
+                    clRejected.isVisible = true
+                    tvRejectionDescription.text = userData?.rejectReason
                 }
-                else{
-                    ivSwitch.setImageResource(R.drawable.switch_off)
-                }
-                btnAccept.setOnClickListener {
-                    affiliateUserClickk.onAffiliateUserClick(position,1)
-                }
-                btnReject.setOnClickListener {
-                    affiliateUserClickk.onAffiliateUserClick(position,2)
-                }
+            }
+
+
+            tvName.text = userData.fullName
+            tvLocation.text =
+                if (Constants.language == "ar") userData?.countryDetails?.nameAr else userData.countryDetails?.name
+            tvJoinedOn.text =
+                "${context.getString(R.string.joined_at)} ${formatUtcDateToDdMmYyyy(userData.createdAt)}"
+            tvEmail.text = userData.email
+            tvCall.text = userData.countryCode + "-" + userData.mobile
+            Glide.with(ivProfileImage).load(userData.profileImage).placeholder(R.drawable.ic_user)
+                .error(R.drawable.ic_user).transform(CircleCrop()).into(ivProfileImage)
+            if (userData.status == "1") {
+                ivSwitch.setImageResource(R.drawable.switch_on)
+            } else {
+                ivSwitch.setImageResource(R.drawable.switch_off)
+            }
+            btnAccept.setOnClickListener {
+                affiliateUserClickk.onAffiliateUserClick(position, 1)
+            }
+            btnReject.setOnClickListener {
+                affiliateUserClickk.onAffiliateUserClick(position, 2)
+            }
 
             root.setOnClickListener {
-                affiliateUserClickk.onAffiliateUserClick(position,3)
+                affiliateUserClickk.onAffiliateUserClick(position, 3)
             }
-            }
-
         }
 
-    interface AffiliateUserClick{
-        fun onAffiliateUserClick(position: Int,type:Int)
+    }
+
+    interface AffiliateUserClick {
+        fun onAffiliateUserClick(position: Int, type: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -104,7 +116,8 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAf
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       holder.bind(position)
+
+        holder.bind(position)
     }
 
     fun setData(newList: ArrayList<GetNewAffiliateUserResponse.Data.Data>) {
@@ -112,7 +125,7 @@ class AffiliateUserAdapter(var context:Context, var userList: ArrayList<GetNewAf
         notifyDataSetChanged()
     }
 
-    fun setType(typeValue:String) {
+    fun setType(typeValue: String) {
         userType = typeValue
         notifyDataSetChanged()
     }
