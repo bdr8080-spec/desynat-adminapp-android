@@ -80,14 +80,16 @@ class HomeFragment : BaseFragment() {
         binding?.mainProgressBar?.isVisible = false
         getNotificationCount()
         getProfile()
-        getDashBoardData()
+
         if(SharedPreference.get(requireActivity()).getCountryList() == null) {
             getCountryApi()
         }
         else{
             countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
+            setDefaultCountry()
         }
+        getDashBoardData()
 
         userInfo = SharedPreference.get(requireActivity()).getUser()
         if (userInfo?.type=="2"){
@@ -213,6 +215,16 @@ private fun getProfile(){
         }
     }
 
+    private fun setDefaultCountry() {
+        if (countryList.isNotEmpty()) {
+            val defaultCountry = countryList.find { it.name.equals("Kuwait", ignoreCase = true) }
+            defaultCountry?.let { selectedCountry ->
+                binding?.etCountry?.setText(if (Constants.language == "ar") selectedCountry.nameAr else selectedCountry.name)
+                countryId = selectedCountry.id.toString()
+            }
+        }
+    }
+
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -252,6 +264,8 @@ private fun getProfile(){
                 countryList.clear()
                 countryList.addAll(response.data)
                 setCountry()
+                setDefaultCountry()
+                getDashBoardData()
         }
 
         viewModel.getProfileResult.observe(viewLifecycleOwner) { response ->
@@ -390,6 +404,7 @@ private fun getProfile(){
     }
 
     private fun setDashboardData(){
+        Log.e("TAG", "setDashboardData: $dashboardData", )
         binding?.apply {
             tvTotalRevenue.text = "${CommonMethod.formatAmount(dashboardData?.totalRevenue.toString())} KD"
             tvByOrderPrice.text = "${CommonMethod.formatAmount(dashboardData?.totalOrderRevenue.toString())} KD"
@@ -417,7 +432,7 @@ private fun getProfile(){
             tvCancelledOrder.text = dashboardData?.totalCancelledOrders.toString()
             tvCompletedOrder.text = dashboardData?.totalCompletedOrders.toString()
             tvOngoingOrder.text = dashboardData?.totalOngoingOrders.toString()
-            tvNewOrder.text = dashboardData?.totalCancelledOrders.toString()
+            tvNewOrder.text = dashboardData?.totalReturnedOrders.toString()
             tvOrder.text = "${getString(R.string.total_orders)} (${dashboardData?.totalOrders?:0})"
 
             tvWebsiteUser.text = dashboardData?.totalWebsiteVisitorUsers.toString()

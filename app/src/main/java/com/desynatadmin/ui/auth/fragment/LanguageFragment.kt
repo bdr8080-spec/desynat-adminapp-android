@@ -72,6 +72,8 @@ class LanguageFragment : BaseFragment() {
                 }
             }
 
+
+
             btnContinue.setOnClickListener {
                 if (Constants.language == "") {
                     showToast(getString(R.string.please_select_language))

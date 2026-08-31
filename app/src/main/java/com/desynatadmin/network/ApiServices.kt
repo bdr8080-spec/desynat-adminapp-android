@@ -1,5 +1,6 @@
 package com.desynatadmin.network
 
+import com.desynatadmin.model.GetAllNotification
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
@@ -1121,7 +1122,7 @@ interface ApiServices {
     @GET(Constants.GET_MY_NOTIFICATION_LIST)
     suspend fun getMyNotification(
         @QueryMap map: HashMap<String, Any>
-    ): Response<CommonResponse>
+    ): Response<GetAllNotification>
 
     @POST(Constants.READ_NOTIFICATION)
     suspend fun readNotification(

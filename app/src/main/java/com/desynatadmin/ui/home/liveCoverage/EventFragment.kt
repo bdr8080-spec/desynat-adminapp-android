@@ -24,25 +24,23 @@ import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
-import kotlin.toString
 
 @AndroidEntryPoint
 class EventFragment : BaseFragment() {
-    private var binding: FragmentEventBinding?=null
+    private var binding: FragmentEventBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var isCountryObserver = true
-    private var eventAdapter : EventAdapter?=null
+    private var eventAdapter: EventAdapter? = null
     private var eventList = ArrayList<GetLiveStreamingRoomResponse.Data>()
     private var countryList = ArrayList<GetCountryResponse.Data>()
-    private var selectedCountryId : GetCountryResponse.Data?=null
+    private var selectedCountryId: GetCountryResponse.Data? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEventBinding.inflate(layoutInflater,container,false)
+        binding = FragmentEventBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -55,22 +53,25 @@ class EventFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            if (SharedPreference.get(requireActivity()).getUser()?.type=="2"){
+            if (SharedPreference.get(requireActivity()).getUser()?.type == "2") {
                 ivBack.isVisible = true
-            }
-            else{
+            } else {
                 ivBack.isVisible = false
             }
             eventList.clear()
-            eventAdapter = EventAdapter(requireActivity(),eventList,object : EventAdapter.OnCLick{
-                override fun onClick(position: Int) {
-                    val bundle = Bundle().apply {
-                        putString("eventData", Gson().toJson(eventList[position]))
+            eventAdapter =
+                EventAdapter(requireActivity(), eventList, object : EventAdapter.OnCLick {
+                    override fun onClick(position: Int) {
+                        val bundle = Bundle().apply {
+                            putString("eventData", Gson().toJson(eventList[position]))
+                        }
+                        findNavController().navigate(
+                            R.id.action_eventFragment_to_liveEventFragment,
+                            bundle
+                        )
                     }
-                    findNavController().navigate(R.id.action_eventFragment_to_liveEventFragment,bundle)
-                }
 
-            })
+                })
             rvEvents.adapter = eventAdapter
 
             if (SharedPreference.get(requireActivity()).getCountryList() == null) {
@@ -86,7 +87,7 @@ class EventFragment : BaseFragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             checkData()
-        },500)
+        }, 500)
     }
 
     override fun initControl() {
@@ -105,7 +106,7 @@ class EventFragment : BaseFragment() {
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.setText(if (Constants.language=="ar") selectedCountry.nameAr else selectedCountry.name)
+                    etCountry.setText(if (Constants.language == "ar") selectedCountry.nameAr else selectedCountry.name)
                     selectedCountryId = selectedCountry
                     getLiveStreaming()
                 }
@@ -151,7 +152,7 @@ class EventFragment : BaseFragment() {
         isCountryObserver = true
     }
 
-    private fun getLiveStreaming(){
+    private fun getLiveStreaming() {
         val map = HashMap<String, Any>()
         map["country_id"] = selectedCountryId?.id.toString()
         viewModel.getLiveStreamingRoom(map)
@@ -159,18 +160,18 @@ class EventFragment : BaseFragment() {
         isObserver = true
     }
 
-    fun setDefaultCountry(){
+    fun setDefaultCountry() {
         for (i in 0 until countryList.size) {
-            if (countryList[i].name == "Kuwait") {
+            if (countryList[i].name == "Kuwait" || (countryList[i].nameAr == "الكويت")) {
                 selectedCountryId = countryList[i]
                 selectedCountryId = countryList[i]
-                binding?.etCountry?.setText(if (Constants.language=="ar") countryList[i].nameAr else countryList[i].name)
+                binding?.etCountry?.setText(if (Constants.language == "ar") countryList[i].nameAr else countryList[i].name)
                 getLiveStreaming()
             }
         }
     }
 
-    private fun  checkData(){
+    private fun checkData() {
         binding?.tvNoDataFound?.isVisible = eventList.isEmpty()
     }
 }

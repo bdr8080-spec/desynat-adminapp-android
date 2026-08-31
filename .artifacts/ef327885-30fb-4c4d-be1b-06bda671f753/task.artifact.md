@@ -1,0 +1,4 @@
+- [x] Implement `setDefaultCountry()` in `HomeFragment.kt`
+- [x] Update `initView()` to call `setDefaultCountry()`
+- [x] Update `observe()` to call `setDefaultCountry()`
+- [x] Verify changes by reviewing code consistency

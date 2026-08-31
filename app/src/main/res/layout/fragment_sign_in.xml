@@ -30,9 +30,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:paddingHorizontal="@dimen/_10sdp"
-            android:paddingVertical="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_5sdp">
+            android:paddingVertical="@dimen/_10sdp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSignIn"
@@ -81,7 +81,7 @@
                 android:id="@+id/tvPassword"
                 style="@style/edit_text_title"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Password"
+                android:text="@string/password"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
@@ -93,35 +93,35 @@
                 android:background="@drawable/edit_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPassword" >
+                app:layout_constraintTop_toBottomOf="@id/tvPassword">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etPassword"
                     style="@style/edit_text"
                     android:layout_width="0dp"
+                    android:background="@null"
                     android:drawableStart="@drawable/password_iv"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/enter_password"
                     android:inputType="textPassword"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:background="@null"
                     android:textAlignment="viewStart"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ivPassword" />
+                    app:layout_constraintEnd_toStartOf="@+id/ivPassword"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingVertical="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:src="@drawable/ic_eye"
-                    app:tint="@color/hint_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:tint="@color/hint_color" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -129,25 +129,25 @@
                 android:id="@+id/tvForgetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_20sdp"
-                android:paddingHorizontal="@dimen/_20sdp"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/poppins_regular"
+                android:paddingHorizontal="@dimen/_20sdp"
+                android:paddingVertical="@dimen/_20sdp"
                 android:text="@string/forget_password"
                 android:textColor="@color/brown"
-                android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/_11sdp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relPassword"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relPassword" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btnLogin"
-                app:layout_constraintTop_toBottomOf="@id/tvForgetPassword"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 style="@style/button"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:text="@string/login"
-                android:layout_marginTop="@dimen/_20sdp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvForgetPassword" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,26 +7,42 @@ import androidx.recyclerview.widget.RecyclerView
 import com.desynatadmin.R
 import com.desynatadmin.databinding.ItemMyNotificationBinding
 
-class MyNotificationAdapter(var context:Context, var notificationList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<MyNotificationAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemMyNotificationBinding) :
-        RecyclerView.ViewHolder(binding.root){
-        fun bind(position: Int) = with(binding){
-            val notificationData = notificationList[position]
-            tvTitle.text = ""
-            tvDescription.text = ""
-            tvDate.text = ""
-//            if (notificationData.isRead){
-//                ivBell.setImageResource(R.drawable.icon_read_bell)
-//                clMain.setBackgroundResource(R.drawable.notification_read_background)
-//            }
-//            else{
-//                ivBell.setImageResource(R.drawable.icon_unread_bell)
-//                clMain.setBackgroundResource(R.drawable.notification_unread_background)
-//            }
-        }
-        }
+import com.desynatadmin.model.DataX
+import com.desynatadmin.utils.CommonMethod
+import com.desynatadmin.utils.Constants
 
-    interface ClickOnItem{
+class MyNotificationAdapter(
+    var context: Context,
+    var notificationList: ArrayList<DataX>,
+    var clickOnItem: ClickOnItem
+) : RecyclerView.Adapter<MyNotificationAdapter.ViewHolder>() {
+    inner class ViewHolder(val binding: ItemMyNotificationBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(position: Int) = with(binding) {
+            val notificationData = notificationList[position]
+            tvTitle.text = if (Constants.language == "ar") notificationData.titleArabic
+                ?: notificationData.titleEnglish else notificationData.titleEnglish
+            tvDescription.text = if (Constants.language == "ar") notificationData.descriptionArabic
+                ?: notificationData.descriptionEnglish else notificationData.descriptionEnglish
+            tvDate.text = CommonMethod.customizeChangeDateFormat(
+                notificationData.createdAt.toString(),
+                outputFormat = "dd/MM/yyyy"
+            )
+            if (notificationData.isRead == 1) {
+                ivBell.setImageResource(R.drawable.icon_read_bell)
+                clMain.setBackgroundResource(R.drawable.notification_read_background)
+            } else {
+                ivBell.setImageResource(R.drawable.icon_unread_bell)
+                clMain.setBackgroundResource(R.drawable.notification_unread_background)
+            }
+
+            clMain.setOnClickListener {
+                clickOnItem.onClickItem(position)
+            }
+        }
+    }
+
+    interface ClickOnItem {
         fun onClickItem(position: Int)
     }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desynatadmin.adapter.AssignAffiliateUserAdapter
 import com.desynatadmin.data.repo.MainRepository
+import com.desynatadmin.model.GetAllNotification
 import com.desynatadmin.ui.auth.LoginResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.GetAffiliateCommissionResponse
 import com.desynatadmin.ui.home.affiliateCommission.response.UpdateAffiliateCommissionResponse
@@ -1791,7 +1792,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getMyNotificationResult: LiveData<CommonResponse>
+    val getMyNotificationResult: LiveData<GetAllNotification>
         get() = repository.getMyNotificationLiveData
 
     fun getMyNotification(map: HashMap<String, Any>) {
