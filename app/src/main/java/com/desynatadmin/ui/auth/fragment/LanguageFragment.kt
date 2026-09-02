@@ -129,6 +129,7 @@ class LanguageFragment : BaseFragment() {
         requestAllPermissions.launch(permissionsList.toTypedArray())
     }
 
+    //updateLanguageUI
     private fun updateLanguageUI(language: String) {
         binding?.apply {
 
