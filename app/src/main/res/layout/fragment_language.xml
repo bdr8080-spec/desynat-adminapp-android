@@ -13,6 +13,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/select_language"
+            android:id="@+id/tvSelectLanguage"
             android:layout_marginTop="@dimen/_30sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_13sdp"
@@ -21,6 +22,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tvInfo"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/choose_the_language_and_continue_to_get_the_experience_the_app_in_your_preferred_language"

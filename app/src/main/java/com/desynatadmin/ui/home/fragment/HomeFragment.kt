@@ -318,19 +318,26 @@ private fun getProfile(){
 
         dialogBinding.apply {
 
+            closeIv.setOnClickListener {
+                dialog.dismiss()
+            }
+
             Constants.language = SharedPreference.get(requireActivity()).language
             if(Constants.language=="en"){
                 cbEnglish.isChecked = true
                 cbArabic.isChecked = false
+
+                cbArabic.text = "العربية"
+                cbEnglish.text = "الإنجليزية"
+                title.text = "تغيير اللغة"
+                btnSave.text = "حفظ"
             }
             else if(Constants.language=="ar"){
                 cbEnglish.isChecked = false
                 cbArabic.isChecked = true
             }
 
-            closeIv.setOnClickListener {
-                dialog.dismiss()
-            }
+
 
             cbArabic.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -346,6 +353,11 @@ private fun getProfile(){
             cbEnglish.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     cbArabic.isChecked = false
+
+                    cbArabic.text = "Arabic"
+                    cbEnglish.text = "English"
+                    title.text = "Change Language"
+                    btnSave.text = "Save"
                 }
                 else {
                     if (!cbArabic.isChecked) {
@@ -353,6 +365,7 @@ private fun getProfile(){
                     }
                 }
             }
+
 
             btnSave.setOnClickListener {
                 if (cbArabic.isChecked) {
