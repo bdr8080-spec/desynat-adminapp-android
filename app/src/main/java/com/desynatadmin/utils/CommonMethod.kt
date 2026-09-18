@@ -26,6 +26,7 @@ import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -63,6 +64,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.math.log
 
 object CommonMethod {
 
@@ -945,6 +947,7 @@ object CommonMethod {
         binding.rvCountry.adapter = AllCountryPickerAdapter(context, countryList,isDialCode,
             object : AllCountryPickerAdapter.ClickOnItem {
                 override fun onClickItem(position: Int) {
+                    Log.d("TAG", "onClickItem: ${countryList[position]}")
                     onCountrySelected(countryList[position])
                     popupWindow.dismiss()
                 }

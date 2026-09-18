@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,6 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -36,42 +36,41 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 @AndroidEntryPoint
 class RefundManagementFragment : BaseFragment() {
-    private var binding: FragmentRefundManagementBinding?=null
+    private var binding: FragmentRefundManagementBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
 
     private var isCountryObserver = true
     private var refundList = ArrayList<GetRefundOrderResponse.Data.Data>()
-    private var refundAdapter : RefundAdapter?=null
+    private var refundAdapter: RefundAdapter? = null
     private var searchJob: Job? = null
     private var lastQuery: String? = null
 
     private var currentPage = 1
     private var lastPage = 1
     private var totalPage = 0
-    private var totalItem=0
-    private var pageLimit=10
-    private var isFromSwipe=false
-    private var pagination=false
+    private var totalItem = 0
+    private var pageLimit = 10
+    private var isFromSwipe = false
+    private var pagination = false
     private val itemsPerPage = 10
     var selectedPos = -1
     private var countryList = ArrayList<GetCountryResponse.Data>()
-    var countryId:String?=null
-    var startDate:String?=null
-    var endDate:String?=null
-    var status:String?=null
-    var fromTimestamp=0L
-    var toTimestamp=0L
+    var countryId: String? = null
+    var startDate: String? = null
+    var endDate: String? = null
+    var status: String? = null
+    var fromTimestamp = 0L
+    var toTimestamp = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRefundManagementBinding.inflate(layoutInflater,container,false)
+        binding = FragmentRefundManagementBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -86,17 +85,24 @@ class RefundManagementFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = getString(R.string.refund_management)
 
-            refundAdapter = RefundAdapter(requireActivity(),refundList,object : RefundAdapter.OnClick{
-                override fun OnItemClick(position: Int) {
+            refundAdapter =
+                RefundAdapter(requireActivity(), refundList, object : RefundAdapter.OnClick {
+                    override fun OnItemClick(position: Int) {
 
-                }
+                    }
 
-            })
+                })
             rvRefund.adapter = refundAdapter
 
             lastQuery = etSearch.text.toString().trim()
             etSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
@@ -111,7 +117,7 @@ class RefundManagementFragment : BaseFragment() {
                         pagination = false
                         isFromSwipe = false
                         if (!isObserver)
-                            getRefundList(search =  query.ifEmpty { null }, loading = false)
+                            getRefundList(search = query.ifEmpty { null }, loading = false)
                     }
 
                 }
@@ -128,12 +134,12 @@ class RefundManagementFragment : BaseFragment() {
                 getRefundList(false)
             }
         }
-
-        if (SharedPreference.get(requireActivity()).getUserCountryList()!=null){
+        getCountryApi()
+        if (SharedPreference.get(requireActivity()).getUserCountryList() != null) {
             countryList.clear()
-            SharedPreference.get(requireActivity()).getUserCountryList()?.let { countryList.addAll(it) }
-        }
-        else{
+            SharedPreference.get(requireActivity()).getUserCountryList()
+                ?.let { countryList.addAll(it) }
+        } else {
             getCountryApi()
         }
 
@@ -144,13 +150,13 @@ class RefundManagementFragment : BaseFragment() {
     override fun initControl() {
         binding?.apply {
 
-    toolbar.ivBack.setOnClickListener {
-    when (val activity = requireActivity()) {
-        is HomeActivity -> activity.onBackPressed()
-        is SubAdminHomeActivity -> activity.onBackPressed()
-        else -> activity.onBackPressed()
-    }
-}
+            toolbar.ivBack.setOnClickListener {
+                when (val activity = requireActivity()) {
+                    is HomeActivity -> activity.onBackPressed()
+                    is SubAdminHomeActivity -> activity.onBackPressed()
+                    else -> activity.onBackPressed()
+                }
+            }
 
 
             ivFilter.setOnClickListener {
@@ -159,11 +165,15 @@ class RefundManagementFragment : BaseFragment() {
 
             btnExport.setOnClickListener {
                 val csv = CommonMethod.listToCsv(refundList)
-                CommonMethod.saveCsvFile(requireContext(), "refund_${System.currentTimeMillis()}", csv)
+                CommonMethod.saveCsvFile(
+                    requireContext(),
+                    "refund_${System.currentTimeMillis()}",
+                    csv
+                )
             }
 
             ivNextArrow.setOnClickListener {
-                if (!isObserver && currentPage < lastPage&&totalItem!=0) {
+                if (!isObserver && currentPage < lastPage && totalItem != 0) {
                     currentPage += 1
                     getRefundList(false)
                     binding?.progressBar?.isVisible = true
@@ -180,33 +190,34 @@ class RefundManagementFragment : BaseFragment() {
         }
     }
 
-    private fun getCountryApi(){
+    private fun getCountryApi() {
         viewModel.getUserCountry()
         isCountryObserver = true
     }
 
 
-    private fun getRefundList(loading:Boolean=true,search:String?=null){
-        val map = HashMap<String,Any>()
+    private fun getRefundList(loading: Boolean = true, search: String? = null) {
+        val map = HashMap<String, Any>()
         map["page"] = currentPage
         map["limit"] = 10
-        if (search!=null) {
+        if (search != null) {
             map["search"] = search
         }
-        if (status!=null) {
+        if (status != null) {
             map["status"] = status.toString()
         }
-        if (startDate!=null) {
+        if (startDate != null) {
             map["from_date"] = startDate.toString()
         }
-        if (endDate!=null) {
+        if (endDate != null) {
             map["to_date"] = endDate.toString()
         }
-        if (countryId!=null) {
-            map["country_name"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
+        if (countryId != null) {
+            map["country_name"] =
+                countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
         }
         viewModel.getRefundOrder(map)
-        if (loading){
+        if (loading) {
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
         isObserver = true
@@ -218,7 +229,7 @@ class RefundManagementFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
-                if (isFromSwipe){
+                if (isFromSwipe) {
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
 
@@ -237,11 +248,11 @@ class RefundManagementFragment : BaseFragment() {
             }
         }
 
-                viewModel.getRefundOrderResult.observe(viewLifecycleOwner) { response ->
+        viewModel.getRefundOrderResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 binding?.progressBar?.isVisible = false
-                if (isFromSwipe){
+                if (isFromSwipe) {
                     binding?.swipeRefreshLayout?.isRefreshing = false
                 }
 
@@ -255,23 +266,21 @@ class RefundManagementFragment : BaseFragment() {
 
                 binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
 
-                if (currentPage<lastPage){
+                if (currentPage < lastPage) {
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
-                }
-                else{
+                } else {
                     binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
                 }
 
-                if (currentPage>1){
+                if (currentPage > 1) {
                     binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
-                }
-                else{
+                } else {
                     binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
                 }
 
 
                 val oldSize = refundList.size
-                if (!pagination){
+                if (!pagination) {
                     refundList.clear()
                 }
                 updatePage()
@@ -280,15 +289,15 @@ class RefundManagementFragment : BaseFragment() {
                 refundList.addAll(newItems)
                 checkData()
 
-                if (pagination){
+                if (pagination) {
 
                     response.data.data?.size?.let {
-                        refundAdapter?.notifyItemRangeInserted(oldSize,
+                        refundAdapter?.notifyItemRangeInserted(
+                            oldSize,
                             it
                         )
                     }
-                }
-                else{
+                } else {
                     refundAdapter?.notifyDataSetChanged()
                 }
 
@@ -306,7 +315,7 @@ class RefundManagementFragment : BaseFragment() {
     private fun updatePage() {
         val start = (currentPage - 1) * itemsPerPage
         val end = minOf(start + itemsPerPage, refundList.size)
-        if (start>=0&&end>=0) {
+        if (start >= 0 && end >= 0) {
             if (start < end) {
                 val pageData = refundList.subList(start, end)
                 refundAdapter?.setData(ArrayList(pageData))
@@ -316,8 +325,8 @@ class RefundManagementFragment : BaseFragment() {
     }
 
     private fun filterDialog() {
-        var selectedCountryId:String?=null
-        var tempStatus:String?=null
+        var selectedCountryId: String? = null
+        var tempStatus: String? = null
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = RefundFilterDialogBinding.inflate(LayoutInflater.from(context))
         dialogBinding.root.let { dialog.setContentView(it) }
@@ -356,16 +365,19 @@ class RefundManagementFragment : BaseFragment() {
             }
 
             etFrom.setOnClickListener {
-                openCustomDatePicker(requireActivity()){date,timestamp->
-                    etFrom.text=date
-                    fromTimestamp=timestamp
+                openCustomDatePicker(requireActivity()) { date, timestamp ->
+                    etFrom.text = date
+                    fromTimestamp = timestamp
                 }
 
             }
             etTo.setOnClickListener {
-                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
-                    etTo.text=date
-                    toTimestamp=timestamp
+                openCustomDatePicker(
+                    requireActivity(),
+                    minDate = fromTimestamp
+                ) { date, timestamp ->
+                    etTo.text = date
+                    toTimestamp = timestamp
                 }
 
             }
@@ -376,13 +388,18 @@ class RefundManagementFragment : BaseFragment() {
                     it,
                     countryList
                 ) { selectedCountry ->
-                    etCountry.text =if (Constants.language=="ar") selectedCountry.nameAr else   selectedCountry.name
+                    Log.d(
+                        "TAG",
+                        "filterDialog: ${if (Constants.language == "ar") selectedCountry.nameAr else selectedCountry.name}"
+                    )
+                    etCountry.text =
+                        if (Constants.language == "ar") selectedCountry.nameAr else selectedCountry.name
                     selectedCountryId = selectedCountry.id.toString()
                 }
             }
 
             tvStatusValue.setOnClickListener {
-                showStatusDropdown(tvStatusValue){selectedStatus ->
+                showStatusDropdown(tvStatusValue) { selectedStatus ->
                     tempStatus = selectedStatus
                 }
             }
@@ -398,19 +415,21 @@ class RefundManagementFragment : BaseFragment() {
                 dialog.dismiss()
             }
 
-            tvApply.setOnClickListener{
-                if (tempStatus!=null){
+            tvApply.setOnClickListener {
+                if (tempStatus != null) {
                     status = tempStatus
                 }
-                if (selectedCountryId!=null) {
+                if (selectedCountryId != null) {
                     countryId = selectedCountryId
                 }
-                if (etFrom.text.isNotEmpty()){
-                    startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                if (etFrom.text.isNotEmpty()) {
+                    startDate =
+                        CommonMethod.formatDate(etFrom.text.toString(), "dd/MM/yyyy", "yyyy-MM-dd")
                 }
 
-                if (etTo.text.isNotEmpty()){
-                    endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
+                if (etTo.text.isNotEmpty()) {
+                    endDate =
+                        CommonMethod.formatDate(etTo.text.toString(), "dd/MM/yyyy", "yyyy-MM-dd")
                 }
 
                 getRefundList()
