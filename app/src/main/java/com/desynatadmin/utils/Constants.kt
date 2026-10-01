@@ -58,6 +58,9 @@ object Constants {
     const val SELLER_DETAIL = "/api/admin/get_seller_details"
     const val ACCEPT_SELLER = "/api/admin/accept_seller"
     const val REJECT_SELLER = "/api/admin/reject_seller"
+    const val GET_SELLER_PAYOUTS = "/api/admin/get_seller_payouts"
+    const val GET_SELLER_PAYOUT_HISTORY = "/api/admin/get_seller_payout_history"
+    const val ADD_SELLER_PAYOUT = "/api/admin/add_seller_payout"
 
 
     const val GET_SUBSCRIPTION_PLAN = "/api/admin/get_plans"

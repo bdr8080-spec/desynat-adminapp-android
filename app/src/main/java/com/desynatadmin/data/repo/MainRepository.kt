@@ -14,6 +14,8 @@ import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAff
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
+import com.desynatadmin.ui.home.sellerPayout.response.GetSellerPayoutHistoryResponse
+import com.desynatadmin.ui.home.sellerPayout.response.GetSellerPayoutResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -2532,6 +2534,42 @@ class MainRepository @Inject constructor(
                 api.getHomeDashBoard(map)
             },
             responseLiveData = getHomeDashBoardLiveData
+        )
+    }
+
+    val getSellerPayoutsLiveData = SingleLiveEvent<GetSellerPayoutResponse>()
+    suspend fun getSellerPayouts(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getSellerPayouts(map)
+            },
+            responseLiveData = getSellerPayoutsLiveData
+        )
+    }
+
+    val getSellerPayoutHistoryLiveData = SingleLiveEvent<GetSellerPayoutHistoryResponse>()
+    suspend fun getSellerPayoutHistory(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getSellerPayoutHistory(map)
+            },
+            responseLiveData = getSellerPayoutHistoryLiveData
+        )
+    }
+
+    val addSellerPayoutLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun addSellerPayout(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.addSellerPayout(map)
+            },
+            responseLiveData = addSellerPayoutLiveData
         )
     }
 

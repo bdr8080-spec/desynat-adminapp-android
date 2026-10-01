@@ -13,6 +13,8 @@ import com.desynatadmin.ui.home.affiliateUserManagement.response.BlockUnblockAff
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetAffiliateUserDetailResponse
 import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliateUserResponse
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
+import com.desynatadmin.ui.home.sellerPayout.response.GetSellerPayoutHistoryResponse
+import com.desynatadmin.ui.home.sellerPayout.response.GetSellerPayoutResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -1798,6 +1800,33 @@ val accountSettingResult: LiveData<LoginResponse>
     fun getHomeDashBoard(map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.getHomeDashBoard(map)
+        }
+    }
+
+    val getSellerPayoutListResult: LiveData<GetSellerPayoutResponse>
+        get() = repository.getSellerPayoutsLiveData
+
+    fun getSellerPayoutList(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getSellerPayouts(map)
+        }
+    }
+
+    val getPayoutHistoryListResult: LiveData<GetSellerPayoutHistoryResponse>
+        get() = repository.getSellerPayoutHistoryLiveData
+
+    fun getPayoutHistoryList(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.getSellerPayoutHistory(map)
+        }
+    }
+
+    val addPayoutResult: LiveData<CommonResponse>
+        get() = repository.addSellerPayoutLiveData
+
+    fun addPayout(map: HashMap<String, Any>) {
+        viewModelScope.launch {
+            repository.addSellerPayout(map)
         }
     }
 

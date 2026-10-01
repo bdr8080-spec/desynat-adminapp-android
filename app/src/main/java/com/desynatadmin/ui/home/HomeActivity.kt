@@ -365,10 +365,10 @@ override fun onBackPressed() {
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
-/*            rlPayoutManagement.setOnClickListener {
+           rlPayoutManagement.setOnClickListener {
                 controller.navigate(R.id.sellerPayout)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-            }*/
+            }
 
             rlRefundManagement.setOnClickListener {
                 controller.navigate(R.id.refundManagement)

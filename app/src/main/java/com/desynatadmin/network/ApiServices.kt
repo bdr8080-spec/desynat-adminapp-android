@@ -10,6 +10,8 @@ import com.desynatadmin.ui.home.affiliateUserManagement.response.GetNewAffiliate
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutRequest
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutResponse
+import com.desynatadmin.ui.home.sellerPayout.response.GetSellerPayoutHistoryResponse
+import com.desynatadmin.ui.home.sellerPayout.response.GetSellerPayoutResponse
 import com.desynatadmin.ui.home.banner.response.GetBannerPricePerDayResponse
 import com.desynatadmin.ui.home.banner.response.UpdateBannerPriceResponse
 import com.desynatadmin.ui.home.bannerRequestManagement.response.GetBannerRequestResponse
@@ -1217,5 +1219,20 @@ interface ApiServices {
     suspend fun getHomeDashBoard(
         @QueryMap map: HashMap<String,Any>
     ): Response<GetDashboardResponse>
+
+    @GET(Constants.GET_SELLER_PAYOUTS)
+    suspend fun getSellerPayouts(
+        @QueryMap map: HashMap<String, Any>
+    ): Response<GetSellerPayoutResponse>
+
+    @GET(Constants.GET_SELLER_PAYOUT_HISTORY)
+    suspend fun getSellerPayoutHistory(
+        @QueryMap map: HashMap<String, Any>
+    ): Response<GetSellerPayoutHistoryResponse>
+
+    @POST(Constants.ADD_SELLER_PAYOUT)
+    suspend fun addSellerPayout(
+        @Body map: HashMap<String, Any>
+    ): Response<CommonResponse>
 
 }

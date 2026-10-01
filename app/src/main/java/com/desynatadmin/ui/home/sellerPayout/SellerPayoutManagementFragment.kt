@@ -23,6 +23,7 @@ import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentSellerPayoutManagementBinding
 import com.desynatadmin.databinding.UserFilterDialogBinding
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.sellerPayout.response.GetSellerPayoutResponse
 import com.desynatadmin.ui.home.subscriptionPlan.response.GetCountryResponse
 import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
@@ -43,7 +44,7 @@ class SellerPayoutManagementFragment : BaseFragment() {
     private var searchJob: Job? = null
     private var lastQuery: String? = null
     private var sellerPayoutAdapter: SellerPayoutAdapter? = null
-    private var payoutList = ArrayList<String>()
+    private var payoutList = ArrayList<GetSellerPayoutResponse.Data.Sellers.SellerItem>()
     private var isCountryObserver = true
     private var countryList = ArrayList<GetCountryResponse.Data>()
 
@@ -117,12 +118,17 @@ class SellerPayoutManagementFragment : BaseFragment() {
                 getSellerPayoutList(false)
             }
 
-            sellerPayoutAdapter = SellerPayoutAdapter(requireActivity(),payoutList,object :
-                SellerPayoutAdapter.OnClick{
-                override fun OnItemClick(position: Int) {
-                    findNavController().navigate(R.id.action_sellerPayoutManagement_to_managePayoutFragment)
+            sellerPayoutAdapter = SellerPayoutAdapter(requireActivity(), payoutList, object :
+                SellerPayoutAdapter.OnClick {
+                override fun OnItemClick(position: Int, sellerId: Int) {
+                    val bundle = Bundle().apply {
+                        putInt("seller_id", sellerId)
+                    }
+                    findNavController().navigate(
+                        R.id.action_sellerPayoutManagement_to_managePayoutFragment,
+                        bundle
+                    )
                 }
-
             })
             rvSellerPayout.adapter = sellerPayoutAdapter
 
@@ -133,6 +139,8 @@ class SellerPayoutManagementFragment : BaseFragment() {
             else{
                 getCountryApi()
             }
+
+            getSellerPayoutList()
         }
     }
 
@@ -195,66 +203,55 @@ class SellerPayoutManagementFragment : BaseFragment() {
             }
         }
 
-//        viewModel.getSellerPayoutListResult.observe(viewLifecycleOwner) { response ->
-//            if (isObserver) {
-//                ProgressDialogUtils.getInstance().hideProgress()
-//                binding?.progressBar?.isVisible = false
-//                if (isFromSwipe){
-//                    binding?.swipeRefreshLayout?.isRefreshing = false
-//                }
-//
-//                currentPage = response.data.currentPage
-//                totalItem = response.data.total
-//
-//                lastPage = response.data.lastPage
-//
-//                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
-//                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
-//
-//                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
-//
-//                if (currentPage<lastPage){
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
-//                }
-//                else{
-//                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
-//                }
-//
-//                if (currentPage>1){
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
-//                }
-//                else{
-//                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
-//                }
-//
-//
-//                val oldSize = payoutList.size
-//                if (!pagination){
-//                    payoutList.clear()
-//                }
-//                updatePage()
-//                val newItems = response.data.data ?: emptyList()
-//
-//                payoutList.addAll(newItems)
-//                checkData()
-//
-//                if (pagination){
-//
-//                    response.data.data?.size?.let {
-//                        sellerPayoutAdapter?.notifyItemRangeInserted(oldSize,
-//                            it
-//                        )
-//                    }
-//                }
-//                else{
-//                    sellerPayoutAdapter?.notifyDataSetChanged()
-//                }
-//
-//                pagination = false
-//                isFromSwipe = false
-//                isObserver = false
-//            }
-//        }
+        viewModel.getSellerPayoutListResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                binding?.progressBar?.isVisible = false
+                if (isFromSwipe){
+                    binding?.swipeRefreshLayout?.isRefreshing = false
+                }
+
+                val sellersObj = response.data?.sellers
+                binding?.tvAmount?.text = "${response.data?.totalPayoutPending ?: "0.000"} KD"
+
+                currentPage = sellersObj?.currentPage ?: 1
+                totalItem = sellersObj?.total ?: 0
+                lastPage = sellersObj?.lastPage ?: 1
+
+                val currentStr = if (currentPage < 10) "0$currentPage" else "$currentPage"
+                val lastStr = if (lastPage < 10) "0$lastPage" else "$lastPage"
+
+                binding?.tvCount?.text = "$currentStr ${getString(R.string.of)} $lastStr"
+
+                if (currentPage < lastPage){
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand)
+                }
+                else{
+                    binding?.ivNextArrow?.setImageResource(R.drawable.ic_next_brand_disable)
+                }
+
+                if (currentPage > 1){
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand)
+                }
+                else{
+                    binding?.ivBackArrow?.setImageResource(R.drawable.ic_back_brand_disable)
+                }
+
+                if (!pagination){
+                    payoutList.clear()
+                }
+
+                val newItems = sellersObj?.data ?: emptyList()
+                payoutList.addAll(newItems)
+                checkData()
+
+                sellerPayoutAdapter?.notifyDataSetChanged()
+
+                pagination = false
+                isFromSwipe = false
+                isObserver = false
+            }
+        }
     }
 
     private fun getCountryApi(){
@@ -264,9 +261,10 @@ class SellerPayoutManagementFragment : BaseFragment() {
 
     private fun getSellerPayoutList(loading:Boolean=true,search:String?=null){
         val map = HashMap<String,Any>()
+        map["req_type"] = 1
         map["page"] = currentPage
-        map["limit"] = 10
-        if (search!=null) {
+        map["limit"] = pageLimit
+        if (!search.isNullOrEmpty()) {
             map["search"] = search
         }
         if (startDate!=null) {
@@ -276,9 +274,14 @@ class SellerPayoutManagementFragment : BaseFragment() {
             map["to_date"] = endDate.toString()
         }
         if (countryId!=null) {
-            map["country"] = countryList.firstOrNull { it.id.toString() == countryId }?.name.toString()
+            val cId = countryId!!.toIntOrNull()
+            if (cId != null) {
+                map["countryId"] = cId
+            } else {
+                map["countryId"] = countryId!!
+            }
         }
-   //     viewModel.getSellerPayoutList(map)
+        viewModel.getSellerPayoutList(map)
         if (loading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
         }
