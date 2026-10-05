@@ -968,6 +968,13 @@ interface ApiServices {
         @Body request: PayoutRequest
     ): Response<PayoutResponse>
 
+    @POST
+    suspend fun sendPaymentLink(
+        @Header("Authorization") token: String,
+        @Url url: String,
+        @Body request: com.desynatadmin.ui.home.sellerPayout.response.SendPaymentRequest
+    ): Response<com.desynatadmin.ui.home.sellerPayout.response.SendPaymentResponse>
+
     @GET(Constants.GET_TERMS_AND_CONDITION)
     suspend fun getTermsAndCondition(
         @QueryMap map: HashMap<String,Any>

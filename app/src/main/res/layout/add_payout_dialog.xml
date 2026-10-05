@@ -48,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
+        android:visibility="gone"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:fontFamily="@font/poppins_regular"
         android:text="@string/enter_transaction_id"
@@ -62,6 +63,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:padding="@dimen/_10sdp"
+        android:visibility="gone"
         android:hint="@string/enter_transaction_id"
         android:maxLength="10"
         android:inputType="number"/>

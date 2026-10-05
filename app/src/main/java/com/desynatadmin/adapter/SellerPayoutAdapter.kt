@@ -21,14 +21,14 @@ class SellerPayoutAdapter(
         fun bind(position: Int) = with(binding) {
             val payoutData = payoutList[position]
 
-            val displayName = payoutData.storeInfo?.storeName
+            val displayName =  payoutData.storeInfo?.storeName
                 ?: payoutData.name
                 ?: listOfNotNull(payoutData.firstName, payoutData.lastName).joinToString(" ").trim().ifEmpty { null }
                 ?: payoutData.nameEnglish
                 ?: ""
 
             tvName.text = displayName
-            tvLocation.text = payoutData.countryName ?: payoutData.location ?: ""
+            tvLocation.text = payoutData.countryName ?: ""
 
             if (!payoutData.lastPayoutDate.isNullOrEmpty()) {
                 val formattedDate = CommonMethod.customizeChangeDateFormat(
@@ -43,7 +43,7 @@ class SellerPayoutAdapter(
             val totalEarningVal = payoutData.totalEarning?.toDoubleOrNull() ?: 0.0
             tvTotalEarning.text = "${CommonMethod.formatPrice(totalEarningVal)} KD"
 
-            val lastPayoutVal = (payoutData.lastPayoutValue ?: payoutData.lastPayoutAmount)?.toDoubleOrNull() ?: 0.0
+            val lastPayoutVal = (payoutData.lastPayout ?:"0")?.toDoubleOrNull() ?: 0.0
             tvLastPayoutValue.text = "${CommonMethod.formatPrice(lastPayoutVal)} KD"
 
             val pendingAmountVal = payoutData.pendingAmount?.toDoubleOrNull() ?: 0.0

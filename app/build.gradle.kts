@@ -54,6 +54,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.activity.ktx)
     configurations.all {
         resolutionStrategy {
             force("androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7")

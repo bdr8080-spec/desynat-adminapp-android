@@ -121,8 +121,17 @@ class SellerPayoutManagementFragment : BaseFragment() {
             sellerPayoutAdapter = SellerPayoutAdapter(requireActivity(), payoutList, object :
                 SellerPayoutAdapter.OnClick {
                 override fun OnItemClick(position: Int, sellerId: Int) {
+                    val payoutData = payoutList[position]
+                    val sellerName = payoutData.sellerName
+                        ?: payoutData.storeInfo?.storeName
+                        ?: payoutData.name
+                        ?: listOfNotNull(payoutData.firstName, payoutData.lastName).joinToString(" ").trim().ifEmpty { null }
+                        ?: payoutData.nameEnglish
+                        ?: "John Doe"
+
                     val bundle = Bundle().apply {
                         putInt("seller_id", sellerId)
+                        putString("seller_name", sellerName)
                     }
                     findNavController().navigate(
                         R.id.action_sellerPayoutManagement_to_managePayoutFragment,
@@ -212,7 +221,8 @@ class SellerPayoutManagementFragment : BaseFragment() {
                 }
 
                 val sellersObj = response.data?.sellers
-                binding?.tvAmount?.text = "${response.data?.totalPayoutPending ?: "0.000"} KD"
+                val pendingAmt = response.data?.totalPayoutPending?.toDoubleOrNull() ?: 0.0
+                binding?.tvAmount?.text = "${CommonMethod.formatPrice(pendingAmt)} KD"
 
                 currentPage = sellersObj?.currentPage ?: 1
                 totalItem = sellersObj?.total ?: 0

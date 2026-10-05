@@ -2,7 +2,8 @@ package com.desynatadmin.ui.home.sellerPayout.response
 
 import com.google.gson.annotations.SerializedName
 
-data class GetSellerPayoutResponse(
+data class GetSellerPayoutResponse
+    (
     @SerializedName("data")
     val `data`: Data? = null,
     @SerializedName("message")
@@ -51,6 +52,8 @@ data class GetSellerPayoutResponse(
                 val sellerId: Int? = null,
                 @SerializedName("name")
                 val name: String? = null,
+                @SerializedName("seller_name")
+                val sellerName: String? = null,
                 @SerializedName("first_name")
                 val firstName: String? = null,
                 @SerializedName("last_name")
@@ -73,6 +76,8 @@ data class GetSellerPayoutResponse(
                 val lastPayoutDate: String? = null,
                 @SerializedName("total_earning")
                 val totalEarning: String? = null,
+                @SerializedName("last_payout")
+                val lastPayout: String? = null,
                 @SerializedName("last_payout_value")
                 val lastPayoutValue: String? = null,
                 @SerializedName("last_payout_amount")

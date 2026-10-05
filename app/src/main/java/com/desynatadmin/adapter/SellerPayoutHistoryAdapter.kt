@@ -25,9 +25,10 @@ class SellerPayoutHistoryAdapter(
             if (!payoutData.payoutDate.isNullOrEmpty()) {
                 val formattedDate = CommonMethod.customizeChangeDateFormat(
                     payoutData.payoutDate,
+                    inputFormat = "yyyy-MM-dd HH:mm:ss",
                     outputFormat = "dd/MM/yyyy"
                 )
-                tvPayoutOnValue.text = formattedDate
+                tvPayoutOnValue.text = formattedDate.ifEmpty { payoutData.payoutDate }
             } else {
                 tvPayoutOnValue.text = "N/A"
             }

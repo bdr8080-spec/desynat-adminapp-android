@@ -1,7 +1,6 @@
 package com.desynatadmin.ui.home.affiliateWithdrawalRequest
 
 import android.app.Dialog
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,16 +13,15 @@ import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.AffiliateWithdrawalRequestAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentAffiliateWithdrawalRequestBinding
 import com.desynatadmin.databinding.RejectReasonLayoutBinding
-import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.payoutRetrofit.PayoutRetrofit
 import com.desynatadmin.ui.home.HomeActivity
+import com.desynatadmin.ui.home.SubAdminHomeActivity
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.GetWithdrawalRequestResponse
 import com.desynatadmin.ui.home.affiliateWithdrawalRequest.response.PayoutRequest
 import com.desynatadmin.utils.CommonMethod
@@ -31,7 +29,6 @@ import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 @AndroidEntryPoint
 class AffiliateWithdrawalRequestFragment : BaseFragment() {
@@ -411,8 +408,10 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
         lifecycleScope.launch {
             try {
                 val response = PayoutRetrofit.api.sendTransfer(
-                    "Bearer SK_KWT_z05HvVtA7meJtUkqI1EyvRBdhADWLu61vb0qfLibYSFdIGEntxDwJrWNE84ktpZY",
-                    "https://api.myfatoorah.com/v2/SendTransfer",
+//                    "Bearer SK_KWT_z05HvVtA7meJtUkqI1EyvRBdhADWLu61vb0qfLibYSFdIGEntxDwJrWNE84ktpZY",
+                    "Bearer SK_KWT_vVZlnnAqu8jRByOWaRPNId4ShzEDNt256dvnjebuyzo52dXjAfRx2ixW5umjWSUx",
+//                    "https://api.myfatoorah.com/v2/SendTransfer",
+                    "https://apitest.myfatoorah.com/v3/SendTransfer",
                     request
                 )
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -436,6 +435,5 @@ class AffiliateWithdrawalRequestFragment : BaseFragment() {
             }
         }
     }
-
 
 }

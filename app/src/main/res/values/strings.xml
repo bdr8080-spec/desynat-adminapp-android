@@ -188,7 +188,7 @@
     <string name="old_password">Old Password</string>
     <string name="password">Password</string>
 
-   //category
+    //category
     <string name="category">Category</string>
     <string name="no_data_found">No data found</string>
     <string name="sub_category">Sub-Category</string>
@@ -227,7 +227,7 @@
     <string name="brand_name">Brand Name</string>
     <string name="enter_brand_name">Enter Brand Name</string>
 
-   //banner request management
+    //banner request management
     <string name="banner_requests">Banner requests</string>
     <string name="banner_request_accepted_successfully">Banner request accepted successfully</string>
     <string name="banner_request_rejected_successfully">Banner request rejected successfully</string>
@@ -307,7 +307,7 @@
     <string name="save">Save</string>
 
 
-   //cms
+    //cms
     <string name="cms">CMS</string>
     <string name="user">User</string>
     <string name="delivery_boy">Delivery Boy</string>
@@ -443,7 +443,7 @@
     <string name="please_enter_full_name">Please Enter Full Name</string>
     <string name="password_changed_successfully">Password changed successfully!</string>
 
-   //full screen banner management
+    //full screen banner management
     <string name="add_full_screen_banner">Add Full Screen Banner</string>
     <string name="edit_full_screen_banner">Edit Full Screen Banner</string>
     <string name="banner_added_successfully">Banner added successfully!</string>
@@ -492,7 +492,7 @@
     <string name="gift_card_category_name">Gift Card Category Name</string>
     <string name="enter_gift_card_category_name">Enter Gift Card Category Name</string>
 
-   //events
+    //events
     <string name="youtube_events">Youtube Events</string>
     <string name="no_event_found">No event found</string>
     <string name="live_timing">Live Timing</string>
@@ -521,7 +521,7 @@
     <string name="please_select_to_am_pm">Please select To AM/PM</string>
     <string name="from_time_must_be_earlier_than_to_time">From time must be earlier than To time</string>
 
-   //Notification
+    //Notification
     <string name="my_notifications">My Notifications</string>
     <string name="no_notification_found">No notification found</string>
     <string name="read_all">Read All</string>
@@ -593,7 +593,7 @@
     <string name="wallet">Wallet</string>
     <string name="cod">COD</string>
 
-   //payment management
+    //payment management
     <string name="payments">Payments</string>
     <string name="plan">Plan</string>
     <string name="gift_card">Gift Card</string>
@@ -612,7 +612,7 @@
     <string name="commission_earned">Commission Earned</string>
     <string name="purchased_by">Purchased By</string>
 
-   //product
+    //product
     <string name="product_details">Product Details</string>
     <string name="inclusive_of_all_taxes">inclusive of all taxes</string>
     <string name="added_on">Added on</string>
@@ -671,7 +671,7 @@
     <string name="up_to_discount">Up to Discount</string>
     <string name="enter_up_to_discount">Enter Up to Discount</string>
 
-   //reason management
+    //reason management
     <string name="reason_management">Reason Management</string>
     <string name="cancel">Cancel</string>
     <string name="no_reason_added">No Reason Added</string>
@@ -688,7 +688,7 @@
     <string name="more_info">More Info</string>
     <string name="select_status">Select Status</string>
 
-   //seller payout
+    //seller payout
     <string name="seller_payout">Seller Payout</string>
     <string name="total_payout_pending">Total payout pending</string>
     <string name="manage_payout">Manage Payout</string>
