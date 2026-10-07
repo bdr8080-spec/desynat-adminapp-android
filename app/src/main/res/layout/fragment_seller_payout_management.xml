@@ -100,16 +100,19 @@
             <TextView
                 android:id="@+id/tvAmount"
                 android:layout_width="0dp"
+                android:textAlignment="viewStart"
                 android:layout_height="wrap_content"
+                android:gravity="start"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="10289 KD"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_25sdp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/icPayout"
-                app:layout_constraintTop_toBottomOf="@+id/tvPending" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPending"
+                tools:text="10,289 KD" />
+
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icPayout"

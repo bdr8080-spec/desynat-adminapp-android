@@ -75,7 +75,7 @@ class SharedPreference(context: Context) {
 
     fun saveCountryList(countryList: List<GetCountryResponse.Data>) {
         val json = Gson().toJson(countryList)
-        preference.set("countryList", json)
+        preference["countryList"] = json
     }
 
     fun getCountryList(): List<GetCountryResponse.Data>? {
@@ -83,14 +83,14 @@ class SharedPreference(context: Context) {
         return try {
             val type = object : TypeToken<List<GetCountryResponse.Data>>() {}.type
             Gson().fromJson(json, type)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
 
     fun saveUserCountryList(countryList: List<GetCountryResponse.Data>) {
         val json = Gson().toJson(countryList)
-        preference.set("countryUserList", json)
+        preference["countryUserList"] = json
     }
 
     fun getUserCountryList(): List<GetCountryResponse.Data>? {
@@ -98,41 +98,41 @@ class SharedPreference(context: Context) {
         return try {
             val type = object : TypeToken<List<GetCountryResponse.Data>>() {}.type
             Gson().fromJson(json, type)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
 
     fun saveUser(user: LoginResponse.Data) {
         val json = Gson().toJson(user)
-        preference.set("userData", json)
+        preference["userData"] = json
     }
 
     fun getUser(): LoginResponse.Data? {
         val json = preference["userData", ""] ?: return null
         return try {
             Gson().fromJson(json, LoginResponse.Data::class.java)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
 
     fun saveSubAdmin(user: GetSubAdminDetailResponse.Data) {
         val json = Gson().toJson(user)
-        preference.set("subAdminData", json)
+        preference["subAdminData"] = json
     }
 
     fun getSubAdmin(): GetSubAdminDetailResponse.Data? {
         val json = preference["subAdminData", ""] ?: return null
         return try {
             Gson().fromJson(json, GetSubAdminDetailResponse.Data::class.java)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
 
     fun clearUser() {
-        preference.set("userData", "")
+        preference["userData"] = ""
     }
 
 }

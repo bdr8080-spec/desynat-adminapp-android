@@ -84,7 +84,11 @@ class SellerPayoutManagementFragment : BaseFragment() {
         binding?.apply {
             CommonMethod.removeSpace(etSearch)
             toolbar.tvToolbar.text = getString(R.string.seller_payout)
-
+            if (sharedPreference.language=="ar"){
+                tvAmount.gravity==Gravity.RIGHT
+            }else{
+                tvAmount.gravity==Gravity.LEFT
+            }
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 

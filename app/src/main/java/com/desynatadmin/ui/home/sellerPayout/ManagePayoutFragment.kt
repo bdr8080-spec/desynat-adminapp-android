@@ -73,7 +73,13 @@ class ManagePayoutFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
 
+
         binding?.apply {
+            if (sharedPreference.language=="ar"){
+                tvAmount.gravity==Gravity.RIGHT
+            }else{
+                tvAmount.gravity==Gravity.LEFT
+            }
             toolbar.tvToolbar.text = getString(R.string.seller_payout)
 
             sellerPayoutHistoryAdapter = SellerPayoutHistoryAdapter(
