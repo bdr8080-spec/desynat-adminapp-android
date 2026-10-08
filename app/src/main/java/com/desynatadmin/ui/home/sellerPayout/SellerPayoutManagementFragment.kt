@@ -18,6 +18,7 @@ import com.desynatadmin.ui.home.SubAdminHomeActivity
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
 import com.desynatadmin.adapter.SellerPayoutAdapter
+import com.desynatadmin.adapter.StatusPickerAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
 import com.desynatadmin.databinding.FragmentSellerPayoutManagementBinding
@@ -58,6 +59,7 @@ class SellerPayoutManagementFragment : BaseFragment() {
     private val itemsPerPage = 10
 
     var countryId:String?=null
+    var status:String?=null
     var startDate:String?=null
     var endDate:String?=null
     var fromTimestamp=0L
@@ -275,7 +277,7 @@ class SellerPayoutManagementFragment : BaseFragment() {
 
     private fun getSellerPayoutList(loading:Boolean=true,search:String?=null){
         val map = HashMap<String,Any>()
-        map["req_type"] = 1
+//        map["req_type"] = status!=null
         map["page"] = currentPage
         map["limit"] = pageLimit
         if (!search.isNullOrEmpty()) {
@@ -293,6 +295,13 @@ class SellerPayoutManagementFragment : BaseFragment() {
                 map["countryId"] = cId
             } else {
                 map["countryId"] = countryId!!
+            }
+        }
+        if (status != null) {
+            val statusList = listOf("Pending", "Completed", "Rejected")
+            val index = statusList.indexOf(status)
+            if (index != -1) {
+                map["req_type"] = index
             }
         }
         viewModel.getSellerPayoutList(map)
@@ -339,34 +348,22 @@ class SellerPayoutManagementFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding.apply {
-                if (countryId != null) {
-                    etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
-                }
-                if (startDate != null) {
-                    etFrom.text =
-                        CommonMethod.formatDate(startDate.toString(), "yyyy-MM-dd", "dd/MM/yyyy")
-                }
-                if (endDate != null) {
-                    etTo.text =
-                        CommonMethod.formatDate(endDate.toString(), "yyyy-MM-dd", "dd/MM/yyyy")
-                }
+            tvChooseDate.isVisible = false
+            etFrom.isVisible = false
+            etTo.isVisible = false
+
+            tvStatus.isVisible = true
+            etStatus.isVisible = true
+
+            if (countryId != null) {
+                etCountry.text = countryList.firstOrNull { it.id.toString() == countryId }?.name
+            }
+            if (status != null) {
+                etStatus.text = status
+            }
+
             tvToolbar.setOnClickListener {
                 dialog.dismiss()
-            }
-
-            etFrom.setOnClickListener {
-                openCustomDatePicker(requireActivity()){date,timestamp->
-                    etFrom.text=date
-                    fromTimestamp=timestamp
-                }
-
-            }
-            etTo.setOnClickListener {
-                openCustomDatePicker(requireActivity(), minDate = fromTimestamp){date,timestamp->
-                    etTo.text=date
-                    toTimestamp=timestamp
-                }
-
             }
 
             etCountry.setOnClickListener {
@@ -380,10 +377,23 @@ class SellerPayoutManagementFragment : BaseFragment() {
                 }
             }
 
+            etStatus.setOnClickListener {
+                rvStatus.isVisible = !rvStatus.isVisible
+                val statusList = listOf("Pending", "Completed","Rejected")
+                rvStatus.adapter = StatusPickerAdapter(requireContext(), statusList, object : StatusPickerAdapter.ClickOnItem {
+                    override fun onClickItem(position: Int) {
+                        etStatus.text = statusList[position]
+                        status = statusList[position]
+                        rvStatus.isVisible = false
+                    }
+                })
+            }
+
             tvClear.setOnClickListener {
                 countryId = null
                 startDate = null
                 endDate = null
+                status = null
                 toTimestamp = 0L
                 fromTimestamp = 0L
                 getSellerPayoutList()
@@ -394,14 +404,6 @@ class SellerPayoutManagementFragment : BaseFragment() {
                 if (selectedCountryId!=null) {
                     countryId = selectedCountryId
                 }
-                if (etFrom.text.isNotEmpty()){
-                    startDate = CommonMethod.formatDate(etFrom.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
-                }
-
-                if (etTo.text.isNotEmpty()){
-                    endDate = CommonMethod.formatDate(etTo.text.toString(),"dd/MM/yyyy","yyyy-MM-dd")
-                }
-
                 getSellerPayoutList()
                 dialog.dismiss()
             }

@@ -33,7 +33,7 @@ class SellerPayoutHistoryAdapter(
                 tvPayoutOnValue.text = "N/A"
             }
 
-            tvTransactionId.text = "#${payoutData.transactionId ?: payoutData.requestId ?: ""}"
+            tvTransactionId.text = "#${payoutData.transactionId?: ""}"
         }
     }
 

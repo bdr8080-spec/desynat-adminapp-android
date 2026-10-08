@@ -898,4 +898,7 @@
     <string name="a_z">أ-ي</string>
     <string name="hi_there">مرحباً</string>
     <string name="promotional_banner_updated_successfully">تم تحديث البانر الترويجي بنجاح</string>
+    <string name="amount_cannot_be_greater_than_pending_amount">
+    لا يمكن أن يكون المبلغ أكبر من المبلغ المعلّق</string>
+    <string name="last_payout_on">"آخر دفعة في "</string>
 </resources>

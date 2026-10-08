@@ -900,4 +900,6 @@
     <string name="a_z">A-Z</string>
     <string name="hi_there">Hi there</string>
     <string name="promotional_banner_updated_successfully">Promotional Banner Updated Successfully</string>
+    <string name="amount_cannot_be_greater_than_pending_amount">Amount cannot be greater than pending amount</string>
+    <string name="last_payout_on">"Last Payout on "</string>
 </resources>

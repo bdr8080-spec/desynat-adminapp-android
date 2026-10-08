@@ -47,6 +47,7 @@ class ManagePayoutFragment : BaseFragment() {
 
     private var sellerPayoutHistoryAdapter: SellerPayoutHistoryAdapter? = null
     private var payoutHistoryList = ArrayList<GetSellerPayoutHistoryResponse.Data.PayoutHistory.PayoutHistoryItem>()
+    private var currentPendingAmount: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -174,6 +175,7 @@ class ManagePayoutFragment : BaseFragment() {
                 val historyData = response.data?.payoutHistory
 
                 val pendingAmt = response.data?.pendingAmount?.toDoubleOrNull() ?: 0.0
+                currentPendingAmount = pendingAmt
                 binding?.tvAmount?.text = "${CommonMethod.formatPrice(pendingAmt)} KD"
 
                 currentPage = historyData?.currentPage ?: 1
@@ -295,9 +297,15 @@ class ManagePayoutFragment : BaseFragment() {
                 if (isInvalid(etAmount, "Amount")) {
                     return@setOnClickListener
                 } else {
-                    dialog.dismiss()
                     val amountText = etAmount.text?.trim().toString()
                     val amountValue = amountText.toDoubleOrNull() ?: 0.0
+
+                    if (amountValue > currentPendingAmount) {
+                        showToast(getString(R.string.amount_cannot_be_greater_than_pending_amount))
+                        return@setOnClickListener
+                    }
+
+                    dialog.dismiss()
                     initiateMyFatoorahPayment(amountValue)
                 }
             }

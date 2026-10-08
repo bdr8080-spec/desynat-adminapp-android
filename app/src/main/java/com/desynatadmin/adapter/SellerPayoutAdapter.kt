@@ -21,11 +21,11 @@ class SellerPayoutAdapter(
         fun bind(position: Int) = with(binding) {
             val payoutData = payoutList[position]
 
-            val displayName =  payoutData.storeInfo?.storeName
-                ?: payoutData.name
-                ?: listOfNotNull(payoutData.firstName, payoutData.lastName).joinToString(" ").trim().ifEmpty { null }
-                ?: payoutData.nameEnglish
-                ?: ""
+            val displayName =
+                listOfNotNull(payoutData.firstName, payoutData.lastName).joinToString(" ").trim()
+                    .ifEmpty { null }
+                    ?: payoutData.nameEnglish
+                    ?: ""
 
             tvName.text = displayName
             tvLocation.text = payoutData.countryName ?: ""
@@ -35,21 +35,25 @@ class SellerPayoutAdapter(
                     payoutData.lastPayoutDate,
                     outputFormat = "dd/MM/yyyy"
                 )
-                tvLastPayoutDate.text = "Last Payout on $formattedDate"
+                tvLastPayoutDate.text = buildString {
+                    append(context.getString(R.string.last_payout_on))
+                    append(formattedDate)
+                }
             } else {
-                tvLastPayoutDate.text = "Last Payout on N/A"
+                tvLastPayoutDate.text = context.getString(R.string.last_payout_on) + "N/A"
             }
 
             val totalEarningVal = payoutData.totalEarning?.toDoubleOrNull() ?: 0.0
             tvTotalEarning.text = "${CommonMethod.formatPrice(totalEarningVal)} KD"
 
-            val lastPayoutVal = (payoutData.lastPayout ?:"0")?.toDoubleOrNull() ?: 0.0
+            val lastPayoutVal = (payoutData.lastPayout ?: "0")?.toDoubleOrNull() ?: 0.0
             tvLastPayoutValue.text = "${CommonMethod.formatPrice(lastPayoutVal)} KD"
 
             val pendingAmountVal = payoutData.pendingAmount?.toDoubleOrNull() ?: 0.0
             tvPendingAmount.text = "${CommonMethod.formatPrice(pendingAmountVal)} KD"
 
-            val imageUrl = payoutData.profilePic ?: payoutData.image ?: payoutData.storeInfo?.storeImage
+            val imageUrl =
+                payoutData.profilePic ?: payoutData.image ?: payoutData.storeInfo?.storeImage
             ivProfileImage.load(imageUrl) {
                 crossfade(true)
                 placeholder(R.drawable.ic_user)
