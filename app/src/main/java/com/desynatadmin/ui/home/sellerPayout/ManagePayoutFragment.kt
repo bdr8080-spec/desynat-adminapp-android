@@ -29,6 +29,7 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class ManagePayoutFragment : BaseFragment() {
@@ -61,7 +62,7 @@ class ManagePayoutFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         sellerId = arguments?.getInt("seller_id", 0) ?: 0
         sellerName = arguments?.getString("seller_name", "") ?: ""
-        Log.e("TAG", "sellerName:$sellerName ", )
+        Log.e("TAG", "sellerName:$sellerName ")
         if (sellerId == 0) {
             sellerId = arguments?.getString("seller_id")?.toIntOrNull() ?: 0
         }
@@ -154,7 +155,7 @@ class ManagePayoutFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 CommonMethod.showSuccessDialog(
                     requireActivity(),
-                    response.message ?: "Payout added successfully"
+                    response.message
                 ) {
                     currentPage = 1
                     pagination = false
@@ -313,26 +314,50 @@ class ManagePayoutFragment : BaseFragment() {
 
         dialog.show()
     }
+    companion object {
+        private const val TAG = "MyFatoorah"
+        private const val SUCCESS_URL = "https://desynat.com/success"
+        private const val ERROR_URL = "https://desynat.com/error"
+
+        // Set to true for Production / Live, false for Sandbox / Test
+        private const val IS_LIVE = true
+
+        private const val TEST_AUTH = "Bearer SK_KWT_vVZlnnAqu8jRByOWaRPNId4ShzEDNt256dvnjebuyzo52dXjAfRx2ixW5umjWSUx"
+        private const val LIVE_AUTH = "Bearer SK_KWT_Xn6nYzfdgF3Lz7TKhrGLhruKiBT5OgesD080ZIJohon0q0CEqCRrwdAsV0qICIsx"
+
+        private val AUTH = if (IS_LIVE) LIVE_AUTH else TEST_AUTH
+        private val SEND_PAYMENT_URL = if (IS_LIVE) "https://api.myfatoorah.com/v2/SendPayment" else "https://apitest.myfatoorah.com/v2/SendPayment"
+    }
 
     private fun initiateMyFatoorahPayment(amount: Double) {
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        
-        val name = if (sellerName.isBlank()) "John Doe" else sellerName
+
+        val name = sellerName.ifBlank { "" }
         val request = com.desynatadmin.ui.home.sellerPayout.response.SendPaymentRequest(
             customerName = name,
             notificationOption = "LNK",
-            invoiceValue = amount
+            invoiceValue = java.math.BigDecimal(amount)
+                .setScale(3, java.math.RoundingMode.HALF_UP).toDouble(),
+            displayCurrencyIso = "KWD",
+            callBackUrl = SUCCESS_URL,
+            errorUrl = ERROR_URL,
+//            customerReference = "payout_${System.currentTimeMillis()}"
         )
-        
+       Log.d(TAG, "SendPayment request: ${com.google.gson.Gson().toJson(request)}")
+
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val response = com.desynatadmin.payoutRetrofit.PayoutRetrofit.api.sendPaymentLink(
-                    "Bearer SK_KWT_vVZlnnAqu8jRByOWaRPNId4ShzEDNt256dvnjebuyzo52dXjAfRx2ixW5umjWSUx",
-                    "https://apitest.myfatoorah.com/v2/SendPayment",
+                    AUTH,
+                    SEND_PAYMENT_URL,
                     request
                 )
                 ProgressDialogUtils.getInstance().hideProgress()
-                
+               Log.d(
+                    TAG,
+                    "SendPayment HTTP ${response.code()} body: ${com.google.gson.Gson().toJson(response.body())}"
+                )
+
                 if (response.isSuccessful) {
                     if (response.body()?.isSuccess == true) {
                         val invoiceUrl = response.body()?.data?.invoiceURL
@@ -343,15 +368,16 @@ class ManagePayoutFragment : BaseFragment() {
                         }
                     } else {
                         showToast("API Error: ${response.body()?.message}")
-                        android.util.Log.e("MyFatoorah", "Failed API Response: ${com.google.gson.Gson().toJson(response.body())}")
+                      Log.e(TAG, "SendPayment failed: ${com.google.gson.Gson().toJson(response.body())}")
                     }
                 } else {
                     val errorBody = response.errorBody()?.string() ?: response.message()
-                    android.util.Log.e("MyFatoorah", "HTTP Error: $errorBody")
+                  Log.e(TAG, "SendPayment HTTP error ${response.code()}: $errorBody")
                     showToast("HTTP Error: $errorBody")
                 }
             } catch (e: Exception) {
                 ProgressDialogUtils.getInstance().hideProgress()
+              Log.e(TAG, "SendPayment exception", e)
                 showToast("Error: ${e.message}")
             }
         }
@@ -370,84 +396,100 @@ class ManagePayoutFragment : BaseFragment() {
         )
         window.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setCancelable(false)
-        
+
         val ivClose = dialog.findViewById<android.widget.ImageView>(R.id.ivClose)
         val webView = dialog.findViewById<android.webkit.WebView>(R.id.webView)
-        
-        ivClose.setOnClickListener {
-            dialog.dismiss()
-        }
-        
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
-        
+
         var isCompleted = false
 
-        fun processUrlOrPage(currentUrl: String) {
-            if (isCompleted) return
-            val uri = android.net.Uri.parse(currentUrl)
-            val paymentId = uri.getQueryParameter("paymentId") 
-                ?: uri.getQueryParameter("PaymentID") 
-                ?: uri.getQueryParameter("id")
-                ?: uri.getQueryParameter("Id")
+        ivClose.setOnClickListener {
+          Log.d(TAG, "User closed dialog")
+            isCompleted = true
+            dialog.dismiss()
+        }
 
-            if (!paymentId.isNullOrEmpty()) {
-                isCompleted = true
-                dialog.dismiss()
-                addPayout(amount, paymentId)
-            } else if (currentUrl.contains("error", ignoreCase = true) || currentUrl.startsWith("https://desynat.com/error")) {
-                isCompleted = true
-                dialog.dismiss()
-                showToast("Payment failed")
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+        }
+        android.webkit.CookieManager.getInstance().apply {
+            setAcceptCookie(true)
+            setAcceptThirdPartyCookies(webView, true)
+        }
+
+        // Log the page's JS console too (nothing is hidden or filtered)
+        webView.webChromeClient = object : android.webkit.WebChromeClient() {
+            override fun onConsoleMessage(m: android.webkit.ConsoleMessage?): Boolean {
+              Log.d("MyFatoorahJS", "${m?.messageLevel()}: ${m?.message()} (${m?.sourceId()}:${m?.lineNumber()})")
+                return true
             }
         }
 
+        // Returns true only for OUR callback URLs. MyFatoorah's own pages load normally.
+        fun handleUrl(currentUrl: String): Boolean {
+            val isSuccess = currentUrl.startsWith(SUCCESS_URL)
+            val isError = currentUrl.startsWith(ERROR_URL)
+            if (!isSuccess && !isError) return false
+            if (isCompleted) return true
+
+            isCompleted = true
+            val paymentId = currentUrl.toUri().getQueryParameter("paymentId")
+          Log.d(TAG, "Callback hit: ${if (isSuccess) "SUCCESS" else "ERROR"} url=$currentUrl paymentId=$paymentId")
+
+            dialog.dismiss()
+            if (isSuccess && !paymentId.isNullOrEmpty()) {
+                addPayout(amount, paymentId)
+            } else {
+                showToast("Payment failed")
+            }
+            return true
+        }
+
         webView.webViewClient = object : android.webkit.WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: android.webkit.WebView?, request: android.webkit.WebResourceRequest?): Boolean {
+            override fun shouldOverrideUrlLoading(
+                view: android.webkit.WebView?,
+                request: android.webkit.WebResourceRequest?
+            ): Boolean {
                 val currentUrl = request?.url?.toString() ?: ""
-                processUrlOrPage(currentUrl)
-                return super.shouldOverrideUrlLoading(view, request)
+                Log.d(TAG, "nav: $currentUrl")
+                return handleUrl(currentUrl)
+            }
+
+            override fun onPageStarted(view: android.webkit.WebView?, url: String?, favicon: android.graphics.Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                Log.d(TAG, "pageStarted: $url")
+                handleUrl(url ?: "") // backup if a redirect skips shouldOverrideUrlLoading
             }
 
             override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                val currentUrl = url ?: ""
-                processUrlOrPage(currentUrl)
+                Log.d(TAG, "pageFinished: $url")
+            }
 
-                if (!isCompleted && (currentUrl.contains("success", ignoreCase = true) || currentUrl.contains("myfatoorah", ignoreCase = true))) {
-                    webView.evaluateJavascript(
-                        "(function() { " +
-                        "  var rows = document.querySelectorAll('tr, div'); " +
-                        "  for (var i = 0; i < rows.length; i++) { " +
-                        "    var text = rows[i].innerText; " +
-                        "    if (text && (text.indexOf('Payment ID') !== -1 || text.indexOf('PaymentID') !== -1)) { " +
-                        "      var parts = text.split('\\n'); " +
-                        "      for (var j = 0; j < parts.length; j++) { " +
-                        "        if (parts[j].trim().length > 10 && !isNaN(parts[j].trim())) { " +
-                        "          return parts[j].trim(); " +
-                        "        } " +
-                        "      } " +
-                        "    } " +
-                        "  } " +
-                        "  return ''; " +
-                        "})();"
-                    ) { result ->
-                        val paymentId = result?.replace("\"", "")?.trim()
-                        if (!paymentId.isNullOrEmpty() && paymentId != "null" && !isCompleted) {
-                            isCompleted = true
-                            requireActivity().runOnUiThread {
-                                dialog.dismiss()
-                                addPayout(amount, paymentId)
-                            }
-                        }
-                    }
+            override fun onReceivedError(
+                view: android.webkit.WebView?,
+                request: android.webkit.WebResourceRequest?,
+                error: android.webkit.WebResourceError?
+            ) {
+                Log.e(TAG, "WebView error ${error?.errorCode} ${error?.description} for ${request?.url}")
+            }
+
+            override fun onReceivedHttpError(
+                view: android.webkit.WebView?,
+                request: android.webkit.WebResourceRequest?,
+                errorResponse: android.webkit.WebResourceResponse?
+            ) {
+                if (request?.isForMainFrame == true) {
+                    Log.e(TAG, "HTTP ${errorResponse?.statusCode} for ${request.url}")
                 }
             }
         }
-        
+
+        Log.d(TAG, "Loading: $url")
         webView.loadUrl(url)
         dialog.show()
     }
+
 
     private fun isInvalid(et: AppCompatEditText, fieldName: String): Boolean {
         val value = et.text.toString().trim()
