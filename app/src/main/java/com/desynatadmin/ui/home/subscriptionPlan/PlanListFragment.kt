@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatadmin.R
-import com.desynatadmin.adapter.CountryPickerAdapter
 import com.desynatadmin.adapter.SubscriptionAdapter
 import com.desynatadmin.base.BaseFragment
 import com.desynatadmin.data.view_model.HomeViewModel
-import com.desynatadmin.databinding.CustomCountryPickerBinding
 import com.desynatadmin.databinding.FragmentPlanListBinding
 import com.desynatadmin.ui.home.HomeActivity
 import com.desynatadmin.ui.home.SubAdminHomeActivity
@@ -24,7 +20,6 @@ import com.desynatadmin.utils.CommonMethod
 import com.desynatadmin.utils.Constants
 import com.desynatadmin.utils.ProgressDialogUtils
 import com.desynatadmin.utils.SharedPreference
-import com.desynatadmin.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -185,8 +180,19 @@ class PlanListFragment : BaseFragment() {
     private fun setCountry() {
         if (!countryList.isNullOrEmpty()) {
             SharedPreference.get(requireActivity()).saveCountryList(countryList)
-            selectedCountryCode = countryList[0].id.toString()
-            binding?.etCountry?.setText(if (Constants.language=="ar") countryList[0].nameAr else countryList[0].name)
+            var foundKuwait = false
+            for (i in 0 until countryList.size) {
+                if (countryList[i].name.equals("Kuwait", ignoreCase = true) || countryList[i].nameAr == "الكويت") {
+                    selectedCountryCode = countryList[i].id.toString()
+                    binding?.etCountry?.setText(if (Constants.language == "ar") countryList[i].nameAr else countryList[i].name)
+                    foundKuwait = true
+                    break
+                }
+            }
+            if (!foundKuwait) {
+                selectedCountryCode = countryList[0].id.toString()
+                binding?.etCountry?.setText(if (Constants.language == "ar") countryList[0].nameAr else countryList[0].name)
+            }
             getSubscriptionPlan()
         }
     }

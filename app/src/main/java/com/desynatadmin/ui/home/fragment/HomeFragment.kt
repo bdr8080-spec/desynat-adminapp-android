@@ -80,13 +80,13 @@ class HomeFragment : BaseFragment() {
         binding?.mainProgressBar?.isVisible = false
         getNotificationCount()
         getProfile()
-        getDashBoardData()
-        if(SharedPreference.get(requireActivity()).getCountryList() == null) {
+        if (SharedPreference.get(requireActivity()).getCountryList() == null) {
             getCountryApi()
-        }
-        else{
+            getDashBoardData()
+        } else {
             countryList.clear()
             SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
+            setDefaultCountry()
         }
 
         userInfo = SharedPreference.get(requireActivity()).getUser()
@@ -212,6 +212,17 @@ private fun getProfile(){
         }
     }
 
+    private fun setDefaultCountry() {
+        for (i in 0 until countryList.size) {
+            if (countryList[i].name.equals("Kuwait", ignoreCase = true) || countryList[i].nameAr == "الكويت") {
+                countryId = countryList[i].id.toString()
+                binding?.etCountry?.setText(if (Constants.language == "ar") countryList[i].nameAr else countryList[i].name)
+                break
+            }
+        }
+        getDashBoardData()
+    }
+
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -250,6 +261,7 @@ private fun getProfile(){
                 countryList.clear()
                 countryList.addAll(response.data)
                 setCountry()
+                setDefaultCountry()
         }
 
         viewModel.getProfileResult.observe(viewLifecycleOwner) { response ->
